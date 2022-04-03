@@ -1,0 +1,9 @@
+{
+	"edit": {
+		"command": "nvim"
+	},
+	"encryption": "gpg",
+	"sourceDir": "C:\\Users\\westeraj\\.devenv\\chezmoi",
+	"targetDir": "C:\\Users\\westeraj"
+
+}
