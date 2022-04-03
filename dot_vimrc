@@ -4,12 +4,12 @@ set foldmethod=indent
 set encoding=utf-8
 set splitright
 set switchbuf=vsplit
+set runtimepath-=~/.devenv/vimfiles
+set runtimepath^=~/.devenv/vim
+
 
 " Windows Configuration Stuff
 if(has('win32')||has('win64'))
-	set runtimepath-=~/.devenv/vimfiles
-	set runtimepath^=~/.devenv/vim
-
 	let s:data_dir = $USERPROFILE.'/.devenv/vim'
 
 	" Mouse behavior (the Windows way)
@@ -99,6 +99,89 @@ endif
 colorscheme deus
 let g:airline_theme='deus'
 
+" Airline Config
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#bufferline#overwrite_variables = 1
+let g:airline#extensions#nerdtree_statusline = 1
+let g:airline#extentions#fugitiveline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#battery#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#fzf#enabled = 1
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline_skip_empty_sections = 1
+let g:bufferline_echo = 0
+let g:airline#extensions#default#layout = [  
+	\ [ 'a', 'b', 'c' ],  
+	\ [ 'x', 'y', 'z', 'error', 'warning' ]  
+	\ ]
+
+" NERDTree Config
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+      \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endf
+
+" UndoTree Config
+nnoremap <F5> :UndotreeToggle<CR>
+
+" Startify Config
+let g:startify_change_to_vcs_root = 1
+"let g:startify_fortune_use_unicode = 1
+let g:startify_enable_unsafe = 1
+let g:startify_lists=[{ 'type': 'files', 'header': ['   MRU']},]
+
+let g:lambda_header = [
+    \'',
+     \'⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣤⣴⣦⣤⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ',
+     \'⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣶⣤⡀⠀⠀⠀⠀⠀⠀ ',
+     \'⠀⠀⠀⠀⣠⣾⣿⣿⡿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⢿⣿⣿⣶⡀⠀⠀⠀⠀ ',
+     \'⠀⠀⠀⣴⣿⣿⠟⠁⠀⠀⠀⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣦⠀⠀⠀ ',
+     \'⠀⠀⣼⣿⣿⠋⠀⠀⠀⠀⠀⠛⠛⢻⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣧⠀⠀ ',
+     \'⠀⢸⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⡇⠀ ',
+     \'⠀⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠀ ',
+     \'⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡟⢹⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⣹⣿⣿⠀ ',
+     \'⠀⣿⣿⣷⠀⠀⠀⠀⠀⠀⣰⣿⣿⠏⠀⠀⢻⣿⣿⡄⠀⠀⠀⠀⠀⠀⣿⣿⡿⠀ ',
+     \'⠀⢸⣿⣿⡆⠀⠀⠀⠀⣴⣿⡿⠃⠀⠀⠀⠈⢿⣿⣷⣤⣤⡆⠀⠀⣰⣿⣿⠇⠀ ',
+     \'⠀⠀⢻⣿⣿⣄⠀⠀⠾⠿⠿⠁⠀⠀⠀⠀⠀⠘⣿⣿⡿⠿⠛⠀⣰⣿⣿⡟⠀⠀ ',
+     \'⠀⠀⠀⠻⣿⣿⣧⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⠏⠀⠀⠀ ',
+     \'⠀⠀⠀⠀⠈⠻⣿⣿⣷⣤⣄⡀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⠟⠁⠀⠀⠀⠀ ',
+     \'⠀⠀⠀⠀⠀⠀⠈⠛⠿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⠁⠀⠀⠀⠀⠀⠀ ',
+     \'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ',
+     \]
+
+let g:doom_header =<< trim END
+=================     ===============     ===============   ========  ========
+\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
+||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||
+|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||
+||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||
+|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||
+||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||
+|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||
+||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||
+||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||
+||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||
+||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||
+||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||
+||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||
+||   .=='    _-'          '-__\._-'         '-_./__-'         `' |. /|  |   ||
+||.=='    _-'                                                     `' |  /==.||
+=='    _-'                           V I M		                        \/   `==
+\   _-'                                                                `-_   /
+ `''                                                                      ``'
+END
+
+let g:startify_custom_header = startify#center(g:doom_header)
+
+" YouCompleteMe Config
+let g:ycm_clangd_uses_ycmd_caching = 0
+let g:ycm_clangd_binary_path = exepath("clangd")
 " Airline Config
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
