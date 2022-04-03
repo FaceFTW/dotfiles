@@ -1,0 +1,5 @@
+{{- if eq .chezmoi.os "linux" }}
+{{ .chezmoi.sourceDir }}/.chezmoiscripts/run_once_WindowsGetBins
+Documents/**
+
+{{- end }}
