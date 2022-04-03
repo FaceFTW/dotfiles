@@ -47,7 +47,6 @@ call plug#begin(s:data_dir. '/extplugs')
 	Plug 'delphinus/ddc-treesitter'
 	Plug 'tani/ddc-fuzzy'
 	Plug 'Shougo/neco-vim'
-	Plug 'Shougo/ddc-omni'
 	Plug 'Shougo/ddc-around'
 call plug#end()
 
@@ -56,13 +55,16 @@ call plug#end()
 colorscheme deus
 
 " Denops config
-let g:denops#deno = $VIMRUNTIME.'/tools/deno' 
-
+if has('win32')|| has('win64')
+	let g:denops#deno = $VIMRUNTIME.'\..\..\..\..\deno.exe' 
+else 
+	let g:denops#deno = $VIMRUNTIME.'/../../../../deno' 
+endif
 " DDC Config
 " Customize global settings
 " Use around source.
 " https://github.com/Shougo/ddc-around
-call ddc#custom#patch_global('sources', ['around', 'treesitter', 'omni'])
+call ddc#custom#patch_global('sources', ['around', 'treesitter'])
 call ddc#custom#patch_global('sourceOptions', {
 	\'_': {
 	\'matchers': ['matcher_fuzzy'],
@@ -72,13 +74,11 @@ call ddc#custom#patch_global('sourceOptions', {
 	\'around': {'mark': 'A', 'maxSize': 500},
 	\'treesitter': {'mark': 'T'},
 	\'necovim': {'mark': 'vim'},
-	\'omni': {'mark': 'O'},
 \})
 
 " Customize settings on a filetype
-call ddc#custom#patch_filetype(['c', 'cpp'], 'sources', ['around', 'clangd'])
-call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', {
-	\'clangd': {'mark': 'C'},
+call ddc#custom#patch_filetype(['c', 'cpp'], 'sources', ['around', 'clangd'],
+											\'sourceOptions', {'clangd': {'mark': 'C'},
 \})
 call ddc#custom#patch_filetype('markdown', 'sourceParams', {
 	\'around': {'maxSize': 100},
@@ -88,17 +88,28 @@ call ddc#custom#patch_global('sourceOptions', {
 	\'necovim': {'mark': 'vim'},
 \})
 
-
 " Mappings
 inoremap <silent><expr><TAB> ddc#map#pum_visible() ? '<C-n>' : (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ? '<TAB>' : ddc#map#manual_complete()
 inoremap <expr><S-TAB>  ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
 call ddc#enable()
 
 
+" Telescope Keybinds
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+
+
 " NERDTree Config
-" nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
 
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
@@ -263,7 +274,7 @@ END
 
 
 " Dashboard Setup
-let g:dashboard_default_executive ='telescope.nvim'
+let g:dashboard_default_executive ='telescope'
 nmap <Leader>ss :<C-u>SessionSave<CR>
 nmap <Leader>sl :<C-u>SessionLoad<CR>
 nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
