@@ -1,0 +1,7 @@
+encryption = "gpg"
+sourceDir = '{{ if eq .chezmoi.os "windows" }}{{ .chezmoi.homeDir }}\.devenv\chezmoi-repo{{ else }}{{ .chezmoi.homeDir }}/.devenv/chezmoi-repo{{ end }}'
+targetDir = '{{ .chezmoi.homeDir }}'
+
+
+[edit]
+	command = "nvim"

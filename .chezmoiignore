@@ -1,5 +1,6 @@
-{{- if eq .chezmoi.os "linux" }}
-{{ .chezmoi.sourceDir }}/.chezmoiscripts/run_once_WindowsGetBins
-Documents/**
+.devenv/chezmoi/chezmoi.toml
+.devenv/chezmoi/.gitignore
 
+{{- if eq .chezmoi.os "linux" }}
+	Documents/**
 {{- end }}
