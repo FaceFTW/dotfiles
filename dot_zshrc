@@ -9,8 +9,8 @@ LC_TIME="en_US.UTF-8"
 LC_ALL="en_US.UTF-8"
 
 
-export COWPATH=$HOME"/.cowsay/cows/"
-export COW_PATH=$HOME"/.cowsay/cows/"
+export COWPATH=$HOME"/.devenv/cows/"
+export COW_PATH=$HOME"/.devenv/cows/"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
