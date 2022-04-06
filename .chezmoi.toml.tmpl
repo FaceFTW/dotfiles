@@ -1,7 +1,12 @@
 encryption = "gpg"
 sourceDir = '{{ if eq .chezmoi.os "windows" }}{{ .chezmoi.homeDir }}\.devenv\chezmoi-repo{{ else }}{{ .chezmoi.homeDir }}/.devenv/chezmoi-repo{{ end }}'
 targetDir = '{{ .chezmoi.homeDir }}'
-
-
 [edit]
 	command = "nvim"
+[diff]
+	exclude=['externals']
+[merge]
+    command = "nvim"
+    args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
+[data]
+	keyFingerprint = "76ED5D6D03012E31"
