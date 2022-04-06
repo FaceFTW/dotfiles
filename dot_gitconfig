@@ -1,0 +1,15 @@
+[user]
+	name = Alex Westerman
+	email = westeraj@rose-hulman.edu
+	signingkey={{ .keyFingerprint }}
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[commit]
+	gpgsign=true
+[gpg]
+	program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
+[core]
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe

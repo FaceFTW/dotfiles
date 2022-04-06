@@ -1,6 +1,16 @@
 .devenv/chezmoi/chezmoi.toml
 .devenv/chezmoi/.gitignore
 
-{{- if eq .chezmoi.os "linux" }}
+{{- if ne .chezmoi.os "windows" }}
 	Documents/**
+	.devenv/bin/**.exe
+	.devenv/bin/**.dll
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+	.bashrc
+	.zshrc
+	.zprofile
+	.profile
+
 {{- end }}
