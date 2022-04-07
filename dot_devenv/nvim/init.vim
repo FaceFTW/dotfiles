@@ -16,7 +16,7 @@ set number
 let g:mapleader="\\"
 
 " Vim Plug Init
-let s:data_dir = stdpath('config') 
+let s:data_dir = stdpath('config')
 if empty(glob(s:data_dir . '/autoload/plug.vim'))
 	execute '!curl -fLo '.s:data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -26,11 +26,10 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 	\| endif
 
 call plug#begin(s:data_dir. '/extplugs')
-	Plug 'preservim/nerdtree'
 	Plug 'tpope/vim-fugitive'
 	Plug 'flazz/vim-colorschemes'
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-	Plug 'lewis6991/gitsigns.nvim'		
+	Plug 'lewis6991/gitsigns.nvim'
 	Plug 'feline-nvim/feline.nvim'
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'nvim-telescope/telescope.nvim'
@@ -38,7 +37,6 @@ call plug#begin(s:data_dir. '/extplugs')
 	Plug 'nathom/filetype.nvim'
 	Plug 'glepnir/dashboard-nvim'
 	Plug 'folke/which-key.nvim'
-	Plug 'akinsho/bufferline.nvim'
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'gbrlsnchs/telescope-lsp-handlers.nvim'
 	Plug 'williamboman/nvim-lsp-installer'
@@ -49,11 +47,12 @@ call plug#begin(s:data_dir. '/extplugs')
 	Plug 'RishabhRD/lspactions'
 	Plug 'onsails/lspkind-nvim'
 	Plug 'kosayoda/nvim-lightbulb'
-	Plug 'lukas-reineke/indent-blankline.nvim'
+
 	Plug 'SmiteshP/nvim-gps'
 	Plug 'folke/todo-comments.nvim'
 	Plug 'anuvyklack/pretty-fold.nvim'
 	Plug 'echasnovski/mini.nvim'
+	Plug 'noib3/nvim-cokeline'
 
 	Plug 'alec-gibson/nvim-tetris'
 	Plug 'seandewar/killersheep.nvim'
@@ -70,13 +69,7 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <C-p> <cmd>Telescope command_palette<cr>
-
-" NERDTree Config
-nnoremap <C-t> :NERDTreeToggle<CR>
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-	\let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endf
-
+			
 " LUA stuff
 lua << EOF
 require('nvim-treesitter.configs').setup{
@@ -165,31 +158,164 @@ vim.lsp.handlers["textDocument/implementation"] = require'lspactions'.implementa
 --vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.implementation()<CR> ]]
 
 
-require('bufferline').setup{
-	options = {
-		mode = 'buffers',
-		numbers = 'buffer_id',
-		close_command = 'bdelete! %d',
-		left_mouse_command = 'buffer %d',
-		indicator_icon = '▎',
-		modified_icon = '●',
-		left_trunc_marker = '',
-		right_trunc_marker = '',
-		max_name_length = 18,
-		max_prefix_length = 15,
-		tab_size = 20,
-		color_icons = true, 
-		show_buffer_icons = true, 
-		show_buffer_close_icons = false,
-		show_close_icon = false,
-		show_tab_indicators = false,
-		persist_buffer_sort = false,
-		separator_style = 'slant', 
-		enforce_regular_tabs = true,
-		always_show_bufferline = true,
-		sort_by = 'id'
-	}
+
+local get_hex = require('cokeline/utils').get_hex
+local mappings = require('cokeline/mappings')
+
+local comments_fg = get_hex('Comment', 'fg')
+local errors_fg = get_hex('DiagnosticError', 'fg')
+local warnings_fg = get_hex('DiagnosticWarn', 'fg')
+
+local red = vim.g.terminal_color_1
+local yellow = vim.g.terminal_color_3
+
+local components = {
+	space = {
+    		text = ' ',
+    		truncation = { priority = 1 }
+  	},
+
+  	two_spaces = {
+    		text = '  ',
+    		truncation = { priority = 1 }
+  	},
+
+  	separator = {
+    		text = function(buffer)
+      			return buffer.index ~= 1 and '▏' or ''
+    		end,
+    		truncation = { priority = 1 }
+ 	},
+
+	devicon = {
+    		text = function(buffer)
+      			return (mappings.is_picking_focus() or mappings.is_picking_close())
+          			and buffer.pick_letter .. ' '
+           			or buffer.devicon.icon
+    		end,
+    		fg = function(buffer)
+      			return (mappings.is_picking_focus() and yellow)
+        			or (mappings.is_picking_close() and red)
+        			or buffer.devicon.color
+    		end,
+    		style = function(_)
+      			return (mappings.is_picking_focus() or mappings.is_picking_close())
+        			and 'italic,bold'
+         			or nil
+    			end,
+    		truncation = { priority = 1 }
+  	},
+
+  	index = {
+    		text = function(buffer)
+      			return buffer.index .. ': '
+    		end,
+    		truncation = { priority = 1 }
+  	},
+
+  	unique_prefix = {
+    		text = function(buffer)
+      			return buffer.unique_prefix
+    		end,
+    		fg = comments_fg,
+    		style = 'italic',
+    		truncation = {
+      			priority = 3,
+      			direction = 'left'
+    		}
+  	},
+
+  	filename = {
+    		text = function(buffer)
+      			return buffer.filename
+    		end,
+    		style = function(buffer)
+      			return ((buffer.is_focused and buffer.diagnostics.errors ~= 0) and 'bold,underline')
+        			or (buffer.is_focused and 'bold')
+        			or (buffer.diagnostics.errors ~= 0 and 'underline')
+        			or nil
+    		end,
+    		truncation = {
+			priority = 2,
+      			direction = 'left'
+    		}
+	},
+
+  	diagnostics = {
+    		text = function(buffer)
+      			return (buffer.diagnostics.errors ~= 0 and '  ' .. buffer.diagnostics.errors)
+        			or (buffer.diagnostics.warnings ~= 0 and '  ' .. buffer.diagnostics.warnings)
+        			or ''
+    		end,
+    		fg = function(buffer)
+      			return (buffer.diagnostics.errors ~= 0 and errors_fg)
+				or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
+        			or nil
+    		end,
+    		truncation = { priority = 1 }
+  	},
+
+  	close_or_unsaved = {
+    		text = function(buffer)
+      			return buffer.is_modified and '●' or ''
+    		end,
+    		fg = function(buffer)
+      			return buffer.is_modified and green or nil
+    		end,
+    		delete_buffer_on_left_click = true,
+    		truncation = { priority = 1 }
+  	}
 }
+
+require('cokeline').setup({
+  	show_if_buffers_are_at_least = 2,
+
+  	buffers = {
+    		-- filter_valid = function(buffer) return buffer.type ~= 'terminal' end,
+    		-- filter_visible = function(buffer) return buffer.type ~= 'terminal' end,
+    		new_buffers_position = 'next',
+  	},
+
+  	rendering = {
+    		max_buffer_width = 30,
+  	},
+
+  	default_hl = {
+    		fg = function(buffer)
+      			return buffer.is_focused 
+				and get_hex('Normal', 'fg')
+				or get_hex('Comment', 'fg')
+    		end,
+    		bg = get_hex('ColorColumn', 'bg'),
+  	},
+
+  	components = {
+    		components.space,
+    		components.separator,
+    		components.space,
+    		components.devicon,
+    		components.space,
+    		components.index,
+    		components.unique_prefix,
+    		components.filename,
+    		components.diagnostics,
+    		components.two_spaces,
+    		components.close_or_unsaved,
+    		components.space,
+  	}
+})
+
+--map('n', '<S-Tab>',   '<Plug>(cokeline-focus-prev)',  { silent = true })
+--map('n', '<Tab>',     '<Plug>(cokeline-focus-next)',  { silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>p', '<Plug>(cokeline-switch-prev)', { silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>n', '<Plug>(cokeline-switch-next)', { silent = true })
+
+for i = 1,9 do
+  vim.api.nvim_set_keymap('n', ('<F%s>'):format(i),      ('<Plug>(cokeline-focus-%s)'):format(i),  { silent = true })
+  vim.api.nvim_set_keymap('n', ('<Leader>%s'):format(i), ('<Plug>(cokeline-switch-%s)'):format(i), { silent = true })
+end
+
+
 require('gitsigns').setup {
 	signs = {
 		add          = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
@@ -231,31 +357,6 @@ require('pretty-fold').setup{
       		right = {'┫ ', 'number_of_folded_lines', ': ', 'percentage', ' ┣━━'}
    }
 }
-
-vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-
-vim.opt.list = true
-vim.opt.listchars:append('space:⋅')
-vim.opt.listchars:append('eol:↴')
-
-require('indent_blankline').setup {
-	space_char_blankline = ' ',
-	char_highlight_list = {
-		'IndentBlanklineIndent1',
-		'IndentBlanklineIndent2',
-		'IndentBlanklineIndent3',
-		'IndentBlanklineIndent4',
-		'IndentBlanklineIndent5',
-		'IndentBlanklineIndent6',
-	},
-}
-
-
 
 local function on_attach(client,bufnr)
 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -424,3 +525,5 @@ nnoremap <silent> <Leader>fa :DashboardFindWord<CR>
 nnoremap <silent> <Leader>fb :DashboardJumpMark<CR>
 nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
+
+
