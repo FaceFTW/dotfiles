@@ -1,9 +1,9 @@
 {{- if eq .chezmoi.os "windows" }}
 
-['Documents/Powershell/Scripts/cowsay']
+['.devenv/cowsay']
 	type = "archive"
 	url = "https://github.com/lukesampson/cowsay-psh/archive/refs/heads/master.zip"
-	exclude = [".gitattributes", ".gitignore", "*.sublime-project", ".git", "README.md"]
+	exclude = ["**/.gitattributes", "**/.gitignore", "**/*.sublime-project", "**/.git", "**/README.md", "**/*.cow"]
 	stripComponents = 1
 
 ['.devenv/bin/oh-my-posh.exe']
