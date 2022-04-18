@@ -12,8 +12,12 @@ set runtimepath^=~/.devenv/nvim
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 set number
+set tabstop=4
+set softtabstop=0 noexpandtab
+set shiftwidth=4
+set completeopt=menu,menuone,noselect
 
-let g:mapleader="\\"
+let g:mapleader='\'
 
 " Vim Plug Init
 let s:data_dir = stdpath('config')
@@ -26,421 +30,108 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 	\| endif
 
 call plug#begin(s:data_dir. '/extplugs')
-	Plug 'tpope/vim-fugitive'
-	Plug 'flazz/vim-colorschemes'
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-	Plug 'lewis6991/gitsigns.nvim'
-	Plug 'feline-nvim/feline.nvim'
-	Plug 'nvim-lua/plenary.nvim'
-	Plug 'nvim-telescope/telescope.nvim'
-	Plug 'kyazdani42/nvim-web-devicons'
+	"----------------------Core Features----------------------"
 	Plug 'nathom/filetype.nvim'
-	Plug 'glepnir/dashboard-nvim'
 	Plug 'folke/which-key.nvim'
-	Plug 'neovim/nvim-lspconfig'
-	Plug 'gbrlsnchs/telescope-lsp-handlers.nvim'
-	Plug 'williamboman/nvim-lsp-installer'
+	Plug 'echasnovski/mini.nvim'
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'tpope/vim-fugitive'
+	"-----------------------Telescope------------------------"
+	Plug 'nvim-telescope/telescope.nvim'
 	Plug 'LinArcX/telescope-command-palette.nvim'
 	Plug 'LinArcX/telescope-env.nvim'
-	Plug 'dstein64/vim-startuptime'
+	"-----------------------UI Plugins------------------------"
+	Plug 'kyazdani42/nvim-web-devicons'
+	Plug 'flazz/vim-colorschemes'
+	Plug 'nvim-lualine/lualine.nvim'
 	Plug 'nvim-lua/popup.nvim'
+	Plug 'noib3/nvim-cokeline'
+	Plug 'rcarriga/nvim-notify'
+	Plug 'folke/trouble.nvim'
+	Plug 'glepnir/dashboard-nvim'
+	"--------------------Editor Features---------------------"
+	Plug 'folke/todo-comments.nvim'
+	Plug 'anuvyklack/pretty-fold.nvim'
+	Plug 'lewis6991/gitsigns.nvim'
+	Plug 'chentau/marks.nvim'
+	"--------------------Language Features-------------------"
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+	Plug 'b0o/schemastore.nvim'
+	Plug 'milisims/nvim-luaref'
+	"----------------------LSP Plugins-----------------------"
+	Plug 'neovim/nvim-lspconfig'
+	Plug 'williamboman/nvim-lsp-installer'
+	Plug 'gbrlsnchs/telescope-lsp-handlers.nvim'
 	Plug 'RishabhRD/lspactions'
 	Plug 'onsails/lspkind-nvim'
 	Plug 'kosayoda/nvim-lightbulb'
-
+	"----------------------Completion----------------------"
+	Plug 'hrsh7th/cmp-nvim-lsp'
+	Plug 'hrsh7th/cmp-buffer'
+	Plug 'hrsh7th/cmp-path'
+	Plug 'hrsh7th/cmp-cmdline'
+	Plug 'hrsh7th/nvim-cmp'
+	Plug 'L3MON4D3/LuaSnip'
+	Plug 'saadparwaiz1/cmp_luasnip'
+	"--------------------Miscellaneous---------------------"
+	Plug 'dstein64/vim-startuptime'
 	Plug 'SmiteshP/nvim-gps'
-	Plug 'folke/todo-comments.nvim'
-	Plug 'anuvyklack/pretty-fold.nvim'
-	Plug 'echasnovski/mini.nvim'
-	Plug 'noib3/nvim-cokeline'
-
+	Plug 'nvim-neo-tree/neo-tree.nvim'
+	Plug 'akinsho/toggleterm.nvim'
+	Plug 'rktjmp/lush.nvim'
 	Plug 'alec-gibson/nvim-tetris'
 	Plug 'seandewar/killersheep.nvim'
-
 call plug#end()
-
 
 " Colorschemeing
 colorscheme sexy-railscasts
 
-" Telescope Keybinds
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <C-p> <cmd>Telescope command_palette<cr>
-			
-" LUA stuff
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""LUA Stuff"""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
-require('nvim-treesitter.configs').setup{
-	ensure_installed = 'maintained',
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = false
-	}
-}
 
-require('which-key').setup{
-	plugins = {
-		marks = true, 
-		registers = true, 
-		spelling = {
-			enabled = false 
-		},
-	presets = {
-		operators = true, 
-		motions = true,
-		text_objects = true,
-		windows = true,
-		nav = true,
-		z = true,
-		g = true
-		}
-	},
-	operators = { gc = 'Comments' },
-	icons = {
-		breadcrumb = '»',
-		separator = '➜',
-		group = '+'
-	},
-	popup_mappings = {
-		scroll_down = '<c-d>',
-		scroll_up = '<c-u>'
-	},
-	window = {
-		border = 'double',
-		position = 'bottom',
-		margin = { 1, 50, 1, 50 },
-		padding = { 2, 2, 2, 2 },
-		winblend = 0
-	},
-	layout = {
-		height = { min = 4, max = 25 },
-		width = { min = 20, max = 50 },
-		spacing = 3,
-		align = 'left'
-	},
-	ignore_missing = false,
-	hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ '},
-	show_help = true,
-	triggers = 'auto',
-}
-
-require('mini.bufremove').setup{}
-require('mini.comment').setup{}
---require('mini.completion').setup{}
-require('mini.cursorword').setup{}
-require('mini.indentscope').setup{}
-require('mini.jump').setup{}
-require('mini.pairs').setup{}
-require('mini.surround').setup{}
-require('mini.trailspace').setup{}
-
---vim.api.nvim_set_keymap('i', [[<Tab>]],   [[pumvisible() ? "\<C-n>" : "\<Tab>"]],   { noremap = true, expr = true })
---vim.api.nvim_set_keymap('i', [[<S-Tab>]], [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { noremap = true, expr = true })
-
-
-
-vim.lsp.handlers["textDocument/codeAction"] = require'lspactions'.codeaction
-vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.code_action()<CR> ]]
---vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.range_code_action()<CR> ]]
-
-vim.lsp.handlers["textDocument/references"] = require'lspactions'.references
---vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.references()<CR> ]]
-
-vim.lsp.handlers["textDocument/definition"] = require'lspactions'.definition
-vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.definition()<CR> ]]
-
-vim.lsp.handlers["textDocument/declaration"] = require'lspactions'.declaration
---vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.declaration()<CR> ]]
-
-vim.lsp.handlers["textDocument/implementation"] = require'lspactions'.implementation
---vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.implementation()<CR> ]]
-
-
-
-local get_hex = require('cokeline/utils').get_hex
-local mappings = require('cokeline/mappings')
-
-local comments_fg = get_hex('Comment', 'fg')
-local errors_fg = get_hex('DiagnosticError', 'fg')
-local warnings_fg = get_hex('DiagnosticWarn', 'fg')
-
-local red = vim.g.terminal_color_1
-local yellow = vim.g.terminal_color_3
-
-local components = {
-	space = {
-    		text = ' ',
-    		truncation = { priority = 1 }
-  	},
-
-  	two_spaces = {
-    		text = '  ',
-    		truncation = { priority = 1 }
-  	},
-
-  	separator = {
-    		text = function(buffer)
-      			return buffer.index ~= 1 and '▏' or ''
-    		end,
-    		truncation = { priority = 1 }
- 	},
-
-	devicon = {
-    		text = function(buffer)
-      			return (mappings.is_picking_focus() or mappings.is_picking_close())
-          			and buffer.pick_letter .. ' '
-           			or buffer.devicon.icon
-    		end,
-    		fg = function(buffer)
-      			return (mappings.is_picking_focus() and yellow)
-        			or (mappings.is_picking_close() and red)
-        			or buffer.devicon.color
-    		end,
-    		style = function(_)
-      			return (mappings.is_picking_focus() or mappings.is_picking_close())
-        			and 'italic,bold'
-         			or nil
-    			end,
-    		truncation = { priority = 1 }
-  	},
-
-  	index = {
-    		text = function(buffer)
-      			return buffer.index .. ': '
-    		end,
-    		truncation = { priority = 1 }
-  	},
-
-  	unique_prefix = {
-    		text = function(buffer)
-      			return buffer.unique_prefix
-    		end,
-    		fg = comments_fg,
-    		style = 'italic',
-    		truncation = {
-      			priority = 3,
-      			direction = 'left'
-    		}
-  	},
-
-  	filename = {
-    		text = function(buffer)
-      			return buffer.filename
-    		end,
-    		style = function(buffer)
-      			return ((buffer.is_focused and buffer.diagnostics.errors ~= 0) and 'bold,underline')
-        			or (buffer.is_focused and 'bold')
-        			or (buffer.diagnostics.errors ~= 0 and 'underline')
-        			or nil
-    		end,
-    		truncation = {
-			priority = 2,
-      			direction = 'left'
-    		}
-	},
-
-  	diagnostics = {
-    		text = function(buffer)
-      			return (buffer.diagnostics.errors ~= 0 and '  ' .. buffer.diagnostics.errors)
-        			or (buffer.diagnostics.warnings ~= 0 and '  ' .. buffer.diagnostics.warnings)
-        			or ''
-    		end,
-    		fg = function(buffer)
-      			return (buffer.diagnostics.errors ~= 0 and errors_fg)
-				or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
-        			or nil
-    		end,
-    		truncation = { priority = 1 }
-  	},
-
-  	close_or_unsaved = {
-    		text = function(buffer)
-      			return buffer.is_modified and '●' or ''
-    		end,
-    		fg = function(buffer)
-      			return buffer.is_modified and green or nil
-    		end,
-    		delete_buffer_on_left_click = true,
-    		truncation = { priority = 1 }
-  	}
-}
-
-require('cokeline').setup({
-  	show_if_buffers_are_at_least = 2,
-
-  	buffers = {
-    		-- filter_valid = function(buffer) return buffer.type ~= 'terminal' end,
-    		-- filter_visible = function(buffer) return buffer.type ~= 'terminal' end,
-    		new_buffers_position = 'next',
-  	},
-
-  	rendering = {
-    		max_buffer_width = 30,
-  	},
-
-  	default_hl = {
-    		fg = function(buffer)
-      			return buffer.is_focused 
-				and get_hex('Normal', 'fg')
-				or get_hex('Comment', 'fg')
-    		end,
-    		bg = get_hex('ColorColumn', 'bg'),
-  	},
-
-  	components = {
-    		components.space,
-    		components.separator,
-    		components.space,
-    		components.devicon,
-    		components.space,
-    		components.index,
-    		components.unique_prefix,
-    		components.filename,
-    		components.diagnostics,
-    		components.two_spaces,
-    		components.close_or_unsaved,
-    		components.space,
-  	}
-})
-
---map('n', '<S-Tab>',   '<Plug>(cokeline-focus-prev)',  { silent = true })
---map('n', '<Tab>',     '<Plug>(cokeline-focus-next)',  { silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>p', '<Plug>(cokeline-switch-prev)', { silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>n', '<Plug>(cokeline-switch-next)', { silent = true })
-
-for i = 1,9 do
-  vim.api.nvim_set_keymap('n', ('<F%s>'):format(i),      ('<Plug>(cokeline-focus-%s)'):format(i),  { silent = true })
-  vim.api.nvim_set_keymap('n', ('<Leader>%s'):format(i), ('<Plug>(cokeline-switch-%s)'):format(i), { silent = true })
-end
-
-
-require('gitsigns').setup {
-	signs = {
-		add          = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
-		change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-		delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-		topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-		changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-	},
-	signcolumn = true,
-	numhl      = false,
-	linehl     = false,
-	word_diff  = false,
-	watch_gitdir = {
-		interval = 1000,
-		follow_files = true
-	},
-	attach_to_untracked = true,
-	current_line_blame = false,
-	sign_priority = 6,
-	update_debounce = 100,
-	status_formatter = nil,
-	max_file_length = 40000,
-	preview_config = {
-		border = 'single',
-		style = 'minimal',
-		relative = 'cursor',
-		row = 0,
-		col = 1
-	}
-}
-
-require('todo-comments').setup {}
-
-require('pretty-fold').setup{
-	keep_indentation = true,
-	fill_char = '━',
-	sections = {
+----------------------------------------------------
+------------------BASE CONFIG-----------------------
+----------------------------------------------------
+--Mini.nvim Modules
+	require('mini.bufremove').setup{}
+	require('mini.comment').setup{}
+	require('mini.cursorword').setup{}
+	require('mini.indentscope').setup{}
+	require('mini.jump').setup{}
+	require('mini.pairs').setup{}
+	require('mini.surround').setup{}
+	require('mini.trailspace').setup{}
+--Todo Comments
+	require('todo-comments').setup {}
+--Pretty Folds
+	require('pretty-fold').setup{
+		keep_indentation = true,
+		fill_char = '━',
+		sections = {
 		left = {'━ ', function() return string.rep('*', vim.v.foldlevel) end, ' ━┫', 'content', '┣'},
-      		right = {'┫ ', 'number_of_folded_lines', ': ', 'percentage', ' ┣━━'}
-   }
-}
-
-local function on_attach(client,bufnr)
-	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-end
-
-
-local enhance_server_opts = {
-	['eslintls'] = function(opts)
-		opts.settings = {
-			format = {enable = true}
+		right = {'┫ ', 'number_of_folded_lines', ': ', 'percentage', ' ┣━━'}
 		}
-	end,
-	['vimls'] = function(opts)
-		opts.settings = {
-			initializationOptions = {
-				isNeovim = true,
-				vimruntime = vim.env.VIMRUNTIME,
-				runtimepath = vim.opt.runtimepath
-			},
-			diagnostic = {
-				enable = true
-			},
-			suggest = {
-				fromVimruntime = true,
-				fromRuntimepath = true
-			}
-		}
-	end
-}
-
-
-require('nvim-lsp-installer').on_server_ready(function(server)
-	local opts = {on_attach = on_attach}
-	if enhance_server_opts[server.name] then
-		enhance_server_opts[server.name](opts)
-	end
-	server:setup(opts)
-end)
-
-require('lspkind').init({
-	mode = 'symbol_text'
-})
-
-
-
-
---Feline Setup
-require('feline').setup{}
-
-require('telescope').setup{
-	defaults = {
-		path_display = {'smart'},
-		file_ignore_patterns = {'Mobilesync/%w*'}
-	},
-	extensions = {
-		command_palette = {
-			{'File',
+	}
+--Treesitter
+	require('nvim-treesitter.configs').setup{
+		ensure_installed = 'all',
+		highlight = {enable = true, additional_vim_regex_highlighting = false}
+	}
+--Telescope
+	require('telescope').setup{
+		defaults = {
+			path_display = {'smart'},
+			file_ignore_patterns = {'Mobilesync/%w*'}
+		},
+		extensions = {
+			command_palette = {
+				{'File',
 				{ 'entire selection (C-a)', ':call feedkeys("GVgg")' },
 				{ 'save current file (C-s)', ':w' },
 				{ 'save all files (C-A-s)', ':wa' },
 				{ 'quit (C-q)', ':qa' },
-			},
-			{'Help',
-				{ 'tips', ':help tips' },
-				{ 'cheatsheet', ':help index' },
-				{ 'tutorial', ':help tutor' },
-				{ 'summary', ':help summary' },
-				{ 'quick reference', ':help quickref' },
 			},
 			{'Vim',
 				{ 'reload vimrc', ':source $MYVIMRC' },
@@ -470,17 +161,544 @@ require('telescope').setup{
 				{'LSP - Type Definitions', ':Telescope lsp_type_definitions'},
 				{'Registers', ':Telescope registers'},
 				{'Marks', ':Telescope marks'},
-				{ 'jumps (Alt-j)', ':Telescope jumplist' },
-				{ 'colorshceme', ':Telescope colorscheme', 1 },
-				{ 'vim options', ':Telescope vim_options' },
+				{'Jumps (Alt-j)', ':Telescope jumplist' },
+				{'Colorschemes', ':Telescope colorscheme', 1 },
+				{'Vim Options', ':Telescope vim_options' },
+			},
+			{'LSP',
+				{'List Installed LSPs', ':LspInstallInfo'},
+				{'Show Current LSP Info',':LspInfo'}
+			},
+			{'Help',
+				{ 'tips', ':help tips' },
+				{ 'cheatsheet', ':help index' },
+				{ 'tutorial', ':help tutor' },
+				{ 'summary', ':help summary' },
+					{ 'quick reference', ':help quickref' },
 			}},
-		lsp_handlers = {
-			code_action = {
-				telescope = require('telescope.themes').get_dropdown({})
+			lsp_handlers = {
+				disable = {},
+				location = {
+					telescope = {},
+					no_results_message = 'No references found',
+				},
+				symbol = {
+					telescope = {},
+					no_results_message = 'No symbols found',
+				},
+				call_hierarchy = {
+					telescope = {},
+					no_results_message = 'No calls found',
+				},
+				code_action = {
+					telescope = require('telescope.themes').get_dropdown({}),
+					no_results_message = 'No code actions available',
+					prefix = '',
+				},
 			}
 		}
 	}
-}
+--Marks
+	require'marks'.setup {
+		-- whether to map keybinds or not. default true
+		default_mappings = true,
+		-- which builtin marks to show. default {}
+		builtin_marks = { ".", "<", ">", "^" },
+		-- whether movements cycle back to the beginning/end of buffer. default true
+		cyclic = true,
+		-- whether the shada file is updated after modifying uppercase marks. default false
+		force_write_shada = false,
+		-- how often (in ms) to redraw signs/recompute mark positions. 
+  		-- higher values will have better performance but may cause visual lag, 
+  		-- while lower values may cause performance penalties. default 150.
+  		refresh_interval = 250,
+  		-- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
+  		-- marks, and bookmarks.
+  		-- can be either a table with all/none of the keys, or a single number, in which case
+  		-- the priority applies to all marks.
+  		-- default 10.
+  		sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
+  		-- disables mark tracking for specific filetypes. default {}
+		excluded_filetypes = {},
+		-- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
+		-- sign/virttext. Bookmarks can be used to group together positions and quickly move
+		-- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
+		-- default virt_text is "".
+		bookmark_0 = {
+    		sign = "⚑",
+    		virt_text = "hello world"
+		},
+		mappings = {}
+	}
+
+----------------------------------------------------
+--------------------UI CONFIG-----------------------
+----------------------------------------------------
+--lualine
+	require('lualine').setup {
+		options = {
+			icons_enabled = true,
+			theme = 'auto',
+			component_separators = { left = '', right = ''},
+			section_separators = { left = '', right = ''},
+			disabled_filetypes = {},
+			always_divide_middle = true,
+			globalstatus = false,
+		},
+		sections = {
+			lualine_a = {'mode'},
+			lualine_b = {'branch', 'diff', 'diagnostics'},
+			lualine_c = {'filename'},
+			lualine_x = {'encoding', 'fileformat', 'filetype'},
+			lualine_y = {'progress'},
+			lualine_z = {'location'}
+		},
+		inactive_sections = {
+			lualine_a = {},
+			lualine_b = {},
+			lualine_c = {'filename'},
+			lualine_x = {'location'},
+			lualine_y = {},
+			lualine_z = {}
+		},
+		tabline = {},
+		extensions = {}
+	}
+--Cokeline
+	local get_hex = require('cokeline/utils').get_hex
+	local mappings = require('cokeline/mappings')
+	local components = {
+			space = {
+    			text = ' ',
+    			truncation = { priority = 1 }
+  		},
+  		separator = {
+    			text = function(buffer)	return buffer.index ~= 1 and '▏' or '' end,
+    			truncation = { priority = 1 }
+ 		},
+		devicon = {
+    			text = function(buffer)
+      				return (mappings.is_picking_focus() or mappings.is_picking_close())
+          			and buffer.pick_letter .. ' '
+           			or buffer.devicon.icon
+    		end,
+    		fg = function(buffer)
+      				return (mappings.is_picking_focus() and yellow)
+        			or (mappings.is_picking_close() and red)
+        			or buffer.devicon.color
+    		end,
+    		style = function(_)
+      			return (mappings.is_picking_focus() or mappings.is_picking_close())
+        			and 'italic,bold'
+         			or nil
+    		end,
+    		truncation = { priority = 1 }
+  		},
+  		index = {
+    		text = function(buffer) return buffer.index .. ': ' end,
+    		truncation = { priority = 1 }
+  		},
+  		unique_prefix = {
+    		text = function(buffer) return buffer.unique_prefix end,
+    		fg = get_hex('Comment', 'fg'),
+    		style = 'italic',
+    		truncation = {priority = 3, direction = 'left'}
+  		},
+  		filename = {
+    		text = function(buffer)
+      			return buffer.filename
+    		end,
+    		style = function(buffer)
+      			return ((buffer.is_focused and buffer.diagnostics.errors ~= 0) and 'bold,underline')
+        			or (buffer.is_focused and 'bold')
+        			or (buffer.diagnostics.errors ~= 0 and 'underline')
+        			or nil
+    		end,
+    		truncation = {priority = 2, direction = 'left'}
+		},
+  		diagnostics = {
+    		text = function(buffer)
+      			return (buffer.diagnostics.errors ~= 0 and '  ' .. buffer.diagnostics.errors)
+        			or (buffer.diagnostics.warnings ~= 0 and '  ' .. buffer.diagnostics.warnings)
+        			or ' '
+    		end,
+    		fg = function(buffer)
+      			return (buffer.diagnostics.errors ~= 0 and get_hex('DiagnosticError', 'fg'))
+				or (buffer.diagnostics.warnings ~= 0 and get_hex('DiagnosticWarn', 'fg'))
+        			or nil
+    		end,
+    		truncation = { priority = 1 }
+  		},
+  		close_or_unsaved = {
+    		text = function(buffer) return buffer.is_modified and '●' or ' ' end,
+    		fg = function(buffer) return buffer.is_modified and green or nil end,
+    		truncation = { priority = 1 }
+  		}
+	}
+	require('cokeline').setup({
+  		buffers = {
+    		filter_valid = function(buffer) return buffer.type ~= 'terminal' end,
+    		filter_visible = function(buffer) return buffer.type ~= 'terminal' end,
+    		new_buffers_position = 'next',
+  		},
+  		rendering = {max_buffer_width = 50},
+  		default_hl = {
+    		fg = function(buffer)
+    			return buffer.is_focused
+				and get_hex('Normal', 'fg')
+				or get_hex('LineNr', 'fg')
+    		end,
+    		bg = get_hex('LineNr', 'bg'),
+  		},
+  		components = {
+    		components.separator,
+    		components.space,
+    		components.devicon,
+    		components.space,
+    		components.index,
+    		components.unique_prefix,
+    		components.filename,
+    		components.diagnostics,
+			components.close_or_unsaved,
+    		components.space,
+  		}
+	})
+
+	vim.api.nvim_set_keymap('n', '<Leader>p', '<Plug>(cokeline-focus-prev)', { silent = true })
+	vim.api.nvim_set_keymap('n', '<Leader>n', '<Plug>(cokeline-focus-next)', { silent = true })
+	for i = 1,9 do
+  		vim.api.nvim_set_keymap('n', ('<Leader>%s'):format(i), ('<Plug>(cokeline-focus-%s)'):format(i), { silent = true })
+	end
+--Notify
+	require("notify").setup({
+  		-- Animation style (see below for details)
+  		stages = "fade_in_slide_out",
+
+  		-- Function called when a new window is opened, use for changing win settings/config
+  		on_open = nil,
+
+  		-- Function called when a window is closed
+  		on_close = nil,
+
+  		-- Render function for notifications. See notify-render()
+  		render = "default",
+
+  		-- Default timeout for notifications
+  		timeout = 5000,
+
+  		-- Max number of columns for messages
+  		max_width = nil,
+  		-- Max number of lines for a message
+  		max_height = nil,
+
+  		-- For stages that change opacity this is treated as the highlight behind the window
+  		-- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
+  		background_colour = "Normal",
+
+  		-- Minimum width for notification windows
+  		minimum_width = 50,
+
+  		-- Icons for the different levels
+  		icons = {
+    		ERROR = "",
+    		WARN = "",
+    		INFO = "",
+    		DEBUG = "",
+    		TRACE = "✎",
+		},
+	})
+	vim.notify = require("notify")
+--WhichKey
+	require('which-key').setup{
+		plugins = {
+			marks = true,
+			registers = true,
+			presets = {
+				operators = true, 
+				motions = true,
+				text_objects = true,
+				windows = true,
+				nav = true,
+				z = true,
+				g = true
+			}
+		},
+		operators = { gc = 'Comments' },
+		window = {
+			border = 'double',
+			position = 'bottom',
+			margin = { 1, 50, 1, 50 },
+			padding = { 2, 2, 2, 2 },
+			winblend = 0
+		},
+		layout = {
+			height = { min = 4, max = 25 },
+			width = { min = 20, max = 50 },
+			spacing = 3,
+			align = 'left'
+		},
+		ignore_missing = false,
+		triggers = 'auto',
+	}
+--Trouble
+	require('trouble').setup{
+    	position = "bottom", -- position of the list can be: bottom, top, left, right
+    	height = 10, -- height of the trouble list when position is top or bottom
+    	width = 50, -- width of the list when position is left or right
+    	icons = true, -- use devicons for filenames
+    	mode = "workspace_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
+    	fold_open = "", -- icon used for open folds
+    	fold_closed = "", -- icon used for closed folds
+    	group = true, -- group results by file
+    	padding = true, -- add an extra new line on top of the list
+    	action_keys = { -- key mappings for actions in the trouble list
+       		-- map to {} to remove a mapping, for example:
+        	-- close = {},
+        	close = "q", -- close the list
+        	cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+        	refresh = "r", -- manually refresh
+        	jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
+        	open_split = { "<c-x>" }, -- open buffer in new split
+        	open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
+        	open_tab = { "<c-t>" }, -- open buffer in new tab
+        	jump_close = {"o"}, -- jump to the diagnostic and close the list
+        	toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+        	toggle_preview = "P", -- toggle auto_preview
+        	hover = "K", -- opens a small popup with the full multiline message
+        	preview = "p", -- preview the diagnostic location
+        	close_folds = {"zM", "zm"}, -- close all folds
+        	open_folds = {"zR", "zr"}, -- open all folds
+        	toggle_fold = {"zA", "za"}, -- toggle fold of current file
+        	previous = "k", -- preview item
+        	next = "j" -- next item
+    	},
+    	indent_lines = true, -- add an indent guide below the fold icons
+    	auto_open = false, -- automatically open the list when you have diagnostics
+    	auto_close = false, -- automatically close the list when you have no diagnostics
+    	auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+    	auto_fold = false, -- automatically fold a file trouble list at creation
+    	auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
+    	signs = {
+        	-- icons / text used for a diagnostic
+        	error = "",
+        	warning = "",
+        	hint = "",
+        	information = "",
+        	other = "﫠"
+    	},	
+    	use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
+	}
+--GitSigns
+	require('gitsigns').setup {
+		signs = {
+			add          = {hl = 'GitSignsAdd', text = '│', numhl='GitSignsAddNr', linehl='GitSignsAddLn'},
+			change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+			delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+			topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+			changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+		},
+		signcolumn = true,
+		numhl      = false,
+		linehl     = false,
+		word_diff  = false,
+		watch_gitdir = {
+			interval = 1000,
+			follow_files = true
+		},
+		attach_to_untracked = true,
+		current_line_blame = false,
+		sign_priority = 6,
+		update_debounce = 100,
+		status_formatter = nil,
+		max_file_length = 40000,
+		preview_config = {
+			border = 'single',
+			style = 'minimal',
+			relative = 'cursor',
+			row = 0,
+			col = 1
+		}
+	}
+
+
+
+----------------------------------------------------
+---------------------LSP CONFIG---------------------
+----------------------------------------------------
+vim.lsp.handlers["textDocument/codeAction"] = require'lspactions'.codeaction
+vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.code_action()<CR> ]]
+--vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.range_code_action()<CR> ]]
+
+vim.lsp.handlers["textDocument/references"] = require'lspactions'.references
+--vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.references()<CR> ]]
+
+vim.lsp.handlers["textDocument/definition"] = require'lspactions'.definition
+vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.definition()<CR> ]]
+
+vim.lsp.handlers["textDocument/declaration"] = require'lspactions'.declaration
+--vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.declaration()<CR> ]]
+
+vim.lsp.handlers["textDocument/implementation"] = require'lspactions'.implementation
+--vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.implementation()<CR> ]]
+
+
+	local enhance_server_opts = {
+		['eslintls'] = function(opts)
+			opts.settings = {
+				format = {enable = true}
+			}
+		end,
+		['vimls'] = function(opts)
+			opts.settings = {
+				initializationOptions = {
+					isNeovim = true,
+					vimruntime = vim.env.VIMRUNTIME,
+					runtimepath = vim.opt.runtimepath
+				},
+				diagnostic = {
+					enable = true
+				},
+				suggest = {
+					fromVimruntime = true,
+					fromRuntimepath = true
+				}
+			}
+		end,
+		['jsonls'] = function(opts)
+			opts.settings = {json = {schemas = require('schemastore').json.schemas()}}
+		end
+	}
+
+	require('nvim-lsp-installer').on_server_ready(function(server)
+		local opts = {
+			on_attach = function(client, bufnr)
+				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+				local opts = { noremap=true, silent=true }
+				-- Mappings.
+				-- See `:help vim.lsp.*` for documentation on any of the below functions
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>',opts)
+				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
+			end
+		}
+
+		if enhance_server_opts[server.name] then
+			enhance_server_opts[server.name](opts)
+		end
+		server:setup(opts)
+	end)
+
+	require('lspkind').init({mode = 'symbol_text'})
+
+	local client_notifs = {}
+	local function get_notif_data(client_id, token)
+		if not client_notifs[client_id] then
+			client_notifs[client_id] = {}
+		end
+		if not client_notifs[client_id][token] then
+			client_notifs[client_id][token] = {}
+		end
+		return client_notifs[client_id][token]
+	end
+
+
+	local spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
+
+	local function update_spinner(client_id, token)
+		local notif_data = get_notif_data(client_id, token)
+		if notif_data.spinner then
+			local new_spinner = (notif_data.spinner + 1) % #spinner_frames
+			notif_data.spinner = new_spinner
+			notif_data.notification = vim.notify(nil, nil, {
+				hide_from_history = true,
+				icon = spinner_frames[new_spinner],
+				replace = notif_data.notification,
+			})
+			vim.defer_fn(function() update_spinner(client_id, token) end, 100)
+		end 
+	end
+
+	local function format_title(title, client_name)
+		return client_name .. (#title > 0 and ": " .. title or "")
+	end
+
+	local function format_message(message, percentage)
+		return (percentage and percentage .. "%\t" or "") .. (message or "")
+	end
+
+-- LSP integration
+-- Make sure to also have the snippet with the common helper functions in your config!
+
+	vim.lsp.handlers["$/progress"] = function(_, result, ctx)
+		local client_id = ctx.client_id
+
+		local val = result.value
+
+		if not val.kind then
+			return
+		end
+
+		local notif_data = get_notif_data(client_id, result.token)
+ 		if val.kind == "begin" then
+			local message = format_message(val.message, val.percentage)
+
+			notif_data.notification = vim.notify(message, "info", {
+				title = format_title(val.title, vim.lsp.get_client_by_id(client_id).name),
+		 		icon = spinner_frames[1],
+				timeout = false,
+				hide_from_history = false,
+			})
+
+			notif_data.spinner = 1
+			update_spinner(client_id, result.token)
+		elseif val.kind == "report" and notif_data then
+			notif_data.notification = vim.notify(format_message(val.message, val.percentage), "info", {
+				replace = notif_data.notification,
+    			hide_from_history = false,
+			})
+ 		elseif val.kind == "end" and notif_data then
+   			notif_data.notification =
+    	 	vim.notify(val.message and format_message(val.message) or "Complete", "info", {
+				icon = "",
+				replace = notif_data.notification,
+				timeout = 3000,
+     	})
+		notif_data.spinner = nil
+		end
+	end
+
+	local cmp = require('cmp')
+	cmp.setup {
+	  completion = {
+	    autocomplete = true, -- disable auto-completion.
+	  }
+	}
+	_G.vimrc = _G.vimrc or {}
+	_G.vimrc.cmp = _G.vimrc.cmp or {}
+	_G.vimrc.cmp.on_text_changed = function()
+		local cursor = vim.api.nvim_win_get_cursor(0)
+		local line = vim.api.nvim_get_current_line()
+		local before = string.sub(line, 1, cursor[2] + 1)
+		if before:match('%s*$') then
+			cmp.complete() -- Trigger completion only if the cursor is placed at the end of line.
+		end
+	end
+	vim.cmd([[
+	augroup vimrc
+		autocmd TextChanged,TextChangedI,TextChangedP * call luaeval('vimrc.cmp.on_text_changed()')
+	augroup END
+	]])
 
 require('telescope').load_extension('lsp_handlers');
 require('telescope').load_extension('env');
@@ -489,41 +707,114 @@ EOF
 
 nnoremap <leader>ar :lua require'lspactions'.rename()<CR>
 
+" Mini.NVIM Autocmds
+au Filetype dashboard let b:minicomment_disable = v:true
+au Filetype dashboard let b:minicursorword_disable = v:true
+au Filetype dashboard let b:miniindentscope_disable = v:true
+au Filetype dashboard let b:minijump_disable = v:true
+au Filetype dashboard let b:minipairs_disable = v:true
+au Filetype dashboard let b:minisurround_disable = v:true
+au Filetype dashboard let b:minitrailspace_disable = v:true
 
+au TermOpen * let b:minicomment_disable = v:true
+au TermOpen * let b:minicursorword_disable = v:true
+au TermOpen * let b:miniindentscope_disable = v:true
+au TermOpen * let b:minijump_disable = v:true
+au TermOpen * let b:minipairs_disable = v:true
+au TermOpen * let b:minisurround_disable = v:true
+au TermOpen * let b:minitrailspace_disable = v:true
 
-let g:dashboard_custom_header =<< trim END
-=================     ===============     ===============   ========  ========
-\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
-||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||
-|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||
-||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||
-|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||
-||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||
-|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||
-||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||
-||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||
-||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||
-||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||
-||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||
-||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||
-||   .=='    _-'          '-__\._-'         '-_./__-'         `' |. /|  |   ||
-||.=='    _-'                                                     `' |  /==.||
-=='    _-'                        N E O V I M                         \/   `==
-\   _-'                                                                `-_   /
- `''                                                                      ``'
-END
+" Telescope Keybinds
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope oldfiles<cr>
+nnoremap <C-p> <cmd>Telescope command_palette<cr>
 
+nnoremap <leader>xx <cmd>TroubleToggle<cr>
+nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
+nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
+nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
 " Dashboard Setup
+let g:dashboard_custom_header = [
+	\'⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣤⣴⣦⣤⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+	\'⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣶⣤⡀⠀⠀⠀⠀⠀⠀',
+	\'⠀⠀⠀⠀⣠⣾⣿⣿⡿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⢿⣿⣿⣶⡀⠀⠀⠀⠀',
+	\'⠀⠀⠀⣴⣿⣿⠟⠁⠀⠀⠀⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣦⠀⠀⠀',
+	\'⠀⠀⣼⣿⣿⠋⠀⠀⠀⠀⠀⠛⠛⢻⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣧⠀⠀',
+	\'⠀⢸⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⡇⠀',
+	\'⠀⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠀',
+	\'⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡟⢹⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⣹⣿⣿',
+	\'⠀⣿⣿⣷⠀⠀⠀⠀⠀⠀⣰⣿⣿⠏⠀⠀⢻⣿⣿⡄⠀⠀⠀⠀⠀⠀⣿⣿⡿⠀',
+	\'⠀⢸⣿⣿⡆⠀⠀⠀⠀⣴⣿⡿⠃⠀⠀⠀⠈⢿⣿⣷⣤⣤⡆⠀⠀⣰⣿⣿⠇⠀',
+	\'⠀⠀⢻⣿⣿⣄⠀⠀⠾⠿⠿⠁⠀⠀⠀⠀⠀⠘⣿⣿⡿⠿⠛⠀⣰⣿⣿⡟⠀⠀',
+	\'⠀⠀⠀⠻⣿⣿⣧⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⠏⠀⠀⠀',
+	\'⠀⠀⠀⠀⠈⠻⣿⣿⣷⣤⣄⡀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⠟⠁⠀⠀⠀⠀',
+	\'⠀⠀⠀⠀⠀⠀⠈⠛⠿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⠁⠀⠀⠀⠀⠀⠀',
+	\'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+	\'          N E O V I M',
+	\]
 let g:dashboard_default_executive ='telescope'
-nmap <Leader>ss :<C-u>SessionSave<CR>
-nmap <Leader>sl :<C-u>SessionLoad<CR>
-nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
-nnoremap <silent> <Leader>ff :DashboardFindFile<CR>
+nmap <silent> <Leader>ss :<C-u>SessionSave<CR>
+nmap <silent> <Leader>sl :<C-u>SessionLoad<CR>
 nnoremap <silent> <Leader>tc :DashboardChangeColorscheme<CR>
 nnoremap <silent> <Leader>fa :DashboardFindWord<CR>
-nnoremap <silent> <Leader>fb :DashboardJumpMark<CR>
 nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 
-
+"
+" require("toggleterm").setup{
+"   -- size can be a number or function which is passed the current terminal
+"   size = 20 | function(term)
+"     if term.direction == "horizontal" then
+"       return 15
+"     elseif term.direction == "vertical" then
+"       return vim.o.columns * 0.4
+"     end
+"   end,
+"   open_mapping = [[<c-\>]],
+"   on_open = fun(t: Terminal), -- function to run when the terminal opens
+"   on_close = fun(t: Terminal), -- function to run when the terminal closes
+"   on_stdout = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stdout
+"   on_stderr = fun(t: Terminal, job: number, data: string[], name: string) -- callback for processing output on stderr
+"   on_exit = fun(t: Terminal, job: number, exit_code: number, name: string) -- function to run when terminal process exits
+"   hide_numbers = true, -- hide the number column in toggleterm buffers
+"   shade_filetypes = {},
+"   highlights = {
+"     -- highlights which map to a highlight group name and a table of it's values
+"     -- NOTE: this is only a subset of values, any group placed here will be set for the terminal window split
+"     Normal = {
+"       guibg = <VALUE-HERE>,
+"     },
+"     NormalFloat = {
+"       link = 'Normal'
+"     },
+"     FloatBorder = {
+"       guifg = <VALUE-HERE>,
+"       guibg = <VALUE-HERE>,
+"     },
+"   },
+"   shade_terminals = true,
+"   shading_factor = '<number>', -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+"   start_in_insert = true,
+"   insert_mappings = true, -- whether or not the open mapping applies in insert mode
+"   terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+"   persist_size = true,
+"   direction = 'vertical' | 'horizontal' | 'window' | 'float',
+"   close_on_exit = true, -- close the terminal window when the process exits
+"   shell = vim.o.shell, -- change the default shell
+"   -- This field is only relevant if direction is set to 'float'
+"   float_opts = {
+"     -- The border key is *almost* the same as 'nvim_open_win'
+"     -- see :h nvim_open_win for details on borders however
+"     -- the 'curved' border is a custom border type
+"     -- not natively supported but implemented in this plugin.
+"     border = 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+"     width = <value>,
+"     height = <value>,
+"     winblend = 3,
+"   }
+" }
