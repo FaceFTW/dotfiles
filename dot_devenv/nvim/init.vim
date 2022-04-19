@@ -661,7 +661,7 @@ lua << EOF
 				hide_gitignored = true,
 				hide_by_name = {
 					".DS_Store",
-					"thumbs.db"
+					"thumbs.db",
 					"node_modules"
 				},
 				never_show = {
