@@ -56,7 +56,7 @@ call plug#begin(s:data_dir. '/extplugs')
 	Plug 'lewis6991/gitsigns.nvim'
 	Plug 'chentau/marks.nvim'
 	"--------------------Language Features-------------------"
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
 	Plug 'b0o/schemastore.nvim'
 	Plug 'milisims/nvim-luaref'
 	"----------------------LSP Plugins-----------------------"
@@ -128,54 +128,114 @@ lua << EOF
 		},
 		extensions = {
 			command_palette = {
-				{'File',
-				{ 'entire selection (C-a)', ':call feedkeys("GVgg")' },
-				{ 'save current file (C-s)', ':w' },
-				{ 'save all files (C-A-s)', ':wa' },
-				{ 'quit (C-q)', ':qa' },
+			{'File',
+				{'entire selection (C-a)',				':call feedkeys("GVgg")'},
+				{'save current file (C-s)',				':w'},
+				{'save all files (C-A-s)',				':wa'},
+				{'quit (C-q)',							':qa'},
 			},
-			{'Vim',
-				{ 'reload vimrc', ':source $MYVIMRC' },
-				{ 'check health', ':checkhealth' },
-				{ 'paste mode', ':set paste!' },
-				{ 'cursor line', ':set cursorline!' },
-				{ 'cursor column', ':set cursorcolumn!' },
-				{ 'spell checker', ':set spell!' },
-				{ 'relative number', ':set relativenumber!' },
-				{ 'search highlighting (F12)', ':set hlsearch!' },
-			},
-			{'Telescope',
-				{'Find Files (\\ff)', ':Telescope find_files'},
-				{'Find Git Files (\\fg)', ':Telescope git_files'},
-				{'Grep String', ':Telescope grep_string'},
-				{'Live Grep String', ':Telescope live_grep'},
-				{'Buffers', ':Telescope buffers'},
-				{'Old Files', ':Telescope oldfiles'},
-				{'Commands', ':Telescope commands'},
-				{'Tags', ':Telescope tags'},
-				{'Command History', ':Telescope command_history'},
-				{'Search History', ':Telescope search_history'},
-				{'Help Tags', ':Telescope help_tags'},
-				{'Man Pages', ':Telescope man_pages'},
-				{'LSP - References', ':Telescope lsp_references'},
-				{'LSP - Symbols (Workspace)', ':Telescope lsp_workspace_symbols'},
-				{'LSP - Type Definitions', ':Telescope lsp_type_definitions'},
-				{'Registers', ':Telescope registers'},
-				{'Marks', ':Telescope marks'},
-				{'Jumps (Alt-j)', ':Telescope jumplist' },
-				{'Colorschemes', ':Telescope colorscheme', 1 },
-				{'Vim Options', ':Telescope vim_options' },
+			{'Dashboard',
+				{'Create New File (\\dn)',				':DashboardNewFile'},
+				{'Find Word (\\df)',					':DashboardFindWord'},
+				{'Show Dashboard',						':Dashboard'},
 			},
 			{'LSP',
-				{'List Installed LSPs', ':LspInstallInfo'},
-				{'Show Current LSP Info',':LspInfo'}
+				{'List Installed LSPs', 				':LspInstallInfo'},
+				{'Show Current LSP Info',				':LspInfo'}
+			},
+			{'Neotree',
+				{'Show Buffer List (\\fb)',				':Neotree toggle show buffers right'},
+				{'Show Filesystem (\\fs)',				':Neotree toggle'},
+				{'Show Git Status (\\fg)',				':Neotree float git_status'},
+			},
+			{'Telescope',
+				{'Buffers (\\tb)', 						':Telescope buffers'},
+				{'Colorschemes', 						':Telescope colorscheme', 1},
+				{'Commands (\\tc)', 					':Telescope commands'},
+				{'Command History',						':Telescope command_history'},
+				{'Files (\\tf)', 						':Telescope find_files'},
+				{'Git Files (\\tv)',					':Telescope git_files'},
+				{'Grep String',							':Telescope grep_string'},
+				{'Help Tags',							':Telescope help_tags'},
+				{'Jumps (\\tj)',						':Telescope jumplist'},
+				{'Live Grep String (\\tg)', 			':Telescope live_grep'},
+				{'LSP - References (\\tlr)', 			':Telescope lsp_references'},
+				{'LSP - Symbols (Workspace) (\\tls)',	':Telescope lsp_workspace_symbols'},
+				{'LSP - Type Definitions (\\tlt)', 		':Telescope lsp_type_definitions'},
+				{'Man Pages', 							':Telescope man_pages'},
+				{'Marks (\\tm)', 						':Telescope marks'},
+				{'Old Files (\\th)', 					':Telescope oldfiles'},
+				{'Registers (\\tr)', 					':Telescope registers'},
+				{'Search History (\\ts)',				':Telescope search_history'},
+				{'Tags (\\tt)', 						':Telescope tags'},
+				{'Vim Options (\\to)', 					':Telescope vim_options'},
+			},
+			{'Trouble',
+				{'Document Diagnostics (\\xd)',			':TroubleToggle document_diagnostics'},
+				{'Location List (\\xl)',				':TroubleToggle loclist'},
+				{'Quickfix (\\xq)',						':TroubleToggle quickfix'},
+				{'Toggle Window (\\xx)',				':TroubleToggle'},
+				{'Workspace Diagnostics (\\xw)',		':TroubleToggle workspace_diagnostics'},
+			},
+			{'Vim',
+				{'reload vimrc',						':source $MYVIMRC'},
+				{'check health', 						':checkhealth'},
+				{'paste mode', 							':set paste!'},
+				{'cursor line', 						':set cursorline!'},
+				{'cursor column', 						':set cursorcolumn!'},
+				{'spell checker', 						':set spell!'},
+				{'relative number', 					':set relativenumber!'},
+				{'search highlighting (F12)',			':set hlsearch!'},
+			},
+			{'Quickref',
+				{'List of Help Files',					':help Q_ct'},
+				{'Abbreviations',						':help Q_ab'},
+				{'Automatic Commands',					':help Q_ac'},
+				{'Buffer List Commands',				':help Q_bu'},
+				{'Change: Changing Text',				':help Q_ch'},
+				{'Change: Complex',						':help Q_co'},
+				{'Change: Copying and Moving',			':help Q_cm'},
+				{'Change: Deleting Text',				':help Q_de'},
+				{'Editing a File',						':help Q_ed'},
+				{'Ex: Command-line Editing',			':help Q_ce'},
+				{'Ex: Ranges',							':help Q_ra'},
+				{'Ex: Special Characters',				':help Q_ex'},
+				{'External Commands',					':help Q_et'},
+				{'Folding',								':help Q_fo'},
+				{'GUI Commands',						':help Q_gu'},
+				{'Insert: Digraphs',					':help Q_di'},
+				{'Insert: Inserting Text',				':help Q_in'},
+				{'Insert: Keys',						':help Q_ai'},
+				{'Insert: Special Inserts',				':help Q_si'},
+				{'Insert: Special Keys',				':help Q_ss'},
+				{'Key Mapping',							':help Q_km'},
+				{'Motion: Left-Right',					':help Q_lr'},
+				{'Motion: Marks',						':help Q_ma'},
+				{'Motion: Pattern Searches',			':help Q_pa'},
+				{'Motion: Text Object',					':help Q_tm'},
+				{'Motion: Up-Down',						':help Q_ud'},
+				{'Motion: Using Tags',					':help Q_ta'},
+				{'Motion: Various',						':help Q_vm'},
+				{'Multi-Window Commands',				':help Q_wi'},
+				{'Options',								':help Q_op'},
+				{'Quickfix Commands',					':help Q_qf'},
+				{'Repeating Commands',					':help Q_re'},
+				{'Scrolling',							':help Q_sc'},
+				{'Starting Vim',						':help Q_st'},
+				{'Syntax Highlighting',					':help Q_sy'},
+				{'Text Objects',						':help Q_to'},
+				{'Undo/Redo Commands',					':help Q_ur'},
+				{'Using the Argument List',				':help Q_fl'},
+				{'Various Commands',					':help Q_vc'},
+				{'Visual Mode',							':help Q_vi'},
+				{'Writing and Quitting',				':help Q_wq'},
 			},
 			{'Help',
-				{ 'tips', ':help tips' },
-				{ 'cheatsheet', ':help index' },
-				{ 'tutorial', ':help tutor' },
-				{ 'summary', ':help summary' },
-					{ 'quick reference', ':help quickref' },
+				{ 'tips', 								':help tips'},
+				{ 'cheatsheet', 						':help index'},
+				{ 'tutorial',							':help tutor'},
+				{ 'summary',							':help summary'},
+				{ 'quick reference',					':help quickref'},
 			}},
 			lsp_handlers = {
 				disable = {},
@@ -201,17 +261,10 @@ lua << EOF
 	}
 --Marks
 	require'marks'.setup {
-		-- whether to map keybinds or not. default true
 		default_mappings = true,
-		-- which builtin marks to show. default {}
 		builtin_marks = { ".", "<", ">", "^" },
-		-- whether movements cycle back to the beginning/end of buffer. default true
 		cyclic = true,
-		-- whether the shada file is updated after modifying uppercase marks. default false
 		force_write_shada = false,
-		-- how often (in ms) to redraw signs/recompute mark positions. 
-  		-- higher values will have better performance but may cause visual lag, 
-  		-- while lower values may cause performance penalties. default 150.
   		refresh_interval = 250,
   		-- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
   		-- marks, and bookmarks.
@@ -219,7 +272,6 @@ lua << EOF
   		-- the priority applies to all marks.
   		-- default 10.
   		sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
-  		-- disables mark tracking for specific filetypes. default {}
 		excluded_filetypes = {},
 		-- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
 		-- sign/virttext. Bookmarks can be used to group together positions and quickly move
@@ -372,41 +424,16 @@ lua << EOF
 	end
 --Notify
 	require("notify").setup({
-  		-- Animation style (see below for details)
   		stages = "fade_in_slide_out",
-
-  		-- Function called when a new window is opened, use for changing win settings/config
   		on_open = nil,
-
-  		-- Function called when a window is closed
   		on_close = nil,
-
-  		-- Render function for notifications. See notify-render()
   		render = "default",
-
-  		-- Default timeout for notifications
   		timeout = 5000,
-
-  		-- Max number of columns for messages
   		max_width = nil,
-  		-- Max number of lines for a message
   		max_height = nil,
-
-  		-- For stages that change opacity this is treated as the highlight behind the window
-  		-- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
   		background_colour = "Normal",
-
-  		-- Minimum width for notification windows
   		minimum_width = 50,
-
-  		-- Icons for the different levels
-  		icons = {
-    		ERROR = "",
-    		WARN = "",
-    		INFO = "",
-    		DEBUG = "",
-    		TRACE = "✎",
-		},
+  		icons = {ERROR = "", WARN = "", INFO = "", DEBUG = "", TRACE = "✎",},
 	})
 	vim.notify = require("notify")
 --WhichKey
@@ -453,8 +480,6 @@ lua << EOF
     	group = true, -- group results by file
     	padding = true, -- add an extra new line on top of the list
     	action_keys = { -- key mappings for actions in the trouble list
-       		-- map to {} to remove a mapping, for example:
-        	-- close = {},
         	close = "q", -- close the list
         	cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
         	refresh = "r", -- manually refresh
@@ -479,14 +504,7 @@ lua << EOF
     	auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
     	auto_fold = false, -- automatically fold a file trouble list at creation
     	auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
-    	signs = {
-        	-- icons / text used for a diagnostic
-        	error = "",
-        	warning = "",
-        	hint = "",
-        	information = "",
-        	other = "﫠"
-    	},	
+    	signs = {error = '', warning = '', hint = '', information = '', other = '﫠'},	
     	use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
 	}
 --GitSigns
@@ -502,30 +520,18 @@ lua << EOF
 		numhl      = false,
 		linehl     = false,
 		word_diff  = false,
-		watch_gitdir = {
-			interval = 1000,
-			follow_files = true
-		},
+		watch_gitdir = {interval = 1000, follow_files = true},
 		attach_to_untracked = true,
 		current_line_blame = false,
 		sign_priority = 6,
 		update_debounce = 100,
 		status_formatter = nil,
 		max_file_length = 40000,
-		preview_config = {
-			border = 'single',
-			style = 'minimal',
-			relative = 'cursor',
-			row = 0,
-			col = 1
-		}
+		preview_config = {border = 'single', style = 'minimal', relative = 'cursor', row = 0, col = 1}
 	}
 --NeoTree
 	local config = {
 		close_if_last_window = true,
-		-- popup_border_style is for input and confirmation dialogs.
-		-- Configurtaion of floating window is done in the individual source sections.
-		-- "NC" is a special style that works well with NormalNC set
 		close_floats_on_escape_key = true,
 		default_source = "filesystem",
 		enable_diagnostics = true,
@@ -540,26 +546,16 @@ lua << EOF
 			indent = {
 				indent_size = 2,
 				padding = 1,
-				-- indent guides
 				with_markers = true,
 				indent_marker = "│",
 				last_indent_marker = "└",
 				highlight = "NeoTreeIndentMarker",
-				-- expander config, needed for nesting fileswith_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
 				expander_collapsed = "",
 				expander_expanded = "",
 				expander_highlight = "NeoTreeExpander",
 			},
-			icon = {
-				folder_closed = "",
-				folder_open = "",
-				folder_empty = "ﰊ",
-				default = "*",
-			},
-			modified = {
-				symbol = "[+]",
-				highlight = "NeoTreeModified",
-			},
+			icon = {folder_closed = "", folder_open = "", folder_empty = "ﰊ", default = "*",},
+			modified = {symbol = "[+]", highlight = "NeoTreeModified",},
 			name = {
 				trailing_slash = false,
 				use_git_status_colors = true,
@@ -903,28 +899,34 @@ au TermOpen * let b:minisurround_disable = v:true
 au TermOpen * let b:minitrailspace_disable = v:true
 
 " Telescope Keybinds
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope oldfiles<cr>
+nnoremap <leader>tb  <cmd>Telescope buffers<cr>
+nnoremap <leader>tc  <cmd>Telescope commands<cr>
+nnoremap <leader>tf  <cmd>Telescope find_files<cr>
+nnoremap <leader>tg  <cmd>Telescope live_grep<cr>
+nnoremap <leader>th  <cmd>Telescope oldfiles<cr>
+nnoremap <leader>tj  <cmd>Telescope jumplist<cr>
+nnoremap <leader>tlr <cmd>Telescope lsp_references<cr>
+nnoremap <leader>tls <cmd>Telescope lsp_workspace_symbols<cr>
+nnoremap <leader>tlt <cmd>Telescope lsp_type_definitions<cr>
+nnoremap <leader>tm  <cmd>Telescope marks<cr>
+nnoremap <leader>to  <cmd>Telescope vim_options<cr>
+nnoremap <leader>tr	 <cmd>Telescope registers<cr>
+nnoremap <leader>tt  <cmd>Telescope tags<cr>
+nnoremap <leader>tv  <cmd>Telescope git_files<cr>
+
 nnoremap <C-p> <cmd>Telescope command_palette<cr>
 
+nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
+nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
+nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
 nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
-nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
-nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
 
 
-nnoremap <silent> <Leader>fs <cmd>Neotree toggle<cr>
-nnoremap <silent> <Leader>fr <cmd>Neotree reveal<cr>
-"nnoremap <silent> gd <cmd>Neotree float reveal_file=<cfile> reveal_force_cwd<cr>
 nnoremap <silent> <Leader>fb <cmd>Neotree toggle show buffers right<cr>
 nnoremap <silent> <Leader>fg <cmd>Neotree float git_status<cr>
-
-
-
+nnoremap <silent> <Leader>fs <cmd>Neotree toggle<cr>
 
 " Dashboard Setup
 let g:dashboard_custom_header = [
@@ -946,11 +948,11 @@ let g:dashboard_custom_header = [
 	\'          N E O V I M',
 	\]
 let g:dashboard_default_executive ='telescope'
-nmap <silent> <Leader>ss :<C-u>SessionSave<CR>
-nmap <silent> <Leader>sl :<C-u>SessionLoad<CR>
-nnoremap <silent> <Leader>tc :DashboardChangeColorscheme<CR>
-nnoremap <silent> <Leader>fa :DashboardFindWord<CR>
-nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
+nmap <silent> <Leader>ds :<C-u>SessionSave<CR>
+nmap <silent> <Leader>dl :<C-u>SessionLoad<CR>
+nnoremap <silent> <Leader>dc :DashboardChangeColorscheme<CR>
+nnoremap <silent> <Leader>df :DashboardFindWord<CR>
+nnoremap <silent> <Leader>dn :DashboardNewFile<CR>
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 
 "
