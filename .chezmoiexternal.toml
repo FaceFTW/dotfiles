@@ -1,11 +1,5 @@
 {{- if eq .chezmoi.os "windows" }}
 
-['.devenv/cowsay']
-	type = "archive"
-	url = "https://github.com/lukesampson/cowsay-psh/archive/refs/heads/master.zip"
-	exclude = ["**/.gitattributes", "**/.gitignore", "**/*.sublime-project", "**/.git", "**/README.md", "**/*.cow"]
-	stripComponents = 1
-
 ['.devenv/bin/oh-my-posh.exe']
 	type = "file"
 	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v7.59.4/posh-windows-amd64.exe"
