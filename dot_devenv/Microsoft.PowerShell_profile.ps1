@@ -23,7 +23,6 @@ function Invoke-GitGCRecursive {
 	Set-Location $originalpath
 }
 
-
 ##
 ## Cowsay 3.03
 ##
@@ -32,8 +31,7 @@ function Invoke-GitGCRecursive {
 ## Modified 'lite' port for Powershell 7 (c) 2022 Alex "FaceFTW" Westerman
 ## http://www.nog.net/~tony/warez/cowsay-3.03.tar.gz
 ##
-function docowsay($cowfile, $message, $think) {
-
+function docowsay([string] $cowfile, $message, $think) {
 	function maxlength($msg) {
 		$l = 0; $m = -1
 		$msg | ForEach-Object { 
@@ -72,25 +70,21 @@ function docowsay($cowfile, $message, $think) {
 			[string]::format($format, $border[2], $msg[-1], $border[3])
 		}
 
-		$balloon_lines += 
-		" $('-'*$max2) ",
-		[string]::format($format, $border[0], $msg[0], $border[1])
-    
-		if ($middle) { $balloon_lines += $middle }
-    
-		$balloon_lines +=
-		$last,
-		" $('-'*$max2) "
+		$balloon_lines += " $('-'*$max2) ", [string]::format($format, $border[0], $msg[0], $border[1])
 
-    ($balloon_lines | Where-Object { $_ -ne $null }), $thoughts
+		if ($middle) { $balloon_lines += $middle }
+		$balloon_lines += $last, " $('-'*$max2) "
+		($balloon_lines | Where-Object { $_ -ne $null }), $thoughts
 	}
 
-	function get_cow($f, $path) {
-		if (!$f.endsWith('.cow')) { $f += ".cow" }
+	function get_cow([string] $f) {
+		 if (!($f.endsWith('.cow'))) { $f += ".cow" }
 
-		$fpath = "$path\$f"
+		$fpath = "$($Env:COWPATH)$($f)"	
+		Write-Host $fpath
+
 		if (!(test-path $fpath)) { "$script:progname: could not find $f cowfile!" }
-		$script = Get-Content -raw $fpath 
+		$script = Get-Content -raw $fpath
 		$script = $script -replace 'binmode STDOUT, ":utf8";[\r]?\n\$the_cow =<<EOC;[\r]\n', '"'
 		$script = $script -replace 'EOC', '"'
 		$script = $script -replace '\\e', '`e'
@@ -109,30 +103,45 @@ function docowsay($cowfile, $message, $think) {
 	}
 	$balloon_lines, $thoughts = construct_balloon $cowmsg $think
 
-	$the_cow = get_cow $cowfile $cowpath
+	$the_cow = get_cow $cowfile
 
 	Write-Output ([string]::join("`n", $balloon_lines))
 	Write-Output $the_cow
 }
 
 function docowthink($cowfile, $message){
-	docowsay($cowfile, $message, $true)
+	docowsay $cowfile $message $true
 }
 
+function doRandomCowsay($message){
+	$cowfile = Get-ChildItem -Path $Env:COWPATH -Name | Select-Object -Index $(Get-Random $((Get-ChildItem -Path $Env:COWPATH).Count))
+
+	docowsay $cowfile $message 0
+}
+
+function doRandomCowthink($message){
+	$cowfile = Get-ChildItem -Path $Env:COWPATH -Name | Select-Object -Index $(Get-Random $((Get-ChildItem -Path $Env:COWPATH).Count))
+	docowthink $cowfile $message 1
+}
+
+
+######### ALIAS DEFINITIONS #########
 Set-Alias cdl Set-CurrentDir -Option AllScope
 Set-Alias git-recurseclean Invoke-GitGCRecursive
 Set-Alias cowsay docowsay
 Set-Alias cowthink docowthink
+Set-Alias cowsay-random doRandomCowsay
+Set-Alias cowthink-random doRandomCowthink
 
+######## ENVIRONMENT VARS ########
 if (!$env:XDG_CONFIG_HOME) {
 	[Environment]::SetEnvironmentVariable("XDG_CONFIG_HOME", "$($env:USERPROFILE)\.devenv\", [System.EnvironmentVariableTarget]::User)
 }
-
 if (!$env:COWPATH) {
 	[Environment]::SetEnvironmentVariable("COWPATH", "$($env:USERPROFILE)\.devenv\cowsay\cows\", [System.EnvironmentVariableTarget]::User)
 }
 
-
-
+######## STARTUP ########
+doRandomCowsay("Deez Nuts")
 oh-my-posh --init --shell pwsh --config "$($env:USERPROFILE)\.devenv\.mytheme.omp.json" | Invoke-Expression
 Enable-PoshTransientPrompt
