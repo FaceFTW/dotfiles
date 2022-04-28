@@ -35,4 +35,10 @@
 	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v7.59.4/posh-linux-amd64"
 	executable = true
 
+[".oh-my-zsh"]
+    type = "archive"
+    url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+
 {{- end }}
