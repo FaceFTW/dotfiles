@@ -5,6 +5,7 @@
 	Documents/**
 	.devenv/bin/**.exe
 	.devenv/bin/**.dll
+	.devenv/bin/LICENSE-fortune.md
 {{- end }}
 
 {{- if ne .chezmoi.os "linux" }}
