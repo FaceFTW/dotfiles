@@ -81,7 +81,6 @@ function docowsay([string] $cowfile, $message, $think) {
 		 if (!($f.endsWith('.cow'))) { $f += ".cow" }
 
 		$fpath = "$($Env:COWPATH)$($f)"	
-		Write-Host $fpath
 
 		if (!(test-path $fpath)) { "$script:progname: could not find $f cowfile!" }
 		$script = Get-Content -raw $fpath
@@ -133,6 +132,8 @@ Set-Alias cowthink docowthink
 Set-Alias cowsay-random doRandomCowsay
 Set-Alias cowthink-random doRandomCowthink
 
+
+
 ######## ENVIRONMENT VARS ########
 if (!$env:XDG_CONFIG_HOME) {
 	[Environment]::SetEnvironmentVariable("XDG_CONFIG_HOME", "$($env:USERPROFILE)\.devenv\", [System.EnvironmentVariableTarget]::User)
@@ -140,8 +141,13 @@ if (!$env:XDG_CONFIG_HOME) {
 if (!$env:COWPATH) {
 	[Environment]::SetEnvironmentVariable("COWPATH", "$($env:USERPROFILE)\.devenv\cowsay\cows\", [System.EnvironmentVariableTarget]::User)
 }
+if (!$env:FORTUNE_FILE){
+	[Environment]::SetEnvironmentVariable("FORTUNE_FILE", "$($env:USERPROFILE)\.devenv\fortune.txt", [System.EnvironmentVariableTarget]::User)
+}
+
 
 ######## STARTUP ########
-doRandomCowsay("Deez Nuts")
+$qotd = fortune
+doRandomCowsay $qotd
 oh-my-posh --init --shell pwsh --config "$($env:USERPROFILE)\.devenv\.mytheme.omp.json" | Invoke-Expression
 Enable-PoshTransientPrompt
