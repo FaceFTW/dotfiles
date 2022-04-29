@@ -67,13 +67,13 @@ call plug#begin(s:data_dir. '/extplugs')
 	Plug 'onsails/lspkind-nvim'
 	Plug 'kosayoda/nvim-lightbulb'
 	"----------------------Completion----------------------"
-	Plug 'hrsh7th/cmp-nvim-lsp'
-	Plug 'hrsh7th/cmp-buffer'
-	Plug 'hrsh7th/cmp-path'
-	Plug 'hrsh7th/cmp-cmdline'
-	Plug 'hrsh7th/nvim-cmp'
-	Plug 'L3MON4D3/LuaSnip'
-	Plug 'saadparwaiz1/cmp_luasnip'
+	" Plug 'hrsh7th/cmp-nvim-lsp'
+	" Plug 'hrsh7th/cmp-buffer'
+	" Plug 'hrsh7th/cmp-path'
+	" Plug 'hrsh7th/cmp-cmdline'
+	" Plug 'hrsh7th/nvim-cmp'
+	" Plug 'L3MON4D3/LuaSnip'
+	" Plug 'saadparwaiz1/cmp_luasnip'
 	"--------------------Miscellaneous---------------------"
 	Plug 'dstein64/vim-startuptime'
 	Plug 'SmiteshP/nvim-gps'
@@ -86,6 +86,27 @@ call plug#end()
 
 " Colorschemeing
 colorscheme sexy-railscasts
+
+" Dashboard Setup
+let g:dashboard_custom_header = [
+	\'⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣤⣴⣦⣤⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+	\'⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣶⣤⡀⠀⠀⠀⠀⠀⠀',
+	\'⠀⠀⠀⠀⣠⣾⣿⣿⡿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⢿⣿⣿⣶⡀⠀⠀⠀⠀',
+	\'⠀⠀⠀⣴⣿⣿⠟⠁⠀⠀⠀⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣦⠀⠀⠀',
+	\'⠀⠀⣼⣿⣿⠋⠀⠀⠀⠀⠀⠛⠛⢻⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣧⠀⠀',
+	\'⠀⢸⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⡇⠀',
+	\'⠀⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠀',
+	\'⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡟⢹⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⣹⣿⣿',
+	\'⠀⣿⣿⣷⠀⠀⠀⠀⠀⠀⣰⣿⣿⠏⠀⠀⢻⣿⣿⡄⠀⠀⠀⠀⠀⠀⣿⣿⡿⠀',
+	\'⠀⢸⣿⣿⡆⠀⠀⠀⠀⣴⣿⡿⠃⠀⠀⠀⠈⢿⣿⣷⣤⣤⡆⠀⠀⣰⣿⣿⠇⠀',
+	\'⠀⠀⢻⣿⣿⣄⠀⠀⠾⠿⠿⠁⠀⠀⠀⠀⠀⠘⣿⣿⡿⠿⠛⠀⣰⣿⣿⡟⠀⠀',
+	\'⠀⠀⠀⠻⣿⣿⣧⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⠏⠀⠀⠀',
+	\'⠀⠀⠀⠀⠈⠻⣿⣿⣷⣤⣄⡀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⠟⠁⠀⠀⠀⠀',
+	\'⠀⠀⠀⠀⠀⠀⠈⠛⠿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⠁⠀⠀⠀⠀⠀⠀',
+	\'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+	\'          N E O V I M',
+	\]
+let g:dashboard_default_executive ='telescope'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""LUA Stuff"""""""""""""""""""""""
@@ -103,7 +124,28 @@ lua << EOF
 	require('mini.jump').setup{}
 	require('mini.pairs').setup{}
 	require('mini.surround').setup{}
-	require('mini.trailspace').setup{}
+	require('mini.trailspace').setup{only_in_normal_buffers = true}
+	require('mini.completion').setup{}
+	vim.api.nvim_set_keymap('i', '<Tab>',   [[pumvisible() ? "\<C-n>" : "\<Tab>"]],   { noremap = true, expr = true })
+	vim.api.nvim_set_keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { noremap = true, expr = true })
+	local keys = {
+    	['cr']        = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
+    	['ctrl-y']    = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
+		['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
+	}
+	_G.cr_action = function()
+		if vim.fn.pumvisible() ~= 0 then
+    	  	-- If popup is visible, confirm selected item or add new line otherwise
+      	local item_selected = vim.fn.complete_info()['selected'] ~= -1
+    		return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
+    	else
+      		-- If popup is not visible, use plain `<CR>`. You might want to customize
+      		-- according to other plugins. For example, to use 'mini.pairs', replace
+      		-- next line with `return require('mini.pairs').cr()`
+    		return keys['cr']
+    	end
+	end
+	vim.api.nvim_set_keymap('i', '<CR>', 'v:lua._G.cr_action()', { noremap = true, expr = true })
 --Todo Comments
 	require('todo-comments').setup {}
 --Pretty Folds
@@ -417,11 +459,6 @@ lua << EOF
   		}
 	})
 
-	vim.api.nvim_set_keymap('n', '<Leader>p', '<Plug>(cokeline-focus-prev)', { silent = true })
-	vim.api.nvim_set_keymap('n', '<Leader>n', '<Plug>(cokeline-focus-next)', { silent = true })
-	for i = 1,9 do
-  		vim.api.nvim_set_keymap('n', ('<Leader>%s'):format(i), ('<Plug>(cokeline-focus-%s)'):format(i), { silent = true })
-	end
 --Notify
 	require("notify").setup({
   		stages = "fade_in_slide_out",
@@ -695,26 +732,23 @@ lua << EOF
 		},
 	}
 
-
 ----------------------------------------------------
 ---------------------LSP CONFIG---------------------
 ----------------------------------------------------
-vim.lsp.handlers["textDocument/codeAction"] = require'lspactions'.codeaction
-vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.code_action()<CR> ]]
---vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.range_code_action()<CR> ]]
-
-vim.lsp.handlers["textDocument/references"] = require'lspactions'.references
---vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.references()<CR> ]]
-
-vim.lsp.handlers["textDocument/definition"] = require'lspactions'.definition
-vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.definition()<CR> ]]
-
-vim.lsp.handlers["textDocument/declaration"] = require'lspactions'.declaration
---vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.declaration()<CR> ]]
-
-vim.lsp.handlers["textDocument/implementation"] = require'lspactions'.implementation
---vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.implementation()<CR> ]]
-
+	--vim.lsp.handlers["textDocument/codeAction"] = require'lspactions'.codeaction
+	--vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.code_action()<CR> ]]
+	--vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.range_code_action()<CR> ]]
+	
+	--vim.lsp.handlers["textDocument/references"] = require'lspactions'.references
+	--vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.references()<CR> ]]
+	
+	--vim.lsp.handlers["textDocument/definition"] = require'lspactions'.definition
+	--vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.definition()<CR> ]]
+	--vim.lsp.handlers["textDocument/declaration"] = require'lspactions'.declaration
+	--vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.declaration()<CR> ]]
+	
+	-- vim.lsp.handlers["textDocument/implementation"] = require'lspactions'.implementation
+	--vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.implementation()<CR> ]]
 
 	local enhance_server_opts = {
 		['eslintls'] = function(opts)
@@ -852,31 +886,63 @@ vim.lsp.handlers["textDocument/implementation"] = require'lspactions'.implementa
 		end
 	end
 
-	local cmp = require('cmp')
-	cmp.setup {
-	  completion = {
-	    autocomplete = true, -- disable auto-completion.
-	  }
-	}
-	_G.vimrc = _G.vimrc or {}
-	_G.vimrc.cmp = _G.vimrc.cmp or {}
-	_G.vimrc.cmp.on_text_changed = function()
-		local cursor = vim.api.nvim_win_get_cursor(0)
-		local line = vim.api.nvim_get_current_line()
-		local before = string.sub(line, 1, cursor[2] + 1)
-		if before:match('%s*$') then
-			cmp.complete() -- Trigger completion only if the cursor is placed at the end of line.
-		end
-	end
-	vim.cmd([[
-	augroup vimrc
-		autocmd TextChanged,TextChangedI,TextChangedP * call luaeval('vimrc.cmp.on_text_changed()')
-	augroup END
-	]])
 
 require('telescope').load_extension('lsp_handlers');
 require('telescope').load_extension('env');
 require('telescope').load_extension('command_palette');
+
+---------------------------------------------------
+-------------------POST-INIT CFG-------------------
+---------------------------------------------------
+	require('which-key').register({
+		['<leader>t'] = {name = '+Telescope'},
+		['<leader>tb'] = {'<cmd>Telescope buffers<cr>', 'Buffers', noremap = true},
+		['<leader>tc'] = {'<cmd>Telescope commands<cr>', 'Commands', noremap = true},
+		['<leader>tf'] = {'<cmd>Telescope find_files<cr>', 'Find Files', noremap = true},
+		['<leader>tg'] = {'<cmd>Telescope live_grep<cr>', 'Live Grep', noremap = true},
+		['<leader>th'] = {'<cmd>Telescope oldfiles<cr>', 'Old Files', noremap = true},
+		['<leader>tj'] = {'<cmd>Telescope jumplist<cr>', 'Jump List', noremap = true},
+		['<leader>tm'] = {'<cmd>Telescope marks<cr>', 'Marks', noremap = true},
+		['<leader>to'] = {'<cmd>Telescope vim_options<cr>', 'Vim Options', noremap = true},
+		['<leader>tr'] = {'<cmd>Telescope registers<cr>', 'Registers', noremap = true},
+		['<leader>tt'] = {'<cmd>Telescope tags<cr>', 'Tags', noremap = true},
+		['<leader>tv'] = {'<cmd>Telescope git_files<cr>', 'Git Files', noremap = true},
+		['<leader>tl'] = {name = '+TelescopeLSP'},
+		['<leader>tlr'] = {'<cmd>Telescope lsp_references<cr>', 'References', noremap = true},
+		['<leader>tls'] = {'<cmd>Telescope lsp_workspace_symbols<cr>', 'Symbols (Workspace)', noremap = true},
+		['<leader>tlt'] = {'<cmd>Telescope lsp_type_definitions<cr>', 'Type Definitions', noremap = true},
+		['<leader>x'] = {name = '+Trouble'},
+		['<leader>xd'] = {'<cmd>TroubleToggle document_diagnostics<cr>','Document Diagnostics', noremap = true},
+		['<leader>xl'] = {'<cmd>TroubleToggle loclist<cr>','Location List', noremap = true},
+		['<leader>xq'] = {'<cmd>TroubleToggle quickfix<cr>','Quickfix', noremap = true},
+		['<leader>xx'] = {'<cmd>TroubleToggle<cr>','Reveal Trouble', noremap = true},
+		['<leader>xd'] = {'<cmd>TroubleToggle workspace_diagnostics<cr>','Workspace Diagnostics', noremap = true},
+		['<leader>f'] = {name = '+Neotree'},
+		['<leader>fb'] = {'<cmd> Neotree toggle show buffers right <cr>', 'Buffer List', noremap = true, silent = true},
+		['<leader>fg'] = {'<cmd> Neotree float git_status<cr>', 'Git Status', noremap = true, silent = true},
+		['<leader>fs'] = {'<cmd> Neotree toggle<cr>', 'File Tree', noremap = true, silent = true},
+		['<leader>d'] = {name = '+Dashboard'},
+		['<leader>dc'] = {'<cmd>DashboardChangeColorscheme<cr>', 'Change Colorscheme', silent = true},
+		['<leader>dd'] = {'<cmd>Dashboard<cr>', 'Show Dashboard', silent = true},
+		['<leader>df'] = {'<cmd>DashboardFindWord<cr>', 'Find Word', silent = true},
+		['<leader>dl'] = {'<C-u>SessionLoad<cr>', 'Load Session', silent = true},
+		['<leader>dn'] = {'<cmd>DashboardNewFile<cr>', 'New File', silent = true},
+		['<leader>ds'] = {'<C-u>SessionSave<cr>', 'Save Session', silent = true},
+		['<leader>c'] = {name = '+Cokeline'},
+		['<leader>cp'] = {'<Plug>(cokeline-focus-prev)', 'Focus Previous Buffer', silent = true},
+		['<leader>cn'] = {'<Plug>(cokeline-focus-next)', 'Focus Next Buffer', silent = true},
+		['<leader>c1'] = {'<Plug>(cokeline-focus-1)', 'Focus Buffer 1', silent = true},
+		['<leader>c2'] = {'<Plug>(cokeline-focus-2)', 'Focus Buffer 2', silent = true},
+		['<leader>c3'] = {'<Plug>(cokeline-focus-3)', 'Focus Buffer 3', silent = true},
+		['<leader>c4'] = {'<Plug>(cokeline-focus-4)', 'Focus Buffer 4', silent = true},
+		['<leader>c5'] = {'<Plug>(cokeline-focus-5)', 'Focus Buffer 5', silent = true},
+		['<leader>c6'] = {'<Plug>(cokeline-focus-6)', 'Focus Buffer 6', silent = true},
+		['<leader>c7'] = {'<Plug>(cokeline-focus-7)', 'Focus Buffer 7', silent = true},
+		['<leader>c8'] = {'<Plug>(cokeline-focus-8)', 'Focus Buffer 8', silent = true},
+		['<leader>c9'] = {'<Plug>(cokeline-focus-9)', 'Focus Buffer 9', silent = true},
+		['<leader>c0'] = {'<Plug>(cokeline-focus-0)', 'Focus Buffer 0', silent = true},
+	})
+
 EOF
 
 nnoremap <leader>ar :lua require'lspactions'.rename()<CR>
@@ -898,61 +964,8 @@ au TermOpen * let b:minipairs_disable = v:true
 au TermOpen * let b:minisurround_disable = v:true
 au TermOpen * let b:minitrailspace_disable = v:true
 
-" Telescope Keybinds
-nnoremap <leader>tb  <cmd>Telescope buffers<cr>
-nnoremap <leader>tc  <cmd>Telescope commands<cr>
-nnoremap <leader>tf  <cmd>Telescope find_files<cr>
-nnoremap <leader>tg  <cmd>Telescope live_grep<cr>
-nnoremap <leader>th  <cmd>Telescope oldfiles<cr>
-nnoremap <leader>tj  <cmd>Telescope jumplist<cr>
-nnoremap <leader>tlr <cmd>Telescope lsp_references<cr>
-nnoremap <leader>tls <cmd>Telescope lsp_workspace_symbols<cr>
-nnoremap <leader>tlt <cmd>Telescope lsp_type_definitions<cr>
-nnoremap <leader>tm  <cmd>Telescope marks<cr>
-nnoremap <leader>to  <cmd>Telescope vim_options<cr>
-nnoremap <leader>tr	 <cmd>Telescope registers<cr>
-nnoremap <leader>tt  <cmd>Telescope tags<cr>
-nnoremap <leader>tv  <cmd>Telescope git_files<cr>
-
 nnoremap <C-p> <cmd>Telescope command_palette<cr>
-
-nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
-nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>xx <cmd>TroubleToggle<cr>
-nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
-
-
-nnoremap <silent> <Leader>fb <cmd>Neotree toggle show buffers right<cr>
-nnoremap <silent> <Leader>fg <cmd>Neotree float git_status<cr>
-nnoremap <silent> <Leader>fs <cmd>Neotree toggle<cr>
-
-" Dashboard Setup
-let g:dashboard_custom_header = [
-	\'⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣤⣴⣦⣤⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-	\'⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣶⣤⡀⠀⠀⠀⠀⠀⠀',
-	\'⠀⠀⠀⠀⣠⣾⣿⣿⡿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⢿⣿⣿⣶⡀⠀⠀⠀⠀',
-	\'⠀⠀⠀⣴⣿⣿⠟⠁⠀⠀⠀⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣦⠀⠀⠀',
-	\'⠀⠀⣼⣿⣿⠋⠀⠀⠀⠀⠀⠛⠛⢻⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣧⠀⠀',
-	\'⠀⢸⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⡇⠀',
-	\'⠀⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠀',
-	\'⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡟⢹⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⣹⣿⣿',
-	\'⠀⣿⣿⣷⠀⠀⠀⠀⠀⠀⣰⣿⣿⠏⠀⠀⢻⣿⣿⡄⠀⠀⠀⠀⠀⠀⣿⣿⡿⠀',
-	\'⠀⢸⣿⣿⡆⠀⠀⠀⠀⣴⣿⡿⠃⠀⠀⠀⠈⢿⣿⣷⣤⣤⡆⠀⠀⣰⣿⣿⠇⠀',
-	\'⠀⠀⢻⣿⣿⣄⠀⠀⠾⠿⠿⠁⠀⠀⠀⠀⠀⠘⣿⣿⡿⠿⠛⠀⣰⣿⣿⡟⠀⠀',
-	\'⠀⠀⠀⠻⣿⣿⣧⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⠏⠀⠀⠀',
-	\'⠀⠀⠀⠀⠈⠻⣿⣿⣷⣤⣄⡀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⠟⠁⠀⠀⠀⠀',
-	\'⠀⠀⠀⠀⠀⠀⠈⠛⠿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⠁⠀⠀⠀⠀⠀⠀',
-	\'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-	\'          N E O V I M',
-	\]
-let g:dashboard_default_executive ='telescope'
-nmap <silent> <Leader>ds :<C-u>SessionSave<CR>
-nmap <silent> <Leader>dl :<C-u>SessionLoad<CR>
-nnoremap <silent> <Leader>dc :DashboardChangeColorscheme<CR>
-nnoremap <silent> <Leader>df :DashboardFindWord<CR>
-nnoremap <silent> <Leader>dn :DashboardNewFile<CR>
 autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
 
 "
