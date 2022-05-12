@@ -750,65 +750,11 @@ lua << EOF
 	-- vim.lsp.handlers["textDocument/implementation"] = require'lspactions'.implementation
 	--vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.implementation()<CR> ]]
 
-	local enhance_server_opts = {
-		['eslintls'] = function(opts)
-			opts.settings = {
-				format = {enable = true}
-			}
-		end,
-		['vimls'] = function(opts)
-			opts.settings = {
-				initializationOptions = {
-					isNeovim = true,
-					vimruntime = vim.env.VIMRUNTIME,
-					runtimepath = vim.opt.runtimepath
-				},
-				diagnostic = {
-					enable = true
-				},
-				suggest = {
-					fromVimruntime = true,
-					fromRuntimepath = true
-				}
-			}
-		end,
-		['jsonls'] = function(opts)
-			opts.settings = {json = {schemas = require('schemastore').json.schemas()}}
-		end
-	}
-
-	require('nvim-lsp-installer').on_server_ready(function(server)
-		local opts = {
-			on_attach = function(client, bufnr)
-				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-				local opts = { noremap=true, silent=true }
-				-- Mappings.
-				-- See `:help vim.lsp.*` for documentation on any of the below functions
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>',opts)
-				vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
-			end
-		}
-
-		if enhance_server_opts[server.name] then
-			enhance_server_opts[server.name](opts)
-		end
-		server:setup(opts)
-	end)
-
 	require('lspkind').init({mode = 'symbol_text'})
 
+
+	vim.ui.select = require('lspactions').select
+	vim.ui.input = require('lspactions').input
 	local client_notifs = {}
 	local function get_notif_data(client_id, token)
 		if not client_notifs[client_id] then
@@ -819,7 +765,6 @@ lua << EOF
 		end
 		return client_notifs[client_id][token]
 	end
-
 
 	local spinner_frames = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" }
 
@@ -848,44 +793,92 @@ lua << EOF
 -- LSP integration
 -- Make sure to also have the snippet with the common helper functions in your config!
 
-	vim.lsp.handlers["$/progress"] = function(_, result, ctx)
-		local client_id = ctx.client_id
-
-		local val = result.value
-
-		if not val.kind then
-			return
-		end
-
-		local notif_data = get_notif_data(client_id, result.token)
- 		if val.kind == "begin" then
-			local message = format_message(val.message, val.percentage)
-
-			notif_data.notification = vim.notify(message, "info", {
-				title = format_title(val.title, vim.lsp.get_client_by_id(client_id).name),
-		 		icon = spinner_frames[1],
-				timeout = false,
-				hide_from_history = false,
-			})
-
-			notif_data.spinner = 1
-			update_spinner(client_id, result.token)
-		elseif val.kind == "report" and notif_data then
-			notif_data.notification = vim.notify(format_message(val.message, val.percentage), "info", {
-				replace = notif_data.notification,
-    			hide_from_history = false,
-			})
- 		elseif val.kind == "end" and notif_data then
-   			notif_data.notification =
-    	 	vim.notify(val.message and format_message(val.message) or "Complete", "info", {
-				icon = "",
-				replace = notif_data.notification,
-				timeout = 3000,
-     	})
-		notif_data.spinner = nil
-		end
+	local lspconfig = require('lspconfig')
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	local function on_attach(client, bufnr)
+		vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+		local opts = { noremap=true, silent=true }
+		-- Mappings.
+		-- See `:help vim.lsp.*` for documentation on any of the below functions
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>',opts)
+		vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>',opts)
 	end
 
+	lspconfig.util.default_config = vim.tbl_extend(
+    	"force",
+    	lspconfig.util.default_config,
+		{
+        	autostart = false,
+        	on_attach = on_attach,
+			capabilities = capabilities,
+			handlers = {
+				["$/progress"] = function(_, result, ctx)
+					local client_id = ctx.client_id
+					local val = result.value
+
+					if not val.kind then return end
+
+					local notif_data = get_notif_data(client_id, result.token)
+ 					if val.kind == "begin" then
+						local message = format_message(val.message, val.percentage)
+
+						notif_data.notification = vim.notify(message, "info", {
+							title = format_title(val.title, vim.lsp.get_client_by_id(client_id).name),
+		 						icon = spinner_frames[1],
+								timeout = false,
+								hide_from_history = false,
+						})
+						notif_data.spinner = 1
+						update_spinner(client_id, result.token)
+					elseif val.kind == "report" and notif_data then
+						notif_data.notification = vim.notify(format_message(val.message, val.percentage), "info", {
+							replace = notif_data.notification,
+    						hide_from_history = false,
+						})
+ 					elseif val.kind == "end" and notif_data then
+   						notif_data.notification =
+    	 				vim.notify(val.message and format_message(val.message) or "Complete", "info", {
+							icon = "",
+							replace = notif_data.notification,
+							timeout = 3000,
+     					})
+						notif_data.spinner = nil
+					end
+				end,
+				['textDocument/codeAction'] = require('lspactions').codeaction
+			}
+    	}
+	)
+
+--Server Specific Init
+	lspconfig.clangd.setup({autostart = true})
+	lspconfig.jsonls.setup({
+		autostart = true,
+		schemas = require('schemastore').json.schemas()
+	})	
+
+	lspconfig.vimls.setup({
+		autostart = true,
+		isNeovim = true,
+		vimruntime = vim.env.VIMRUNTIME,
+		runtimepath = vim.opt.runtimepath,
+		diagnostic = {enable = true},
+		suggest = {
+			fromVimruntime = true,
+			fromRuntimepath = true
+		}
+	})
 
 require('telescope').load_extension('lsp_handlers');
 require('telescope').load_extension('env');
