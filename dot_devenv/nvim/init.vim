@@ -54,7 +54,7 @@ call plug#begin(s:data_dir. '/extplugs')
 	Plug 'folke/todo-comments.nvim'
 	Plug 'anuvyklack/pretty-fold.nvim'
 	Plug 'lewis6991/gitsigns.nvim'
-	Plug 'chentau/marks.nvim'
+	Plug 'chentoast/marks.nvim'
 	"--------------------Language Features-------------------"
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdateSync'}
 	Plug 'b0o/schemastore.nvim'
@@ -66,14 +66,6 @@ call plug#begin(s:data_dir. '/extplugs')
 	Plug 'RishabhRD/lspactions'
 	Plug 'onsails/lspkind-nvim'
 	Plug 'kosayoda/nvim-lightbulb'
-	"----------------------Completion----------------------"
-	" Plug 'hrsh7th/cmp-nvim-lsp'
-	" Plug 'hrsh7th/cmp-buffer'
-	" Plug 'hrsh7th/cmp-path'
-	" Plug 'hrsh7th/cmp-cmdline'
-	" Plug 'hrsh7th/nvim-cmp'
-	" Plug 'L3MON4D3/LuaSnip'
-	" Plug 'saadparwaiz1/cmp_luasnip'
 	"--------------------Miscellaneous---------------------"
 	Plug 'dstein64/vim-startuptime'
 	Plug 'SmiteshP/nvim-gps'
@@ -159,7 +151,6 @@ lua << EOF
 	}
 --Treesitter
 	require('nvim-treesitter.configs').setup{
-		ensure_installed = 'all',
 		highlight = {enable = true, additional_vim_regex_highlighting = false}
 	}
 --Telescope
@@ -314,7 +305,7 @@ lua << EOF
   		-- the priority applies to all marks.
   		-- default 10.
   		sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
-		excluded_filetypes = {},
+		excluded_filetypes = {'terminal', 'dashboard'},
 		-- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
 		-- sign/virttext. Bookmarks can be used to group together positions and quickly move
 		-- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
@@ -458,7 +449,6 @@ lua << EOF
     		components.space,
   		}
 	})
-
 --Notify
 	require("notify").setup({
   		stages = "fade_in_slide_out",
@@ -866,8 +856,7 @@ lua << EOF
 	lspconfig.jsonls.setup({
 		autostart = true,
 		schemas = require('schemastore').json.schemas()
-	})	
-
+	})
 	lspconfig.vimls.setup({
 		autostart = true,
 		isNeovim = true,
@@ -941,21 +930,26 @@ EOF
 nnoremap <leader>ar :lua require'lspactions'.rename()<CR>
 
 " Mini.NVIM Autocmds
-au Filetype dashboard let b:minicomment_disable = v:true
-au Filetype dashboard let b:minicursorword_disable = v:true
-au Filetype dashboard let b:miniindentscope_disable = v:true
-au Filetype dashboard let b:minijump_disable = v:true
-au Filetype dashboard let b:minipairs_disable = v:true
-au Filetype dashboard let b:minisurround_disable = v:true
-au Filetype dashboard let b:minitrailspace_disable = v:true
+augroup dashboardAU
+	au Filetype dashboard let b:minicomment_disable = v:true
+	au Filetype dashboard let b:minicursorword_disable = v:true
+	au Filetype dashboard let b:miniindentscope_disable = v:true
+	au Filetype dashboard let b:minijump_disable = v:true
+	au Filetype dashboard let b:minipairs_disable = v:true
+	au Filetype dashboard let b:minisurround_disable = v:true
+	au Filetype dashboard let b:minitrailspace_disable = v:true
+augroup END
 
-au TermOpen * let b:minicomment_disable = v:true
-au TermOpen * let b:minicursorword_disable = v:true
-au TermOpen * let b:miniindentscope_disable = v:true
-au TermOpen * let b:minijump_disable = v:true
-au TermOpen * let b:minipairs_disable = v:true
-au TermOpen * let b:minisurround_disable = v:true
-au TermOpen * let b:minitrailspace_disable = v:true
+augroup terminalAU
+	au TermOpen * let b:minicomment_disable = v:true
+	au TermOpen * let b:minicursorword_disable = v:true
+	au TermOpen * let b:miniindentscope_disable = v:true
+	au TermOpen * let b:minijump_disable = v:true
+	au TermOpen * let b:minipairs_disable = v:true
+	au TermOpen * let b:minisurround_disable = v:true
+	au TermOpen * let b:minitrailspace_disable = v:true
+	au TermOpen  * set nonumber 
+augroup END
 
 nnoremap <C-p> <cmd>Telescope command_palette<cr>
 nnoremap gR <cmd>TroubleToggle lsp_references<cr>
