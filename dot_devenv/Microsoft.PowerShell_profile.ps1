@@ -153,7 +153,7 @@ if (!$env:COWPATH) {
 	[Environment]::SetEnvironmentVariable("COWPATH", "$($env:USERPROFILE)\.devenv\cowsay\cows\", [System.EnvironmentVariableTarget]::User)
 }
 if (!$env:FORTUNE_FILE){
-	[Environment]::SetEnvironmentVariable("FORTUNE_FILE", "$($env:USERPROFILE)\.devenv\fortune.txt", [System.EnvironmentVariableTarget]::User)
+	[Environment]::SetEnvironmentVariable("FORTUNE_FILE", "$($env:USERPROFILE)\.devenv\fortunes.txt", [System.EnvironmentVariableTarget]::User)
 }
 
 
