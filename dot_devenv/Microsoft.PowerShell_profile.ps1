@@ -158,7 +158,7 @@ if (!$env:FORTUNE_FILE){
 
 
 ######## STARTUP ########
-
+doAFunny
 
 
 oh-my-posh --init --shell pwsh --config "$($env:USERPROFILE)\.devenv\.mytheme.omp.json" | Invoke-Expression
