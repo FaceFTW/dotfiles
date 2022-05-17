@@ -123,6 +123,16 @@ function doRandomCowthink($message){
 	docowthink $cowfile $message 1
 }
 
+function doAFunny(){
+	$qotd = fortune
+	doRandomCowsay $qotd
+}
+
+function newClear(){
+	Clear-Host
+	doAFunny
+}
+
 
 ######### ALIAS DEFINITIONS #########
 Set-Alias cdl Set-CurrentDir -Option AllScope
@@ -131,7 +141,8 @@ Set-Alias cowsay docowsay
 Set-Alias cowthink docowthink
 Set-Alias cowsay-random doRandomCowsay
 Set-Alias cowthink-random doRandomCowthink
-
+Set-Alias doFunny doAFunny
+Set-Alias clear newClear
 
 
 ######## ENVIRONMENT VARS ########
@@ -147,7 +158,8 @@ if (!$env:FORTUNE_FILE){
 
 
 ######## STARTUP ########
-$qotd = fortune
-doRandomCowsay $qotd
+
+
+
 oh-my-posh --init --shell pwsh --config "$($env:USERPROFILE)\.devenv\.mytheme.omp.json" | Invoke-Expression
 Enable-PoshTransientPrompt
