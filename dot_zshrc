@@ -47,5 +47,5 @@ alias clear="/bin/clear; fortune -s | cowsay -f $(ls $COW_PATH | shuf -n1) -W 80
 fortune -s | cowsay -f $(ls $COW_PATH | shuf -n1) -W 80 -n 
 
 path+=('/home/face/.local/bin')
-eval "$(oh-my-posh-wsl --init --shell zsh --config ~/.devenv/.mytheme.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/.devenv/.mytheme.omp.json)"
 enable_poshtransientprompt
