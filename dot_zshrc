@@ -16,7 +16,7 @@ export COW_PATH=$HOME"/.devenv/cowsay/cows/"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+zstyle ':omz:update' mode disabled 
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
