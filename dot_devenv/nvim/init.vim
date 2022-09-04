@@ -49,7 +49,8 @@ call plug#begin(s:data_dir. '/extplugs')
 	Plug 'rcarriga/nvim-notify'
 	Plug 'folke/trouble.nvim'
 	Plug 'goolord/alpha-nvim'
-	Plug 'MunifTanjim/nui.nvim',
+	Plug 'MunifTanjim/nui.nvim'
+	Plug 'xiyaowong/nvim-transparent'
 	"--------------------Editor Features---------------------"
 	Plug 'folke/todo-comments.nvim'
 	Plug 'anuvyklack/pretty-fold.nvim'
@@ -746,6 +747,10 @@ lua << EOF
   		"                       ",
 	}
 	alpha.setup(dashboard.opts)
+--Transparent
+	require("transparent").setup({
+		enable = true,
+	})
 ----------------------------------------------------
 ---------------------LSP CONFIG---------------------
 ----------------------------------------------------
