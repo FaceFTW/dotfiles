@@ -2,7 +2,7 @@
 
 ['.devenv/bin/oh-my-posh.exe']
 	type = "file"
-	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v7.59.4/posh-windows-amd64.exe"
+	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v8.37.1/posh-windows-amd64.exe"
 	executable = true
 
 ['.devenv/bin']
@@ -32,7 +32,7 @@
 
 ['.devenv/bin/oh-my-posh']
 	type = "file"
-	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v7.59.4/posh-linux-amd64"
+	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v8.37.1/posh-linux-amd64"
 	executable = true
 
 [".oh-my-zsh"]
