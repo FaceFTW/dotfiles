@@ -8,7 +8,7 @@ set splitright
 set switchbuf=vsplit
 set showcmd
 set timeoutlen=200
-set runtimepath^=~/.devenv/nvim
+set runtimepath^=~/.config/nvim
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 set number
@@ -449,7 +449,7 @@ lua << EOF
 			marks = true,
 			registers = true,
 			presets = {
-				operators = true, 
+				operators = true,
 				motions = true,
 				text_objects = true,
 				windows = true,
@@ -511,7 +511,7 @@ lua << EOF
     	auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
     	auto_fold = false, -- automatically fold a file trouble list at creation
     	auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
-    	signs = {error = '', warning = '', hint = '', information = '', other = '﫠'},	
+    	signs = {error = '', warning = '', hint = '', information = '', other = '﫠'},
     	use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
 	}
 --GitSigns
@@ -757,15 +757,15 @@ lua << EOF
 	--vim.lsp.handlers["textDocument/codeAction"] = require'lspactions'.codeaction
 	--vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.code_action()<CR> ]]
 	--vim.cmd [[ nnoremap <leader>af :lua require'lspactions'.range_code_action()<CR> ]]
-	
+
 	--vim.lsp.handlers["textDocument/references"] = require'lspactions'.references
 	--vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.references()<CR> ]]
-	
+
 	--vim.lsp.handlers["textDocument/definition"] = require'lspactions'.definition
 	--vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.definition()<CR> ]]
 	--vim.lsp.handlers["textDocument/declaration"] = require'lspactions'.declaration
 	--vim.cmd [[ nnoremap <F12> :lua vim.lsp.buf.declaration()<CR> ]]
-	
+
 	-- vim.lsp.handlers["textDocument/implementation"] = require'lspactions'.implementation
 	--vim.cmd [[ nnoremap <leader>af :lua vim.lsp.buf.implementation()<CR> ]]
 
@@ -798,7 +798,7 @@ lua << EOF
 				replace = notif_data.notification,
 			})
 			vim.defer_fn(function() update_spinner(client_id, token) end, 100)
-		end 
+		end
 	end
 
 	local function format_title(title, client_name)
@@ -977,7 +977,7 @@ augroup terminalAU
 	au TermOpen * let b:minipairs_disable = v:true
 	au TermOpen * let b:minisurround_disable = v:true
 	au TermOpen * let b:minitrailspace_disable = v:true
-	au TermOpen  * set nonumber 
+	au TermOpen  * set nonumber
 augroup END
 
 nnoremap <C-p> <cmd>Telescope command_palette<cr>

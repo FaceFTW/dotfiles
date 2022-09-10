@@ -25,10 +25,3 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-
-if [ -d "$HOME/.devenv/bin" ] ; then
-	PATH="$HOME/.devenv/bin:$PATH"
-fi
-
-
-export XDG_CONFIG_HOME=$HOME/.devenv

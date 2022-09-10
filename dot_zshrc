@@ -9,14 +9,13 @@ LC_TIME="en_US.UTF-8"
 LC_ALL="en_US.UTF-8"
 
 
-export COWPATH=$HOME"/.devenv/cowsay/cows/"
-export COW_PATH=$HOME"/.devenv/cowsay/cows/"
+export COW_PATH=$HOME"/.config/cowsay/cows/"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-zstyle ':omz:update' mode disabled 
+zstyle ':omz:update' mode disabled
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
@@ -43,9 +42,9 @@ alias doafunny="fortune | cowsay -f $(ls $COW_PATH | shuf -n1)" -W 80 -n
 alias clearmemcache="echo 3 | sudo tee /proc/sys/vm/drop_caches"
 alias nvim="nvim.appimage"
 
-alias clear="/bin/clear; fortune -s | cowsay -f $(ls $COW_PATH | shuf -n1) -W 80 -n" 
-fortune -s | cowsay -f $(ls $COW_PATH | shuf -n1) -W 80 -n 
+alias clear="/bin/clear; fortune -s | cowsay -f $(ls $COW_PATH | shuf -n1) -W 80 -n"
+fortune -s | cowsay -f $(ls $COW_PATH | shuf -n1) -W 80 -n
 
 path+=('/home/face/.local/bin')
-eval "$(oh-my-posh --init --shell zsh --config ~/.devenv/.mytheme.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/.config/.mytheme.omp.json)"
 enable_poshtransientprompt

@@ -212,15 +212,21 @@ Set-Alias clear newClear
 
 
 ######## ENVIRONMENT VARS ########
-if (!$env:XDG_CONFIG_HOME) {
-	[Environment]::SetEnvironmentVariable("XDG_CONFIG_HOME", "$($env:USERPROFILE)\.devenv\", [System.EnvironmentVariableTarget]::User)
-}
 if (!$env:FORTUNE_FILE) {
-	[Environment]::SetEnvironmentVariable("FORTUNE_FILE", "$($env:USERPROFILE)\.devenv\fortunes.txt", [System.EnvironmentVariableTarget]::User)
+	[Environment]::SetEnvironmentVariable("FORTUNE_FILE", "$($env:USERPROFILE)\.config\fortunes.txt", [System.EnvironmentVariableTarget]::User)
+}
+
+######## SYMLINKS ########
+if (!(Test-Path ${env:LOCALAPPDATA}\nvim\init.vim)) {
+	if (!(Test-Path $env:LOCALAPPDATA\nvim)) {
+		New-Item -ItemType Directory -Path $env:LOCALAPPDATA\nvim
+	}
+	New-Item -Type SymbolicLink -Path "$($env:LOCALAPPDATA)\nvim\init.vim" -Target "$($env:USERPROFILE)\.config\nvim\init.vim"
 }
 
 ######## STARTUP ########
 doAFunny
 
-oh-my-posh --init --shell pwsh --config "$($env:USERPROFILE)\.devenv\.mytheme.omp.json" | Invoke-Expression
+oh-my-posh --init --shell pwsh --config "$($env:USERPROFILE)\.config\.mytheme.omp.json" | Invoke-Expression
+Enable-PoshTransientPrompt
 Enable-PoshTransientPrompt
