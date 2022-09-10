@@ -1,11 +1,11 @@
-.devenv/chezmoi/chezmoi.toml
-.devenv/chezmoi/.gitignore
+.config/chezmoi/chezmoi.toml
+.config/chezmoi/.gitignore
 
 {{- if ne .chezmoi.os "windows" }}
 	Documents/**
-	.devenv/bin/**.exe
-	.devenv/bin/**.dll
-	.devenv/bin/LICENSE-fortune.md
+	.local/bin/**.exe
+	.local/bin/**.dll
+	.local/bin/LICENSE-fortune.md
 {{- end }}
 
 {{- if ne .chezmoi.os "linux" }}
@@ -13,5 +13,4 @@
 	.zshrc
 	.zprofile
 	.profile
-
 {{- end }}
