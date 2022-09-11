@@ -9,7 +9,7 @@ LC_TIME="en_US.UTF-8"
 LC_ALL="en_US.UTF-8"
 
 
-export COW_PATH=$HOME"/.config/cowsay/cows/"
+export COWPATH=$HOME"/.config/cowsay/cows/"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -38,7 +38,7 @@ export GPG_TTY=$(tty)
 
 # ALIAS
 alias zshconfig="vim ~/.zshrc"
-alias doafunny="fortune | cowsay -f $(ls $COW_PATH | shuf -n1)" -W 80 -n
+alias doafunny="fortune | cowsay -f $(ls $COWPATH | shuf -n1)" -W 80 -n
 alias clearmemcache="echo 3 | sudo tee /proc/sys/vm/drop_caches"
 alias nvim="nvim.appimage"
 
