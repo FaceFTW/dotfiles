@@ -41,14 +41,6 @@
     exact = true
     stripComponents = 1
 
-{{- if lookPath "perl" }}
-
-['.local/bin/cowsay']
-	type = "file"
-	url = "https://raw.githubusercontent.com/cowsay-org/cowsay/master/cowsay"
-	executable = true
-
-{{- end }}
 
 
 {{- end }}

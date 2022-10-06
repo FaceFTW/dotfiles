@@ -13,4 +13,5 @@
 	.zshrc
 	.zprofile
 	.profile
+	.local/bin/cowsay
 {{- end }}
