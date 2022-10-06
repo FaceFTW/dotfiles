@@ -45,7 +45,7 @@
 
 ['.local/bin/cowsay']
 	type = "file"
-	url = "https://raw.githubusercontent.com/schacon/cowsay/master/cowsay"
+	url = "https://raw.githubusercontent.com/cowsay-org/cowsay/master/cowsay"
 	executable = true
 
 {{- end }}
