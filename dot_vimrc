@@ -1,16 +1,24 @@
 " Common Vim Settings
+set autoread
 set termguicolors
 set foldmethod=indent
 set encoding=utf-8
 set splitright
-set switchbuf=vsplit
-set runtimepath-=~/.devenv/vimfiles
-set runtimepath^=~/.devenv/vim
-
+set noshowmode
+set number
+set tabstop=4
+set shiftwidth=4
+set completeopt=menu,menuone,noselect
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+set hidden
+set laststatus=2
+set runtimepath-=~/.config/vimfiles
+set runtimepath^=~/.config/vim
 
 " Windows Configuration Stuff
 if(has('win32')||has('win64'))
-	let s:data_dir = $USERPROFILE.'/.devenv/vim'
+	let s:data_dir = $USERPROFILE.'/.config/vim'
 
 	" Mouse behavior (the Windows way)
 	behave mswin
@@ -56,7 +64,7 @@ endif
 
 " Vim Plug Init
 	if !(has('win32') || has('win64'))
-		let s:data_dir = has('nvim') ? stdpath('data') . '~/.devenv/nvim' : '~/.devenv/vim'
+		let s:data_dir = has('nvim') ? stdpath('data') . '~/.config/nvim' : '~/.config/vim'
 	endif
 	if empty(glob(s:data_dir . '/autoload/plug.vim'))
 		execute '!curl -fLo '.s:data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -65,58 +73,35 @@ endif
 	autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 			\| PlugInstall --sync | source $MYVIMRC
 			\| endif
-	
-	call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : ((has('win32')|| has('win64'))? $USERPROFILE.'/.devenv/vim/plugged':'~/.devenv/vim/plugged'))
-		Plug 'sheerun/vim-polyglot'
-		Plug 'preservim/nerdtree'
+
+	call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : ((has('win32')|| has('win64'))? $USERPROFILE.'/.config/vim/plugged':'~/.config/vim/plugged'))
+		"=================== Core Features ===================
 		Plug 'tpope/vim-fugitive'
-		Plug 'vim-airline/vim-airline'
-		Plug 'vim-airline/vim-airline-themes'
-		Plug 'bling/vim-bufferline'
-		Plug 'yuttie/comfortable-motion.vim'
-		Plug 'mhinz/vim-startify'
-		Plug 'myusuf3/numbers.vim'
-		Plug 'flazz/vim-colorschemes'
-		Plug 'ryanoasis/vim-devicons'
-		Plug 'SirVer/ultisnips'
-		Plug 'honza/vim-snippets'
-		Plug 'mbbill/undotree'
-		Plug 'tpope/vim-commentary'
-		Plug 'jeetsukumaran/vim-buffergator'
+		Plug 'sheerun/vim-polyglot'
 		Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 		Plug 'junegunn/fzf.vim'
+		Plug 'preservim/nerdtree'
+
+		"=================== UI Plugins ===================
+		Plug 'mhinz/vim-startify'
+		Plug 'itchyny/lightline.vim',
+		Plug 'mbbill/undotree'
+		Plug 'ryanoasis/vim-devicons'
+		Plug 'myusuf3/numbers.vim'
+		Plug 'flazz/vim-colorschemes'
+		Plug 'ap/vim-buftabline'
+
+		"=================== Misc Plugins ===================
+		Plug 'tpope/vim-commentary'
 		Plug 'junegunn/vim-peekaboo'
-		Plug 'skywind3000/vim-quickui'
-		Plug 'w0rp/ale'
 		Plug 'raimondi/delimitMate'
 
-		if has('python3') && isdirectory($HOME.'\.vim\plugged\youcompleteme\python')
-			Plug 'valloric/youcompleteme'
-		endif
 	call plug#end()
 
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
 " Colorschemeing
-colorscheme deus
-let g:airline_theme='deus'
-
-" Airline Config
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#bufferline#enabled = 1
-let g:airline#extensions#bufferline#overwrite_variables = 1
-let g:airline#extensions#nerdtree_statusline = 1
-let g:airline#extentions#fugitiveline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#battery#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#fzf#enabled = 1
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline_skip_empty_sections = 1
-let g:bufferline_echo = 0
-let g:airline#extensions#default#layout = [  
-	\ [ 'a', 'b', 'c' ],  
-	\ [ 'x', 'y', 'z', 'error', 'warning' ]  
-	\ ]
+colorscheme sexy-railscasts
 
 " NERDTree Config
 nnoremap <C-n> :NERDTree<CR>
@@ -129,6 +114,34 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 
 " UndoTree Config
 nnoremap <F5> :UndotreeToggle<CR>
+
+" BufTabLine Config
+let g:buftabline_numbers=2
+let g:buftabline_indicators=1
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(10)
+
+" Lightline config
+let g:lightline = {
+      \ 'colorscheme': 'srcery_drk',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ] ]
+      \ },
+	  \ 'enable': {'tabline': 0 },
+      \ }
+autocmd VimEnter * call lightline#update()
+
+" Which Key config
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
 " Startify Config
 let g:startify_change_to_vcs_root = 1
@@ -155,113 +168,4 @@ let g:lambda_header = [
      \'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ',
      \]
 
-let g:doom_header =<< trim END
-=================     ===============     ===============   ========  ========
-\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
-||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||
-|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||
-||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||
-|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||
-||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||
-|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||
-||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||
-||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||
-||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||
-||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||
-||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||
-||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||
-||   .=='    _-'          '-__\._-'         '-_./__-'         `' |. /|  |   ||
-||.=='    _-'                                                     `' |  /==.||
-=='    _-'                           V I M		                        \/   `==
-\   _-'                                                                `-_   /
- `''                                                                      ``'
-END
-
-let g:startify_custom_header = startify#center(g:doom_header)
-
-" YouCompleteMe Config
-let g:ycm_clangd_uses_ycmd_caching = 0
-let g:ycm_clangd_binary_path = exepath("clangd")
-" Airline Config
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#bufferline#enabled = 1
-let g:airline#extensions#bufferline#overwrite_variables = 1
-let g:airline#extensions#nerdtree_statusline = 1
-let g:airline#extentions#fugitiveline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#battery#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#fzf#enabled = 1
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline_skip_empty_sections = 1
-let g:bufferline_echo = 0
-let g:airline#extensions#default#layout = [  
-	\ [ 'a', 'b', 'c' ],  
-	\ [ 'x', 'y', 'z', 'error', 'warning' ]  
-	\ ]
-
-" NERDTree Config
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-      \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endf
-
-" UndoTree Config
-nnoremap <F5> :UndotreeToggle<CR>
-
-" Startify Config
-let g:startify_change_to_vcs_root = 1
-"let g:startify_fortune_use_unicode = 1
-let g:startify_enable_unsafe = 1
-let g:startify_lists=[{ 'type': 'files', 'header': ['   MRU']},]
-
-let g:lambda_header = [
-    \'',
-     \'⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣤⣴⣦⣤⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ',
-     \'⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣶⣤⡀⠀⠀⠀⠀⠀⠀ ',
-     \'⠀⠀⠀⠀⣠⣾⣿⣿⡿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⢿⣿⣿⣶⡀⠀⠀⠀⠀ ',
-     \'⠀⠀⠀⣴⣿⣿⠟⠁⠀⠀⠀⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣦⠀⠀⠀ ',
-     \'⠀⠀⣼⣿⣿⠋⠀⠀⠀⠀⠀⠛⠛⢻⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣧⠀⠀ ',
-     \'⠀⢸⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⡇⠀ ',
-     \'⠀⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠀ ',
-     \'⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⡟⢹⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⣹⣿⣿⠀ ',
-     \'⠀⣿⣿⣷⠀⠀⠀⠀⠀⠀⣰⣿⣿⠏⠀⠀⢻⣿⣿⡄⠀⠀⠀⠀⠀⠀⣿⣿⡿⠀ ',
-     \'⠀⢸⣿⣿⡆⠀⠀⠀⠀⣴⣿⡿⠃⠀⠀⠀⠈⢿⣿⣷⣤⣤⡆⠀⠀⣰⣿⣿⠇⠀ ',
-     \'⠀⠀⢻⣿⣿⣄⠀⠀⠾⠿⠿⠁⠀⠀⠀⠀⠀⠘⣿⣿⡿⠿⠛⠀⣰⣿⣿⡟⠀⠀ ',
-     \'⠀⠀⠀⠻⣿⣿⣧⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⠏⠀⠀⠀ ',
-     \'⠀⠀⠀⠀⠈⠻⣿⣿⣷⣤⣄⡀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣾⣿⣿⠟⠁⠀⠀⠀⠀ ',
-     \'⠀⠀⠀⠀⠀⠀⠈⠛⠿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⠁⠀⠀⠀⠀⠀⠀ ',
-     \'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠛⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ',
-     \]
-
-let g:doom_header =<< trim END
-=================     ===============     ===============   ========  ========
-\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
-||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||
-|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||
-||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||
-|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||
-||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||
-|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||
-||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||
-||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||
-||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||
-||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||
-||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||
-||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||
-||   .=='    _-'          '-__\._-'         '-_./__-'         `' |. /|  |   ||
-||.=='    _-'                                                     `' |  /==.||
-=='    _-'                           V I M		                        \/   `==
-\   _-'                                                                `-_   /
- `''                                                                      ``'
-END
-
-let g:startify_custom_header = startify#center(g:doom_header)
-
-" YouCompleteMe Config
-let g:ycm_clangd_uses_ycmd_caching = 0
-let g:ycm_clangd_binary_path = exepath("clangd")
+let g:startify_custom_header = startify#center(g:lambda_header)
