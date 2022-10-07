@@ -90,7 +90,7 @@ endif
 		Plug 'myusuf3/numbers.vim'
 		Plug 'flazz/vim-colorschemes'
 		Plug 'ap/vim-buftabline'
-
+		Plug 'tribela/vim-transparent'
 		"=================== Misc Plugins ===================
 		Plug 'tpope/vim-commentary'
 		Plug 'junegunn/vim-peekaboo'
@@ -138,7 +138,7 @@ let g:lightline = {
       \ },
 	  \ 'enable': {'tabline': 0 },
       \ }
-autocmd VimEnter * call lightline#update()
+autocmd VimEnter,BufEnter,WinEnter,BufDelete,FileChangedShellPost,BufReadPost * call lightline#update()
 
 " Which Key config
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
