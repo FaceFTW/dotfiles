@@ -91,6 +91,7 @@ endif
 		Plug 'flazz/vim-colorschemes'
 		Plug 'ap/vim-buftabline'
 		Plug 'tribela/vim-transparent'
+		Plug 'liuchengxu/vim-which-key'
 		"=================== Misc Plugins ===================
 		Plug 'tpope/vim-commentary'
 		Plug 'junegunn/vim-peekaboo'
@@ -113,7 +114,7 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
       \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endf
 
 " UndoTree Config
-nnoremap <F5> :UndotreeToggle<CR>
+nnoremap <silent> <F5> :UndotreeToggle<CR>
 
 " BufTabLine Config
 let g:buftabline_numbers=2
@@ -141,7 +142,28 @@ let g:lightline = {
 autocmd VimEnter,BufEnter,WinEnter,BufDelete,FileChangedShellPost,BufReadPost * call lightline#update()
 
 " Which Key config
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+nnoremap <silent> <leader> :WhichKey '<leader>'<CR>
+nnoremap <silent> g :WhichKey 'g'<CR> 
+
+
+" let g:which_key_map['+win'] = {
+"       \ 'name' : '+windows' ,
+"       \ 'w' : ['<C-W>w'     , 'other-window']          ,
+"       \ 'd' : ['<C-W>c'     , 'delete-window']         ,
+"       \ '-' : ['<C-W>s'     , 'split-window-below']    ,
+"       \ '|' : ['<C-W>v'     , 'split-window-right']    ,
+"       \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
+"       \ 'h' : ['<C-W>h'     , 'window-left']           ,
+"       \ 'j' : ['<C-W>j'     , 'window-below']          ,
+"       \ 'l' : ['<C-W>l'     , 'window-right']          ,
+"       \ 'k' : ['<C-W>k'     , 'window-up']             ,
+"       \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
+"       \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
+"       \ '=' : ['<C-W>='     , 'balance-window']        ,
+"       \ 's' : ['<C-W>s'     , 'split-window-below']    ,
+"       \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
+"       \ }
+
 
 " Startify Config
 let g:startify_change_to_vcs_root = 1
