@@ -216,9 +216,9 @@ if (!$env:FORTUNE_FILE) {
 	[Environment]::SetEnvironmentVariable("FORTUNE_FILE", "$($env:USERPROFILE)\.config\fortunes.txt", [System.EnvironmentVariableTarget]::User)
 }
 
-if(!(Test-Path "vim")){
-	[Environment]::SetEnvironmentVariable("Path", "$($Env:Path);$($Env:USERPROFILE)\.local\bin\vim", 'User')
-}
+# if(!(Test-Path "vim")){
+# 	[Environment]::SetEnvironmentVariable("Path", "$($Env:Path);$($Env:USERPROFILE)\.local\bin\vim", 'User')
+# }
 
 ######## SYMLINKS ########
 if (!(Test-Path ${env:LOCALAPPDATA}\nvim\init.vim)) {
