@@ -14,6 +14,7 @@
 	.zprofile
 	.profile
 	.local/bin/cowsay
+	.config/deck_sync.sh
 {{- end }}
 
 {{- if ne .chezmoi.hostname "steamdeck" }}
