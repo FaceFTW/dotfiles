@@ -1,11 +1,5 @@
-encryption = "gpg"
-targetDir = '{{ .chezmoi.homeDir }}'
-[edit]
-	command = "nvim"
+
 [diff]
 	exclude=['externals']
-[merge]
-    command = "nvim"
-    args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
 [data]
 	keyfingerprint = "76ED5D6D03012E31"
