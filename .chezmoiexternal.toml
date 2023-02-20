@@ -14,6 +14,12 @@
 	type="archive"
 	url="https://github.com/vim/vim-win32-installer/releases/download/v9.0.1050/gvim_9.0.1050_x64.zip"
 	stripComponents=2
+
+['.local/bin/winfetch.ps1']
+	type = "file"
+	url = "https://raw.githubusercontent.com/lptstr/winfetch/master/winfetch.ps1"
+	executable = true
+
 {{- end }}
 
 
