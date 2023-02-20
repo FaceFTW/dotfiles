@@ -14,7 +14,8 @@
 	program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
 [core]
 	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
-	editor=nvim.exe
+	editor=vim.exe
+	autocrlf=true
 {{- end }}
 {{- if eq .chezmoi.os "linux" }}
 [gpg]
