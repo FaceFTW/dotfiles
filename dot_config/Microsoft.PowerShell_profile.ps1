@@ -186,7 +186,6 @@ function export_cow([string] $f) {
 	return $script
 }
 
-
 function docowthink($cowfile, $message) {
 	docowsay $cowfile $message $true
 }
@@ -199,6 +198,16 @@ function doAFunny() {
 function newClear() {
 	Clear-Host
 	doAFunny
+}
+
+function getUserPath() {
+	return [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
+}
+
+function appendUserPath($toAppend) {
+	$userPath = getUserPath
+	[Environment]::SetEnvironmentVariable("Path", $userPath + $toAppend, [EnvironmentVariableTarget]::User)
+	Write-Host "Path updated"
 }
 
 
@@ -216,9 +225,20 @@ if (!$env:FORTUNE_FILE) {
 	[Environment]::SetEnvironmentVariable("FORTUNE_FILE", "$($env:USERPROFILE)\.config\fortunes.txt", [System.EnvironmentVariableTarget]::User)
 }
 
-# if(!(Test-Path "vim")){
-# 	[Environment]::SetEnvironmentVariable("Path", "$($Env:Path);$($Env:USERPROFILE)\.local\bin\vim", 'User')
-# }
+######## ADD CHEZMOI EXTERNALS TO PATH ###########
+if (!(getUserPath -match "%USERPROFILE%\\.local\\bin")) {
+	appendUserPath "%USERPROFILE%\.local\bin;"
+}
+if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\vim")) {
+	appendUserPath "%USERPROFILE%\.local\bin\vim;"
+}
+if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\gsudo")) {
+	appendUserPath "%USERPROFILE%\.local\bin\gsudo;"
+}
+if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\btop")) {
+	appendUserPath "%USERPROFILE%\.local\bin\btop;"
+}
+
 
 ######## SYMLINKS ########
 if (!(Test-Path ${env:LOCALAPPDATA}\nvim\init.vim)) {

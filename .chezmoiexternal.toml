@@ -14,6 +14,18 @@
 	type="archive"
 	url="https://github.com/vim/vim-win32-installer/releases/download/v9.0.1050/gvim_9.0.1050_x64.zip"
 	stripComponents=2
+
+['.local/bin/gsudo']
+	type="archive"
+	url="https://github.com/gerardog/gsudo/releases/download/v2.0.4/gsudo.v2.0.4.zip"
+	stripComponents = 1
+	include=["x64/*"]
+
+['.local/bin/btop']
+	type="archive"
+	url="https://github.com/aristocratos/btop4win/releases/download/v1.0.4/btop4win-LHM-x64.zip"
+	stripComponents=1
+
 {{- end }}
 
 
@@ -34,8 +46,6 @@
     url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
     exact = true
     stripComponents = 1
-
-
 
 {{- end }}
 
