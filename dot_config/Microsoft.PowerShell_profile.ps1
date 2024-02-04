@@ -211,14 +211,6 @@ if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\btop")) {
 
 
 
-######## SYMLINKS ########
-if (!(Test-Path ${env:LOCALAPPDATA}\nvim\init.vim)) {
-	if (!(Test-Path $env:LOCALAPPDATA\nvim)) {
-		New-Item -ItemType Directory -Path $env:LOCALAPPDATA\nvim
-	}
-	New-Item -Type SymbolicLink -Path "$($env:LOCALAPPDATA)\nvim\init.vim" -Target "$($env:USERPROFILE)\.config\nvim\init.vim"
-}
-
 ######## STARTUP ########
 doAFunny
 
