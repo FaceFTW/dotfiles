@@ -2,12 +2,12 @@
 
 ['.local/bin/oh-my-posh.exe']
 	type = "file"
-	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v19.28.0/posh-windows-amd64.exe"
+	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v21.16.2/posh-windows-amd64.exe"
 	executable = true
 
 ['.local/bin/vim']
 	type="archive"
-	url="https://github.com/vim/vim-win32-installer/releases/download/v9.0.1050/gvim_9.0.1050_x64.zip"
+	url="https://github.com/vim/vim-win32-installer/releases/download/v9.1.0516/gvim_9.1.0516_x64.zip"
 	stripComponents=2
 
 ['.local/bin/winfetch.ps1']
@@ -17,7 +17,7 @@
 
 ['.local/bin/gsudo']
 	type="archive"
-	url="https://github.com/gerardog/gsudo/releases/download/v2.0.4/gsudo.v2.0.4.zip"
+	url="https://github.com/gerardog/gsudo/releases/download/v2.5.1/gsudo.v2.5.1.zip"
 	stripComponents = 1
 	include=["x64/*"]
 
@@ -33,7 +33,7 @@
 
 ['.local/bin/oh-my-posh']
 	type = "file"
-	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v19.28.0/posh-linux-amd64"
+	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v21.16.2/posh-linux-amd64"
 	executable = true
 
 [".oh-my-zsh"]
