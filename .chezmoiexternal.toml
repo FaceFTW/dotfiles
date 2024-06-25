@@ -15,16 +15,16 @@
 	url = "https://raw.githubusercontent.com/lptstr/winfetch/master/winfetch.ps1"
 	executable = true
 
-['.local/bin/gsudo']
-	type="archive"
-	url="https://github.com/gerardog/gsudo/releases/download/v2.5.1/gsudo.v2.5.1.zip"
-	stripComponents = 1
-	include=["x64/*"]
+# ['.local/bin/gsudo']
+# 	type="archive"
+# 	url="https://github.com/gerardog/gsudo/releases/download/v2.5.1/gsudo.v2.5.1.zip"
+# 	stripComponents = 1
+# 	include=["x64/*"]
 
-['.local/bin/btop']
-	type="archive"
-	url="https://github.com/aristocratos/btop4win/releases/download/v1.0.4/btop4win-LHM-x64.zip"
-	stripComponents=1
+# ['.local/bin/btop']
+# 	type="archive"
+# 	url="https://github.com/aristocratos/btop4win/releases/download/v1.0.4/btop4win-LHM-x64.zip"
+# 	stripComponents=1
 
 {{- end }}
 
