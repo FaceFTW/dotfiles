@@ -72,6 +72,13 @@
 					"type": "git"
 				},
 				{
+					"type": "project",
+					"style": "diamond",
+					"background": "#2f2f2f",
+					"foreground": "#2d82f1",
+					"template": "<#7a7a7a>\ue0b1 </>{{ if .Error }}{{ .Error }}{{ else }}{{ if .Version }} {{.Version}}{{ end }} {{ if .Name }}{{ .Name }}{{ end }}{{ end }} "
+				},
+				{
 					"foreground": "#FFCE5C",
 					"background": "#2f2f2f",
 					"properties": {
@@ -116,6 +123,20 @@
 					"type": "text"
 				},
 				{
+					"type": "firebase",
+					"style": "diamond",
+					"background": "#FFA000",
+					"foreground": "#2f2f2f",
+					"template": " \ue657 {{ .Project }}<#7a7a7a> \ue0b3</>"
+				},
+				{
+					"type": "react",
+					"style": "diamond",
+					"foreground": "#81a1c1",
+					"background": "#2f2f2f",
+					"template": " \ue625 {{ .Full }}<#7a7a7a> \ue0b3</>"
+				},
+				{
 					"background": "#2f2f2f",
 					"foreground": "#6CA35E",
 					"style": "diamond",
@@ -137,11 +158,25 @@
 					"type": "dotnet"
 				},
 				{
+					"type": "go",
+					"style": "diamond",
+					"backgound": "#2f2f2f",
+					"foreground": "#7FD5EA",
+					"template": " \ue65e {{ .Full }} "
+				},
+				{
 					"type": "rust",
 					"style": "diamond",
 					"background": "#2f2f2f",
 					"foreground": "#99908a",
 					"template": " \ue68b rustc {{ .Full }}<#7a7a7a> \ue0b3</>"
+				},
+				{
+					"type": "cmake",
+					"style": "diamond",
+					"foreground": "#1E9748",
+					"background": "#2f2f2f",
+					"template": " \ue61e \ue61d cmake {{ .Full }}<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"type": "java",
@@ -172,7 +207,6 @@
 					},
 					"style": "diamond",
 					"template": " {{ .CurrentDate | date .Format }}<#007ACC> \ue641 </>",
-					"leading_diamond": "\ue0b2",
 					"trailing_diamond": "\u2593\ue0c6",
 					"type": "time"
 				}
@@ -194,6 +228,11 @@
 		}
 	],
 	"final_space": true,
+	"secondary_prompt": {
+		"background":"transparent",
+		"foreground":"#7a7a7a",
+		"template": " | "
+	},
 	"transient_prompt": {
 		"background": "transparent",
 		"foreground": "#7a7a7a",
