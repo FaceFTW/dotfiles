@@ -45,6 +45,7 @@
     type = "archive"
     url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
     exact = true
+	exclude=['cache/**']
     stripComponents = 1
 
 ['.local/bin']
