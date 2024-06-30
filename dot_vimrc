@@ -96,6 +96,7 @@ endif
 		Plug 'tpope/vim-commentary'
 		Plug 'junegunn/vim-peekaboo'
 		Plug 'raimondi/delimitMate'
+		Plug 'alker0/chezmoi.vim'
 
 	call plug#end()
 
@@ -143,7 +144,7 @@ autocmd VimEnter,BufEnter,WinEnter,BufDelete,FileChangedShellPost,BufReadPost * 
 
 " Which Key config
 nnoremap <silent> <leader> :WhichKey '<leader>'<CR>
-nnoremap <silent> g :WhichKey 'g'<CR> 
+nnoremap <silent> g :WhichKey 'g'<CR>
 
 
 " let g:which_key_map['+win'] = {
