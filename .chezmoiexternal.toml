@@ -29,7 +29,8 @@
 ['.local/bin']
 	type="archive"
 	url="https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-x86_64-pc-windows-msvc.zip"
-
+	stripComponents=1
+	exclude=["*.md", "LICENSE-*"]
 {{- end }}
 
 
@@ -49,6 +50,8 @@
 ['.local/bin']
 	type="archive"
 	url="https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-x86_64-unknown-linux-gnu.tar.gz"
+	stripComponents=1
+	exclude=["*.md", "LICENSE-*"]
 
 {{- end }}
 
