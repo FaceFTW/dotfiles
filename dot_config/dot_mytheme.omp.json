@@ -48,7 +48,7 @@
 					"foreground": "#fafafa",
 					"properties": {
 						"folder_icon": "<#B5B2C2>\ue5fe </>",
-						"style": "full"
+						"style": "unique"
 					},
 					"style": "diamond",
 					"template": "<#f2f200> \ue5ff </>{{ .Path }} ",
@@ -70,13 +70,6 @@
 					"style": "diamond",
 					"template": "<#7a7a7a>\ue0b1 </>{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<#E84855> \uf044 {{ .Working.String }}</>{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#2FDA4E> \uf046 {{ .Staging.String }}</>{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
 					"type": "git"
-				},
-				{
-					"type": "project",
-					"style": "diamond",
-					"background": "#2f2f2f",
-					"foreground": "#2d82f1",
-					"template": "<#7a7a7a>\ue0b1 </>{{ if .Error }}{{ .Error }}{{ else }}{{ if .Version }} {{.Version}}{{ end }} {{ if .Name }}{{ .Name }}{{ end }}{{ end }} "
 				},
 				{
 					"foreground": "#FFCE5C",
