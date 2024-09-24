@@ -16,6 +16,7 @@
 	.zprofile
 	.profile
 	.local/bin/cowsay
+	.local/bin/sh-toy
 	.config/deck_sync.sh
 {{- end }}
 
