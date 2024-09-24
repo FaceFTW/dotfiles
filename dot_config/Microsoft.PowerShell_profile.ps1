@@ -57,18 +57,18 @@ Set-Alias clear newClear
 # }
 
 ######## ADD CHEZMOI EXTERNALS TO PATH ###########
-if (!(getUserPath -match "%USERPROFILE%\\.local\\bin")) {
-	appendUserPath "%USERPROFILE%\.local\bin;"
-}
-if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\vim")) {
-	appendUserPath "%USERPROFILE%\.local\bin\vim;"
-}
-if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\gsudo")) {
-	appendUserPath "%USERPROFILE%\.local\bin\gsudo;"
-}
-if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\btop")) {
-	appendUserPath "%USERPROFILE%\.local\bin\btop;"
-}
+# if (!(getUserPath -match "%USERPROFILE%\\.local\\bin")) {
+# 	appendUserPath "%USERPROFILE%\.local\bin;"
+# }
+# if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\vim")) {
+# 	appendUserPath "%USERPROFILE%\.local\bin\vim;"
+# }
+# if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\gsudo")) {
+# 	appendUserPath "%USERPROFILE%\.local\bin\gsudo;"
+# }
+# if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\btop")) {
+# 	appendUserPath "%USERPROFILE%\.local\bin\btop;"
+# }
 
 
 
