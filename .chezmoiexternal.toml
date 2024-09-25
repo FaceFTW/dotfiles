@@ -2,7 +2,7 @@
 
 ['.local/bin/oh-my-posh.exe']
 	type = "file"
-	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v21.16.2/posh-windows-amd64.exe"
+	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v23.14.2/posh-windows-amd64.exe"
 	executable = true
 
 ['.local/bin/vim']
@@ -38,7 +38,7 @@
 
 ['.local/bin/oh-my-posh']
 	type = "file"
-	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v21.16.2/posh-linux-amd64"
+	url = "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/v23.14.2/posh-linux-amd64"
 	executable = true
 
 [".oh-my-zsh"]
