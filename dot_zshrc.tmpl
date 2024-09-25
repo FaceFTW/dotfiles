@@ -31,7 +31,7 @@ zstyle :omz:plugins:ssh-agent lazy yes
 
 source $ZSH/oh-my-zsh.sh
 
-if ![[ $(stat -c %a ~/.local/bin/sh-toy) != "755" ]]
+if [[ $(stat -c %a ~/.local/bin/sh-toy) != "755" ]]
 then
 	chmod 755 ~/.local/bin/sh-toy
 fi
