@@ -201,5 +201,8 @@
 		"foreground": "#7a7a7a",
 		"template": " {{ .Shell }} - {{.UserName}}\u276f "
 	},
-	"version": 2
+	"version": 2,
+	"shell_integration": true,
+	"patch_pwsh_bleed": true,
+	"disable_notice": true
 }
