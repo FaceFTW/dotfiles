@@ -120,34 +120,34 @@
 					"style": "diamond",
 					"background": "#FFA000",
 					"foreground": "#2f2f2f",
-					"template": " \ue657 {{ .Project }}<#7a7a7a> \ue0b3</>"
+					"template": " \ue657<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"type": "react",
 					"style": "diamond",
 					"foreground": "#81a1c1",
 					"background": "#2f2f2f",
-					"template": " \ue625 {{ .Full }}<#7a7a7a> \ue0b3</>"
+					"template": " \ue625<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"background": "#2f2f2f",
 					"foreground": "#6CA35E",
 					"style": "diamond",
-					"template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}<#7a7a7a> \ue0b3</>",
+					"template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}<#7a7a7a> \ue0b3</>",
 					"type": "node"
 				},
 				{
 					"background": "#2f2f2f",
 					"foreground": "#96E072",
 					"style": "diamond",
-					"template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}<#7a7a7a> \ue0b3</>",
+					"template": " \ue235<#7a7a7a> \ue0b3</>",
 					"type": "python"
 				},
 				{
 					"background": "#2f2f2f",
 					"foreground": "#3891A6",
 					"style": "diamond",
-					"template": " \ue77f {{ if .Unsupported }}\uf071{{ else }}{{ .Full }}{{ end }}<#7a7a7a> \ue0b3</>",
+					"template": " \ue77f {{ if .Unsupported }}\uf071{{ end }}<#7a7a7a> \ue0b3</>",
 					"type": "dotnet"
 				},
 				{
@@ -155,42 +155,42 @@
 					"style": "diamond",
 					"backgound": "#2f2f2f",
 					"foreground": "#7FD5EA",
-					"template": " \ue65e {{ .Full }} "
+					"template": " \ue65e<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"type": "rust",
 					"style": "diamond",
 					"background": "#2f2f2f",
 					"foreground": "#99908a",
-					"template": " \ue68b rustc {{ .Full }}<#7a7a7a> \ue0b3</>"
+					"template": " \ue68b<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"type": "cmake",
 					"style": "diamond",
 					"foreground": "#1E9748",
 					"background": "#2f2f2f",
-					"template": " \ue61e \ue61d cmake {{ .Full }}<#7a7a7a> \ue0b3</>"
+					"template": " \ue61d cmake<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"type": "java",
 					"style": "diamond",
-					"foreground": "#2f2f2f",
-					"background": "#f8981d",
-					"template": " \ue738 Java {{ .Full }}<#7a7a7a> \ue0b3</>"
+					"foreground": "#f8981d",
+					"background": "#2f2f2f",
+					"template": " \ue738<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"type": "kotlin",
 					"style": "diamond",
 					"foreground": "#2f2f2f",
 					"background": "#906cff",
-					"template": " \ue643 {{ .Full }}<#7a7a7a> \ue0b3</>"
+					"template": " \ue643<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"type": "shell",
 					"style": "diamond",
 					"foreground": "#fafafa",
 					"background": "#2f2f2f",
-					"template": " {{ .Name }} {{ .Version }}<#7a7a7a> \ue0b3</>"
+					"template": " {{ .Name }}<#7a7a7a> \ue0b3</>"
 				},
 				{
 					"background": "#2f2f2f",
