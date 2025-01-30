@@ -70,7 +70,9 @@ Set-Alias clear newClear
 # 	appendUserPath "%USERPROFILE%\.local\bin\btop;"
 # }
 
-
+if (Test-Path "$($Env:USERPROFILE)\.local\bin\gsudo"){
+	Import-Module -Name "$($Env:USERPROFILE)\.local\bin\gsudo\gsudoModule.psm1"
+}
 
 ######## STARTUP ########
 doAFunny
