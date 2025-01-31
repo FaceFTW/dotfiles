@@ -5,7 +5,6 @@ set foldmethod=indent
 set encoding=utf-8
 set splitright
 set noshowmode
-set number
 set tabstop=4
 set shiftwidth=4
 set completeopt=menu,menuone,noselect
@@ -15,52 +14,35 @@ set hidden
 set laststatus=2
 set runtimepath-=~/.config/vimfiles
 set runtimepath^=~/.config/vim
+set nocompatible
 
-" Windows Configuration Stuff
-if(has('win32')||has('win64'))
-	let s:data_dir = $USERPROFILE.'/.config/vim'
 
-	" Mouse behavior (the Windows way)
-	behave mswin
+" Relative line setings (abridged from myusuf3/numbers.vim)
+" excludes toggling when changing modes
+	set number
+	set relativenumber
 
-	" Use the internal diff if available.
-	" Otherwise use the special 'diffexpr' for Windows.
-	if &diffopt !~# 'internal'
-	set diffexpr=MyDiff()
+	if (!exists('g:numbers_exclude'))
+		let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', 'Mundo', 'MundoDiff']
 	endif
-	function MyDiff()
-	let opt = '-a --binary '
-	if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-	if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-	let arg1 = v:fname_in
-	if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-	let arg1 = substitute(arg1, '!', '\!', 'g')
-	let arg2 = v:fname_new
-	if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-	let arg2 = substitute(arg2, '!', '\!', 'g')
-	let arg3 = v:fname_out
-	if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-	let arg3 = substitute(arg3, '!', '\!', 'g')
-	if $VIMRUNTIME =~ ' '
-		if &sh =~ '\<cmd'
-		if empty(&shellxquote)
-			let l:shxq_sav = ''
-			set shellxquote&
+
+	function! CheckFtForRelNum()
+		if index(g:numbers_exclude, &ft) >= 0
+			setlocal norelativenumber
+			setlocal nonumber
 		endif
-		let cmd = '"' . $VIMRUNTIME . '\diff"'
-		else
-		let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-		endif
-	else
-		let cmd = $VIMRUNTIME . '\diff'
-	endif
-	let cmd = substitute(cmd, '!', '\!', 'g')
-	silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-	if exists('l:shxq_sav')
-		let &shellxquote=l:shxq_sav
-	endif
-	endfunction
-endif
+	endfunc
+
+	augroup rel_numbers_check
+		au!
+		autocmd bufnewfile  * :call CheckFtForRelNum()
+		autocmd bufreadpost * :call CheckFtForRelNum()
+		autocmd winenter    * :setlocal relativenumber
+		autocmd winleave    * :setlocal norelativenumber
+	augroup end
+
+
+
 
 " Vim Plug Init
 	if !(has('win32') || has('win64'))
@@ -87,11 +69,10 @@ endif
 		Plug 'itchyny/lightline.vim',
 		Plug 'mbbill/undotree'
 		Plug 'ryanoasis/vim-devicons'
-		Plug 'myusuf3/numbers.vim'
 		Plug 'flazz/vim-colorschemes'
 		Plug 'ap/vim-buftabline'
-		Plug 'tribela/vim-transparent'
-		Plug 'liuchengxu/vim-which-key'
+"	Plug 'tribela/vim-transparent'
+"		Plug 'liuchengxu/vim-which-key'
 		"=================== Misc Plugins ===================
 		Plug 'tpope/vim-commentary'
 		Plug 'junegunn/vim-peekaboo'
@@ -103,7 +84,7 @@ endif
 nnoremap <C-N> :bnext<CR>
 nnoremap <C-P> :bprev<CR>
 " Colorschemeing
-colorscheme sexy-railscasts
+colorscheme papercolor
 
 " NERDTree Config
 nnoremap <C-n> :NERDTree<CR>
