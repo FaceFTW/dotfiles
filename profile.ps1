@@ -77,5 +77,5 @@ if (Test-Path "$($Env:USERPROFILE)\.local\bin\gsudo"){
 ######## STARTUP ########
 doAFunny
 
-oh-my-posh --init --shell pwsh --config "$($env:USERPROFILE)\.config\.mytheme.omp.json" | Invoke-Expression
+oh-my-posh --init --shell pwsh --config "$env:USERPROFILE\.config\theme.omp.json" | Invoke-Expression
 Enable-PoshTransientPrompt
