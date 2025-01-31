@@ -1,7 +1,7 @@
 [user]
 	name = Alex Westerman
 	email = alex@faceftw.dev
-	signingkey={{ .keyfingerprint }}
+	signingkey=9EB573C02E056DA8
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f

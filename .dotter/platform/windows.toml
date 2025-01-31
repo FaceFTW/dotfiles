@@ -1,0 +1,8 @@
+
+[helpers]
+
+[default]
+depends = ["win64"]
+
+[settings]
+default_target_type = "automatic"

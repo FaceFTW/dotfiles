@@ -1,0 +1,35 @@
+[helpers]
+
+[default]
+depends = []
+
+
+[default.files]
+gitconfig = "~/.gitconfig"
+".vimrc" = "~/.vimrc"
+"config/cowsay" = "~/.config/cowsay"
+"config/fortunes.txt" = "~/.config/fortunes.txt"
+"config/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
+
+
+[default.variables]
+
+[win64]
+depends=[]
+
+[win64.files]
+"bin/executable_sh-toy.exe" = "~/.local/bin/sh-toy.exe"
+"profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
+
+[linux]
+depends = []
+
+[linux.files]
+bashrc = "~/.bashrc"
+zshrc = "~/.zshrc"
+profile = "~/.profile"
+"bin/executable_sh-toy" = "~/.local/bin/sh-toy"
+
+
+[settings]
+default_target_type = "automatic"
