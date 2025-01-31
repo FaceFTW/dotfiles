@@ -43,6 +43,12 @@ set nocompatible
 
 
 
+" Nice keybinds
+mapleader \
+
+tnoremap <Esc> <C-\><C-n>
+noremap  <Leader>p "+p
+
 
 " Vim Plug Init
 	if !(has('win32') || has('win64'))
