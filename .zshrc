@@ -22,12 +22,10 @@ zstyle ':omz:update' mode disabled
 COMPLETION_WAITING_DOTS="true"
 
 # Oh My Zsh Plugins
-plugins=(colorize colored-man-pages dircycle cp lol {{ if ne .chezmoi.hostname "steamdeck" }} vscode ssh-agent gpg-agent {{ end }})
-{{ if ne .chezmoi.hostname "steamdeck" }}
+plugins=(colorize colored-man-pages dircycle cp lol vscode ssh-agent gpg-agent)
 zstyle :omz:plugins:keychain agents gpg,ssh
 zstyle :omz:plugins:keychain options --quiet --quick --noask
 zstyle :omz:plugins:ssh-agent lazy yes
-{{ end }}
 
 source $ZSH/oh-my-zsh.sh
 
@@ -47,7 +45,7 @@ alias clearmemcache="echo 3 | sudo tee /proc/sys/vm/drop_caches"
 alias clear="/bin/clear; sh-toy"
 
 path+=('/home/face/.local/bin')
-eval "$(oh-my-posh --init --shell zsh --config ~/.config/.mytheme.omp.json)"
-enable_poshtransientprompt
+eval "$(oh-my-posh --init --shell zsh --config ~/.config/theme.omp.json)"
+# enable_poshtransientprompt
 
 sh-toy

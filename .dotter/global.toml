@@ -32,9 +32,9 @@ depends = []
 depends = []
 
 [linux.files]
-bashrc = "~/.bashrc"
-zshrc = "~/.zshrc"
-profile = "~/.profile"
+".bashrc" = "~/.bashrc"
+".zshrc" = "~/.zshrc"
+"profile" = "~/.profile"
 "bin/executable_sh-toy" = "~/.local/bin/sh-toy"
 
 
