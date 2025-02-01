@@ -17,9 +17,8 @@ mkdir tmp
 
 # Oh-My-Posh
 curl \
-	-I \
 	--output "$HOME/.local/bin/oh-my-posh" \
-	"https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/$OH_MY_POSH_VERSION/posh-linux-arm64"
+	-L "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/$OH_MY_POSH_VERSION/posh-linux-arm64"
 #	--silent \
 chmod +x "$HOME/.local/bin/oh-my-posh"
 
@@ -28,9 +27,8 @@ git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 
 #bat
 curl \
-	-I \
 	--output tmp/bat.tar.gz \
-	"https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/bat-$BAT_VERSION-aarch64-unknown-linux-gnu.tar.gz"
+	-L "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/bat-$BAT_VERSION-aarch64-unknown-linux-gnu.tar.gz"
 	# --silent \
 tar -zxf tmp/bat.tar.gz bat
 mv "tmp/bat-$BAT_VERSION-aarch64-unknown-linux-gnu/bat" ~/.local/bin/bat
