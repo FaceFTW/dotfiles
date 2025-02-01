@@ -33,7 +33,7 @@ cd tmp || exit
 tar -zxf bat.tar.gz
 mv "bat-$BAT_VERSION-x86_64-unknown-linux-gnu/bat" ~/.local/bin/bat
 mv "bat-$BAT_VERSION-x86_64-unknown-linux-gnu/autocomplete/bat.bash" ~/.local/bin/bat.bash
-mv "bat-$BAT_VERSION-x86_64-unknown-linux-gnu/autocomplete/bat" ~/.local/bin/bat.zsh
+mv "bat-$BAT_VERSION-x86_64-unknown-linux-gnu/autocomplete/bat.zsh" ~/.local/bin/bat.zsh
 cd .. || exit
 
 # Vim is installed by package manager
