@@ -13,9 +13,15 @@ gitconfig = "~/.gitconfig"
 
 
 [default.variables]
+arch = "x86_64"
+install_pkgs = "false"
+
+## Var values For local.toml reference
+## arch="x86_64"
+## arch="arm64"
 
 [win64]
-depends=[]
+depends = []
 
 [win64.files]
 "bin/executable_sh-toy.exe" = "~/.local/bin/sh-toy.exe"
@@ -34,3 +40,4 @@ profile = "~/.profile"
 
 [settings]
 default_target_type = "automatic"
+

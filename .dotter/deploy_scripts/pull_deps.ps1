@@ -1,8 +1,8 @@
 # Versions for all the binaries we are pulling if they need it
 
-$oh_my_posh_version = "v23.14.2"
+$oh_my_posh_version = "v24.19.0"
 $vim_w32_version = "9.1.0516"
-$bat_version = "v0.24.0"
+$bat_version = "v0.25.0"
 
 # Remove Old stuff
 Remove-Item -Path "~/.local/bin/oh-my-posh.exe" -ErrorAction Ignore

@@ -1,7 +1,0 @@
-[helpers]
-
-[default]
-depends = ["win64"]
-
-[default.variables]
-post_deploy_script = [".dotter/deploy_scripts/deploy_win.bat"]
