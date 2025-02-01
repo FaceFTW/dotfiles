@@ -46,6 +46,6 @@ alias clear="/bin/clear; sh-toy"
 
 path+=('/home/face/.local/bin')
 eval "$(oh-my-posh --init --shell zsh --config ~/.config/.mytheme.omp.json)"
-enable_poshtransientprompt
+# enable_poshtransientprompt
 
 sh-toy
