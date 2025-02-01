@@ -14,13 +14,12 @@ rm -f ~/.local/bin/oh-my-posh
 
 mkdir tmp
 
-
 # Oh-My-Posh
 curl \
-	--output ~/.local/bin/oh-my-posh \
+	--output "$HOME/.local/bin/oh-my-posh" \
 	"https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/$OH_MY_POSH_VERSION/posh-linux-amd64"
 #	--silent \
-chmod +x ~/.local/bin/oh-my-posh
+chmod +x "$HOME/.local/bin/oh-my-posh"
 
 # Oh-My-ZSH
 git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
