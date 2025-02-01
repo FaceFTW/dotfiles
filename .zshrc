@@ -45,7 +45,7 @@ alias clearmemcache="echo 3 | sudo tee /proc/sys/vm/drop_caches"
 alias clear="/bin/clear; sh-toy"
 
 path+=('/home/face/.local/bin')
-eval "$(oh-my-posh --init --shell zsh --config ~/.config/.mytheme.omp.json)"
+eval "$(oh-my-posh --init --shell zsh --config ~/.config/theme.omp.json)"
 # enable_poshtransientprompt
 
 sh-toy
