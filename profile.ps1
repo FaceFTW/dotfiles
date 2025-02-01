@@ -52,17 +52,14 @@ Set-Alias clear newClear
 
 
 ######## ENVIRONMENT VARS ########
-# if (!$env:FORTUNE_FILE) {
-# 	[Environment]::SetEnvironmentVariable("FORTUNE_FILE", "$($env:USERPROFILE)\.config\fortunes.txt", [System.EnvironmentVariableTarget]::User)
-# }
 
 ######## ADD CHEZMOI EXTERNALS TO PATH ###########
-# if (!(getUserPath -match "%USERPROFILE%\\.local\\bin")) {
-# 	appendUserPath "%USERPROFILE%\.local\bin;"
-# }
-# if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\vim")) {
-# 	appendUserPath "%USERPROFILE%\.local\bin\vim;"
-# }
+if (!(getUserPath -match "$Env:USERPROFILE\\.local\\bin")) {
+	appendUserPath "$Env:USERPROFILE\.local\bin;"
+}
+if (!(getUserPath -match "$Env:USERPROFILE\\.local\\bin\\vim")) {
+	appendUserPath "$Env:USERPROFILE\.local\bin\vim;"
+}
 # if (!(getUserPath -match "%USERPROFILE%\\.local\\bin\\gsudo")) {
 # 	appendUserPath "%USERPROFILE%\.local\bin\gsudo;"
 # }
@@ -70,9 +67,14 @@ Set-Alias clear newClear
 # 	appendUserPath "%USERPROFILE%\.local\bin\btop;"
 # }
 
-if (Test-Path "$($Env:USERPROFILE)\.local\bin\gsudo"){
+if (Test-Path "$($Env:USERPROFILE)\.local\bin\gsudo") {
 	Import-Module -Name "$($Env:USERPROFILE)\.local\bin\gsudo\gsudoModule.psm1"
 }
+
+if (Test-Path "$($Env:USERPROFILE)\.local\bin\_bat.ps1"){
+	. $Env:USERPROFILE\.local\bin\_bat.ps1
+}
+
 
 ######## STARTUP ########
 doAFunny
