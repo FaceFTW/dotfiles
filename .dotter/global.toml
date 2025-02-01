@@ -21,6 +21,7 @@ depends=[]
 "bin/executable_sh-toy.exe" = "~/.local/bin/sh-toy.exe"
 "profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
 
+
 [linux]
 depends = []
 

@@ -1,8 +1,7 @@
-
 [helpers]
 
 [default]
 depends = ["win64"]
 
-[settings]
-default_target_type = "automatic"
+[default.variables]
+post_deploy_script = [".dotter/deploy_scripts/deploy_win.bat"]
