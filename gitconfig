@@ -9,20 +9,20 @@
 	process = git-lfs filter-process
 [commit]
 	gpgsign=true
-{{- if eq .chezmoi.os "windows" }}
+{{#if (eq dotter.os "windows")}}
 [gpg]
 	program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
 [core]
 	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 	editor=vim.exe
 	autocrlf=true
-{{- end }}
-{{- if eq .chezmoi.os "linux" }}
+{{/if}}
+{{#if (eq dotter.os "unix")}}
 [gpg]
 	program = /bin/gpg
 [core]
 	sshCommand = /bin/ssh
-{{- end }}
+{{/if}}
 
 [init]
 	defaultBranchName = main
