@@ -112,6 +112,7 @@ set runtimepath^=~/.config/vim
 		Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 		Plug 'junegunn/fzf.vim'
 		Plug 'sbdchd/neoformat'
+		Plug 'dense-analysis/ale'
 		"=================== UI Plugins ===================
 		Plug 'mhinz/vim-startify'
 		Plug 'itchyny/lightline.vim',
@@ -133,7 +134,12 @@ set runtimepath^=~/.config/vim
 " Colorschemeing
 colorscheme papercolor
 
-" UndoTree Config
+" ALE config
+let g:ale_completion_enabled = 1
+let g:ale_linters = {'rust': ['analyzer']}
+let g:ale_fixers = {
+\	'*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
 
 " BufTabLine Config
 let g:buftabline_numbers=2
