@@ -2,3 +2,5 @@ chezmoi.toml
 chemoistate.boltdb
 .dotter/cache*
 .dotter/local.toml
+
+*.vscdb*
