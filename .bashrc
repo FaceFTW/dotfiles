@@ -115,3 +115,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+export _Z_DATA=$HOME/.config/z_data
+source $HOME/.local/bin/z.sh

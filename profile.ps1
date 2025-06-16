@@ -1,3 +1,6 @@
+
+
+
 function Set-CurrentDir {
 	param($dir)
 	Set-Location $dir
@@ -75,6 +78,9 @@ if (Test-Path "$($Env:USERPROFILE)\.local\bin\_bat.ps1"){
 	. $Env:USERPROFILE\.local\bin\_bat.ps1
 }
 
+if (-not (Get-Module -ListAvailable -Name z)) {
+    Install-Module z
+}
 
 ######## STARTUP ########
 doAFunny
