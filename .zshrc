@@ -22,10 +22,12 @@ zstyle ':omz:update' mode disabled
 COMPLETION_WAITING_DOTS="true"
 
 # Oh My Zsh Plugins
-plugins=(colorize colored-man-pages dircycle cp lol vscode ssh-agent gpg-agent)
+plugins=(colorize colored-man-pages dircycle cp lol vscode ssh-agent gpg-agent z)
 zstyle :omz:plugins:keychain agents gpg,ssh
 zstyle :omz:plugins:keychain options --quiet --quick --noask
 zstyle :omz:plugins:ssh-agent lazy yes
+
+export ZSHZ_DATA=$HOME/.config/z_data
 
 source $ZSH/oh-my-zsh.sh
 
