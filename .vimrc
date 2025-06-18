@@ -211,85 +211,45 @@ nnoremap <silent> <F5> :UndotreeToggle<CR>
 " Source: https://github.com/NLKNguyen/papercolor-theme/blob/0cfe64ffb24c21a6101b5f994ca342a74c977aef/colors/PaperColor.vim
 " (Under MIT License)
 let s:palette = {
-\       'color00' : ['#1c1c1c', '234'],
-\       'color01' : ['#af005f', '125'],
-\       'color02' : ['#5faf00', '70'],
-\       'color03' : ['#d7af5f', '179'],
-\       'color04' : ['#5fafd7', '74'],
-\       'color05' : ['#808080', '244'],
-\       'color06' : ['#d7875f', '173'],
-\       'color07' : ['#d0d0d0', '252'],
-\       'color08' : ['#585858', '240'],
-\       'color09' : ['#5faf5f', '71'],
-\       'color10' : ['#afd700', '148'],
-\       'color11' : ['#af87d7', '140'],
-\       'color12' : ['#ffaf00', '214'],
-\       'color13' : ['#ff5faf', '205'],
-\       'color14' : ['#00afaf', '37'],
-\       'color15' : ['#5f8787', '66'],
-\       'color16' : ['#5fafd7', '74'],
-\       'color17' : ['#d7af00', '178'],
-\       'cursor_fg' : ['#1c1c1c', '234'],
-\       'cursor_bg' : ['#c6c6c6', '251'],
-\       'cursorline' : ['#303030', '236'],
-\       'cursorcolumn' : ['#303030', '236'],
-\       'cursorlinenr_fg' : ['#ffff00', '226'],
-\       'cursorlinenr_bg' : ['#1c1c1c', '234'],
-\       'popupmenu_fg' : ['#c6c6c6', '251'],
-\       'popupmenu_bg' : ['#303030', '236'],
-\       'search_fg' : ['#000000', '16'],
-\       'search_bg' : ['#00875f', '29'],
-\       'incsearch_fg' : ['#00875f', '29'],
-\       'incsearch_bg' : ['#000000', '16'],
-\       'linenumber_fg' : ['#585858', '240'],
-\       'linenumber_bg' : ['#1c1c1c', '234'],
-\       'vertsplit_fg' : ['#5f8787', '66'],
-\       'vertsplit_bg' : ['#1c1c1c', '234'],
-\       'statusline_active_fg' : ['#1c1c1c', '234'],
-\       'statusline_active_bg' : ['#5f8787', '66'],
-\       'statusline_inactive_fg' : ['#bcbcbc', '250'],
-\       'statusline_inactive_bg' : ['#3a3a3a', '237'],
-\       'todo_fg' : ['#ff8700', '208'],
-\       'todo_bg' : ['#1c1c1c', '234'],
-\       'error_fg' : ['#af005f', '125'],
-\       'error_bg' : ['#5f0000', '52'],
-\       'matchparen_bg' : ['#4e4e4e', '239'],
-\       'matchparen_fg' : ['#c6c6c6', '251'],
-\       'visual_fg' : ['#000000', '16'],
-\       'visual_bg' : ['#8787af', '103'],
-\       'folded_fg' : ['#d787ff', '177'],
-\       'folded_bg' : ['#5f005f', '53'],
-\       'wildmenu_fg': ['#1c1c1c', '234'],
-\       'wildmenu_bg': ['#afd700', '148'],
-\       'spellbad':   ['#5f0000', '52'],
-\       'spellcap':   ['#5f005f', '53'],
-\       'spellrare':  ['#005f00', '22'],
-\       'spelllocal': ['#00005f', '17'],
-\       'diffadd_fg':    ['#87d700', '112'],
-\       'diffadd_bg':    ['#005f00', '22'],
-\       'diffdelete_fg': ['#af005f', '125'],
-\       'diffdelete_bg': ['#5f0000', '52'],
-\       'difftext_fg':   ['#5fffff', '87'],
-\       'difftext_bg':   ['#008787', '30'],
-\       'diffchange_fg': ['#d0d0d0', '252'],
-\       'diffchange_bg': ['#005f5f', '23'],
-\       'tabline_bg':          ['#262626', '235'],
-\       'tabline_active_fg':   ['#121212', '233'],
-\       'tabline_active_bg':   ['#00afaf', '37'],
-\       'tabline_inactive_fg': ['#bcbcbc', '250'],
-\       'tabline_inactive_bg': ['#585858', '240'],
-\       'buftabline_bg':          ['#262626', '235'],
-\       'buftabline_current_fg':  ['#121212', '233'],
-\       'buftabline_current_bg':  ['#00afaf', '37'],
-\       'buftabline_active_fg':   ['#00afaf', '37'],
-\       'buftabline_active_bg':   ['#585858', '240'],
-\       'buftabline_inactive_fg': ['#bcbcbc', '250'],
-\       'buftabline_inactive_bg': ['#585858', '240'],
+\ 'color03': ['#d7af5f', '179'], 'color04': ['#5fafd7', '74' ], 'color05': ['#808080', '244'],
+\ 'color00': ['#1c1c1c', '234'], 'color01': ['#af005f', '125'], 'color02': ['#5faf00', '70' ],
+\ 'color06': ['#d7875f', '173'], 'color07': ['#d0d0d0', '252'], 'color08': ['#585858', '240'],
+\ 'color09': ['#5faf5f', '71' ], 'color10': ['#afd700', '148'], 'color11': ['#af87d7', '140'],
+\ 'color12': ['#ffaf00', '214'], 'color13': ['#ff5faf', '205'], 'color14': ['#00afaf', '37' ],
+\ 'color15': ['#5f8787', '66' ], 'color16': ['#5fafd7', '74' ], 'color17': ['#d7af00', '178'],
+\ 'cursor_fg':              ['#1c1c1c', '234'], 'cursor_bg':              ['#c6c6c6', '251'],
+\ 'cursorline':             ['#303030', '236'], 'cursorcolumn':           ['#303030', '236'],
+\ 'cursorlinenr_fg':        ['#ffff00', '226'], 'cursorlinenr_bg':        ['#1c1c1c', '234'],
+\ 'popupmenu_fg':           ['#c6c6c6', '251'], 'popupmenu_bg':           ['#303030', '236'],
+\ 'search_fg':              ['#000000', '16' ], 'search_bg':              ['#00875f', '29' ],
+\ 'incsearch_fg':           ['#00875f', '29' ], 'incsearch_bg':           ['#000000', '16' ],
+\ 'linenumber_fg':          ['#585858', '240'], 'linenumber_bg':          ['#1c1c1c', '234'],
+\ 'vertsplit_fg':           ['#5f8787', '66' ], 'vertsplit_bg' :          ['#1c1c1c', '234'],
+\ 'statusline_active_fg':   ['#1c1c1c', '234'], 'statusline_active_bg':   ['#5f8787', '66' ],
+\ 'statusline_inactive_fg': ['#bcbcbc', '250'], 'statusline_inactive_bg': ['#3a3a3a', '237'],
+\ 'todo_fg':                ['#ff8700', '208'], 'todo_bg':                ['#1c1c1c', '234'],
+\ 'error_fg':               ['#af005f', '125'], 'error_bg':               ['#5f0000', '52' ],
+\ 'matchparen_bg':          ['#4e4e4e', '239'], 'matchparen_fg':          ['#c6c6c6', '251'],
+\ 'visual_fg':              ['#000000', '16' ], 'visual_bg':              ['#8787af', '103'],
+\ 'folded_fg':              ['#d787ff', '177'], 'folded_bg':              ['#5f005f', '53' ],
+\ 'wildmenu_fg':            ['#1c1c1c', '234'], 'wildmenu_bg':            ['#afd700', '148'],
+\ 'spellbad':               ['#5f0000', '52' ], 'spellcap':               ['#5f005f', '53' ],
+\ 'spellrare':              ['#005f00', '22' ], 'spelllocal':             ['#00005f', '17' ],
+\ 'diffadd_fg':             ['#87d700', '112'], 'diffadd_bg':             ['#005f00', '22' ],
+\ 'diffdelete_fg':          ['#af005f', '125'], 'diffdelete_bg':          ['#5f0000', '52' ],
+\ 'difftext_fg':            ['#5fffff', '87' ], 'difftext_bg':            ['#008787', '30' ],
+\ 'diffchange_fg':          ['#d0d0d0', '252'], 'diffchange_bg':          ['#005f5f', '23' ],
+\ 'tabline_bg':             ['#262626', '235'],
+\ 'tabline_active_fg':      ['#121212', '233'], 'tabline_active_bg':      ['#00afaf', '37' ],
+\ 'tabline_inactive_fg':    ['#bcbcbc', '250'], 'tabline_inactive_bg':    ['#585858', '240'],
+\ 'buftabline_bg':          ['#262626', '235'],
+\ 'buftabline_current_fg':  ['#121212', '233'], 'buftabline_current_bg':  ['#00afaf', '37' ],
+\ 'buftabline_active_fg':   ['#00afaf', '37' ], 'buftabline_active_bg':   ['#585858', '240'],
+\ 'buftabline_inactive_fg': ['#bcbcbc', '250'], 'buftabline_inactive_bg': ['#585858', '240'],
 \}
 
-" Identify Color Mode + Set Formatting Attrs.: {{{
-"
- fun! s:identify_color_mode()
+" Identify Color Mode + Set Formatting Attrs.:
+fun! s:identify_color_mode()
     let s:MODE_16_COLOR = 0
     let s:MODE_256_COLOR = 1
     let s:MODE_GUI_COLOR = 2
@@ -315,14 +275,14 @@ let s:palette = {
 		let s:ft_italic  = ""
 		let s:ft_italic_bold = ""
      endif
- endfun
-"}}}
+endfun
 
 
-" Set Color Variables: {{{
+
+" Set Color Variables:
 fun! s:set_color_variables()
 
-  " Helper: {{{
+  " Helper:
   " -------
   " Function to dynamically generate variables that store the color strings
   " for setting highlighting. Each color name will have 2 variables with prefix
@@ -364,7 +324,6 @@ fun! s:set_color_variables()
       let {'s:sp_' . a:color_name} = ''
     endfun
   endif
-  " }}}
 
   " Color value format: Array [<GUI COLOR/HEX >, <256-Base>, <16-Base>]
   " 16-Base is terminal's native color palette that can be alternated through
@@ -380,7 +339,7 @@ fun! s:set_color_variables()
   " and the color name on the right is for 16-color terminal (the actual terminal colors
   " can be different from what the color names suggest). See :h cterm-colors
   "
-  " Depending on the provided color palette and current Vim, the 1st and 2nd
+11  " Depending on the provided color palette and current Vim, the 1st and 2nd
   " parameter might not exist, for example, on 16-color terminal, the variables below
   " only store the color names to use the terminal color palette which is the only
   " thing available therefore no need for GUI-color or 256-color.
@@ -411,17 +370,14 @@ fun! s:set_color_variables()
   call s:create_color_variables('navy',       color06 , 'DarkCyan') " storageclass
   call s:create_color_variables('foreground', color07 , 'LightGray')
 
-  call s:create_color_variables('nontext',   color08 , 'DarkGray')
-  call s:create_color_variables('red',       color09 , 'LightRed') " import / try/catch
-  call s:create_color_variables('pink',      color10 , 'LightGreen') " statement, type
-  call s:create_color_variables('purple',    color11 , 'LightYellow') " if / conditional
-  call s:create_color_variables('accent',    color12 , 'LightBlue')
-  call s:create_color_variables('orange',    color13 , 'LightMagenta') " number
-  call s:create_color_variables('blue',      color14 , 'LightCyan') " other keyword
-  call s:create_color_variables('highlight', color15 , 'White')
-
-  " Note: special case for FoldColumn group. I want to get rid of this case.
-"   call s:create_color_variables('transparent', [color00[0], 'none'], 'none')
+  call s:create_color_variables('nontext',    color08 , 'DarkGray')
+  call s:create_color_variables('red',        color09 , 'LightRed') " import / try/catch
+  call s:create_color_variables('pink',       color10 , 'LightGreen') " statement, type
+  call s:create_color_variables('purple',     color11 , 'LightYellow') " if / conditional
+  call s:create_color_variables('accent',     color12 , 'LightBlue')
+  call s:create_color_variables('orange',     color13 , 'LightMagenta') " number
+  call s:create_color_variables('blue',       color14 , 'LightCyan') " other keyword
+  call s:create_color_variables('highlight',  color15 , 'White')
 
   " EXTENDED COLORS:
   " From here on, all colors are optional and must have default values (3rd parameter of the
@@ -685,7 +641,6 @@ fun! s:apply_syntax_highlightings()
 
   endif
 
-  " Extension {{{
   " VimL Highlighting
   exec 'hi vimCommand' . s:fg_pink
   exec 'hi vimVar' . s:fg_navy
@@ -1685,7 +1640,6 @@ fun! s:apply_syntax_highlightings()
   endif
 
 endfun
-" }}}
 
 hi clear
 syntax reset
