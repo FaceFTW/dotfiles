@@ -17,13 +17,14 @@ set hidden						" Hide buffers instead of asking if to save them.
 set cursorline					" Highlight line under cursor. It helps with navigation.
 set cursorlineopt=number
 set scrolloff=8					" Keep 8 lines above or below the cursor when scrolling.
-set noerrorbell					" Disable any annoying beeps on errors.
+set noerrorbells				" Disable any annoying beeps on errors.
 set belloff=all
 set nomodeline					" Don't parse modelines (google "vim modeline vulnerability").
 set foldmethod=indent			" Folding Settings
 set foldnestmax=5
 set nofoldenable
 set noshowmode					" This is handled by lightline now
+set re=1
 filetype plugin on
 filetype indent on
 
@@ -114,7 +115,6 @@ set runtimepath^=~/.config/vim
 		Plug 'itchyny/lightline.vim',
 		Plug 'mbbill/undotree'
 		"=================== Misc Plugins ===================
-		Plug 'tpope/vim-commentary'
 		Plug 'junegunn/vim-peekaboo'
 		Plug 'raimondi/delimitMate'
 
@@ -372,6 +372,12 @@ nnoremap <silent> <F5> :UndotreeToggle<CR>
 		" WildMenu: Autocomplete command, ex: :color <tab><tab>
 		call s:create_color_variables('wildmenu_fg', get(s:palette, 'wildmenu_fg', color00) , 'Black')
 		call s:create_color_variables('wildmenu_bg', get(s:palette, 'wildmenu_bg', color06) , 'LightGray')
+		" Tabline: when having tabs, ex: :tabnew
+		call s:create_color_variables('tabline_bg',          get(s:palette, 'tabline_bg',          color00) , 'Black')
+		call s:create_color_variables('tabline_active_fg',   get(s:palette, 'tabline_active_fg',   color07) , 'LightGray')
+		call s:create_color_variables('tabline_active_bg',   get(s:palette, 'tabline_active_bg',   color00) , 'Black')
+		call s:create_color_variables('tabline_inactive_fg', get(s:palette, 'tabline_inactive_fg', color07) , 'Black')
+		call s:create_color_variables('tabline_inactive_bg', get(s:palette, 'tabline_inactive_bg', color08) , 'DarkMagenta')
 		" Spelling: when spell on and there are spelling problems like this for example: papercolor. a vim color scheme
 		call s:create_color_variables('spellbad', get(s:palette, 'spellbad', color04) , 'DarkRed')
 		call s:create_color_variables('spellcap', get(s:palette, 'spellcap', color05) , 'DarkMagenta')
@@ -424,6 +430,26 @@ nnoremap <silent> <F5> :UndotreeToggle<CR>
 	" Apply Syntax Highlightings: {{{
 
 	fun! s:apply_syntax_highlightings()
+		exec 'hi Normal' . s:fg_foreground . s:bg_background
+		set background=dark
+		exec 'hi EndOfBuffer' . s:fg_cursor_fg  . s:ft_none
+		exec 'hi NonText' . s:fg_nontext . s:bg_background
+		exec 'hi LineNr' . s:fg_linenumber_fg . s:bg_linenumber_bg
+		exec 'hi Conceal' . s:fg_linenumber_fg . s:bg_linenumber_bg
+		exec 'hi VertSplit' . s:fg_vertsplit_bg . s:bg_vertsplit_fg
+		exec 'hi FoldColumn' . s:fg_folded_fg . s:bg_background . s:ft_none
+		exec 'hi Cursor' . s:fg_cursor_fg . s:bg_cursor_bg
+		exec 'hi SpecialKey' . s:fg_nontext
+		exec 'hi Search' . s:fg_search_fg . s:bg_search_bg
+		exec 'hi IncSearch' . s:fg_incsearch_fg . s:bg_incsearch_bg
+		exec 'hi StatusLine' . s:fg_statusline_active_bg . s:bg_statusline_active_fg
+		exec 'hi StatusLineNC' . s:fg_statusline_inactive_bg . s:bg_statusline_inactive_fg
+		exec 'hi StatusLineTerm' . s:fg_statusline_active_bg . s:bg_statusline_active_fg
+		exec 'hi StatusLineTermNC' . s:fg_statusline_inactive_bg . s:bg_statusline_inactive_fg
+		exec 'hi Visual' . s:fg_visual_fg . s:bg_visual_bg
+		exec 'hi Directory' . s:fg_blue
+		exec 'hi ModeMsg' . s:fg_olive
+		exec 'hi MoreMsg' . s:fg_olive
 		exec 'hi Question' . s:fg_olive
 		exec 'hi WarningMsg' . s:fg_pink
 		exec 'hi MatchParen' . s:fg_matchparen_fg . s:bg_matchparen_bg
@@ -1670,4 +1696,118 @@ call s:apply_syntax_highlightings()
 		nnoremap <C-N> :bnext<CR>
 		nnoremap <C-P> :bprev<CR>
 
+	endif
+
+" Port/Minification of commentary.vim
+" Source: https://github.com/tpope/vim-commentary/tree/master/plugin
+" Under Vim Licensing (Charityware, Donate to iccf)
+	if v:version >= 703
+		function! s:surroundings() abort
+		  return split(get(b:, 'commentary_format', substitute(substitute(substitute(
+				\ &commentstring, '^$', '%s', ''), '\S\zs%s',' %s', '') ,'%s\ze\S', '%s ', '')), '%s', 1)
+		endfunction
+
+		function! s:strip_white_space(l,r,line) abort
+			let [l, r] = [a:l, a:r]
+			if l[-1:] ==# ' ' && stridx(a:line . ' ', l) == -1 && stridx(a:line, l[0:-2]) == 0
+				let l = l[:-2]
+			endif
+			if r[0] ==# ' ' && (' ' . a:line)[-strlen(r)-1:] != r && a:line[-strlen(r):] == r[1:]
+				let r = r[1:]
+			endif
+			return [l, r]
+		endfunction
+
+		function! s:go(...) abort
+			if !a:0
+				let &operatorfunc = matchstr(expand('<sfile>'), '[^. ]*$')
+				return 'g@'
+			elseif a:0 > 1
+				let [lnum1, lnum2] = [a:1, a:2]
+			else
+				let [lnum1, lnum2] = [line("'["), line("']")]
+			endif
+
+			let [l, r] = s:surroundings()
+			let uncomment = 2
+			let force_uncomment = a:0 > 2 && a:3
+			for lnum in range(lnum1,lnum2)
+				let line = matchstr(getline(lnum),'\S.*\s\@<!')
+				let [l, r] = s:strip_white_space(l,r,line)
+				if len(line) && (stridx(line,l) || line[strlen(line)-strlen(r) : -1] != r)
+					let uncomment = 0
+				endif
+			endfor
+
+			if get(b:, 'commentary_startofline')
+				let indent = '^'
+			else
+				let indent = '^\s*'
+			endif
+
+			let lines = []
+			for lnum in range(lnum1,lnum2)
+				let line = getline(lnum)
+				if strlen(r) > 2 && l.r !~# '\\'
+					let line = substitute(line,
+						\'\M' . substitute(l, '\ze\S\s*$', '\\zs\\d\\*\\ze', '') . '\|' . substitute(r, '\S\zs', '\\zs\\d\\*\\ze', ''),
+						\'\=substitute(submatch(0)+1-uncomment,"^0$\\|^-\\d*$","","")','g')
+				endif
+				if force_uncomment
+					if line =~ '^\s*' . l
+						let line = substitute(line,'\S.*\s\@<!','\=submatch(0)[strlen(l):-strlen(r)-1]','')
+					endif
+				elseif uncomment
+					let line = substitute(line,'\S.*\s\@<!','\=submatch(0)[strlen(l):-strlen(r)-1]','')
+				else
+					let line = substitute(line,'^\%('.matchstr(getline(lnum1),indent).'\|\s*\)\zs.*\S\@<=','\=l.submatch(0).r','')
+				endif
+				call add(lines, line)
+			endfor
+			call setline(lnum1, lines)
+			let modelines = &modelines
+			try
+				set modelines=0
+				silent doautocmd User CommentaryPost
+			finally
+				let &modelines = modelines
+			endtry
+			return ''
+		endfunction
+
+		function! s:textobject(inner) abort
+			let [l, r] = s:surroundings()
+			let lnums = [line('.')+1, line('.')-2]
+			for [index, dir, bound, line] in [[0, -1, 1, ''], [1, 1, line('$'), '']]
+				while lnums[index] != bound && line ==# '' || !(stridx(line,l) || line[strlen(line)-strlen(r) : -1] != r)
+					let lnums[index] += dir
+					let line = matchstr(getline(lnums[index]+dir),'\S.*\s\@<!')
+					let [l, r] = s:strip_white_space(l,r,line)
+				endwhile
+			endfor
+			while (a:inner || lnums[1] != line('$')) && empty(getline(lnums[0]))
+				let lnums[0] += 1
+			endwhile
+			while a:inner && empty(getline(lnums[1]))
+				let lnums[1] -= 1
+			endwhile
+			if lnums[0] <= lnums[1]
+				execute 'normal! 'lnums[0].'GV'.lnums[1].'G'
+			endif
+		endfunction
+
+		command! -range -bar -bang Commentary call s:go(<line1>,<line2>,<bang>0)
+		xnoremap <expr>   <Plug>Commentary     <SID>go()
+		nnoremap <expr>   <Plug>Commentary     <SID>go()
+		nnoremap <expr>   <Plug>CommentaryLine <SID>go() . '_'
+		onoremap <silent> <Plug>Commentary        :<C-U>call <SID>textobject(get(v:, 'operator', '') ==# 'c')<CR>
+		nnoremap <silent> <Plug>ChangeCommentary c:<C-U>call <SID>textobject(1)<CR>
+
+		if !hasmapto('<Plug>Commentary') || maparg('gc','n') ==# ''
+			xmap gc  <Plug>Commentary
+			nmap gc  <Plug>Commentary
+			omap gc  <Plug>Commentary
+			nmap gcc <Plug>CommentaryLine
+			nmap gcu <Plug>Commentary<Plug>Commentary
+		endif
 	endif
