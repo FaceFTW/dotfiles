@@ -1,7 +1,7 @@
 # Versions for all the binaries we are pulling if they need it
 
-$oh_my_posh_version = "v24.19.0"
-$vim_w32_version = "9.1.1065"
+$oh_my_posh_version = "v26.17.2"
+$vim_w32_version = "9.1.1591"
 $bat_version = "v0.25.0"
 
 # Remove Old stuff
