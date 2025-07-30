@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is separated from the pre_deploy.sh for cleanliness
 
-OH_MY_POSH_VERSION="v24.19.0"
+OH_MY_POSH_VERSION="v26.17.2"
 #VIM_VERSION="9.1.0516"
 BAT_VERSION="v0.25.0"
 
