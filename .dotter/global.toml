@@ -5,8 +5,8 @@ depends = []
 
 
 [default.files]
-gitconfig = "~/.gitconfig"
-".vimrc" = "~/.vimrc"
+"dotfiles/gitconfig" = "~/.gitconfig"
+"dotfiles/.vimrc" = "~/.vimrc"
 "config/cowsay" = "~/.config/cowsay"
 "config/fortunes.txt" = "~/.config/fortunes.txt"
 "config/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
@@ -26,7 +26,7 @@ depends = []
 
 [win64.files]
 "bin/executable_sh-toy.exe" = "~/.local/bin/sh-toy.exe"
-"profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
+"dotfiles/profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
 # "vscodium/settings.json" = "~/AppData/Roaming/VSCodium/User/settings.json"
 # "vscodium/keybindings.json" = "~/AppData/Roaming/VSCodium/User/keybindings.json"
 # "vscodium/extensions.json" = "~/.vscode-oss/extensions/extensions.json"
@@ -37,9 +37,9 @@ depends = []
 depends = []
 
 [linux.files]
-".bashrc" = "~/.bashrc"
-".zshrc" = "~/.zshrc"
-"profile" = "~/.profile"
+"dotfiles/.bashrc" = "~/.bashrc"
+"dotfiles/.zshrc" = "~/.zshrc"
+"dotfiles/profile" = "~/.profile"
 "bin/executable_sh-toy" = "~/.local/bin/sh-toy"
 # "settings/vscode/settings.json" = "~/.config/VSCodium/User/settings.json"
 # "vscodium/keybindings.json" = "~/.config/VSCodium/User/keybindings.json"

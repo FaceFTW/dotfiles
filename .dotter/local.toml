@@ -1,0 +1,7 @@
+includes = []
+packages = ["default", "win64"]
+
+[files]
+
+[variables]
+signingkey="9EB573C02E056DA8"
