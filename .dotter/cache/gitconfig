@@ -1,0 +1,20 @@
+[user]
+	name = Alex Westerman
+	email = alex@faceftw.dev
+	signingkey=9EB573C02E056DA8
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[commit]
+	gpgsign=true
+[gpg]
+	program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
+[core]
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+	editor=vim.exe
+	autocrlf=true
+
+[init]
+	defaultBranchName = main
