@@ -3,13 +3,15 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    agenix.url = "github:ryantm/agenix";
+    # agenix.url = "github:ryantm/agenix";
 
     home-manager.url = "github:nix-community/home-manager";
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # disko = {
+    #   url = "github:nix-community/disko";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
   };
 
@@ -18,57 +20,74 @@
       self,
       home-manager,
       nixpkgs,
-      disko,
-      agenix,
+      # disko,
+      # agenix,
+      ...
     }@inputs:
     let
       user = "face";
-      linuxSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
-      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems) f;
-      devShell =
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default =
-            with pkgs;
-            mkShell {
-              nativeBuildInputs = with pkgs; [
-                bashInteractive
-                git
-                age
-                age-plugin-yubikey
-              ];
-              shellHook = with pkgs; ''
-                export EDITOR=vim
-              '';
-            };
-        };
+      # devShell =
+      #   system:
+      #   let
+      #     pkgs = nixpkgs.legacyPackages.${system};
+      #   in
+      #   {
+      #     default =
+      #       with pkgs;
+      #       mkShell {
+      #         nativeBuildInputs = with pkgs; [
+      #           bashInteractive
+      #           git
+      #           age
+      #           age-plugin-yubikey
+      #         ];
+      #         shellHook = with pkgs; ''
+      #           export EDITOR=vim
+      #         '';
+      #       };
+      #   };
     in
     {
-      devShells = forAllSystems devShell;
-      nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
-        system:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = inputs;
+      # devShells = devShell;
+      nixosConfigurations = {
+        manifold = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [
-            disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
+            inputs.home-manager.nixosModules
             {
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.${user} = import ./modules/nixos/home-manager.nix;
+                users.face = ./hosts/manifold/home-manager.nix;
               };
             }
-            ./hosts/nixos
+            ./hosts/manifold/default.nix
           ];
-        }
-      );
+
+        };
+      };
+
+      #   nixpkgs.lib.genAttrs linuxSystems (
+      #   system:
+      #   nixpkgs.lib.nixosSystem {
+      #     inherit system;
+      #     specialArgs = inputs;
+      #     modules = [
+      #       disko.nixosModules.disko
+      #       home-manager.nixosModules.home-manager
+      #       {
+      #         home-manager = {
+      #           useGlobalPkgs = true;
+      #           useUserPackages = true;
+      #           users.${user} = import ./modules/nixos/home-manager.nix;
+      #         };
+      #       }
+      #       ./hosts/nixos
+      #     ];
+      #   }
+      # );
     };
 }

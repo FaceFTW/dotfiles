@@ -2,7 +2,7 @@
   config,
   inputs,
   pkgs,
-  agenix,
+  # agenix,
   ...
 }:
 
@@ -15,7 +15,7 @@ in
     ./secrets.nix
     # ./disk-config.nix
     ../../modules/shared
-    agenix.nixosModules.default
+    # agenix.nixosModules.default
   ];
 
   # Set your time zone.
@@ -49,6 +49,10 @@ in
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+  };
+
+  nixpkgs = {
+    hostPlatform = "x86_64-linux";
   };
 
   # Manages keys and such
@@ -90,7 +94,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    agenix.packages."${pkgs.system}".default # "x86_64-linux"
+    # agenix.packages."${pkgs.system}".default # "x86_64-linux"
     gitAndTools.gitFull
     inetutils
   ];
