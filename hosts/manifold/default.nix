@@ -69,7 +69,7 @@ in
   # Video support
   hardware = {
     graphics.enable = true;
-    nvidia.modesetting.enable = true;
+    # nvidia.modesetting.enable = true;
   };
 
   # Add docker daemon
@@ -99,5 +99,12 @@ in
     inetutils
   ];
 
-  system.stateVersion = "21.05"; # Don't change this
+  system.stateVersion = "25.05"; # Don't change this
+  wsl = {
+    enable = true;
+    defaultUser = "face";
+    docker-desktop.enable = true;
+    wslConf.automount.enabled = true;
+    wslConf.user.default = "face";
+  };
 }
