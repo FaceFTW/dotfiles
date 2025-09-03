@@ -9,7 +9,6 @@ shared-packages
 
   gnumake
   cmake
-  home-manager
 
   tree
   unixtools.ifconfig

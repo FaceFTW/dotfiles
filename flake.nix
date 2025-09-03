@@ -3,10 +3,12 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # agenix.url = "github:ryantm/agenix";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # agenix.url = "github:ryantm/agenix";
 
     # disko = {
     #   url = "github:nix-community/disko";
@@ -18,8 +20,9 @@
   outputs =
     {
       self,
-      home-manager,
       nixpkgs,
+      home-manager,
+      nixos-wsl,
       # disko,
       # agenix,
       ...
@@ -46,6 +49,7 @@
       #         '';
       #       };
       #   };
+
     in
     {
       # devShells = devShell;
@@ -56,13 +60,12 @@
             inherit inputs;
           };
           modules = [
-            inputs.home-manager.nixosModules
+            nixos-wsl.nixosModules.default
+            home-manager.nixosModules.home-manager
             {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.face = ./hosts/manifold/home-manager.nix;
-              };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.face = ./hosts/manifold/home-manager.nix;
             }
             ./hosts/manifold/default.nix
           ];

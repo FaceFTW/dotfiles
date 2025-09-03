@@ -6,9 +6,7 @@
 }:
 
 let
-  name = "%NAME%";
-  user = "%USER%";
-  email = "%EMAIL%";
+  user = "face";
 in
 {
   # Shared shell configuration
@@ -87,15 +85,15 @@ in
     enable = true;
     enableZshIntegration = true;
     settings = builtins.fromJSON (
-      builtins.unsafeDiscardStringContext (builtins.readFile "../../config/omp-theme.json")
+      builtins.unsafeDiscardStringContext (builtins.readFile "${./../../config/omp-theme.json}")
     );
   };
 
   git = {
     enable = true;
     ignores = [ "*.swp" ];
-    userName = name;
-    userEmail = email;
+    userName = "Alex Westerman";
+    userEmail = "alex@faceftw.dev";
     lfs = {
       enable = true;
     };
