@@ -8,6 +8,9 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    fenix.url = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows = "nixpkgs";
+
     # agenix.url = "github:ryantm/agenix";
 
     # disko = {
@@ -23,6 +26,7 @@
       nixpkgs,
       home-manager,
       nixos-wsl,
+      fenix,
       # disko,
       # agenix,
       ...
