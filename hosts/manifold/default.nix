@@ -14,6 +14,7 @@ in
   imports = [
     ./secrets.nix
     # ./disk-config.nix
+    ../../modules/fenix
     ../../modules/shared
     # agenix.nixosModules.default
   ];
@@ -38,11 +39,6 @@ in
         "@admin"
         "${user}"
       ];
-      substituters = [
-        "https://nix-community.cachix.org"
-        "https://cache.nixos.org"
-      ];
-      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
     };
 
     package = pkgs.nix;
