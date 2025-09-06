@@ -2,19 +2,21 @@
   config,
   inputs,
   pkgs,
+  fenix,
   # agenix,
+
   ...
 }:
 
 let
   user = "face";
-
+  fenix = fenix;
 in
 {
   imports = [
     ./secrets.nix
     # ./disk-config.nix
-    ../../modules/fenix
+    # ./../../modules/dev/fenix.nix
     ../../modules/shared
     # agenix.nixosModules.default
   ];

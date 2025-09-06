@@ -53,6 +53,9 @@
       #         '';
       #       };
       #   };
+      overlays = {
+        nixpkgs.overlays = [ fenix.overlays.default ];
+      };
 
     in
     {
@@ -64,6 +67,7 @@
             inherit inputs;
           };
           modules = [
+            overlays
             nixos-wsl.nixosModules.default
             home-manager.nixosModules.home-manager
             {
@@ -72,6 +76,7 @@
               home-manager.users.face = ./hosts/manifold/home-manager.nix;
             }
             ./hosts/manifold/default.nix
+            ./modules/dev/fenix.nix
           ];
 
         };

@@ -4,8 +4,6 @@
   ...
 }:
 {
-  nixpkgs.overlays = [ pkgs.fenix.overlays.default ];
-
   environment.systemPackages = with pkgs; [
     (fenix.stable.withComponents [
       "cargo"
@@ -13,15 +11,16 @@
       "rust-src"
       "rustc"
       "rustfmt"
-      "rustdoc"
+      "rust-docs"
     ])
-    (fenix.nightly.withComponents [
-      "cargo"
+    (fenix.complete.withComponents [
       "clippy"
       "rust-src"
       "rustc"
       "rustfmt"
     ])
-    rust-analyzer-nightly
+    pkgs.rust-analyzer-nightly
+    pkgs.pkg-config
+    pkgs.openssl
   ];
 }
