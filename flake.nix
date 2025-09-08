@@ -54,7 +54,10 @@
       #       };
       #   };
       overlays = {
-        nixpkgs.overlays = [ fenix.overlays.default ];
+        nixpkgs.overlays = [
+          fenix.overlays.default
+          (import ./overlays/shell-toy.nix)
+        ];
       };
 
     in

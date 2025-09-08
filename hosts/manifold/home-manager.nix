@@ -19,7 +19,7 @@ in
     homeDirectory = "/home/${user}";
     packages = pkgs.callPackage ./packages.nix { };
     # file = shared-files // import ./files.nix { inherit user; };
-    file = import ./files.nix { inherit user; };
+    # file = import ./files.nix { inherit user; };
     stateVersion = "25.05";
   };
 

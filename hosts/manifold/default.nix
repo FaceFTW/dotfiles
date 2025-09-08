@@ -21,8 +21,6 @@ in
     # agenix.nixosModules.default
   ];
 
-  # Set your time zone.
-  time.timeZone = "America/New_York";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -64,6 +62,9 @@ in
     gvfs.enable = true; # Mount, trash, and other functionalities
   };
 
+  # Set your time zone.
+  time.timeZone = "America/New_York";
+
   # Video support
   hardware = {
     graphics.enable = true;
@@ -97,7 +98,6 @@ in
     inetutils
   ];
 
-  system.stateVersion = "25.05"; # Don't change this
   wsl = {
     enable = true;
     defaultUser = "face";
@@ -105,4 +105,6 @@ in
     wslConf.automount.enabled = true;
     wslConf.user.default = "face";
   };
+
+  system.stateVersion = "25.05"; # Don't change this
 }
