@@ -14,4 +14,6 @@ shared-packages
   unixtools.ifconfig
   unixtools.netstat
 
+  bat
+
 ]
