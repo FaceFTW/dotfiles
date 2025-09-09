@@ -7,9 +7,9 @@ depends = []
 [default.files]
 "dotfiles/gitconfig" = "~/.gitconfig"
 "dotfiles/.vimrc" = { target = "~/.vimrc", type = "symbolic" }
-"config/cowsay" = "~/.config/cowsay"
-"config/fortunes.txt" = "~/.config/fortunes.txt"
-"config/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
+"dotfiles/cowsay" = "~/.config/cowsay"
+"dotfiles/fortunes.txt" = "~/.config/fortunes.txt"
+"dotfiles/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
 
 
 [default.variables]
