@@ -1,3 +1,4 @@
+let g:skip_plug_load = 0
 set nocompatible				" Disable strange Vi defaults.
 set autoindent 					" Autoindent when starting new line, or using `o` or `O`.
 set backspace=indent,eol,start	" Allow backspace in insert mode.
@@ -61,8 +62,6 @@ set tabstop=4
 set shiftwidth=4
 set completeopt=menu,menuone,noselect
 set omnifunc=syntaxcomplete#Complete
-set runtimepath-=~/.config/vimfiles
-set runtimepath^=~/.config/vim
 
 " Relative line setings (abridged from myusuf3/numbers.vim)
 " excludes toggling when changing modes
@@ -88,37 +87,45 @@ set runtimepath^=~/.config/vim
 		autocmd winleave    * :setlocal norelativenumber
 	augroup end
 
+
 " Vim Plug Init
-	if !(has('win32') || has('win64'))
-		let s:data_dir = has('nvim') ? stdpath('data') : '~/.config/vim'
-	else
-		let s:data_dir = has('nvim') ? stdpath('data') : $USERPROFILE.'/.config/vim'
-	endif
-	if empty(glob(s:data_dir . '/autoload/plug.vim'))
-		execute '!curl -fLo '.s:data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-	endif
-	" autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-			" \| PlugInstall --sync | source $MYVIMRC
-			" \| endif
+" For NixOS where plugins are managed externally, gate this with a boolean that the flake
+" Adds when creating the config based on this file
+	if get(g:, 'skip_plug_load', 0) == 0
+		set runtimepath-=~/.config/vimfiles
+		set runtimepath^=~/.config/vim
 
-	call plug#begin(has('nvim') ? stdpath('data').'/plugged' : (s:data_dir.'/plugged'))
-		"=================== Core Features ===================
-		Plug 'tpope/vim-fugitive'
-		Plug 'sheerun/vim-polyglot'
-		Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-		Plug 'junegunn/fzf.vim'
-		Plug 'sbdchd/neoformat'
-		Plug 'dense-analysis/ale'
-		"=================== UI Plugins ===================
-		Plug 'mhinz/vim-startify'
-		Plug 'itchyny/lightline.vim',
-		Plug 'mbbill/undotree'
-		"=================== Misc Plugins ===================
-		Plug 'junegunn/vim-peekaboo'
-		Plug 'raimondi/delimitMate'
+		if !(has('win32') || has('win64'))
+			let s:data_dir = has('nvim') ? stdpath('data') : '~/.config/vim'
+		else
+			let s:data_dir = has('nvim') ? stdpath('data') : $USERPROFILE.'/.config/vim'
+		endif
+		if empty(glob(s:data_dir . '/autoload/plug.vim'))
+			execute '!curl -fLo '.s:data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+			autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+		endif
+		" autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+				" \| PlugInstall --sync | source $MYVIMRC
+				" \| endif
 
-	call plug#end()
+		call plug#begin(has('nvim') ? stdpath('data').'/plugged' : (s:data_dir.'/plugged'))
+			"=================== Core Features ===================
+			Plug 'tpope/vim-fugitive'
+			Plug 'sheerun/vim-polyglot'
+			Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+			Plug 'junegunn/fzf.vim'
+			Plug 'sbdchd/neoformat'
+			Plug 'dense-analysis/ale'
+			"=================== UI Plugins ===================
+			Plug 'mhinz/vim-startify'
+			Plug 'itchyny/lightline.vim',
+			Plug 'mbbill/undotree'
+			"=================== Misc Plugins ===================
+			Plug 'junegunn/vim-peekaboo'
+			Plug 'raimondi/delimitMate'
+
+		call plug#end()
+	endif
 
 " ALE config
 let g:ale_completion_enabled = 1
@@ -1516,7 +1523,7 @@ nnoremap <silent> <F5> :UndotreeToggle<CR>
 
 hi clear
 syntax reset
-let g:colors_name = "PaperColor"
+" let g:colors_name = "PaperColor"
 
 call s:identify_color_mode()
 call s:set_color_variables()

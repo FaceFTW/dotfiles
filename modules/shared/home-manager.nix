@@ -131,7 +131,9 @@ in
   ];
   vim.defaultEditor = true;
   vim.settings.ignorecase = true;
-  # extraConfig =
+  vim.extraConfig =
+    builtins.replaceStrings [ "let g:skip_plug_load = 0" ] [ "let g:skip_plug_load = 1" ]
+      (builtins.unsafeDiscardStringContext (builtins.readFile "${./../../dotfiles/.vimrc}"));
 
   ############################################
   # SSH Config
