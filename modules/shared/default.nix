@@ -1,7 +1,5 @@
 { config, pkgs, ... }:
-
 {
-
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -23,5 +21,17 @@
 
   environment.systemPackages = with pkgs; [
     shell-toy
+
+    age
+    bash-completion
+    bat
+    coreutils
+    gnupg
+    htop
+    iftop
+    killall
+    openssh
+    wget
+    zip
   ];
 }
