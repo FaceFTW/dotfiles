@@ -12,6 +12,7 @@ depends = []
 "dotfiles/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
 
 
+
 [default.variables]
 arch = "x86_64"
 install_pkgs = "false"
