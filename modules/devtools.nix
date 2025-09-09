@@ -41,6 +41,10 @@ in
         pkgs.docker
         pkgs.docker-compose
       ])
+      # Node Packages
+      (lists.optional devTools.node [
+        pkgs.nodejs_24
+      ])
     ];
 
     virtualisation.docker = mkIf devTools.docker {

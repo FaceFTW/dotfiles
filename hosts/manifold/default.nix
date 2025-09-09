@@ -16,7 +16,7 @@ in
   imports = [
     ./secrets.nix
     ../../modules/devtools.nix
-    ../../modules/shared
+    ../../modules/shared/core.nix
     # agenix.nixosModules.default
   ];
 
@@ -29,39 +29,45 @@ in
   #     interfaces."%INTERFACE%".useDHCP = true;
   #   };
 
-  nix = {
-    nixPath = [ "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos" ];
-    settings = {
-      allowed-users = [ "${user}" ];
-      trusted-users = [
-        "@admin"
-        "${user}"
-      ];
-    };
+  ############################################
+  # Nix Settings
+  ############################################
 
-    package = pkgs.nix;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
+  nix.nixPath = [ "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos" ];
+  nix.settings.allowed-users = [ "${user}" ];
+  nix.settings.trusted-users = [
+    "@admin"
+    "${user}"
+  ];
+  nix.package = pkgs.nix;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+  nixpkgs.hostPlatform = "x86_64-linux";
 
-  nixpkgs = {
-    hostPlatform = "x86_64-linux";
-  };
+  ############################################
+  # WSL Configuration
+  ############################################
+  wsl.enable = true;
+  wsl.defaultUser = "face";
+  wsl.docker-desktop.enable = true;
+  wsl.wslConf.automount.enabled = true;
+  wsl.wslConf.user.default = "face";
 
-  # Manages keys and such
-  programs = {
-    gnupg.agent.enable = true;
-    zsh.enable = true;
-    devTools.rust = true;
-    devTools.docker = true;
-    devTools.node = true;
-  };
+  ############################################
+  # Program Options
+  ############################################
+  programs.gnupg.agent.enable = true;
+  programs.zsh.enable = true;
+  programs.devTools.rust = true;
+  programs.devTools.docker = true;
+  programs.devTools.node = true;
 
-  services = {
-    openssh.enable = true;
-    gvfs.enable = true; # Mount, trash, and other functionalities
-  };
+  ############################################
+  # Services
+  ############################################
+  services.openssh.enable = true;
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -71,7 +77,6 @@ in
     graphics.enable = true;
     # nvidia.modesetting.enable = true;
   };
-
 
   # It's me, it's you, it's everyone
   users.users = {
@@ -95,14 +100,6 @@ in
     gitAndTools.gitFull
     inetutils
   ];
-
-  wsl = {
-    enable = true;
-    defaultUser = "face";
-    docker-desktop.enable = true;
-    wslConf.automount.enabled = true;
-    wslConf.user.default = "face";
-  };
 
   system.stateVersion = "25.05"; # Don't change this
 }
