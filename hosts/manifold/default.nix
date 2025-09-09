@@ -15,12 +15,10 @@ in
 {
   imports = [
     ./secrets.nix
-    # ./disk-config.nix
-    # ./../../modules/dev/fenix.nix
+    ../../modules/devtools.nix
     ../../modules/shared
     # agenix.nixosModules.default
   ];
-
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -55,6 +53,9 @@ in
   programs = {
     gnupg.agent.enable = true;
     zsh.enable = true;
+    devTools.rust = true;
+    devTools.docker = true;
+    devTools.node = true;
   };
 
   services = {
@@ -71,9 +72,6 @@ in
     # nvidia.modesetting.enable = true;
   };
 
-  # Add docker daemon
-  virtualisation.docker.enable = true;
-  virtualisation.docker.logDriver = "json-file";
 
   # It's me, it's you, it's everyone
   users.users = {

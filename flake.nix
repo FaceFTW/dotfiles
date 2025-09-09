@@ -79,7 +79,6 @@
               home-manager.users.face = ./hosts/manifold/home-manager.nix;
             }
             ./hosts/manifold/default.nix
-            ./modules/dev/fenix.nix
           ];
 
         };
