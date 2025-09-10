@@ -2,32 +2,20 @@
   config,
   inputs,
   pkgs,
-  fenix,
-  # agenix,
-
   ...
 }:
 
 let
   user = "face";
-  fenix = fenix;
+  # Windows SSH Key (Used for VS Code Integration)
+  hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold";
 in
 {
   imports = [
-    ./secrets.nix
+    ../../modules/core.nix
     ../../modules/devtools.nix
-    ../../modules/shared/core.nix
     # agenix.nixosModules.default
   ];
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  #   networking = {
-  #     hostName = ""; # Define your hostname.
-  #     useDHCP = false;
-  #     interfaces."%INTERFACE%".useDHCP = true;
-  #   };
 
   ############################################
   # Nix Settings
@@ -38,6 +26,7 @@ in
   nix.settings.trusted-users = [
     "@admin"
     "${user}"
+    "@wheel"
   ];
   nix.package = pkgs.nix;
   nix.extraOptions = ''
@@ -62,21 +51,24 @@ in
   programs.devTools.rust = true;
   programs.devTools.docker = true;
   programs.devTools.node = true;
+  programs.devTools.patchVSCodeRemote = true;
 
   ############################################
   # Services
   ############################################
   services.openssh.enable = true;
+  services.openssh.settings.PasswordAuthentication = false; # "Hardening"
   services.gvfs.enable = true; # Mount, trash, and other functionalities
 
-  # Set your time zone.
+  ############################################
+  # Misc System Configuration
+  ############################################
+  networking.hostName = "manifold-wsl";
+
   time.timeZone = "America/New_York";
 
-  # Video support
-  hardware = {
-    graphics.enable = true;
-    # nvidia.modesetting.enable = true;
-  };
+  hardware.graphics.enable = true;
+  # hardware.nvidia.modesetting.enable = true;
 
   # It's me, it's you, it's everyone
   users.users = {
@@ -87,14 +79,13 @@ in
         "docker"
       ];
       shell = pkgs.zsh;
-      # openssh.authorizedKeys.keys = keys;
+      openssh.authorizedKeys.keys = [ hostKey ];
     };
-
-    # root = {
-    #   openssh.authorizedKeys.keys = keys;
-    # };
   };
 
+  ############################################
+  # Global Packages
+  ############################################
   environment.systemPackages = with pkgs; [
     # agenix.packages."${pkgs.system}".default # "x86_64-linux"
     gitAndTools.gitFull

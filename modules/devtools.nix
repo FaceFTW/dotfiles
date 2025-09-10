@@ -11,6 +11,7 @@ in
     rust = mkEnableOption "Rust Toolchain";
     docker = mkEnableOption "Docker";
     node = mkEnableOption "NodeJS";
+    patchVSCodeRemote = mkEnableOption "VS Code Remote Server Patch";
   };
 
   config = {
@@ -51,6 +52,20 @@ in
       enable = true;
       logDriver = "json-file";
     };
+
+    # Quick Workaround for VS Code Remote
+    # Assumes Node is Enabled with devTools
+    systemd.user.paths.vscode-remote-workaround = mkIf devTools.patchVSCodeRemote {
+      wantedBy = [ "default.target" ];
+      pathConfig.PathChanged = "%h/.vscode-server/bin";
+    };
+    systemd.user.services.vscode-remote-workaround.script = mkIf devTools.patchVSCodeRemote ''
+      for i in ~/.vscode-server/bin/*; do
+        echo "Fixing vscode-server in $i..."
+        ln -sf ${pkgs.nodejs_24}/bin/node $i/node
+      done
+    '';
+
   };
 
 }

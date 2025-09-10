@@ -50,5 +50,7 @@
     unixtools.umount
 
     fzf # Used with Vim config
+
+    ragenix
   ];
 }

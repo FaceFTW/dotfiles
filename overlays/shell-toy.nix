@@ -10,12 +10,10 @@ final: prev: with prev; {
       pname = "sh-toy";
       version = "0.7.3";
 
-      outputs = ["out"];
-
       srcs = [
         (lib.fileset.toSource {
           root = ./..;
-          fileset = lib.fileset.union ../config/fortunes.txt ../config/cowsay;
+          fileset = lib.fileset.union ../dotfiles/fortunes.txt ../dotfiles/cowsay;
         })
         (fetchgit {
           url = "https://github.com/FaceFTW/shell-toy.git";
@@ -35,8 +33,8 @@ final: prev: with prev; {
 
       doCheck = false;
 
-      FORTUNE_FILE = "../source/config/fortunes.txt";
-      COW_PATH = "../source/config/cowsay";
+      FORTUNE_FILE = "../source/dotfiles/fortunes.txt";
+      COW_PATH = "../source/dotfiles/cowsay";
 
       buildPhase = ''
         cargo build --release --features inline-fortune,inline-cowsay
@@ -45,7 +43,6 @@ final: prev: with prev; {
       '';
 
       installPhase = ''
-
         mkdir -p $out/bin
         install -Dm755 target/release/sh-toy $out/bin
       '';
