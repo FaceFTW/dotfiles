@@ -90,7 +90,7 @@
             "fetch_status": true,
             "fetch_upstream_icon": true
           },
-          "template": "<#7a7a7a>\ue0b1</> {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<#E84855> \uf044 {{ .Working.String }}</>{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#2FDA4E> \uf046 {{ .Staging.String }}</>{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} <#7a7a7a>\ue0b1</> ",
+          "template": "<#7a7a7a>\ue0b1</> {{ .UpstreamIcon }} {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<#E84855> \uf044 {{ .Working.String }}</>{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#2FDA4E> \uf046 {{ .Staging.String }}</>{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} <#7a7a7a>\ue0b1</> ",
           "foreground": "#ffeb3b",
           "background": "#2f2f2f",
           "type": "git",
@@ -103,115 +103,11 @@
         },
         {
           "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue657 ",
-          "foreground": "#2f2f2f",
-          "background": "#FFA000",
-          "type": "firebase",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue625 ",
-          "foreground": "#81a1c1",
-          "background": "#2f2f2f",
-          "type": "react",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none",
-            "fetch_package_manager": "true",
-            "fetch_version": "false",
-            "npm_icon": "\ue71e",
-            "pnpm_icon": "\uf02c1",
-            "yarn_icon": "\uf011B"
-          },
-          "template": "\ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}",
-          "foreground": "#6CA35E",
-          "background": "#2f2f2f",
-          "type": "node",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue235 ",
-          "foreground": "#96E072",
-          "background": "#2f2f2f",
-          "type": "python",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue77f {{ if .Unsupported }}\uf071 {{ end }}",
-          "foreground": "#3891A6",
-          "background": "#2f2f2f",
-          "type": "dotnet",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue65e ",
-          "foreground": "#7FD5EA",
-          "type": "go",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue68b ",
-          "foreground": "#99908a",
-          "background": "#2f2f2f",
-          "type": "rust",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue61d ",
-          "foreground": "#1E9748",
-          "background": "#2f2f2f",
-          "type": "cmake",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue738 ",
-          "foreground": "#f8981d",
-          "background": "#2f2f2f",
-          "type": "java",
-          "style": "diamond"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "\ue643 ",
-          "foreground": "#906cff",
-          "background": "#2f2f2f",
-          "type": "kotlin",
-          "style": "diamond"
-        },
-        {
-          "properties": {
             "cache_duration": "none",
             "style": "roundrock",
             "threshold": 0
           },
-          "template": "<#7a7a7a>\ue0b1 </>{{ .Ms }}ms<#fafafa> \uf252 </>",
+          "template": "{{ .Ms }}ms<#fafafa> \uf252 </>",
           "foreground": "#FFCE5C",
           "background": "#2f2f2f",
           "type": "executiontime",

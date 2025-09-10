@@ -79,6 +79,9 @@ in
         alias clearmemcache="echo 3 | sudo tee /proc/sys/vm/drop_caches"
         alias clear="clear-scrollback-buffer; sh-toy"
 
+        alias rebuild-nix="sudo nixos-rebuild switch --flake .#manifold"
+        alias rebuild-nix-trace="sudo nixos-rebuild switch --show-trace --flake .#manifold"
+
       '';
 
       runAfter = lib.mkOrder 1500 "sh-toy";
@@ -95,7 +98,7 @@ in
   oh-my-posh.enable = true;
   oh-my-posh.enableZshIntegration = true;
   oh-my-posh.settings = builtins.fromJSON (
-    builtins.unsafeDiscardStringContext (builtins.readFile "${./../../config/omp-theme.json}")
+    builtins.unsafeDiscardStringContext (builtins.readFile "${./../dotfiles/omp-theme.json}")
   );
 
   ############################################
@@ -133,17 +136,12 @@ in
   vim.settings.ignorecase = true;
   vim.extraConfig =
     builtins.replaceStrings [ "let g:skip_plug_load = 0" ] [ "let g:skip_plug_load = 1" ]
-      (builtins.unsafeDiscardStringContext (builtins.readFile "${./../../dotfiles/.vimrc}"));
+      (builtins.unsafeDiscardStringContext (builtins.readFile "${./../dotfiles/.vimrc}"));
 
   ############################################
   # SSH Config
   ############################################
   ssh.enable = true;
   ssh.enableDefaultConfig = false;
-  # includes = [
-  #   (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-  #     "/home/${user}/.ssh/config_external"
-  #   )
-  # ];
 
 }
