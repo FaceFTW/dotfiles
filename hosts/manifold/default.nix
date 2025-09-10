@@ -14,6 +14,7 @@ in
   imports = [
     ../../modules/core.nix
     ../../modules/devtools.nix
+    ../../modules/kernel.nix
     # agenix.nixosModules.default
   ];
 
@@ -42,6 +43,7 @@ in
   wsl.docker-desktop.enable = true;
   wsl.wslConf.automount.enabled = true;
   wsl.wslConf.user.default = "face";
+  kernel.isWSL = true; # For Kernel Configs
 
   ############################################
   # Program Options
