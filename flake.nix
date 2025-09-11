@@ -11,8 +11,6 @@
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    ragenix.url = "github:yaxitech/ragenix";
-
     # disko = {
     #   url = "github:nix-community/disko";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -28,7 +26,6 @@
       nixos-wsl,
       fenix,
       # disko,
-      ragenix,
       ...
     }@inputs:
     let
@@ -58,7 +55,6 @@
               home-manager.users.face = ./hosts/manifold/home-manager.nix;
             }
             ./hosts/manifold/default.nix
-            ragenix.nixosModules.default
           ];
 
         };

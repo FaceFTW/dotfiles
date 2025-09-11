@@ -25,11 +25,11 @@
   environment.systemPackages = with pkgs; [
     shell-toy
 
-    age
     bash-completion
     bat
     coreutils
     curl
+    gitAndTools.gitFull
     gnupg
     htop
     iftop
@@ -51,7 +51,7 @@
 
     fzf # Used with Vim config
 
-    ragenix
     nixfmt
   ];
+
 }

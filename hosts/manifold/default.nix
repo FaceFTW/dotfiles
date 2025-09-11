@@ -22,7 +22,10 @@ in
   # Nix Settings
   ############################################
 
-  nix.nixPath = [ "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos" ];
+  nix.nixPath = [
+    "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos"
+    "nixpkgs=flake:nixpkgs"
+  ];
   nix.settings.allowed-users = [ "${user}" ];
   nix.settings.trusted-users = [
     "@admin"
@@ -60,7 +63,7 @@ in
   ############################################
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  # services.gvfs.enable = true; # Mount, trash, and other functionalities
 
   ############################################
   # Misc System Configuration
@@ -68,9 +71,6 @@ in
   networking.hostName = "manifold-wsl";
 
   time.timeZone = "America/New_York";
-
-  hardware.graphics.enable = true;
-  # hardware.nvidia.modesetting.enable = true;
 
   # It's me, it's you, it's everyone
   users.users = {
