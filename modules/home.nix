@@ -23,12 +23,14 @@ in
   zsh.shellAliases.clearmemcache = "echo 3 | sudo tee /proc/sys/vm/drop_caches";
 
   # Nix Specific Aliases
-  zsh.shellAliases.rebuild-nix = "sudo nixos-rebuild switch --flake .#manifold";
-  zsh.shellAliases.rebuild-nix-trace = "sudo nixos-rebuild switch --show-trace --flake .#manifold";
   zsh.shellAliases.clean-nix = "sudo nix-collect-garbage -d";
   zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
-  zsh.shellAliases.build-manifold-image = "sudo nix run .#nixosConfigurations.manifold.config.system.build.tarballBuilder";
+  zsh.shellAliases.build-manifold-image = "sudo nix run /mnt/c/Users/awest/.local/dotfiles#nixosConfigurations.manifold.config.system.build.tarballBuilder";
+  zsh.shellAliases.rebuild-manifold = "sudo nixos-rebuild switch --flake /mnt/c/Users/awest/.local/dotfiles#portal";
+  zsh.shellAliases.rebuild-manifold-trace = "sudo nixos-rebuild switch --show-trace --flake /mnt/c/Users/awest/.local/dotfiles#portal";
   zsh.shellAliases.build-portal-image = "sudo nix run .#nixosConfigurations.portal.config.system.build.tarballBuilder";
+  zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --flake /mnt/c/Users/awest/.local/dotfiles#portal";
+  zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --show-trace --flake /mnt/c/Users/awest/.local/dotfiles#portal";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;

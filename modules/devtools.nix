@@ -2,7 +2,12 @@
 
 let
   devTools = config.programs.devTools;
-  inherit (pkgs.lib) mkIf mkEnableOption lists;
+  inherit (pkgs.lib)
+    mkIf
+    mkEnableOption
+    lists
+    makeLibraryPath
+    ;
 in
 {
   imports = [ ];
@@ -15,7 +20,6 @@ in
   };
 
   config = {
-    # TODO why do I have to do the list twice????
     environment.systemPackages = lists.flatten [
       # Rust Packages
       (lists.optional devTools.rust [
@@ -35,7 +39,9 @@ in
         ])
         (pkgs.rust-analyzer-nightly)
         (pkgs.pkg-config)
-        (pkgs.openssl)
+        (pkgs.openssl.dev)
+        (pkgs.clang)
+        (pkgs.llvmPackages_21.bintools)
       ])
       # Docker Packages
       (lists.optional devTools.docker [
@@ -47,6 +53,30 @@ in
         pkgs.nodejs_24
       ])
     ];
+
+    # Extra environment variables for Rust
+    environment.variables = mkIf devTools.rust {
+      LIBCLANG_PATH = makeLibraryPath [ pkgs.llvmPackages_latest.libclang.lib ];
+      RUSTFLAGS = (
+        builtins.map (a: ''-L ${a}/lib'') [
+          (pkgs.openssl.dev)
+        ]
+      );
+      LD_LIBRARY_PATH = makeLibraryPath [
+        pkgs.openssl.dev
+      ];
+      BINDGEN_EXTRA_CLANG_ARGS =
+        (builtins.map (a: ''-I"${a}/include"'') [
+          pkgs.glibc.dev
+          pkgs.openssl.dev
+        ])
+        # Includes with special directory paths
+        ++ [
+          ''-I"${pkgs.llvmPackages_latest.libclang.lib}/lib/clang/${pkgs.llvmPackages_latest.libclang.version}/include"''
+          ''-I"${pkgs.glib.dev}/include/glib-2.0"''
+          ''-I${pkgs.glib.out}/lib/glib-2.0/include/''
+        ];
+    };
 
     virtualisation.docker = mkIf devTools.docker {
       enable = true;
