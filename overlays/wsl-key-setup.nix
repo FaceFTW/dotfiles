@@ -27,7 +27,7 @@ final: prev: with prev; {
         echo "SSH User key already generated"
         echo "Public Key: $(cat ~/.ssh/id_ed25519.pub)"
       else
-        ssh-keygen -f ~/.ssh/id_ed25519.pub
+        ssh-keygen -f ~/.ssh/id_ed25519
         echo "SSH User key created"
         echo "Public Key: $(cat ~/.ssh/id_ed25519.pub)"
         ssh-add ~/.ssh/id_ed25519
