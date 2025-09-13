@@ -20,6 +20,24 @@
   ];
 
   ############################################
+  # Sudo Settings
+  ############################################
+  security.sudo.enable = true;
+  security.sudo.wheelNeedsPassword = true;
+  # So passwords can be set. Aside from root, I should be able to do this
+  security.sudo.extraRules = [
+    {
+      groups = [ "wheel" ];
+      commands = [
+        {
+          command = "${pkgs.shadow}/bin/passwd face";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
+  ############################################
   # Default System Packages
   ############################################
   environment.systemPackages = with pkgs; [
