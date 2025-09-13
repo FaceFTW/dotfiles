@@ -46,6 +46,8 @@ in
   wsl.docker-desktop.enable = true;
   wsl.wslConf.automount.enabled = true;
   wsl.wslConf.user.default = "face";
+  wsl.wslConf.interop.enabled = false;
+  wsl.wslConf.interop.appendWindowsPath = false;
   kernel.isWSL = true; # For Kernel Configs
 
   ############################################
@@ -94,6 +96,7 @@ in
   ############################################
   environment.systemPackages = with pkgs; [
     inetutils
+    ncdu
   ];
 
   system.stateVersion = "25.05"; # Don't change this
