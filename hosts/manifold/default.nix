@@ -63,6 +63,7 @@ in
   ############################################
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
+
   # services.gvfs.enable = true; # Mount, trash, and other functionalities
 
   ############################################
@@ -75,6 +76,8 @@ in
   # It's me, it's you, it's everyone
   users.users = {
     ${user} = {
+      name = "${user}";
+      home = "/home/${user}";
       isNormalUser = true;
       extraGroups = [
         "wheel" # Enable ‘sudo’ for the user.
@@ -82,6 +85,7 @@ in
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [ hostKey ];
+      packages = [ pkgs.wslKeySetup ];
     };
   };
 
@@ -89,8 +93,6 @@ in
   # Global Packages
   ############################################
   environment.systemPackages = with pkgs; [
-    # agenix.packages."${pkgs.system}".default # "x86_64-linux"
-    gitAndTools.gitFull
     inetutils
   ];
 

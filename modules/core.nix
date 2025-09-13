@@ -52,6 +52,7 @@
     fzf # Used with Vim config
 
     nixfmt
+    home-manager
   ];
 
 }
