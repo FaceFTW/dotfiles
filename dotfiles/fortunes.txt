@@ -1,0 +1,874 @@
+This is Unix we're talking about, remember.  It's not supposed to be nice for the applications programmer.
+        -- Matthew Danish on debian-devel
+%
+... but hey, this is Linux, isn't it meant to do infinite loops in 6 seconds?
+        -- Jonathan Oxer in the apt-cacher ChangeLog
+%
+< sam> /.ing an issue is like asking an infinite number of monkeys for advice
+        -- in #debian-devel
+%
+<liiwi> udp - universal dropping of an pigeon
+%
+You will not censor me through bug terrorism.
+        -- James Troup
+%
+<doogie> Thinking is dangerous.  It leads to ideas.
+        -- Seen on #Debian
+%
+A bug in the code is worth two in the documentation.
+%
+A complex system that works is invariably found to have evolved from a simple system that works.
+%
+A computer lets you make more mistakes faster than any other invention, with the possible exceptions of handguns and Tequilla.
+        -- Mitch Ratcliffe
+%
+A language that doesn't affect the way you think about programming is not worth knowing.
+%
+A language that doesn't have everything is actually easier to program in than some that do.
+        -- Dennis M. Ritchie
+%
+A LISP programmer knows the value of everything, but the cost of nothing.
+        -- Alan Perlis
+%
+A nasty looking dwarf throws a knife at you.
+%
+A year spent in artificial intelligence is enough to make one believe in God.
+%
+Adding features does not necessarily increase functionality -- it just makes the manuals thicker.
+%
+All your files have been destroyed (sorry).  Paul.
+%
+Almost anything derogatory you could say about today's software design would be accurate.
+        -- K. E. Iverson
+%
+Any programming language is at its best before it is implemented and used.
+%
+Any sufficiently advanced bug is indistinguishable from a feature.
+        -- Rich Kulawiec
+%
+As a computer, I find your faith in technology amusing.
+%
+Ask not for whom the <CONTROL-G>  tolls.
+%
+Assembly language experience is [important] for the maturity and understanding of how computers work that it provides.
+        -- D. Gries
+%
+BASIC is the Computer Science equivalent of `Scientific Creationism'.
+%
+Bell Labs Unix -- Reach out and grep someone.
+%
+Beware of bugs in the above code; I have only proved it correct, not tried it.
+        -- Donald Knuth
+%
+Brain fried -- Core dumped
+%
+Build a system that even a fool can use and only a fool will want to use it.
+%
+C makes it easy for you to shoot yourself in the foot.  C++ makes that harder, but when you do, it blows away your whole leg.
+        -- Bjarne Stroustrup
+%
+Can't open /usr/share/games/fortunes/fortunes.  Lid stuck on cookie jar.
+%
+Computer Science is the only discipline in which we view adding a new wing to a building as being maintenance
+        -- Jim Horning
+%
+Computers are unreliable, but humans are even more unreliable. Any system which depends on human reliability is unreliable.
+        -- Gilb
+%
+Computers are useless.  They can only give you answers.
+        -- Pablo Picasso
+%
+Deliver yesterday, code today, think tomorrow.
+%
+DISCLAIMER:
+Use of this advanced computing technology does not imply an endorsement of Western industrial civilization.
+%
+Do you guys know what you're doing, or are you just hacking?
+%
+Documentation is the castor oil of programming.
+Managers know it must be good because the programmers hate it so much.
+%
+<<<<< EVACUATION ROUTE <<<<<
+%
+fortune: cannot execute.  Out of cookies.
+%
+grep me no patterns and I'll tell you no lines.
+%
+HEAD CRASH!!  FILES LOST!!
+Details at 11.
+%
+Help me, I'm a prisoner in a Fortune cookie file!
+%
+HELP!!!! I'm being held prisoner in /usr/games/lib!
+%
+Heuristics are bug ridden by definition.  If they didn't have bugs, then they'd be algorithms.
+%
+HOLY MACRO!
+%
+HOST SYSTEM NOT RESPONDING, PROBABLY DOWN. DO YOU WANT TO WAIT? (Y/N)
+%
+I am the wandering glitch -- catch me if you can.
+%
+I came, I saw, I deleted all your files.
+%
+I have a very small mind and must live with it.
+        -- E. Dijkstra
+%
+I've finally learned what "upward compatible" means.  It means we get to keep all our old mistakes.
+        -- Dennie van Tassel
+%
+If it happens once, it's a bug.
+If it happens twice, it's a feature.
+If it happens more than twice, it's a design philosophy.
+%
+If it has syntax, it isn't user friendly.
+%
+In computing, the mean time to failure keeps getting shorter.
+%
+In English, every word can be verbed.  Would that it were so in our programming languages.
+%
+In every non-trivial program there is at least one bug.
+%
+In seeking the unattainable, simplicity only gets in the way.
+        -- Epigrams in Programming, ACM SIGPLAN Sept. 1982
+%
+It is easier to change the specification to fit the program than vice versa.
+%
+It is easier to write an incorrect program than understand a correct one.
+%
+Let the machine do the dirty work.
+        -- "Elements of Programming Style", Kernighan and Ritchie
+%
+Life would be so much easier if we could just look at the source code.
+        -- Dave Olson
+%
+Due to the holiday next Monday, there will be no garbage collection.
+%
+Make sure your code does nothing gracefully.
+%
+Memory fault -- brain fried
+%
+Memory fault -- core...uh...um...core... Oh dammit, I forget!
+%
+MESSAGE ACKNOWLEDGED -- The Pershing II missiles have been launched.
+%
+Much of the excitement we get out of our work is that we don't really know what we are doing.
+        -- E. Dijkstra
+%
+Never put off till run-time what you can do at compile-time.
+        -- D. Gries
+%
+Never test for an error condition you don't know how to handle.
+        -- Steinbach
+%
+Never trust a computer you can't repair yourself.
+%
+Never underestimate the bandwidth of a station wagon full of tapes.
+        -- Dr. Warren Jackson, Director, UTCS
+%
+No line available at 300 baud.
+%
+Nobody said computers were going to be polite.
+%
+Nothing happens.
+%
+One picture is worth 128K words.
+%
+Overflow on /dev/null, please empty the bit bucket.
+%
+Overload -- core meltdown sequence initiated.
+%
+panic: kernel segmentation violation. core dumped		(only kidding)
+%
+panic: kernel trap (ignored)
+%
+Please go away.
+%
+Premature optimization is the root of all evil.
+        -- D. E. Knuth
+%
+Profanity is the one language all programmers know best.
+%
+PURGE COMPLETE.
+%
+Put no trust in cryptic comments.
+%
+Reactor error - core dumped!
+%
+Real Users find the one combination of bizarre input values that shuts down the system for days.
+%
+Real Users hate Real Programmers.
+%
+Recursion is the root of computation since it trades description for time.
+%
+Security check:    INTRUDER ALERT!
+%
+Swap read error.  You lose your mind.
+%
+Syntactic sugar causes cancer of the semicolon.
+        -- Epigrams in Programming, ACM SIGPLAN Sept. 1982
+%
+Testing can show the presence of bugs, but not their absence.
+        -- Dijkstra
+%
+The algorithm for finding the longest path in a graph is NP-complete. For you systems people, that means it's *real slow*.
+        -- Bart Miller
+%
+"The algorithm to do that is extremely nasty.  You might want to mug someone with it."
+        -- M. Devine, Computer Science 340
+%
+The clothes have no emperor.
+        -- C. A. R. Hoare, commenting on ADA.
+%
+"The Computer made me do it."
+%
+The goal of Computer Science is to build something that will last at least until we've finished building it.
+%
+The nice thing about standards is that there are so many of them to choose from.
+        -- Andrew S. Tanenbaum
+%
+The road to hell is paved with NAND gates.
+        -- J. Gooding
+%
+The steady state of disks is full.
+        -- Ken Thompson
+%
+The trouble with computers is that they do what you tell them, not what you want.
+        -- D. Cohen
+%
+The UNIX philosophy basically involves giving you enough rope to hang yourself.  And then a couple of feet more, just to be sure.
+%
+There are two ways to write error-free programs; only the third one works.
+%
+This screen intentionally left blank.
+%
+* * * * * THIS TERMINAL IS IN USE * * * * *
+%
+To err is human -- to blame it on a computer is even more so.
+%
+Trap full -- please empty.
+%
+UNIX was not designed to stop you from doing stupid things, because that would also stop you from doing clever things.
+        -- Doug Gwyn
+%
+You are in the hall of the mountain king.
+%
+You're not Dave.  Who are you?
+%
+Your fault -- core dumped
+%
+Life is NP-hard, and then you die.
+        -- Dave Cock
+%
+All rights reserved.
+%
+Any resemblance to real persons, living or dead, is purely coincidental.
+%
+Batteries not included.
+%
+Breaking seal constitutes acceptance of agreement.
+%
+Contest void where prohibited by law.
+%
+Danger: do not shake.
+%
+Do not try this at home.
+%
+Do not flush.
+%
+These statements have not been evaluated by the Food and Drug Administration.
+%
+Filmed before a live audience.
+%
+Keep out of reach of children.
+%
+May be too intense for some viewers.
+%
+Not responsible for typographical errors.
+%
+Results vary by individual.
+%
+Shake well before using.
+%
+Shipping not included.
+%
+Some restrictions may apply.
+%
+Subject to change without notice.
+%
+The Surgeon General has determined that cigarette smoking is hazardous to your health.
+%
+This space intentionally left blank.
+%
+Use at own risk.
+%
+Use of software is governed by the terms of the end user license agreement.
+%
+Void where prohibited by law.
+%
+Random, n.:
+    As in number, predictable.  As in memory access, unpredictable.
+%
+Ray's Rule of Precision:
+    Measure with a micrometer.  Mark with chalk.  Cut with an axe.
+%
+Recursion n.:
+    See Recursion.
+        -- Random Shack Data Processing Dictionary
+%
+Reisner's Rule of Conceptual Inertia:
+    If you think big enough, you'll never have to do it.
+%
+Reliable source, n.:
+    The guy you just met.
+%
+Satellite Safety Tip #14:
+    If you see a bright streak in the sky coming at you, duck.
+%
+Sattinger's Law:
+    It works better if you plug it in.
+%
+Shaw's Principle:
+    Build a system that even a fool can use, and only a fool will want to use it.
+%
+Shick's Law:
+    There is no problem a good miracle can't solve.
+%
+Silverman's Law:
+    If Murphy's Law can go wrong, it will.
+%
+Simon's Law:
+    Everything put together falls apart sooner or later.
+%
+standards, n.:
+    The principles we use to reject other people's code.
+%
+Stone's Law:
+    One man's "simple" is another man's "huh?"
+%
+Sturgeon's Law:
+    90% of everything is crud.
+%
+system-independent, adj.:
+    Works equally poorly on all systems.
+%
+The Roman Rule:
+    The one who says it cannot be done should never interrupt the one who is doing it.
+%
+The Second Law of Thermodynamics:
+    If you think things are in a mess now, just wait!
+        -- Jim Warner
+%
+Thyme's Law:
+    Everything goes wrong at once.
+%
+Uncle Ed's Rule of Thumb:
+    Never use your thumb for a rule.
+    You'll either hit it with a hammer or get a splinter in it.
+%
+User n.:
+    A programmer who will believe anything you tell him.
+%
+Van Roy's Law:
+    An unbreakable toy is useful for breaking other toys.
+%
+Watson's Law:
+    The reliability of machinery is inversely proportional to the number and significance of any persons watching it.
+%
+Whistler's Law:
+    You never know who is right, but you always know who is in charge.
+%
+Whitehead's Law:
+    The obvious answer is always overlooked.
+%
+Williams and Holland's Law:
+    If enough data is collected, anything may be proven by statistical methods.
+%
+Wilner's Observation:
+    All conversations with a potato should be conducted in private.
+%
+Woodward's Law:
+    A theory is better than its explanation.
+%
+WYSIWYG:
+    What You See Is What You Get.
+%
+Let's call it an accidental feature.
+    --Larry Wall
+%
+I did this 'cause Linux gives me a woody.  It doesn't generate revenue.
+    -- Dave '-ddt->` Taylor, announcing DOOM for Linux
+%
+How should I know if it works?  That's what beta testers are for.  I only coded it.
+    -- Attributed to Linus Torvalds, somewhere in a posting
+%
+Dijkstra probably hates me.
+    -- Linus Torvalds, in kernel/sched.c
+%
+And 1.1.81 is officially BugFree(tm), so if you receive any bug-reports on it, you know they are just evil lies.
+    -- Linus Torvalds
+%
+I've run DOOM more in the last few days than I have the last few months.  I just love debugging ;-)
+    -- Linus Torvalds
+%
+The memory management on the PowerPC can be used to frighten small children.
+    -- Linus Torvalds
+%
+> Linux is not user-friendly.
+It _is_ user-friendly.  It is not ignorant-friendly and idiot-friendly.
+    -- Seen somewhere on the net
+%
+Ok, I'm just uploading the new version of the kernel, v1.3.33, also known as "the buggiest kernel ever".
+    -- Linus Torvalds
+%
+Those who don't understand Linux are doomed to reinvent it, poorly.
+    -- unidentified source
+%
+We apologize for the inconvenience, but we'd still like yout to test out this kernel.
+    -- Linus Torvalds, announcing another kernel patch
+%
+Excusing bad programming is a shooting offence, no matter _what_ the circumstances.
+    -- Linus Torvalds, to the linux-kernel list
+%
+Linus?  Whose that?
+    -- clueless newbie on #Linux
+%
+'Ooohh.. "FreeBSD is faster over loopback, when compared to Linux over the wire". Film at 11.'
+    -- Linus Torvalds
+%
+The good thing about standards is that there are so many to choose from.
+    -- Andrew S. Tanenbaum
+%
+Computers are useless.  They can only give you answers.
+    -- Pablo Picasso
+%
+I tried the clone syscall on me, but it didn't work.
+    -- Mike Neuffer trying to fix a serious time problem
+%
+I don't even know if it makes sense at all :) This is an experimental patch for an experimental kernel :))
+    -- Ingo Molnar on linux-kernel
+%
+A feature is nothing more than a bug with seniority.
+    -- Unknown source
+%
+Make it idiot-proof, and someone will breed a better idiot.
+    -- Oliver Elphick
+%
+Real Men don't make backups.  They upload it via ftp and let the world mirror it.
+    -- Linus Torvalds
+%
+#if _FP_W_TYPE_SIZE < 32
+#error "Here's a nickel kid.  Go buy yourself a real computer."
+#endif
+    -- linux/arch/sparc64/double.h
+%
+I'm telling you that the kernel is stable not because it's a kernel, but because I refuse to listen to arguments like this.
+    -- Linus Torvalds
+%
+The nice thing about Windows is - It does not just crash, it displays a dialog box and lets you press 'OK' first.
+    -- Arno Schaefer's .sig
+%
+"And I don't like doing silly things (except on purpose)."
+        -- Larry Wall in <1992Jul3.191825.14435@netlabs.com>
+%
+echo "Congratulations.  You aren't running Eunice."
+        -- Larry Wall in Configure from the perl distribution
+%
+echo "Your stdio isn't very std."
+        -- Larry Wall in Configure from the perl distribution
+%
+[End of diatribe.  We now return you to your regularly scheduled programming...]
+        -- Larry Wall in Configure from the perl distribution
+%
+In general, they do what you want, unless you want consistency.
+        -- Larry Wall in the perl man page
+%
+I think it's a new feature.  Don't tell anyone it was an accident.  :-)
+        -- Larry Wall on s/foo/bar/eieio in <10911@jpl-devvax.JPL.NASA.GOV>
+%
+"It is easier to port a shell than a shell script."
+        -- Larry Wall
+%
+It is, of course, written in Perl.  Translation to C is left as an exercise for the reader.  :-)  
+         -- Larry Wall in <7448@jpl-devvax.JPL.NASA.GOV>
+%
+It's all magic.  :-)
+        -- Larry Wall in <7282@jpl-devvax.JPL.NASA.GOV>
+%
+Let us be charitable, and call it a misleading feature  :-)
+        -- Larry Wall in <2609@jato.Jpl.Nasa.Gov>
+%
+"The road to hell is paved with melting snowballs."
+        -- Larry Wall in  <1992Jul2.222039.26476@netlabs.com>
+%
+Though I'll admit readability suffers slightly...
+        -- Larry Wall in <2969@jato.Jpl.Nasa.Gov>
+%
+tmps_base = tmps_max;                /* protect our mortal string */
+        -- Larry Wall in stab.c from the perl source code
+%
+/* we have tried to make this normal case as abnormal as possible */
+        -- Larry Wall in cmd.c from the perl source code
+%
+What about WRITING it first and rationalizing it afterwords?  :-)
+        -- Larry Wall in <8162@jpl-devvax.JPL.NASA.GOV>
+%
+When in doubt, parenthesize.  At the very least it will let some poor schmuck bounce on the % key in vi.
+        -- Larry Wall in the perl man page
+%
+The whole history of computers is rampant with cheerleading at best and bigotry at worst.
+        -- Larry Wall in <199702111730.JAA28598@wall.org>
+%
+I'd put my money where my mouth is, but my mouth keeps moving.
+        -- Larry Wall in <199704051723.JAA28035@wall.org>
+%
+May you do Good Magic with Perl.
+        -- Larry Wall's blessing
+%
+Perl has a long tradition of working around compilers.
+        -- Larry Wall in <199708252256.PAA00105@wall.org>
+%
+Personally, I like to defiantly split my infinitives.  :-)
+        -- Larry Wall in <199708271551.IAA10211@wall.org>
+%
+The computer should be doing the hard work.  That's what it's paid to do, after all.
+        -- Larry Wall in <199709012312.QAA08121@wall.org>
+%
+:-) your own self.
+        -- Larry Wall in <199709261754.KAA23761@wall.org>
+%
+I surely do hope that's a syntax error.
+        -- Larry Wall in <199710011752.KAA21624@wall.org>
+%
+I think that's easier to read.  Pardon me.  Less difficult to read.
+        -- Larry Wall in <199710120226.TAA06867@wall.org>
+%
+For the sake of argument I'll ignore all your fighting words.
+        -- Larry Wall in <199710221710.KAA24242@wall.org>
+%
+Either approach may give birth to various sorts of monstrosities.
+        -- Larry Wall in <199710221950.MAA25210@wall.org>
+%
+Maybe it's time to break that.
+        -- Larry Wall in <199710311718.JAA19082@wall.org>
+%
+I think you're letting your knowledge of internals interfere with your linguistic judgement here.
+        -- Larry Wall in <199711011949.LAA25651@wall.org>
+%
+There's some entertainment value in watching people juggle nitroglycerin.
+        -- Larry Wall in <199712041747.JAA18908@wall.org>
+%
+It's easy to solve the halting problem with a shotgun.   :-)
+        -- Larry Wall in <199801151836.KAA14656@wall.org>
+%
+Kent's Heuristic:
+    Look for it first where you'd most like to find it.
+%
+kernel, n.:
+    A part of an operating system that preserves the medieval traditions of sorcery and black art.
+%
+Larkinson's Law:
+    All laws are basically false.
+%
+laser, n.:
+    Failed death ray.
+%
+Murphy's Law of Research:
+    Enough research will tend to support your theory.
+%
+no maintenance:
+    Impossible to fix.
+%
+Occam's eraser:
+    The philosophical principle that even the simplest solution is bound to have something wrong with it.
+%
+Power, n.:
+    The only narcotic regulated by the SEC instead of the FDA.
+%
+Anthony's Law of Force:
+    Don't force it; get a larger hammer.
+%
+audiophile, n:
+    Someone who listens to the equipment instead of the music.
+%
+Blore's Razor:
+    Given a choice between two theories, take the one which is funnier.
+%
+Blutarsky's Axiom:
+    Nothing is impossible for the man who will not listen to reason.
+%
+design, v.:
+    What you regret not doing later on.
+%
+First law of debate:
+    Never argue with a fool.  People might not know the difference.
+%
+Green's Law of Debate:
+    Anything is possible if you don't know what you're talking about.
+%
+Hlade's Law:
+    If you have a difficult task, give it to a lazy person -- they will find an easier way to do it.
+%
+Horngren's Observation:
+    Among economists, the real world is often a special case.
+%
+Jenkinson's Law:
+    It won't work.
+%
+Life isn't just about passing on your genes. We can leave behind much more than just DNA. Through speech, music, literature, and movies... what we've seen, heard, felt... anger, joy, and sorrow... these are the things I will pass on. That's what I live for.
+    - Solid Snake (Metal Gear Solid 2: Sons of Liberty)
+%
+"Everything she did, she did for her country. She sacrificed her life and her honor for her native land. She was a real hero. She was a true patriot." 
+    — EVA (Metal Gear Solid 3: Snake Eater)
+%
+“It’s not about changing the world. It’s about leaving the world the way it is.”
+    - Big Boss (Metal Gear Solid 4: Guns of the Patriots)
+%
+“That new world is yours to live in. Not as a snake, but as a man.”
+    - Big Boss to Old Snake (Metal Gear Solid 4: Guns of the Patriots)
+%
+"I want to ask you. Do you think love can bloom even on a battlefield?"
+    - Hal "Otacon" Emmerich (Metal Gear Solid)
+%
+"You mustn't allow yourself to be chained to fate, to be ruled by your genes. Human beings can choose the kind of life that they want to live. What's important is that you choose life... and then live."
+    - Dr. Naomi Hunter (Metal Gear Solid)
+%
+"What's with these guys? It's just like one of my Japanese animes!"
+    — Hal "Otacon" Emmerich (Metal Gear Solid)
+%
+"What is our legacy if we cannot pass the torch? Proof of our existence - a mark of some sort."
+    - Solidus Snake (Metal Gear Solid 2: Sons of Liberty)
+%
+"Remember, No Russian"
+    - Vladmir Makarov (Call of Duty: Modern Warfare 2)
+%
+"It doesn't take the most powerful nations on Earth to create the next global conflict. Just the will of a single man." 
+    - Vladimir Makarov (Call of Duty: Modern Warfare 2)
+%
+"Bravo Six, Going Dark."
+    - Captain Price (Call of Duty: Modern Warfare (2019))
+%
+"This is Pequod! Arriving shortly at the LZ!"
+%
+"Soap trusted you. I thought I could too. So, why in bloody hell, does Makarov know you?"
+    - Captain Price (Call of Duty: Modern Warfare 3)
+%
+"Psycho Mantis?"
+%
+"Prepare for unforseen consequences..."
+    - G-Man (Half-Life 2 Episode 2)
+%
+"They are waiting for you Gordon. In the test chamberrrrr..."
+    - Unnamed Scientist (Half Life)
+%
+"What Cat?"
+    - Alyx Vance (Half Life 2)
+%
+"Attention, ground units - anti-citizen reported in this community. Code: lock, cauterize, stabilize."
+%
+"Alert: Community Ground Protection units: Local unrest structure detected. Assemble, administer, pacify."
+%
+"Attention residents: This block contains potential civil infection. Inform, cooperate, assemble."
+%
+"Citizen notice: Failure to cooperate will result in permanent off-world relocation."
+%
+"Nova Prospekt stabilization force directive Two: Engage reserve, contain exogen incursion."
+%
+"Alert. Ground units. Invasive operation of anti-citizen origin. Response code: Engage. Quell. Inquire."
+%
+"Attention please. Access to this block is not permitted. Local security deployed and designated to prosecute."
+%
+"Warning: Counter-resonant singularity device detected. Confiscation field failure."
+%
+"Security Alert: Illegal counter-resonant singularity device detected. Deploy, Diagnose, Dissect."
+%
+"Warning. Malignant Viral Interface bypass detected. Polyphasic core reprogramming detected. Sterilizers and containment fields may be compromised."
+%
+"Converge sector station one, weapons free. Target has been designated as primary one objective. Prosecute on sight."
+%
+"Overwatch acknowledges activity. Confirm sector zero-two, possible necrotic interference. Sweep sector, report containment status."
+%
+"Response code: Shield. Key. Migrate."
+%
+"Alert. Response team. Overload protocol: Angle. Cauterize. Flash. Angle. Cauterize. Flash."
+%
+"Welcome to the HEV Mark 4 Protective System, for use in hazardous environment conditions."
+%
+"Morphine administered."
+%
+"Warning: Hazardous radiation levels detected."
+%
+"Warning: Blood toxin levels detected."
+%
+"Have a very safe day."
+%
+"Gordon Freeman in the flesh. Or rather, in the hazard suit. I took the liberty of relieving you of your weapons; most of them were government property. As for the suit, I think you’ve earned it."
+%
+"Rise and shine, Mr. Freeman. Rise and shine."
+%
+"The right man in the wrong place can make all the difference in the world."
+    - The G-Man (Half-Life 2)
+%
+"So, wake up, Mr. Freeman. Wake up and smell the ashes."
+%
+"...time, Dr. Freeman? Is it really that time again? It seems as if you only just arrived."
+    - The G-Man (Half-Life 2)
+%
+"In the meantime... This is where I get off"
+    - The G-Man (Half-Life 2)
+%
+"Some believe the fate of our worlds is inflexible. My employers disagree. They authorize me to… nudge things in a particular direction from time to time."
+    - The G-Man (Half-Life Alyx)
+%
+"A previous hire has been unable — or unwilling — to perform the tasks laid before him. We have struggled to find a suitable replacement. Until now."
+    - The G-Man (Half-Life Alyx)
+%
+Good. That's one less loose end.
+%
+Remember, No Russian.
+%
+Rip and Tear. Until it is done.
+%
+You can't just blow a hole into Mars.
+      -- Dr. Samuel Hayden (DOOM Eternal)
+%
+<< Crystal Kingdom denies this request >>
+%
+"This is the part where he kills us."
+"This is the part where I kill you."
+> The Part Where He Kills You
+%
+DORYA!
+%
+I'M NOT GONNA SUGARCOAT IT.
+%
+Hello Potion Seller. I am going into battler, and I want your strongest potions.
+%
+My potions are too strong for you, traveller
+%
+Oh Mein Gott zee is ein cave full of blüntsmoken!
+%
+It's not ethically made, its _epically_ made
+%
+How's it going everyone, Flashbang here.
+%
+TOTSUGEKI!!!
+%
+From the River to the Sea,
+Palestine will be free!
+%
+Call me Ishmael
+%
+Why are we still here, just to suffer?
+        -- Kazuhiro Miller (Metal Gear Solid V: The Phantom Pain)
+%
+"Memes, the DNA of the soul..."
+        -- Monsoon (Metal Gear Rising: Revengance)
+%
+Nanomachines, Son.
+%
+"Mind if I... cut in?"
+        -- Jetstream Sam (Metal Gear Rising: Revengance)
+%
+@gock is this true????
+%
+try finger
+but hole
+%
+Get rotated. Idiot.
+%
+The highest honor in journalism is being murdered by the CIA
+%
+38+2 weeks pregananant?
+        -- Seen on Yahoo Answers
+%
+Wake the fuck up Samurai, we've got a city to burn.
+%
+man
+%
+What was he cooking?
+%
+LET HIM COOK
+%
+Was that the Bite of ‘87?
+    — Markiplier
+%
+THAT’S WHY HE IS THE GOAT!!!!
+%
+Glory to Arstotzka
+%
+CHICKEN JOCKEY
+%
+I… am Steve
+%
+It’s MY home. God gave me the right to make it a tomb for federal agents or thieves
+    — Flork of Cows
+%
+“Hello America. I’m going to be the money president.”
+    —President Jimble (Smiling Friends)
+%
+Right Behind You
+%
+INTRUDER ALERT! RED SPY IS IN THE BASE!
+%
+no :)
+%
+“If I chopped you up in a meat grinder”
+    --Jerma985
+%
+VANGUARD-CLASS TITAN: BT-7274
+PROTOCOL 1: Link to Pilot
+%
+VANGUARD-CLASS TITAN: BT-7274
+PROTOCOL 2: Uphold the Mission
+%
+VANGUARD-CLASS TITAN: BT-7274
+PROTOCOL 3: Protect the Pilot
+%
+"Protocol three: I will NOT lose another pilot."
+%
+"I will avoid any further shortcuts."
+    - BT-7274
+%
+"Congratulations on your field promotion, Pilot Cooper."
+    - BT-7274
+%
+"It's your lucky day hero, I'm not going to kill you. I don't work for free."
+    - Kuben Blisk
+%
+"Yikes! I hope you have a few tricks up your sleeve for this final challenge!"
+%
+"Maybe Go Fish is more our speed..."
+%
+"What a flop!"
+%
+"We folded like a cheap suit!"
+%
+"Time for us to shuffle off and try again!"
+%
+"You know what they say, the house always wins!"
+%
+"Looks like we found out who the real Joker is!"
+%
+"Oh no, were you bluffing too?"
+%
+"Looks like the joke's on us!"
+%
+"If I had hands I would have covered my eyes!"
+%
+"I'm literally a fool, what's your excuse?"
+%
+"You Aced it!"
+%
+"You dealt with that pretty well!"
+%
+"Looks like you weren't bluffing!"
+%
+"Too bad these chips are all virtual..."
+%
+"Looks like I've taught you well!"
+%
+"You made some heads up plays!"
+%
+"Good thing I didn't bet against you!"
+%
