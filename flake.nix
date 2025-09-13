@@ -34,6 +34,7 @@
         nixpkgs.overlays = [
           fenix.overlays.default
           (import ./overlays/shell-toy.nix)
+          (import ./overlays/wsl-key-setup.nix)
         ];
       };
 
@@ -48,13 +49,13 @@
           modules = [
             overlays
             nixos-wsl.nixosModules.default
+            ./hosts/manifold/default.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.face = ./hosts/manifold/home-manager.nix;
+              home-manager.users.face = (import ./hosts/manifold/home-manager.nix);
             }
-            ./hosts/manifold/default.nix
           ];
 
         };

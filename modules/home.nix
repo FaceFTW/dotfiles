@@ -115,6 +115,7 @@ in
   git.extraConfig.commit.gpgsign = true;
   git.extraConfig.pull.rebase = true;
   git.extraConfig.rebase.autoStash = true;
+  git.signing.key = "CB9CCE0E558306B21891063A9EB573C02E056DA8";
 
   ############################################
   # Vim Config

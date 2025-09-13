@@ -7,7 +7,7 @@
 let
   user = "face";
   xdg_configHome = "/home/${user}/.config";
-  shared-programs = import ../../modules/home.nix { inherit config pkgs lib; };
+  shared-programs = (import ../../modules/home.nix { inherit config pkgs lib; });
 in
 {
   ############################################
@@ -18,7 +18,7 @@ in
   home.homeDirectory = "/home/${user}";
   home.packages = pkgs.callPackage ./user-packages.nix { };
   home.stateVersion = "25.05";
+  xdg.enable = true;
 
   programs = shared-programs;
-
 }
