@@ -30,6 +30,7 @@ final: prev: with prev; {
         ssh-keygen -f ~/.ssh/id_ed25519.pub
         echo "SSH User key created"
         echo "Public Key: $(cat ~/.ssh/id_ed25519.pub)"
+        ssh-add ~/.ssh/id_ed25519
       fi
     '';
   };
