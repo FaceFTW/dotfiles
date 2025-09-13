@@ -14,6 +14,18 @@ in
   ############################################
   zsh.enable = true;
 
+  zsh.shellAliases.search = "rg -p --glob '!node_modules/*'  $@";
+  zsh.shellAliases.zshconfig = "vim ~/.zshrc";
+  zsh.shellAliases.doafunny = "sh-toy";
+  zsh.shellAliases.clearmemcache = "echo 3 | sudo tee /proc/sys/vm/drop_caches";
+  zsh.shellAliases.clear = "clear-scrollback-buffer; sh-toy";
+  zsh.shellAliases.rebuild-nix = "sudo nixos-rebuild switch --flake .#manifold";
+  zsh.shellAliases.rebuild-nix-trace = "sudo nixos-rebuild switch --show-trace --flake .#manifold";
+  zsh.shellAliases.clean-nix = "sudo nix-collect-garbage -d";
+  zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
+  zsh.shellAliases.la = "ls -a";
+  zsh.shellAliases.ll = "ls -al";
+
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;
   zsh.history.ignorePatterns = [
@@ -72,16 +84,6 @@ in
           # https://github.com/Powerlevel9k/powerlevel9k/pull/1176#discussion_r299303453
           zle && zle .reset-prompt && zle -R
         }
-
-        alias search=rg -p --glob '!node_modules/*'  $@
-        alias zshconfig="vim ~/.zshrc"
-        alias doafunny="sh-toy"
-        alias clearmemcache="echo 3 | sudo tee /proc/sys/vm/drop_caches"
-        alias clear="clear-scrollback-buffer; sh-toy"
-
-        alias rebuild-nix="sudo nixos-rebuild switch --flake .#manifold"
-        alias rebuild-nix-trace="sudo nixos-rebuild switch --show-trace --flake .#manifold"
-
       '';
 
       runAfter = lib.mkOrder 1500 "sh-toy";
