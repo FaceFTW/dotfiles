@@ -60,6 +60,7 @@
               home-manager.users.face = (import ./hosts/manifold/home-manager.nix);
             }
           ];
+        };
 
         ############################################
         # portal

@@ -14,23 +14,27 @@ in
   ############################################
   zsh.enable = true;
 
+  zsh.shellAliases.la = "ls -a";
+  zsh.shellAliases.ll = "ls -al";
+  zsh.shellAliases.clear = "clear-scrollback-buffer; sh-toy";
   zsh.shellAliases.search = "rg -p --glob '!node_modules/*'  $@";
   zsh.shellAliases.zshconfig = "vim ~/.zshrc";
   zsh.shellAliases.doafunny = "sh-toy";
   zsh.shellAliases.clearmemcache = "echo 3 | sudo tee /proc/sys/vm/drop_caches";
-  zsh.shellAliases.clear = "clear-scrollback-buffer; sh-toy";
+
+  # Nix Specific Aliases
   zsh.shellAliases.rebuild-nix = "sudo nixos-rebuild switch --flake .#manifold";
   zsh.shellAliases.rebuild-nix-trace = "sudo nixos-rebuild switch --show-trace --flake .#manifold";
   zsh.shellAliases.clean-nix = "sudo nix-collect-garbage -d";
   zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
-  zsh.shellAliases.la = "ls -a";
-  zsh.shellAliases.ll = "ls -al";
+  zsh.shellAliases.build-manifold-image = "sudo nix run .#nixosConfigurations.manifold.config.system.build.tarballBuilder";
+  zsh.shellAliases.build-portal-image = "sudo nix run .#nixosConfigurations.portal.config.system.build.tarballBuilder";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;
   zsh.history.ignorePatterns = [
     "cd *"
-    "ls"
+    "ls*"
     "pwd"
   ];
   zsh.history.share = true;
@@ -41,9 +45,7 @@ in
     "z"
     "colorize"
     "colored-man-pages"
-    "dircycle"
     "cp"
-    "lol"
     "vscode"
     "ssh-agent"
     "gpg-agent"
@@ -63,25 +65,11 @@ in
           . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
         fi
 
-        # Define variables for directories
         export PATH=$HOME/.local/share/bin:$PATH
-
-        shell() {
-          nix-shell '<nixpkgs>' -A "$1"
-        }
 
         # https://unix.stackexchange.com/questions/517025/zsh-clear-scrollback-buffer
         function clear-scrollback-buffer {
-          # Behavior of clear:
-          # 1. clear scrollback if E3 cap is supported (terminal, platform specific)
-          # 2. then clear visible screen
-          # For some terminal 'e[3J' need to be sent explicitly to clear scrollback
           clear && printf '\e[3J'
-          # .reset-prompt: bypass the zsh-syntax-highlighting wrapper
-          # https://github.com/sorin-ionescu/prezto/issues/1026
-          # https://github.com/zsh-users/zsh-autosuggestions/issues/107#issuecomment-183824034
-          # -R: redisplay the prompt to avoid old prompts being eaten up
-          # https://github.com/Powerlevel9k/powerlevel9k/pull/1176#discussion_r299303453
           zle && zle .reset-prompt && zle -R
         }
       '';
