@@ -97,6 +97,7 @@ in
   environment.systemPackages = with pkgs; [
     inetutils
     ncdu
+    rsync
   ];
 
   system.stateVersion = "25.05"; # Don't change this
