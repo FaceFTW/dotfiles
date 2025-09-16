@@ -49,11 +49,11 @@ in
   hardware.raspberry-pi."4".fkms-3d.enable = true;
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
   hardware.deviceTree.enable = true;
-  hardware.deviceTree.filter = "*-rpi-*.dtp";
+  # hardware.deviceTree.filter = "*-rpi-*.dtp"; # Set with fkms-3d?
   hardware.deviceTree.overlays = [
     {
       name = "spi";
-      dtsFile = ./spi0-0cs.dtso;
+      dtboFile = ./devicetree/spi0-0cs.dtbo;
     }
   ];
 
