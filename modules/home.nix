@@ -25,13 +25,14 @@ in
   # Nix Specific Aliases
   zsh.shellAliases.clean-nix = "sudo nix-collect-garbage -d";
   zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
-  zsh.shellAliases.build-manifold-image = "sudo nix run ~/.config/dotfiles#nixosConfigurations.manifold.config.system.build.tarballBuilder";
-  zsh.shellAliases.rebuild-manifold = "sudo nixos-rebuild switch --flake ~/.config/dotfiles#manifold";
-  zsh.shellAliases.rebuild-manifold-trace = "sudo nixos-rebuild switch --show-trace --flake ~/.config/dotfiles#manifold";
-  zsh.shellAliases.build-portal-image = "sudo nix run .#nixosConfigurations.portal.config.system.build.tarballBuilder";
-  zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --flake ~/.config/dotfiles#portal";
-  zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --show-trace --flake ~/.config/dotfiles#portal";
-  zsh.shellAliases.build-fabricator-image = "nix build .$images.fabricator";
+  zsh.shellAliases.rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
+  zsh.shellAliases.build-manifold-image = "sudo nix run --print-build-logs ~/.config/dotfiles#nixosConfigurations.manifold.config.system.build.tarballBuilder";
+  zsh.shellAliases.rebuild-manifold = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#manifold";
+  zsh.shellAliases.rebuild-manifold-trace = "sudo nixos-rebuild switch --print-build-logs --show-trace --flake ~/.config/dotfiles#manifold";
+  zsh.shellAliases.build-portal-image = "sudo nix run --print-build-logs .#nixosConfigurations.portal.config.system.build.tarballBuilder";
+  zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#portal";
+  zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --print-build-logs --show-trace --flake ~/.config/dotfiles#portal";
+  zsh.shellAliases.build-fabricator-image = "nix build --print-build-logs .$images.fabricator";
   # zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --flake ~/.config/dotfiles#portal";
   # zsh.shellAliases.rebuild-fabricator-trace = "sudo nixos-rebuild switch --show-trace --flake /";
 

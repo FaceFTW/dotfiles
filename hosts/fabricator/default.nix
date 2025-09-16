@@ -24,7 +24,7 @@ in
   ############################################
 
   nix.nixPath = [
-    "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos"
+    "nixos-config=/home/${user}/.config/dotfiles:/etc/nixos"
     "nixpkgs=flake:nixpkgs"
   ];
   nix.settings.allowed-users = [ "${user}" ];
@@ -107,7 +107,10 @@ in
   ############################################
   packages.monitoring = true;
   packages.networking = true;
+
   environment.systemPackages = with pkgs; [ ];
+
+  environment.variables.FUNCNEST = 100000; # Fixes a potential issue with clear
 
   system.stateVersion = "25.05"; # Don't change this
 }
