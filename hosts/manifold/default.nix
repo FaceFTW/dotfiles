@@ -24,7 +24,7 @@ in
   ############################################
 
   nix.nixPath = [
-    "nixos-config=/home/${user}/.local/share/src/nixos-config:/etc/nixos"
+    "nixos-config=/home/${user}/.config/dotfiles:/etc/nixos"
     "nixpkgs=flake:nixpkgs"
   ];
   nix.settings.allowed-users = [ "${user}" ];

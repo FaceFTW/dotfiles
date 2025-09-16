@@ -25,14 +25,14 @@ in
   # Nix Specific Aliases
   zsh.shellAliases.clean-nix = "sudo nix-collect-garbage -d";
   zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
-  zsh.shellAliases.build-manifold-image = "sudo nix run /mnt/c/Users/awest/.local/dotfiles#nixosConfigurations.manifold.config.system.build.tarballBuilder";
-  zsh.shellAliases.rebuild-manifold = "sudo nixos-rebuild switch --flake /mnt/c/Users/awest/.local/dotfiles#manifold";
-  zsh.shellAliases.rebuild-manifold-trace = "sudo nixos-rebuild switch --show-trace --flake /mnt/c/Users/awest/.local/dotfiles#manifold";
+  zsh.shellAliases.build-manifold-image = "sudo nix run ~/.config/dotfiles#nixosConfigurations.manifold.config.system.build.tarballBuilder";
+  zsh.shellAliases.rebuild-manifold = "sudo nixos-rebuild switch --flake ~/.config/dotfiles#manifold";
+  zsh.shellAliases.rebuild-manifold-trace = "sudo nixos-rebuild switch --show-trace --flake ~/.config/dotfiles#manifold";
   zsh.shellAliases.build-portal-image = "sudo nix run .#nixosConfigurations.portal.config.system.build.tarballBuilder";
-  zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --flake /mnt/c/Users/awest/.local/dotfiles#portal";
-  zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --show-trace --flake /mnt/c/Users/awest/.local/dotfiles#portal";
+  zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --flake ~/.config/dotfiles#portal";
+  zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --show-trace --flake ~/.config/dotfiles#portal";
   zsh.shellAliases.build-fabricator-image = "nix build .$images.fabricator";
-  # zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --flake /mnt/c/Users/awest/.local/dotfiles#portal";
+  # zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --flake ~/.config/dotfiles#portal";
   # zsh.shellAliases.rebuild-fabricator-trace = "sudo nixos-rebuild switch --show-trace --flake /";
 
   zsh.history.append = true;
