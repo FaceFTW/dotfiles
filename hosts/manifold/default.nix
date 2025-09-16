@@ -62,7 +62,6 @@ in
   ############################################
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
-
   # services.gvfs.enable = true; # Mount, trash, and other functionalities
 
   ############################################
@@ -104,5 +103,7 @@ in
 
   environment.systemPackages = with pkgs; [ ];
 
-  system.stateVersion = "25.05"; # Don't change this
+  environment.variables.FUNCNEST = 100000; # Fixes a potential issue with clear
+
+  system.stateVersion = "25.05";
 }
