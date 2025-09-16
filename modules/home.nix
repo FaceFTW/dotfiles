@@ -31,6 +31,9 @@ in
   zsh.shellAliases.build-portal-image = "sudo nix run .#nixosConfigurations.portal.config.system.build.tarballBuilder";
   zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --flake /mnt/c/Users/awest/.local/dotfiles#portal";
   zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --show-trace --flake /mnt/c/Users/awest/.local/dotfiles#portal";
+  zsh.shellAliases.build-fabricator-image = "nix build .$images.fabricator";
+  # zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --flake /mnt/c/Users/awest/.local/dotfiles#portal";
+  # zsh.shellAliases.rebuild-fabricator-trace = "sudo nixos-rebuild switch --show-trace --flake /";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;

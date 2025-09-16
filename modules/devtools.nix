@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  devTools = config.programs.devTools;
+  devTools = config.devTools;
   inherit (pkgs.lib)
     mkIf
     mkEnableOption
@@ -12,7 +12,7 @@ in
 {
   imports = [ ];
 
-  options.programs.devTools = {
+  options.devTools = {
     rust = mkEnableOption "Rust Toolchain";
     docker = mkEnableOption "Docker";
     node = mkEnableOption "NodeJS";

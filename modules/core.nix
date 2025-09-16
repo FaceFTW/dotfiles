@@ -36,41 +36,4 @@
       ];
     }
   ];
-
-  ############################################
-  # Default System Packages
-  ############################################
-  environment.systemPackages = with pkgs; [
-    shell-toy
-
-    bash-completion
-    bat
-    coreutils
-    curl
-    gitAndTools.gitFull
-    gnupg
-    htop
-    iftop
-    killall
-    openssh
-    vim
-    zip
-
-    unixtools.fsck
-    unixtools.hexdump
-    unixtools.ifconfig
-    unixtools.mount
-    unixtools.netstat
-    unixtools.ping
-    unixtools.ps
-    unixtools.sysctl
-    unixtools.top
-    unixtools.umount
-
-    fzf # Used with Vim config
-
-    nixfmt
-    home-manager
-  ];
-
 }
