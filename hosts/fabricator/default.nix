@@ -16,6 +16,7 @@ in
     ../../modules/core.nix
     ../../modules/devtools.nix
     ../../modules/kernel.nix
+    ../../modules/packages.nix
   ];
 
   ############################################
@@ -37,14 +38,14 @@ in
     experimental-features = nix-command flakes
   '';
   nixpkgs.hostPlatform = "aarch64-linux";
-  nixpkgs.crossSystem = "aarch64-linux";
   nixpkgs.buildPlatform = "x86_64-linux";
 
   ############################################
   # Hardware Configuration
   ############################################
-  boot.kernelPackages = pkgs.linuxPackages_rpi4;
-  hardware.raspberry-pi."4".i2c1 = true;
+  boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
+  boot.kernelModules = [ ];
+  hardware.raspberry-pi."4".i2c1.enable = true;
   hardware.raspberry-pi."4".fkms-3d.enable = true;
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
   hardware.deviceTree.enable = true;
@@ -52,7 +53,7 @@ in
   hardware.deviceTree.overlays = [
     {
       name = "spi";
-      dtsoFile = ./spi0-0cs.dtso;
+      dtsFile = ./spi0-0cs.dtso;
     }
   ];
 
@@ -64,12 +65,11 @@ in
 
   # Enable Graphics
   services.xserver.enable = true;
-  services.xserver.window-managers.ratpoison = true;
+  services.xserver.windowManager.ratpoison.enable = true;
 
   ############################################
   # Program Options
   ############################################
-  programs.gnupg.agent.enable = true;
   programs.zsh.enable = true;
 
   ############################################
@@ -83,7 +83,7 @@ in
   ############################################
   # Misc System Configuration
   ############################################
-  networking.hostName = "manifold-wsl";
+  networking.hostName = "fabricator";
 
   time.timeZone = "America/New_York";
 
@@ -95,7 +95,6 @@ in
       isNormalUser = true;
       extraGroups = [
         "wheel" # Enable ‘sudo’ for the user.
-        "docker"
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [ hostKey ];
@@ -106,10 +105,9 @@ in
   ############################################
   # Global Packages
   ############################################
-  environment.systemPackages = with pkgs; [
-    inetutils
-    ncdu
-  ];
+  packages.monitoring = true;
+  packages.networking = true;
+  environment.systemPackages = with pkgs; [ ];
 
   system.stateVersion = "25.05"; # Don't change this
 }

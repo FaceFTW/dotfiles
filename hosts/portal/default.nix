@@ -15,6 +15,7 @@ in
     ../../modules/core.nix
     ../../modules/devtools.nix
     ../../modules/kernel.nix
+    ../../modules/packages.nix
     # agenix.nixosModules.default
   ];
 
@@ -55,8 +56,6 @@ in
   ############################################
   programs.gnupg.agent.enable = true;
   programs.zsh.enable = true;
-  programs.devTools.rust = true;
-  programs.devTools.patchVSCodeRemote = true;
 
   ############################################
   # Services
@@ -92,10 +91,16 @@ in
   ############################################
   # Global Packages
   ############################################
-  environment.systemPackages = with pkgs; [
-    inetutils
-    ncdu
-  ];
+  packages.gitFull = true;
+  packages.gnupg = true;
+  packages.monitoring = true;
+  packages.networking = true;
+  packages.nixTools = true;
+
+  programs.devTools.rust = true;
+  programs.devTools.patchVSCodeRemote = true;
+
+  environment.systemPackages = with pkgs; [ ];
 
   system.stateVersion = "25.05"; # Don't change this
 }
