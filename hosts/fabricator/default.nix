@@ -12,7 +12,6 @@ let
 in
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     ../../modules/core.nix
     ../../modules/devtools.nix
     ../../modules/kernel.nix
@@ -45,6 +44,30 @@ in
   ############################################
   boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
   boot.kernelModules = [ ];
+#   sdImage.populateFirmwareCommands = ''
+#     dtparam=i2c_arm=on
+#     dtparam=spi=on
+
+#     camera_auto_detect=1
+#     display_auto_detect=1
+
+#     auto_initramfs=1
+
+#     # dtoverlay=vc4-kms-v3d
+#     max_framebuffers=2
+#     disable_fw_kms_setup=1
+#     disable_overscan=1
+
+#     arm_64bit=1
+#     arm_boost=1
+
+#     [all]
+#     enable_uart=1
+#     max_usb_current=1
+#     start_x=1
+#     gpu_mem=128
+
+#   '';
   hardware.raspberry-pi."4".i2c1.enable = true;
   hardware.raspberry-pi."4".fkms-3d.enable = true;
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
@@ -108,7 +131,10 @@ in
   packages.monitoring = true;
   packages.networking = true;
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [
+    libraspberrypi
+    raspberrypi-eeprom
+  ];
 
   environment.variables.FUNCNEST = 100000; # Fixes a potential issue with clear
 
