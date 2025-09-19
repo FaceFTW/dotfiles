@@ -12,11 +12,36 @@ let
 in
 {
   imports = [
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     ../../modules/core.nix
     ../../modules/devtools.nix
     ../../modules/kernel.nix
     ../../modules/packages.nix
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nixos-generators.nixosModules.all-formats
+    inputs.nixos-generators.nixosModules.sd-aarch64
   ];
+
+  ############################################
+  # User Settings
+  ############################################
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.face = (import ./home-manager.nix);
+
+  users.users = {
+    ${user} = {
+      name = "${user}";
+      home = "/home/${user}";
+      isNormalUser = true;
+      extraGroups = [
+        "wheel" # Enable ‘sudo’ for the user.
+      ];
+      shell = pkgs.zsh;
+      openssh.authorizedKeys.keys = [ hostKey ];
+      packages = [ pkgs.wslKeySetup ];
+    };
+  };
 
   ############################################
   # Nix Settings
@@ -44,30 +69,30 @@ in
   ############################################
   boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
   boot.kernelModules = [ ];
-#   sdImage.populateFirmwareCommands = ''
-#     dtparam=i2c_arm=on
-#     dtparam=spi=on
+  #   sdImage.populateFirmwareCommands = ''
+  #     dtparam=i2c_arm=on
+  #     dtparam=spi=on
 
-#     camera_auto_detect=1
-#     display_auto_detect=1
+  #     camera_auto_detect=1
+  #     display_auto_detect=1
 
-#     auto_initramfs=1
+  #     auto_initramfs=1
 
-#     # dtoverlay=vc4-kms-v3d
-#     max_framebuffers=2
-#     disable_fw_kms_setup=1
-#     disable_overscan=1
+  #     # dtoverlay=vc4-kms-v3d
+  #     max_framebuffers=2
+  #     disable_fw_kms_setup=1
+  #     disable_overscan=1
 
-#     arm_64bit=1
-#     arm_boost=1
+  #     arm_64bit=1
+  #     arm_boost=1
 
-#     [all]
-#     enable_uart=1
-#     max_usb_current=1
-#     start_x=1
-#     gpu_mem=128
+  #     [all]
+  #     enable_uart=1
+  #     max_usb_current=1
+  #     start_x=1
+  #     gpu_mem=128
 
-#   '';
+  #   '';
   hardware.raspberry-pi."4".i2c1.enable = true;
   hardware.raspberry-pi."4".fkms-3d.enable = true;
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
@@ -101,29 +126,11 @@ in
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
 
-  # services.gvfs.enable = true; # Mount, trash, and other functionalities
-
   ############################################
   # Misc System Configuration
   ############################################
   networking.hostName = "fabricator";
-
   time.timeZone = "America/New_York";
-
-  # It's me, it's you, it's everyone
-  users.users = {
-    ${user} = {
-      name = "${user}";
-      home = "/home/${user}";
-      isNormalUser = true;
-      extraGroups = [
-        "wheel" # Enable ‘sudo’ for the user.
-      ];
-      shell = pkgs.zsh;
-      openssh.authorizedKeys.keys = [ hostKey ];
-      packages = [ pkgs.wslKeySetup ];
-    };
-  };
 
   ############################################
   # Global Packages

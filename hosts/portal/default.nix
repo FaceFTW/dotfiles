@@ -12,12 +12,34 @@ let
 in
 {
   imports = [
+    inputs.nixos-wsl.nixosModules.default
     ../../modules/core.nix
     ../../modules/devtools.nix
     ../../modules/kernel.nix
     ../../modules/packages.nix
-    # agenix.nixosModules.default
+    inputs.home-manager.nixosModules.home-manager
   ];
+
+  ############################################
+  # User Settings
+  ############################################
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.face = (import ./home-manager.nix);
+
+  users.users = {
+    ${user} = {
+      name = "${user}";
+      home = "/home/${user}";
+      isNormalUser = true;
+      extraGroups = [
+        "wheel" # Enable ‘sudo’ for the user.
+      ];
+      shell = pkgs.zsh;
+      openssh.authorizedKeys.keys = [ hostKey ];
+      packages = [ pkgs.wslKeySetup ];
+    };
+  };
 
   ############################################
   # Nix Settings
@@ -63,30 +85,11 @@ in
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
 
-  # services.gvfs.enable = true; # Mount, trash, and other functionalities
-
   ############################################
   # Misc System Configuration
   ############################################
   networking.hostName = "portal-wsl";
-
   time.timeZone = "America/New_York";
-
-  # It's me, it's you, it's everyone
-  users.users = {
-    ${user} = {
-      name = "${user}";
-      home = "/home/${user}";
-      isNormalUser = true;
-      extraGroups = [
-        "wheel" # Enable ‘sudo’ for the user.
-        "docker"
-      ];
-      shell = pkgs.zsh;
-      openssh.authorizedKeys.keys = [ hostKey ];
-      packages = [ pkgs.wslKeySetup ];
-    };
-  };
 
   ############################################
   # Global Packages
