@@ -2,10 +2,9 @@
   description = "Starter Configuration with secrets for MacOS and NixOS";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-generators.url = "github:nix-community/nixos-generators";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,22 +26,30 @@
       home-manager,
       nixos-wsl,
       nixos-hardware,
+      nixos-generators,
       fenix,
       # disko,
       ...
     }@inputs:
     let
       user = "face";
-      overlays = {
-        nixpkgs.overlays = [
-          fenix.overlays.default
-          (import ./overlays/shell-toy.nix)
-          (import ./overlays/wsl-key-setup.nix)
-        ];
-      };
-
+      withOverlays = configModule: [
+        {
+          nixpkgs.overlays = [
+            fenix.overlays.default
+            (import ./overlays/shell-toy.nix)
+            (import ./overlays/wsl-key-setup.nix)
+          ];
+        }
+        configModule
+      ];
     in
     rec {
+
+      ############################################
+      # nixos-generators Config
+      ############################################
+
       ############################################
       # manifold
       ############################################
@@ -51,38 +58,19 @@
         specialArgs = {
           inherit inputs;
         };
-        modules = [
-          overlays
-          nixos-wsl.nixosModules.default
-          ./hosts/manifold/default.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.face = (import ./hosts/manifold/home-manager.nix);
-          }
-        ];
+        modules = withOverlays ./hosts/manifold/default.nix;
       };
 
       ############################################
       # portal
       ############################################
+
       nixosConfigurations.portal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
         };
-        modules = [
-          overlays
-          nixos-wsl.nixosModules.default
-          ./hosts/portal/default.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.face = (import ./hosts/portal/home-manager.nix);
-          }
-        ];
+        modules = withOverlays ./hosts/portal/default.nix;
       };
 
       ############################################
@@ -93,20 +81,9 @@
         specialArgs = {
           inherit inputs;
         };
-        modules = [
-          overlays
-          inputs.nixos-hardware.nixosModules.raspberry-pi-4
-          "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          ./hosts/fabricator/default.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.face = (import ./hosts/fabricator/home-manager.nix);
-          }
-        ];
+        modules = withOverlays ./hosts/fabricator/default.nix;
       };
-      images.fabricator = nixosConfigurations.fabricator.config.system.build.sdImage;
+      images.fabricator = nixosConfigurations.fabricator.config.formats.sd-aarch64;
 
     };
 }
