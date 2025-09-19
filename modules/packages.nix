@@ -77,6 +77,7 @@ in
       # Nix Dev Tools
       (lists.optional packages.nixTools [
         pkgs.nixfmt
+        pkgs.nix-tree
       ])
     ];
   };
