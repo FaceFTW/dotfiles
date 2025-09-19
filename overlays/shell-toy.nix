@@ -1,9 +1,10 @@
 final: prev: with prev; {
   shell-toy =
     let
+      # Not a fan, but prevents bin collisions
       rustToolchain = makeRustPlatform {
-        cargo = fenix.packages.${system}.stable.toolchain;
-        rustc = fenix.packages.${system}.stable.toolchain;
+        cargo = fenix.packages.${system}.minimal.toolchain;
+        rustc = fenix.packages.${system}.minimal.toolchain;
       };
     in
     rustPlatform.buildRustPackage rec {
@@ -26,17 +27,15 @@ final: prev: with prev; {
       sourceRoot = "sh-toy-source";
       cargoHash = "sha256-szG3K6nA5lOyezJfGNhP6UYsGKjZohNFdGF0JKY/JN8=";
 
-      buildInputs = [
-        pkgs.clang
-        pkgs.llvmPackages_20.bintools
-      ];
-
       doCheck = false;
 
       FORTUNE_FILE = "../source/dotfiles/fortunes.txt";
       COW_PATH = "../source/dotfiles/cowsay";
 
+      # The sed thing fixes an aarch64 compilation issue, removes things not used in my builds
       buildPhase = ''
+        sed -i -e 's/"lzma"/#"lzma"/' -e 's/"xz"/#"xz"/' Cargo.toml
+        cat Cargo.toml
         cargo build --release --features inline-fortune,inline-cowsay
         ls target
         ls target/release
