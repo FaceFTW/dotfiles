@@ -23,7 +23,15 @@ in
     environment.systemPackages = lists.flatten [
       # Rust Packages
       (lists.optional devTools.rust [
-        (pkgs.fenix.stable.withComponents [
+        # (pkgs.fenix.stable.withComponents [
+        #   "cargo"
+        #   "clippy"
+        #   "rust-src"
+        #   "rustc"
+        #   "rustfmt"
+        #   "rust-docs"
+        # ])
+        (pkgs.fenix.complete.withComponents [
           "cargo"
           "clippy"
           "rust-src"
@@ -31,17 +39,10 @@ in
           "rustfmt"
           "rust-docs"
         ])
-        (pkgs.fenix.complete.withComponents [
-          "clippy"
-          "rust-src"
-          "rustc"
-          "rustfmt"
-        ])
         (pkgs.rust-analyzer-nightly)
         (pkgs.pkg-config)
         (pkgs.openssl.dev)
-        (pkgs.clang)
-        (pkgs.llvmPackages_21.bintools)
+        (pkgs.llvmPackages_latest.bintools)
       ])
       # Docker Packages
       (lists.optional devTools.docker [
