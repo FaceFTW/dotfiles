@@ -4,7 +4,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
-    nixos-generators.url = "github:nix-community/nixos-generators";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -26,7 +25,6 @@
       home-manager,
       nixos-wsl,
       nixos-hardware,
-      nixos-generators,
       fenix,
       # disko,
       ...
@@ -46,22 +44,6 @@
       ];
     in
     rec {
-
-      ############################################
-      # nixos-generators Config
-      ############################################
-    #   nixosModules.myFormats =
-    #     { config, ... }:
-    #     {
-    #       imports = [ nixos-generators.nixosModules.all-formats ];
-
-    #       formatConfigs.sd-aarch64 =
-    #         { config, ... }:
-    #         {
-    #           config.boot.blacklistedKernelModules = [ "dw_hdmi" ];
-    #         };
-    #     };
-
       ############################################
       # manifold
       ############################################
