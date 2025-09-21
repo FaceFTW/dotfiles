@@ -7,6 +7,8 @@
   nixpkgs.config.allowBroken = true;
   nixpkgs.config.allowInsecure = false;
   nixpkgs.config.allowUnsupportedSystem = true;
+  nixpkgs.config.documentation.doc.enable = false;
+  nixpkgs.config.documentation.info.enable = false;
 
   ############################################
   # Nix Common Settings

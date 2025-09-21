@@ -50,6 +50,17 @@
       ############################################
       # nixos-generators Config
       ############################################
+    #   nixosModules.myFormats =
+    #     { config, ... }:
+    #     {
+    #       imports = [ nixos-generators.nixosModules.all-formats ];
+
+    #       formatConfigs.sd-aarch64 =
+    #         { config, ... }:
+    #         {
+    #           config.boot.blacklistedKernelModules = [ "dw_hdmi" ];
+    #         };
+    #     };
 
       ############################################
       # manifold

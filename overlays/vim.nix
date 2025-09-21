@@ -5,6 +5,8 @@ final: prev: with prev; {
   vimCustom =
     (vim-full.override {
       features = "normal";
+      guiSupport = false;
+      waylandSupport = false;
       luaSupport = false;
       pythonSupport = false;
       rubySupport = false;
