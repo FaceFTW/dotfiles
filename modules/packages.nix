@@ -84,6 +84,7 @@ in
       (lists.optional packages.nixTools [
         pkgs.nixfmt
         pkgs.nix-tree
+		pkgs.nix-output-monitor
       ])
 
       # ARM Virtualization - Used for building RasPi images
