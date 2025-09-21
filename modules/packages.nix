@@ -14,8 +14,10 @@ in
     gitFull = mkEnableOption "Use gitFull with perl";
     gnupg = mkEnableOption "Install GnuPG";
     monitoring = mkEnableOption "Extra System Monitoring Utils";
+	ncdu = mkEnableOption "ncdu";
     networking = mkEnableOption "Extra Networking Things";
     nixTools = mkEnableOption "Nix Dev Tools";
+    armVirt = mkEnableOption "QEMU + ARM Virtualization";
   };
 
   config = {
@@ -29,7 +31,6 @@ in
         pkgs.coreutils
         pkgs.curl
         pkgs.htop
-        pkgs.ncdu
         # openssh # I don't think I need this for sshd
         pkgs.vim
         pkgs.zip
@@ -68,6 +69,11 @@ in
         pkgs.iotop
       ])
 
+	  # Extra Monitoring Tools
+      (lists.optional packages.ncdu [
+        pkgs.ncdu
+      ])
+
       # Extra Networking Things
       (lists.optional packages.nixTools [
         pkgs.inetutils
@@ -79,6 +85,13 @@ in
         pkgs.nixfmt
         pkgs.nix-tree
       ])
+
+      # ARM Virtualization - Used for building RasPi images
+      (lists.optional packages.armVirt [
+        pkgs.qemu
+      ])
     ];
+
+    boot.binfmt.emulatedSystems = mkIf packages.armVirt [ "aarch64-linux" ]; # For Cross-Compiling Raspberry Pi Things
   };
 }

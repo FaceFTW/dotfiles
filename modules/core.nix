@@ -11,6 +11,7 @@
   ############################################
   # Nix Common Settings
   ############################################
+  nix.settings.warn-dirty = false;
   nix.settings.substituters = [
     "https://nix-community.cachix.org"
     "https://cache.nixos.org/"

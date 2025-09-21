@@ -97,6 +97,7 @@ in
   packages.gitFull = true;
   packages.gnupg = true;
   packages.monitoring = true;
+  packages.ncdu = true;
   packages.networking = true;
   packages.nixTools = true;
 
