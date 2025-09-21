@@ -39,6 +39,7 @@
             fenix.overlays.default
             (import ./overlays/shell-toy.nix)
             (import ./overlays/wsl-key-setup.nix)
+            (import ./overlays/vim.nix)
           ];
         }
         configModule

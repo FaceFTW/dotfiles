@@ -32,7 +32,7 @@ in
   zsh.shellAliases.build-portal-image = "sudo nix run --print-build-logs .#nixosConfigurations.portal.config.system.build.tarballBuilder";
   zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#portal";
   zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --print-build-logs --show-trace --flake ~/.config/dotfiles#portal";
-  zsh.shellAliases.build-fabricator-image = "nix build --print-build-logs ~/.config/dotfiles#images.fabricator";
+  zsh.shellAliases.build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
   # zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --flake ~/.config/dotfiles#portal";
   # zsh.shellAliases.rebuild-fabricator-trace = "sudo nixos-rebuild switch --show-trace --flake /";
 
@@ -42,6 +42,8 @@ in
     "cd *"
     "ls*"
     "pwd"
+	"git add \."
+	"git commit"
   ];
   zsh.history.share = true;
   zsh.historySubstringSearch.enable = true;
@@ -112,28 +114,6 @@ in
   git.extraConfig.pull.rebase = true;
   git.extraConfig.rebase.autoStash = true;
   git.signing.key = "CB9CCE0E558306B21891063A9EB573C02E056DA8";
-
-  ############################################
-  # Vim Config
-  ############################################
-  # vim.enable = true;
-  vim.plugins = with pkgs.vimPlugins; [
-    vim-fugitive
-    vim-polyglot
-    fzf-vim
-    neoformat
-    ale
-    vim-startify
-    lightline-vim
-    undotree
-    vim-peekaboo
-    delimitMate
-  ];
-  vim.defaultEditor = true;
-  vim.settings.ignorecase = true;
-  vim.extraConfig =
-    builtins.replaceStrings [ "let g:skip_plug_load = 0" ] [ "let g:skip_plug_load = 1" ]
-      (builtins.unsafeDiscardStringContext (builtins.readFile "${./../dotfiles/.vimrc}"));
 
   ############################################
   # SSH Config

@@ -14,7 +14,7 @@ in
     gitFull = mkEnableOption "Use gitFull with perl";
     gnupg = mkEnableOption "Install GnuPG";
     monitoring = mkEnableOption "Extra System Monitoring Utils";
-	ncdu = mkEnableOption "ncdu";
+    ncdu = mkEnableOption "ncdu";
     networking = mkEnableOption "Extra Networking Things";
     nixTools = mkEnableOption "Nix Dev Tools";
     armVirt = mkEnableOption "QEMU + ARM Virtualization";
@@ -32,7 +32,7 @@ in
         pkgs.curl
         pkgs.htop
         # openssh # I don't think I need this for sshd
-        pkgs.vim
+        pkgs.vimCustom # See overlays/vim.nix for config
         pkgs.zip
 
         pkgs.unixtools.fsck
@@ -69,7 +69,7 @@ in
         pkgs.iotop
       ])
 
-	  # Extra Monitoring Tools
+      # Extra Monitoring Tools
       (lists.optional packages.ncdu [
         pkgs.ncdu
       ])
