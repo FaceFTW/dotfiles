@@ -116,7 +116,7 @@ in
   ############################################
   # Vim Config
   ############################################
-  vim.enable = true;
+  # vim.enable = true;
   vim.plugins = with pkgs.vimPlugins; [
     vim-fugitive
     vim-polyglot

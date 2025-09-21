@@ -83,7 +83,7 @@
         };
         modules = withOverlays ./hosts/fabricator/default.nix;
       };
-      images.fabricator = nixosConfigurations.fabricator.config.formats.sd-aarch64;
+      images.fabricator = nixosConfigurations.fabricator.config.system.build.sdImage;
 
     };
 }

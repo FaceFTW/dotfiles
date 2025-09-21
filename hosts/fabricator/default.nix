@@ -18,8 +18,9 @@ in
     ../../modules/kernel.nix
     ../../modules/packages.nix
     inputs.home-manager.nixosModules.home-manager
-    inputs.nixos-generators.nixosModules.all-formats
-    inputs.nixos-generators.nixosModules.sd-aarch64
+    # inputs.nixos-generators.nixosModules.all-formats
+    # inputs.nixos-generators.nixosModules.sd-aarch64
+    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
   ];
 
   ############################################

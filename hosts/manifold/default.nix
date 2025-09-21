@@ -88,7 +88,6 @@ in
   ############################################
   # Misc System Configuration
   ############################################
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ]; # For Cross-Compiling Raspberry Pi Things
   networking.hostName = "manifold-wsl";
   time.timeZone = "America/New_York";
 
@@ -98,8 +97,10 @@ in
   packages.gitFull = true;
   packages.gnupg = true;
   packages.monitoring = true;
+  packages.ncdu = true;
   packages.networking = true;
   packages.nixTools = true;
+  packages.armVirt = true;
 
   devTools.rust = true;
   devTools.docker = true;
