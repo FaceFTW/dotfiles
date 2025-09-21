@@ -20,7 +20,8 @@ in
     inputs.home-manager.nixosModules.home-manager
     # inputs.nixos-generators.nixosModules.all-formats
     # inputs.nixos-generators.nixosModules.sd-aarch64
-    "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel.nix"
+    # "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+    ../../modules/raspi
   ];
 
   ############################################
@@ -70,6 +71,7 @@ in
   ############################################
   boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
   boot.kernelModules = [ ];
+  boot.blacklistedKernelModules = [ "dw_hdmi" ];
   #   sdImage.populateFirmwareCommands = ''
   #     dtparam=i2c_arm=on
   #     dtparam=spi=on
@@ -126,6 +128,7 @@ in
   ############################################
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
+  services.speechd.enable = false;
 
   ############################################
   # Misc System Configuration
