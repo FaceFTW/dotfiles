@@ -35,6 +35,7 @@ in
       isNormalUser = true;
       extraGroups = [
         "wheel" # Enable ‘sudo’ for the user.
+		"networkmanager"
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [ hostKey ];
@@ -128,9 +129,14 @@ in
   services.speechd.enable = false;
 
   ############################################
-  # Misc System Configuration
+  # Networking Configuration
   ############################################
   networking.hostName = "fabricator";
+  networking.networkmanager.enable = true;
+
+  ############################################
+  # Misc System Configuration
+  ############################################
   time.timeZone = "America/New_York";
 
   ############################################

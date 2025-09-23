@@ -47,6 +47,9 @@ in
         pkgs.unixtools.umount
 
         pkgs.fzf # Used with Vim config
+
+        pkgs.rbw
+        pkgs.pinentry-curses
       ]
 
       # Git (Big or smol?)
@@ -85,6 +88,7 @@ in
         pkgs.nixfmt
         pkgs.nix-tree
         pkgs.nix-output-monitor
+        pkgs.nix-index
       ])
 
       # ARM Virtualization - Used for building RasPi images

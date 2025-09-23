@@ -42,8 +42,8 @@ in
     "cd *"
     "ls*"
     "pwd"
-	"git add \."
-	"git commit"
+    "git add \."
+    "git commit"
   ];
   zsh.history.share = true;
   zsh.historySubstringSearch.enable = true;
@@ -121,4 +121,10 @@ in
   ssh.enable = true;
   ssh.enableDefaultConfig = false;
 
+  ############################################
+  # rbw Config
+  ############################################
+  rbw.enable = true;
+  rbw.settings.email = "alex@faceftw.dev";
+  rbw.settings.pinentry = pkgs.pinentry-curses;
 }
