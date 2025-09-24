@@ -4,3 +4,5 @@ chemoistate.boltdb
 .dotter/local.toml
 
 *.vscdb*
+
+result

@@ -31,14 +31,17 @@
     }@inputs:
     let
       user = "face";
+      definedOverlays = builtins.map (n: import (./overlays + ("/" + n))) (
+        (builtins.filter (n: builtins.match ".*\\.nix" n != null)) (
+          builtins.attrNames (builtins.readDir ./overlays)
+        )
+      );
       withOverlays = configModule: [
         {
           nixpkgs.overlays = [
             fenix.overlays.default
-            (import ./overlays/shell-toy.nix)
-            (import ./overlays/wsl-key-setup.nix)
-            (import ./overlays/vim.nix)
-          ];
+          ]
+          ++ definedOverlays;
         }
         configModule
       ];

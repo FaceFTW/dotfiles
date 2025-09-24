@@ -17,7 +17,7 @@
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig.ExecStart = ''
-      ${pkgs.libcamerify}/bin/libcamerify ${pkgs.ustreamer}/bin/ustreamer --device=/dev/video0 --allow-origin=http://localhost:* --host=0.0.0.0 --port 8080
+      ${pkgs.libcamera}/bin/libcamerify ${pkgs.ustreamer}/bin/ustreamer --device=/dev/video0 --allow-origin=http://localhost:* --host=0.0.0.0 --port 8080
     '';
   };
 
