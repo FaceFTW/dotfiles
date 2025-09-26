@@ -115,8 +115,8 @@ in
   '';
 
   # Enable Graphics
-#   services.xserver.enable = true;
-#   services.xserver.windowManager.ratpoison.enable = true;
+  #   services.xserver.enable = true;
+  #   services.xserver.windowManager.ratpoison.enable = true;
 
   ############################################
   # Program Options
@@ -130,6 +130,7 @@ in
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
   services.speechd.enable = false;
   services.printing.enable = false;
+  services.getty.autologinUser = "face";
 
   ############################################
   # Networking Configuration
@@ -147,6 +148,7 @@ in
   ############################################
   packages.monitoring = true;
   packages.networking = true;
+  packages.secretsMan = true;
 
   environment.systemPackages = with pkgs; [
     libraspberrypi

@@ -1,0 +1,20 @@
+keys:
+  - &key_lockpick 88F98C3A7D4FC56189F936D737DEE9A34EB6C6BE
+  - &key_spare A15BF8D125033956EC3A7763DE72262208C7F196
+  - &host_fabricator
+  - &host_manifold age1ng2en0a2nv2ucdj7ejcydyzr6qqky25sh4qfsx9q7k4g4gl55drqay8eql
+creation_rules:
+  - path_regex: hosts/fabricator/secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+      - *key_lockpick
+      - *key_spare
+    - age:
+      - *host_fabricator
+  - path_regex: hosts/manifold/secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+      - *key_lockpick
+      - *key_spare
+    - age:
+      - *host_manifold
