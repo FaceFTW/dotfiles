@@ -12,7 +12,7 @@ in
 
   options.packages = {
     gitFull = mkEnableOption "Use gitFull with perl";
-    gnupg = mkEnableOption "Install GnuPG";
+    secretsMan = mkEnableOption "Install Secrets Management Things";
     monitoring = mkEnableOption "Extra System Monitoring Utils";
     ncdu = mkEnableOption "ncdu";
     networking = mkEnableOption "Extra Networking Things";
@@ -61,8 +61,10 @@ in
       ])
 
       # GnuPG
-      (lists.optional packages.gnupg [
+      (lists.optional packages.secretsMan [
         pkgs.gnupg
+        pkgs.sops
+        pkgs.ssh-to-age
       ])
 
       # Extra Monitoring Tools

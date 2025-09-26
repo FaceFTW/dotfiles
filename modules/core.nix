@@ -33,7 +33,7 @@
       groups = [ "wheel" ];
       commands = [
         {
-          command = "${pkgs.shadow}/bin/passwd face";
+          command = "${pkgs.shadow}/bin/chpasswd";
           options = [ "NOPASSWD" ];
         }
       ];

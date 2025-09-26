@@ -95,7 +95,7 @@ in
   # Global Packages
   ############################################
   packages.gitFull = true;
-  packages.gnupg = true;
+  packages.secretsMan = true;
   packages.monitoring = true;
   packages.ncdu = true;
   packages.networking = true;
