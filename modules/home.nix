@@ -114,6 +114,7 @@ in
   git.extraConfig.pull.rebase = true;
   git.extraConfig.rebase.autoStash = true;
   git.signing.key = "CB9CCE0E558306B21891063A9EB573C02E056DA8";
+  git.signing.signer = "${pkgs.gnupg}/bin/gpg --default-key 2e056da8";
 
   ############################################
   # SSH Config

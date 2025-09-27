@@ -65,6 +65,7 @@ in
         pkgs.gnupg
         pkgs.sops
         pkgs.ssh-to-age
+        pkgs.socat
       ])
 
       # Extra Monitoring Tools

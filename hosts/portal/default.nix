@@ -76,7 +76,6 @@ in
   ############################################
   # Program Options
   ############################################
-  programs.gnupg.agent.enable = true;
   programs.zsh.enable = true;
 
   ############################################
@@ -84,6 +83,12 @@ in
   ############################################
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
+  programs.gnupg.agent.enable = false; # Using GPG forwarding from Windows seen below
+  systemd.services.win-gpg-forwarder.enable = true;
+  systemd.services.win-gpg-forwarder.path = [ pkgs.socat ];
+  systemd.services.win-gpg-forwarder.wantedBy = [ "default.target" ];
+  systemd.services.win-gpg-forwarder.preStart = ''rm -f /run/user/1000/gnupg/S.gpg-agent'';
+  systemd.services.win-gpg-forwarder.script = ''socat UNIX-LISTEN:"/run/user/1000/gnupg/S.gpg-agent,fork" EXEC:'/mnt/c/Users/awest/.local/bin/npiperelay.exe -ei -ep -s -a "C:/Users/awest/AppData/Local/gnupg/S.gpg-agent"',nofork'';
 
   ############################################
   # Misc System Configuration
