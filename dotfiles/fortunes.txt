@@ -489,7 +489,7 @@ I think it's a new feature.  Don't tell anyone it was an accident.  :-)
 "It is easier to port a shell than a shell script."
         -- Larry Wall
 %
-It is, of course, written in Perl.  Translation to C is left as an exercise for the reader.  :-)  
+It is, of course, written in Perl.  Translation to C is left as an exercise for the reader.  :-)
          -- Larry Wall in <7448@jpl-devvax.JPL.NASA.GOV>
 %
 It's all magic.  :-)
@@ -618,7 +618,7 @@ Jenkinson's Law:
 Life isn't just about passing on your genes. We can leave behind much more than just DNA. Through speech, music, literature, and movies... what we've seen, heard, felt... anger, joy, and sorrow... these are the things I will pass on. That's what I live for.
     - Solid Snake (Metal Gear Solid 2: Sons of Liberty)
 %
-"Everything she did, she did for her country. She sacrificed her life and her honor for her native land. She was a real hero. She was a true patriot." 
+"Everything she did, she did for her country. She sacrificed her life and her honor for her native land. She was a real hero. She was a true patriot."
     — EVA (Metal Gear Solid 3: Snake Eater)
 %
 “It’s not about changing the world. It’s about leaving the world the way it is.”
@@ -642,7 +642,7 @@ Life isn't just about passing on your genes. We can leave behind much more than 
 "Remember, No Russian"
     - Vladmir Makarov (Call of Duty: Modern Warfare 2)
 %
-"It doesn't take the most powerful nations on Earth to create the next global conflict. Just the will of a single man." 
+"It doesn't take the most powerful nations on Earth to create the next global conflict. Just the will of a single man."
     - Vladimir Makarov (Call of Duty: Modern Warfare 2)
 %
 "Bravo Six, Going Dark."
@@ -872,3 +872,20 @@ PROTOCOL 3: Protect the Pilot
 %
 "Good thing I didn't bet against you!"
 %
+Alright, everybody, we're gonna watch the trailer, shut the f*** up!
+    - Wrench (Watch_Dogs 2)
+%
+I came. I saw. I blew s*** up! And then I came again...
+    - Wrench (Watch_Dogs 2)
+%
+Hell yeah, man! Barbarians are at the gate and ready to bust some Roman heads
+    - Wrench (Watch_Dogs 2)
+%
+We will not be lied to. We will not be afraid. We will not be silent.
+    - Marcus Holloway (Watch_Dogs 2)
+%
+You're fighting a war nobody gives a s*** about. You're so aggressive, so indignant. Oh-oh-oh, and there's a warrant out for your arrest.
+    - Dušan Nemec (Watch_Dogs 2)
+%
+What if you actually answer it this time? Maybe it's Blume, sending you out to face a firing squad alone? Maybe it's your lawyer, telling you there is no place to run? Or maybe it's just a telemarketer.
+    - Marcus Holloway to Dušan Nemec (Watch_Dogs 2)
