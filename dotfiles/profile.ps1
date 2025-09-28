@@ -52,6 +52,7 @@ Set-Alias git-recurseclean Invoke-GitGCRecursive
 Set-Alias cowsay sh-toy
 Set-Alias doFunny doAFunny
 Set-Alias clear newClear
+Set-Alias yubikeyUseBackup "gpg-connect-agent `"scd serialno`" `"learn --force`" /bye"
 
 
 ######## ENVIRONMENT VARS ########
