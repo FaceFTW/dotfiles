@@ -20,6 +20,7 @@ in
     inputs.home-manager.nixosModules.home-manager
     ../../modules/raspi
     ./services.nix
+    ./udev.nix
   ];
 
   ############################################
@@ -107,12 +108,6 @@ in
       dtboFile = ./devicetree/spi0-0cs.dtbo;
     }
   ];
-
-  # Enable SPI
-  users.groups.spi = { };
-  services.udev.extraRules = ''
-    SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
-  '';
 
   # Enable Graphics
   #   services.xserver.enable = true;
