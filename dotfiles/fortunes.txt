@@ -742,7 +742,7 @@ DORYA!
 %
 I'M NOT GONNA SUGARCOAT IT.
 %
-Hello Potion Seller. I am going into battler, and I want your strongest potions.
+Hello Potion Seller. I am going into battle, and I want your strongest potions.
 %
 My potions are too strong for you, traveller
 %
