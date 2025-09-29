@@ -1,37 +1,21 @@
-function Set-CurrentDir {
-	param($dir)
-	Set-Location $dir
-	Get-ChildItem
-}
-
-function Invoke-GitGCRecursive {
-	param($dir)
-
-	$originalpath = $PWD
-	foreach ($path in Get-ChildItem $dir -Attributes Directory+Hidden -ErrorAction SilentlyContinue -Filter '.git' -Recurse) {
-
-		Set-Location $path
-		Set-Location .\..
-		Write-Host -ForegroundColor Yellow '====================================================='
-		Write-Host -ForegroundColor Yellow $path
-		Write-Host -ForegroundColor Yellow '====================================================='
-		git fsck
-		git prune
-		git gc --aggressive --prune
+#####################################
+########## History Filter ###########
+#####################################
+Set-PSReadLineOption -AddToHistoryHandler {
+	param($command)
+	if (
+		$command -like ' *' ||
+		$command -like 'cd*' ||
+		$command -like 'ls*' ||
+		$command -like 'clear' ||
+		$command -like 'pwd' ||
+		$command -like 'z'
+	) {
+		return $false
 	}
-
-	Set-Location $originalpath
+	return $true
 }
 
-function doAFunny() { sh-toy }
-function newClear() { Clear-Host; doAFunny }
-
-function getUserPath() { return [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::User) }
-function appendUserPath($toAppend) {
-	$userPath = getUserPath
-	[Environment]::SetEnvironmentVariable('Path', $userPath + $toAppend, [EnvironmentVariableTarget]::User)
-	Write-Host 'Path updated'
-}
 
 #####################################
 ####### z Module Simpilified ########
@@ -41,34 +25,27 @@ $cdHistory = '~/.config/.cdHistory'
 function z {
 	<#
 .SYNOPSIS
-
    Tracks your most used directories, based on 'frecency'. This is done by storing your CD command history and ranking it over time.
 
 .DESCRIPTION
-
     After a short learning phase, z will take you to the most 'frecent'
     directory that matches the regex given on the command line.
 
 .PARAMETER JumpPath
-
 A un-escaped regular expression of the directory name to jump to. Character escaping will be done internally.
 
 .PARAMETER Option
-
 Frecency - Match by frecency (default)
 Rank - Match by rank only
 Time - Match by recent access only
 
 .PARAMETER $Remove
-
 Remove the current directory from the datafile
 
 .PARAMETER $Clean
-
 Clean up all history entries that cannot be resolved
 
 .NOTES
-
 This  PowerShell implementation is very crude and does not include all of the options of the original z bash script.
 I've also removed a bunch of stuff that I don't use like limiting to subdirectories + listing files via z.
 Based off of the original module code here: https://github.com/badmotorfinger/z/blob/master/z.psm1.
@@ -126,7 +103,8 @@ Tracking of frequently used directories is obtained through the continued use of
 			$list = @()
 
 			$global:history |
-				Where-Object { Get-DirectoryEntryMatchPredicate -path $_.Path -jumpPath $JumpPath -ProviderRegex $providerRegex } | Get-ArgsFilter -Option $Option |
+				Where-Object { Get-DirectoryEntryMatchPredicate -path $_.Path -jumpPath $JumpPath -ProviderRegex $providerRegex } |
+				Get-ArgsFilter -Option $Option |
 				ForEach-Object { if ($ListFiles -or (Test-Path $_.Path.FullName)) { $list += $_ } }
 
 
@@ -141,7 +119,9 @@ Tracking of frequently used directories is obtained through the continued use of
 			}
 			else {
 				if ($list.Length -gt 1) {
-					$entry = $list | Sort-Object -Descending { $_.Score } | Select-Object -First 1
+					$entry = $list |
+						Sort-Object -Descending { $_.Score } |
+						Select-Object -First 1
 				}
 				else {
 					$entry = $list[0]
@@ -149,7 +129,6 @@ Tracking of frequently used directories is obtained through the continued use of
 				Set-Location $entry.Path.FullName
 				Save-CdCommandHistory $Remove
 			}
-
 		}
 	}
 	else {
@@ -161,11 +140,18 @@ Tracking of frequently used directories is obtained through the continued use of
 function cdX {
 	[CmdletBinding(DefaultParameterSetName = 'Path', SupportsTransactions = $true, HelpUri = 'http://go.microsoft.com/fwlink/?LinkID=113397')]
 	param(
-		[Parameter(ParameterSetName = 'Path', Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-		[string]
-		${Path},
+		[Parameter(
+			ParameterSetName = 'Path',
+			Position = 0,
+			ValueFromPipeline = $true,
+			ValueFromPipelineByPropertyName = $true
+		)] [string] ${Path},
 
-		[Parameter(ParameterSetName = 'LiteralPath', Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
+		[Parameter(
+			ParameterSetName = 'LiteralPath',
+			Mandatory = $true,
+			ValueFromPipelineByPropertyName = $true
+		)]
 		[Alias('PSPath')]
 		[string]
 		${LiteralPath},
@@ -173,7 +159,10 @@ function cdX {
 		[switch]
 		${PassThru},
 
-		[Parameter(ParameterSetName = 'Stack', ValueFromPipelineByPropertyName = $true)]
+		[Parameter(
+			ParameterSetName = 'Stack',
+			ValueFromPipelineByPropertyName = $true
+		)]
 		[string]
 		${StackName})
 
@@ -194,7 +183,6 @@ function cdX {
 
 	process {
 		$steppablePipeline.Process($_)
-
 		Save-CdCommandHistory # Build up the DB.
 	}
 
@@ -205,15 +193,18 @@ function cdX {
 
 function Get-DirectoryEntryMatchPredicate {
 	Param(
-		[Parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-		$Path,
+		[Parameter(
+			ValueFromPipeline = $true,
+			ValueFromPipelineByPropertyName = $true
+		)] $Path,
 
-		[Parameter( ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-		[string] $JumpPath,
+		[Parameter(
+			ValueFromPipeline = $true,
+			ValueFromPipelineByPropertyName = $true
+		)] [string] $JumpPath,
 
 		$ProviderRegex
 	)
-
 	if ($null -ne $Path) {
 		$providerMatches = [System.Text.RegularExpressions.Regex]::Match($Path.FullName, $ProviderRegex).Success
 
@@ -283,7 +274,7 @@ function Clear-CdCommandHistory() {
 				}
 			}
 		}
-		Remove-Old-History
+		Remove-OldHistory
 		WriteHistoryToDisk
 	}
 	catch {
@@ -291,8 +282,7 @@ function Clear-CdCommandHistory() {
 	}
 }
 
-
-function Remove-Old-History() {
+function Remove-OldHistory() {
 	if ($global:history.Length -gt 1000) {
 		$global:history | Where-Object { $_ -ne $null } | ForEach-Object {
 			[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
@@ -338,7 +328,8 @@ function Save-CdCommandHistory($removeCurrentDirectory = $false) {
 					}
 					else {
 						$rank++
-						Update-HistoryEntryUsageTime $global:history[$i]
+						$global:history[$i].Rank++
+						$global:history[$i].Time = (Get-Date).Ticks
 					}
 				}
 			}
@@ -353,10 +344,11 @@ function Save-CdCommandHistory($removeCurrentDirectory = $false) {
 		}
 		else {
 			if (-not $foundDirectory) {
-				Save-HistoryEntry 1 $currentDirectory
+				$entry = ConvertTo-TextualHistoryEntry 1 $currentDirectory
+				$global:history += ConvertTo-DirectoryEntry $entry
 				$runningTotal += 1
 			}
-			Remove-Old-History
+			Remove-OldHistory
 		}
 
 		WriteHistoryToDisk
@@ -367,12 +359,11 @@ function Save-CdCommandHistory($removeCurrentDirectory = $false) {
 }
 
 function WriteHistoryToDisk() {
-	$newList = GetAllHistoryAsText $global:history
-	Set-Content -Value $newList -Path $cdHistory -Encoding UTF8
-}
+	$newList = $global:history |
+		Where-Object { $_ -ne $null } |
+		ForEach-Object { ConvertTo-TextualHistoryEntry $_.Rank $_.Path.FullName $_.Time }
 
-function GetAllHistoryAsText($history) {
-	return $history | Where-Object { $_ -ne $null } | ForEach-Object { ConvertTo-TextualHistoryEntry $_.Rank $_.Path.FullName $_.Time }
+	Set-Content -Value $newList -Path $cdHistory -Encoding UTF8
 }
 
 function Get-FormattedLocation() {
@@ -384,26 +375,12 @@ function Get-FormattedLocation() {
 	}
 }
 
-function Format-Rank($rank) {
-	return $rank.ToString('000#.00', [System.Globalization.CultureInfo]::InvariantCulture);
-}
-
-function Save-HistoryEntry($rank, $directory) {
-	$entry = ConvertTo-TextualHistoryEntry $rank $directory
-	$global:history += ConvertTo-DirectoryEntry $entry
-}
-
-function Update-HistoryEntryUsageTime($historyEntry) {
-	$historyEntry.Rank++
-	$historyEntry.Time = (Get-Date).Ticks
-}
-
 function ConvertTo-TextualHistoryEntry($rank, $directory, $lastAccessedTicks) {
 	if ($null -eq $lastAccessedTicks) {
 		$lastAccessedTicks = (Get-Date).Ticks
 	}
 
-    (Format-Rank $rank) + $lastAccessedTicks + $directory
+    ($rank.ToString('000#.00', [System.Globalization.CultureInfo]::InvariantCulture)) + $lastAccessedTicks + $directory
 }
 
 function ConvertTo-DirectoryEntry {
@@ -415,7 +392,6 @@ function ConvertTo-DirectoryEntry {
 			ValueFromPipelineByPropertyName = $true)]
 		[String]$line
 	)
-
 	Process {
 		$pathValue = $line.Substring(25)
 
@@ -436,24 +412,12 @@ function ConvertTo-DirectoryEntry {
 		$time = [long]::Parse($line.Substring(7, 18), [Globalization.CultureInfo]::InvariantCulture)
 
 		@{
-			Rank = GetRankFromLine $line;
+			Rank = [double]::Parse($line.Substring(0, 7), [Globalization.CultureInfo]::InvariantCulture)
 			Time = $time;
 			Path = @{ Name = $fileName; FullName = $pathValue };
 			Age  = (Get-Date).Subtract((New-Object System.DateTime -ArgumentList $time)).TotalSeconds;
 		}
 	}
-}
-
-function GetRankFromLine([String]$line) {
-	$rankStr = $line.Substring(0, 7)
-	[double]::Parse($rankStr, [Globalization.CultureInfo]::InvariantCulture)
-}
-
-function Get-MostRecentDirectoryEntries {
-
-	$mruEntries = (Get-Item -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths | ForEach-Object { $item = $_; $_.GetValueNames() | ForEach-Object { $item.GetValue($_) } })
-
-	$mruEntries | ForEach-Object { ConvertTo-TextualHistoryEntry 1 $_ }
 }
 
 function Get-ArgsFilter {
@@ -487,7 +451,9 @@ Set-Alias cd -Value 'cdX' -Option AllScope
 $completion_RunningService = {
 	param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
 
-	$global:history | Sort-Object { $_.Rank } -Descending | Where-Object { $_.Path.Name -like "*$wordToComplete*" } |
+	$global:history |
+		Sort-Object { $_.Rank } -Descending |
+		Where-Object { $_.Path.Name -like "*$wordToComplete*" } |
 		ForEach-Object { New-Object System.Management.Automation.CompletionResult ("'{0}'" -f $_.Path.FullName), $_.Path.FullName, 'ParameterName', ('{0} ({1})' -f $_.Path.Name, $_.Path.FullName) }
 }
 
@@ -505,13 +471,13 @@ else {
 #####################################
 ######### ALIAS DEFINITIONS #########
 #####################################
-Set-Alias cdl Set-CurrentDir -Option AllScope
-Set-Alias git-recurseclean Invoke-GitGCRecursive
-Set-Alias cowsay sh-toy
-Set-Alias doFunny doAFunny
+Set-Alias doFunny sh-toy.exe
+function newClear() { Clear-Host; sh-toy.exe }
 Set-Alias clear newClear
-Set-Alias yubikeyUseBackup "gpg-connect-agent `"scd serialno`" `"learn --force`" /bye"
-
+Set-Alias cowsay sh-toy
+function optimizeGitRepo { git fsck; git prune; git gc --aggressive --prune }
+Set-Alias Optimize-GitRepo optimizeGitRepo
+Set-Alias Switch-YubikeyBackup "gpg-connect-agent `"scd serialno`" `"learn --force`" /bye"
 
 #####################################
 ########## ENVIRONMENT VARS #########
@@ -520,6 +486,13 @@ Set-Alias yubikeyUseBackup "gpg-connect-agent `"scd serialno`" `"learn --force`"
 #####################################
 ####### ADD EXTERNALS TO PATH #######
 #####################################
+function getUserPath() { return [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::User) }
+function appendUserPath($toAppend) {
+	$userPath = getUserPath
+	[Environment]::SetEnvironmentVariable('Path', $userPath + $toAppend, [EnvironmentVariableTarget]::User)
+	Write-Host 'Path updated'
+}
+
 if (!(getUserPath -match "$Env:USERPROFILE\\.local\\bin")) {
 	appendUserPath "$Env:USERPROFILE\.local\bin;"
 }
@@ -527,7 +500,9 @@ if (!(getUserPath -match "$Env:USERPROFILE\\.local\\bin\\vim")) {
 	appendUserPath "$Env:USERPROFILE\.local\bin\vim;"
 }
 
-# Autocompletes
+#####################################
+####### Autocomplete Modules ########
+#####################################
 if (Test-Path "$($Env:USERPROFILE)\.local\bin\gsudo") {
 	Import-Module -Name "$($Env:USERPROFILE)\.local\bin\gsudo\gsudoModule.psm1"
 }
@@ -535,9 +510,8 @@ if (Test-Path "$($Env:USERPROFILE)\.local\bin\_bat.ps1") {
 	. $Env:USERPROFILE\.local\bin\_bat.ps1
 }
 
-
 #####################################
 ############## STARTUP ##############
 #####################################
-doAFunny
+sh-toy.exe
 oh-my-posh --init --shell pwsh --config "$env:USERPROFILE\.config\theme.omp.json" | Invoke-Expression
