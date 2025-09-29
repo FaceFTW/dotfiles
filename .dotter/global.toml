@@ -12,7 +12,6 @@ depends = []
 "dotfiles/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
 
 
-
 [default.variables]
 arch = "x86_64"
 install_pkgs = "false"
@@ -26,12 +25,8 @@ signingkey = ""        # Only populated in local.toml
 depends = []
 
 [win64.files]
-"bin/executable_sh-toy.exe" = "~/.local/bin/sh-toy.exe"
+"bin/executable_sh-toy.exe" = { target = "~/.local/bin/sh-toy.exe", type = "symbolic" }
 "dotfiles/profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
-# "vscodium/settings.json" = "~/AppData/Roaming/VSCodium/User/settings.json"
-# "vscodium/keybindings.json" = "~/AppData/Roaming/VSCodium/User/keybindings.json"
-# "vscodium/extensions.json" = "~/.vscode-oss/extensions/extensions.json"
-# "vscodium/profiles" = { target = "~/AppData/Roaming/VSCodium/User/profiles", type = "symbolic" }
 
 
 [linux]
@@ -41,11 +36,7 @@ depends = []
 "dotfiles/.bashrc" = "~/.bashrc"
 "dotfiles/.zshrc" = "~/.zshrc"
 "dotfiles/profile" = "~/.profile"
-"bin/executable_sh-toy" = "~/.local/bin/sh-toy"
-# "settings/vscode/settings.json" = "~/.config/VSCodium/User/settings.json"
-# "vscodium/keybindings.json" = "~/.config/VSCodium/User/keybindings.json"
-# "vscodium/extensions.json" = "~/.vscode-oss/extensions/extensions.json"
-# "vscodium/profiles" = "~/.config/VSCodium/User/profiles"
+"bin/executable_sh-toy" = { target = "~/.local/bin/sh-toy", type = "symbolic" }
 
 
 [settings]
