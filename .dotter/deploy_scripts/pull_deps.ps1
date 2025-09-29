@@ -3,6 +3,7 @@
 $oh_my_posh_version = "v26.17.2"
 $vim_w32_version = "9.1.1591"
 $bat_version = "v0.25.0"
+$npiperelay_version = "v1.9.0"
 
 # Remove Old stuff
 Remove-Item -Path "~/.local/bin/oh-my-posh.exe" -ErrorAction Ignore
@@ -10,8 +11,9 @@ Remove-Item -Path "~/.local/bin/vim" -Recurse -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/vim.exe" -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/bat.exe" -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/_bat.ps1" -ErrorAction Ignore
+Remove-Item -Path "~/.local/bin/npiperelay.exe" -ErrorAction Ignore
 
-If(Test-Path -LiteralPath "$Env:USERPROFILE/tmp"){
+If (Test-Path -LiteralPath "$Env:USERPROFILE/tmp") {
 	Remove-Item -LiteralPath "$Env:USERPROFILE/tmp" -Recurse -Force
 }
 
@@ -38,5 +40,10 @@ Invoke-WebRequest `
 Expand-Archive -Path "$Env:USERPROFILE/tmp/bat.zip" -DestinationPath "$Env:USERPROFILE/tmp"
 Move-Item -Path "$Env:USERPROFILE/tmp/bat-$bat_version-x86_64-pc-windows-msvc/bat.exe" -Destination "~/.local/bin/bat.exe"
 Move-Item -Path "$Env:USERPROFILE/tmp/bat-$bat_version-x86_64-pc-windows-msvc/autocomplete/_bat.ps1" -Destination "~/.local/bin/_bat.ps1"
+
+# npiperelay (For WSL GPG forwarding)
+Invoke-WebRequest `
+	-Uri "https://github.com/albertony/npiperelay/releases/download/$npiperelay_version/npiperelay_windows_amd64.exe" `
+	-Outfile "~/.local/bin/npiperelay.exe"
 
 Remove-Item -Path $Env:USERPROFILE/tmp -Recurse
