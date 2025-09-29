@@ -101,8 +101,8 @@ in
   packages.networking = true;
   packages.nixTools = true;
 
-  programs.devTools.rust = true;
-  programs.devTools.patchVSCodeRemote = true;
+  devTools.rust = true;
+  devTools.patchVSCodeRemote = true;
 
   environment.systemPackages = with pkgs; [ ];
 
