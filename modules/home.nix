@@ -1,13 +1,8 @@
 {
-  config,
   pkgs,
   lib,
   ...
 }:
-
-let
-  user = "face";
-in
 {
   ############################################
   # ZSH Config
@@ -103,7 +98,6 @@ in
   # Git Config
   ############################################
   git.enable = true;
-  git.ignores = [ "*.swp" ];
   git.userName = "Alex Westerman";
   git.userEmail = "alex@faceftw.dev";
   git.lfs.enable = true;
@@ -115,6 +109,10 @@ in
   git.extraConfig.rebase.autoStash = true;
   git.signing.key = "CB9CCE0E558306B21891063A9EB573C02E056DA8";
   git.signing.signer = "${pkgs.gnupg}/bin/gpg --default-key 2e056da8";
+  git.ignores = [
+    "*.swp"
+    ".envrc"
+  ];
 
   ############################################
   # SSH Config
