@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   pkgs,
   ...
@@ -80,6 +79,7 @@ in
   ############################################
   programs.zsh.enable = true;
   programs.ssh.startAgent = true;
+  # environment.
 
   ############################################
   # Services
@@ -109,7 +109,7 @@ in
   devTools.node = true;
   devTools.patchVSCodeRemote = true;
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = [ ];
 
   environment.variables.FUNCNEST = 100000; # Fixes a potential issue with clear
 

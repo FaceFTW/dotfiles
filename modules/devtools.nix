@@ -97,6 +97,11 @@ in
       done
     '';
 
+    # Direnv hook
+    programs.direnv.enable = true;
+    programs.direnv.enableZshIntegration = true;
+    programs.direnv.nix-direnv.enable = true;
+    programs.direnv.silent = false;
   };
 
 }

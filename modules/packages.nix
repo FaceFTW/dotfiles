@@ -92,6 +92,7 @@ in
         pkgs.nix-tree
         pkgs.nix-output-monitor
         pkgs.nix-index
+        pkgs.nil
       ])
 
       # ARM Virtualization - Used for building RasPi images
