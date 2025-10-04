@@ -33,7 +33,6 @@
       ...
     }@inputs:
     let
-      user = "face";
       definedOverlays = builtins.map (n: import (./overlays + ("/" + n))) (
         (builtins.filter (n: builtins.match ".*\\.nix" n != null)) (
           builtins.attrNames (builtins.readDir ./overlays)
@@ -84,6 +83,7 @@
         modules = withOverlays ./hosts/fabricator/default.nix;
       };
       images.fabricator = nixosConfigurations.fabricator.config.system.build.sdImage;
+      # images.fabricator-printer-fw = nixosConfigurations.fabricator.config.
 
     };
 }

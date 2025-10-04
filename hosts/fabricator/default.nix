@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   pkgs,
   ...
@@ -21,7 +20,14 @@ in
     ../../modules/raspi
     ./services.nix
     ./udev.nix
+    ./klipper.nix
   ];
+
+  ############################################
+  # SOPS Settings
+  ############################################
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   ############################################
   # User Settings
@@ -29,6 +35,8 @@ in
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.face = (import ./home-manager.nix);
+
+  sops.secrets.face-password.neededForUsers = true;
 
   users.users = {
     ${user} = {
@@ -101,17 +109,12 @@ in
   hardware.raspberry-pi."4".fkms-3d.enable = true;
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
   hardware.deviceTree.enable = true;
-  # hardware.deviceTree.filter = "*-rpi-*.dtp"; # Set with fkms-3d?
   hardware.deviceTree.overlays = [
     {
       name = "spi";
       dtboFile = ./devicetree/spi0-0cs.dtbo;
     }
   ];
-
-  # Enable Graphics
-  #   services.xserver.enable = true;
-  #   services.xserver.windowManager.ratpoison.enable = true;
 
   ############################################
   # Program Options
@@ -131,7 +134,8 @@ in
   # Networking Configuration
   ############################################
   networking.hostName = "fabricator";
-  networking.networkmanager.enable = true;
+  networking.wireless.enable = true;
+  services.avahi.enable = true;
 
   ############################################
   # Misc System Configuration
