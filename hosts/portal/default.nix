@@ -93,6 +93,7 @@ in
   packages.nodejs.node = true;
   packages.nodejs.vsCodeRemotePatch = true;
   packages.rust = "stable";
+  packages.secrets.base = true;
   packages.secrets.wslGpgForwarding = true;
 
   environment.systemPackages = [ ];
