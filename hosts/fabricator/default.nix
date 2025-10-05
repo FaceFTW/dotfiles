@@ -47,7 +47,9 @@ in
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
     ];
-    packages = [ pkgs.wslKeySetup ];
+    # initialPassword = ""; #For bootstrapping!
+    hashedPasswordFile = config.sops.secrets.user_passwd.path;
+    packages = [ ];
   };
 
   ############################################
