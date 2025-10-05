@@ -1,23 +1,13 @@
-{
-  config,
-  inputs,
-  pkgs,
-  ...
-}:
-
+{ inputs, pkgs, ... }:
 let
   user = "face";
-  # Windows SSH Key (Used for VS Code Integration)
-  hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold";
 in
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
     ../../modules/core.nix
-    ../../modules/devtools.nix
     ../../modules/kernel.nix
     ../../modules/packages.nix
-    ../../modules/gpg-forward.nix
     inputs.home-manager.nixosModules.home-manager
   ];
 
@@ -28,24 +18,22 @@ in
   home-manager.useUserPackages = true;
   home-manager.users.face = (import ./home-manager.nix);
 
-  users.users = {
-    ${user} = {
-      name = "${user}";
-      home = "/home/${user}";
-      isNormalUser = true;
-      extraGroups = [
-        "wheel" # Enable ‘sudo’ for the user.
-      ];
-      shell = pkgs.zsh;
-      openssh.authorizedKeys.keys = [ hostKey ];
-      packages = [ pkgs.wslKeySetup ];
-    };
+  users.users.${user} = {
+    home = "/home/${user}";
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+    ];
+    shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
+    ];
+    packages = [ pkgs.wslKeySetup ];
   };
 
   ############################################
   # Nix Settings
   ############################################
-
   nix.nixPath = [
     "nixos-config=/home/${user}/.config/dotfiles:/etc/nixos"
     "nixpkgs=flake:nixpkgs"
@@ -66,10 +54,10 @@ in
   # WSL Configuration
   ############################################
   wsl.enable = true;
-  wsl.defaultUser = "face";
+  wsl.defaultUser = "${user}";
   wsl.docker-desktop.enable = true;
   wsl.wslConf.automount.enabled = true;
-  wsl.wslConf.user.default = "face";
+  wsl.wslConf.user.default = "${user}";
   wsl.wslConf.interop.enabled = false;
   wsl.wslConf.interop.appendWindowsPath = false;
   kernel.isWSL = true; # For Kernel Configs
@@ -95,17 +83,18 @@ in
   ############################################
   # Global Packages
   ############################################
+  packages.direnv = true;
   packages.gitFull = true;
-  packages.secretsMan = true;
   packages.monitoring = true;
   packages.ncdu = true;
   packages.networking = true;
   packages.nixTools = true;
+  packages.nodejs.node = true;
+  packages.nodejs.vsCodeRemotePatch = true;
+  packages.rust = "stable";
+  packages.secrets.wslGpgForwarding = true;
 
-  devTools.rust = true;
-  devTools.patchVSCodeRemote = true;
-
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = [ ];
 
   environment.variables.FUNCNEST = 100000; # Fixes a potential issue with clear
 
