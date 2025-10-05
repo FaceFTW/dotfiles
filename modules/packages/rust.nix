@@ -6,18 +6,12 @@
 }:
 let
   rust = config.packages.rust;
-  inherit (lib)
-    mkOption
-    makeLibraryPath
-    types
-    mkIf
-    lists
-    ;
+  inherit (lib) mkOption makeLibraryPath lists;
 in
 {
   options.packages.rust = mkOption {
     type =
-      with types;
+      with lib.types;
       nullOr (enum [
         "stable"
         "beta"
@@ -27,57 +21,53 @@ in
     description = "Rust Toolchain";
   };
 
-  config = {
-    environment.systemPackages = mkIf rust (
+  config = lib.mkIf (rust != null) {
+    environment.systemPackages = (
       lists.flatten [
         ############################################
         # Stable Toolchain
         ############################################
-        (
-          lists.optional rust == "stable" [
-            (pkgs.fenix.stable.withComponents [
-              "cargo"
-              "clippy"
-              "rust-src"
-              "rustc"
-              "rustfmt"
-              "rust-docs"
-            ])
-            (pkgs.rust-analyzer-nightly)
-          ]
-        )
+        (lists.optional (rust == "stable") [
+          (pkgs.fenix.stable.withComponents [
+            "cargo"
+            "clippy"
+            "rust-src"
+            "rustc"
+            "rustfmt"
+            "rust-docs"
+          ])
+          (pkgs.rust-analyzer-nightly)
+        ])
+
         ############################################
         # Beta Toolchain
         ############################################
-        (
-          lists.optional rust == "beta" [
-            (pkgs.fenix.stable.withComponents [
-              "cargo"
-              "clippy"
-              "rust-src"
-              "rustc"
-              "rustfmt"
-              "rust-docs"
-            ])
-            (pkgs.rust-analyzer)
-          ]
-        )
+        (lists.optional (rust == "beta") [
+          (pkgs.fenix.stable.withComponents [
+            "cargo"
+            "clippy"
+            "rust-src"
+            "rustc"
+            "rustfmt"
+            "rust-docs"
+          ])
+          (pkgs.rust-analyzer)
+        ])
+
         ############################################
         # Nightly Toolchain
         ############################################
-        (
-          lists.optional rust == "nightly" [
-            (pkgs.fenix.complete.withComponents [
-              "cargo"
-              "clippy"
-              "rust-src"
-              "rustc"
-              "rustfmt"
-              "rust-docs"
-            ])
-            (pkgs.rust-analyzer-nightly)
-          ]
-        )
+        (lists.optional (rust == "nightly") [
+          (pkgs.fenix.complete.withComponents [
+            "cargo"
+            "clippy"
+            "rust-src"
+            "rustc"
+            "rustfmt"
+            "rust-docs"
+          ])
+          (pkgs.rust-analyzer-nightly)
+        ])
 
         ############################################
         # Common Dependencies
@@ -91,7 +81,7 @@ in
 
     );
 
-    environment.variables = mkIf rust {
+    environment.variables = {
       LIBCLANG_PATH = makeLibraryPath [ pkgs.llvmPackages_latest.libclang.lib ];
       RUSTFLAGS = (
         builtins.map (a: ''-L ${a}/lib'') [

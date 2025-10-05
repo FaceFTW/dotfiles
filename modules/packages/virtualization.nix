@@ -7,28 +7,38 @@
 let
   docker = config.packages.virtualization.docker;
   armVirt = config.packages.virtualization.armVirtualization;
-  inherit (lib) mkIf mkEnableOption lists;
+  inherit (lib) mkIf mkMerge mkEnableOption;
 in
 {
   options.packages.virtualization.docker = mkEnableOption "Docker";
   options.packages.virtualization.armVirtualization = mkEnableOption "ARM Virtualization via QEMU";
 
-  config = {
-    environment.systemPackages = lists.flatten [
-      (lists.optional docker [
+  config = mkMerge [
+    ############################################
+    # Docker
+    ############################################
+    (mkIf docker {
+      environment.systemPackages = [
         pkgs.docker
         pkgs.docker-compose
-      ])
-      (lists.optional armVirt [
+      ];
+
+      virtualisation.docker = mkIf docker {
+        enable = true;
+        logDriver = "json-file";
+      };
+    })
+
+    ############################################
+    # ARM Virtualization
+    ############################################
+    (mkIf armVirt {
+      environment.systemPackages = [
         pkgs.qemu
-      ])
-    ];
+      ];
 
-    virtualisation.docker = mkIf docker {
-      enable = true;
-      logDriver = "json-file";
-    };
-
-    boot.binfmt.emulatedSystems = mkIf armVirt [ "aarch64-linux" ]; # For Cross-Compiling Raspberry Pi Things
-  };
+      # For cross-compiling Raspberry-Pi things
+      boot.binfmt.emulatedSystems = mkIf armVirt [ "aarch64-linux" ];
+    })
+  ];
 }

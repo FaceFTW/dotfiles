@@ -20,16 +20,5 @@ in
   home.stateVersion = "25.05";
   xdg.enable = true;
 
-  # For disabling the GPG Agent autostart
-  home.file.".gnupg/common.conf".enable = true;
-  home.file.".gnupg/common.conf".text = ''
-    no-autostart
-  '';
-
-  home.file.".gnupg/gpg.conf".enable = true;
-  home.file.".gnupg/gpg.conf".text = ''
-    default-key CB9CCE0E558306B21891063A9EB573C02E056DA8
-  '';
-
   programs = shared-programs;
 }
