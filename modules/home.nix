@@ -28,8 +28,8 @@
   zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#portal";
   zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --print-build-logs --show-trace --flake ~/.config/dotfiles#portal";
   zsh.shellAliases.build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
-  # zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --flake ~/.config/dotfiles#portal";
-  # zsh.shellAliases.rebuild-fabricator-trace = "sudo nixos-rebuild switch --show-trace --flake /";
+  zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#fabricator";
+  zsh.shellAliases.rebuild-fabricator-trace = "sudo nixos-rebuild switch --print-build-logs --show-trace --flake ~/.config/dotfiles#fabricator";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;

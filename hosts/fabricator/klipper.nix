@@ -4,19 +4,14 @@
   lib,
   ...
 }:
-let
-  klipper-fw = (
-    pkgs.klipper-firmware.overrideAttrs {
-      firmwareConfig = ./klipper/Kconfig;
-    }
-  );
-in
 {
-  environment.systemPackages = [
-    pkgs.klipper
-    pkgs.moonraker
-    pkgs.mainsail
-    klipper-fw
-  ];
+  services.klipper.enable = true;
+  services.klipper.firmwares.fabricator.enable = true;
+  services.klipper.firmwares.fabricator.configFile = ./klipper/Kconfig;
+  services.klipper.configFile = ./klipper/printer.cfg;
 
+  services.moonraker.enable = true;
+  services.moonraker.analysis.enable = true;
+
+  services.mainsail.enable = true;
 }
