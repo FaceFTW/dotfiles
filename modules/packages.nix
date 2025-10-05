@@ -10,6 +10,7 @@ let
 in
 {
   imports = [
+    ./packages/gnu.nix
     ./packages/nodejs.nix
     ./packages/rust.nix
     ./packages/secrets.nix
