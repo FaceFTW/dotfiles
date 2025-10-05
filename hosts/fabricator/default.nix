@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   pkgs,
   ...
@@ -17,6 +18,7 @@ in
     ../../modules/kernel.nix
     ../../modules/packages.nix
     inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
     ../../modules/raspi
     ./services.nix
     ./udev.nix
@@ -28,6 +30,8 @@ in
   ############################################
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets.user_passwd.neededForUsers = true;
+  sops.secrets.wifi_secrets = { };
 
   ############################################
   # User Settings
@@ -35,8 +39,6 @@ in
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.face = (import ./home-manager.nix);
-
-  sops.secrets.face-password.neededForUsers = true;
 
   users.users = {
     ${user} = {
@@ -50,7 +52,8 @@ in
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [ hostKey ];
-      packages = [ pkgs.wslKeySetup ];
+      packages = [ ];
+      hashedPasswordFile = config.sops.secrets.user_passwd.path;
     };
   };
 
@@ -73,7 +76,6 @@ in
     experimental-features = nix-command flakes
   '';
   nixpkgs.hostPlatform = "aarch64-linux";
-  nixpkgs.buildPlatform = "x86_64-linux";
 
   ############################################
   # Hardware Configuration
@@ -135,6 +137,8 @@ in
   ############################################
   networking.hostName = "fabricator";
   networking.wireless.enable = true;
+  networking.wireless.secretsFile = config.sops.secrets.wifi_secrets.path;
+  networking.wireless.networks."Orbi89".pskRaw = "ext:home-psk";
   services.avahi.enable = true;
 
   ############################################

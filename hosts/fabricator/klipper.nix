@@ -2,11 +2,14 @@
   config,
   pkgs,
   lib,
+  ...
 }:
 let
-  klipper-fw = pkgs.klipper-firmware.overrideAttrs {
-    firmwareConfig = ./klipper/Kconfig;
-  };
+  klipper-fw = (
+    pkgs.klipper-firmware.overrideAttrs {
+      firmwareConfig = ./klipper/Kconfig;
+    }
+  );
 in
 {
   environment.systemPackages = [
@@ -15,6 +18,5 @@ in
     pkgs.mainsail
     klipper-fw
   ];
-
 
 }
