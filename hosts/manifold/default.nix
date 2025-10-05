@@ -31,6 +31,7 @@ in
     ];
     packages = [ pkgs.wslKeySetup ];
   };
+
   ############################################
   # Nix Settings
   ############################################
@@ -54,10 +55,10 @@ in
   # WSL Configuration
   ############################################
   wsl.enable = true;
-  wsl.defaultUser = "face";
+  wsl.defaultUser = "${user}";
   wsl.docker-desktop.enable = true;
   wsl.wslConf.automount.enabled = true;
-  wsl.wslConf.user.default = "face";
+  wsl.wslConf.user.default = "${user}";
   wsl.wslConf.interop.enabled = true;
   wsl.interop.register = true;
   wsl.wslConf.interop.appendWindowsPath = false; # Let Linux binaries take precedence
@@ -90,10 +91,11 @@ in
   packages.ncdu = true;
   packages.networking = true;
   packages.nixTools = true;
-
-  packages.rust = "stable";
   packages.nodejs.node = true;
   packages.nodejs.vsCodeRemotePatch = true;
+  packages.rust = "stable";
+  packages.secrets.base = true;
+  packages.secrets.wslGpgForwarding = true;
   packages.virtualization.docker = true;
   packages.virtualization.armVirtualization = true;
 

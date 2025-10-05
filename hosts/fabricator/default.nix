@@ -7,14 +7,11 @@
 
 let
   user = "face";
-  # Windows SSH Key
-  hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold";
 in
 {
   imports = [
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     ../../modules/core.nix
-    ../../modules/devtools.nix
     ../../modules/kernel.nix
     ../../modules/packages.nix
     inputs.home-manager.nixosModules.home-manager
@@ -40,21 +37,17 @@ in
   home-manager.useUserPackages = true;
   home-manager.users.face = (import ./home-manager.nix);
 
-  users.users = {
-    ${user} = {
-      name = "${user}";
-      home = "/home/${user}";
-      isNormalUser = true;
-      extraGroups = [
-        "wheel"
-        # Enable ‘sudo’ for the user.
-        "networkmanager"
-      ];
-      shell = pkgs.zsh;
-      openssh.authorizedKeys.keys = [ hostKey ];
-      packages = [ ];
-      hashedPasswordFile = config.sops.secrets.user_passwd.path;
-    };
+  users.users.${user} = {
+    home = "/home/${user}";
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+    ];
+    shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
+    ];
+    packages = [ pkgs.wslKeySetup ];
   };
 
   ############################################
@@ -128,6 +121,7 @@ in
   ############################################
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
+
   services.speechd.enable = false;
   services.printing.enable = false;
   services.getty.autologinUser = "face";
@@ -151,7 +145,7 @@ in
   ############################################
   packages.monitoring = true;
   packages.networking = true;
-  packages.secretsMan = true;
+  packages.secrets.base = true;
 
   environment.systemPackages = with pkgs; [
     libraspberrypi
