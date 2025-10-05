@@ -1,39 +1,42 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   packages = config.packages;
-  inherit (lib)
-    mkIf
-    mkEnableOption
-    lists
-    ;
+  inherit (lib) mkIf mkMerge mkEnableOption;
 in
 {
   imports = [
     ./packages/nodejs.nix
     ./packages/rust.nix
+    ./packages/secrets.nix
     ./packages/virtualization.nix
   ];
 
   options.packages = {
+    direnv = mkEnableOption "Use direnv";
     gitFull = mkEnableOption "Use gitFull with perl";
-    secretsMan = mkEnableOption "Install Secrets Management Things";
     monitoring = mkEnableOption "Extra System Monitoring Utils";
     ncdu = mkEnableOption "ncdu";
     networking = mkEnableOption "Extra Networking Things";
     nixTools = mkEnableOption "Nix Dev Tools";
   };
 
-  config = {
-    environment.systemPackages = lists.flatten [
-      # Core Utilities
-      [
+  config = mkMerge [
+    ############################################
+    # Common Packages
+    ############################################
+    {
+      environment.systemPackages = [
         pkgs.shell-toy
 
         pkgs.bash-completion
         pkgs.bat
         pkgs.coreutils
         pkgs.curl
-        pkgs.htop
         # openssh # I don't think I need this for sshd
         pkgs.vimCustom # See overlays/vim.nix for config
         pkgs.zip
@@ -45,56 +48,74 @@ in
         pkgs.unixtools.netstat
         pkgs.unixtools.ping
         pkgs.unixtools.ps
-        pkgs.unixtools.sysctl
         pkgs.unixtools.top
         pkgs.unixtools.umount
 
         pkgs.fzf # Used with Vim config
-      ]
+      ];
+    }
 
-      # Git (Big or smol?)
-      (lists.optional packages.gitFull [
+    ############################################
+    # direnv
+    ############################################
+    (mkIf packages.direnv {
+      programs.direnv.enable = true;
+      programs.direnv.enableZshIntegration = true;
+      programs.direnv.nix-direnv.enable = true;
+      programs.direnv.silent = false;
+    })
+
+    ############################################
+    # Git (Big or smol?)
+    ############################################
+    (mkIf packages.gitFull {
+      environment.systemPackages = [
         pkgs.gitFull
-      ])
-      (lists.optional (!packages.gitFull) [
+      ];
+    })
+    (mkIf (!packages.gitFull) {
+      environment.systemPackages = [
         pkgs.git
-      ])
+      ];
+    })
 
-      # GnuPG
-      (lists.optional packages.secretsMan [
-        pkgs.gnupg
-        pkgs.sops
-        pkgs.ssh-to-age
-        pkgs.socat
-      ])
-
-      # Extra Monitoring Tools
-      (lists.optional packages.nixTools [
+    ############################################
+    # Monitoring Tools
+    ############################################
+    (mkIf packages.monitoring {
+      environment.systemPackages = [
         pkgs.htop
         pkgs.iftop
         pkgs.iotop
-      ])
-
-      # Extra Monitoring Tools
-      (lists.optional packages.ncdu [
+      ];
+    })
+    # Separated because Zig compilation on aarch64 weird
+    (mkIf packages.ncdu {
+      environment.systemPackages = [
         pkgs.ncdu
-      ])
+      ];
+    })
 
-      # Extra Networking Things
-      (lists.optional packages.nixTools [
+    ############################################
+    # Networking Tools
+    ############################################
+    (mkIf packages.networking {
+      environment.systemPackages = [
         pkgs.inetutils
         pkgs.rsync
-      ])
+      ];
+    })
 
-      # Nix Dev Tools
-      (lists.optional packages.nixTools [
+    ############################################
+    # Nix Tools
+    ############################################
+    (mkIf packages.nixTools {
+      environment.systemPackages = [
         pkgs.nixfmt
         pkgs.nix-tree
         pkgs.nix-index
         pkgs.nil
-      ])
-
-    ];
-
-  };
+      ];
+    })
+  ];
 }
