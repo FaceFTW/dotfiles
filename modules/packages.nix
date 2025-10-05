@@ -1,14 +1,18 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   packages = config.packages;
-  inherit (pkgs.lib)
+  inherit (lib)
     mkIf
     mkEnableOption
     lists
     ;
 in
 {
-  imports = [ ];
+  imports = [
+    ./packages/nodejs.nix
+    ./packages/rust.nix
+    ./packages/virtualization.nix
+  ];
 
   options.packages = {
     gitFull = mkEnableOption "Use gitFull with perl";
@@ -17,7 +21,6 @@ in
     ncdu = mkEnableOption "ncdu";
     networking = mkEnableOption "Extra Networking Things";
     nixTools = mkEnableOption "Nix Dev Tools";
-    armVirt = mkEnableOption "QEMU + ARM Virtualization";
   };
 
   config = {
@@ -47,9 +50,6 @@ in
         pkgs.unixtools.umount
 
         pkgs.fzf # Used with Vim config
-
-        pkgs.rbw
-        pkgs.pinentry-curses
       ]
 
       # Git (Big or smol?)
@@ -90,17 +90,11 @@ in
       (lists.optional packages.nixTools [
         pkgs.nixfmt
         pkgs.nix-tree
-        pkgs.nix-output-monitor
         pkgs.nix-index
         pkgs.nil
       ])
 
-      # ARM Virtualization - Used for building RasPi images
-      (lists.optional packages.armVirt [
-        pkgs.qemu
-      ])
     ];
 
-    boot.binfmt.emulatedSystems = mkIf packages.armVirt [ "aarch64-linux" ]; # For Cross-Compiling Raspberry Pi Things
   };
 }
