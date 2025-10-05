@@ -85,6 +85,7 @@ in
   ############################################
   packages.direnv = true;
   packages.gitFull = true;
+  packages.gnuMake = true;
   packages.monitoring = true;
   packages.ncdu = true;
   packages.networking = true;
