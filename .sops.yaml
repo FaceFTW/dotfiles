@@ -1,20 +1,22 @@
 keys:
-  - &key_lockpick D384406EE3E09652DA84CC0ACCE34B296644C01B!
+  # - &key_lockpick D384406EE3E09652DA84CC0ACCE34B296644C01B!
   - &host_fabricator age1lskkuxu8cpstc6ya0wchgt5ckhecegwqggusrfv4xvqp7qv83g7q46a534
   - &host_manifold age1ng2en0a2nv2ucdj7ejcydyzr6qqky25sh4qfsx9q7k4g4gl55drqay8eql
+  - &user_face_manifold age145ltxlne4wy497exp3fw4an9ss8mxy80wvwnzzckfnpv5jw50dhqrlfrvu
 creation_rules:
   - path_regex: hosts/fabricator/[^/]+\.(yaml|json|env|ini)$
     shamir_threshold: 2
     key_groups:
-      - pgp:
-          - *key_lockpick
+      # - pgp:
+      # - *key_lockpick
       - age:
           - *host_fabricator
-          - *host_manifold # For config changes off machine
+          - *user_face_manifold
+          # - *host_manifold # For config changes off machine
   - path_regex: hosts/manifold/[^/]+\.(yaml|json|env|ini)$
     shamir_threshold: 2
     key_groups:
-      - pgp:
-          - *key_lockpick
+      # - pgp:
+      # - *key_lockpick
       - age:
           - *host_manifold

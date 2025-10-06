@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ ... }:
 {
   services.klipper.enable = true;
   services.klipper.firmwares.fabricator.enable = true;
