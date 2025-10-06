@@ -69,6 +69,7 @@ in
   nix.package = pkgs.nix;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
+    download-buffer-size = 1073741824
   '';
   nixpkgs.hostPlatform = "aarch64-linux";
 
@@ -140,6 +141,12 @@ in
   ############################################
   # Misc System Configuration
   ############################################
+  swapDevices = [
+    {
+      device = "/var/swapfile";
+      size = 4294967296;
+    }
+  ];
   time.timeZone = "America/New_York";
 
   ############################################
