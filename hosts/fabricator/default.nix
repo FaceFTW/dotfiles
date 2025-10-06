@@ -144,7 +144,7 @@ in
   swapDevices = [
     {
       device = "/var/swapfile";
-      size = 4294967296;
+      size = 4096;
     }
   ];
   time.timeZone = "America/New_York";
