@@ -58,8 +58,9 @@ in
   wsl.docker-desktop.enable = true;
   wsl.wslConf.automount.enabled = true;
   wsl.wslConf.user.default = "${user}";
-  wsl.wslConf.interop.enabled = false;
-  wsl.wslConf.interop.appendWindowsPath = false;
+  wsl.wslConf.interop.enabled = true;
+  wsl.interop.register = true;
+  wsl.wslConf.interop.appendWindowsPath = false; # Let Linux binaries take precedence
   kernel.isWSL = true; # For Kernel Configs
 
   ############################################
