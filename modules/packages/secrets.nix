@@ -36,6 +36,7 @@ in
         pkgs.gnupg
         pkgs.sops
         pkgs.ssh-to-age
+        pkgs.pinentry-curses
       ];
     })
 
