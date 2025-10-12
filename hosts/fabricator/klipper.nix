@@ -11,6 +11,18 @@
   services.moonraker.group = "klipper";
   services.moonraker.user = "klipper";
   services.moonraker.analysis.enable = true;
+  services.moonraker.settings.authorization.trustedClients = [
+    "10.0.0.0/8"
+    "127.0.0.0/8"
+    "172.16.0.0/12"
+    "192.168.0.0/16"
+    "FE80::/10"
+    "::1/128"
+  ];
+  services.moonraker.settings.authorization.cors_domains = [
+    "*://*.local"
+    "*://*.lan"
+  ];
 
   services.mainsail.enable = true;
 }

@@ -120,6 +120,7 @@ in
   ############################################
   programs.zsh.enable = true;
 
+
   ############################################
   # Services
   ############################################
@@ -134,6 +135,7 @@ in
   # Networking Configuration
   ############################################
   networking.hostName = "fabricator";
+  networking.firewall.allowedTCPPorts = [ 22 80 7125 ];
   networking.wireless.enable = true;
   networking.wireless.secretsFile = config.sops.secrets.wifi_secrets.path;
   networking.wireless.networks."Orbi89".pskRaw = "ext:home-psk";
