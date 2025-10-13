@@ -74,7 +74,10 @@ in
   # Services
   ############################################
   services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = false; # "Hardening"
+  services.openssh.settings.PasswordAuthentication = false;
+  services.openssh.settings.PermitRootLogin = "no";
+  services.openssh.settings.KbdInteractiveAuthentication = false;
+  services.openssh.settings.AllowUsers = [ "face" ];
 
   ############################################
   # Misc System Configuration
