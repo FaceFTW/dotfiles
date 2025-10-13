@@ -50,14 +50,9 @@
     "colored-man-pages"
     "cp"
     "vscode"
-    "ssh-agent"
-    "gpg-agent"
   ];
   zsh.oh-my-zsh.extraConfig = ''
     zstyle ':omz:update' mode disabled
-    zstyle :omz:plugins:keychain agents gpg,ssh
-    zstyle :omz:plugins:keychain options --quiet --quick --noask
-    zstyle :omz:plugins:ssh-agent lazy yes
   '';
 
   zsh.initContent =
@@ -115,15 +110,10 @@
   ];
 
   ############################################
-  # SSH Config
+  # SSH Client Config
   ############################################
   ssh.enable = true;
   ssh.enableDefaultConfig = false;
-
-  ############################################
-  # rbw Config
-  ############################################
-  rbw.enable = true;
-  rbw.settings.email = "alex@faceftw.dev";
-  rbw.settings.pinentry = pkgs.pinentry-curses;
+  ssh.extraConfig = ''AddKeysToAgent yes'';
+  ssh.matchBlocks."*" = { };
 }
