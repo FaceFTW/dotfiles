@@ -15,36 +15,7 @@
   ############################################
   # Moonraker Config
   ############################################
-  environment.etc."moonraker.cfg".source = ''
-    [analysis]
-    enable_estimator_updates:false
-    platform:linux
-
-    [authorization]
-    cors_domains:
-      *://*.local
-      *://*.lan
-    trustedClients:
-      10.0.0.0/8
-      127.0.0.0/8
-      172.16.0.0/12
-      192.168.0.0/16
-      FE80::/10
-      ::1/128
-
-    [file_manager]
-    check_klipper_config_path:false
-
-    [machine]
-    provider:none
-    validate_service:false
-
-    [server]
-    host:127.0.0.1
-    klippy_uds_address:/run/klipper/api
-    port:7125
-
-  '';
+  environment.etc."moonraker.cfg".source = ./klipper/moonraker.cfg;
 
   systemd.tmpfiles.rules = [
     "d '/var/lib/moonraker' - klipper klipper - -"
@@ -81,6 +52,8 @@
   ############################################
   services.nginx = {
     enable = true;
+    user = "klipper";
+    group = "klipper";
     upstreams.mainsail-apiserver.servers."127.0.0.1:7125" = { };
     virtualHosts."fabricator" = {
       root = lib.mkForce "${pkgs.mainsail}/share/mainsail";
