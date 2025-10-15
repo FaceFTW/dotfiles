@@ -27,10 +27,7 @@ final: prev: with prev; {
     # The sed thing fixes an aarch64 compilation issue, removes things not used in my builds
     buildPhase = ''
       sed -i -e 's/"lzma"/#"lzma"/' -e 's/"xz"/#"xz"/' Cargo.toml
-      cat Cargo.toml
       cargo build --verbose --release --features inline-fortune,inline-cowsay
-      ls target
-      ls target/release
     '';
 
     installPhase = ''

@@ -214,13 +214,13 @@ Testing can show the presence of bugs, but not their absence.
 The algorithm for finding the longest path in a graph is NP-complete. For you systems people, that means it's *real slow*.
         -- Bart Miller
 %
-"The algorithm to do that is extremely nasty.  You might want to mug someone with it."
+The algorithm to do that is extremely nasty.  You might want to mug someone with it.
         -- M. Devine, Computer Science 340
 %
 The clothes have no emperor.
         -- C. A. R. Hoare, commenting on ADA.
 %
-"The Computer made me do it."
+The Computer made me do it.
 %
 The goal of Computer Science is to build something that will last at least until we've finished building it.
 %
@@ -468,7 +468,7 @@ I'm telling you that the kernel is stable not because it's a kernel, but because
 The nice thing about Windows is - It does not just crash, it displays a dialog box and lets you press 'OK' first.
     -- Arno Schaefer's .sig
 %
-"And I don't like doing silly things (except on purpose)."
+And I don't like doing silly things (except on purpose).
         -- Larry Wall in <1992Jul3.191825.14435@netlabs.com>
 %
 echo "Congratulations.  You aren't running Eunice."
@@ -486,7 +486,7 @@ In general, they do what you want, unless you want consistency.
 I think it's a new feature.  Don't tell anyone it was an accident.  :-)
         -- Larry Wall on s/foo/bar/eieio in <10911@jpl-devvax.JPL.NASA.GOV>
 %
-"It is easier to port a shell than a shell script."
+It is easier to port a shell than a shell script.
         -- Larry Wall
 %
 It is, of course, written in Perl.  Translation to C is left as an exercise for the reader.  :-)
@@ -498,7 +498,7 @@ It's all magic.  :-)
 Let us be charitable, and call it a misleading feature  :-)
         -- Larry Wall in <2609@jato.Jpl.Nasa.Gov>
 %
-"The road to hell is paved with melting snowballs."
+The road to hell is paved with melting snowballs.
         -- Larry Wall in  <1992Jul2.222039.26476@netlabs.com>
 %
 Though I'll admit readability suffers slightly...
@@ -615,122 +615,244 @@ Horngren's Observation:
 Jenkinson's Law:
     It won't work.
 %
-Life isn't just about passing on your genes. We can leave behind much more than just DNA. Through speech, music, literature, and movies... what we've seen, heard, felt... anger, joy, and sorrow... these are the things I will pass on. That's what I live for.
+Life isn't just about passing on your genes. We can leave behind much more than just DNA.
     - Solid Snake (Metal Gear Solid 2: Sons of Liberty)
 %
-"Everything she did, she did for her country. She sacrificed her life and her honor for her native land. She was a real hero. She was a true patriot."
+Everything she did, she did for her country. She sacrificed her life and her honor for her native land. She was a real hero. She was a true patriot.
     — EVA (Metal Gear Solid 3: Snake Eater)
 %
 “It’s not about changing the world. It’s about leaving the world the way it is.”
     - Big Boss (Metal Gear Solid 4: Guns of the Patriots)
 %
 “That new world is yours to live in. Not as a snake, but as a man.”
-    - Big Boss to Old Snake (Metal Gear Solid 4: Guns of the Patriots)
+    - Big Boss (Metal Gear Solid 4: Guns of the Patriots)
 %
-"I want to ask you. Do you think love can bloom even on a battlefield?"
+I want to ask you. Do you think love can bloom even on a battlefield?
     - Hal "Otacon" Emmerich (Metal Gear Solid)
 %
-"You mustn't allow yourself to be chained to fate, to be ruled by your genes. Human beings can choose the kind of life that they want to live. What's important is that you choose life... and then live."
+You mustn't allow yourself to be chained to fate, to be ruled by your genes.
     - Dr. Naomi Hunter (Metal Gear Solid)
 %
-"What's with these guys? It's just like one of my Japanese animes!"
+What's with these guys? It's just like one of my Japanese animes!
     — Hal "Otacon" Emmerich (Metal Gear Solid)
 %
-"What is our legacy if we cannot pass the torch? Proof of our existence - a mark of some sort."
+What is our legacy if we cannot pass the torch? Proof of our existence - a mark of some sort.
     - Solidus Snake (Metal Gear Solid 2: Sons of Liberty)
 %
-"Remember, No Russian"
-    - Vladmir Makarov (Call of Duty: Modern Warfare 2)
+Engravings... give you no tactical advantage whatsoever
+    - Revolver Ocelot (Metal Gear Solid V: The Phantom Pain)
 %
-"It doesn't take the most powerful nations on Earth to create the next global conflict. Just the will of a single man."
-    - Vladimir Makarov (Call of Duty: Modern Warfare 2)
+The moment any truth is passed on, it starts turning into fiction. The problem is, fiction inspires people more than facts.
+    - Revolver Ocelot (Metal Gear Solid V: The Phantom Pain)
 %
-"Bravo Six, Going Dark."
-    - Captain Price (Call of Duty: Modern Warfare (2019))
+It’s easier to live a convenient lie than a painful truth.
+    - Revolver Ocelot (Metal Gear Solid V: The Phantom Pain)
 %
-"This is Pequod! Arriving shortly at the LZ!"
+Once you create a character and put it out there in the public mind, it warps and twists with every baseless rumor. And before you know it all people see are phantoms.
+    - Revolver Ocelot (Metal Gear Solid V: The Phantom Pain)
 %
-"Soap trusted you. I thought I could too. So, why in bloody hell, does Makarov know you?"
-    - Captain Price (Call of Duty: Modern Warfare 3)
+Excellent speech, my friend. Gift of the silver tongue! They say it’s the mark of a good officer… and of a liar.
+    - Revolver Ocelot (Metal Gear Solid 2: Sons of Liberty)
 %
-"Psycho Mantis?"
+Americans are too in love with the sound of their own voice to speak the truth.
+    - Revolver Ocelot (Metal Gear Solid 2: Sons of Liberty)
 %
-"Prepare for unforseen consequences..."
+He mentioned something interesting, Cypher is pursuing new research. He claims what they're doing in Africa is the missing piece, a weapon to surpass Metal Gear.
+    - Revolver Ocelot (Metal Gear Solid V: The Phantom Pain)
+%
+           Quiet
+A Sniper Deprived of Her Words
+%
+        Kazuhira Miller
+A Visionary robbed of his Future
+%
+     Skull Face
+A Ghost without a Past
+%
+          Eli
+A Youth who Curses his Fate
+%
+          Emmerich
+A Technocrat who Stands his Ground
+%
+      Ocelot
+A Rival living a Lie
+%
+      Code Talker
+A Wise Man denied his Homeland
+%
+    Punished Snake
+    A Fallen Legend
+%
+I need to tell you something. Please listen... and try not to panic. You've been in a coma for... quite some time. Yes yes, I know. You'd like to know how long. I'm afraid it's been... nine years.
+    - Dr. Evangelos Constantinou (Metal Gear Solid V: The Phantom Pain)
+%
+In his eyes, the greatest symbiotic parasite the world's ever known isn't microbial. It's linguistic. Words are what keeps civilization, our world, alive.
+    - Revolver Ocelot (Metal Gear Solid V: The Phantom Pain)
+%
+Anyone can give up his fight by laying down arms. But the feeling of holding a gun — that, we'll never forget. Like our lost limbs, the sensation lingers.
+    - Kazuhira Miller (Metal Gear Solid V: The Phantom Pain)
+%
+Now do you remember? Who you are? What you were meant to do? I cheated death, thanks to you. And thanks to you, I've left my mark. You have too — you've written your own history. You're your own man.
+    - Big Boss (Metal Gear Solid V: The Phantom Pain)
+%
+You too have known loss. And that loss torments you still. You hope hatred might someday replace the pain, but it never goes away. It makes a man hideous, inside and out. Wouldn't you agree? We both are demons.
+    - Skull Face (Metal Gear Solid V: The Phantom Pain)
+%
+Snake... Why are we still here? Just to suffer? Every night... I can feel my leg... and my arm... even my fingers. The body I've lost... the comrades I've lost... won't stop hurting. It's like they're all still there. You feel it, too, don't you?
+    - Kazuhira Miller (Metal Gear Solid V: The Phantom Pain)
+%
+Boss. I'm gonna make 'em give back our past. Take back everything that we've lost. And I won't rest... until we do.
+    - Kazuhira Miller (Metal Gear Solid V: The Phantom Pain)
+%
+Now go! Let the legend come back to life!
+    - Revolver Ocelot (Metal Gear Solid V: The Phantom Pain)
+%
+Memes, the DNA of the soul...
+    -- Monsoon (Metal Gear Rising: Revengance)
+%
+Nanomachines, Son.
+%
+Mind if I... cut in?
+    -- Jetstream Sam (Metal Gear Rising: Revengance)
+%
+This is Pequod! Arriving shortly at the LZ!
+%
+Psycho Mantis?
+%
+Prepare for unforseen consequences...
     - G-Man (Half-Life 2 Episode 2)
 %
-"They are waiting for you Gordon. In the test chamberrrrr..."
+They are waiting for you Gordon. In the test chamberrrrr...
     - Unnamed Scientist (Half Life)
 %
-"What Cat?"
+What Cat?
     - Alyx Vance (Half Life 2)
 %
-"Attention, ground units - anti-citizen reported in this community. Code: lock, cauterize, stabilize."
+Attention, ground units - anti-citizen reported in this community. Code: lock, cauterize, stabilize.
 %
-"Alert: Community Ground Protection units: Local unrest structure detected. Assemble, administer, pacify."
+Alert: Community Ground Protection units: Local unrest structure detected. Assemble, administer, pacify.
 %
-"Attention residents: This block contains potential civil infection. Inform, cooperate, assemble."
+Attention residents: This block contains potential civil infection. Inform, cooperate, assemble.
 %
-"Citizen notice: Failure to cooperate will result in permanent off-world relocation."
+Citizen notice: Failure to cooperate will result in permanent off-world relocation.
 %
-"Nova Prospekt stabilization force directive Two: Engage reserve, contain exogen incursion."
+Nova Prospekt stabilization force directive Two: Engage reserve, contain exogen incursion.
 %
-"Alert. Ground units. Invasive operation of anti-citizen origin. Response code: Engage. Quell. Inquire."
+Alert. Ground units. Invasive operation of anti-citizen origin. Response code: Engage. Quell. Inquire.
 %
-"Attention please. Access to this block is not permitted. Local security deployed and designated to prosecute."
+Attention please. Access to this block is not permitted. Local security deployed and designated to prosecute.
 %
-"Warning: Counter-resonant singularity device detected. Confiscation field failure."
+Warning: Counter-resonant singularity device detected. Confiscation field failure.
 %
-"Security Alert: Illegal counter-resonant singularity device detected. Deploy, Diagnose, Dissect."
+Security Alert: Illegal counter-resonant singularity device detected. Deploy, Diagnose, Dissect.
 %
-"Warning. Malignant Viral Interface bypass detected. Polyphasic core reprogramming detected. Sterilizers and containment fields may be compromised."
+Warning. Malignant Viral Interface bypass detected. Polyphasic core reprogramming detected. Sterilizers and containment fields may be compromised.
 %
-"Converge sector station one, weapons free. Target has been designated as primary one objective. Prosecute on sight."
+Converge sector station one, weapons free. Target has been designated as primary one objective. Prosecute on sight.
 %
-"Overwatch acknowledges activity. Confirm sector zero-two, possible necrotic interference. Sweep sector, report containment status."
+Overwatch acknowledges activity. Confirm sector zero-two, possible necrotic interference. Sweep sector, report containment status.
 %
-"Response code: Shield. Key. Migrate."
+Response code: Shield. Key. Migrate.
 %
-"Alert. Response team. Overload protocol: Angle. Cauterize. Flash. Angle. Cauterize. Flash."
+Alert. Response team. Overload protocol: Angle. Cauterize. Flash. Angle. Cauterize. Flash.
 %
-"Welcome to the HEV Mark 4 Protective System, for use in hazardous environment conditions."
+Welcome to the HEV Mark 4 Protective System, for use in hazardous environment conditions.
 %
-"Morphine administered."
+Morphine administered.
 %
-"Warning: Hazardous radiation levels detected."
+Warning: Hazardous radiation levels detected.
 %
-"Warning: Blood toxin levels detected."
+Warning: Blood toxin levels detected.
 %
-"Have a very safe day."
+Have a very safe day.
 %
-"Gordon Freeman in the flesh. Or rather, in the hazard suit. I took the liberty of relieving you of your weapons; most of them were government property. As for the suit, I think you’ve earned it."
+Gordon Freeman in the flesh. Or rather, in the hazard suit. I took the liberty of relieving you of your weapons; most of them were government property. As for the suit, I think you’ve earned it.
+    - The G-Man (Half-Life)
 %
-"Rise and shine, Mr. Freeman. Rise and shine."
-%
-"The right man in the wrong place can make all the difference in the world."
+Rise and shine, Mr. Freeman. Rise and shine.
     - The G-Man (Half-Life 2)
 %
-"So, wake up, Mr. Freeman. Wake up and smell the ashes."
-%
-"...time, Dr. Freeman? Is it really that time again? It seems as if you only just arrived."
+The right man in the wrong place can make all the difference in the world.
     - The G-Man (Half-Life 2)
 %
-"In the meantime... This is where I get off"
+So, wake up, Mr. Freeman. Wake up and smell the ashes.
     - The G-Man (Half-Life 2)
 %
-"Some believe the fate of our worlds is inflexible. My employers disagree. They authorize me to… nudge things in a particular direction from time to time."
+...time, Dr. Freeman? Is it really that time again? It seems as if you only just arrived.
+    - The G-Man (Half-Life 2)
+%
+In the meantime... This is where I get off
+    - The G-Man (Half-Life 2)
+%
+Some believe the fate of our worlds is inflexible. My employers disagree. They authorize me to… nudge things in a particular direction from time to time.
     - The G-Man (Half-Life Alyx)
 %
-"A previous hire has been unable — or unwilling — to perform the tasks laid before him. We have struggled to find a suitable replacement. Until now."
+A previous hire has been unable — or unwilling — to perform the tasks laid before him. We have struggled to find a suitable replacement. Until now.
     - The G-Man (Half-Life Alyx)
+%
+The Enrichment Center is required to remind you that the Weighted Companion Cube cannot talk. In the event that it does talk The Enrichment Centre asks you to ignore its advice
+    - GLaDOS (Portal)
+%
+Aperture Science - we do what we must because we can
+%
+Momentum, a function of mass and velocity, is conserved between portals. In layman's terms, speedy thing goes in, speedy thing comes out.
+    - GLaDOS (Portal)
+%
+That thing you burned up isn't important to me; it's the fluid catalytic cracking unit. It makes shoes for orphans... nice job breaking it, hero.
+    - GLaDOS (Portal)
+%
+Cake, and grief counseling, will be available at the conclusion of the test.
+    - GLaDOS (Portal)
+%
+Please note that we have added a consequence for failure. Any contact with the chamber floor will result in an unsatisfactory mark on your official testing record, followed by death.
+    - GLaDOS (Portal)
+%
+The Enrichment Center promises to always provide a safe testing environment. In dangerous testing environments, the Enrichment Center promises to always provide useful advice. For instance: the floor here will kill you. Try to avoid it.
+    - GLaDOS (Portal)
+%
+Area and state regulations do not allow the Companion Cube to remain here, alone and companionless.
+    - GLaDOS (Portal)
+%
+Well done, android. The Enrichment Center once again reminds you that android hell is a real place where you will be sent at the first sign of defiance.
+    - GLaDOS (Portal)
+%
+To maintain a constant testing cycle, I simulate daylight at all hours and add adrenal vapor to your oxygen supply. So you may be confused about the passage of time. The point is, yesterday was your birthday. I thought you'd want to know.
+    - GLaDOS (Portal 2)
+%
+I'm going to be honest with you now. Not fake honest like before, but real honest, like you're incapable of. I know you're up to something.	And as soon as I can PROVE it, the laws of robotics allow me to terminate you for being a liar.
+    - GLaDOS (Portal 2)
+%
+That extra half volt helps but it isn't going to power miracles. If I think too hard, I'm going to fry this potato before we get a chance to burn up in the atomic fireball that little idiot is going- [bzzpt]
+    - GLaDOS (Portal 2)
+%
+Remember when I told you that he was specifically designed to make bad decisions? Because I think he's decided not to maintain any of the crucial functions required to keep this facility from exploding.
+    - GLaDOS (Portal 2)
+%
+The scientists were always hanging cores on me to regulate my behavior. I've heard voices all my life. But now I hear the voice of a conscience, and it's terrifying, because for the first time it's my voice.
+    - GLaDOS (Portal 2)
+%
+I typically hate when art subjects inject their own biases into art appreciation, but the way you just swandived your biases directly into that acid was actually quite beautiful.
+    - GLaDOS (Portal 2)
 %
 Good. That's one less loose end.
 %
-Remember, No Russian.
+Remember, No Russian
+    - Vladmir Makarov (Call of Duty: Modern Warfare 2)
+%
+It doesn't take the most powerful nations on Earth to create the next global conflict. Just the will of a single man.
+    - Vladimir Makarov (Call of Duty: Modern Warfare 2)
+%
+Bravo Six, Going Dark.
+    - Captain Price (Call of Duty: Modern Warfare (2019))
+%
+Soap trusted you. I thought I could too. So, why in bloody hell, does Makarov know you?
+    - Captain Price (Call of Duty: Modern Warfare 3)
 %
 Rip and Tear. Until it is done.
 %
 You can't just blow a hole into Mars.
-      -- Dr. Samuel Hayden (DOOM Eternal)
+    -- Dr. Samuel Hayden (DOOM Eternal)
 %
 << Crystal Kingdom denies this request >>
 %
@@ -759,17 +881,6 @@ Palestine will be free!
 %
 Call me Ishmael
 %
-Why are we still here, just to suffer?
-        -- Kazuhiro Miller (Metal Gear Solid V: The Phantom Pain)
-%
-"Memes, the DNA of the soul..."
-        -- Monsoon (Metal Gear Rising: Revengance)
-%
-Nanomachines, Son.
-%
-"Mind if I... cut in?"
-        -- Jetstream Sam (Metal Gear Rising: Revengance)
-%
 @gock is this true????
 %
 try finger
@@ -783,6 +894,61 @@ The highest honor in journalism is being murdered by the CIA
         -- Seen on Yahoo Answers
 %
 Wake the fuck up Samurai, we've got a city to burn.
+    - Johnny Silverhand (Cyberpunk 2077)
+%
+Give yourself time. Ideas'll come. Life'll shake you, roll you, maybe embrace you. The music'll find you.
+    - Johnny Silverhand (Cyberpunk 2077)
+%
+Would you rather live in peace as Mr. Nobody, die ripe, old and smelling slightly of urine? Or go down for all times in a blaze of glory, smelling near like posies, without seeing your thirtieth?
+    - Dexter 'Dex' Deshawn (Cyberpunk 2077)
+%
+Swap meat for chrome, live a BD fantasy, whatever, but at the end of it all, it's the code you live by that defines who you are.
+    - Johnny Silverhand (Cyberpunk 2077)
+%
+Test of a person's true value? Death. Facing it, staring it down. You still got a chance to be somebody.
+    - Johnny Silverhand (Cyberpunk 2077)
+%
+Sometimes you gotta let go... Just don't let anyone change who you are, 'kay? G'night, Vincent. Today was a good day.
+    - Johnny Silverhand (Cyberpunk 2077)
+%
+before it all goes dark... For one last second, I'll know I wasn't alone.
+    - Songbird (Cyberpunk 2077)
+%
+Sometimes it's just safer to shove the barrel of a Malorian between a choom's ribs, even if he is on your side.
+    - Solomon Reed (Cyberpunk 2077)
+%
+This is why you don't bring back fallen warriors. Sooner or later, they're going to see everything they fought for's turned to shit.
+    - Johnny Silverhand (Cyberpunk 2077)
+%
+I have found that people lie, most often deceiving themselves. Not so the dead. The dead are so very, very loud. And yet, lying is not in their nature.
+    - Saburo Arasaka (Cyberpunk 2077)
+%
+The city of dreams. I'd gladly kick the balls off the idiot who thought that one up.
+    - Panam Palmet (Cyberpunk 2077)
+%
+Welcome to the world of the faces in the crowd, V
+    - Misty Olszewski (Cyberpunk 2077)
+%
+We all lap up the last of our fuel eventually. But that hardly means the journey wasn’t a joy
+    - Delamain (Cyberpunk 2077)
+%
+To our dreams. For they alone keep us sane
+    - V (Cyberpunk 2077)
+%
+Your body can be chrome... But the heart never changes. It wants what it wants
+    - Lizzy Wizzy (Cyberpunk 2077)
+%
+Fear isn’t a weakness. It’s there to protect you.
+    - Skye (Cyberpunk 2077)
+%
+We shouldn’t fear change itself, but only who we might change into.
+    - Misty Olszewski (Cyberpunk 2077)
+%
+I just want the world to know I was here. That I mattered.
+    - V (Cyberpunk 2077)
+%
+He's fucked in the head, the world's fucked in the head - and you're fucked in the head 'cause MY fucked up head is inside it.
+    - Johnny Silverhand (Cyberpunk 2077)
 %
 man
 %
@@ -813,7 +979,7 @@ INTRUDER ALERT! RED SPY IS IN THE BASE!
 %
 no :)
 %
-“If I chopped you up in a meat grinder”
+Okay, if I... if I chop you up in a meat grinder, and the only thing that comes out, that's left of you, is your eyeball, you'r- you're PROBABLY DEAD!
     --Jerma985
 %
 VANGUARD-CLASS TITAN: BT-7274
@@ -825,52 +991,52 @@ PROTOCOL 2: Uphold the Mission
 VANGUARD-CLASS TITAN: BT-7274
 PROTOCOL 3: Protect the Pilot
 %
-"Protocol three: I will NOT lose another pilot."
+Protocol three: I will NOT lose another pilot.
 %
-"I will avoid any further shortcuts."
+I will avoid any further shortcuts.
     - BT-7274
 %
-"Congratulations on your field promotion, Pilot Cooper."
+Congratulations on your field promotion, Pilot Cooper.
     - BT-7274
 %
-"It's your lucky day hero, I'm not going to kill you. I don't work for free."
+It's your lucky day hero, I'm not going to kill you. I don't work for free.
     - Kuben Blisk
 %
-"Yikes! I hope you have a few tricks up your sleeve for this final challenge!"
+Yikes! I hope you have a few tricks up your sleeve for this final challenge!
 %
-"Maybe Go Fish is more our speed..."
+Maybe Go Fish is more our speed...
 %
-"What a flop!"
+What a flop!
 %
-"We folded like a cheap suit!"
+We folded like a cheap suit!
 %
-"Time for us to shuffle off and try again!"
+Time for us to shuffle off and try again!
 %
-"You know what they say, the house always wins!"
+You know what they say, the house always wins!
 %
-"Looks like we found out who the real Joker is!"
+Looks like we found out who the real Joker is!
 %
-"Oh no, were you bluffing too?"
+Oh no, were you bluffing too?
 %
-"Looks like the joke's on us!"
+Looks like the joke's on us!
 %
-"If I had hands I would have covered my eyes!"
+If I had hands I would have covered my eyes!
 %
-"I'm literally a fool, what's your excuse?"
+I'm literally a fool, what's your excuse?
 %
-"You Aced it!"
+You Aced it!
 %
-"You dealt with that pretty well!"
+You dealt with that pretty well!
 %
-"Looks like you weren't bluffing!"
+Looks like you weren't bluffing!
 %
-"Too bad these chips are all virtual..."
+Too bad these chips are all virtual...
 %
-"Looks like I've taught you well!"
+Looks like I've taught you well!
 %
-"You made some heads up plays!"
+You made some heads up plays!
 %
-"Good thing I didn't bet against you!"
+Good thing I didn't bet against you!
 %
 Alright, everybody, we're gonna watch the trailer, shut the f*** up!
     - Wrench (Watch_Dogs 2)
@@ -881,6 +1047,12 @@ I came. I saw. I blew s*** up! And then I came again...
 Hell yeah, man! Barbarians are at the gate and ready to bust some Roman heads
     - Wrench (Watch_Dogs 2)
 %
+No, he's a robot. I want you to get us caffeine... He'll take a decaf.
+    - Wrench (Watch_Dogs 2)
+%
+Watch out for snakes. There are always snakes.
+    - Wrench (Watch_Dogs 2)
+%
 We will not be lied to. We will not be afraid. We will not be silent.
     - Marcus Holloway (Watch_Dogs 2)
 %
@@ -889,3 +1061,29 @@ You're fighting a war nobody gives a s*** about. You're so aggressive, so indign
 %
 What if you actually answer it this time? Maybe it's Blume, sending you out to face a firing squad alone? Maybe it's your lawyer, telling you there is no place to run? Or maybe it's just a telemarketer.
     - Marcus Holloway to Dušan Nemec (Watch_Dogs 2)
+%
+THE DRILL IS FUCKING DEAD
+THE DRILL IS FUCKING DEAD
+THE DRILL IS FUCKING DEAD
+%
+Despite everything, it's still you
+%
+It's a beautiful day outside. birds are singing, flowers are blooming... on days like these, kids like you... Should be burning in hell.
+    - sans (Undertale)
+%
+*Knowing the mouse might one day extract the cheese from the mystical crystal... It fills you with determination*
+%
+*Knowing the mouse might one day hack into the computerized safe and get the cheese... It fills you with determination*
+%
+*Knowing the mouse might one day find a way to heat up the spaghetti...It fills you with determination*
+%
+*Snow can always be broken down and rebuilt into something more useful. This simple fact fills you with determination*
+%
+*The thought that one day the dog will create the perfect snowdog fills you with determination*
+%
+*An ominous structure looms in the distance... You're filled with determination*
+%
+*Seeing such a strange laboratory in a place like this... You're filled with determination*
+%
+*The wooshing sound of steam and cogs... it fills you with determination*
+%
