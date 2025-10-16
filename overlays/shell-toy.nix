@@ -1,5 +1,5 @@
 final: prev: with prev; {
-  shell-toy = rustPlatform.buildRustPackage {
+  shell-toy = prev.pkgsStatic.rustPlatform.buildRustPackage {
     pname = "sh-toy";
     version = "0.7.3";
 
@@ -23,16 +23,17 @@ final: prev: with prev; {
 
     FORTUNE_FILE = "../source/dotfiles/fortunes.txt";
     COW_PATH = "../source/dotfiles/cowsay";
+    RUSTFLAGS = "-C target-feature=+crt-static";
 
     # The sed thing fixes an aarch64 compilation issue, removes things not used in my builds
     buildPhase = ''
       sed -i -e 's/"lzma"/#"lzma"/' -e 's/"xz"/#"xz"/' Cargo.toml
-      cargo build --verbose --release --features inline-fortune,inline-cowsay
+      cargo build --verbose --release --features inline-fortune,inline-cowsay --target x86_64-unknown-linux-musl
     '';
 
     installPhase = ''
       mkdir -p $out/bin
-      install -Dm755 target/release/sh-toy $out/bin
+      install -Dm755 target/x86_64-unknown-linux-musl/release/sh-toy $out/bin
     '';
   };
 }
