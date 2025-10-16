@@ -1,4 +1,13 @@
-final: prev: with prev; {
+final: prev:
+with prev;
+let
+  rustTargets = {
+    x86_64-linux = "x86_64-unknown-linux-musl";
+    aarch64-linux = "aarch64-unknown-linux-musl";
+  };
+in
+{
+
   shell-toy = prev.pkgsStatic.rustPlatform.buildRustPackage {
     pname = "sh-toy";
     version = "0.7.3";
@@ -28,12 +37,12 @@ final: prev: with prev; {
     # The sed thing fixes an aarch64 compilation issue, removes things not used in my builds
     buildPhase = ''
       sed -i -e 's/"lzma"/#"lzma"/' -e 's/"xz"/#"xz"/' Cargo.toml
-      cargo build --verbose --release --features inline-fortune,inline-cowsay --target x86_64-unknown-linux-musl
+      cargo build --verbose --release --features inline-fortune,inline-cowsay --target ${rustTargets.${system}}
     '';
 
     installPhase = ''
       mkdir -p $out/bin
-      install -Dm755 target/x86_64-unknown-linux-musl/release/sh-toy $out/bin
+      install -Dm755 target/${rustTargets.${system}}/release/sh-toy $out/bin
     '';
   };
 }
