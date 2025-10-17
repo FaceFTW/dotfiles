@@ -45,7 +45,7 @@ in
     "${user}"
     "@wheel"
   ];
-  nix.package = pkgs.nix;
+  nix.package = pkgs.lix;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
