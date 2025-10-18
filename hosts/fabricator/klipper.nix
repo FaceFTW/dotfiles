@@ -50,7 +50,7 @@
     serviceConfig.User = "klipper";
   };
 
-  systemd.service.moonraker-key-setup = {
+  systemd.services.moonraker-key-setup = {
     description = "Initializes pre-generated Moonraker API Key";
     wantedBy = [ "multi-user.target" ];
     before = [ "moonraker.service" ];
