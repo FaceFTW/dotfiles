@@ -47,7 +47,6 @@
           ]
           ++ definedOverlays;
         }
-        lix-module.nixosModules.default
         configModule
       ];
     in

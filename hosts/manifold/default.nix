@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    inputs.lix-module.nixosModules.default
     inputs.nixos-wsl.nixosModules.default
     ../../modules/core.nix
     ../../modules/kernel.nix
