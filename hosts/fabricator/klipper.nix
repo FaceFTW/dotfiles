@@ -26,7 +26,11 @@
   systemd.services.moonraker = {
     description = "Moonraker, an API web server for Klipper";
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ] ++ lib.optional config.services.klipper.enable "klipper.service";
+    after = [
+      "network.target"
+      "klipper.service"
+      "moonraker-key-setup.service"
+    ];
 
     # Moonraker really wants its own config to be writable...
     script = ''
@@ -44,7 +48,16 @@
     serviceConfig.PrivateTmp = true;
     serviceConfig.Group = "klipper";
     serviceConfig.User = "klipper";
+  };
 
+  systemd.service.moonraker-key-setup = {
+    description = "Initializes pre-generated Moonraker API Key";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "moonraker.service" ];
+    path = [ pkgs.moonrakerSopsApiKey ];
+
+    serviceConfig.Type = "oneshot";
+    serviceConfig.ExecStart = "${pkgs.moonrakerSopsApiKey}/bin/provisionMoonrakerKey";
   };
 
   ############################################
