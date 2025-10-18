@@ -28,6 +28,7 @@ final: prev: with prev; {
 
       APIKEY_SCRIPT=$(cat << EOF
       import sqlite3
+      import sys
       conn = sqlite3.connect("/var/lib/moonraker/database/moonraker-sql.db")
       with conn:
           conn.execute(
@@ -38,7 +39,7 @@ final: prev: with prev; {
       EOF
       )
 
-      ${pkgs.python3} -c "$APIKEY_SCRIPT" "$API_KEY"
+      ${pkgs.python3}/bin/python3 -c "$APIKEY_SCRIPT" "$API_KEY"
     '';
   };
 }
