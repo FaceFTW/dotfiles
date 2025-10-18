@@ -24,7 +24,7 @@ final: prev: with prev; {
         exit 0
       fi
 
-      API_KEY = $(cat /run/secrets/moonraker_key)
+      API_KEY=$(cat /run/secrets/moonraker_key)
 
       APIKEY_SCRIPT=$(cat << EOF
       import sqlite3
@@ -38,7 +38,7 @@ final: prev: with prev; {
       EOF
       )
 
-      ${pkgs.python3} -c "$APIKEY_SCRIPT" $API_KEY
+      ${pkgs.python3} -c "$APIKEY_SCRIPT" "$API_KEY"
     '';
   };
 }

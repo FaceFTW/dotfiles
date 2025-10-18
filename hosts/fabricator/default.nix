@@ -29,7 +29,8 @@ in
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
   sops.secrets.wifi_secrets = { };
-  sops.secrets.moonraker_key.owner = config.systemd.services.klipper.serviceConfig.User;
+  sops.secrets.moonraker_key.owner = "klipper";
+  sops.secrets.moonraker_key.group = "klipper";
 
   ############################################
   # User Settings
