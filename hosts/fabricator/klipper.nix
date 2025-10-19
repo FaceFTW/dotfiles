@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -67,45 +66,86 @@
     enable = true;
     user = "klipper";
     group = "klipper";
-    upstreams.mainsail-apiserver.servers."127.0.0.1:7125" = { };
-    virtualHosts."fabricator" = {
-      root = lib.mkForce "${pkgs.mainsail}/share/mainsail";
-      locations = {
-        "/" = {
-          index = "index.html";
-          tryFiles = "$uri $uri/ /index.html";
-        };
-        "/index.html".extraConfig = ''
-          add_header Cache-Control "no-store, no-cache, must-revalidate";
-        '';
-        "/websocket" = {
-          proxyWebsockets = true;
-          proxyPass = "http://mainsail-apiserver/websocket";
-        };
-        "~ ^/(printer|api|access|machine|server)/" = {
-          proxyWebsockets = true;
-          proxyPass = "http://mainsail-apiserver$request_uri";
-        };
-      };
-    };
+    # modules = [ pkgs.nginxModules.lua ];
+    # Manual config because I need to do some _wacky shit_
+    config = ''
+      pid /run/nginx/nginx.pid;
+      error_log stderr;
+      daemon off;
+      http {
+          # Load mime types and configure maximum size of the types hash tables.
+          include ${pkgs.mailcap}/etc/nginx/mime.types;
+          types_hash_max_size 2688;
+          include ${pkgs.nginx}/conf/fastcgi.conf;
+          include ${pkgs.nginx}/conf/uwsgi_params;
+          default_type application/octet-stream;
+          upstream mainsail-apiserver {
+              server 127.0.0.1:7125 ;
+          }
+          ssl_protocols TLSv1.2 TLSv1.3;
+          ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305;
+          # $connection_upgrade is used for websocket proxying
+          map $http_upgrade $connection_upgrade {
+              default upgrade;
+              '''      close;
+          }
+          client_max_body_size 10m;
+          server_tokens off;
+          server {
+              listen 0.0.0.0:80 ;
+              listen [::0]:80 ;
+              root ${pkgs.mainsail}/share/mainsail;
+              index index.html;
+              server_name fabricator;
+              location / {
+                  try_files $uri $uri/ /index.html;
+              }
+              location /index.html {
+                  add_header Cache-Control "no-store, no-cache, must-revalidate";
+              }
+              location /websocket {
+                  proxy_pass http://mainsail-apiserver/websocket;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection $connection_upgrade;
+                  proxy_set_header Host $http_host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_read_timeout 86400;
+              }
+              location ~ ^/(printer|api|access|machine|server)/ {
+                  proxy_pass http://mainsail-apiserver$request_uri;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection $connection_upgrade;
+                  proxy_set_header Host $http_host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              }
+          }
+      }
+    '';
+
+    # upstreams.mainsail-apiserver.servers."127.0.0.1:7125" = { };
+    # virtualHosts."fabricator" = {
+    #   root = lib.mkForce "${pkgs.mainsail}/share/mainsail";
+    #   locations = {
+    #     "/" = {
+    #       index = "index.html";
+    #       tryFiles = "$uri $uri/ /index.html";
+    #     };
+    #     "/index.html".extraConfig = ''
+    #       add_header Cache-Control "no-store, no-cache, must-revalidate";
+    #     '';
+    #     "/websocket" = {
+    #       proxyWebsockets = true;
+    #       proxyPass = "http://mainsail-apiserver/websocket";
+    #     };
+    #     "~ ^/(printer|api|access|machine|server)/" = {
+    #       proxyWebsockets = true;
+    #       proxyPass = "http://mainsail-apiserver$request_uri";
+    #     };
+    #   };
+    # };
   };
-
-  # services.moonraker.enable = true;
-  # services.moonraker.group = "klipper";
-  # services.moonraker.user = "klipper";
-  # services.moonraker.analysis.enable = true;
-  # services.moonraker.settings.authorization.trustedClients = [
-  #   "10.0.0.0/8"
-  #   "127.0.0.0/8"
-  #   "172.16.0.0/12"
-  #   "192.168.0.0/16"
-  #   "FE80::/10"
-  #   "::1/128"
-  # ];
-  # services.moonraker.settings.authorization.cors_domains = [
-  #   "*://*.local"
-  #   "*://*.lan"
-  # ];
-
-  # services.mainsail.enable = true;
 }
