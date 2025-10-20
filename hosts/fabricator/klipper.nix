@@ -69,15 +69,17 @@
     # modules = [ pkgs.nginxModules.lua ];
     # Manual config because I need to do some _wacky shit_
     config = ''
-    pid /run/nginx/nginx.pid;
+    # pid /run/nginx/nginx.pid;
     error_log stderr;
-    daemon off;
+    # daemon off;
+    events{
+    }
     http {
         # Load mime types and configure maximum size of the types hash tables.
-        include ${pkgs.nginx}/conf/mime.types;
+        # include ${pkgs.nginx}/conf/mime.types;
         types_hash_max_size 2688;
-        include ${pkgs.nginx}/conf/fastcgi.conf;
-        include ${pkgs.nginx}/conf/uwsgi_params;
+        # include ${pkgs.nginx}/conf/fastcgi.conf;
+        # include ${pkgs.nginx}/conf/uwsgi_params;
         default_type application/octet-stream;
         upstream mainsail-apiserver {
             server 127.0.0.1:7125 ;
