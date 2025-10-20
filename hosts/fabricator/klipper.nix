@@ -76,7 +76,7 @@
     }
     http {
         # Load mime types and configure maximum size of the types hash tables.
-        # include ${pkgs.nginx}/conf/mime.types;
+        include ${pkgs.nginx}/conf/mime.types;
         types_hash_max_size 2688;
         # include ${pkgs.nginx}/conf/fastcgi.conf;
         # include ${pkgs.nginx}/conf/uwsgi_params;
