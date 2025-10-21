@@ -4,6 +4,9 @@
   ...
 }:
 {
+
+  environment.systemPackages = [ pkgs.klipperscreen ];
+
   services.klipper.enable = true;
   services.klipper.firmwares.fabricator.enable = true;
   services.klipper.firmwares.fabricator.configFile = ./klipper/Kconfig;
@@ -69,21 +72,13 @@
     # modules = [ pkgs.nginxModules.lua ];
     # Manual config because I need to do some _wacky shit_
     config = ''
-    # pid /run/nginx/nginx.pid;
     error_log stderr;
-    # daemon off;
-    events{
-    }
+    events { }
     http {
         # Load mime types and configure maximum size of the types hash tables.
         include ${pkgs.nginx}/conf/mime.types;
         types_hash_max_size 2688;
-        # include ${pkgs.nginx}/conf/fastcgi.conf;
-        # include ${pkgs.nginx}/conf/uwsgi_params;
         default_type application/octet-stream;
-        upstream mainsail-apiserver {
-            server 127.0.0.1:7125 ;
-        }
         ssl_protocols TLSv1.2 TLSv1.3;
         ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305;
         # $connection_upgrade is used for websocket proxying
@@ -93,6 +88,8 @@
         }
         client_max_body_size 10m;
         server_tokens off;
+
+        upstream mainsail-apiserver { server 127.0.0.1:7125 ;}
         server {
             listen 0.0.0.0:80 ;
             listen [::0]:80 ;
@@ -128,26 +125,5 @@
     }
     '';
 
-    # upstreams.mainsail-apiserver.servers."127.0.0.1:7125" = { };
-    # virtualHosts."fabricator" = {
-    #   root = lib.mkForce "${pkgs.mainsail}/share/mainsail";
-    #   locations = {
-    #     "/" = {
-    #       index = "index.html";
-    #       tryFiles = "$uri $uri/ /index.html";
-    #     };
-    #     "/index.html".extraConfig = ''
-    #       add_header Cache-Control "no-store, no-cache, must-revalidate";
-    #     '';
-    #     "/websocket" = {
-    #       proxyWebsockets = true;
-    #       proxyPass = "http://mainsail-apiserver/websocket";
-    #     };
-    #     "~ ^/(printer|api|access|machine|server)/" = {
-    #       proxyWebsockets = true;
-    #       proxyPass = "http://mainsail-apiserver$request_uri";
-    #     };
-    #   };
-    # };
   };
 }
