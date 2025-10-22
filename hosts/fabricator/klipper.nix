@@ -63,6 +63,22 @@
   };
 
   ############################################
+  # Webcam Daemon
+  ############################################
+  systemd.services.webcamd = {
+    enable = true;
+    description = "Webcam Stream Daemon";
+    after = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.ExecStart = ''
+      ${pkgs.libcamera}/bin/libcamerify ${pkgs.ustreamer}/bin/ustreamer --device=/dev/video0 --allow-origin=http://localhost:* --host=0.0.0.0 --port 5123
+    '';
+
+    serviceConfig.User = "klipper";
+    serviceConfig.Group = "klipper";
+  };
+
+  ############################################
   # Mainsail + Nginx Config
   ############################################
   services.nginx = {
@@ -72,57 +88,63 @@
     # modules = [ pkgs.nginxModules.lua ];
     # Manual config because I need to do some _wacky shit_
     config = ''
-    error_log stderr;
-    events { }
-    http {
-        # Load mime types and configure maximum size of the types hash tables.
-        include ${pkgs.nginx}/conf/mime.types;
-        types_hash_max_size 2688;
-        default_type application/octet-stream;
-        ssl_protocols TLSv1.2 TLSv1.3;
-        ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305;
-        # $connection_upgrade is used for websocket proxying
-        map $http_upgrade $connection_upgrade {
-            default upgrade;
-            '''      close;
-        }
-        client_max_body_size 10m;
-        server_tokens off;
+      error_log stderr;
+      events { }
+      http {
+          # Load mime types and configure maximum size of the types hash tables.
+          include ${pkgs.nginx}/conf/mime.types;
+          types_hash_max_size 2688;
+          default_type application/octet-stream;
+          ssl_protocols TLSv1.2 TLSv1.3;
+          ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305;
+          # $connection_upgrade is used for websocket proxying
+          map $http_upgrade $connection_upgrade {
+              default upgrade;
+              '''      close;
+          }
+          client_max_body_size 10m;
+          server_tokens off;
 
-        upstream mainsail-apiserver { server 127.0.0.1:7125 ;}
-        server {
-            listen 0.0.0.0:80 ;
-            listen [::0]:80 ;
-            root ${pkgs.mainsail}/share/mainsail;
-            index index.html;
-            server_name fabricator;
-            location / {
-                try_files $uri $uri/ /index.html;
-            }
-            location /index.html {
-                add_header Cache-Control "no-store, no-cache, must-revalidate";
-            }
-            location /websocket {
-                proxy_pass http://mainsail-apiserver/websocket;
-                proxy_http_version 1.1;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection $connection_upgrade;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_read_timeout 86400;
-            }
-            location ~ ^/(printer|api|access|machine|server)/ {
-                proxy_pass http://mainsail-apiserver$request_uri;
-                proxy_http_version 1.1;
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header Connection $connection_upgrade;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            }
-        }
-    }
+          upstream mainsail-apiserver {
+              server 127.0.0.1:7125 ;
+          }
+          upstream webcam {
+              server 127.0.0.1:5123 ;
+          }
+
+          server {
+              listen 0.0.0.0:80 ;
+              listen [::0]:80 ;
+              root ${pkgs.mainsail}/share/mainsail;
+              index index.html;
+              server_name fabricator;
+              location / {
+                  try_files $uri $uri/ /index.html;
+              }
+              location /index.html {
+                  add_header Cache-Control "no-store, no-cache, must-revalidate";
+              }
+              location /websocket {
+                  proxy_pass http://mainsail-apiserver/websocket;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection $connection_upgrade;
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_read_timeout 86400;
+              }
+              location ~ ^/(printer|api|access|machine|server)/ {
+                  proxy_pass http://mainsail-apiserver$request_uri;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection $connection_upgrade;
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              }
+          }
+      }
     '';
 
   };
