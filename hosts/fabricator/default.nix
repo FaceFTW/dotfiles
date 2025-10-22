@@ -117,6 +117,7 @@ in
   networking.wireless.enable = true;
   networking.wireless.secretsFile = config.sops.secrets.wifi_secrets.path;
   networking.wireless.networks."Orbi89".pskRaw = "ext:home-psk";
+  networking.useDHCP = false;
   systemd.network.enable = true;
   services.avahi.enable = true;
 

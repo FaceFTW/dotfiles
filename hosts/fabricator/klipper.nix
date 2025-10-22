@@ -70,6 +70,7 @@
     description = "Webcam Stream Daemon";
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
+    requires = [ "network-online.target" ];
     serviceConfig.ExecStart = ''
       ${pkgs.libcamera}/bin/libcamerify ${pkgs.ustreamer}/bin/ustreamer --device=/dev/video0 --allow-origin=http://localhost:* --host=0.0.0.0 --port 5123
     '';
