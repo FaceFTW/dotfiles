@@ -4,7 +4,6 @@
   pkgs,
   ...
 }:
-
 let
   user = "face";
 in
@@ -17,8 +16,6 @@ in
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     ../../modules/raspi
-    ./services.nix
-    ./udev.nix
     ./klipper.nix
   ];
 
@@ -30,8 +27,6 @@ in
   sops.secrets.user_passwd.neededForUsers = true;
   sops.secrets.wifi_secrets = { };
   sops.secrets.moonraker_key = { };
-  # sops.secrets.moonraker_key.owner = "klipper";
-  # sops.secrets.moonraker_key.group = "klipper";
 
   ############################################
   # User Settings
@@ -122,6 +117,7 @@ in
   networking.wireless.enable = true;
   networking.wireless.secretsFile = config.sops.secrets.wifi_secrets.path;
   networking.wireless.networks."Orbi89".pskRaw = "ext:home-psk";
+  systemd.network.enable = true;
   services.avahi.enable = true;
 
   ############################################
@@ -134,6 +130,14 @@ in
     }
   ];
   time.timeZone = "America/New_York";
+
+  services.udev.enable = true;
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{name}=="ADS7846*", SYMLINK+="input/touchscreen"
+  '';
+  # If I ever want to enable SPI
+  # SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
 
   ############################################
   # Global Packages
