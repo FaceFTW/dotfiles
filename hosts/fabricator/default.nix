@@ -86,11 +86,11 @@ in
   hardware.deviceTree.overlays = [
     {
       name = "spi";
-      dtboFile = ./devicetree/spi0-0cs.dtbo;
+      dtsFile = ./devicetree/spi0-0cs-overlay.dts;
     }
     {
       name = "ov5647";
-      dtboFile = ./devicetree/imx708.dtbo;
+      dtsFile = ./devicetree/imx708-overlay.dts;
     }
   ];
 
