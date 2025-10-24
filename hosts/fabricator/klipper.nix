@@ -109,7 +109,7 @@
           upstream mainsail-apiserver {
               server 127.0.0.1:7125 ;
           }
-          upstream webcam {
+          upstream webcam-server {
               server 127.0.0.1:5123 ;
           }
 
@@ -137,6 +137,15 @@
               }
               location ~ ^/(printer|api|access|machine|server)/ {
                   proxy_pass http://mainsail-apiserver$request_uri;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection $connection_upgrade;
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              }
+              location ~ ^/(webcam)/ {
+                  proxy_pass http://webcam-server$request_uri;
                   proxy_http_version 1.1;
                   proxy_set_header Upgrade $http_upgrade;
                   proxy_set_header Connection $connection_upgrade;

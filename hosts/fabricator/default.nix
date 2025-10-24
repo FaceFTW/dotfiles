@@ -112,6 +112,7 @@ in
   networking.firewall.allowedTCPPorts = [
     22
     80
+    5123
     7125
   ];
   networking.wireless.enable = true;
