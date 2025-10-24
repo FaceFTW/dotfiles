@@ -88,6 +88,10 @@ in
       name = "spi";
       dtboFile = ./devicetree/spi0-0cs.dtbo;
     }
+    {
+      name = "ov5647";
+      dtboFile = ./devicetree/imx708.dtbo;
+    }
   ];
 
   ############################################
