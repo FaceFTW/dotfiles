@@ -89,8 +89,12 @@ in
       dtsFile = ./devicetree/spi0-0cs-overlay.dts;
     }
     {
-      name = "ov5647";
+      name = "imx708";
       dtsFile = ./devicetree/imx708-overlay.dts;
+    }
+    {
+      name = "ov5647";
+      dtsFile = ./devicetree/ov5647-overlay.dts;
     }
   ];
 
@@ -152,12 +156,13 @@ in
   time.timeZone = "America/New_York";
 
   services.udev.enable = true;
-
   services.udev.extraRules = ''
     SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{name}=="ADS7846*", SYMLINK+="input/touchscreen"
+    SUBSYSTEM=="video4linux", KERNEL=="video[01]", GROUP="camera", MODE="660"
   '';
   # If I ever want to enable SPI
   # SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
+  users.groups.camera = { };
 
   ############################################
   # Global Packages
