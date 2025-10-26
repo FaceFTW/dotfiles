@@ -6,7 +6,7 @@
 #include <dt-bindings/gpio/gpio.h>
 
 /{
-	compatible = "brcm,bcm2835";
+	compatible = "brcm,bcm2711";
 
 	fragment@0 {
 		target = <&i2c0if>;
@@ -111,7 +111,7 @@
 	fragment@102 {
 		target = <&csi1>;
 		__dormant__ {
-			compatible = "brcm,bcm2835-unicam-legacy";
+			compatible = "brcm,bcm2711-unicam-legacy";
 		};
 	};
 
