@@ -77,6 +77,7 @@
 
     serviceConfig.User = "klipper";
     serviceConfig.Group = "klipper";
+    serviceConfig.SupplementaryGroups = [ "camera" ];
   };
 
   ############################################
