@@ -20,15 +20,6 @@ in
   ];
 
   ############################################
-  # SOPS Settings
-  ############################################
-  sops.defaultSopsFile = ./secrets.yaml;
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.secrets.user_passwd.neededForUsers = true;
-  sops.secrets.wifi_secrets = { };
-  sops.secrets.moonraker_key = { };
-
-  ############################################
   # User Settings
   ############################################
   home-manager.useGlobalPkgs = true;
@@ -51,10 +42,27 @@ in
     packages = [ ];
   };
 
+  # The following are system users/groups defined for various services
+  # Unless they are defined elsewhere, in which here I document it for tracking
+  #
+  users.groups.camera = { }; # For accessing the camera via udev
+  users.groups.wifi = { }; # For ensuring wpa_supplicant can access the secrets reasonably
+  # users.users.klipper = {}; # Klipper system user for Klipper/Moonraker/Nginx
+
+  ############################################
+  # SOPS Settings
+  ############################################
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets.user_passwd.neededForUsers = true;
+  sops.secrets.wifi_secrets = {
+    group = config.users.users.systemd-network.group;
+  };
+  sops.secrets.moonraker_key = { };
+
   ############################################
   # Nix Settings
   ############################################
-
   nix.nixPath = [
     "nixos-config=/home/${user}/.config/dotfiles:/etc/nixos"
     "nixpkgs=flake:nixpkgs"
@@ -162,7 +170,6 @@ in
   '';
   # If I ever want to enable SPI
   # SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
-  users.groups.camera = { };
 
   ############################################
   # Global Packages
