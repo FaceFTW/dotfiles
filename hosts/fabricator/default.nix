@@ -86,7 +86,8 @@ in
   ############################################
   boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
   boot.kernelModules = [ ];
-  boot.blacklistedKernelModules = [ "dw_hdmi" ];
+  boot.blacklistedKernelModules = [ "dw_hdmi" "bluetooth" ];
+  hardware.bluetooth.enable = false;
 
   hardware.raspberry-pi."4".i2c1.enable = true;
   hardware.raspberry-pi."4".fkms-3d.enable = true;
