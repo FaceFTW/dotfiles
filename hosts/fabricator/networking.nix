@@ -1,7 +1,5 @@
 {
   config,
-  pkgs,
-  lib,
   ...
 }:
 {
@@ -18,19 +16,26 @@
   networking.wireless.networks."Orbi89".pskRaw = "ext:home-psk";
   networking.useDHCP = false;
 
+  services.resolved.enable = true;
+  services.resolved.extraConfig = ''
+    MulticastDNS=yes
+  '';
+  services.resolved.llmnr = "resolve";
+
   systemd.network.enable = true;
   systemd.network.networks."10-end0" = {
     matchConfig.Name = "end0";
     networkConfig.DHCP = "ipv4";
     networkConfig.IPv6AcceptRA = true;
+    networkConfig.MulticastDNS = "yes";
     # linkConfig.RequiredForOnline = "routable";  - I Don't Think U
   };
   systemd.network.networks."10-wlan0" = {
     matchConfig.Name = "wlan0";
     networkConfig.DHCP = "ipv4";
     networkConfig.IPv6AcceptRA = true;
+    networkConfig.MulticastDNS = "yes";
     linkConfig.RequiredForOnline = "routable";
   };
 
-  services.avahi.enable = true;
 }
