@@ -165,6 +165,15 @@
           }
       }
     '';
-
   };
+
+  services.logrotate.settings.nginx = {
+      files = [ "/var/log/nginx/*.log" ];
+      frequency = "weekly";
+      su = "klipper klipper";
+      rotate = 26;
+      compress = true;
+      delaycompress = true;
+      postrotate = "[ ! -f /var/run/nginx/nginx.pid ] || kill -USR1 `cat /var/run/nginx/nginx.pid`";
+    };
 }
