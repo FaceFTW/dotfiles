@@ -4,10 +4,18 @@
   ...
 }:
 {
+  users.users.klipper = {
+    isSystemUser = true;
+    group = "klipper";
+    createHome = false;
+  };
+  users.groups.klipper = { };
 
   environment.systemPackages = [ pkgs.klipperscreen ];
 
   services.klipper.enable = true;
+  services.klipper.user = "klipper";
+  services.klipper.group = "klipper";
   services.klipper.firmwares.fabricator.enable = true;
   services.klipper.firmwares.fabricator.configFile = ./klipper/Kconfig;
   services.klipper.firmwares.fabricator.serial =
