@@ -36,6 +36,7 @@ in
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuQw4U+Wam1gjuEXyH/cObZfnfYiA/LPF0kjQPFTz9x face@manifold-wsl"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
     ];
     # initialPassword = ""; #For bootstrapping!
@@ -86,7 +87,10 @@ in
   ############################################
   boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
   boot.kernelModules = [ ];
-  boot.blacklistedKernelModules = [ "dw_hdmi" "bluetooth" ];
+  boot.blacklistedKernelModules = [
+    "dw_hdmi"
+    "bluetooth"
+  ];
   hardware.bluetooth.enable = false;
 
   hardware.raspberry-pi."4".i2c1.enable = true;
