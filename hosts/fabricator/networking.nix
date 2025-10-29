@@ -28,7 +28,7 @@
     networkConfig.DHCP = "ipv4";
     networkConfig.IPv6AcceptRA = true;
     networkConfig.MulticastDNS = "yes";
-    # linkConfig.RequiredForOnline = "routable";  - I Don't Think U
+    linkConfig.RequiredForOnline = false;
   };
   systemd.network.networks."10-wlan0" = {
     matchConfig.Name = "wlan0";
