@@ -90,6 +90,7 @@ in
   boot.blacklistedKernelModules = [
     "dw_hdmi"
     "bluetooth"
+	"btusb"
   ];
   hardware.bluetooth.enable = false;
 
