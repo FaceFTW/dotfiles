@@ -103,7 +103,5 @@ in
 
   environment.systemPackages = [ ];
 
-  environment.variables.FUNCNEST = 100000; # Fixes a potential issue with clear
-
   system.stateVersion = "25.05"; # Don't change this
 }
