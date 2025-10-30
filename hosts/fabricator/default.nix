@@ -107,10 +107,10 @@ in
       name = "imx708";
       dtsFile = ./devicetree/imx708-overlay.dts;
     }
-    {
-      name = "ov5647";
-      dtsFile = ./devicetree/ov5647-overlay.dts;
-    }
+    # {
+    #   name = "ov5647";
+    #   dtsFile = ./devicetree/ov5647-overlay.dts;
+    # }
   ];
 
   ############################################

@@ -79,9 +79,20 @@
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
     requires = [ "network-online.target" ];
-    serviceConfig.ExecStart = ''
-      ${pkgs.libcamera}/bin/libcamerify ${pkgs.ustreamer}/bin/ustreamer --device=/dev/video0 --allow-origin=http://localhost:* --host=0.0.0.0 --port 5123
-    '';
+    serviceConfig.ExecStart = (
+      builtins.foldl' (acc: e: acc + " " + e) "" [
+        "${pkgs.libcamera}/bin/libcamerify"
+        "${pkgs.ustreamer}/bin/ustreamer"
+        "--device=/dev/video0"
+        "--format=uyvy"
+        "--encoder=M2M-VIDEO"
+        "--resolution=1280x720"
+        "--allow-origin=http://localhost:*"
+        "--host=0.0.0.0"
+        "--port=5123"
+        "--verbose"
+      ]
+    );
 
     serviceConfig.User = "klipper";
     serviceConfig.Group = "klipper";
@@ -168,12 +179,12 @@
   };
 
   services.logrotate.settings.nginx = {
-      files = [ "/var/log/nginx/*.log" ];
-      frequency = "weekly";
-      su = "klipper klipper";
-      rotate = 26;
-      compress = true;
-      delaycompress = true;
-      postrotate = "[ ! -f /var/run/nginx/nginx.pid ] || kill -USR1 `cat /var/run/nginx/nginx.pid`";
-    };
+    files = [ "/var/log/nginx/*.log" ];
+    frequency = "weekly";
+    su = "klipper klipper";
+    rotate = 26;
+    compress = true;
+    delaycompress = true;
+    postrotate = "[ ! -f /var/run/nginx/nginx.pid ] || kill -USR1 `cat /var/run/nginx/nginx.pid`";
+  };
 }
