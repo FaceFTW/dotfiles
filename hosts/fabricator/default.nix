@@ -159,7 +159,5 @@ in
     raspberrypi-eeprom
   ];
 
-  environment.variables.FUNCNEST = 100000; # Fixes a potential issue with clear
-
   system.stateVersion = "25.05"; # Don't change this
 }

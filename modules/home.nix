@@ -11,7 +11,7 @@
 
   zsh.shellAliases.la = "ls -a";
   zsh.shellAliases.ll = "ls -al";
-  zsh.shellAliases.clear = "clear-scrollback-buffer; sh-toy";
+  zsh.shellAliases.clear = "reset; sh-toy";
   zsh.shellAliases.search = "rg -p --glob '!node_modules/*'  $@";
   zsh.shellAliases.zshconfig = "vim ~/.zshrc";
   zsh.shellAliases.doafunny = "sh-toy";
@@ -64,12 +64,6 @@
         fi
 
         export PATH=$HOME/.local/share/bin:$PATH
-
-        # https://unix.stackexchange.com/questions/517025/zsh-clear-scrollback-buffer
-        function clear-scrollback-buffer {
-          clear && printf '\e[3J'
-          zle && zle .reset-prompt && zle -R
-        }
       '';
 
       runAfter = lib.mkOrder 1500 "sh-toy";
