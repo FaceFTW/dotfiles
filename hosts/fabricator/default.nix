@@ -90,7 +90,7 @@ in
   boot.blacklistedKernelModules = [
     "dw_hdmi"
     "bluetooth"
-	"btusb"
+    "btusb"
   ];
   hardware.bluetooth.enable = false;
 
@@ -143,9 +143,11 @@ in
   services.udev.extraRules = ''
     SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{name}=="ADS7846*", SYMLINK+="input/touchscreen"
     SUBSYSTEM=="video4linux", KERNEL=="video[01]", GROUP="camera", MODE="660"
+    # https://raspberrypi.stackexchange.com/a/141107
+    SUBSYSTEM=="dma_heap", GROUP="video", MODE="0660"
+    # If I ever want to enable SPI
+    # SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
   '';
-  # If I ever want to enable SPI
-  # SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
 
   ############################################
   # Global Packages
