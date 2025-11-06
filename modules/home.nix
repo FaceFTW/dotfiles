@@ -87,15 +87,15 @@
   # Git Config
   ############################################
   git.enable = true;
-  git.userName = "Alex Westerman";
-  git.userEmail = "alex@faceftw.dev";
   git.lfs.enable = true;
-  git.extraConfig.init.defaultBranch = "main";
-  git.extraConfig.core.editor = "vim";
-  git.extraConfig.core.autocrlf = "input";
-  git.extraConfig.commit.gpgsign = true;
-  git.extraConfig.pull.rebase = true;
-  git.extraConfig.rebase.autoStash = true;
+  git.settings.user.name = "Alex Westerman";
+  git.settings.user.email = "alex@faceftw.dev";
+  git.settings.init.defaultBranch = "main";
+  git.settings.core.editor = "vim";
+  git.settings.core.autocrlf = "input";
+  git.settings.commit.gpgsign = true;
+  git.settings.pull.rebase = true;
+  git.settings.rebase.autoStash = true;
   git.signing.key = "CB9CCE0E558306B21891063A9EB573C02E056DA8";
   git.signing.signer = "${pkgs.gnupg}/bin/gpg --default-key 2e056da8";
   git.ignores = [
