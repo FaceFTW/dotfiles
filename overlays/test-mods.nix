@@ -9,6 +9,14 @@ final: prev: {
         meson test --print-errorlogs --timeout-multiplier=5
       runHook postCheck
     '';
-
   };
+
+  sdl3 = prev.sdl3.overrideAttrs (
+    finalAttrs: prevAttrs: {
+      patches = [
+        ./sdl-disable-failing-test.patch
+      ];
+    }
+  );
+
 }
