@@ -35,20 +35,33 @@
       ...
     }@inputs:
     let
-      definedOverlays = builtins.map (n: import (./overlays + ("/" + n))) (
+      globalOverlays = builtins.map (n: import (./overlays + ("/" + n))) (
         (builtins.filter (n: builtins.match ".*\\.nix" n != null)) (
           builtins.attrNames (builtins.readDir ./overlays)
         )
       );
+      # Assumes machine path
+      specificOverlays =
+        machinePath:
+        if builtins.pathExists "${(builtins.dirOf machinePath)}/overlays" then
+          (builtins.map (n: import ("${(builtins.dirOf machinePath)}/overlays" + ("/" + n))) (
+            (builtins.filter (n: builtins.match ".*\\.nix" n != null)) (
+              builtins.attrNames (builtins.readDir ./overlays)
+            )
+          ))
+        else
+          [ ];
       withOverlays = configModule: [
         {
           nixpkgs.overlays = [
             fenix.overlays.default
           ]
-          ++ definedOverlays;
+          ++ globalOverlays
+          ++ (specificOverlays configModule);
         }
         configModule
       ];
+
     in
     rec {
       ############################################
