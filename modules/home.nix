@@ -23,13 +23,11 @@
   zsh.shellAliases.rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
   zsh.shellAliases.build-manifold-image = "sudo nix run --print-build-logs ~/.config/dotfiles#nixosConfigurations.manifold.config.system.build.tarballBuilder";
   zsh.shellAliases.rebuild-manifold = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#manifold";
-  zsh.shellAliases.rebuild-manifold-trace = "sudo nixos-rebuild switch --print-build-logs --show-trace --flake ~/.config/dotfiles#manifold";
   zsh.shellAliases.build-portal-image = "sudo nix run --print-build-logs .#nixosConfigurations.portal.config.system.build.tarballBuilder";
   zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#portal";
-  zsh.shellAliases.rebuild-portal-trace = "sudo nixos-rebuild switch --print-build-logs --show-trace --flake ~/.config/dotfiles#portal";
   zsh.shellAliases.build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
   zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#fabricator";
-  zsh.shellAliases.rebuild-fabricator-trace = "sudo nixos-rebuild switch --print-build-logs --show-trace --flake ~/.config/dotfiles#fabricator";
+  zsh.shellAliases.rebuild-fabricator-remote = "nixos-rebuild --print-build-logs --max-jobs 8  --flake .#fabricator --sudo --ask-sudo-password --keep-going --target-host face@";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;
