@@ -14,11 +14,12 @@ I daily-drive Windows for both personal/work use, but I use WSL on all my machin
 
 ### NixOS System List
 
-| Host Name    | Hardware                                                                                           | Description                                                    |
-|--------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| `manifold`   | WSL Host :window: <br/> <ul><li>AMD Ryzen R7 7700X</li><li>Nvidia GeForce RTX 4070 SUPER</li></ul> | Main System                                                    |
-| `portal`     | WSL Host :window:<br/> Microsoft Surface Laptop Studio                                             | On-the-go System (not used as often)<br/> ***IN DEVELOPMENT*** |
-| `fabricator` | Raspberry Pi 4                                                                                     | Octoprint Server <br/> ***IN DEVELOPMENT***                    |
+| Host Name    | Hardware                                                                                           | Description                                 |
+|--------------|----------------------------------------------------------------------------------------------------|---------------------------------------------|
+| `manifold`   | WSL Host :window: <br/> <ul><li>AMD Ryzen R7 7700X</li><li>Nvidia GeForce RTX 4070 SUPER</li></ul> | Main System                                 |
+| `portal`     | WSL Host :window:<br/> Microsoft Surface Laptop Studio                                             | On-the-go System (not used as often)<br/>   |
+| `fabricator` | Raspberry Pi 4                                                                                     | Octoprint Server <br/> ***IN DEVELOPMENT*** |
+| `archiver`   | Raspberry Pi 4                                                                                     | Makeshift NAS    <br/> ***IN DEVELOPMENT*** |
 
 ### Configurations Maintained
 

@@ -99,5 +99,16 @@
       };
       images.fabricator = nixosConfigurations.fabricator.config.system.build.sdImage;
 
+      ############################################
+      # archiver
+      ############################################
+      nixosConfigurations.archiver = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = withOverlays ./hosts/archiver/default.nix;
+      };
+      images.archiver = nixosConfigurations.fabricator.config.system.build.sdImage;
     };
 }
