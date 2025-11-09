@@ -28,6 +28,12 @@ depends = []
 "bin/executable_sh-toy.exe" = { target = "~/.local/bin/sh-toy.exe", type = "symbolic" }
 "dotfiles/profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
 
+[cs2]
+depends = []
+
+[cs2.files]
+# Seems like CS2 doesn't follow symlinks :(
+"dotfiles/cs2_autoexec.cfg" = { target = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg\\autoexec.cfg", type = "template" }
 
 [linux]
 depends = []
