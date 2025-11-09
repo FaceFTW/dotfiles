@@ -20,3 +20,12 @@ creation_rules:
       # - *key_lockpick
       - age:
           - *host_manifold
+  - path_regex: hosts/archiver/[^/]+\.(yaml|json|env|ini)$
+    shamir_threshold: 2
+    key_groups:
+      # - pgp:
+      # - *key_lockpick
+      - age:
+          # - *host_fabricator
+          - *user_face_manifold
+          # - *host_manifold # For config changes off machine
