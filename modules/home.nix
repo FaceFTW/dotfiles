@@ -28,6 +28,9 @@
   zsh.shellAliases.build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
   zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#fabricator";
   zsh.shellAliases.rebuild-fabricator-remote = "(){nixos-rebuild switch --print-build-logs --max-jobs 8 --cores 8 --flake .#fabricator --sudo --ask-sudo-password --keep-going --target-host \"face@$1\"}";
+  zsh.shellAliases.build-archiver-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.archiver";
+  zsh.shellAliases.rebuild-archiver = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#archiver";
+  zsh.shellAliases.rebuild-archiver-remote = "(){nixos-rebuild switch --print-build-logs --max-jobs 8 --cores 8 --flake .#archiver --sudo --ask-sudo-password --keep-going --target-host \"face@$1\"}";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;

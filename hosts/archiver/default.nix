@@ -87,10 +87,6 @@ in
     "bluetooth"
     "btusb"
   ];
-  hardware.bluetooth.enable = false;
-
-  hardware.raspberry-pi."4".i2c1.enable = false;
-  hardware.raspberry-pi."4".fkms-3d.enable = false;
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
   hardware.deviceTree.enable = true;
   hardware.deviceTree.overlays = [ ];
@@ -105,10 +101,6 @@ in
   ############################################
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
-
-  services.speechd.enable = false;
-  services.printing.enable = false;
-  services.getty.autologinUser = "face";
 
   ############################################
   # Misc System Configuration

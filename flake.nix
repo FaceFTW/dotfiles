@@ -109,6 +109,6 @@
         };
         modules = withOverlays ./hosts/archiver/default.nix;
       };
-      images.archiver = nixosConfigurations.fabricator.config.system.build.sdImage;
+      images.archiver = nixosConfigurations.archiver.config.system.build.sdImage;
     };
 }

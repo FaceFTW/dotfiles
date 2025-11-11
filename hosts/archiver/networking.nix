@@ -22,14 +22,14 @@
     networkConfig.DHCP = "ipv4";
     networkConfig.IPv6AcceptRA = true;
     networkConfig.MulticastDNS = "yes";
-    linkConfig.RequiredForOnline = true;
+    linkConfig.RequiredForOnline = false;
   };
-  # systemd.network.networks."10-wlan0" = {
-  #   matchConfig.Name = "wlan0";
-  #   networkConfig.DHCP = "ipv4";
-  #   networkConfig.IPv6AcceptRA = true;
-  #   networkConfig.MulticastDNS = "yes";
-  #   linkConfig.RequiredForOnline = "routable";
-  # };
+  systemd.network.networks."10-wlan0" = {
+    matchConfig.Name = "wlan0";
+    networkConfig.DHCP = "ipv4";
+    networkConfig.IPv6AcceptRA = true;
+    networkConfig.MulticastDNS = "yes";
+    linkConfig.RequiredForOnline = "routable";
+  };
 
 }
