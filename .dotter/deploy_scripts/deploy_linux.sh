@@ -37,5 +37,6 @@ mv "bat-$BAT_VERSION-x86_64-unknown-linux-gnu/autocomplete/bat.zsh" ~/.local/bin
 cd .. || exit
 
 # Vim is installed by package manager
+# fastfetch is installed by package manager
 
 rm -rf tmp
