@@ -8,6 +8,7 @@
     isSystemUser = true;
     group = "klipper";
     createHome = false;
+    extraGroups = [ "video" ];
   };
   users.groups.klipper = { };
 
