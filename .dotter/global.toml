@@ -10,6 +10,7 @@ depends = []
 "dotfiles/cowsay" = "~/.config/cowsay"
 "dotfiles/fortunes.txt" = "~/.config/fortunes.txt"
 "dotfiles/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
+"dotfiles/fastfetch.jsonc" = {target = "~/.config/fastfetch/config.jsonc", type="symbolic"}
 
 
 [default.variables]

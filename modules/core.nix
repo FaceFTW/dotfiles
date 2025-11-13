@@ -39,4 +39,9 @@
       ];
     }
   ];
+
+  ############################################
+  # Environment Variables
+  ############################################
+  environment.sessionVariables.EDITOR = "vim";
 }

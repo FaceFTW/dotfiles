@@ -111,4 +111,12 @@
   ssh.enableDefaultConfig = false;
   ssh.extraConfig = ''AddKeysToAgent yes'';
   ssh.matchBlocks."*" = { };
+
+  ############################################
+  # fastfetch Config
+  ############################################
+  fastfetch.enable = true;
+  fastfetch.settings = builtins.fromJSON (
+    builtins.unsafeDiscardStringContext (builtins.readFile "${./../dotfiles/fastfetch.jsonc}")
+  );
 }
