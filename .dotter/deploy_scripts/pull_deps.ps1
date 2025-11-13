@@ -4,6 +4,7 @@ $oh_my_posh_version = "v26.17.2"
 $vim_w32_version = "9.1.1591"
 $bat_version = "v0.25.0"
 $npiperelay_version = "v1.9.0"
+$fastfetch_version = "2.55.0"
 
 # Remove Old stuff
 Remove-Item -Path "~/.local/bin/oh-my-posh.exe" -ErrorAction Ignore
@@ -12,6 +13,8 @@ Remove-Item -Path "~/.local/bin/vim.exe" -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/bat.exe" -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/_bat.ps1" -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/npiperelay.exe" -ErrorAction Ignore
+Remove-Item -Path "~/.local/bin/fastfetch" -Recurse -ErrorAction Ignore
+Remove-Item -Path "~/.local/bin/fastfetch.exe" -ErrorAction Ignore
 
 If (Test-Path -LiteralPath "$Env:USERPROFILE/tmp") {
 	Remove-Item -LiteralPath "$Env:USERPROFILE/tmp" -Recurse -Force
@@ -45,5 +48,13 @@ Move-Item -Path "$Env:USERPROFILE/tmp/bat-$bat_version-x86_64-pc-windows-msvc/au
 Invoke-WebRequest `
 	-Uri "https://github.com/albertony/npiperelay/releases/download/$npiperelay_version/npiperelay_windows_amd64.exe" `
 	-Outfile "~/.local/bin/npiperelay.exe"
+
+# fastfetch
+Invoke-WebRequest `
+	-Uri "https://github.com/fastfetch-cli/fastfetch/releases/download/$fastfetch_version/fastfetch-windows-amd64.zip" `
+	-Outfile "$Env:USERPROFILE/tmp/fastfetch.zip"
+Expand-Archive -Path "$Env:USERPROFILE/tmp/fastfetch.zip" -DestinationPath "$Env:USERPROFILE/tmp/fastfetch" >$null
+Move-Item -Path $Env:USERPROFILE/tmp/fastfetch -Destination ~/.local/bin/fastfetch
+New-Item -ItemType SymbolicLink -Path "~/.local/bin/fastfetch.exe" -Value "$Env:USERPROFILE/.local/bin/fastfetch/fastfetch.exe" >$null
 
 Remove-Item -Path $Env:USERPROFILE/tmp -Recurse
