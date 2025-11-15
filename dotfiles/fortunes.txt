@@ -1041,7 +1041,7 @@ Good thing I didn't bet against you!
 Alright, everybody, we're gonna watch the trailer, shut the f*** up!
     - Wrench (Watch_Dogs 2)
 %
-I came. I saw. I blew s*** up! And then I came again...
+I came. I saw. I blew shit up! And then I came again...
     - Wrench (Watch_Dogs 2)
 %
 Hell yeah, man! Barbarians are at the gate and ready to bust some Roman heads
@@ -1056,7 +1056,7 @@ Watch out for snakes. There are always snakes.
 We will not be lied to. We will not be afraid. We will not be silent.
     - Marcus Holloway (Watch_Dogs 2)
 %
-You're fighting a war nobody gives a s*** about. You're so aggressive, so indignant. Oh-oh-oh, and there's a warrant out for your arrest.
+You're fighting a war nobody gives a shit about. You're so aggressive, so indignant. Oh-oh-oh, and there's a warrant out for your arrest.
     - Dušan Nemec (Watch_Dogs 2)
 %
 What if you actually answer it this time? Maybe it's Blume, sending you out to face a firing squad alone? Maybe it's your lawyer, telling you there is no place to run? Or maybe it's just a telemarketer.
@@ -1086,4 +1086,90 @@ It's a beautiful day outside. birds are singing, flowers are blooming... on days
 *Seeing such a strange laboratory in a place like this... You're filled with determination*
 %
 *The wooshing sound of steam and cogs... it fills you with determination*
+%
+They thought they could stop a demon, I'm back
+    - Dracula Flow 2
+%
+I don't even know who I am anymore, I'm gettin' too much money
+    - Dracula Flow 2
+%
+This shit ain't nothin' to me, man
+    - Dracula Flow
+%
+You see it, I really did this, I'm really him
+    - Dracula Flow
+%
+I don't give a fuck if I go blind. I don't need to see the price tag anyways
+    - Dracula Flow 3
+%
+Motherfucker looked like a Resident Evil 5 campaign extra after we was done with him
+    - Dracula Flow 3
+%
+Ops wanted some initiative, blew up their entire quadrant. I'm movin' like Oppenheimer
+    - Dracula Flow 3
+%
+I was flippin' bricks for Mansa Musa before y'all even became a type-1 civilization
+    - Dracula Flow 3
+%
+This Smith & Wesson got me movin' like an invasive species
+    - Dracula Flow 4
+%
+Thеy needed a stealth soldier, so I put my hands on the hibachi hot plate at Benihana and burned my fuckin' fingerprints off. They will not find me
+    - Dracula Flow 4
+%
+We smokin' that IBM Quantum Computer
+    - Dracula Flow 4
+%
+My Audemars Piguet worth the GDP of Yemen
+    - Dracula Flow 4
+%
+If this watch breaks, the foreign exchange market will take a twenty-eight percent hit, people will die
+    - Dracula Flow 4
+%
+They're sick in the head, they forgot I'm him
+    - Dracula Flow 4
+%
+Spun around the block so many times they thought it was fucking Minecraft
+    - Dracula Flow 4
+%
+The Vatican wants to wet me up with silver bullets, but I'm on a god damn samurai pill!
+    - Dracula Flow 4
+%
+How can I be homophobic? I blew his fucking brains out
+    - Dracula Flow 5
+%
+There are bugs under my skin, I need to dig them out with a screwdriver
+    - Dracula Flow 5
+%
+The worms in my head won't shut the hell up. They're telling me to go absolutely fucking stupid on 'em
+    - Dracula Flow 5
+%
+I got inter-dimensional demons dropping the pin as we speak. They'll take anyone back over there
+    - Dracula Flow 5
+%
+Threw the opp into the particle collider, watched his ass get pulled apart into a million pieces. Turned his sorry ass into some data
+    - Dracula Flow 5
+%
+Rome wasn't built in a day but this 9mm certainly was
+    - Dracula Flow 5
+%
+Remember! This is bandit country. Shoot everything that moves.
+%
+These fellas are gonna regret waking up this morning.
+%
+Gear up; We aren't going on a windy walk here!
+%
+Easy peasy, lemon squeezy!
+%
+Watch out. These boys have got a bit of an arsenal and they don't mind using it!
+%
+Are we rushing in? Or are we going sneaky-beaky like?
+%
+Flashbang!
+%
+Flashbang out!
+%
+Deploying Flashbang!
+%
+16 // 16 // 16 // 16
 %
