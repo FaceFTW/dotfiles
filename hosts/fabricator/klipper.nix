@@ -88,6 +88,7 @@
         "--format=uyvy"
         "--encoder=M2M-VIDEO"
         "--resolution=1280x720"
+        "--desired-fps=15"
         "--allow-origin=http://localhost:*"
         "--host=0.0.0.0"
         "--port=5123"
