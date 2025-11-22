@@ -124,6 +124,12 @@ in
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
 
+  # See klipper.nix for wm config
+  services.xserver.enable = true;
+  services.xserver.libinput.enable = true;
+  services.xserver.displayManager.startx.enable=true;
+
+
   services.speechd.enable = false;
   services.printing.enable = false;
   services.getty.autologinUser = "face";
@@ -159,6 +165,7 @@ in
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom
+    firefox
   ];
 
   system.stateVersion = "25.05"; # Don't change this

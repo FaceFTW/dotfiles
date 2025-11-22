@@ -189,4 +189,48 @@
     delaycompress = true;
     postrotate = "[ ! -f /var/run/nginx/nginx.pid ] || kill -USR1 `cat /var/run/nginx/nginx.pid`";
   };
+
+  ############################################
+  # KlipperScreen
+  ############################################
+
+  # Use ratpoison for kiosk wm
+  # services.xserver.windowManager.ratpoison.enable = true;
+
+  systemd.services.klipperscreen = {
+    description = "KlipperScreen";
+    after = [
+      # "systemd-user-sessions.service"
+      "dbus.socket"
+      "systemd-logind.service"
+      "moonraker.service"
+    ];
+    wants = [
+      "dbus.socket"
+      "systemd-logind.service"
+    ];
+
+    unitConfig.ConditionPathExists = "/dev/tty0";
+    unitConfig.StartLimitIntervalSec = 0;
+
+    serviceConfig.Type = "simple";
+    serviceConfig.Restart = "always";
+    serviceConfig.RestartSec = 2;
+    serviceConfig.User = "klipper";
+    serviceConfig.SupplementaryGroups = "klipperScreen";
+    serviceConfig.WorkingDirectory = ";";
+    # serviceConfig.Environment = [
+    #   "KS_XCLIENT=${pkgs.klipperscreen}/bin/KlipperScreen"
+    #   "KS_BACKEND=X"
+    # ];
+    serviceConfig.ExecStart = "${pkgs.xorg.xinit}/bin/startx ${pkgs.klipperscreen}/bin/KlipperScreen";
+
+    serviceConfig.UtmpIdentifier = "tty7";
+    serviceConfig.UtmpMode = "user";
+    serviceConfig.TTYPath = "/dev/tty7";
+    serviceConfig.TTYReset = "yes";
+    serviceConfig.TTYHangup = "yes";
+    serviceConfig.TTYVTDisallocate = "yes";
+
+  };
 }
