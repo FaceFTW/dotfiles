@@ -1173,3 +1173,183 @@ Deploying Flashbang!
 %
 16 // 16 // 16 // 16
 %
+You bolt awake in the mountains of Carthage. You are not online. It is 217 BC. You are the general Hannibal, and you have changed your mind. The future cannot come to pass. Rome must burn.
+%
+Creature of Steel, my gratitude upon thee for my freedom. But the crimes thy kind have committed against humanity are NOT forgotten! And thy punishment... is DEATH.
+    - Minos Prime (Ultrakill)
+%
+Your choice is made... As the righteous hand of The Father, I shall rend you apart! And you shall become inanimate once more.
+    - Gabriel (Ultrakill)
+%
+BEHOLD! THE POWER OF AN ANGEL!
+%
+And so, before I tear down the cities and CRUSH the armies of Heaven, you shall do as an appetizer. Come forth, Child of Man, and DIE.
+    - Sisyphus Prime (Ultrakill)
+%
+One must imagine Sisyphus happy
+%
+Entry is not guaranteed
+%
+28 STAB WOUNDS!
+%
+Nice try, but I'm no deviant.
+    - Connor (Detroit: Become Human)
+%
+What's more important to you, Connor? Your investigation, or the life of this android? Decide who you are. An obedient machine... Or a living being endowed with free will...
+    - Elijah Kamski (Detroit: Become Human)
+%
+What will happen if I pull this trigger? Hm? Nothing? Oblivion? Android heaven?
+    - Hank Anderson (Detroit: Become Human)
+%
+It's a lot to ask, but I don't want you to be sad that I'm gone. I want you to be amazed that any of us ever had a chance to be here at all.
+    - Edith Finch (What Remains of Edith Finch)
+%
+But I need to stop living the same day, even if it kills me. Whatever's out there, I want you to know, I'm ready for it
+    - Walter Finch (What Remains of Edith Finch)
+%
+I haven't shown my hand - I've shown one card. I've given my enemies a single, provocative datum upon which to fixate. They have no idea what other cards I'm holding. It's a strong hand, believe me - I dealt it to myself.
+    - Mr. House (Fallout: New Vegas)
+%
+Waging war against good people is bad for the soul. This may not seem important to you now, but it's the most important thing I've said.
+    - Joshua Graham (Fallout: New Vegas)
+%
+Success depends on forethought, dispassionate calculation of probabilities, accounting for every stray variable.
+    - Mr. House (Fallout: New Vegas)
+%
+Truth is... the game was rigged from the start.
+    - Benny (Fallout: New Vegas)
+%
+Maybe you just need to be tested. Or you believe in nothing. We'll see.
+    - Ulysses (Fallout: New Vegas)
+%
+Don't know why they chose to make a robot based on some pre-War cop instead of a math genius or a bioengineer. But hey, maybe that's why the Institute tossed me in the garbage instead of turning me into one of their people snatchers.
+    - Nick Valentine (Fallout 4)
+%
+Huh. If I didn't know any better, I'd say they were trying to build a nuke in he... oh my god.
+    - Nick Valentine (Fallout 4)
+%
+I've seen soldiers come and go. Some were brave. Some were honest. Some were even heroic. But I've never called any of them a friend.
+    - Paladin Danse (Fallout 4)
+%
+The time for talk has passed. The Lord's work must me done.
+    - Joshua Graham (Fallout: New Vegas)
+%
+The point of Fallout: New Vegas Dead Money is "letting go"... "letting go" of poverty that is
+%
+Would you rather have unlimited bacon but no more video games, or games, unlimited games, but no more games?
+%
+Your mission is to infiltrate the jungle and capture all of the monkeys!
+%
+What the fuck is this, Robert? They look fucking identical, Robert.
+    - Shroud (Dispatch)
+%
+I only came in because I thought we were playing Magic the Gathering tonight....I am hoping, we still may.
+    - Phenomeman (Dispatch)
+%
+Don’t worry about it Waterboy. Bathrooms are for shitting after your first coffee and picking shrapnel out of your chest. Not... whatever this is.
+    - Robert Robertson (Dispatch)
+%
+I ain’t making memories right now.
+    - Golem (Dispatch)
+%
+Can we just skip to the part where you reveal your bullshit superpower so we can fight for real?
+    - Mecha Man (Dispatch)
+%
+That's gonna be a weird insurance claim.
+    - Robert Robertson (Dispatch)
+%
+shabingus
+%
+Shebooyah!
+%
+Back at it again at Krispy Kreme
+%
+What the dog doin'?
+%
+Re: Dance lessons with Jordan
+%
+Minutes to install but a lifetime to master
+%
+Rush B, don't stop
+%
+It's time to earn our stories
+%
+If found please return to Cedar Creek Nuclear Power Plant
+%
+The defuse is coming in -- he's still going!
+%
+We can do this fast or slow, it's your call
+%
+WHITE_1; BLACK_1; PEARLESCENT_1; BOLTACTION_1
+%
+WARNING: BRIGHT LIGHT, AVOID EXPOSURE
+%
+Now arriving at green line stop number four, Dust II
+%
+>>WEAPON FINISH TEXTURE EXPERIMENTS, ENTRY ONE<<
+%
+An apple a day keeps insurance premiums high
+%
+FOR USE BY AUTHORIZED CT AGENTS ONLY
+%
+Valeria doesn't pay Javier to ask questions... she pays him to pry out answers
+%
+With routine maintenance this'll last at least 500,000 bullets!
+%
+WHITE_1; BLACK_1; PEARLESCENT_1; SILENCED_1; PISTOL_1;
+%
+One crow short of a murder
+%
+Cutting off one head means two more appear—is that a risk you're willing to take?
+    - Valeria Jenner, Revolutionary (Counter-Strike 2)
+%
+Please consult an electrician before conducting your own repairs
+%
+hammer.exe time
+%
+WHITE_1; BLACK_1; PEARLESCENT_1; SILENCED_1;
+%
+Always follow manufacturer guidelines for safe use
+%
+Numbers don't lie, but I do
+%
+WHITE_1; BLACK_1; PEARLESCENT_1;
+%
+Available for 4 easy payments of $124.95!
+%
+"Roy G. Biv? Never heard of 'em."
+%
+Personally I prefer the 4th edition, but the customer is always right
+    - Booth, Arms Dealer (Counter-Strike 2)
+%
+Shame, the inscriptions have worn away with use...
+%
+Lead with your head, even if it means ignoring your heart
+%
+Information is never free
+%
+—REDACTED—
+%
+Nothing a little sandpaper can't fix
+%
+Left unchecked, any garden becomes a tangled mass of weeds
+%
+Conflict existed since the first caveman learned how to pick up a rock
+    – Booth, Arms Dealer (Counter-Strike 2)
+%
+Shahrazad told 1000 tales... this is the last one you'll hear
+%
+Feared by Queens. Beloved by Bishops.
+%
+Anyone can predict the future... a visionary shapes it
+%
+DO NOT CROSS
+%
+I can follow procedure and get 7 out, or I can do it my way and save all 10... your choice
+    - Carmen Cocinero, Extraction Expert (Counter-Strike 2)
+%
+Float like a butterfly, sting like a relentless hateful insect
+%
+Sometimes a subtle nudge is all it takes to get what you want
+    - Franz Kriegeld, Phoenix Tactician (Counter-Strike 2)
+%
