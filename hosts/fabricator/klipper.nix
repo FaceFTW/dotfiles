@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -196,130 +195,20 @@
   ############################################
 
   services.xserver.enable = true;
-  services.xserver.layout = "us";
+  services.xserver.xkb.layout = "us";
   services.libinput.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.displayManager.autoLogin.enable = true;
-#   services.displayManager.autoLogin.timeout = 0;
-  services.displayManager.autoLogin.user = "klipper";
+  services.displayManager.autoLogin.user = "face";
 
   services.xserver.windowManager.openbox.enable = true;
   services.displayManager.defaultSession = "none+openbox";
 
   environment.etc."openbox/autostart".source = pkgs.writers.writeBash "autostart" ''
-	#!${pkgs.bash}/bin/bash
-	${pkgs.klipperscreen}/bin/KlipperScreen &
+    	#!${pkgs.bash}/bin/bash
+    	${pkgs.klipperscreen}/bin/KlipperScreen &
+		export DISPLAY=:0
+		export XAUTHORITY=/home/face/.Xauthority
+		${pkgs.wmctrl}/bin/wmctrl -r KlipperScreen -b toggle,fullscreen &
   '';
-
-  #   services.cage.enable = true;
-  #   services.cage.program = "${pkgs.klipperscreen}/bin/KlipperScreen";
-  #   services.cage.user = "klipper";
-
-  #   systemd.services."cage-tty1".serviceConfig.Environment = [
-  #     "WLR_BACKENDS=drm,wayland"
-  #     "WLR_LIBINPUT_NO_DEVICES=1"
-  #     ""
-  #   ];
-  #   systemd.services."cage-tty1" = {
-  #     enable = true;
-  #     after = [
-  #       "systemd-user-sessions.service"
-  #       "plymouth-start.service"
-  #       "plymouth-quit.service"
-  #       "systemd-logind.service"
-  #       "getty@tty1.service"
-  #       "moonraker.service"
-  #     ];
-  #     before = [ "graphical.target" ];
-  #     wants = [
-  #       "dbus.socket"
-  #       "systemd-logind.service"
-  #       "plymouth-quit.service"
-  #     ];
-  #     wantedBy = [ "graphical.target" ];
-  #     conflicts = [ "getty@tty1.service" ];
-
-  #     restartIfChanged = false;
-  #     unitConfig.ConditionPathExists = "/dev/tty1";
-
-  #     serviceConfig.ExecStart = "${pkgs.cage}/bin/cage -D -- ${pkgs.klipperscreen}/bin/KlipperScreen";
-  #     serviceConfig.User = config.users.users.klipper.name;
-  #     serviceConfig.Environment = [
-  #     #   "WLR_BACKENDS=drm,wayland"
-  #       "WLR_LIBINPUT_NO_DEVICES=1"
-  #       "WLR_RENDERER_ALLOW_SOFTWARE=1"
-  #     ];
-
-  #     serviceConfig.IgnoreSIGPIPE = "no";
-  #     # Log this user with utmp, letting it show up with commands 'w' and
-  #     # 'who'. This is needed since we replace (a)getty.
-  #     serviceConfig.UtmpIdentifier = "%n";
-  #     serviceConfig.UtmpMode = "user";
-  #     # A virtual terminal is needed.
-  #     serviceConfig.TTYPath = "/dev/tty1";
-  #     serviceConfig.TTYReset = "yes";
-  #     serviceConfig.TTYVHangup = "yes";
-  #     serviceConfig.TTYVTDisallocate = "yes";
-  #     # Fail to start if not controlling the virtual terminal.
-  #     serviceConfig.StandardInput = "tty-fail";
-  #     serviceConfig.StandardOutput = "journal";
-  #     serviceConfig.StandardError = "journal";
-  #     # Set up a full (custom) user session for the user, required by Cage.
-  #     serviceConfig.PAMName = "cage";
-
-  #   };
-
-  #   security.polkit.enable = true;
-
-  #   security.pam.services.cage.text = ''
-  #     auth    required pam_unix.so nullok
-  #     account required pam_unix.so
-  #     session required pam_unix.so
-  #     session required pam_env.so conffile=/etc/pam/environment readenv=0
-  #     session required ${config.systemd.package}/lib/security/pam_systemd.so
-  #   '';
-
-  #   hardware.graphics.enable = true;
-
-  #   systemd.targets.graphical.wants = [ "cage-tty1.service" ];
-
-  #   systemd.defaultUnit = "graphical.target";
-
-  # systemd.services.klipperscreen = {
-  #   enable = true;
-  #   description = "KlipperScreen";
-  #   after = [
-  #     "systemd-user-sessions.service"
-  #     "dbus.socket"
-  #     "systemd-logind.service"
-  #     "moonraker.service"
-  #   ];
-  #   wants = [
-  #     "dbus.socket"
-  #     "systemd-logind.service"
-  #   ];
-
-  #   unitConfig.ConditionPathExists = "/dev/tty0";
-  #   unitConfig.StartLimitIntervalSec = 0;
-
-  #   serviceConfig.Type = "simple";
-  #   serviceConfig.Restart = "always";
-  #   serviceConfig.RestartSec = 2;
-  #   serviceConfig.User = "klipper";
-  #   serviceConfig.SupplementaryGroups = "klipperScreen";
-  #   # serviceConfig.WorkingDirectory = "";
-  #   # serviceConfig.Environment = [
-  #   #   "KS_XCLIENT=${pkgs.klipperscreen}/bin/KlipperScreen"
-  #   #   "KS_BACKEND=X"
-  #   # ];
-  #   serviceConfig.ExecStart = "${pkgs.xorg.xinit}/bin/startx ${pkgs.klipperscreen}/bin/KlipperScreen";
-
-  #   serviceConfig.UtmpIdentifier = "tty7";
-  #   serviceConfig.UtmpMode = "user";
-  #   serviceConfig.TTYPath = "/dev/tty7";
-  #   serviceConfig.TTYReset = "yes";
-  #   serviceConfig.TTYHangup = "yes";
-  #   serviceConfig.TTYVTDisallocate = "yes";
-
-  # };
 }
