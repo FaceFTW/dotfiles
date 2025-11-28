@@ -28,6 +28,7 @@ depends = []
 [win64.files]
 "bin/executable_sh-toy.exe" = { target = "~/.local/bin/sh-toy.exe", type = "symbolic" }
 "dotfiles/profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
+"dotfiles/filepilot.json" = { target ="~/AppData/Roaming/Voidstar/FilePilot/FPilot-Config.json", type = "symbolic" }
 
 [cs2]
 depends = []
