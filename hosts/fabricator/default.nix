@@ -124,12 +124,6 @@ in
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
 
-  # See klipper.nix for wm config
-  services.xserver.enable = true;
-  services.xserver.libinput.enable = true;
-  services.xserver.displayManager.startx.enable=true;
-
-
   services.speechd.enable = false;
   services.printing.enable = false;
   # services.getty.autologinUser = "face";
