@@ -75,7 +75,7 @@
   # Webcam Daemon
   ############################################
   systemd.services.webcamd = {
-    enable = true;
+    enable = false;
     description = "Webcam Stream Daemon";
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
@@ -194,43 +194,52 @@
   # KlipperScreen
   ############################################
 
-  # Use ratpoison for kiosk wm
-  # services.xserver.windowManager.ratpoison.enable = true;
+  services.cage.enable = true;
+  services.cage.program = "${pkgs.klipperscreen}/bin/KlipperScreen";
+  services.cage.user = "klipper";
 
-  systemd.services.klipperscreen = {
-    description = "KlipperScreen";
-    after = [
-      # "systemd-user-sessions.service"
-      "dbus.socket"
-      "systemd-logind.service"
-      "moonraker.service"
-    ];
-    wants = [
-      "dbus.socket"
-      "systemd-logind.service"
-    ];
+  systemd.services."cage-tty1".after = [ "moonraker.service" ];
+  systemd.services."cage-tty1".serviceConfig.Environment=[
+    "WLR_BACKENDS=drm,wayland"
+    "WLR_LIBINPUT_NO_DEVICES=1"
+    ""
+  ];
 
-    unitConfig.ConditionPathExists = "/dev/tty0";
-    unitConfig.StartLimitIntervalSec = 0;
+  # systemd.services.klipperscreen = {
+  #   enable = true;
+  #   description = "KlipperScreen";
+  #   after = [
+  #     "systemd-user-sessions.service"
+  #     "dbus.socket"
+  #     "systemd-logind.service"
+  #     "moonraker.service"
+  #   ];
+  #   wants = [
+  #     "dbus.socket"
+  #     "systemd-logind.service"
+  #   ];
 
-    serviceConfig.Type = "simple";
-    serviceConfig.Restart = "always";
-    serviceConfig.RestartSec = 2;
-    serviceConfig.User = "klipper";
-    serviceConfig.SupplementaryGroups = "klipperScreen";
-    serviceConfig.WorkingDirectory = ";";
-    # serviceConfig.Environment = [
-    #   "KS_XCLIENT=${pkgs.klipperscreen}/bin/KlipperScreen"
-    #   "KS_BACKEND=X"
-    # ];
-    serviceConfig.ExecStart = "${pkgs.xorg.xinit}/bin/startx ${pkgs.klipperscreen}/bin/KlipperScreen";
+  #   unitConfig.ConditionPathExists = "/dev/tty0";
+  #   unitConfig.StartLimitIntervalSec = 0;
 
-    serviceConfig.UtmpIdentifier = "tty7";
-    serviceConfig.UtmpMode = "user";
-    serviceConfig.TTYPath = "/dev/tty7";
-    serviceConfig.TTYReset = "yes";
-    serviceConfig.TTYHangup = "yes";
-    serviceConfig.TTYVTDisallocate = "yes";
+  #   serviceConfig.Type = "simple";
+  #   serviceConfig.Restart = "always";
+  #   serviceConfig.RestartSec = 2;
+  #   serviceConfig.User = "klipper";
+  #   serviceConfig.SupplementaryGroups = "klipperScreen";
+  #   # serviceConfig.WorkingDirectory = "";
+  #   # serviceConfig.Environment = [
+  #   #   "KS_XCLIENT=${pkgs.klipperscreen}/bin/KlipperScreen"
+  #   #   "KS_BACKEND=X"
+  #   # ];
+  #   serviceConfig.ExecStart = "${pkgs.xorg.xinit}/bin/startx ${pkgs.klipperscreen}/bin/KlipperScreen";
 
-  };
+  #   serviceConfig.UtmpIdentifier = "tty7";
+  #   serviceConfig.UtmpMode = "user";
+  #   serviceConfig.TTYPath = "/dev/tty7";
+  #   serviceConfig.TTYReset = "yes";
+  #   serviceConfig.TTYHangup = "yes";
+  #   serviceConfig.TTYVTDisallocate = "yes";
+
+  # };
 }

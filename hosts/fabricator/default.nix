@@ -132,7 +132,7 @@ in
 
   services.speechd.enable = false;
   services.printing.enable = false;
-  services.getty.autologinUser = "face";
+  # services.getty.autologinUser = "face";
 
   ############################################
   # Misc System Configuration
