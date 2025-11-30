@@ -211,11 +211,11 @@
     ${pkgs.klipperscreen}/bin/KlipperScreen &
 	# I don't like this :(
 	sleep 10;
-	${pkgs.xorg.xset}/bin/xset -dpms &
-    ${pkgs.xorg.xset}/bin/xset s off &
-    ${pkgs.xorg.xset}/bin/xset s noblank &
     export DISPLAY=:0
     export XAUTHORITY=/home/face/.Xauthority
     ${pkgs.wmctrl}/bin/wmctrl -r KlipperScreen -b toggle,fullscreen &
+	${pkgs.xorg.xset}/bin/xset -dpms &
+    ${pkgs.xorg.xset}/bin/xset s off &
+    ${pkgs.xorg.xset}/bin/xset s noblank &
   '';
 }

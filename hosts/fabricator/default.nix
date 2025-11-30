@@ -94,6 +94,7 @@ in
   ];
   hardware.bluetooth.enable = false;
 
+  hardware.raspberry-pi."4".i2c0.enable = true;
   hardware.raspberry-pi."4".i2c1.enable = true;
   hardware.raspberry-pi."4".fkms-3d.enable = true;
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
@@ -106,6 +107,14 @@ in
     {
       name = "imx708";
       dtsFile = ./devicetree/imx708-overlay.dts;
+    }
+    {
+      name = "display";
+      dtsFile = ./devicetree/display-overlay.dts;
+    }
+    {
+      name = "disable-bt";
+      dtsFile = ./devicetree/disable-bt-overlay.dts;
     }
     # {
     #   name = "ov5647";
