@@ -12,7 +12,9 @@
   };
   users.groups.klipper = { };
 
-  environment.systemPackages = [ pkgs.klipperscreen ];
+  environment.systemPackages = [
+    pkgs.klipperscreen
+  ];
 
   services.klipper.enable = true;
   services.klipper.user = "klipper";
@@ -205,10 +207,15 @@
   services.displayManager.defaultSession = "none+openbox";
 
   environment.etc."openbox/autostart".source = pkgs.writers.writeBash "autostart" ''
-    	#!${pkgs.bash}/bin/bash
-    	${pkgs.klipperscreen}/bin/KlipperScreen &
-		export DISPLAY=:0
-		export XAUTHORITY=/home/face/.Xauthority
-		${pkgs.wmctrl}/bin/wmctrl -r KlipperScreen -b toggle,fullscreen &
+    #!${pkgs.bash}/bin/bash
+    ${pkgs.klipperscreen}/bin/KlipperScreen &
+	# I don't like this :(
+	sleep 10;
+	${pkgs.xorg.xset}/bin/xset -dpms &
+    ${pkgs.xorg.xset}/bin/xset s off &
+    ${pkgs.xorg.xset}/bin/xset s noblank &
+    export DISPLAY=:0
+    export XAUTHORITY=/home/face/.Xauthority
+    ${pkgs.wmctrl}/bin/wmctrl -r KlipperScreen -b toggle,fullscreen &
   '';
 }
