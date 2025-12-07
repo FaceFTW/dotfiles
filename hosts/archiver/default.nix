@@ -75,21 +75,20 @@ in
     experimental-features = nix-command flakes
     download-buffer-size = 1073741824
   '';
-  nixpkgs.hostPlatform = "aarch64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   ############################################
   # Hardware Configuration
   ############################################
-  boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
+  boot.loader.systemd-boot.enable = true;
+
   boot.kernelModules = [ ];
   boot.blacklistedKernelModules = [
     "dw_hdmi"
     "bluetooth"
     "btusb"
   ];
-  hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
-  hardware.deviceTree.enable = true;
-  hardware.deviceTree.overlays = [ ];
+
 
   ############################################
   # Program Options
@@ -105,12 +104,6 @@ in
   ############################################
   # Misc System Configuration
   ############################################
-  swapDevices = [
-    {
-      device = "/var/swapfile";
-      size = 4096;
-    }
-  ];
   time.timeZone = "America/New_York";
 
   services.udev.enable = true;
@@ -121,11 +114,6 @@ in
   packages.monitoring = true;
   packages.networking = true;
   packages.secrets.base = true;
-
-  environment.systemPackages = with pkgs; [
-    libraspberrypi
-    raspberrypi-eeprom
-  ];
 
   system.stateVersion = "25.05"; # Don't change this
 }
