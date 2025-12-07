@@ -103,12 +103,11 @@
       # archiver
       ############################################
       nixosConfigurations.archiver = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
+        system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
         };
         modules = withOverlays ./hosts/archiver/default.nix;
       };
-      images.archiver = nixosConfigurations.archiver.config.system.build.sdImage;
     };
 }
