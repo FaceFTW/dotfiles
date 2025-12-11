@@ -40,9 +40,29 @@
       };
 
     };
+    # NVMe Disks
+    # These are used primarily as fast-memory + swap.
+    # These drives aren't NAS-grade (literally pulled from scrap computers)
+    # Two swap partitions is weird but at least it "should" work
+
+    # NVME0
+    disk.nvme0.type = "disk";
+    disk.nvme0.device = "/dev/nvme0n1";
+    disk.nvme0.content.type = "gpt";
+    disk.nvme0.content.partitions = {
+      # Swap 0
+      swap0.size = "8GB";
+      swap0.content.type = "swap";
+      swap0.priority = 1;
+
+      # Motorway 0
+      motorway0.size = "100%";
+      motorway0.content.type = "btrfs";
+      motorway0.content.extraArgs = [ "" ];
+	#   motorway0
+    };
+
+    # NVMe1
   };
 
-  # NVMe Disks
-  # These are used primarily as fast-caches + swap. Not the most optimal use of such a system
-  # but we take those
 }
