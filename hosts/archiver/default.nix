@@ -9,13 +9,13 @@ let
 in
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     ../../modules/core.nix
     ../../modules/kernel.nix
     ../../modules/packages.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
-    ../../modules/raspi
+    inputs.disko.nixosModules.disko
+    ./disks.nix
     ./networking.nix
   ];
 
