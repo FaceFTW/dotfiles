@@ -3,6 +3,7 @@ keys:
   - &host_archiver age100vv3rkgwqzerc8w6lrkvwud866pfxetp9pfgh35azlqxly5ja4s85racc
   - &host_fabricator age1lskkuxu8cpstc6ya0wchgt5ckhecegwqggusrfv4xvqp7qv83g7q46a534
   - &host_manifold age1ng2en0a2nv2ucdj7ejcydyzr6qqky25sh4qfsx9q7k4g4gl55drqay8eql
+  # - &host_nemesis
   - &user_face_manifold age145ltxlne4wy497exp3fw4an9ss8mxy80wvwnzzckfnpv5jw50dhqrlfrvu
 
 creation_rules:
@@ -31,3 +32,12 @@ creation_rules:
           - *host_archiver
           - *user_face_manifold
           # - *host_manifold # For config changes off machine
+
+  - path_regex: hosts/nemesis/[^/]+\.(yaml|json|env|ini)$
+    shamir_threshold: 2
+    key_groups:
+      # - pgp:
+      # - *key_lockpick
+      - age:
+          # - *host_nemesis
+          - *user_face_manifold
