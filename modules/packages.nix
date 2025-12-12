@@ -24,6 +24,7 @@ in
     ncdu = mkEnableOption "ncdu";
     networking = mkEnableOption "Extra Networking Things";
     nixTools = mkEnableOption "Nix Dev Tools";
+    steam = mkEnableOption "Valve Steam";
   };
 
   config = mkMerge [
@@ -117,6 +118,16 @@ in
         pkgs.nix-index
         pkgs.nil
       ];
+    })
+
+    ############################################
+    # Valve Steam
+    ############################################
+    (mkIf packages.steam {
+      programs.steam.enable = true;
+      programs.steam.remotePlay.openFirewall = true;
+      programs.steam.localNetworkGameTransfers.openFirewall = true;
+
     })
   ];
 }
