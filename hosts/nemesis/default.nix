@@ -10,14 +10,17 @@ in
 {
   imports = [
     inputs.nixos-hardware.nixosModules.microsoft.surface.common
+    inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.lix-module.nixosModules.default
+    inputs.sops-nix.nixosModules.sops
+    inputs.home-manager.nixosModules.home-manager
     ../../modules/core.nix
     ../../modules/kernel.nix
     ../../modules/packages.nix
-    inputs.home-manager.nixosModules.home-manager
-    inputs.sops-nix.nixosModules.sops
-    inputs.disko.nixosModules.disko
-    ./disks.nix
+    ./hardware.nix
     ./networking.nix
+    ./services.nix
+    ./wm.nix
   ];
 
   ############################################
@@ -32,6 +35,7 @@ in
     isNormalUser = true;
     extraGroups = [
       "wheel"
+      "networkmanager"
     ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
@@ -39,8 +43,8 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuQw4U+Wam1gjuEXyH/cObZfnfYiA/LPF0kjQPFTz9x face@manifold-wsl"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
     ];
-    # initialPassword = ""; #For bootstrapping!
-    hashedPasswordFile = config.sops.secrets.user_passwd.path;
+    initialPassword = ""; # For bootstrapping!
+    # hashedPasswordFile = config.sops.secrets.user_passwd.path;
     packages = [ ];
   };
 
@@ -51,12 +55,12 @@ in
   ############################################
   # SOPS Settings
   ############################################
-  sops.defaultSopsFile = ./secrets.yaml;
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.secrets.user_passwd.neededForUsers = true;
-  sops.secrets.wifi_secrets = {
-    group = config.users.users.systemd-network.group;
-  };
+  # sops.defaultSopsFile = ./secrets.yaml;
+  # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  # sops.secrets.user_passwd.neededForUsers = true;
+  # sops.secrets.wifi_secrets = {
+  #   group = config.users.users.systemd-network.group;
+  # };
 
   ############################################
   # Nix Settings
@@ -79,25 +83,6 @@ in
   nixpkgs.hostPlatform = "x86_64-linux";
 
   ############################################
-  # Hardware Configuration
-  ############################################
-  hardware.microsoft-surface.kernelVersion = "stable";
-  hardware.microsoft-surface.ipts.enable = true;
-  hardware.microsoft-surface.surface-control.enable = true;
-
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.intelgpu.vaapiDrive="intel-media-driver";
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.windows.
-
-  boot.kernelModules =
-    [ ];
-  boot.blacklistedKernelModules = [
-
-  ];
-
-  ############################################
   # Program Options
   ############################################
   programs.zsh.enable = true;
@@ -113,6 +98,17 @@ in
   ############################################
   time.timeZone = "America/New_York";
 
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_ADDRESS = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_IDENTIFICATION = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_MEASUREMENT = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_MONETARY = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_NAME = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_NUMERIC = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_PAPER = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_TELEPHONE = "en_US.UTF-8";
+  i18n.extraLocaleSettings.LC_TIME = "en_US.UTF-8";
+
   services.udev.enable = true;
 
   ############################################
@@ -121,7 +117,16 @@ in
   packages.monitoring = true;
   packages.networking = true;
   packages.secrets.base = true;
-  packages.
+  packages.direnv = true;
+  packages.gitFull = true;
+  packages.nixTools = true;
+  packages.rust = "nightly";
+  packages.nodejs.node = true;
+  packages.steam = true;
+
+  environment.systemPackages = [
+    pkgs.sbctl
+  ];
 
   system.stateVersion = "25.05"; # Don't change this
 }
