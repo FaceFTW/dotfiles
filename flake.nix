@@ -14,8 +14,8 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    inputs.disko.url = "github:nix-community/disko/latest";
-    inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
+    disko.url = "github:nix-community/disko/latest";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
     lix.flake = false;
@@ -85,13 +85,23 @@
       ############################################
       # portal
       ############################################
-
       nixosConfigurations.portal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
         };
         modules = withOverlays ./hosts/portal/default.nix;
+      };
+
+      ############################################
+      # nemesis
+      ############################################
+      nixosConfigurations.nemesis = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = withOverlays ./hosts/nemesis/default.nix;
       };
 
       ############################################
