@@ -2,7 +2,7 @@
   description = "Starter Configuration with secrets for MacOS and NixOS";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware.url = "github:FaceFTW/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     home-manager.url = "github:nix-community/home-manager";

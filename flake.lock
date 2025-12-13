@@ -227,15 +227,15 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1764440730,
-        "narHash": "sha256-ZlJTNLUKQRANlLDomuRWLBCH5792x+6XUJ4YdFRjtO4=",
-        "owner": "NixOS",
+        "lastModified": 1765649568,
+        "narHash": "sha256-yaHE0vpK7XN/BR6B8jufAWrp7uYzwkhUbqk8G9EU1ak=",
+        "owner": "FaceFTW",
         "repo": "nixos-hardware",
-        "rev": "9154f4569b6cdfd3c595851a6ba51bfaa472d9f3",
+        "rev": "76d5096550de0d7dd6b635cc7bd77602a5885a0e",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "FaceFTW",
         "repo": "nixos-hardware",
         "type": "github"
       }
