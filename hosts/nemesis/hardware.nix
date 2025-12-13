@@ -5,15 +5,14 @@
   ...
 }:
 {
+
   ############################################
   # Hardware Configuration
   ############################################
   hardware.microsoft-surface.kernelVersion = "stable";
-  hardware.microsoft-surface.ipts.enable = true;
-  hardware.microsoft-surface.surface-control.enable = true;
 
   hardware.cpu.intel.updateMicrocode = true;
-  hardware.intelgpu.vaapiDrive = "intel-media-driver";
+  hardware.intelgpu.vaapiDriver = "intel-media-driver";
 
   ############################################
   # Bootloader Configuration
@@ -27,6 +26,12 @@
   # boot.loader.systemd-boot.enable = pkgs.lib.mkForce false;
   # boot.loader.systemd-boot.windows.windows.title="Windows 11";
   boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
+
+  ############################################
+  # Surface-related things
+  ############################################
+  services.iptsd.enable = true;
+  environment.systemPackages = [ pkgs.surface-control ];
 
   ############################################
   # Nvidia Graphics Configuration
@@ -55,6 +60,10 @@
   # Fine-grained power management. Turns off GPU when not in use.
   # Experimental and only works on modern Nvidia GPUs (Turing or newer).
   hardware.nvidia.powerManagement.finegrained = false;
+
+  boot.extraModprobeConfig = ''
+    options nvidia "NVreg_DynamicPowerManagement=0x00
+  '';
 
   ############################################
   #  hardware-configuration.nix
