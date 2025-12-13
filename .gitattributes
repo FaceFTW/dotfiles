@@ -2,6 +2,7 @@
 fortunes.txt text eol=lf
 dotfiles/.vimrc text eol=lf
 *.nix text eol=lf
+*.lock text eol=lf
 
 *.exe binary
 *.jpg binary
