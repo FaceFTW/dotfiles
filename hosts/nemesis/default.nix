@@ -82,7 +82,6 @@ in
   nix.package = pkgs.nix;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
-    download-buffer-size = 1073741824
   '';
   nixpkgs.hostPlatform = "x86_64-linux";
 
