@@ -25,10 +25,7 @@
   boot.loader.limine.extraEntries = ''
     /Windows
       protocol: efi
-      path: uuid(5460d67c-e5c5-4a6e-89c4-66464150baf7):/EFI/Microsoft/Boot/bootmgfw.efi#bf54ae4c759a239c2dc64dd6c48e1cc742e9666c2544714e70dc789a2b0e019731012cb68d64c22a7e4cbe505c556ba9d6c92072dcac53043f224e2fe5e69ab2
-    /memtest86
-      protocol: chainload
-
+      path: boot():/EFI/Microsoft/Boot/bootmgfw.efi#bf54ae4c759a239c2dc64dd6c48e1cc742e9666c2544714e70dc789a2b0e019731012cb68d64c22a7e4cbe505c556ba9d6c92072dcac53043f224e2fe5e69ab2
   '';
   # boot.loader.systemd-boot.enable = pkgs.lib.mkForce false;
   # boot.lanzaboote = {
