@@ -11,4 +11,8 @@
 
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.variant = "";
+
+  programs.hyprland.enable = true;
+  programs.hyprland.systemd.setPath.enable = true;
+  programs.hyprland.withUWSM = true;
 }
