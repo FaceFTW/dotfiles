@@ -14,12 +14,13 @@ I daily-drive Windows for both personal/work use, but I use WSL on all my machin
 
 ### NixOS System List
 
-| Host Name    | Hardware                                                                                           | Description                                 |
-|--------------|----------------------------------------------------------------------------------------------------|---------------------------------------------|
-| `manifold`   | WSL Host :window: <br/> <ul><li>AMD Ryzen R7 7700X</li><li>Nvidia GeForce RTX 4070 SUPER</li></ul> | Main System                                 |
-| `portal`     | WSL Host :window:<br/> Microsoft Surface Laptop Studio                                             | On-the-go System (not used as often)<br/>   |
-| `fabricator` | Raspberry Pi 4                                                                                     | Klipper Server <br/> ***IN DEVELOPMENT***   |
-| `archiver`   | Raspberry Pi 4                                                                                     | Makeshift NAS    <br/> ***IN DEVELOPMENT*** |
+| Host Name    | Hardware                                                                                                            | Description                                                         |
+|--------------|---------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| `manifold`   | <ul><li>AMD Ryzen R7 7700X</li><li>Nvidia GeForce RTX 4070 SUPER</li></ul>WSL Host :window:                         | Main System                                                         |
+| `nemesis`    | Microsoft Surface Laptop Studio<br/>Dual-boots into `portal` :window:                                               | On-the-go System<br/>With Full NixOS Rice<br/> ***IN DEVELOPMENT*** |
+| `portal`     | Microsoft Surface Laptop Studio<br/> WSL Host :window:                                                              | On-the-go System (Windows Side)<br/>                                |
+| `fabricator` | Raspberry Pi 4                                                                                                      | Klipper Server<br/> ***IN DEVELOPMENT***                            |
+| `archiver`   | UGREEN NASync DXP2800<br/><ul><li>16GB DDR5</li><li>14TB SATA Btrfs RAID1</li><li>500GB NVMe Btrfs RAID 1</li></ul> | NAS<br/> ***IN DEVELOPMENT***                                       |
 
 ### Configurations Maintained
 
@@ -29,12 +30,12 @@ Legend
 - :white_circle: -> Probably supported
 - :x: -> Not Supported
 
-| Configuration    | Windows            | Linux              | NixOS              |
-|------------------|--------------------|--------------------|--------------------|
-| PowerShell 7     | :white_check_mark: | :white_circle:     | :x:                |
-| Oh My Posh       | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [shell-toy](https://github.com/FaceFTW/shell-toy)<br/> (Fortunes, Cowsay)| :white_check_mark: Prebuilt Custom Binary | :white_check_mark: Prebuilt Custom Binary | :white_check_mark: Local Overlay
-| Git              | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| Vim              | :white_check_mark: Using `vim_plug` | :white_check_mark: Using `vim_plug` | :white_check_mark: Plugins installed via Nix |
-| Zsh              | :x: | :white_check_mark: | :white_check_mark: via Home Manager |
-| Counter-Strike 2 | :white_check_mark: | :white_circle:     | :white_circle:                |
+| Configuration                                                             | Windows                                   | Linux                                     | NixOS                                        |
+|---------------------------------------------------------------------------|-------------------------------------------|-------------------------------------------|----------------------------------------------|
+| PowerShell 7                                                              | :white_check_mark:                        | :white_circle:                            | :x:                                          |
+| Oh My Posh                                                                | :white_check_mark:                        | :white_check_mark:                        | :white_check_mark:                           |
+| [shell-toy](https://github.com/FaceFTW/shell-toy)<br/> (Fortunes, Cowsay) | :white_check_mark: Prebuilt Custom Binary | :white_check_mark: Prebuilt Custom Binary | :white_check_mark: Local Overlay             |
+| Git                                                                       | :white_check_mark:                        | :white_check_mark:                        | :white_check_mark:                           |
+| Vim                                                                       | :white_check_mark: Using `vim_plug`       | :white_check_mark: Using `vim_plug`       | :white_check_mark: Plugins installed via Nix |
+| Zsh                                                                       | :x:                                       | :white_check_mark:                        | :white_check_mark: via Home Manager          |
+| Counter-Strike 2                                                          | :white_check_mark:                        | :white_circle:                            | :white_circle:                               |

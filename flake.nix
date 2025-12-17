@@ -1,22 +1,20 @@
 {
-  description = "Starter Configuration with secrets for MacOS and NixOS";
+  description = "";
   inputs = {
+    # Core NixOS
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:FaceFTW/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
+    # Home Manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Rust Toolchain
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    disko.url = "github:nix-community/disko/latest";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-
+    # Lix
     lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
     lix.flake = false;
 
@@ -24,9 +22,20 @@
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.lix.follows = "lix";
 
-    lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0";
-    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+    # sops
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Disko
+    disko.url = "github:nix-community/disko/latest";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Hyprland Ecosystem
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprlock.url = "github:hyprwm/hyprlock";
+
+
+    #
   };
 
   outputs =

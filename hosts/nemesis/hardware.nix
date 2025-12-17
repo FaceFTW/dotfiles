@@ -43,6 +43,8 @@
   services.iptsd.enable = true;
   environment.systemPackages = [ pkgs.surface-control ];
 
+  hardware.sensor.iio.enable = false; # Sometimes there are annoying rotations that happen
+
   ############################################
   # Nvidia Graphics Configuration
   ############################################
