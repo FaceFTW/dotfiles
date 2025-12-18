@@ -45,7 +45,6 @@ in
 
   # The following are system users/groups defined for various services
   # Unless they are defined elsewhere, in which here I document it for tracking
-  users.groups.wifi = { }; # For ensuring wpa_supplicant can access the secrets reasonably
 
   ############################################
   # SOPS Settings
@@ -53,9 +52,7 @@ in
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
-  sops.secrets.wifi_secrets = {
-    group = config.users.users.systemd-network.group;
-  };
+
 
   ############################################
   # Nix Settings
@@ -73,7 +70,6 @@ in
   nix.package = pkgs.nix;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
-    download-buffer-size = 1073741824
   '';
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -83,12 +79,6 @@ in
   boot.loader.systemd-boot.enable = true;
 
   boot.kernelModules = [ ];
-  boot.blacklistedKernelModules = [
-    "dw_hdmi"
-    "bluetooth"
-    "btusb"
-  ];
-
 
   ############################################
   # Program Options

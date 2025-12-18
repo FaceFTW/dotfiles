@@ -1,6 +1,8 @@
 {
   disko.devices = {
+    ############################################
     # Internal eMMC
+    ############################################
     # This is the core "OS"
     disk.internal.type = "disk";
     disk.internal.device = "/dev/mmcblk0";
@@ -21,7 +23,7 @@
       root.size = "100%";
       root.content.type = "btrfs";
       root.content.extraArgs = [ "-f" ];
-      root.content.mountpoint = "/partition-root";
+      root.content.mountpoint = "/";
       root.content.subvolumes = {
         "/".mountpoint = "/";
 
@@ -40,29 +42,88 @@
       };
 
     };
+
+    ############################################
     # NVMe Disks
+    ############################################
     # These are used primarily as fast-memory + swap.
     # These drives aren't NAS-grade (literally pulled from scrap computers)
     # Two swap partitions is weird but at least it "should" work
 
-    # NVME0
     disk.nvme0.type = "disk";
     disk.nvme0.device = "/dev/nvme0n1";
     disk.nvme0.content.type = "gpt";
     disk.nvme0.content.partitions = {
-      # Swap 0
       swap0.size = "8GB";
       swap0.content.type = "swap";
       swap0.priority = 1;
 
-      # Motorway 0
       motorway0.size = "100%";
-      motorway0.content.type = "btrfs";
-      motorway0.content.extraArgs = [ "" ];
-	#   motorway0
+      motorway0.content.type = "mdraid";
+      motorway0.content.name = "motorway";
     };
 
-    # NVMe1
+    disk.nvme1.type = "disk";
+    disk.nvme1.device = "/dev/nvme0n2";
+    disk.nvme1.content.type = "gpt";
+    disk.nvme1.content.partitions = {
+      swap1.size = "8GB";
+      swap1.content.type = "swap";
+      swap1.priority = 1;
+
+      motorway1.size = "100%";
+      motorway1.content.type = "mdraid";
+      motorway1.content.name = "motorway";
+    };
+  };
+
+  mdadm.motorway.type = "mdadm";
+  mdadm.motorway.level = 1; # RAID 1
+  mdadm.motorway.content.type = "gpt";
+  mdadm.motorway.content.partitions = {
+    motorway.size = "100%";
+    motorway.content.type = "filesystem";
+    motorway.content.format = "btrfs";
+    motorway.content.mountpoint = "/mnt/motorway";
+    motorway.content.mountOptions = [ "noatime" ];
+  };
+
+  ############################################
+  # SATA HDDs
+  ############################################
+  # The slow storage devices
+  # Separate mdadm volume for this
+
+  disk.sda.type = "disk";
+  disk.sda.device = "/dev/sda";
+  disk.sda.content.type = "gpt";
+  disk.sda.content.partitions = {
+    archive0.size = "100%";
+    archive0.content.type = "mdraid";
+    archive0.content.name = "archive";
+  };
+
+  disk.sdb.type = "disk";
+  disk.sdb.device = "/dev/sdb";
+  disk.sdb.content.type = "gpt";
+  disk.sdb.content.partitions = {
+    archive1.size = "100%";
+    archive1.content.type = "mdraid";
+    archive1.content.name = "archive";
+  };
+
+  mdadm.archive.type = "mdadm";
+  mdadm.archive.level = 1; # RAID 1
+  mdadm.archive.content.type = "gpt";
+  mdadm.archive.content.partitions = {
+    library.size = "100%";
+    library.content.type = "filesystem";
+    library.content.format = "btrfs";
+    library.content.mountpoint = "/mnt/archive";
+    library.content.mountOptions = [
+      "compress=zstd"
+      "noatime"
+    ];
   };
 
 }
