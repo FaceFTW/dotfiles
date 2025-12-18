@@ -1,4 +1,14 @@
+{ ... }:
 {
+  boot.swraid.enable = true;
+  boot.swraid.mdadmConf = ''
+    ARRAY /dev/md/archive level=raid1 num-devices=2 metadata=1.2 UUID=4b2a84b8:7dc68fd2:fc13310b:d33a87d7
+       devices=/dev/sda1,/dev/sdb1
+    ARRAY /dev/md/motorway level=raid1 num-devices=2 metadata=1.2 UUID=b24a0956:4cae3b00:0885ea30:b409d016
+       devices=/dev/nvme0n1p2,/dev/nvme1n1p2
+
+  '';
+
   disko.devices = {
     ############################################
     # Internal eMMC
@@ -54,7 +64,7 @@
     disk.nvme0.device = "/dev/nvme0n1";
     disk.nvme0.content.type = "gpt";
     disk.nvme0.content.partitions = {
-      swap0.size = "8GB";
+      swap0.size = "8G";
       swap0.content.type = "swap";
       swap0.priority = 1;
 
@@ -64,10 +74,10 @@
     };
 
     disk.nvme1.type = "disk";
-    disk.nvme1.device = "/dev/nvme0n2";
+    disk.nvme1.device = "/dev/nvme1n1";
     disk.nvme1.content.type = "gpt";
     disk.nvme1.content.partitions = {
-      swap1.size = "8GB";
+      swap1.size = "8G";
       swap1.content.type = "swap";
       swap1.priority = 1;
 
@@ -75,55 +85,56 @@
       motorway1.content.type = "mdraid";
       motorway1.content.name = "motorway";
     };
-  };
 
-  mdadm.motorway.type = "mdadm";
-  mdadm.motorway.level = 1; # RAID 1
-  mdadm.motorway.content.type = "gpt";
-  mdadm.motorway.content.partitions = {
-    motorway.size = "100%";
-    motorway.content.type = "filesystem";
-    motorway.content.format = "btrfs";
-    motorway.content.mountpoint = "/mnt/motorway";
-    motorway.content.mountOptions = [ "noatime" ];
-  };
+    mdadm.motorway.type = "mdadm";
+    mdadm.motorway.level = 1; # RAID 1
+    mdadm.motorway.content.type = "gpt";
+    mdadm.motorway.content.partitions = {
+      motorway.size = "100%";
+      motorway.content.type = "filesystem";
+      motorway.content.format = "btrfs";
+      motorway.content.mountpoint = "/mnt/motorway";
+      motorway.content.mountOptions = [ "noatime" ];
+    };
 
-  ############################################
-  # SATA HDDs
-  ############################################
-  # The slow storage devices
-  # Separate mdadm volume for this
+    ############################################
+    # SATA HDDs
+    ############################################
+    # The slow storage devices
+    # Separate mdadm volume for this
 
-  disk.sda.type = "disk";
-  disk.sda.device = "/dev/sda";
-  disk.sda.content.type = "gpt";
-  disk.sda.content.partitions = {
-    archive0.size = "100%";
-    archive0.content.type = "mdraid";
-    archive0.content.name = "archive";
-  };
+    disk.sda.type = "disk";
+    disk.sda.device = "/dev/sda";
+    disk.sda.content.type = "gpt";
+    disk.sda.content.partitions = {
+      archive0.size = "100%";
+      archive0.content.type = "mdraid";
+      archive0.content.name = "archive";
+    };
 
-  disk.sdb.type = "disk";
-  disk.sdb.device = "/dev/sdb";
-  disk.sdb.content.type = "gpt";
-  disk.sdb.content.partitions = {
-    archive1.size = "100%";
-    archive1.content.type = "mdraid";
-    archive1.content.name = "archive";
-  };
+    disk.sdb.type = "disk";
+    disk.sdb.device = "/dev/sdb";
+    disk.sdb.content.type = "gpt";
+    disk.sdb.content.partitions = {
+      archive1.size = "100%";
+      archive1.content.type = "mdraid";
+      archive1.content.name = "archive";
+    };
 
-  mdadm.archive.type = "mdadm";
-  mdadm.archive.level = 1; # RAID 1
-  mdadm.archive.content.type = "gpt";
-  mdadm.archive.content.partitions = {
-    library.size = "100%";
-    library.content.type = "filesystem";
-    library.content.format = "btrfs";
-    library.content.mountpoint = "/mnt/archive";
-    library.content.mountOptions = [
-      "compress=zstd"
-      "noatime"
-    ];
+    mdadm.archive.type = "mdadm";
+    mdadm.archive.level = 1; # RAID 1
+    mdadm.archive.content.type = "gpt";
+    mdadm.archive.content.partitions = {
+      library.size = "100%";
+      library.content.type = "filesystem";
+      library.content.format = "btrfs";
+      library.content.mountpoint = "/mnt/archive";
+      library.content.mountOptions = [
+        "compress=zstd"
+        "noatime"
+      ];
+    };
+
   };
 
 }
