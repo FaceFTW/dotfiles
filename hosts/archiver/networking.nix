@@ -4,10 +4,6 @@
   networking.firewall.allowedTCPPorts = [
     22
   ];
-  # networking.wireless.enable = false;
-  # networking.wireless.interfaces = [ "wlan0" ];
-  # networking.wireless.secretsFile = config.sops.secrets.wifi_secrets.path;
-  # networking.wireless.networks."Orbi89".pskRaw = "ext:home-psk";
   networking.useDHCP = false;
 
   services.resolved.enable = true;
@@ -16,14 +12,15 @@
   '';
   services.resolved.llmnr = "resolve";
 
+  # NOTE: Configured such that the local router gives this a static IP
+  # on the local network
   systemd.network.enable = true;
-  systemd.network.networks."10-end0" = {
-    matchConfig.Name = "end0";
+  systemd.network.networks."10-enp2s0" = {
+    matchConfig.Name = "enp2s0";
     networkConfig.DHCP = "ipv4";
     networkConfig.IPv6AcceptRA = true;
     networkConfig.MulticastDNS = "yes";
     linkConfig.RequiredForOnline = true;
   };
-
 
 }

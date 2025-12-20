@@ -53,7 +53,6 @@ in
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
 
-
   ############################################
   # Nix Settings
   ############################################
@@ -78,7 +77,8 @@ in
   ############################################
   boot.loader.systemd-boot.enable = true;
 
-  boot.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "mmc_block" ];
+  hardware.enableAllHardware = true;
 
   ############################################
   # Program Options
