@@ -17,6 +17,7 @@ in
     inputs.disko.nixosModules.disko
     ./disks.nix
     ./networking.nix
+	./services.nix
   ];
 
   ############################################
@@ -76,8 +77,18 @@ in
   # Hardware Configuration
   ############################################
   boot.loader.systemd-boot.enable = true;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
+  boot.extraModulePackages = [ pkgs.kernelModules.ugreen_led ];
 
   boot.initrd.kernelModules = [ "mmc_block" ];
+  boot.kernelModules = [
+    "mmc_block"
+    "led-ugreen"
+    "i2c-dev"
+    "ledtrig-netdev"
+    "ledtrig-disk"
+    "ledtrig-cpu"
+  ];
   hardware.enableAllHardware = true;
 
   ############################################
