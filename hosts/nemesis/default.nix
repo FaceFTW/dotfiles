@@ -11,10 +11,9 @@ in
   imports = [
 
     inputs.nixos-hardware.nixosModules.microsoft-surface-common
-	inputs.nixos-hardware.nixosModules.common-cpu-intel
-	inputs.nixos-hardware.nixosModules.common-gpu-intel
-	inputs.nixos-hardware.nixosModules.common-pc-ssd
-    inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-gpu-intel
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
     inputs.lix-module.nixosModules.default
     inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
