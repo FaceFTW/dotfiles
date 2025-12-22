@@ -7,6 +7,7 @@
     ARRAY /dev/md/motorway level=raid1 num-devices=2 metadata=1.2 UUID=b24a0956:4cae3b00:0885ea30:b409d016
        devices=/dev/nvme0n1p2,/dev/nvme1n1p2
 
+    MAILADDR archiver-alerts@faceftw.dev
   '';
 
   disko.devices = {
