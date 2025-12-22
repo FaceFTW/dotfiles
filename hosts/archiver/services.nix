@@ -1,5 +1,12 @@
 { pkgs, ... }:
 {
+  users.users.watchman = {
+    isSystemUser = true;
+    group = "watchman";
+    createHome = false;
+  };
+  users.groups.watchman = { };
+
   systemd.services.ugreen-led-cfg = {
     wantedBy = [ "sysinit.target" ];
     serviceConfig.Type = "oneshot";
@@ -31,4 +38,33 @@
     '';
 
   };
+
+  services.opendkim.enable = true;
+  services.opendkim.domains = "csl:faceftw.dev";
+  services.opendkim.selector = "alerts._domainkey";
+  services.opendkim.user = "watchman";
+  services.opendkim.group = "watchman";
+  services.opendkim.settings.Mode = "sv";
+  services.opendkim.settings.Domain = "faceftw.dev";
+  services.opendkim.settings.RequireSafeKeys = "False";
+  services.opendkim.settings.ExternalIgnoreList = "127.0.0.1,::1,faceftw.dev";
+  services.opendkim.settings.InternalHosts = "127.0.0.1,::1";
+
+  services.postfix.enable = true;
+  services.postfix.user = "watchman";
+  services.postfix.group = "watchman";
+  services.postfix.rootAlias = "archiver-alerts@faceftw.dev";
+  services.postfix.settings.main.relayhost = [ "faceftw.dev" ];
+  services.postfix.settings.main.smtp_tls_security_level = "dane";
+  services.postfix.settings.main.smtpd_milters = "unix:/run/opendkim/opendkim.sock";
+  services.postfix.settings.main.non_sntpd_milters = "$smtpd_milters";
+  services.postfix.settings.main.milter_default_action = "accept";
+  services.postfix.settings.main.smtp_generic_maps = "hash:/var/lib/postfix/generic";
+  services.postfix.mapFiles.generic = ./postfix-generic;
+
+  #   environment.etc."postfix/generic".text = ''
+  #     root@archiver.local archiver-alerts@faceftw.dev
+  #     @archiver.local archiver-alerts@faceftw.dev
+  #   '';
+
 }
