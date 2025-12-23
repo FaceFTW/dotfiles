@@ -86,8 +86,7 @@ in
     "led-ugreen"
     "i2c-dev"
     "ledtrig-netdev"
-    "ledtrig-disk"
-    "ledtrig-cpu"
+    "ledtrig-oneshot"
   ];
   hardware.enableAllHardware = true;
 
