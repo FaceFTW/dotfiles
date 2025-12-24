@@ -17,7 +17,7 @@ in
     inputs.disko.nixosModules.disko
     ./disks.nix
     ./networking.nix
-	./services.nix
+    ./services.nix
   ];
 
   ############################################
@@ -53,6 +53,8 @@ in
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
+  sops.secrets.pushover_api_key = { };
+  sops.secrets.pushover_user_key = { };
 
   ############################################
   # Nix Settings
@@ -77,6 +79,7 @@ in
   # Hardware Configuration
   ############################################
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 3;
   boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.extraModulePackages = [ pkgs.kernelModules.ugreen_led ];
 
