@@ -7,6 +7,9 @@
   };
   users.groups.watchman = { };
 
+  services.smartd.enable = true;
+  services.smartd.defaults.monitored = "-a -m <nomailer> -M exec ${pkgs.smartd-notif-event}/bin/smartd-notif-event -s (S/../.././03|L/../(2|4)/./04)";
+
   systemd.services.ugreen-led-mons = {
     wantedBy = [ "sysinit.target" ];
     serviceConfig.Type = "oneshot";
