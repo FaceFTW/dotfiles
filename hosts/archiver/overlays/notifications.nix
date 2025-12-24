@@ -7,7 +7,7 @@ final: prev: {
       affected_device=$2
       related_device=''${3:-"N/A"}
 
-      message=''${event_type} on ''${affected_device}. Related Devices: ''${related_device}"
+      message="''${event_type} on ''${affected_device}. Related Devices: ''${related_device}"
       timestamp=$(${prev.coreutils}/bin/date +%s)
 
       token=$(cat /run/secrets/pushover_api_key)
