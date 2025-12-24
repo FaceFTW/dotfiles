@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   lib,
   ...
@@ -27,15 +26,7 @@
       protocol: efi
       path: boot():/EFI/Microsoft/Boot/bootmgfw.efi#bf54ae4c759a239c2dc64dd6c48e1cc742e9666c2544714e70dc789a2b0e019731012cb68d64c22a7e4cbe505c556ba9d6c92072dcac53043f224e2fe5e69ab2
   '';
-  # boot.loader.systemd-boot.enable = pkgs.lib.mkForce false;
-  # boot.lanzaboote = {
-  #   enable = true;
-  #   pkiBundle = "/var/lib/sbctl";
-  # };
   boot.loader.efi.canTouchEfiVariables = true;
-  # boot.loader.systemd-boot.enable = pkgs.lib.mkForce false;
-  # boot.loader.systemd-boot.windows.windows.title="Windows 11";
-  # boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
 
   ############################################
   # Surface-related things

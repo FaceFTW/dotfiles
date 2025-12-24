@@ -208,40 +208,4 @@
 
   };
 
-  # services.opendkim.enable = true;
-  # services.opendkim.domains = "csl:faceftw.dev";
-  # services.opendkim.selector = "alerts._domainkey";
-  # services.opendkim.user = "watchman";
-  # services.opendkim.group = "watchman";
-  # services.opendkim.settings.Mode = "sv";
-  # services.opendkim.settings.Domain = "faceftw.dev,archiver.localdomain";
-  # services.opendkim.settings.RequireSafeKeys = "False";
-  # services.opendkim.settings.ExternalIgnoreList = "127.0.0.1,::1,faceftw.dev";
-  # services.opendkim.settings.InternalHosts = "127.0.0.1,::1";
-
-  # services.postfix.enable = true;
-  # services.postfix.user = "watchman";
-  # services.postfix.group = "watchman";
-  # services.postfix.rootAlias = "archiver-alerts@faceftw.dev";
-  # services.postfix.settings.main.relayhost = [ "faceftw.dev" ];
-  # services.postfix.settings.main.smtp_tls_security_level = "dane";
-  # services.postfix.settings.master.smtp.smtpd_milters = "unix:/run/opendkim/opendkim.sock";
-  # services.postfix.settings.master.non_smtpd_milters = "$smtpd_milters";
-  # services.postfix.settings.master.milter_default_action = "accept";
-  # services.postfix.canonical = ''
-  #   root@archiver.localdomain archiver-alerts@faceftw.dev
-  #   @archiver.localdomain archiver-alerts@faceftw.dev
-  #   root@faceftw.dev archiver-alerts@faceftw.dev
-  #   @faceftw.dev archiver-alerts@faceftw.dev
-  # '';
-  # services.postfix.extraAliases = "root: archiver-alerts@faceftw.dev";
-  # #   services.postfix.settings.main.smtp_generic_maps = "hash:/var/lib/postfix/conf/generic";
-  # services.postfix.settings.main.myorigin = "faceftw.dev";
-  # #   services.postfix.mapFiles.generic = ./postfix-generic;
-
-  # #   environment.etc."postfix/generic".text = ''
-  # #     root@archiver.local archiver-alerts@faceftw.dev
-  # #     @archiver.local archiver-alerts@faceftw.dev
-  # #   '';
-
 }
