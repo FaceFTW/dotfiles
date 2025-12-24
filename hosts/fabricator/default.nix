@@ -2,6 +2,7 @@
   config,
   inputs,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -25,7 +26,16 @@ in
   ############################################
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.face = (import ./home-manager.nix);
+  home-manager.users.face = {
+    home.enableNixpkgsReleaseCheck = false;
+    home.username = "face";
+    home.homeDirectory = "/home/face";
+    xdg.enable = true;
+
+    programs = (import ../../modules/home.nix { inherit config pkgs lib; });
+
+    home.stateVersion = "25.05";
+  };
 
   users.users.${user} = {
     home = "/home/${user}";
