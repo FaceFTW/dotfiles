@@ -138,4 +138,11 @@
 
   };
 
+  # Bind mounts for NFS Shares
+  # Assumes we made the /export directory with perms
+  fileSystems."/export/motorway".device = "/mnt/motorway";
+  fileSystems."/export/motorway".options = [ "bind" ];
+
+  fileSystems."/export/archive".device = "/mnt/archive";
+  fileSystems."/export/archive".options = [ "bind" ];
 }
