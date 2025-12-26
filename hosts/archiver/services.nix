@@ -208,7 +208,55 @@
           sleep ''${LED_REFRESH_INTERVAL}s
       done
     '';
+  };
 
+  systemd.timers."archive-offline-mirror" = {
+    wantedBy = [ "timers.target" ];
+    timerConfig.OnCalendar = "weekly";
+    timerConfig.Persistent = true;
+  };
+  systemd.services."archive-offline-mirror" = {
+    wants = [
+      "mnt-archive.mount"
+      "mnt-freeman.mount"
+    ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+
+      token=$(cat /run/secrets/pushover_api_key)
+      user=$(cat /run/secrets/pushover_user_key)
+
+      ${pkgs.curl}/bin/curl \
+        --retry 5 \
+        --retry-delay 30 \
+        --form-string "token=''${token}" \
+        --form-string "user=''${user}" \
+        --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
+        --form-string "title="Archive Offline Mirror" \
+        --form-string "message=Starting backup job" \
+        https://api.pushover.net/1/messages.json
+
+
+      ${pkgs.rsync}/bin/rsync -aPt \
+          --archive \
+          --partial \
+          --progress \
+          --delete-before \
+          --exclude /SteamBackups
+          --exclude /Misc_Large
+          /mnt/archive/ \
+          /mnt/freeman
+
+      ${pkgs.curl}/bin/curl \
+        --retry 5 \
+        --retry-delay 30 \
+        --form-string "token=''${token}" \
+        --form-string "user=''${user}" \
+        --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
+        --form-string "title="Archive Offline Mirror" \
+        --form-string "message=Backup Job completed. Check logs for more info" \
+        https://api.pushover.net/1/messages.json
+    '';
   };
 
 }
