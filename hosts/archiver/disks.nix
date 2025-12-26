@@ -158,4 +158,11 @@
     "nofail"
   ];
 
+  services.btrfs.autoScrub.enable = true;
+  services.btrfs.autoScrub.fileSystems = [
+    "/"
+    "/mnt/archive"
+    "/mnt/motorway"
+  ];
+
 }
