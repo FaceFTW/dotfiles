@@ -1,34 +1,26 @@
-{ pkgs,... }:
+{ ... }:
 {
   networking.hostName = "archiver";
   networking.firewall.allowedTCPPorts = [
     22
-    80
-    # For some godforsaken reason Windows likes this port for conencting to shares
-    111
-    # Also desired by Windows
-    445
-    2049
-    4000
-    4001
-    4002
-    4003
-    20048
-    43183
+    # 80
+    # # For some godforsaken reason Windows likes this port for conencting to shares
+    # 111
+    # # Also desired by Windows
+    # 445
+    # 2049
+    # 4000
+    # 4001
+    # 4002
+    # 4003
+    # 20048
+    # 43183
   ];
   networking.firewall.allowedUDPPorts = [
-    80
     # For some godforsaken reason Windows likes this port for conencting to shares
-    111
+    # 111
     # Also desired by Windows
-    445
-    2049
-    4000
-    4001
-    4002
-    4003
-    20048
-    50421
+    # 445
   ];
 
   networking.firewall.allowPing = true;
@@ -57,7 +49,7 @@
   services.samba.openFirewall = true;
   services.samba-wsdd.enable = true;
   services.samba-wsdd.openFirewall = true;
-  services.samba.settings.global."log level" = "5";
+  services.samba.settings.global."log level" = "3";
   services.samba.settings.global."syslog" = "3";
   services.samba.settings.global."workgroup" = "WORKGROUP";
   services.samba.settings.global."server string" = "archiver";
@@ -65,16 +57,16 @@
   services.samba.settings.global."passdb backend" = "smbpasswd";
   services.samba.settings.global."smb passwd file" = "/etc/samba/smbpasswd";
   services.samba.settings.global."server role" = "standalone server";
-  services.samba.settings.global."server min protocol" = "SMB3_11";
+  # services.samba.settings.global."server min protocol" = "SMB3_11";
   services.samba.settings.global."server smb encrypt" = "required";
   services.samba.settings.global."server signing" = "mandatory";
+  services.samba.settings.global."winbind nss info" = "rfc2307";
   services.samba.settings.global."server smb3 encryption algorithms" = "AES-256-GCM";
   services.samba.settings.global."server smb3 signing algorithms" = "AES-128-GMAC";
   services.samba.settings.global."security" = "user";
   services.samba.settings.global."hosts allow" = "192.168.0. 127.0.0.1 localhost";
   services.samba.settings.global."hosts deny" = "0.0.0.0/0";
-  services.samba.settings.global."username map script" = "${pkgs.}/bin/echo";
-  #   services.samba.settings.global."map to guest" = "bad user";
+  services.samba.settings.global."map to guest" = "bad user";
   services.samba.settings.global."deadtime" = "5";
 
   # Disable samba printing because of course that is a thing
@@ -86,36 +78,16 @@
   services.samba.settings.motorway."path" = "/export/motorway";
   services.samba.settings.motorway."browseable" = "yes";
   services.samba.settings.motorway."writable" = "yes";
-  services.samba.settings.motorway."read only" = "no";
-  # services.samba.settings.motorway."guest ok" = "yes";
   services.samba.settings.motorway."create mask" = "0644";
   services.samba.settings.motorway."directory mask" = "0755";
   services.samba.settings.motorway."force user" = "face";
-  services.samba.settings.motorway."force group" = "face";
+  services.samba.settings.motorway."force group" = "users";
 
   services.samba.settings.archive."path" = "/export/archive";
   services.samba.settings.archive."browseable" = "yes";
   services.samba.settings.archive."writable" = "yes";
-  services.samba.settings.archive."read only" = "no";
-  # services.samba.settings.archive."guest ok" = "yes";
   services.samba.settings.archive."create mask" = "0644";
   services.samba.settings.archive."directory mask" = "0755";
   services.samba.settings.archive."force user" = "face";
-  services.samba.settings.archive."force group" = "face";
-
-  #   services.nfs.server.enable = true;
-  #   services.nfs.server.lockdPort = 4001;
-  #   services.nfs.server.mountdPort = 4002;
-  #   services.nfs.server.statdPort = 4000;
-  #   boot.kernel.sysctl."fs.nfs.nlm_udpport" = 4001;
-  #   boot.kernel.sysctl."fs.nfs.nlm_tcpport" = 4001;
-  #   boot.kernel.sysctl."fs.nfs.nfs_callback_tcpport" = 4003;
-  #   #   boot.extraModprobeConfig = ''
-
-  #   #   '';
-  #   services.nfs.server.exports = ''
-  #     /export            192.168.0.0/24(insecure,rw,sync,no_subtree_check,crossmnt,fsid=0)
-  #     /export/motorway   192.168.0.0/24(insecure,rw,sync,no_subtree_check)
-  #     /export/archive    192.168.0.0/24(insecure,rw,sync,no_subtree_check)
-  #   '';
+  services.samba.settings.archive."force group" = "users";
 }
