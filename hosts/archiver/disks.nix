@@ -138,11 +138,24 @@
 
   };
 
-  # Bind mounts for NFS Shares
+  # Bind mounts for Samba Shares
   # Assumes we made the /export directory with perms
   fileSystems."/export/motorway".device = "/mnt/motorway";
+  fileSystems."/export/motorway".depends = [ "/mnt/motorway" ];
   fileSystems."/export/motorway".options = [ "bind" ];
 
   fileSystems."/export/archive".device = "/mnt/archive";
+  fileSystems."/export/archive".depends = [ "/mnt/archive" ];
   fileSystems."/export/archive".options = [ "bind" ];
+
+  # This is an external SSD to be used as a "offline mirror" separate from
+  # the main MDADM array. Since this is external, it is not managed by disko
+  fileSystems."/mnt/freeman".device = "/dev/disk/by-partuuid/c524f2dc-4057-4b30-80c1-a70397c1bbd2";
+  fileSystems."/mnt/freeman".fsType = "exfat";
+  fileSystems."/mnt/freeman".options = [
+    "uid=face"
+    "gid=users"
+    "nofail"
+  ];
+
 }

@@ -3,26 +3,7 @@
   networking.hostName = "archiver";
   networking.firewall.allowedTCPPorts = [
     22
-    # 80
-    # # For some godforsaken reason Windows likes this port for conencting to shares
-    # 111
-    # # Also desired by Windows
-    # 445
-    # 2049
-    # 4000
-    # 4001
-    # 4002
-    # 4003
-    # 20048
-    # 43183
   ];
-  networking.firewall.allowedUDPPorts = [
-    # For some godforsaken reason Windows likes this port for conencting to shares
-    # 111
-    # Also desired by Windows
-    # 445
-  ];
-
   networking.firewall.allowPing = true;
 
   services.resolved.enable = true;
