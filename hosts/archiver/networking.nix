@@ -3,6 +3,7 @@
   networking.hostName = "archiver";
   networking.firewall.allowedTCPPorts = [
     22
+    111
   ];
   networking.firewall.allowPing = true;
 
@@ -42,8 +43,6 @@
   services.samba.settings.global."server smb encrypt" = "required";
   services.samba.settings.global."server signing" = "mandatory";
   services.samba.settings.global."winbind nss info" = "rfc2307";
-  services.samba.settings.global."server smb3 encryption algorithms" = "AES-256-GCM";
-  services.samba.settings.global."server smb3 signing algorithms" = "AES-128-GMAC";
   services.samba.settings.global."security" = "user";
   services.samba.settings.global."hosts allow" = "192.168.0. 127.0.0.1 localhost";
   services.samba.settings.global."hosts deny" = "0.0.0.0/0";
