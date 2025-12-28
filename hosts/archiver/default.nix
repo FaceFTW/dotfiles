@@ -92,6 +92,7 @@ in
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.extraModulePackages = [ pkgs.kernelModules.ugreen_led ];
+  boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
 
   boot.initrd.kernelModules = [ "mmc_block" ];
   boot.kernelModules = [

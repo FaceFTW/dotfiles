@@ -244,6 +244,7 @@
           --delete-before \
           --exclude /SteamBackups
           --exclude /Misc_Large
+          --exclude /SteamLibrary
           /mnt/archive/ \
           /mnt/freeman
 
