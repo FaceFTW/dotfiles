@@ -49,8 +49,8 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuQw4U+Wam1gjuEXyH/cObZfnfYiA/LPF0kjQPFTz9x face@manifold-wsl"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
     ];
-    # initialPassword = ""; #For bootstrapping!
-    hashedPasswordFile = config.sops.secrets.user_passwd.path;
+    initialPassword = "***REMOVED***"; #For bootstrapping!
+    # hashedPasswordFile = config.sops.secrets.user_passwd.path;
     packages = [ ];
   };
 
