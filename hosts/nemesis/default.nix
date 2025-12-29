@@ -58,7 +58,8 @@ in
     ];
     initialPassword = ""; # For bootstrapping!
     # hashedPasswordFile = config.sops.secrets.user_passwd.path;
-    packages = [ ];
+    packages = [
+    ];
   };
 
   # The following are system users/groups defined for various services
@@ -138,6 +139,9 @@ in
 
   environment.systemPackages = [
     pkgs.sbctl
+    pkgs.alacritty
+    pkgs.thunar
+    pkgs.firefox
   ];
 
   system.stateVersion = "25.05"; # Don't change this
