@@ -90,9 +90,17 @@ in
   ############################################
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 3;
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
-  boot.extraModulePackages = [ pkgs.kernelModules.ugreen_led ];
+  boot.kernelPackages = pkgs.linuxPackages;
+  boot.crashDump.enable = true;
+  boot.extraModulePackages = [
+    pkgs.kernelModules.ugreen_led
+  ];
+  boot.kernelParams = [
+    "pcie_port_pm=off"
+    "pcie_aspm.policy=performance"
+  ];
   boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
 
   boot.initrd.kernelModules = [ "mmc_block" ];
   boot.kernelModules = [
@@ -101,6 +109,7 @@ in
     "i2c-dev"
     "ledtrig-netdev"
     "ledtrig-oneshot"
+    "igc"
   ];
   hardware.enableAllHardware = true;
 

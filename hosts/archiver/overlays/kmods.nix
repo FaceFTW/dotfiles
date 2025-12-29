@@ -2,7 +2,7 @@
 # Note that this assumes we use Kernel 6.18 since that is what we compile with
 final: prev:
 let
-  kernel = prev.linuxKernel.kernels.linux_6_18;
+  kernel = prev.linuxKernel.kernels.linux_6_12;
   git = (
     fetchGit {
       url = "https://github.com/miskcoo/ugreen_leds_controller.git";

@@ -193,20 +193,20 @@
       ) &
       disk_online_check_pid=$!
 
-      declare -A diskio_data_rw
-      while true; do
-          for led in "''${!devices[@]}"; do
-              # if $dev does not exist, diskio_new_rw="", which will be safe
-              diskio_new_rw="$(cat /sys/block/''${devices[$led]}/stat 2>/dev/null)"
-              if [ "''${diskio_data_rw[$led]}" != "''${diskio_new_rw}" ]; then
-                  if [[ -f /sys/class/leds/$led/shot  ]]; then
-                      echo 1 > /sys/class/leds/$led/shot
-                  fi
-              fi
-              diskio_data_rw[$led]=$diskio_new_rw
-          done
-          sleep ''${LED_REFRESH_INTERVAL}s
-      done
+      # declare -A diskio_data_rw
+      # while true; do
+      #     for led in "''${!devices[@]}"; do
+      #         # if $dev does not exist, diskio_new_rw="", which will be safe
+      #         diskio_new_rw="$(cat /sys/block/''${devices[$led]}/stat 2>/dev/null)"
+      #         if [ "''${diskio_data_rw[$led]}" != "''${diskio_new_rw}" ]; then
+      #             if [[ -f /sys/class/leds/$led/shot  ]]; then
+      #                 echo 1 > /sys/class/leds/$led/shot
+      #             fi
+      #         fi
+      #         diskio_data_rw[$led]=$diskio_new_rw
+      #     done
+      #     sleep ''${LED_REFRESH_INTERVAL}s
+      # done
     '';
   };
 

@@ -23,6 +23,8 @@
     networkConfig.IPv6AcceptRA = true;
     networkConfig.MulticastDNS = "yes";
     linkConfig.RequiredForOnline = true;
+    linkConfig.MTUBytes = 1500;
+
   };
 
   # NOTE: This assumes this is only in the local network and not exposed to the outside
