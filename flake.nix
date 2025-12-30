@@ -36,7 +36,10 @@
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
 
-    #
+    #Vicinae
+    vicinae.url = "github:vicinaehq/vicinae";
+
+
   };
 
   outputs =

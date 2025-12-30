@@ -1,23 +1,10 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
-}:
-{
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.budgie.enable = true;
+{ pkgs, inputs, ... }:
+let
 
-  services.xserver.xkb.layout = "us";
-  services.xserver.xkb.variant = "";
-
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.displayManager.sddm.autoLogin.relogin = false;
-  services.displayManager.sddm.enableHidpi = true;
-  services.displayManager.sddm.settings.EnableAvatars = true;
+  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+  systemctl = "${pkgs.systemd}/bin/systemctl";
+in
+{
 
   programs.hyprland.enable = true;
   programs.hyprland.package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
@@ -27,28 +14,28 @@
   # programs.hyprland.withUWSM = true;
 
   programs.hyprlock.enable = true;
+  security.pam.services.hyprlock = { };
 
+  # Manage hyprland /wm startup with uwsm
+  # programs.uwsm.enable = true;
+  # programs.uwsm.waylandCompositors.hyprland.prettyName = "Hyprland";
+  # programs.uwsm.waylandCompositors.hyprland.comment = "Hyprland compositor managed by UWSM";
+  # programs.uwsm.waylandCompositors.hyprland.binPath = "/run/current-system/sw/bin/Hyprland";
   home-manager.users.face = {
-
-    programs.waybar.enable = true;
-    programs.waybar.style = ./assets/waybar.css;
-
-    services.swaync.enable = true;
-    # services.swaync.settings = builtins.re;
-
-
     wayland.windowManager.hyprland.enable = true;
     wayland.windowManager.hyprland.package = null;
     wayland.windowManager.hyprland.portalPackage = null;
     wayland.windowManager.hyprland.plugins = [
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
     ];
+    wayland.windowManager.hyprland.systemd.enable = false;
+    # I manage this here since there needs to be a lot of references to nix store paths
     wayland.windowManager.hyprland.extraConfig = ''
-      $terminal = alacritty
-      $fileManager = thunar
+      $terminal = ${pkgs.alacritty}/bin/alacritty
+      $fileManager = ${pkgs.thunar}/bin/thunar
       $menu = wofi --show drun --style ~/.config/wofi/menu.css
       $browser = hyprctl dispatch exec "firefox --ozone-platform=wayland --enable-features=UseOzonePlatform"
-      $editor = vim
+      $editor = ${pkgs.vimCustom}/bin/vim
       $wallpaper=~/Hyprland-Simple-Setup/Wallpaper/Forest_01.png
 
       # $screenshot = hyprshot --mode
@@ -63,33 +50,35 @@
       # AUTOSTART
       #######################################################
       # Start Polkit Agent for Authentication
-      exec-once = systemctl --user start hyprpolkitagent &
-      exec-once = hyprctl keyword input:kb_numlock true && date "+%Y-%m-%d %H:%M:%S" > /tmp/numlock-set
+      exec-once = ${systemctl} --user start hyprpolkitagent &
+      exec-once = ${hyprctl} keyword input:kb_numlock true && date "+%Y-%m-%d %H:%M:%S" > /tmp/numlock-set
       exec-once = /usr/lib/polkit-kde-authentication-agent-1 &
 
-      exec-once = swaync
+      exec-once = ${pkgs.swaync}/bin/swaync &
 
-      exec-once = nm-applet --indicator &
-      exec-once = blueman-applet &
+      exec-once = ${pkgs.vicinae}/bin/vicinae server &
 
-      exec-once = hyprpaper &
-      exec-once = $hyprscripts/change_wallpaper.sh &
+      # exec-once = nm-applet --indicator &
+      # exec-once = blueman-applet &
 
-      exec-once = wl-clip-persist --clipboard regular &
-      exec-once = wl-clipboard-history -t &
+      # exec-once = hyprpaper &
+      # exec-once = $hyprscripts/change_wallpaper.sh &
+
+      # exec-once = wl-clip-persist --clipboard regular &
+      # exec-once = wl-clipboard-history -t &
 
       # Start Idle Manager
-      exec-once = hypridle &
+      # exec-once = hypridle &
 
-      exec-once = systemctl --user start app-org.kde.xwaylandvideobridge@autostart.service &
+      # exec-once = ${systemctl} --user start app-org.kde.xwaylandvideobridge@autostart.service &
 
       # Fix Dolphin File Manager
-      exec-once = $hyprscripts/fix-dolphin.sh &
+      # exec-once = $hyprscripts/fix-dolphin.sh &
 
       # Cursor theme
       exec-once = hyprctl setcursor $cursor 24
 
-      exec-once = hyprsunset
+      # exec-once = hyprsunset
 
       # exec-once = sleep 1; waybar -c "$HOME/.config/waybar/config.jsonc" &
       # exec-once = $hyprscripts/Startup_check.sh &
@@ -205,6 +194,7 @@
           vfr = true # Enable VFR (Variable Frame Rate) for Hyprland
           force_default_wallpaper = 0 # Set to 0 or 1 to disable the anime mascot wallpapers
           disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
+          focus_on_activate = true
       }
 
       #######################################################
@@ -244,15 +234,12 @@
 
       # Open Programms
       bindd = $mainMod, SPACE, Open Menu, exec, pkill wofi || $menu
-      bindd = $mainMod1, Y, Open Preferred Terminal, exec, $terminal
+      bindd = $mainMod, T, Open Preferred Terminal, exec, $terminal
       bindd = $mainMod, E, Open Preferred File Manager, exec, $fileManager
       bindd = $mainMod, F, Open Preferred Browser, exec, $browser
       bindd = $mainMod, C, Open Preferred Editor, exec, $editor
       bindd = $mainMod, J, Open Preferred Color Picker, exec, $colorPicker
-      bindd = $mainMod, K, Open Preferred Calendar, exec, $calendar
-      bindd = $mainMod, $ENTER, Open Calculator, exec, $calc
       bindd = $mainMod, $LESS, Open Notification Center, exec, sleep 0.1 && swaync-client -t -sw
-      bindd = $mainMod $mainMod2, W, Open Archwiki (Locally), exec, vivaldi /usr/share/doc/arch-wiki/html/en/Table_of_contents.html
 
       # Window Behaivior
       bindd = $mainMod, X, Close Active Window, killactive,
@@ -351,14 +338,8 @@
       #######################################################
       # WINDOW RULES
       #######################################################
-      # Workspace 1
-      windowrule = workspace 1 silent, class:code, title:Visual Studio Code
-
-      # Workspace 2
-      windowrule = workspace 2 silent, class:vivaldi-stable
-
       # Ignore maximize requests from apps. You'll probably like this.
-      windowrule = suppressevent maximize, class:.*
+      # windowrule = suppressevent maximize, class:.*
 
       # Fix some dragging issues with XWayland
       windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
@@ -387,20 +368,11 @@
       windowrule = float, class:Tk
       windowrule = center, class:Tk
 
-      layerrule = dimaround, wofi
+      layerrule = blur,vicinae
+      layerrule = ignorealpha 0, vicinae
+      layerrule = noanim, vicinae
 
-      windowrule = float, class:qalculate-gtk
 
-      windowrule = float, class:kitty, title:Notes
-      windowrule = center, class:kitty, title:Notes
-      windowrule = size 800 600, class:kitty, title:Notes
     '';
-
-  xdg.portal.config = ''
-        [preferred]
-    default = hyprland;gtk;kde
-    org.freedesktop.impl.portal.FileChooser = kde"
-  '';
   };
-
 }
