@@ -24,7 +24,7 @@ in
     ./hardware.nix
     ./networking.nix
     ./services.nix
-    ./wm.nix
+    ./wm
   ];
 
   ############################################
