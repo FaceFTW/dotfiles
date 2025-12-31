@@ -1,12 +1,9 @@
 { ... }:
-let
-  fromJsonFile =
-    file: (builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile file)));
-in
 {
   imports = [
     ./hypr.nix
-
+    ./swaync.nix
+    ./waybar.nix
   ];
 
   # services.xserver.enable = true;
@@ -27,15 +24,6 @@ in
   services.displayManager.sddm.settings.RememberLastUser = true;
 
   home-manager.users.face = {
-
-    programs.waybar.enable = true;
-    programs.waybar.style = ./assets/waybar.css;
-    programs.waybar.settings = fromJsonFile ./assets/waybar.json;
-
-    services.swaync.enable = true;
-    services.swaync.style = ./assets/swaync.css;
-    services.swaync.settings = fromJsonFile ./assets/swaync.json;
-
     services.wl-clip-persist.enable = true;
     # services.wl-clip-persist.systemdTargets = "graphical-session.target";
 
