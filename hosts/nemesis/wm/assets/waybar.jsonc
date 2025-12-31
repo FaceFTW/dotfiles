@@ -3,16 +3,15 @@
     "layer": "top", // Waybar at top layer
     "spacing": 10, // Gaps between modules
     "modules-left": [
-        "custom/power",
-        "custom/menu",
+        // "custom/power",
+        // "custom/menu",
         "tray",
-        "hyprland/workspaces",
-        "hyprland/submap",
-        "custom/clipboard"
+        // "hyprland/submap",
+        // "custom/clipboard"
     ],
     "modules-right": [
         "wlr/taskbar",
-        "custom/weather",
+        // "custom/weather",
         "pulseaudio",
         // "custom/brightness",
         "network",
@@ -21,8 +20,7 @@
         "keyboard-state",
         "battery",
         "bluetooth",
-        "custom/updates",
-        "custom/notification",
+        // "custom/notification",
         "clock"
         // Unused Modules
         // "idle_inhibitor",
@@ -72,7 +70,7 @@
     },
 
     "clock": {
-        "timezone": "Zurich",
+        "timezone": "New York",
         "format": "{:%a %d %b %Y | %H:%M}",
         "tooltip-format": "<big><tt><small>{calendar}</small></tt></big>",
         "on-click": "~/.config/hypr/scripts/float_calendar.sh"
@@ -121,48 +119,37 @@
         "on-click-right": "nm-connection-editor"
     },
 
-    "pulseaudio": {
-        "on-click": "pavucontrol",
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        }
-    },
+    // "pulseaudio": {
+    //     "on-click": "pavucontrol",
+    //     "format": "{volume}% {icon} {format_source}",
+    //     "format-bluetooth": "{volume}% {icon} {format_source}",
+    //     "format-bluetooth-muted": " {icon} {format_source}",
+    //     "format-muted": " {format_source}",
+    //     "format-source": "{volume}% ",
+    //     "format-source-muted": "",
+    //     "format-icons": {
+    //         "headphone": "",
+    //         "hands-free": "",
+    //         "headset": "",
+    //         "phone": "",
+    //         "portable": "",
+    //         "car": "",
+    //         "default": ["", "", ""]
+    //     }
+    // },
 
-    "bluetooth": {
-        "format": "",
-        "format-off": "",
-        "format-on": "",
-        "format-connected": " {device_alias}",
-        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
-        "tooltip": true,
-        "tooltip-format": "Controller: {controller_alias}\nAddress: {controller_address}\nStatus: {status}",
-        "tooltip-format-connected": "Controller: {controller_alias}\nAddress: {controller_address}\nConnected: {device_alias} ({device_address})\nBattery: {device_battery_percentage}%",
-        "on-click": "blueman-manager",
-        "on-click-right": "$HOME/.config/hypr/scripts/toggle_bluetooth.sh"
-    },
-
-    "custom/weather": {
-        "format": "{}",
-        "format-alt": "{alt}:{}",
-        "format-alt-click": "click",
-        "interval": 3600,
-        "return-type": "json",
-        "exec": "$HOME/.config/waybar/scripts/weather.py",
-        "tooltip": true,
-        "on-click": "$HOME/.config/waybar/scripts/weather.sh"
-    },
+    // "bluetooth": {
+    //     "format": "",
+    //     "format-off": "",
+    //     "format-on": "",
+    //     "format-connected": " {device_alias}",
+    //     "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    //     "tooltip": true,
+    //     "tooltip-format": "Controller: {controller_alias}\nAddress: {controller_address}\nStatus: {status}",
+    //     "tooltip-format-connected": "Controller: {controller_alias}\nAddress: {controller_address}\nConnected: {device_alias} ({device_address})\nBattery: {device_battery_percentage}%",
+    //     "on-click": "blueman-manager",
+    //     "on-click-right": "$HOME/.config/hypr/scripts/toggle_bluetooth.sh"
+    // },
 
     // TODO: Could lead to freezes and crashes due to ddcutil checking monitors through a loop
     // "custom/brightness": {
@@ -182,74 +169,62 @@
     //     }
     // },
 
-    "custom/updates": {
-        "format": "{}{icon}",
-        "return-type": "json",
-        "format-icons": {
-            "has-updates": " 󱍷",
-            "updated": ""
-        },
-        "exec-if": "which waybar-module-pacman-updates",
-        "exec": "waybar-module-pacman-updates --no-zero-output --interval-seconds 60 --network-interval-seconds 60 --tooltip-align-columns monospace",
-        "on-click": "$HOME/.config/waybar/scripts/update.sh"
-    },
+    // "custom/notification": {
+    //     "tooltip": false,
+    //     "format": "{} {icon}",
+    //     "format-icons": {
+    //       "notification": "<span foreground='red'><sup></sup></span>",
+    //       "none": "",
+    //       "dnd-notification": "<span foreground='red'><sup></sup></span>",
+    //       "dnd-none": "",
+    //       "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+    //       "inhibited-none": "",
+    //       "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+    //       "dnd-inhibited-none": ""
+    //     },
+    //     "return-type": "json",
+    //     "exec-if": "which swaync-client",
+    //     "exec": "swaync-client -swb",
+    //     "on-click": "sleep 0.1 && swaync-client -t -sw",
+    //     "on-click-right": "sleep 0.1 && swaync-client -d -sw",
+    //     "escape": true
+    //   },
 
-    "custom/notification": {
-        "tooltip": false,
-        "format": "{} {icon}",
-        "format-icons": {
-          "notification": "<span foreground='red'><sup></sup></span>",
-          "none": "",
-          "dnd-notification": "<span foreground='red'><sup></sup></span>",
-          "dnd-none": "",
-          "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-          "inhibited-none": "",
-          "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-          "dnd-inhibited-none": ""
-        },
-        "return-type": "json",
-        "exec-if": "which swaync-client",
-        "exec": "swaync-client -swb",
-        "on-click": "sleep 0.1 && swaync-client -t -sw",
-        "on-click-right": "sleep 0.1 && swaync-client -d -sw",
-        "escape": true
-      },
+    // "custom/power": {
+    // "format": " ⏻ ",
+    // "on-click": "wlogout --protocol layer-shell",
+    // "menu": "on-click-right",
+    // "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+    // "menu-actions": {
+    //     "shutdown": "shutdown",
+    //     "reboot": "reboot",
+    //     "suspend": "systemctl suspend",
+    //     "hibernate": "systemctl hibernate",
+    //     "logout": "hyprctl dispatch exit"
+    //     }
+    // },
 
-    "custom/power": {
-    "format": " ⏻ ",
-    "on-click": "wlogout --protocol layer-shell",
-    "menu": "on-click-right",
-    "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
-    "menu-actions": {
-        "shutdown": "shutdown",
-        "reboot": "reboot",
-        "suspend": "systemctl suspend",
-        "hibernate": "systemctl hibernate",
-        "logout": "hyprctl dispatch exit"
-        }
-    },
+    // "custom/menu": {
+    //     "format": "{icon} Menu",
+    //     "format-icons": [""],
+    //     "tooltip": "Open Menu",
+    //     "on-click": "",
+    //     "menu": "on-click-right",
+    //     "menu-file": "$HOME/.config/waybar/options_menu.xml",
+    //     "menu-actions": {
+    //         "keybinds": "~/.config/waybar/scripts/keybinds.py",
+    //         "drun": "wofi --show drun --style ~/.config/wofi/menu.css",
+    //         "open_keybinds": "kitty nvim ~/.config/hypr/sources/keybindings.conf",
+    //         "snapshot": "$HOME/.config/waybar/scripts/snapshot.sh"
+    //     }
+    // },
 
-    "custom/menu": {
-        "format": "{icon} Menu",
-        "format-icons": [""],
-        "tooltip": "Open Menu",
-        "on-click": "wofi --show drun --style ~/.config/wofi/menu.css",
-        "menu": "on-click-right",
-        "menu-file": "$HOME/.config/waybar/options_menu.xml",
-        "menu-actions": {
-            "keybinds": "~/.config/waybar/scripts/keybinds.py",
-            "drun": "wofi --show drun --style ~/.config/wofi/menu.css",
-            "open_keybinds": "kitty nvim ~/.config/hypr/sources/keybindings.conf",
-            "snapshot": "$HOME/.config/waybar/scripts/snapshot.sh"
-        }
-    },
-
-    "custom/clipboard": {
-        "format": "󰅌",
-        "exec": "wl-clipboard-history -p",
-        "interval": 5,
-        "on-click": "$HOME/.config/waybar/scripts/clipboard.sh"
-    }
+    // "custom/clipboard": {
+    //     "format": "󰅌",
+    //     "exec": "wl-clipboard-history -p",
+    //     "interval": 5,
+    //     "on-click": "$HOME/.config/waybar/scripts/clipboard.sh"
+    // }
 }
 
 // Unused Modules
