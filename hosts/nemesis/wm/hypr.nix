@@ -76,11 +76,11 @@ in
       # exec-once = $hyprscripts/fix-dolphin.sh &
 
       # Cursor theme
-      exec-once = hyprctl setcursor $cursor 24
+      # exec-once = ${hyprctl} setcursor $cursor 24
 
       # exec-once = hyprsunset
 
-      # exec-once = sleep 1; waybar -c "$HOME/.config/waybar/config.jsonc" &
+      exec-once = sleep 1; ${pkgs.waybar}/bin/waybar -c "$HOME/.config/waybar/config.jsonc" &
       # exec-once = $hyprscripts/Startup_check.sh &
       exec-once = sleep 5; $hyprscripts/check_setup_warnings.sh &
 
@@ -233,7 +233,7 @@ in
       $HOME = code:110 # Home Key
 
       # Open Programms
-      bindd = $mainMod, SPACE, Open Menu, exec, pkill wofi || $menu
+      bindd = $mainMod, SPACE, Open Menu, exec, ${pkgs.vicinae}/bin/vicinae toggle
       bindd = $mainMod, T, Open Preferred Terminal, exec, $terminal
       bindd = $mainMod, E, Open Preferred File Manager, exec, $fileManager
       bindd = $mainMod, F, Open Preferred Browser, exec, $browser

@@ -9,18 +9,18 @@ in
 
   ];
 
-  services.xserver.enable = true;
-  services.xserver.displaymanager.lightdm.enable = true;
-  services.xserver.desktopmanager.budgie.enable = true;
+  # services.xserver.enable = true;
+  # services.xserver.displaymanager.lightdm.enable = true;
+  # services.xserver.desktopmanager.budgie.enable = true;
 
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.variant = "";
 
-  services.displaymanager.sddm.enable = true;
-  services.displaymanager.sddm.wayland.enable = true;
-  services.displaymanager.sddm.autologin.relogin = false;
-  services.displaymanager.sddm.enablehidpi = true;
-  services.displaymanager.sddm.settings.EnableAvatars = true;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.autoLogin.relogin = false;
+  services.displayManager.sddm.enableHidpi = true;
+  services.displayManager.sddm.settings.EnableAvatars = true;
   services.displayManager.sddm.settings.FacesDir = ./assets/sddm;
   services.displayManager.sddm.settings.ReuseSession = true;
   services.displayManager.sddm.settings.RememberLastSession = true;
