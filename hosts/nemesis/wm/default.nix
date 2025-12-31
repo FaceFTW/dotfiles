@@ -30,7 +30,7 @@ in
 
     programs.waybar.enable = true;
     programs.waybar.style = ./assets/waybar.css;
-    programs.waybar.settings = fromJsonFile ./assets/waybar.jsonc;
+    programs.waybar.settings = fromJsonFile ./assets/waybar.json;
 
     services.swaync.enable = true;
     services.swaync.style = ./assets/swaync.css;
@@ -39,7 +39,7 @@ in
     services.wl-clip-persist.enable = true;
     # services.wl-clip-persist.systemdTargets = "graphical-session.target";
 
-    xdg.portal.enable = true;
+    # xdg.portal.enable = true;
     xdg.portal.config = ''
       [preferred]
       default = hyprland;gtk;kde
