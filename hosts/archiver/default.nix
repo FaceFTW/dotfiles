@@ -32,8 +32,64 @@ in
     home.homeDirectory = "/home/face";
     xdg.enable = true;
 
-    programs = (import ../../modules/home.nix { inherit config pkgs lib; });
+    programs = lib.mkMerge [
+      (import ../../modules/home.nix { inherit config pkgs lib; })
+      {
+        btop.enable = true;
+        btop.settings.color_theme = "Default";
+        btop.settings.theme_background = true;
+        btop.settings.force_tty = true;
+        btop.settings.terminal_sync = true;
+        btop.settings.clock_format = "/host - %x %X";
+        btop.settings.presets = "cpu:0:default,mem:0:default,net:0:default";
+        btop.settings.update_ms = 2000;
+        btop.settings.log_level = "WARNING";
 
+        #* Default symbols to use for graph creation, "braille", "block" or "tty".
+        #* "braille" offers the highest resolution but might not be included in all fonts.
+        #* "block" has half the resolution of braille but uses more common characters.
+        #* "tty" uses only 3 different symbols but will work with most fonts and should work in a real TTY.
+        #* Note that "tty" only has half the horizontal resolution of the other two, so will show a shorter historical view.
+        btop.settings.graph_symbol = "braille";
+        # btop.settings.graph_symbol_cpu = "default";
+        # btop.settings.graph_symbol_gpu = "default";
+        # btop.settings.graph_symbol_mem = "default";
+        # btop.settings.graph_symbol_net = "default";
+        btop.settings.shown_boxes = "mem cpu net";
+
+        btop.settings.cpu_graph_upper = "total";
+        btop.settings.cpu_graph_lower = "system";
+        btop.settings.cpu_single_graph = false;
+        btop.settings.cpu_bottom = false;
+        btop.settings.show_uptime = true;
+        btop.settings.show_cpu_watts = true;
+        btop.settings.check_temp = true;
+        btop.settings.cpu_sensor = "Auto";
+        btop.settings.show_coretemp = true;
+        btop.settings.temp_scale = "celsius";
+        btop.settings.base_10_sizes = false;
+        btop.settings.show_cpu_freq = true;
+
+        btop.settings.mem_graphs = false;
+        btop.settings.mem_below_net = false;
+        btop.settings.show_swap = true;
+
+        btop.settings.show_disks = true;
+        btop.settings.disks_filter = "/mnt/archive /mnt/motorway";
+        btop.settings.swap_disk = false;
+        btop.settings.use_fstab = true;
+        btop.settings.zfs_hide_datasets = true;
+        btop.settings.disk_free_priv = true;
+        btop.settings.show_io_stat = false;
+
+        btop.settings.net_auto = true;
+        btop.settings.net_sync = true;
+        btop.settings.net_iface = "enp2s0";
+        btop.settings.base_10_bitrate = "false";
+        btop.settings.show_battery = false;
+
+      }
+    ];
     home.stateVersion = "25.05";
   };
 
@@ -98,9 +154,10 @@ in
   boot.kernelParams = [
     "pcie_port_pm=off"
     "pcie_aspm.policy=performance"
+    "consoleblank=0"
   ];
-  boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
+  # boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
+  # boot.loader.systemd-boot.memtest86.enable = true;
 
   boot.initrd.kernelModules = [ "mmc_block" ];
   boot.kernelModules = [
@@ -123,6 +180,17 @@ in
   ############################################
   services.openssh.enable = true;
   services.openssh.settings.PasswordAuthentication = false; # "Hardening"
+
+  # Autostart btop monitor as a kiosk
+  systemd.services."getty@tty1" = {
+    overrideStrategy = "asDropin";
+    serviceConfig.ExecStart = [
+      ""
+      "${pkgs.btop}/bin/btop --config /home/face/.config/btop/btop.conf --preset 1 --force-utf"
+    ];
+    serviceConfig.User = "face"; # this is unconventional
+    serviceConfig.Group = "users";
+  };
 
   ############################################
   # Misc System Configuration
