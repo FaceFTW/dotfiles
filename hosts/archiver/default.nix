@@ -36,25 +36,19 @@ in
       (import ../../modules/home.nix { inherit config pkgs lib; })
       {
         btop.enable = true;
-        btop.settings.color_theme = "Default";
+        btop.settings.color_theme = "TTY";
         btop.settings.theme_background = true;
-        btop.settings.force_tty = true;
+        btop.settings.force_tty = false;
         btop.settings.terminal_sync = true;
         btop.settings.clock_format = "/host - %x %X";
         btop.settings.presets = "cpu:0:default,mem:0:default,net:0:default";
         btop.settings.update_ms = 2000;
         btop.settings.log_level = "WARNING";
 
-        #* Default symbols to use for graph creation, "braille", "block" or "tty".
-        #* "braille" offers the highest resolution but might not be included in all fonts.
-        #* "block" has half the resolution of braille but uses more common characters.
-        #* "tty" uses only 3 different symbols but will work with most fonts and should work in a real TTY.
-        #* Note that "tty" only has half the horizontal resolution of the other two, so will show a shorter historical view.
-        btop.settings.graph_symbol = "braille";
-        # btop.settings.graph_symbol_cpu = "default";
-        # btop.settings.graph_symbol_gpu = "default";
-        # btop.settings.graph_symbol_mem = "default";
-        # btop.settings.graph_symbol_net = "default";
+        btop.settings.graph_symbol = "block";
+        btop.settings.graph_symbol_cpu = "tty";
+        btop.settings.graph_symbol_mem = "tty";
+        btop.settings.graph_symbol_net = "block";
         btop.settings.shown_boxes = "mem cpu net";
 
         btop.settings.cpu_graph_upper = "total";
@@ -203,7 +197,7 @@ in
     # ];
     serviceConfig.ExecStart = [
       ""
-      "${pkgs.btop}/bin/btop --config /home/face/.config/btop/btop.conf --preset 1 --force-utf"
+      "${pkgs.btop}/bin/btop --config /home/face/.config/btop/btop.conf --preset 1 --force-utf --no-tty"
     ];
     serviceConfig.User = "face"; # this is unconventional
     serviceConfig.Group = "users";
