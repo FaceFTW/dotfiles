@@ -60,7 +60,7 @@
   services.samba.settings.motorway."path" = "/export/motorway";
   services.samba.settings.motorway."browseable" = "yes";
   services.samba.settings.motorway."writable" = "yes";
-  services.samba.settings.motorway."create mask" = "0644";
+  services.samba.settings.motorway."create mask" = "0777";
   services.samba.settings.motorway."directory mask" = "0755";
   services.samba.settings.motorway."force user" = "face";
   services.samba.settings.motorway."force group" = "users";
@@ -68,7 +68,7 @@
   services.samba.settings.archive."path" = "/export/archive";
   services.samba.settings.archive."browseable" = "yes";
   services.samba.settings.archive."writable" = "yes";
-  services.samba.settings.archive."create mask" = "0644";
+  services.samba.settings.archive."create mask" = "0777";
   services.samba.settings.archive."directory mask" = "0755";
   services.samba.settings.archive."force user" = "face";
   services.samba.settings.archive."force group" = "users";
