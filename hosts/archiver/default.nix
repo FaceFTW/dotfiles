@@ -145,30 +145,43 @@ in
   # Hardware Configuration
   ############################################
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 3;
-  boot.kernelPackages = pkgs.linuxPackages;
-  boot.crashDump.enable = true;
-  boot.extraModulePackages = [
-    pkgs.kernelModules.ugreen_led
-  ];
-  boot.kernelParams = [
-    "pcie_port_pm=off"
-    "pcie_aspm.policy=performance"
-    "consoleblank=0"
-  ];
-  # boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
-  # boot.loader.systemd-boot.memtest86.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 2;
 
-  boot.initrd.kernelModules = [ "mmc_block" ];
-  boot.kernelModules = [
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
+
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "uas"
+    "sd_mod"
+    "sdhci_pci"
     "mmc_block"
+  ];
+  boot.initrd.systemd.enable = true;
+
+  boot.extraModulePackages = [ pkgs.kernelModules.ugreen_led ];
+  boot.kernelModules = [
     "led-ugreen"
     "i2c-dev"
     "ledtrig-netdev"
     "ledtrig-oneshot"
     "igc"
+    "kvm-intel"
+    "i915"
   ];
-  hardware.enableAllHardware = true;
+  boot.kernelParams = [
+    "pcie_port_pm=off"
+    "pcie_aspm.policy=performance"
+    "consoleblank=0"
+    "fbcon=logo-count:1"
+    "fbcon=font:ter-v14n"
+    "vconsole.font=ter-v14n"
+  ];
+  # boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
+  # boot.loader.systemd-boot.memtest86.enable = true;
+
+  hardware.cpu.intel.updateMicrocode = true;
 
   ############################################
   # Program Options
@@ -184,6 +197,10 @@ in
   # Autostart btop monitor as a kiosk
   systemd.services."getty@tty1" = {
     overrideStrategy = "asDropin";
+    # serviceConfig.ExecPreStart = [
+    #   ""
+    #   # "setfont ter-v14n"
+    # ];
     serviceConfig.ExecStart = [
       ""
       "${pkgs.btop}/bin/btop --config /home/face/.config/btop/btop.conf --preset 1 --force-utf"
@@ -198,6 +215,11 @@ in
   time.timeZone = "America/New_York";
 
   services.udev.enable = true;
+  i18n.defaultLocale = "en_US.UTF-8";
+  console.earlySetup = true;
+  console.packages = [ pkgs.terminus_font ];
+  console.font = "ter-v14n";
+  console.useXkbConfig = true;
 
   ############################################
   # Global Packages
@@ -205,6 +227,10 @@ in
   packages.monitoring = true;
   packages.networking = true;
   packages.secrets.base = true;
+
+  environment.systemPackages = [
+    pkgs.terminus_font
+  ];
 
   system.stateVersion = "25.05"; # Don't change this
 }
