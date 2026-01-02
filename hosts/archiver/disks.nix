@@ -131,7 +131,7 @@
       library.content.format = "btrfs";
       library.content.mountpoint = "/mnt/archive";
       library.content.mountOptions = [
-        "compress=zstd"
+        "compress=zstd:9"
         "noatime"
       ];
     };

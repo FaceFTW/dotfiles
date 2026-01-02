@@ -146,8 +146,9 @@
       (
           while true; do
               for led in "''${!devices[@]}"; do
+                  led_proper=$(( $led + 1 ))
 
-                  led_color=$(cat /sys/class/leds/$led/color)
+                  led_color=$(cat /sys/class/leds/''${led_map[$led]}/color)
                   if ! [[ "$COLOR_DISK_HEALTH" == "$led_color" ]]; then
                       continue;
                   fi
@@ -161,7 +162,7 @@
                   # check return code for critical errors (any bit set except bit 5)
                   # possible return bits set: https://invent.kde.org/system/kpmcore/-/merge_requests/28
                   if (( $RET & ~32 )); then
-                      echo "$COLOR_SMART_FAIL" > /sys/class/leds/$led/color
+                      echo "$COLOR_SMART_FAIL" > /sys/class/leds/''${led_map[$led]}/color
                       echo Disk failure detected on /dev/$dev at $(date +%Y-%m-%d' '%H:%M:%S)
                       continue
                   fi
@@ -183,7 +184,7 @@
                   fi
 
                   if [[ ! -f /sys/class/block/''${dev}/stat ]]; then
-                      echo "$COLOR_DISK_UNAVAIL" > /sys/class/leds/$led/color 2>/dev/null
+                      echo "$COLOR_DISK_UNAVAIL" > /sys/class/leds/''${led_map[$led]}/color 2>/dev/null
                       echo Disk /dev/$dev went offline at $(date +%Y-%m-%d' '%H:%M:%S)
                       continue
                   fi
@@ -193,20 +194,18 @@
       ) &
       disk_online_check_pid=$!
 
-      # declare -A diskio_data_rw
-      # while true; do
-      #     for led in "''${!devices[@]}"; do
-      #         # if $dev does not exist, diskio_new_rw="", which will be safe
-      #         diskio_new_rw="$(cat /sys/block/''${devices[$led]}/stat 2>/dev/null)"
-      #         if [ "''${diskio_data_rw[$led]}" != "''${diskio_new_rw}" ]; then
-      #             if [[ -f /sys/class/leds/$led/shot  ]]; then
-      #                 echo 1 > /sys/class/leds/$led/shot
-      #             fi
-      #         fi
-      #         diskio_data_rw[$led]=$diskio_new_rw
-      #     done
-      #     sleep ''${LED_REFRESH_INTERVAL}s
-      # done
+      declare -A diskio_data_rw
+      while true; do
+          for led in "''${!devices[@]}"; do
+              # if $dev does not exist, diskio_new_rw="", which will be safe
+              diskio_new_rw="$(cat /sys/block/''${devices[$led]}/stat 2>/dev/null)"
+              if [ "''${diskio_data_rw[$led]}" != "''${diskio_new_rw}" ]; then
+                  echo 1 > /sys/class/leds/''${led_map[$led]}/shot
+              fi
+              diskio_data_rw[$led]=$diskio_new_rw
+          done
+          sleep ''${LED_REFRESH_INTERVAL}s
+      done
     '';
   };
 
