@@ -50,6 +50,7 @@
   services.samba.settings.global."hosts deny" = "0.0.0.0/0";
   services.samba.settings.global."map to guest" = "bad user";
   services.samba.settings.global."deadtime" = "5";
+  services.samba.settings.global."acl allow execute always" = "yes";
 
   # Disable samba printing because of course that is a thing
   services.samba.settings.global."printing" = "bsd";
