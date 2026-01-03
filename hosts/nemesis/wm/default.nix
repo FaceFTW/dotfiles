@@ -17,11 +17,11 @@
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.sddm.autoLogin.relogin = false;
   services.displayManager.sddm.enableHidpi = true;
-  services.displayManager.sddm.settings.EnableAvatars = true;
-  services.displayManager.sddm.settings.FacesDir = ./assets/sddm;
-  services.displayManager.sddm.settings.ReuseSession = true;
-  services.displayManager.sddm.settings.RememberLastSession = true;
-  services.displayManager.sddm.settings.RememberLastUser = true;
+  services.displayManager.sddm.settings.Theme.EnableAvatars = "true";
+  services.displayManager.sddm.settings.Theme.FacesDir = "${./assets/sddm}";
+  services.displayManager.sddm.settings.Users.ReuseSession = "true";
+  services.displayManager.sddm.settings.Users.RememberLastSession = "true";
+  services.displayManager.sddm.settings.Users.RememberLastUser = "true";
 
   home-manager.users.face = {
     services.wl-clip-persist.enable = true;
