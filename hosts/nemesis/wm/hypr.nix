@@ -26,7 +26,7 @@ in
     wayland.windowManager.hyprland.package = null;
     wayland.windowManager.hyprland.portalPackage = null;
     wayland.windowManager.hyprland.plugins = [
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
+      inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
     ];
     wayland.windowManager.hyprland.systemd.enable = false;
     # I manage this here since there needs to be a lot of references to nix store paths
@@ -54,7 +54,7 @@ in
       exec-once = ${hyprctl} keyword input:kb_numlock true && date "+%Y-%m-%d %H:%M:%S" > /tmp/numlock-set
       exec-once = /usr/lib/polkit-kde-authentication-agent-1 &
 
-      exec-once = ${pkgs.swaync}/bin/swaync &
+      exec-once = ${pkgs.swaynotificationcenter}/bin/swaync &
 
       exec-once = ${pkgs.vicinae}/bin/vicinae server &
 

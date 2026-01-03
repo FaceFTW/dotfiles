@@ -4,8 +4,8 @@ final: prev: {
     prev.libcamera.overrideAttrs {
       src = prev.fetchgit {
         url = "https://github.com/raspberrypi/libcamera.git";
-        rev = "bfd68f786964636b09f8122e6c09c230367390e7";
-        hash = "sha256-4rNV9TMDvVpMBmgeRftO51ptOyHh4QOgoyZ6F/Iwdnw=";
+        rev = "f0e40f1c50bd0afe65727d6e407d0dcb42666ada";
+        hash = "sha256-sJKzmeeXD/66P5o+X9w3J2gwxDNsdBUdXEqU6goJdN4=";
       };
     }
   );
