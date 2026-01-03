@@ -39,7 +39,6 @@
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
 
-
   };
 
   outputs =
@@ -89,9 +88,7 @@
       ############################################
       nixosConfigurations.manifold = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
         modules = withOverlays ./hosts/manifold/default.nix;
       };
 
@@ -100,9 +97,7 @@
       ############################################
       nixosConfigurations.portal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
         modules = withOverlays ./hosts/portal/default.nix;
       };
 
@@ -111,9 +106,7 @@
       ############################################
       nixosConfigurations.nemesis = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
         modules = withOverlays ./hosts/nemesis/default.nix;
       };
 
@@ -122,9 +115,7 @@
       ############################################
       nixosConfigurations.fabricator = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
         modules = withOverlays ./hosts/fabricator/default.nix;
       };
       images.fabricator = nixosConfigurations.fabricator.config.system.build.sdImage;
@@ -134,9 +125,7 @@
       ############################################
       nixosConfigurations.archiver = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
         modules = withOverlays ./hosts/archiver/default.nix;
       };
     };

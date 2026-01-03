@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -8,6 +9,7 @@
   # ZSH Config
   ############################################
   zsh.enable = true;
+  zsh.dotDir = "${config.home-manager.users.face.xdg.configHome}/zsh"; # Using default XDG Home config
 
   zsh.shellAliases.la = "ls -a";
   zsh.shellAliases.ll = "ls -al";
