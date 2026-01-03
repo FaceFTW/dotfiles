@@ -37,12 +37,14 @@ in
     # The sed thing fixes an aarch64 compilation issue, removes things not used in my builds
     buildPhase = ''
       sed -i -e 's/"lzma"/#"lzma"/' -e 's/"xz"/#"xz"/' Cargo.toml
-      cargo build --verbose --release --features inline-fortune,inline-cowsay --target ${rustTargets.${system}}
+      cargo build --verbose --release --features inline-fortune,inline-cowsay --target ${
+        rustTargets.${stdenv.hostPlatform.system}
+      }
     '';
 
     installPhase = ''
       mkdir -p $out/bin
-      install -Dm755 target/${rustTargets.${system}}/release/sh-toy $out/bin
+      install -Dm755 target/${rustTargets.${stdenv.hostPlatform.system}}/release/sh-toy $out/bin
     '';
   };
 }
