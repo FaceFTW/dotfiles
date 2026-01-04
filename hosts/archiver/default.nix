@@ -115,6 +115,8 @@ in
   sops.secrets.user_passwd.neededForUsers = true;
   sops.secrets.pushover_api_key = { };
   sops.secrets.pushover_user_key = { };
+  sops.secrets.nix_cache_priv_key = { };
+  sops.secrets.nix_cache_pub_key = { };
 
   ############################################
   # Nix Settings
@@ -123,7 +125,10 @@ in
     "nixos-config=/home/${user}/.config/dotfiles:/etc/nixos"
     "nixpkgs=flake:nixpkgs"
   ];
-  nix.settings.allowed-users = [ "${user}" ];
+  nix.settings.allowed-users = [
+    "${user}"
+    "nix-serve"
+  ];
   nix.settings.trusted-users = [
     "@admin"
     "${user}"

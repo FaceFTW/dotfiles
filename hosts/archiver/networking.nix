@@ -3,6 +3,7 @@
   networking.hostName = "archiver";
   networking.firewall.allowedTCPPorts = [
     22
+    80
     111
   ];
   networking.firewall.allowPing = true;
