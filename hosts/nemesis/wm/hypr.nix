@@ -342,35 +342,35 @@ in
       # windowrule = suppressevent maximize, class:.*
 
       # Fix some dragging issues with XWayland
-      windowrule = no_focus on,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+      # windowrule = no_focus on,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
 
-      # XWayland video bridge window rules
-      windowrule = opacity 0.0 override,class:xwaylandvideobridge
-      windowrule = no_anim on, class:xwaylandvideobridge
-      windowrule = no_initial_focus on, class:xwaylandvideobridge
-      windowrule = max_size 1 1, class:xwaylandvideobridge
-      windowrule = no_blur on, class:xwaylandvideobridge
-      windowrule = no_focus on, class:xwaylandvideobridge
-      windowrule = workspace 1, class:xwaylandvideobridge
+      # # XWayland video bridge window rules
+      # windowrule = opacity 0.0 override,class:xwaylandvideobridge
+      # windowrule = no_anim on, class:xwaylandvideobridge
+      # windowrule = no_initial_focus on, class:xwaylandvideobridge
+      # windowrule = max_size 1 1, class:xwaylandvideobridge
+      # windowrule = no_blur on, class:xwaylandvideobridge
+      # windowrule = no_focus on, class:xwaylandvideobridge
+      # windowrule = workspace 1, class:xwaylandvideobridge
 
-      windowrule = float,class:org.pulseaudio.pavucontrol
-      windowrule = center,class:org.pulseaudio.pavucontrol
+      # windowrule = float,class:org.pulseaudio.pavucontrol
+      # windowrule = center,class:org.pulseaudio.pavucontrol
 
-      windowrule = float,class:blueman-manager
-      windowrule = center,class:blueman-manager
+      # windowrule = float,class:blueman-manager
+      # windowrule = center,class:blueman-manager
 
-      windowrule = float,class:nm-connection-editor
-      windowrule = center,class:nm-connection-editor
+      # windowrule = float,class:nm-connection-editor
+      # windowrule = center,class:nm-connection-editor
 
-      windowrule = float,class:waypaper
-      windowrule = center,class:waypaper
+      # windowrule = float,class:waypaper
+      # windowrule = center,class:waypaper
 
-      windowrule = float,class:Tk
-      windowrule = center,class:Tk
+      # windowrule = float,class:Tk
+      # windowrule = center,class:Tk
 
-      layerrule = blur on, vicinae
-      layerrule = ignore_alpha 0, vicinae
-      layerrule = no_anim on, vicinae
+      layerrule = match:vicinae, blur on
+      layerrule = match:vicinae, ignore_alpha 0
+      layerrule = match:vicinae, no_anim on
 
 
     '';
