@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./hypr.nix
@@ -12,6 +12,13 @@
 
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.variant = "";
+
+  fonts.packages = [
+    pkgs.nerd-fonts.hack
+    pkgs.ubuntu-sans
+  ];
+
+  fonts.fontconfig.defaultFonts.monospace = [ "Hack NF Mono" "Ubuntu Mono" ];
 
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
