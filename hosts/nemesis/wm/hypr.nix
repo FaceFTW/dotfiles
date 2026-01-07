@@ -11,16 +11,7 @@ in
   programs.hyprland.portalPackage =
     inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   programs.hyprland.systemd.setPath.enable = true;
-  # programs.hyprland.withUWSM = true;
 
-  programs.hyprlock.enable = true;
-  security.pam.services.hyprlock = { };
-
-  # Manage hyprland /wm startup with uwsm
-  # programs.uwsm.enable = true;
-  # programs.uwsm.waylandCompositors.hyprland.prettyName = "Hyprland";
-  # programs.uwsm.waylandCompositors.hyprland.comment = "Hyprland compositor managed by UWSM";
-  # programs.uwsm.waylandCompositors.hyprland.binPath = "/run/current-system/sw/bin/Hyprland";
   home-manager.users.face = {
     wayland.windowManager.hyprland.enable = true;
     wayland.windowManager.hyprland.package = null;
@@ -33,7 +24,7 @@ in
     wayland.windowManager.hyprland.extraConfig = ''
       $terminal = ${pkgs.alacritty}/bin/alacritty
       $fileManager = ${pkgs.thunar}/bin/thunar
-      $menu = wofi --show drun --style ~/.config/wofi/menu.css
+      $menu = ${pkgs.vicinae}/bin/vicinae toggle
       $browser = hyprctl dispatch exec "firefox --ozone-platform=wayland --enable-features=UseOzonePlatform"
       $editor = ${pkgs.vimCustom}/bin/vim
       $wallpaper=~/Hyprland-Simple-Setup/Wallpaper/Forest_01.png
@@ -41,11 +32,14 @@ in
       # $screenshot = hyprshot --mode
       # $cursor = rose-pine-hyprcursor
       # $colorPicker = hyprpicker --autocopy --format hex
-      # $git = github-desktop
-      # $calc = qalculate-gtk
-      # $hyprscripts = ~/.config/hypr/scripts
-      # $calendar = ~/.config/hypr/scripts/float_calendar.sh
 
+      monitor=eDP-1,2400x1600@120,0x0,1
+      # monitor=MONITOR_2,2560x1440@144,2560x0,1
+
+      workspace=1,monitor:MONITOR_1
+      workspace=2,monitor:MONITOR_1
+      workspace=3,monitor:MONITOR_1
+      workspace=4,monitor:MONITOR_1
       #######################################################
       # AUTOSTART
       #######################################################
@@ -61,8 +55,7 @@ in
       # exec-once = nm-applet --indicator &
       # exec-once = blueman-applet &
 
-      # exec-once = hyprpaper &
-      # exec-once = $hyprscripts/change_wallpaper.sh &
+      # exec-once = ${pkgs.hyprpaper}/bin/hyprpaper &
 
       # exec-once = wl-clip-persist --clipboard regular &
       # exec-once = wl-clipboard-history -t &
@@ -78,10 +71,7 @@ in
       # Cursor theme
       # exec-once = ${hyprctl} setcursor $cursor 24
 
-      # exec-once = hyprsunset
-
-      exec-once = sleep 1; ${pkgs.waybar}/bin/waybar -c "$HOME/.config/waybar/config.jsonc" &
-      # exec-once = $hyprscripts/Startup_check.sh &
+      exec-once = sleep 1; ${pkgs.waybar}/bin/waybar -c "/home/face/.config/waybar/config" &
       exec-once = sleep 5; $hyprscripts/check_setup_warnings.sh &
 
       #######################################################
@@ -233,7 +223,7 @@ in
       $HOME = code:110 # Home Key
 
       # Open Programms
-      bindd = $mainMod, SPACE, Open Menu, exec, ${pkgs.vicinae}/bin/vicinae toggle
+      bindd = $mainMod, SPACE, Open Menu, exec, $menu
       bindd = $mainMod, T, Open Preferred Terminal, exec, $terminal
       bindd = $mainMod, E, Open Preferred File Manager, exec, $fileManager
       bindd = $mainMod, F, Open Preferred Browser, exec, $browser
@@ -368,11 +358,21 @@ in
       # windowrule = float,class:Tk
       # windowrule = center,class:Tk
 
-      layerrule = match:vicinae, blur on
-      layerrule = match:vicinae, ignore_alpha 0
-      layerrule = match:vicinae, no_anim on
+      layerrule = match:namespace vicinae, blur on
+      layerrule = match:namespace vicinae, ignore_alpha 0
+      layerrule = match:namespace vicinae, no_anim on
 
 
     '';
+
+    services.hyprpaper.enable = true;
+    services.hyprpaper.settings.wallpaper = [
+      {
+        monitor = "eDP-1";
+        path = "~/.config/dotfiles/hosts/nemesis/wm/assets/deep_blue.png";
+        fit_mode = "contain";
+      }
+    ];
+
   };
 }
