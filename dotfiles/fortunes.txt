@@ -347,7 +347,7 @@ Stone's Law:
     One man's "simple" is another man's "huh?"
 %
 Sturgeon's Law:
-    90% of everything is crud.
+    9% of everything is crud.
 %
 system-independent, adj.:
     Works equally poorly on all systems.
@@ -513,7 +513,7 @@ tmps_base = tmps_max;                /* protect our mortal string */
 What about WRITING it first and rationalizing it afterwords?  :-)
         -- Larry Wall in <8162@jpl-devvax.JPL.NASA.GOV>
 %
-When in doubt, parenthesize.  At the very least it will let some poor schmuck bounce on the % key in vi.
+When in doubt, parenthesize.  At the very least it will let some poor schmuck bounce on the% key in vi.
         -- Larry Wall in the perl man page
 %
 The whole history of computers is rampant with cheerleading at best and bigotry at worst.
@@ -1352,4 +1352,133 @@ Float like a butterfly, sting like a relentless hateful insect
 %
 Sometimes a subtle nudge is all it takes to get what you want
     - Franz Kriegeld, Phoenix Tactician (Counter-Strike 2)
+%
+...and so he left, with new orders and new questions.
+%
+...and so he vanished, another number among the missing.
+%
+...and so she left, yearning for her next great hunt.
+%
+...and so she vanished, never to collect again.
+%
+...and so he left, with newfound inspirations.
+%
+...and so he vanished, unable to explain what his eyes had seen.
+%
+...and so it left, ready to grow into something more.
+%
+...and so it vanished, still remaining as one.
+%
+...and so it left, with delusions of freedom.
+%
+...and so it vanished, taken for the final time.
+%
+...and so she left, heart still racing.
+%
+...and so she vanished, her momentum halted forever.
+%
+...and so he left, with dreams of good food and a peaceful night.
+%
+...and so he vanished, reduced to fable.
+%
+...and so he left, with a new tale to tell.
+%
+...and so he vanished, free from a lifetime of paperwork.
+%
+...and so it left, ready to recharge.
+%
+...and so it vanished, inactive forever.
+%
+...and so she left, in love with a new passion: to explore.
+%
+...and so she vanished, her place forever vacant.
+%
+...and so he left, grateful for his luck.
+%
+...and so he vanished, full of regret.
+%
+...and so they left, bitterly avenged and deeply lost.
+%
+...and so they vanished, two stories ending as one.
+%
+...and so she left, ready to take her shot.
+%
+...and so she vanished, out of sight.
+%
+『...and s?o it c??omes】... 「fo?r al?l of us.』
+%
+『...a?nd so it v?ani??shed』, 「a wh?isper in the d??arkness』
+%
+...and so it left, unchanged in every way.
+%
+...and so it vanished, warranty expired.
+%
+...and so she left, burdened with knowledge.
+%
+...and so she vanished, replacement en route.
+%
+...and so he left, drawn to a call in the darkness.
+%
+...and so he vanished, a gift unspent.
+%
+....and his music was electric.
+%
+...and so he left, calculating his next act.
+%
+...and so he vanished, his designs unfulfilled.
+%
+...and so she left, with everything she loved.
+%
+...and so she vanished, smothered by a larger obsession.
+%
+...and so he left, with everything but his humanity.
+%
+....and so he left, mutated beyond recognition.
+%
+...and so he left, with his pyrrhic plunder.
+%
+...and so she left, her soul still remaining on the planet.
+%
+...and so it left, servos pulsing with new life.
+%
+...and so he left, more steel and circuit than man
+%
+...and so he left, adrenaline still rushing through his veins.
+%
+...and so he left, the sound still ringing in deaf ears.
+%
+...and so he left, with a new hunger: To be left alone.
+%
+...and so he left, never to become human again.
+%
+...and so he left ready to rebuild his life, brick by brick.
+%
+...and so it left, entirely forgetting its original purpose.
+%
+“A computer can never be held accountable, therefore a computer should not be responsible for a management decision.”
+    - IBM Training Manual, 1979
+%
+Eclipse First, The Rest Nowhere
+%
+Its awesome that the dudes in neuromancer are blowing eachother’s heads off for like 3 megabytes of RAM
+    - @laserboat999 (9/14/2025)
+%
+Get it twisted. If you lock in you can do anything.
+    - Northernlion
+%
+Your actions impact nothing. Your fate is predetermined. The only thing you can change is your reaction to it.
+    - Northernlion
+%
+You can do anything you set your mind to. The world is a playground designed for you and only you.
+    - Northernlion
+%
+You are a pawn in a universe chess match. You mean nothing to god if they even exist.
+    - Northernlion
+%
+ You’re a rounding error. You’re two pennies on a fortune 500 company’s balance sheet. They don’t care about you in the slightest.
+    - Northernlion
+%
+Ho Ho Ho! Christmas Spirits!
+Do you want to be remembered, or do you want to fit in?
+    - Finn "karrigan" Andersen (December 2025)
 %
