@@ -43,3 +43,5 @@ Legend
 ### Additional Notes
 
 The Nemesis "rice" is based off of [Firstp1ck/Hyprland-Simple-Setup](https://github.com/Firstp1ck/Hyprland-Simple-Setup/tree/main), but altered to fit my needs. A pretty decent non-NixOS starting point for a noob like me :)
+
+Cursor -> https://github.com/yeyushengfan258/Future-cursors
