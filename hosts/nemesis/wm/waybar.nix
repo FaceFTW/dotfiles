@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   home-manager.users.face = {
     programs.waybar.enable = true;
@@ -8,31 +8,21 @@
         "layer" = "top";
         "spacing" = 10;
         "modules-left" = [
-          "tray"
+          "custom/menu"
+          "wlr/taskbar"
         ];
         "modules-right" = [
-          "wlr/taskbar"
-          "pulseaudio"
-          "network"
+          "tray"
           "power-profiles-daemon"
           "temperature"
-          "keyboard-state"
-          "battery"
+          "pulseaudio"
           "bluetooth"
+          "network"
+          "battery"
           "clock"
         ];
 
         # Modules configuration
-        "keyboard-state" = {
-          "numlock" = true;
-          "capslock" = false;
-          "format" = "{icon}{name}";
-          "format-icons" = {
-            "locked" = " ";
-            "unlocked" = " ";
-          };
-        };
-
         "wlr/taskbar" = {
           "format" = "{icon}";
           "icon-size" = 30;
@@ -41,8 +31,6 @@
           "on-click" = "activate";
           "on-click-middle" = "close";
           "rewrite" = {
-            "Firefox Web Browser" = "Firefox";
-            "Foot Server" = "Terminal";
           };
         };
 
@@ -56,7 +44,6 @@
           "timezone" = "New York";
           "format" = "{:%a %d %b %Y | %H:%M}";
           "tooltip-format" = "<big><tt><small>{calendar}</small></tt></big>";
-          "on-click" = "~/.config/hypr/scripts/float_calendar.sh";
         };
 
         "temperature" = {
@@ -110,6 +97,18 @@
           "format-disconnected" = "Disconnected ⚠";
           "format-alt" = "{ifname}= {ipaddr}/{cidr}";
           "on-click-right" = "nm-connection-editor";
+        };
+
+        "custom/menu" = {
+          "format" = "{icon} Menu";
+          "format-icons" = [ "" ];
+          "tooltip" = "Open Menu";
+          "on-click" = "${pkgs.wofi}/bin/wofi --show drun";
+          "menu" = "on-click-right";
+          "menu-file" = "$HOME/.config/waybar/options_menu.xml";
+          "menu-actions" = {
+            "drun" = "${pkgs.wofi}/bin/wofi --show drun";
+          };
         };
       };
     };

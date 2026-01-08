@@ -3,7 +3,9 @@
   imports = [
     ./hypr.nix
     ./swaync.nix
+    ./vicinae.nix
     ./waybar.nix
+    ./wofi.nix
   ];
 
   # services.xserver.enable = true;

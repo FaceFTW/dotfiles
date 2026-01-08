@@ -262,7 +262,7 @@ in
       bindd = $mainMod, H, Toggle Waybar, exec, $hyprscripts/toggle_waybar.sh
 
       # Custom Hyprscript Keybindings
-      bindd = $mainMod, V, Toggle Floating, exec, $hyprscripts/toggle_floating.sh
+      bindd = $mainMod, V, Clipboard History, exec, ${pkgs.vicinae}/bin/vicinae vicinae://extensions/vicinae/clipboard/history
       bindd = $mainMod, W, Change Wallpaper, exec, $hyprscripts/change_wallpaper.sh
       bindd = $mainMod $mainMod1, S, Start Hyprsunset, exec, $hyprscripts/hyprsunset.sh
       bindd = $mainMod $mainMod1, M, Start Music Player, exec, hyprctl dispatch exec "[workspace 7 silent] kitty -e $hyprscripts/play_music.sh"
