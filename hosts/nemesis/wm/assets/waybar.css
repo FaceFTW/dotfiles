@@ -3,7 +3,7 @@
 
 /* All Modules */
 * {
-  font-family: "JetBrainsMono Nerd Font";
+  font-family: "Hack Nerd Font";
   font-weight: bold;
   font-size: 15px;
   background: rgba(21, 18, 27, 0);
@@ -69,7 +69,7 @@ menu menuitem:hover {
 #custom-razerbattery,
 #wlr-taskbar {
   background: @background;
-  font-family: "JetBrainsMono Nerd Font";
+  font-family: "Hack Nerd Font";
   opacity: 1.0;
   padding: 0px 10px;
   margin: 0px 0px;
