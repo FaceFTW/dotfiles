@@ -32,7 +32,6 @@
 
     # Hyprland Ecosystem
     hyprland.url = "github:hyprwm/Hyprland";
-    hyprlock.url = "github:hyprwm/hyprlock";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
 
@@ -42,17 +41,7 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      nixos-wsl,
-      nixos-hardware,
-      fenix,
-      lix-module,
-      lix,
-      ...
-    }@inputs:
+    { nixpkgs, ... }@inputs:
     let
       globalOverlays = builtins.map (n: import (./overlays + ("/" + n))) (
         (builtins.filter (n: builtins.match ".*\\.nix" n != null)) (
@@ -73,14 +62,15 @@
       withOverlays = configModule: [
         {
           nixpkgs.overlays = [
-            fenix.overlays.default
+            inputs.fenix.overlays.default
+            inputs.vicinae.overlays.default
+            inputs.hyprland.overlays.default
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);
         }
         configModule
       ];
-
     in
     rec {
       ############################################
