@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     ./hypr.nix
@@ -20,7 +20,10 @@
     pkgs.ubuntu-sans
   ];
 
-  fonts.fontconfig.defaultFonts.monospace = [ "Hack NF Mono" "Ubuntu Mono" ];
+  fonts.fontconfig.defaultFonts.monospace = [
+    "Hack NF Mono"
+    "Ubuntu Mono"
+  ];
 
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
@@ -34,13 +37,19 @@
 
   home-manager.users.face = {
     services.wl-clip-persist.enable = true;
-    # services.wl-clip-persist.systemdTargets = "graphical-session.target";
 
-    # xdg.portal.enable = true;
     xdg.portal.config = ''
       [preferred]
       default = hyprland;gtk;kde
       org.freedesktop.impl.portal.FileChooser = kde"
     '';
+
+    home.pointerCursor.enable = true;
+    home.pointerCursor.package =
+      inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    home.pointerCursor.name = "rose-pine-hyprcursor";
+
+    gtk.enable = true;
+    gtk.colorScheme = "dark";
   };
 }

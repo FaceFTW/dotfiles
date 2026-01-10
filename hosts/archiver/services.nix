@@ -312,4 +312,7 @@
     '';
   };
 
+  services.syncthing.enable = true;
+  # services.syn
+
 }
