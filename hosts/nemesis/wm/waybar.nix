@@ -48,12 +48,7 @@
 
         "temperature" = {
           "critical-threshold" = 80;
-          "format" = " {temperatureC}°C {icon}";
-          "format-icons" = [
-            ""
-            ""
-            ""
-          ];
+          "format" = " {temperatureC}°C ";
           "on-click" = "psensor";
         };
 
@@ -65,7 +60,7 @@
           };
           "format" = "{capacity}% {icon}";
           "format-full" = "{capacity}% {icon}";
-          "format-charging" = "{capacity}% ";
+          "format-charging" = "{capacity}% ";
           "format-plugged" = "{capacity}% ";
           "format-alt" = "{time} {icon}";
           "format-icons" = [
@@ -90,17 +85,17 @@
         };
 
         "network" = {
-          "format-wifi" = "{signalStrength}% ";
-          "format-ethernet" = "Connected ";
-          "tooltip-format" = "{ifname} via {gwaddr} ";
-          "format-linked" = "{ifname} (No IP) ";
+          "format-wifi" = "{signalStrength}%  ";
+          "format-ethernet" = "Connected \udb80\ude01 ";
+          "tooltip-format" = "{ifname} via {gwaddr} \uf0ac";
+          "format-linked" = "{ifname} (No IP) \udb83\udd1b";
           "format-disconnected" = "Disconnected ⚠";
           "format-alt" = "{ifname}= {ipaddr}/{cidr}";
           "on-click-right" = "nm-connection-editor";
         };
 
         "custom/menu" = {
-          "format" = "{icon} Menu";
+          "format" = "{icon}";
           "format-icons" = [ "" ];
           "tooltip" = "Open Menu";
           "on-click" = "${pkgs.wofi}/bin/wofi --show drun";

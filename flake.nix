@@ -32,8 +32,15 @@
 
     # Hyprland Ecosystem
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
+    hyprpaper.url = "github:hyprwm/hyprpaper";
+
+    # Hyprcursor
+    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
+    rose-pine-hyprcursor.inputs.nixpkgs.follows = "nixpkgs";
+    rose-pine-hyprcursor.inputs.hyprlang.follows = "hyprland/hyprlang";
 
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
@@ -65,6 +72,7 @@
             inputs.fenix.overlays.default
             inputs.vicinae.overlays.default
             inputs.hyprland.overlays.default
+            inputs.hyprpaper.overlays.default
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);

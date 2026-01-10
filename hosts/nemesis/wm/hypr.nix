@@ -5,12 +5,14 @@ let
   systemctl = "${pkgs.systemd}/bin/systemctl";
 in
 {
-
   programs.hyprland.enable = true;
   programs.hyprland.package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   programs.hyprland.portalPackage =
     inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-  programs.hyprland.systemd.setPath.enable = true;
+
+  systemd.user.services.hyprpolkitagent = {
+    serviceConfig.ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+  };
 
   home-manager.users.face = {
     wayland.windowManager.hyprland.enable = true;
@@ -30,7 +32,7 @@ in
       $wallpaper=~/Hyprland-Simple-Setup/Wallpaper/Forest_01.png
 
       # $screenshot = hyprshot --mode
-      # $cursor = rose-pine-hyprcursor
+      $cursor = rose-pine-hyprcursor
       # $colorPicker = hyprpicker --autocopy --format hex
 
       monitor=eDP-1,2400x1600@120,0x0,1
@@ -46,7 +48,6 @@ in
       # Start Polkit Agent for Authentication
       exec-once = ${systemctl} --user start hyprpolkitagent &
       exec-once = ${hyprctl} keyword input:kb_numlock true && date "+%Y-%m-%d %H:%M:%S" > /tmp/numlock-set
-      exec-once = /usr/lib/polkit-kde-authentication-agent-1 &
 
       exec-once = ${pkgs.swaynotificationcenter}/bin/swaync &
 
@@ -69,7 +70,7 @@ in
       # exec-once = $hyprscripts/fix-dolphin.sh &
 
       # Cursor theme
-      # exec-once = ${hyprctl} setcursor $cursor 24
+      exec-once = ${hyprctl} setcursor $cursor 24
 
       exec-once = sleep 1; ${pkgs.waybar}/bin/waybar -c "/home/face/.config/waybar/config" &
       exec-once = sleep 5; $hyprscripts/check_setup_warnings.sh &
