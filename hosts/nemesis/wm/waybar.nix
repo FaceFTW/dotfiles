@@ -48,7 +48,7 @@
 
         "temperature" = {
           "critical-threshold" = 80;
-          "format" = " {temperatureC}°C ";
+          "format" = " {temperatureC}°C";
           "on-click" = "psensor";
         };
 
@@ -95,14 +95,14 @@
         };
 
         "custom/menu" = {
-          "format" = "{icon}";
+          "format" = "{icon} ";
           "format-icons" = [ "" ];
           "tooltip" = "Open Menu";
-          "on-click" = "${pkgs.wofi}/bin/wofi --show drun";
+          "on-click" = "${pkgs.vicinae}/bin/vicinae toggle";
           "menu" = "on-click-right";
           "menu-file" = "$HOME/.config/waybar/options_menu.xml";
           "menu-actions" = {
-            "drun" = "${pkgs.wofi}/bin/wofi --show drun";
+            "drun" = "${pkgs.vicinae}/bin/vicinae toggle";
           };
         };
       };
