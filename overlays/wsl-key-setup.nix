@@ -1,7 +1,7 @@
-final: prev: with prev; {
-  wslKeySetup = writeShellApplication {
+final: prev: {
+  wslKeySetup = final.writeShellApplication {
     name = "wslKeySetup";
-    runtimeInputs = [ gnupg ];
+    runtimeInputs = [ final.gnupg ];
     text = ''
       #!/bin/sh
 
