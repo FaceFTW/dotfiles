@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ ... }:
 {
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -22,8 +17,14 @@
 
   services.tuned.enable = true;
   services.upower.enable = true;
-#   services.upower.criticalPowerAction = "";
+  services.upower.criticalPowerAction = "Hibernate";
 
-#   services.
+  # Bluetooth management
+  services.blueman.enable = true;
+
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
+
+  programs.dconf.enable = true;
 
 }
