@@ -25,11 +25,11 @@ in
     # I manage this here since there needs to be a lot of references to nix store paths
     wayland.windowManager.hyprland.extraConfig = ''
       $terminal = ${pkgs.alacritty}/bin/alacritty
-      $fileManager = ${pkgs.thunar}/bin/thunar
+      $fileManager = ${pkgs.nautilus}/bin/nautilus
       $menu = ${pkgs.vicinae}/bin/vicinae toggle
       $browser = hyprctl dispatch exec "firefox --ozone-platform=wayland --enable-features=UseOzonePlatform"
       $editor = ${pkgs.vimCustom}/bin/vim
-      $wallpaper=~/Hyprland-Simple-Setup/Wallpaper/Forest_01.png
+      $wallpaper = ${./assets/deep_blue.png}
 
       # $screenshot = hyprshot --mode
       $cursor = rose-pine-hyprcursor
@@ -65,9 +65,6 @@ in
       # exec-once = hypridle &
 
       # exec-once = ${systemctl} --user start app-org.kde.xwaylandvideobridge@autostart.service &
-
-      # Fix Dolphin File Manager
-      # exec-once = $hyprscripts/fix-dolphin.sh &
 
       # Cursor theme
       exec-once = ${hyprctl} setcursor $cursor 24
@@ -380,7 +377,7 @@ in
     services.hyprpaper.settings.wallpaper = [
       {
         monitor = "eDP-1";
-        path = "~/.config/dotfiles/hosts/nemesis/wm/assets/deep_blue.png";
+        path = "${./assets/deep_blue.png}";
         fit_mode = "contain";
       }
     ];
