@@ -259,16 +259,10 @@ in
       bindd = , $HOME, Take Screenshot of Region, exec, $screenshot region --raw | satty --filename -
 
       # Wallpaper Interactions
-      bindd = $mainMod $mainMod1, W, Set Wallpaper, exec, waypaper
       bindd = $mainMod, H, Toggle Waybar, exec, $hyprscripts/toggle_waybar.sh
 
       # Custom Hyprscript Keybindings
       bindd = $mainMod, V, Clipboard History, exec, ${pkgs.vicinae}/bin/vicinae vicinae://extensions/vicinae/clipboard/history
-      bindd = $mainMod, W, Change Wallpaper, exec, $hyprscripts/change_wallpaper.sh
-      bindd = $mainMod $mainMod1, S, Start Hyprsunset, exec, $hyprscripts/hyprsunset.sh
-      bindd = $mainMod $mainMod1, M, Start Music Player, exec, hyprctl dispatch exec "[workspace 7 silent] kitty -e $hyprscripts/play_music.sh"
-      bindd = $mainMod, $DOUBLES, Open Notes, exec, $hyprscripts/notes.sh
-      bindd = $mainMod $mainMod2, B, Turn Bluetooth ON or OFF, exec, $hyprscripts/toggle_bluetooth.sh
 
       # System Interactions
       bindd = $mainMod, L, Lock Screen, exec, hyprlock
@@ -317,14 +311,14 @@ in
       # bindd = $mainMod, mouse_up, Go to Last Workspace, workspace, e-1
 
       # Laptop multimedia Interactions and LCD brightness
-      bindeld = ,XF86AudioLowerVolume, Lower Volume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-      bindeld = ,XF86AudioRaiseVolume, Rise Volume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+      bindeld = ,XF86AudioLowerVolume, Lower Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bindeld = ,XF86AudioRaiseVolume, Rise Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 
-      bindeld = ,XF86AudioMute, Mute Volume, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-      bindeld = ,XF86AudioMicMute, Mute Microphone, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+      bindeld = ,XF86AudioMute, Mute Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      bindeld = ,XF86AudioMicMute, Mute Microphone, exec, ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
-      bindeld = ,XF86MonBrightnessUp, Turn Up Brightness, exec, brightnessctl s 10%+
-      bindeld = ,XF86MonBrightnessDown, Turn Down Brightness, exec, brightnessctl s 10%-
+      bindeld = ,XF86MonBrightnessUp, Turn Up Brightness, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%+
+      bindeld = ,XF86MonBrightnessDown, Turn Down Brightness, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%-
 
       #######################################################
       # WINDOW RULES
@@ -332,32 +326,48 @@ in
       # Ignore maximize requests from apps. You'll probably like this.
       # windowrule = suppressevent maximize, class:.*
 
-      # Fix some dragging issues with XWayland
-      # windowrule = no_focus on,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+      windowrule {
+        # Fix some dragging issues with XWayland
+        name = fix-xwayland-drags
+        match:class = ^$
+        match:title = ^$
+        match:xwayland = true
+        match:float = true
+        match:fullscreen = false
+        match:pin = false
 
-      # # XWayland video bridge window rules
-      # windowrule = opacity 0.0 override,class:xwaylandvideobridge
-      # windowrule = no_anim on, class:xwaylandvideobridge
-      # windowrule = no_initial_focus on, class:xwaylandvideobridge
-      # windowrule = max_size 1 1, class:xwaylandvideobridge
-      # windowrule = no_blur on, class:xwaylandvideobridge
-      # windowrule = no_focus on, class:xwaylandvideobridge
-      # windowrule = workspace 1, class:xwaylandvideobridge
+        no_focus = true
+      }
 
-      # windowrule = float,class:org.pulseaudio.pavucontrol
-      # windowrule = center,class:org.pulseaudio.pavucontrol
+      windowrule {
+          name = xwayland-video-bridge-fixes
+          match:class = xwaylandvideobridge
 
-      # windowrule = float,class:blueman-manager
-      # windowrule = center,class:blueman-manager
+          no_initial_focus = true
+          no_focus = true
+          no_anim = true
+          no_blur = true
+          max_size = 1 1
+          opacity = 0.0
+      }
 
-      # windowrule = float,class:nm-connection-editor
-      # windowrule = center,class:nm-connection-editor
+      windowrule = match:class org.pulseaudio.pavucontrol, float on
+      windowrule = match:class org.pulseaudio.pavucontrol, center on
 
-      # windowrule = float,class:waypaper
-      # windowrule = center,class:waypaper
+      windowrule = match:class blueman-manager, float on
+      windowrule = match:class blueman-manager, center on
 
-      # windowrule = float,class:Tk
-      # windowrule = center,class:Tk
+      windowrule = match:class nm-connection-editor, float on
+      windowrule = match:class nm-connection-editor, center on
+
+      windowrule = match:class waypaper, float on
+      windowrule = match:class waypaper, center on
+
+      windowrule = match:class Tk, float on
+      windowrule = match:class Tk, center on
+
+      windowrule = match:class tuned-gui, float on
+      windowrule = match:class tuned-gui, center on
 
       layerrule = match:namespace vicinae, blur on
       layerrule = match:namespace vicinae, ignore_alpha 0
