@@ -5,7 +5,7 @@
 * {
   font-family: "Hack Nerd Font";
   font-weight: bold;
-  font-size: 15px;
+  font-size: 18px;
   background: rgba(21, 18, 27, 0);
 }
 window#waybar {
@@ -73,7 +73,7 @@ menu menuitem:hover {
   opacity: 1.0;
   padding: 0px 10px;
   margin: 0px 0px;
-  margin-top: 5px;
+  /* margin-top: 10px; */
   border: 0.5px solid @primary;
   border-radius: 10px;
 }

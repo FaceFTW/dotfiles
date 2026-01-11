@@ -34,6 +34,10 @@
   services.displayManager.sddm.settings.Users.RememberLastSession = "true";
   services.displayManager.sddm.settings.Users.RememberLastUser = "true";
 
+  qt.enable = true;
+  qt.platformTheme = "qt5ct";
+  qt.style = "kvantum";
+
   home-manager.users.face = {
     services.wl-clip-persist.enable = true;
 
@@ -50,5 +54,8 @@
 
     gtk.enable = true;
     gtk.colorScheme = "dark";
+
+    xdg.configFile."Kvantum/kvantum.kvconfig".source = ./assets/Fluent-Dark.kvconfig;
   };
+
 }

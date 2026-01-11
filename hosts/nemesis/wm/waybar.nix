@@ -82,6 +82,7 @@
             "balanced" = " Mid";
             "power-saver" = " Low";
           };
+          "on-click-right" = "${pkgs.tuned}/bin/tuned-gui";
         };
 
         "network" = {
@@ -91,7 +92,7 @@
           "format-linked" = "{ifname} (No IP) \udb83\udd1b";
           "format-disconnected" = "Disconnected ⚠";
           "format-alt" = "{ifname}= {ipaddr}/{cidr}";
-          "on-click-right" = "nm-connection-editor";
+          "on-click-right" = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
         };
 
         "custom/menu" = {
@@ -99,11 +100,6 @@
           "format-icons" = [ "" ];
           "tooltip" = "Open Menu";
           "on-click" = "${pkgs.vicinae}/bin/vicinae toggle";
-          "menu" = "on-click-right";
-          "menu-file" = "$HOME/.config/waybar/options_menu.xml";
-          "menu-actions" = {
-            "drun" = "${pkgs.vicinae}/bin/vicinae toggle";
-          };
         };
       };
     };
