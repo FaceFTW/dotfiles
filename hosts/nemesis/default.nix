@@ -143,6 +143,7 @@ in
     pkgs.alacritty
     pkgs.thunar
     pkgs.firefox
+    pkgs.xdg-utils
   ];
 
   system.stateVersion = "25.05"; # Don't change this

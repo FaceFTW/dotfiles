@@ -25,7 +25,7 @@ in
     # I manage this here since there needs to be a lot of references to nix store paths
     wayland.windowManager.hyprland.extraConfig = ''
       $terminal = ${pkgs.alacritty}/bin/alacritty
-      $fileManager = ${pkgs.nautilus}/bin/nautilus
+      $fileManager = ${pkgs.thunar}/bin/thunar
       $menu = ${pkgs.vicinae}/bin/vicinae toggle
       $browser = hyprctl dispatch exec "firefox --ozone-platform=wayland --enable-features=UseOzonePlatform"
       $editor = ${pkgs.vimCustom}/bin/vim

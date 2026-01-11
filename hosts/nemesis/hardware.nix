@@ -96,6 +96,20 @@
     ];
   };
 
+  fileSystems."/mnt/citadel" = {
+    device = "/dev/disk/by-uuid/293CD3DA2A50BE4A";
+    fsType = "ntfs";
+    options = [
+      "noatime"
+      "uid=face"
+      "gid=users"
+      "dmask=0022"
+      "fmask=0022"
+      # "iocharset=utf8"
+    ];
+
+  };
+
   swapDevices = [
     { device = "/dev/disk/by-uuid/5813e031-07db-4496-b818-11e165caeee7"; }
   ];
