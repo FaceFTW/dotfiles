@@ -1,12 +1,12 @@
 #!/bin/bash
 i2c_dev=$(${final.i2c-tools}/bin/i2cdetect -l | grep "SMBus I801 adapter" | grep -Po "i2c-\d+")
 if [ $? = 0 ]; then
-	echo "Found I2C device /dev/''${i2c_dev}"
-	dev_path=/sys/bus/i2c/devices/$i2c_dev/''${i2c_dev/i2c-/}-003a
+	echo "Found I2C device /dev/${i2c_dev}"
+	dev_path=/sys/bus/i2c/devices/$i2c_dev/${i2c_dev/i2c-/}-003a
 	if [ ! -d "$dev_path" ]; then
-		echo "led-ugreen 0x3a" > /sys/bus/i2c/devices/"''${i2c_dev}"/new_device
+		echo "led-ugreen 0x3a" > /sys/bus/i2c/devices/"${i2c_dev}"/new_device
 	elif [ "$(cat "$dev_path"/name)" != "led-ugreen" ]; then
-		echo "ERROR: the device ''${i2c_dev/i2c-/}-003a has been registered as $(cat "$dev_path"/name)"
+		echo "ERROR: the device ${i2c_dev/i2c-/}-003a has been registered as $(cat "$dev_path"/name)"
 		exit 1
 	fi
 else
@@ -62,7 +62,7 @@ COLOR_SMART_FAIL='255 0 0'
 BRIGHTNESS_DISK_LEDS=255
 
 function disk_enumerating_string() {
-	${final.util-linux}/bin/lsblk -S -o name,''${MAPPING_METHOD},tran | grep sata
+	${final.util-linux}/bin/lsblk -S -o name,${MAPPING_METHOD},tran | grep sata
 }
 
 echo Enumerating disks based on $MAPPING_METHOD...
@@ -71,41 +71,39 @@ while read -r line
 do
 	# shellcheck disable=SC2206
 	blk_line=($line)
-	key=''${blk_line[1]}
-	val=''${blk_line[0]}
-	dev_map[''${key}]=''${val}
-	echo $MAPPING_METHOD "''${key} >> ''${dev_map[''${key}]}"
+	key=${blk_line[1]}
+	val=${blk_line[0]}
+	dev_map[${key}]=${val}
+	echo $MAPPING_METHOD "${key} >> ${dev_map[${key}]}"
 done <<< "$(disk_enumerating_string)"
 
 # initialize LEDs
-declare -A dev_to_led_map
-for i in "''${!led_map[@]}"; do
-	led=''${led_map[i]}
+for i in "${!led_map[@]}"; do
+	led=${led_map[i]}
 	if [[ -d /sys/class/leds/$led ]]; then
-		echo oneshot > /sys/class/leds/$led/trigger
-		echo 1 > /sys/class/leds/$led/invert
-		echo 100 > /sys/class/leds/$led/delay_on
-		echo 100 > /sys/class/leds/$led/delay_off
-		echo "$COLOR_DISK_HEALTH" > /sys/class/leds/$led/color
-		echo "''$BRIGHTNESS_DISK_LEDS" > /sys/class/leds/$led/brightness
+		echo oneshot > /sys/class/leds/"$led"/trigger
+		echo 1 > /sys/class/leds/"$led"/invert
+		echo 100 > /sys/class/leds/"$led"/delay_on
+		echo 100 > /sys/class/leds/"$led"/delay_off
+		echo "$COLOR_DISK_HEALTH" > /sys/class/leds/"$led"/color
+		echo "$BRIGHTNESS_DISK_LEDS" > /sys/class/leds/"$led"/brightness
 
 		# find corresponding device
 
-		if [[ -v "dev_map[''${hctl_map[i]}]" ]]; then
-			dev=''${dev_map[''${hctl_map[i]}]}
+		if [[ -v "dev_map[${hctl_map[i]}]" ]]; then
+			dev=${dev_map[${hctl_map[i]}]}
 
-			if [[ -f /sys/class/block/''${dev}/stat ]]; then
-				devices[$led]=''${dev}
-				dev_to_led_map[$dev]=$led
+			if [[ -f /sys/class/block/${dev}/stat ]]; then
+				devices[led]=${dev}
 			else
 				# turn off the led if no disk installed on this slot
-				echo 0 > /sys/class/leds/"$led"/brightness
-				echo none > /sys/class/leds/"$led"/trigger
+				echo 0 > /sys/class/leds/"${led_map[$led]}"/brightness
+				echo none > /sys/class/leds/"${led_map[$led]}"/trigger
 			fi
 		else
 			# turn off the led if no disk installed on this slot
-			echo 0 > /sys/class/leds/"$led"/brightness
-			echo none > /sys/class/leds/"$led"/trigger
+			echo 0 > /sys/class/leds/"${led_map[$led]}"/brightness
+			echo none > /sys/class/leds/"${led_map[$led]}"/trigger
 		fi
 	fi
 done
@@ -113,29 +111,26 @@ done
 # disk health check
 (
 	while true; do
-		for led in "''${!devices[@]}"; do
-			led_proper=$(( led + 1 ))
-
-			led_color=$(cat /sys/class/leds/''${led_map[$led_proper]}/color)
-			if ! [[ "$COLOR_DISK_HEALTH" == "$led_color" ]]; then
+		for led in "${!devices[@]}"; do
+			if ! [[ $(cat /sys/class/leds/"${led_map[$led]}"/color) == "$COLOR_DISK_HEALTH" ]]; then
 				continue;
 			fi
 
-			dev=''${devices[$led]}
+			dev=${devices[$led]}
 
 			# read the smart status return code, but ignore if the drive is on standby
-			/usr/sbin/smartctl -H /dev/''${dev} -n standby,0 &> /dev/null
+			/usr/sbin/smartctl -H "/dev/$dev" -n standby,0 &> /dev/null
 			RET=$?
 
 			# check return code for critical errors (any bit set except bit 5)
 			# possible return bits set: https://invent.kde.org/system/kpmcore/-/merge_requests/28
-			if (( $RET & ~32 )); then
-				echo "$COLOR_SMART_FAIL" > /sys/class/leds/''${led_map[$led]}/color
-				echo Disk failure detected on /dev/$dev at $(date +%Y-%m-%d' '%H:%M:%S)
+			if (( "$RET" & ~32 )); then
+				echo "$COLOR_SMART_FAIL" > /sys/class/leds/"${led_map[$led]}"/color
+				echo "Disk failure detected on /dev/$dev at $(date '+%Y-%m-%d %H:%M:%S')"
 				continue
 			fi
 		done
-		sleep ''${CHECK_SMART_INTERVAL}s
+		sleep ${CHECK_SMART_INTERVAL}s
 	done
 ) &
 smart_check_pid=$!
@@ -143,34 +138,32 @@ smart_check_pid=$!
 # check disk online status
 (
 	while true; do
-		for led in "''${!devices[@]}"; do
-			dev=''${devices[$led]}
-
-			led_color=$(cat /sys/class/leds/$led/color)
-			if ! [[ "$COLOR_DISK_HEALTH" == "$led_color" ]]; then
+		for led in "${!devices[@]}"; do
+			dev=${devices[$led]}
+			if ! [[ $(cat /sys/class/leds/"${led_map[$led]}"/color) == "$COLOR_DISK_HEALTH" ]]; then
 				continue;
 			fi
 
-			if [[ ! -f /sys/class/block/''${dev}/stat ]]; then
-				echo "$COLOR_DISK_UNAVAIL" > /sys/class/leds/''${led_map[$led]}/color 2>/dev/null
-				echo Disk /dev/$dev went offline at $(date +%Y-%m-%d' '%H:%M:%S)
+			if [[ ! -f /sys/class/block/${dev}/stat ]]; then
+				echo "$COLOR_DISK_UNAVAIL" > /sys/class/leds/"${led_map[$led]}"/color 2>/dev/null
+				echo "Disk /dev/$dev went offline at $(date '+%Y-%m-%d %H:%M:%S')"
 				continue
 			fi
 		done
-		sleep ''${CHECK_DISK_ONLINE_INTERVAL}s
+		sleep ${CHECK_DISK_ONLINE_INTERVAL}s
 	done
 ) &
 disk_online_check_pid=$!
 
 declare -A diskio_data_rw
 while true; do
-	for led in "''${!devices[@]}"; do
+	for led in "${!devices[@]}"; do
 		# if $dev does not exist, diskio_new_rw="", which will be safe
-		diskio_new_rw="$(cat /sys/block/''${devices[$led]}/stat 2>/dev/null)"
-		if [ "''${diskio_data_rw[$led]}" != "''${diskio_new_rw}" ]; then
-			echo 1 > /sys/class/leds/''${led_map[$led]}/shot
+		diskio_new_rw="$(cat /sys/block/"${devices[$led]}"/stat 2>/dev/null)"
+		if [ "${diskio_data_rw[$led]}" != "${diskio_new_rw}" ]; then
+			echo 1 > /sys/class/leds/"${led_map[$led]}"/shot
 		fi
 		diskio_data_rw[$led]=$diskio_new_rw
 	done
-	sleep ''${LED_REFRESH_INTERVAL}s
+	sleep ${LED_REFRESH_INTERVAL}s
 done
