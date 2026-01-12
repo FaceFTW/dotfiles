@@ -157,6 +157,10 @@
     "gid=users"
     "nofail"
   ];
+  fileSystems."/mnt/freeman".depends = [
+    "/mnt/archive"
+    "/mnt/motorway"
+  ];
 
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
