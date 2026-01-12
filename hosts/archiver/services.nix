@@ -71,4 +71,19 @@
   services.photoprism.originalsPath = "/mnt/archive/Photos";
   services.photoprism.importPath = "/mnt/archive/Photos/import";
   services.photoprism.passwordFile = config.sops.secrets.photoprism_admin_pass.path;
+
+  users.users.jellyfin = {
+    isSystemUser = true;
+    createHome = false;
+    group = "jellyfin";
+  };
+  users.groups.jellyfin = { };
+  services.jellyfin.enable = true;
+  services.jellyfin.cacheDir = "/mnt/motorway/var/jellyfin/cache";
+  services.jellyfin.configDir = "/mnt/motorway/var/jellyfin/config";
+  services.jellyfin.dataDir = "/mnt/motorway/var/jellyfin/data";
+  services.jellyfin.logDir = "/mnt/motorway/var/jellyfin/logs";
+  services.jellyfin.openFirewall = true;
+  services.jellyfin.user = "jellyfin";
+  services.jellyfin.group = "jellyfin";
 }

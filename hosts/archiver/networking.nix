@@ -5,6 +5,7 @@
     22
     80
     111
+    2342
   ];
   networking.firewall.allowPing = true;
 
