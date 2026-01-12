@@ -10,14 +10,15 @@ let
 in
 {
   imports = [
-    ../../modules/core.nix
-    ../../modules/kernel.nix
-    ../../modules/packages.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     inputs.disko.nixosModules.disko
+    ../../modules/core.nix
+    ../../modules/kernel.nix
+    ../../modules/packages.nix
     ./disks.nix
     ./networking.nix
+    ./nginx.nix
     ./services.nix
   ];
 
@@ -92,6 +93,7 @@ in
     isNormalUser = true;
     extraGroups = [
       "wheel"
+      "photoprism"
     ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
@@ -115,8 +117,9 @@ in
   sops.secrets.user_passwd.neededForUsers = true;
   sops.secrets.pushover_api_key = { };
   sops.secrets.pushover_user_key = { };
-  sops.secrets.nix_cache_priv_key = { };
-  sops.secrets.nix_cache_pub_key = { };
+  sops.secrets.photoprism_admin_pass.owner = "photoprism";
+  sops.secrets.photoprism_admin_pass.group = "photoprism";
+
 
   ############################################
   # Nix Settings

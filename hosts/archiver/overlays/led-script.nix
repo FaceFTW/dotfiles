@@ -148,7 +148,7 @@ final: prev: {
               for led in "''${!devices[@]}"; do
                   led_proper=$(( $led + 1 ))
 
-                  led_color=$(cat /sys/class/leds/''${led_map[$led]}/color)
+                  led_color=$(cat /sys/class/leds/''${led_map[$led_proper]}/color)
                   if ! [[ "$COLOR_DISK_HEALTH" == "$led_color" ]]; then
                       continue;
                   fi
@@ -176,15 +176,16 @@ final: prev: {
       (
           while true; do
               for led in "''${!devices[@]}"; do
+                  led_proper=$(( $led + 1 ))
                   dev=''${devices[$led]}
 
-                  led_color=$(cat /sys/class/leds/$led/color)
+                  led_color=$(cat /sys/class/leds/$led_proper/color)
                   if ! [[ "$COLOR_DISK_HEALTH" == "$led_color" ]]; then
                       continue;
                   fi
 
                   if [[ ! -f /sys/class/block/''${dev}/stat ]]; then
-                      echo "$COLOR_DISK_UNAVAIL" > /sys/class/leds/''${led_map[$led]}/color 2>/dev/null
+                      echo "$COLOR_DISK_UNAVAIL" > /sys/class/leds/''${led_map[$led_proper]}/color 2>/dev/null
                       echo Disk /dev/$dev went offline at $(date +%Y-%m-%d' '%H:%M:%S)
                       continue
                   fi
@@ -197,10 +198,11 @@ final: prev: {
       declare -A diskio_data_rw
       while true; do
           for led in "''${!devices[@]}"; do
+              led_proper=$(( $led + 1 ))
               # if $dev does not exist, diskio_new_rw="", which will be safe
-              diskio_new_rw="$(cat /sys/block/''${devices[$led]}/stat 2>/dev/null)"
+              diskio_new_rw="$(cat /sys/block/''${devices[$led_proper]}/stat 2>/dev/null)"
               if [ "''${diskio_data_rw[$led]}" != "''${diskio_new_rw}" ]; then
-                  echo 1 > /sys/class/leds/''${led_map[$led]}/shot
+                  echo 1 > /sys/class/leds/''${led_map[$led_proper]}/shot
               fi
               diskio_data_rw[$led]=$diskio_new_rw
           done
