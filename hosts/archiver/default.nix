@@ -94,6 +94,7 @@ in
     extraGroups = [
       "wheel"
       "photoprism"
+      "jellyfin"
     ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
