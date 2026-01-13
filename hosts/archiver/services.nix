@@ -60,21 +60,21 @@
     '';
   };
 
-  users.users.photoprism = {
-    isSystemUser = true;
-    createHome = false;
-    group = "photoprism";
-  };
-  users.groups.photoprism = { };
-  services.photoprism.enable = true;
-  services.photoprism.storagePath = "/mnt/motorway/var/photoprism";
-  services.photoprism.originalsPath = "/mnt/archive/Photos";
-  services.photoprism.importPath = "/mnt/archive/Photos/import";
-  services.photoprism.passwordFile = config.sops.secrets.photoprism_admin_pass.path;
+  # users.users.photoprism = {
+  #   isSystemUser = true;
+  #   createHome = false;
+  #   group = "photoprism";
+  # };
+  # users.groups.photoprism = { };
+  # services.photoprism.enable = true;
+  # services.photoprism.storagePath = "/mnt/motorway/var/photoprism";
+  # services.photoprism.originalsPath = "/mnt/archive/Photos";
+  # services.photoprism.importPath = "/mnt/archive/Photos/import";
+  # services.photoprism.passwordFile = config.sops.secrets.photoprism_admin_pass.path;
 
   users.users.jellyfin = {
     isSystemUser = true;
-    createHome = false;
+    home ="/mnt/motorway/var/jellyfin";
     group = "jellyfin";
   };
   users.groups.jellyfin = { };
@@ -86,4 +86,21 @@
   services.jellyfin.openFirewall = true;
   services.jellyfin.user = "jellyfin";
   services.jellyfin.group = "jellyfin";
+
+  users.users.immich = {
+    isSystemUser = true;
+    home ="/mnt/motorway/var/immich";
+    group = "immich";
+  };
+  users.groups.immich = { };
+  services.immich.enable = true;
+  services.immich.user = "immich";
+  services.immich.group = "immich";
+  services.immich.secretsFile = config.sops.secrets.immich_secrets.path;
+  services.immich.mediaLocation = "/mnt/motorway/var/immich/data";
+  services.immich.database.enable = true;
+  services.immich.database.enableVectorChord = true;
+
+  services.postgresql.dataDir = "/mnt/motorway/var/postgres";
+
 }

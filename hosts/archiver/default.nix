@@ -118,8 +118,8 @@ in
   sops.secrets.user_passwd.neededForUsers = true;
   sops.secrets.pushover_api_key = { };
   sops.secrets.pushover_user_key = { };
-  sops.secrets.photoprism_admin_pass.owner = "photoprism";
-  sops.secrets.photoprism_admin_pass.group = "photoprism";
+  sops.secrets.immich_secrets.owner = "immich";
+  sops.secrets.immich_secrets.group = "immich";
 
 
   ############################################
