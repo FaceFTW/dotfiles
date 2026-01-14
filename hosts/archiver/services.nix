@@ -96,6 +96,7 @@
   services.immich.enable = true;
   services.immich.user = "immich";
   services.immich.group = "immich";
+  services.immich.openFirewall = true;
   services.immich.secretsFile = config.sops.secrets.immich_secrets.path;
   services.immich.mediaLocation = "/mnt/motorway/var/immich/data";
   services.immich.database.enable = true;
