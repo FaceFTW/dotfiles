@@ -6,8 +6,11 @@
     80
     111
     2283
+    2284
   ];
   networking.firewall.allowedUDPPorts = [
+    2283
+    2284
     5353  # for mDNS
   ];
   networking.firewall.allowPing = true;
