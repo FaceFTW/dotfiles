@@ -93,7 +93,7 @@ in
     isNormalUser = true;
     extraGroups = [
       "wheel"
-      "photoprism"
+      "immich"
       "jellyfin"
     ];
     shell = pkgs.zsh;
