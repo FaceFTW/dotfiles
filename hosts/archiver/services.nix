@@ -10,6 +10,101 @@
     serviceConfig.ExecStart = "${pkgs.ugreen-led-mon}/bin/ugreen-led-mon";
   };
 
+  ############################################
+  # Jellyfin
+  ############################################
+  users.users.jellyfin = {
+    isSystemUser = true;
+    home = "/mnt/motorway/var/jellyfin";
+    group = "jellyfin";
+  };
+  users.groups.jellyfin = { };
+  services.jellyfin.enable = true;
+  services.jellyfin.cacheDir = "/mnt/motorway/var/jellyfin/cache";
+  services.jellyfin.configDir = "/mnt/motorway/var/jellyfin/config";
+  services.jellyfin.dataDir = "/mnt/motorway/var/jellyfin/data";
+  services.jellyfin.logDir = "/mnt/motorway/var/jellyfin/logs";
+  services.jellyfin.openFirewall = true;
+  services.jellyfin.user = "jellyfin";
+  services.jellyfin.group = "jellyfin";
+
+  ############################################
+  # Immich
+  ############################################
+  users.users.immich = {
+    isSystemUser = true;
+    home = "/mnt/motorway/var/immich";
+    group = "immich";
+  };
+  users.groups.immich = { };
+  services.immich.enable = true;
+  services.immich.user = "immich";
+  services.immich.group = "immich";
+  services.immich.openFirewall = true;
+  services.immich.secretsFile = config.sops.secrets.immich_secrets.path;
+  services.immich.mediaLocation = "/mnt/motorway/var/immich/data";
+  services.immich.database.enable = true;
+  services.immich.database.enableVectorChord = true;
+  users.users.postgres = {
+    isSystemUser = true;
+    home = "/mnt/motorway/var/postgres";
+    group = "postgres";
+  };
+  services.postgresql.dataDir = "/mnt/motorway/var/postgres";
+
+  systemd.timers."immich-mirror" = {
+    wantedBy = [ "timers.target" ];
+    timerConfig.OnCalendar = "*-*-* 3:00:00";
+    timerConfig.Persistent = true;
+  };
+  systemd.services."immich-mirror" = {
+    wants = [
+      "mnt-archive.mount"
+      "mnt-motorway.mount"
+    ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+
+      token=$(cat /run/secrets/pushover_api_key)
+      user=$(cat /run/secrets/pushover_user_key)
+
+      ${pkgs.curl}/bin/curl \
+        --retry 5 \
+        --retry-delay 30 \
+        --form-string "token=''${token}" \
+        --form-string "user=''${user}" \
+        --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
+        --form-string "title=Archiver - Immich Mirror" \
+        --form-string "message=Starting backup" \
+        https://api.pushover.net/1/messages.json
+
+
+      ${pkgs.rsync}/bin/rsync -aPt \
+          --archive \
+          --partial \
+          --progress \
+          --delete-before \
+          /mnt/motorway/var/immich/data/ \
+          /mnt/archive/immich
+
+      ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/immich
+
+
+      ${pkgs.curl}/bin/curl \
+        --retry 5 \
+        --retry-delay 30 \
+        --form-string "token=''${token}" \
+        --form-string "user=''${user}" \
+        --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
+        --form-string "title=Archiver - Immich Mirror" \
+        --form-string "message=Backup Job completed. Check logs for more info" \
+        https://api.pushover.net/1/messages.json
+    '';
+  };
+
+  ############################################
+  # Mirror to Backup
+  ############################################
   systemd.timers."archive-offline-mirror" = {
     wantedBy = [ "timers.target" ];
     timerConfig.OnCalendar = "weekly";
@@ -32,7 +127,7 @@
         --form-string "token=''${token}" \
         --form-string "user=''${user}" \
         --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
-        --form-string "title="Archive Offline Mirror" \
+        --form-string "title=Archive Offline Mirror" \
         --form-string "message=Starting backup job" \
         https://api.pushover.net/1/messages.json
 
@@ -54,54 +149,9 @@
         --form-string "token=''${token}" \
         --form-string "user=''${user}" \
         --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
-        --form-string "title="Archive Offline Mirror" \
+        --form-string "title=Archive Offline Mirror" \
         --form-string "message=Backup Job completed. Check logs for more info" \
         https://api.pushover.net/1/messages.json
     '';
   };
-
-  # users.users.photoprism = {
-  #   isSystemUser = true;
-  #   createHome = false;
-  #   group = "photoprism";
-  # };
-  # users.groups.photoprism = { };
-  # services.photoprism.enable = true;
-  # services.photoprism.storagePath = "/mnt/motorway/var/photoprism";
-  # services.photoprism.originalsPath = "/mnt/archive/Photos";
-  # services.photoprism.importPath = "/mnt/archive/Photos/import";
-  # services.photoprism.passwordFile = config.sops.secrets.photoprism_admin_pass.path;
-
-  users.users.jellyfin = {
-    isSystemUser = true;
-    home ="/mnt/motorway/var/jellyfin";
-    group = "jellyfin";
-  };
-  users.groups.jellyfin = { };
-  services.jellyfin.enable = true;
-  services.jellyfin.cacheDir = "/mnt/motorway/var/jellyfin/cache";
-  services.jellyfin.configDir = "/mnt/motorway/var/jellyfin/config";
-  services.jellyfin.dataDir = "/mnt/motorway/var/jellyfin/data";
-  services.jellyfin.logDir = "/mnt/motorway/var/jellyfin/logs";
-  services.jellyfin.openFirewall = true;
-  services.jellyfin.user = "jellyfin";
-  services.jellyfin.group = "jellyfin";
-
-  users.users.immich = {
-    isSystemUser = true;
-    home ="/mnt/motorway/var/immich";
-    group = "immich";
-  };
-  users.groups.immich = { };
-  services.immich.enable = true;
-  services.immich.user = "immich";
-  services.immich.group = "immich";
-  services.immich.openFirewall = true;
-  services.immich.secretsFile = config.sops.secrets.immich_secrets.path;
-  services.immich.mediaLocation = "/mnt/motorway/var/immich/data";
-  services.immich.database.enable = true;
-  services.immich.database.enableVectorChord = true;
-
-  services.postgresql.dataDir = "/mnt/motorway/var/postgres";
-
 }
