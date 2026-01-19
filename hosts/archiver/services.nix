@@ -27,6 +27,7 @@
   services.jellyfin.openFirewall = true;
   services.jellyfin.user = "jellyfin";
   services.jellyfin.group = "jellyfin";
+  systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD";
 
   ############################################
   # Immich
