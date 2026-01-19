@@ -28,7 +28,7 @@
               listen 0.0.0.0:2284 ;
               listen [::0]:80 ;
               server_name archiver;
-              client_max_body_size 50m;
+              client_max_body_size 1g;
               location / {
                   proxy_pass http://immich;
                   proxy_redirect off;
