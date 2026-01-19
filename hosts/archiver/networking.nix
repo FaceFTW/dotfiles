@@ -2,27 +2,26 @@
 {
   networking.hostName = "archiver";
   networking.firewall.allowedTCPPorts = [
-    22
-    80
-    111
-    2283
-    2284
+    22 # SSH
+    111 # Something Samba Related (Service Discovery?)
+    2283 # Immich Direct
+    2284 # Immich Proxy
+    8384 # Syncthing GUI
+    8385 # Syncthing GUI Proxy
   ];
   networking.firewall.allowedUDPPorts = [
-    2283
-    2284
-    5353  # for mDNS
+    5353 # mDNS
   ];
   networking.firewall.allowPing = true;
 
+  ############################################
+  # systemd networkd+resolved
+  ############################################
   services.resolved.enable = true;
-  services.resolved.extraConfig = ''
-    MulticastDNS=yes
-  '';
+  services.resolved.extraConfig = "MulticastDNS=yes";
   services.resolved.llmnr = "resolve";
 
-  # NOTE: Configured such that the local router gives this a static IP
-  # on the local network
+  # NOTE: Local router gives static IP
   networking.useDHCP = false;
   systemd.network.enable = true;
   systemd.network.networks."10-enp2s0" = {
@@ -31,12 +30,12 @@
     networkConfig.IPv6AcceptRA = true;
     networkConfig.MulticastDNS = "yes";
     linkConfig.RequiredForOnline = true;
-    linkConfig.MTUBytes = 1500;
-
   };
 
-  # NOTE: This assumes this is only in the local network and not exposed to the outside
-  #       so no security here. I might do it later when I feel like it
+  ############################################
+  # Samba
+  ############################################
+  # NOTE: Assumes LAN operation only, no exposure to outside
   services.samba.enable = true;
   services.samba.openFirewall = true;
   services.samba-wsdd.enable = true;
@@ -49,7 +48,7 @@
   services.samba.settings.global."passdb backend" = "smbpasswd";
   services.samba.settings.global."smb passwd file" = "/etc/samba/smbpasswd";
   services.samba.settings.global."server role" = "standalone server";
-  # services.samba.settings.global."server min protocol" = "SMB3_11";
+  # services.samba.settings.global."server min protocol" = "SMB3_11";   # Broken somehow
   services.samba.settings.global."server smb encrypt" = "required";
   services.samba.settings.global."server signing" = "mandatory";
   services.samba.settings.global."winbind nss info" = "rfc2307";
@@ -66,6 +65,7 @@
   services.samba.settings.global."load printers" = "no";
   services.samba.settings.global."disable spoolss" = "yes";
 
+  # Motorway Share
   services.samba.settings.motorway."path" = "/export/motorway";
   services.samba.settings.motorway."browseable" = "yes";
   services.samba.settings.motorway."writable" = "yes";
@@ -74,6 +74,7 @@
   services.samba.settings.motorway."force user" = "face";
   services.samba.settings.motorway."force group" = "users";
 
+  # Archive Share
   services.samba.settings.archive."path" = "/export/archive";
   services.samba.settings.archive."browseable" = "yes";
   services.samba.settings.archive."writable" = "yes";

@@ -107,9 +107,6 @@ in
     packages = [ ];
   };
 
-  # The following are system users/groups defined for various services
-  # Unless they are defined elsewhere, in which here I document it for tracking
-
   ############################################
   # SOPS Settings
   ############################################
@@ -120,6 +117,9 @@ in
   sops.secrets.pushover_user_key = { };
   sops.secrets.immich_secrets.owner = "immich";
   sops.secrets.immich_secrets.group = "immich";
+  sops.secrets."syncthing/cert.pem".key = "syncthing_cert_pem";
+  sops.secrets."syncthing/key.pem".key = "syncthing_key_pem";
+
 
   ############################################
   # Nix Settings
