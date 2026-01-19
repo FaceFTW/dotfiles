@@ -30,6 +30,21 @@
   systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD";
 
   ############################################
+  # Syncthing
+  ############################################
+  users.users.syncthing = {
+    isSystemUser = true;
+    home = "/var/lib/syncthing";
+    group = "syncthing";
+    extraGroups = [ "users" ]; # TODO this is probably a bad idea
+  };
+  users.groups.syncthing = { };
+  services.syncthing.enable = true;
+  services.syncthing.openDefaultPorts = true;
+  services.syncthing.key = "/run/secrets/syncthing/key.pem";
+  services.syncthing.cert = "/run/secrets/syncthing/cert.pem";
+
+  ############################################
   # Immich
   ############################################
   users.users.immich = {
@@ -154,5 +169,6 @@
         --form-string "message=Backup Job completed. Check logs for more info" \
         https://api.pushover.net/1/messages.json
     '';
+
   };
 }
