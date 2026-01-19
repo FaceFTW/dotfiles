@@ -121,7 +121,6 @@ in
   sops.secrets.immich_secrets.owner = "immich";
   sops.secrets.immich_secrets.group = "immich";
 
-
   ############################################
   # Nix Settings
   ############################################
@@ -185,6 +184,13 @@ in
   # boot.loader.systemd-boot.memtest86.enable = true;
 
   hardware.cpu.intel.updateMicrocode = true;
+  hardware.enableAllFirmware = true;
+  hardware.graphics.enable = true;
+  hardware.graphics.extraPackages = [
+    pkgs.intel-ocl
+    pkgs.intel-media-driver
+    pkgs.vpl-gpu-rt
+  ];
 
   ############################################
   # Program Options
@@ -234,6 +240,8 @@ in
   environment.systemPackages = [
     pkgs.terminus_font
   ];
+
+  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
   system.stateVersion = "25.05"; # Don't change this
 }
