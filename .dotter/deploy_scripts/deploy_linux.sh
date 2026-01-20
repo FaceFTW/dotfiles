@@ -1,9 +1,8 @@
 #!/bin/sh
 # This is separated from the pre_deploy.sh for cleanliness
-
-OH_MY_POSH_VERSION="v26.17.2"
+OH_MY_POSH_VERSION="v29.0.2"
 #VIM_VERSION="9.1.0516"
-BAT_VERSION="v0.25.0"
+BAT_VERSION="v0.26.1"
 
 # Remove existing bin files
 rm -rf ~/.oh-my-zsh
