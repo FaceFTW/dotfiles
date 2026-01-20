@@ -1,8 +1,8 @@
 # Versions for all the binaries we are pulling if they need it
 
-$oh_my_posh_version = "v26.17.2"
-$vim_w32_version = "9.1.1591"
-$bat_version = "v0.25.0"
+$oh_my_posh_version = "v29.0.2"
+$vim_w32_version = "9.1.2098"
+$bat_version = "v0.26.1"
 $npiperelay_version = "v1.9.0"
 $fastfetch_version = "2.55.0"
 
