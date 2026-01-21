@@ -69,7 +69,12 @@
     gtk.iconTheme.package = pkgs.fluent-icon-theme;
     gtk.iconTheme.name = "Fluent";
 
-    xdg.configFile."Kvantum/kvantum.kvconfig".source = ./assets/Fluent-Dark.kvconfig;
+    xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.kvconfig".source = ./assets/Fluent-Dark.kvconfig;
+    xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.svg".source = ./assets/Fluent-round-solidDark.svg;
+    xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
+      [General]
+      theme=KvFluentDark
+    '';
 
     xdg.terminal-exec.enable = true;
     xdg.terminal-exec.settings.default = [ "alacritty.desktop" ];
