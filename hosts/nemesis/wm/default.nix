@@ -54,24 +54,25 @@
 
     gtk.enable = true;
     gtk.colorScheme = "dark";
-    gtk.theme.name = "Fluent";
-    gtk.theme.package = (
-      pkgs.fluent-gtk-theme.override {
-        tweaks = [
-          "solid"
-          "round"
-        ];
+    gtk.theme.name = "Fluent-round-Dark-compact";
+    gtk.theme.package = pkgs.fluent-gtk-theme.override {
+      tweaks = [
+        "solid"
+        "round"
+      ];
 
-        sizeVariants = [
-          "standard"
-          "compact"
-        ];
-      }
-    );
+      sizeVariants = [
+        "standard"
+        "compact"
+      ];
+    };
     gtk.iconTheme.package = pkgs.fluent-icon-theme;
     gtk.iconTheme.name = "Fluent";
 
     xdg.configFile."Kvantum/kvantum.kvconfig".source = ./assets/Fluent-Dark.kvconfig;
+
+    xdg.terminal-exec.enable = true;
+    xdg.terminal-exec.settings.default = [ "alacritty.desktop" ];
   };
 
 }
