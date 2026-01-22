@@ -1,6 +1,8 @@
 # Dotfiles
 
-Dotfiles and my NixOS configuration I maintain. Extremely opinionated as all personalized configuration is.
+Dotfiles and my NixOS configuration I maintain. Extremely opinionated as all personalized configuration should be.
+
+_**NOTE: Do not expect tech support when trying to use these configs for your own purposes. Issues/PRs are still welcome if you find something wrong that I should be aware of.**_
 
 ## Overview
 
@@ -44,4 +46,7 @@ Legend
 
 The Nemesis "rice" is based off of [Firstp1ck/Hyprland-Simple-Setup](https://github.com/Firstp1ck/Hyprland-Simple-Setup/tree/main), but altered to fit my needs. A pretty decent non-NixOS starting point for a noob like me :)
 
-Cursor -> https://github.com/yeyushengfan258/Future-cursors
+Kvantum Theme from: https://github.com/vinceliuice/Fluent-kde/tree/main
+GTK Theme: Fluent GTK
+Cursor Theme: rose-pine-hyprcursors
+
