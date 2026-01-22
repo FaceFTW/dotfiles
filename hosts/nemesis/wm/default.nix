@@ -38,14 +38,13 @@
   qt.platformTheme = "qt5ct";
   qt.style = "kvantum";
 
+  # File picker for Hyprland
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  programs.dconf.enable = true;
+  environment.sessionVariables.GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas/:${pkgs.gtk4}/share/gsettings-schemas/${pkgs.gtk4.name}/glib-2.0/schemas/:${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas/";
+
   home-manager.users.face = {
     services.wl-clip-persist.enable = true;
-
-    xdg.portal.config = ''
-      [preferred]
-      default = hyprland;gtk;kde
-      org.freedesktop.impl.portal.FileChooser = kde"
-    '';
 
     home.pointerCursor.enable = true;
     home.pointerCursor.package =
@@ -67,7 +66,7 @@
       ];
     };
     gtk.iconTheme.package = pkgs.fluent-icon-theme;
-    gtk.iconTheme.name = "Fluent";
+    gtk.iconTheme.name = "Fluent-dark";
 
     xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.kvconfig".source = ./assets/Fluent-Dark.kvconfig;
     xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.svg".source = ./assets/Fluent-round-solidDark.svg;
