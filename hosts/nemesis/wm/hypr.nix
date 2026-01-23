@@ -1,6 +1,5 @@
 { pkgs, inputs, ... }:
 let
-
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   systemctl = "${pkgs.systemd}/bin/systemctl";
 in
@@ -20,306 +19,263 @@ in
     wayland.windowManager.hyprland.portalPackage = null;
     wayland.windowManager.hyprland.plugins = [
       inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
+      inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.csgo-vulkan-fix
     ];
     wayland.windowManager.hyprland.systemd.enable = false;
-    # I manage this here since there needs to be a lot of references to nix store paths
-    wayland.windowManager.hyprland.extraConfig = ''
-      $terminal = ${pkgs.alacritty}/bin/alacritty
-      $fileManager = ${pkgs.thunar}/bin/thunar
-      $menu = ${pkgs.vicinae}/bin/vicinae toggle
-      $browser = hyprctl dispatch exec "firefox --ozone-platform=wayland --enable-features=UseOzonePlatform"
-      $editor = ${pkgs.vimCustom}/bin/vim
-      $wallpaper = ${./assets/deep_blue.png}
 
-      # $screenshot = hyprshot --mode
-      $cursor = rose-pine-hyprcursor
-      # $colorPicker = hyprpicker --autocopy --format hex
+    #######################################################
+    # BASIC ALIASES
+    #######################################################
+    wayland.windowManager.hyprland.settings."$terminal" = "${pkgs.alacritty}/bin/alacritty";
+    wayland.windowManager.hyprland.settings."$fileManager" = "${pkgs.thunar}/bin/thunar";
+    wayland.windowManager.hyprland.settings."$menu" = "${pkgs.vicinae}/bin/vicinae toggle";
+    wayland.windowManager.hyprland.settings."$browser" =
+      "hyprctl dispatch exec \"firefox --ozone-platform=wayland --enable-features=useozoneplatform\"";
+    wayland.windowManager.hyprland.settings."$editor" = "${pkgs.vimCustom}/bin/vim";
+    wayland.windowManager.hyprland.settings."$wallpaper" = "${./assets/deep_blue_invert.png}";
+    wayland.windowManager.hyprland.settings."$cursor" = "rose-pine-hyprcursor";
+    # $screenshot = hyprshot --mode
+    # $colorPicker = hyprpicker --autocopy --format hex
 
-      monitor=eDP-1,2400x1600@120,0x0,1
-      # monitor=MONITOR_2,2560x1440@144,2560x0,1
+    wayland.windowManager.hyprland.settings.monitor = [ "eDP-1,2400x1600@120,0x0,1" ];
 
-      workspace=1,monitor:MONITOR_1
-      workspace=2,monitor:MONITOR_1
-      workspace=3,monitor:MONITOR_1
-      workspace=4,monitor:MONITOR_1
-      #######################################################
-      # AUTOSTART
-      #######################################################
-      # Start Polkit Agent for Authentication
-      exec-once = ${systemctl} --user start hyprpolkitagent &
-      exec-once = ${hyprctl} keyword input:kb_numlock true && date "+%Y-%m-%d %H:%M:%S" > /tmp/numlock-set
+    wayland.windowManager.hyprland.settings.workspace = [
+      "1,monitor:MONITOR_1"
+      "2,monitor:MONITOR_1"
+      "3,monitor:MONITOR_1"
+      "4,monitor:MONITOR_1"
+    ];
 
-      exec-once = ${pkgs.swaynotificationcenter}/bin/swaync &
+    #######################################################
+    # AUTOSTART
+    #######################################################
+    wayland.windowManager.hyprland.settings.exec-once = [
+      "${systemctl} --user start hyprpolkitagent &"
+      "${hyprctl} keyword input:kb_numlock true && date \"+%Y-%m-%d %H:%M:%S\" > /tmp/numlock-set"
+      "${hyprctl} setcursor $cursor 24"
 
-      exec-once = ${pkgs.vicinae}/bin/vicinae server &
+      "${pkgs.swaynotificationcenter}/bin/swaync &"
+
+      "${pkgs.vicinae}/bin/vicinae server &"
 
       # exec-once = nm-applet --indicator &
       # exec-once = blueman-applet &
 
-      # exec-once = ${pkgs.hyprpaper}/bin/hyprpaper &
+      "${pkgs.hyprpaper}/bin/hyprpaper &"
 
-      # exec-once = wl-clip-persist --clipboard regular &
-      # exec-once = wl-clipboard-history -t &
-
-      # Start Idle Manager
       # exec-once = hypridle &
 
       # exec-once = ${systemctl} --user start app-org.kde.xwaylandvideobridge@autostart.service &
 
-      # Cursor theme
-      exec-once = ${hyprctl} setcursor $cursor 24
+      "sleep 1; ${pkgs.waybar}/bin/waybar -c \"/home/face/.config/waybar/config\" &"
+      "sleep 5; $hyprscripts/check_setup_warnings.sh &"
+    ];
 
-      exec-once = sleep 1; ${pkgs.waybar}/bin/waybar -c "/home/face/.config/waybar/config" &
-      exec-once = sleep 5; $hyprscripts/check_setup_warnings.sh &
+    #######################################################
+    # LOOK AND FEEL
+    #######################################################
+    wayland.windowManager.hyprland.settings.general = {
+      gaps_in = 5;
+      gaps_out = 5;
+      border_size = 3;
 
-      #######################################################
-      # LOOK AND FEEL
-      #######################################################
-      general {
-          gaps_in = 5
-          gaps_out = 5
+      "col.active_border" = "rgba(a591ffdd) rgba(91f8ffaa) 70deg";
+      "col.inactive_border" = "rgba(404040aa)";
+      resize_on_border = true;
+      allow_tearing = false;
+      layout = "dwindle";
 
-          border_size = 3
+      # Enable Snapping
+      "snap:enabled" = true;
+      "snap:monitor_gap" = 20;
+      "snap:window_gap" = 20;
+    };
 
-          col.active_border = rgba(a591ffdd) rgba(91f8ffaa) 70deg
-          col.inactive_border = rgba(404040aa)
+    wayland.windowManager.hyprland.settings.group = {
+      "col.border_active" = "rgba(a591ffdd) rgba(91f8ffaa) 70deg";
+      "col.border_inactive" = "rgba(404040aa)";
 
-          # Set to true enable resizing windows by clicking and dragging on borders and gaps
-          resize_on_border = true
+      groupbar = {
+        font_size = 14;
+        height = 22;
+        scrolling = false;
+        gradients = true;
+        gradient_rounding = 10;
+        indicator_height = 0;
+        gaps_in = 10;
+        gaps_out = 3;
+        text_color = "rgba(ffffffaa)";
+        "col.active" = "rgba(a591ffdd)";
+        "col.inactive" = "rgba(404040aa)";
+      };
 
-          allow_tearing = false
+    };
 
-          layout = dwindle
+    wayland.windowManager.hyprland.settings.decoration = {
+      rounding = 5;
+      rounding_power = 5;
 
-          # Enable Snapping
-          snap:enabled = true
-          snap:monitor_gap = 20
-          snap:window_gap = 20
-      }
+      # Change transparency of focused and unfocused windows
+      active_opacity = 1.0;
+      inactive_opacity = 0.9;
 
-      group {
-          col.border_active = rgba(a591ffdd) rgba(91f8ffaa) 70deg
-          col.border_inactive = rgba(404040aa)
+      shadow = {
+        enabled = true;
+        range = 5;
+        render_power = 3;
+        color = " rgba(1a1a1aee)";
+      };
 
-          groupbar {
-              font_size = 14
-              height = 22
-              scrolling = false
-              gradients = true
-              gradient_rounding = 10
-              indicator_height = 0
-              gaps_in = 10
-              gaps_out = 3
-              text_color = rgba(ffffffaa)
-              col.active = rgba(a591ffdd)
-              col.inactive = rgba(404040aa)
-          }
-      }
+      blur = {
+        enabled = true;
+        size = 3;
+        passes = 3;
+        xray = true;
+        popups = true;
 
-      decoration {
-          rounding = 5
-          rounding_power = 5
+        vibrancy = 0.1696;
+      };
+    };
 
-          # Change transparency of focused and unfocused windows
-          active_opacity = 0.9
-          inactive_opacity = 0.9
+    wayland.windowManager.hyprland.settings.animations.enabled = true;
+    wayland.windowManager.hyprland.settings.animations.bezier = [
+      "easeOutQuint,0.23,1,0.32,1"
+      "easeInOutCubic,0.65,0.05,0.36,1"
+      "linear,0,0,1,1"
+      "almostLinear,0.5,0.5,0.75,1.0"
+      "quick,0.15,0,0.1,1"
+    ];
+    wayland.windowManager.hyprland.settings.animations.animation = [
+      "global, 1, 10, default"
+      "border, 1, 5.39, easeOutQuint"
+      "windows, 1, 4.79, easeOutQuint"
+      "windowsIn, 1, 4.1, easeOutQuint, popin 87%"
+      "windowsOut, 1, 1.49, linear, popin 87%"
+      "fadeIn, 1, 1.73, almostLinear"
+      "fadeOut, 1, 1.46, almostLinear"
+      "fade, 1, 3.03, quick"
+      "layers, 1, 3.81, easeOutQuint"
+      "layersIn, 1, 4, easeOutQuint, fade"
+      "layersOut, 1, 1.5, linear, fade"
+      "fadeLayersIn, 1, 1.79, almostLinear"
+      "fadeLayersOut, 1, 1.39, almostLinear"
+      "workspaces, 1, 1.94, almostLinear, fade"
+      "workspacesIn, 1, 1.21, almostLinear, fade"
+      "workspacesOut, 1, 1.94, almostLinear, fade"
+    ];
 
-          shadow {
-              enabled = true
-              range = 5
-              render_power = 3
-              color = rgba(1a1a1aee)
-          }
+    wayland.windowManager.hyprland.settings.dwindle.pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    wayland.windowManager.hyprland.settings.dwindle.preserve_split = true; # You probably want this
 
-          blur {
-              enabled = true
-              size = 3
-              passes = 3
-              xray = true
-              popups = true
+    wayland.windowManager.hyprland.settings.master.new_status = "master";
 
-              vibrancy = 0.1696
-          }
-      }
+    wayland.windowManager.hyprland.settings.misc.vfr = true;
+    wayland.windowManager.hyprland.settings.misc.force_default_wallpaper = 0; # Set to 0 or 1 to disable the anime mascot wallpapers
+    wayland.windowManager.hyprland.settings.misc.disable_hyprland_logo = true; # If true disables the random hyprland logo / anime girl background. :(
+    wayland.windowManager.hyprland.settings.misc.focus_on_activate = true;
 
-      animations {
-          enabled = true
+    #######################################################
+    # PLUGINS
+    #######################################################
+    wayland.windowManager.hyprland.settings.plugin.hyprbars = {
+      bar_height = 20;
 
-          bezier = easeOutQuint,0.23,1,0.32,1
-          bezier = easeInOutCubic,0.65,0.05,0.36,1
-          bezier = linear,0,0,1,1
-          bezier = almostLinear,0.5,0.5,0.75,1.0
-          bezier = quick,0.15,0,0.1,1
+      # (R->L) hyprbars-button = color, size, on-click
+      hyprbars-button = [
+        " rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive"
+        " rgb(eeee11), 10, , hyprctl dispatch fullscreen 1"
+      ];
 
-          animation = global, 1, 10, default
-          animation = border, 1, 5.39, easeOutQuint
-          animation = windows, 1, 4.79, easeOutQuint
-          animation = windowsIn, 1, 4.1, easeOutQuint, popin 87%
-          animation = windowsOut, 1, 1.49, linear, popin 87%
-          animation = fadeIn, 1, 1.73, almostLinear
-          animation = fadeOut, 1, 1.46, almostLinear
-          animation = fade, 1, 3.03, quick
-          animation = layers, 1, 3.81, easeOutQuint
-          animation = layersIn, 1, 4, easeOutQuint, fade
-          animation = layersOut, 1, 1.5, linear, fade
-          animation = fadeLayersIn, 1, 1.79, almostLinear
-          animation = fadeLayersOut, 1, 1.39, almostLinear
-          animation = workspaces, 1, 1.94, almostLinear, fade
-          animation = workspacesIn, 1, 1.21, almostLinear, fade
-          animation = workspacesOut, 1, 1.94, almostLinear, fade
-      }
+      # cmd to run on double click of the bar
+      on_double_click = "hyprctl dispatch fullscreen 1";
+    };
 
-      dwindle {
-          pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-          preserve_split = true # You probably want this
-      }
+    wayland.windowManager.hyprland.settings.plugin.csgo-vulkan-fix = {
+      # Whether to fix the mouse position. A select few apps might be wonky with this.
+      fix_mouse = true;
 
-      master {
-          new_status = master
-      }
+      # Add apps with vkfix-app = initialClass, width, height
+      vkfix-app = [ "cs2, 2400, 1600" ];
+    };
 
-      misc {
-          vfr = true # Enable VFR (Variable Frame Rate) for Hyprland
-          force_default_wallpaper = 0 # Set to 0 or 1 to disable the anime mascot wallpapers
-          disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
-          focus_on_activate = true
-      }
-
-      #######################################################
-      # PLUGINS
-      #######################################################
-      plugin {
-          hyprbars {
-              # example config
-              bar_height = 20
-
-              # example buttons (R -> L)
-              # hyprbars-button = color, size, on-click
-              hyprbars-button = rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive
-              hyprbars-button = rgb(eeee11), 10, , hyprctl dispatch fullscreen 1
-
-              # cmd to run on double click of the bar
-              on_double_click = hyprctl dispatch fullscreen 1
-          }
-      }
-      #######################################################
-      # KEYBINDS
-      #######################################################
-      $mainMod = SUPER # Sets "Windows" key as 1. main modifier
-      $mainMod1 = CTRL # Sets "Control" key as 2. main modifier
-      $mainMod2 = SHIFT # Sets "Shift" key as 3. main modifier
-      $mainMod3 = ALT # Sets "alt" key as 4. main modifier
-
-      $ENTER = code:104 # NUMLOCK Enter key
-      $PLUS = code:88 # NUMLOCK Plus key
-      $MINUS = code:82 # NUMLOCK Minus Key
-      $MULTIPLY = code:63 # NUMLOCK Multiply Key
-      $DIVISION = code:106 # NUMLOCK Division Key
-      $LESS = code:94 # Less Key
-
-      $DOUBLES = code:49 # "§" Key
-      $HOME = code:110 # Home Key
-
+    #######################################################
+    # KEYBINDS
+    #######################################################
+    wayland.windowManager.hyprland.settings.bindd = [
       # Open Programms
-      bindd = $mainMod, SPACE, Open Menu, exec, $menu
-      bindd = $mainMod, T, Open Preferred Terminal, exec, $terminal
-      bindd = $mainMod, E, Open Preferred File Manager, exec, $fileManager
-      bindd = $mainMod, F, Open Preferred Browser, exec, $browser
-      bindd = $mainMod, C, Open Preferred Editor, exec, $editor
-      bindd = $mainMod, J, Open Preferred Color Picker, exec, $colorPicker
-      bindd = $mainMod, $LESS, Open Notification Center, exec, sleep 0.1 && swaync-client -t -sw
+      "SUPER, SPACE, Open Menu, exec, $menu"
+      "SUPER, T, Open Preferred Terminal, exec, $terminal"
+      "SUPER, E, Open Preferred File Manager, exec, $fileManager"
+      "SUPER, F, Open Preferred Browser, exec, $browser"
+      "SUPER, C, Open Preferred Editor, exec, $editor"
+      "SUPER, J, Open Preferred Color Picker, exec, $colorPicker"
+      "SUPER, $LESS, Open Notification Center, exec, sleep 0.1 && swaync-client -t -sw"
+
+      "SUPER, V, Clipboard History, exec, ${pkgs.vicinae}/bin/vicinae vicinae://extensions/vicinae/clipboard/history"
 
       # Window Behaivior
-      bindd = $mainMod, X, Close Active Window, killactive,
-      bindd = $mainMod, Q, Toggle Fullscreen, fullscreenstate, 3 0
+      "SUPER, X, Close Active Window, killactive"
+      "SUPER, Q, Toggle Fullscreen, fullscreenstate, 3 0"
 
-      bindd = $mainMod, B, Toggle Pseudo Layout, pseudo, # dwindle
-      bindd = $mainMod, N, Toggle Split Layout, togglesplit, # dwindle
+      "SUPER, B, Toggle Pseudo Layout, pseudo" # dwindle
+      "SUPER, N, Toggle Split Layout, togglesplit" # dwindle
 
-      bindd = $mainMod $mainMod1, G, Toggle Windowgroup, togglegroup
-      bindd = $mainMod3, tab, Tab trough Windowgroup, changegroupactive, f
-
-      bindd = $mainMod, S, Toggle Special Workspace (Minimize), togglespecialworkspace, magic
-      bind = $mainMod, S, movetoworkspace, +0
-      bind = $mainMod, S, togglespecialworkspace, magic
-      bind = $mainMod, S, movetoworkspace, special:magic
-      bind = $mainMod, S, togglespecialworkspace, magic
-
-      bindmd = $mainMod, mouse:272, Move Window, movewindow
-      bindmd = $mainMod, mouse:273, Resize Window, resizewindow
-
-      bindd = $mainMod $mainMod1, X, Toggle Scratchpad Terminal, exec, pypr toggle term
-
-      # Screenshots
-      bindd = $mainMod, Y, Take Screenshot of Window, exec, $screenshot window --raw | satty --filename -
-      bindd = $mainMod, $HOME, Take Screenshot of Monitor, exec, $screenshot output --raw | satty --filename -
-      bindd = , $HOME, Take Screenshot of Region, exec, $screenshot region --raw | satty --filename -
-
-      # Wallpaper Interactions
-      bindd = $mainMod, H, Toggle Waybar, exec, $hyprscripts/toggle_waybar.sh
-
-      # Custom Hyprscript Keybindings
-      bindd = $mainMod, V, Clipboard History, exec, ${pkgs.vicinae}/bin/vicinae vicinae://extensions/vicinae/clipboard/history
+      "SUPER ALT, G, Toggle Windowgroup, togglegroup"
+      "ALT, TAB, Tab trough Windowgroup, changegroupactive, f"
 
       # System Interactions
-      bindd = $mainMod, L, Lock Screen, exec, hyprlock
-      bindd = $mainMod, M, Exit Hyprland, exit,
-      bindd = $mainMod, O, Reboot PC, exec, reboot
-      bindd = $mainMod, P, Shutdown PC, exec, poweroff
+      "SUPER, L, Lock Screen, exec, hyprlock"
+      "SUPER, M, Exit Hyprland, exit,"
+      "SUPER, O, Reboot PC, exec, reboot"
+      "SUPER, P, Shutdown PC, exec, poweroff"
 
       # Focus Interactions
-      bindd = $mainMod, left, Move Focus left, movefocus, l
-      bindd = $mainMod, right, Move Focus right, movefocus, r
-      bindd = $mainMod, up, Move Focus up, movefocus, u
-      bindd = $mainMod, down, Move Focus down, movefocus, d
-
-      # Temporarly disable Global shortcuts
-      bindd = $mainMod $mainMod1, L, Disable Global Hyprland Keybinds (if enabled), submap, clean
-      submap = clean
-      bindd = $mainMod $mainMod1, L, Enable Global Hyprland Keybinds (if disabled), submap, reset
-      submap = reset
+      "SUPER, left, Move Focus left, movefocus, l"
+      "SUPER, right, Move Focus right, movefocus, r"
+      "SUPER, up, Move Focus up, movefocus, u"
+      "SUPER, down, Move Focus down, movefocus, d"
 
       # Switch workspaces F[1-10]
-      # bindd =  , F1, Open Workspace 1, workspace, 1
-      # bindd =  , F2, Open Workspace 2, workspace, 2
-      # bindd =  , F3, Open Workspace 3, workspace, 3
-      # bindd =  , F4, Open Workspace 4, workspace, 4
-      # bindd =  , F5, Open Workspace 5, workspace, 5
-      # bindd =  , F6, Open Workspace 6, workspace, 6
-      # bindd =  , F7, Open Workspace 7, workspace, 7
-      # bindd =  , F8, Open Workspace 8, workspace, 8
-      # bindd =  , F9, Open Workspace 9, workspace, 9
-      # bindd =  , F10, Open Workspace 10, workspace, 10
+      "SUPER , F1, Open Workspace 1, workspace, 1"
+      "SUPER , F2, Open Workspace 2, workspace, 2"
+      "SUPER , F3, Open Workspace 3, workspace, 3"
+      "SUPER , F4, Open Workspace 4, workspace, 4"
 
-      # # Move active window to a workspace with SHIFT + F[1-10]
-      # bindd = $mainMod2, F1, Move to Workspace 1, movetoworkspace, 1
-      # bindd = $mainMod2, F2, Move to Workspace 2, movetoworkspace, 2
-      # bindd = $mainMod2, F3, Move to Workspace 3, movetoworkspace, 3
-      # bindd = $mainMod2, F4, Move to Workspace 4, movetoworkspace, 4
-      # bindd = $mainMod2, F5, Move to Workspace 5, movetoworkspace, 5
-      # bindd = $mainMod2, F6, Move to Workspace 6, movetoworkspace, 6
-      # bindd = $mainMod2, F7, Move to Workspace 7, movetoworkspace, 7
-      # bindd = $mainMod2, F8, Move to Workspace 8, movetoworkspace, 8
-      # bindd = $mainMod2, F9, Move to Workspace 9, movetoworkspace, 9
-      # bindd = $mainMod2, F10, Move to Workspace 10, movetoworkspace, 10
+      # Move active window to a workspace with SHIFT + F[1-10]
+      "SUPER SHIFT, F1, Move to Workspace 1, movetoworkspace, 1"
+      "SUPER SHIFT, F2, Move to Workspace 2, movetoworkspace, 2"
+      "SUPER SHIFT, F3, Move to Workspace 3, movetoworkspace, 3"
+      "SUPER SHIFT, F4, Move to Workspace 4, movetoworkspace, 4"
+    ];
 
-      # Scroll through existing workspaces with mainMod + scroll
-      # bindd = $mainMod, mouse_down, Go to Next Workspace, workspace, e+1
-      # bindd = $mainMod, mouse_up, Go to Last Workspace, workspace, e-1
-
+    wayland.windowManager.hyprland.settings.bindeld = [
       # Laptop multimedia Interactions and LCD brightness
-      bindeld = ,XF86AudioLowerVolume, Lower Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-      bindeld = ,XF86AudioRaiseVolume, Rise Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+      ",XF86AudioLowerVolume, Lower Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ",XF86AudioRaiseVolume, Rise Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
 
-      bindeld = ,XF86AudioMute, Mute Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-      bindeld = ,XF86AudioMicMute, Mute Microphone, exec, ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+      ",XF86AudioMute, Mute Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ",XF86AudioMicMute, Mute Microphone, exec, ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
-      bindeld = ,XF86MonBrightnessUp, Turn Up Brightness, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%+
-      bindeld = ,XF86MonBrightnessDown, Turn Down Brightness, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%-
+      ",XF86MonBrightnessUp, Turn Up Brightness, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%+"
+      ",XF86MonBrightnessDown, Turn Down Brightness, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%-"
+    ];
 
-      #######################################################
-      # WINDOW RULES
-      #######################################################
+    # bindmd = $mainMod, mouse:272, Move Window, movewindow
+    # bindmd = $mainMod, mouse:273, Resize Window, resizewindow
+
+    # # Screenshots
+    # bindd = $mainMod, Y, Take Screenshot of Window, exec, $screenshot window --raw | satty --filename -
+    #a bindd = $mainMod, $HOME, Take Screenshot of Monitor, exec, $screenshot output --raw | satty --filename -
+    # bindd = , $HOME, Take Screenshot of Region, exec, $screenshot region --raw | satty --filename -
+
+    # Scroll through existing workspaces with mainMod + scroll
+    # bindd = $mainMod, mouse_down, Go to Next Workspace, workspace, e+1
+    # bindd = $mainMod, mouse_up, Go to Last Workspace, workspace, e-1
+
+    #######################################################
+    # WINDOW RULES
+    #######################################################
+    wayland.windowManager.hyprland.extraConfig = ''
       # Ignore maximize requests from apps. You'll probably like this.
       # windowrule = suppressevent maximize, class:.*
 
@@ -366,18 +322,22 @@ in
       windowrule = match:class tuned-gui, float on
       windowrule = match:class tuned-gui, center on
 
+      windowrule = match:class steam, hyprbars:no_bar on
+      windowrule = match:class steam match:initialTitle: Settings, float on
+
       layerrule = match:namespace vicinae, blur on
       layerrule = match:namespace vicinae, ignore_alpha 0
       layerrule = match:namespace vicinae, no_anim on
-
-
     '';
 
+    #######################################################
+    # WALLPAPER
+    #######################################################
     services.hyprpaper.enable = true;
     services.hyprpaper.settings.wallpaper = [
       {
         monitor = "eDP-1";
-        path = "${./assets/deep_blue.png}";
+        path = "${./assets/deep_blue_invert.png}";
         fit_mode = "contain";
       }
     ];
