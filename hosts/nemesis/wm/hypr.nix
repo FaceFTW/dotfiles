@@ -13,6 +13,8 @@ in
     serviceConfig.ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
   };
 
+  environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/intel_gpu:/dev/dri/nvidia_gpu";
+
   home-manager.users.face = {
     wayland.windowManager.hyprland.enable = true;
     wayland.windowManager.hyprland.package = null;
@@ -82,7 +84,7 @@ in
       "col.active_border" = "rgba(a591ffdd) rgba(91f8ffaa) 70deg";
       "col.inactive_border" = "rgba(404040aa)";
       resize_on_border = true;
-      allow_tearing = false;
+      allow_tearing = true;
       layout = "dwindle";
 
       # Enable Snapping
@@ -223,6 +225,18 @@ in
       "SUPER ALT, G, Toggle Windowgroup, togglegroup"
       "ALT, TAB, Tab trough Windowgroup, changegroupactive, f"
 
+      "ALT, F4, Force Close Window, signal, 9"
+
+      "SUPER ALT, left, Shrink Window Horizontally, resizeactive, -10 0"
+      "SUPER ALT, right, Grow Window Horizontally, resizeactive, 10 0"
+      "SUPER ALT, down, Shrink Window Vertically, resizeactive, 0 -10"
+      "SUPER ALT, up, Grow Window Vertically, resizeactive, 0 10"
+
+      "SUPER SHIFT ALT, left, Half Window Size Horizontally, resizeactive, 50% 0"
+      "SUPER SHIFT ALT, right, Double Window Size Horizontally, resizeactive, 200% 0"
+      "SUPER SHIFT ALT, down, Half Window Size Vertically, resizeactive, 0 50%"
+      "SUPER SHIFT ALT, up, Double Window Size Vertically, resizeactive, 0 200%"
+
       # System Interactions
       "SUPER, L, Lock Screen, exec, hyprlock"
       "SUPER, M, Exit Hyprland, exit,"
@@ -324,6 +338,7 @@ in
 
       windowrule = match:class steam, hyprbars:no_bar on
       windowrule = match:class steam match:initialTitle: Settings, float on
+      windowrule = match:class cs2, immediate yes
 
       layerrule = match:namespace vicinae, blur on
       layerrule = match:namespace vicinae, ignore_alpha 0

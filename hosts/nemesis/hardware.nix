@@ -38,15 +38,27 @@
   hardware.sensor.iio.enable = false; # Sometimes there are annoying rotations that happen
 
   ############################################
+  # udev rules
+  ############################################
+
+  services.udev.enable = true;
+  services.udev.extraRules = ''
+    KERNEL=="card*", KERNELS=="0000:00:02.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/intel_gpu"
+    KERNEL=="card*", KERNELS=="0000:00:f3.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/nvidia_gpu"
+  '';
+
+  ############################################
   # Nvidia Graphics Configuration
   ############################################
   hardware.graphics.enable = true;
+  hardware.opengl.enable = true;
+
   services.xserver.videoDrivers = [
     "modesetting"
     "nvidia"
   ];
 
-  hardware.nvidia.open = true;
+  hardware.nvidia.open = false;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.nvidiaSettings = true; # accessible via `nvidia-settings`.
@@ -67,7 +79,7 @@
   hardware.nvidia.powerManagement.finegrained = false;
 
   boot.extraModprobeConfig = ''
-    options nvidia "NVreg_DynamicPowerManagement=0x00
+    options nvidia "NVreg_DynamicPowerManagement=0x00"
   '';
 
   ############################################
@@ -80,9 +92,14 @@
     "usb_storage"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [
+    "nvidia"
+    "i915"
+    "nvidia_modeset"
+    "nvidia_drm"
+  ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/5ad1e2a9-84d0-45e1-8663-2b6744626d57";
