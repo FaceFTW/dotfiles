@@ -137,6 +137,8 @@ in
   packages.rust = "nightly";
   packages.nodejs.node = true;
   packages.steam = true;
+  packages.steam-nvidia-prime = true;
+
 
   environment.systemPackages = [
     pkgs.sbctl
