@@ -137,6 +137,7 @@ in
   packages.rust = "nightly";
   packages.nodejs.node = true;
   packages.steam = true;
+  packages.steam-nvidia-prime = true;
 
   environment.systemPackages = [
     pkgs.sbctl
@@ -144,6 +145,7 @@ in
     pkgs.thunar
     pkgs.firefox
     pkgs.xdg-utils
+	pkgs.nvidia-offload
   ];
 
   system.stateVersion = "25.05"; # Don't change this
