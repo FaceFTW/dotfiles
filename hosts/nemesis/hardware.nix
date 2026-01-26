@@ -51,6 +51,7 @@
   # Nvidia Graphics Configuration
   ############################################
   hardware.graphics.enable = true;
+  hardware.opengl.enable = true;
 
   services.xserver.videoDrivers = [
     "modesetting"
