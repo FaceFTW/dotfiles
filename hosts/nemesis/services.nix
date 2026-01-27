@@ -27,4 +27,9 @@
 
   programs.dconf.enable = true;
 
+  service.syncthing.enable = true;
+  service.syncthing.key = "/run/secrets/syncthing/key.pem";
+  service.syncthing.cert = "/run/secrets/syncthing/cert.pem";
+  service.syncthing.accessibleFolders = [ "/mnt/citadel/Workspaces" ];
+  service.syncthing.folderOwner = "face";
 }

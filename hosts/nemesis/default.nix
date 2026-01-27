@@ -10,7 +10,6 @@ let
 in
 {
   imports = [
-
     inputs.nixos-hardware.nixosModules.microsoft-surface-common
     inputs.nixos-hardware.nixosModules.common-cpu-intel
     inputs.nixos-hardware.nixosModules.common-gpu-intel
@@ -21,6 +20,7 @@ in
     ../../modules/core.nix
     ../../modules/kernel.nix
     ../../modules/packages.nix
+	../../modules/services.nix
     ./hardware.nix
     ./networking.nix
     ./services.nix
@@ -50,6 +50,7 @@ in
     extraGroups = [
       "wheel"
       "networkmanager"
+	  "syncthing"
     ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
@@ -57,25 +58,20 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuQw4U+Wam1gjuEXyH/cObZfnfYiA/LPF0kjQPFTz9x face@manifold-wsl"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
     ];
-    initialPassword = ""; # For bootstrapping!
-    # hashedPasswordFile = config.sops.secrets.user_passwd.path;
+    # initialPassword = ""; # For bootstrapping!
+    hashedPasswordFile = config.sops.secrets.user_passwd.path;
     packages = [
     ];
   };
 
-  # The following are system users/groups defined for various services
-  # Unless they are defined elsewhere, in which here I document it for tracking
-  users.groups.wifi = { }; # For ensuring wpa_supplicant can access the secrets reasonably
-
   ############################################
   # SOPS Settings
   ############################################
-  # sops.defaultSopsFile = ./secrets.yaml;
-  # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  # sops.secrets.user_passwd.neededForUsers = true;
-  # sops.secrets.wifi_secrets = {
-  #   group = config.users.users.systemd-network.group;
-  # };
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets.user_passwd.neededForUsers = true;
+  sops.secrets."syncthing/cert.pem".key = "syncthing_cert_pem";
+  sops.secrets."syncthing/key.pem".key = "syncthing_key_pem";
 
   ############################################
   # Nix Settings

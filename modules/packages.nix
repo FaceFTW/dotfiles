@@ -157,8 +157,7 @@ in
             rm $out/share/applications/steam.desktop
             substitute steam.desktop $out/share/applications/steam.desktop \
               --replace-fail /usr/bin/steam steam \
-              --replace-fail 'Exec=' 'Exec=${pkgs.nvidia-offload}/bin/nvidia-offload '
-            echo lmao
+              --replace-fail "Exec=" "Exec=${pkgs.nvidia-offload}/bin/nvidia-offload "
           '';
         }
       );

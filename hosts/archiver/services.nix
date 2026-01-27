@@ -32,17 +32,11 @@
   ############################################
   # Syncthing
   ############################################
-  users.users.syncthing = {
-    isSystemUser = true;
-    home = "/var/lib/syncthing";
-    group = "syncthing";
-    extraGroups = [ "users" ]; # TODO this is probably a bad idea
-  };
-  users.groups.syncthing = { };
-  services.syncthing.enable = true;
-  services.syncthing.openDefaultPorts = true;
-  services.syncthing.key = "/run/secrets/syncthing/key.pem";
-  services.syncthing.cert = "/run/secrets/syncthing/cert.pem";
+  service.syncthing.enable = true;
+  service.syncthing.key = "/run/secrets/syncthing/key.pem";
+  service.syncthing.cert = "/run/secrets/syncthing/cert.pem";
+  service.syncthing.accessibleFolders = [ "/mnt/motorway/Workspaces" ];
+  service.syncthing.folderOwner = "face";
 
   ############################################
   # Immich

@@ -16,6 +16,7 @@ in
     ../../modules/core.nix
     ../../modules/kernel.nix
     ../../modules/packages.nix
+    ../../modules/services.nix
     ./disks.nix
     ./networking.nix
     ./nginx.nix
@@ -119,7 +120,6 @@ in
   sops.secrets.immich_secrets.group = "immich";
   sops.secrets."syncthing/cert.pem".key = "syncthing_cert_pem";
   sops.secrets."syncthing/key.pem".key = "syncthing_key_pem";
-
 
   ############################################
   # Nix Settings
