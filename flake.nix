@@ -3,6 +3,7 @@
   inputs = {
     # Core NixOS
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11-small";
     nixos-hardware.url = "github:FaceFTW/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
@@ -31,8 +32,8 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hyprland Ecosystem
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland.url = "github:FaceFTW/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs-stable";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     hyprpaper.url = "github:hyprwm/hyprpaper";
@@ -72,6 +73,7 @@
             inputs.fenix.overlays.default
             inputs.vicinae.overlays.default
             inputs.hyprland.overlays.default
+            inputs.hyprland-plugins.overlays.default
             inputs.hyprpaper.overlays.default
           ]
           ++ globalOverlays
