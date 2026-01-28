@@ -9,10 +9,6 @@ in
   programs.hyprland.enable = true;
   programs.hyprland.package = pkgs.hyprland;
   programs.hyprland.portalPackage = pkgs.xdg-desktop-portal-hyprland;
-  programs.hyprland.plugins = [
-    pkgs.hyprlandPlugins.hyprbars
-    pkgs.hyprlandPlugins.csgo-vulkan-fix
-  ];
 
   systemd.user.services.hyprpolkitagent = {
     serviceConfig.ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
@@ -21,13 +17,16 @@ in
   environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/intel_gpu:/dev/dri/nvidia_gpu";
 
   home-manager.users.face = {
+    # imports = [ inputs.hyprland.homeManagerModules.default ];
+
     wayland.windowManager.hyprland.enable = true;
     wayland.windowManager.hyprland.package = null;
     wayland.windowManager.hyprland.portalPackage = null;
-    # wayland.windowManager.hyprland.plugins = [
-    #   inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
-    #   inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.csgo-vulkan-fix
-    # ];
+    wayland.windowManager.hyprland.plugins = [
+      pkgs.hyprlandPlugins.hyprbars
+      pkgs.hyprlandPlugins.hyprexpo
+      # pkgs.hyprlandPlugins.csgo-vulkan-fix
+    ];
     wayland.windowManager.hyprland.systemd.enable = false;
 
     #######################################################
@@ -205,6 +204,13 @@ in
       vkfix-app = [ "cs2, 2400, 1600" ];
     };
 
+    wayland.windowManager.hyprland.settings.plugin.hyprexpo = {
+      columns = 4;
+      gap_size = 25;
+      workspace_method = "first current";
+      skip_empty = true;
+    };
+
     #######################################################
     # KEYBINDS
     #######################################################
@@ -220,6 +226,8 @@ in
 
       "SUPER, V, Clipboard History, exec, ${pkgs.vicinae}/bin/vicinae vicinae://extensions/vicinae/clipboard/history"
 
+      "SUPER, TAB, Workspace View, hyprexpo:expo, toggle"
+
       # Window Behaivior
       "SUPER, X, Close Active Window, killactive"
       "SUPER, Q, Toggle Fullscreen, fullscreenstate, 3 0"
@@ -231,6 +239,8 @@ in
       "ALT, TAB, Tab trough Windowgroup, changegroupactive, f"
 
       "ALT, F4, Force Close Window, signal, 9"
+
+      "SUPER SHIFT, F, Toggle Window Float, togglefloating, active"
 
       "SUPER ALT, left, Shrink Window Horizontally, resizeactive, -10 0"
       "SUPER ALT, right, Grow Window Horizontally, resizeactive, 10 0"
@@ -340,6 +350,12 @@ in
 
       windowrule = match:class tuned-gui, float on
       windowrule = match:class tuned-gui, center on
+
+      windowrule = match:class thunar, float on
+      windowrule = match:class thunar, center on
+
+      windowrule = match:class firefox, hyprbars:no_bar on
+
 
       windowrule = match:class steam, hyprbars:no_bar on
       windowrule = match:class steam match:initialTitle: Settings, float on
