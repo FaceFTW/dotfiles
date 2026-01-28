@@ -121,8 +121,10 @@
       "noatime"
       "uid=face"
       "gid=users"
-      "dmask=0022"
-      "fmask=0022"
+      "dmask=0002"
+      "fmask=0002"
+      "acl"
+      "windows_names"
       # "iocharset=utf8"
     ];
 
