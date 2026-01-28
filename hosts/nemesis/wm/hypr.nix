@@ -4,10 +4,15 @@ let
   systemctl = "${pkgs.systemd}/bin/systemctl";
 in
 {
+  imports = [ inputs.hyprland.nixosModules.default ];
+
   programs.hyprland.enable = true;
-  programs.hyprland.package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-  programs.hyprland.portalPackage =
-    inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  programs.hyprland.package = pkgs.hyprland;
+  programs.hyprland.portalPackage = pkgs.xdg-desktop-portal-hyprland;
+  programs.hyprland.plugins = [
+    pkgs.hyprlandPlugins.hyprbars
+    pkgs.hyprlandPlugins.csgo-vulkan-fix
+  ];
 
   systemd.user.services.hyprpolkitagent = {
     serviceConfig.ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
@@ -19,10 +24,10 @@ in
     wayland.windowManager.hyprland.enable = true;
     wayland.windowManager.hyprland.package = null;
     wayland.windowManager.hyprland.portalPackage = null;
-    wayland.windowManager.hyprland.plugins = [
-      inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
-      inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.csgo-vulkan-fix
-    ];
+    # wayland.windowManager.hyprland.plugins = [
+    #   inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
+    #   inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.csgo-vulkan-fix
+    # ];
     wayland.windowManager.hyprland.systemd.enable = false;
 
     #######################################################
