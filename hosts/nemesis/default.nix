@@ -19,8 +19,8 @@ in
     inputs.home-manager.nixosModules.home-manager
     ../../modules/core.nix
     ../../modules/kernel.nix
-    ../../modules/packages.nix
-	../../modules/services.nix
+    ../../modules/packages
+	../../modules/services
     ./hardware.nix
     ./networking.nix
     ./services.nix

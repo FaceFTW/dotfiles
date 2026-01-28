@@ -15,8 +15,8 @@ in
     inputs.disko.nixosModules.disko
     ../../modules/core.nix
     ../../modules/kernel.nix
-    ../../modules/packages.nix
-    ../../modules/services.nix
+    ../../modules/packages
+    ../../modules/services
     ./disks.nix
     ./networking.nix
     ./nginx.nix

@@ -12,10 +12,10 @@ in
   imports = [
     inputs.lix-module.nixosModules.default
     inputs.nixos-wsl.nixosModules.default
+    inputs.home-manager.nixosModules.home-manager
     ../../modules/core.nix
     ../../modules/kernel.nix
-    ../../modules/packages.nix
-    inputs.home-manager.nixosModules.home-manager
+    ../../modules/packages
   ];
 
   ############################################
