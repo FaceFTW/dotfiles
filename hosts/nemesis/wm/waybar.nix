@@ -52,6 +52,10 @@
           "on-click" = "psensor";
         };
 
+        # "bluetooth" = {
+
+        # };
+
         "battery" = {
           "states" = {
             "good" = 80;
