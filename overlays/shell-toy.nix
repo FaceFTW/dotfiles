@@ -15,7 +15,7 @@ in
     srcs = [
       (lib.fileset.toSource {
         root = ./..;
-        fileset = lib.fileset.union ../dotfiles/fortunes.txt ../dotfiles/cowsay;
+        fileset = lib.fileset.union ../config/fortunes.txt ../config/cowsay;
       })
       (fetchgit {
         url = "https://github.com/FaceFTW/shell-toy.git";
@@ -30,8 +30,8 @@ in
 
     doCheck = false;
 
-    FORTUNE_FILE = "../source/dotfiles/fortunes.txt";
-    COW_PATH = "../source/dotfiles/cowsay";
+    FORTUNE_FILE = "../source/config/fortunes.txt";
+    COW_PATH = "../source/config/cowsay";
     RUSTFLAGS = "-C target-feature=+crt-static";
 
     # The sed thing fixes an aarch64 compilation issue, removes things not used in my builds
