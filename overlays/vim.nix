@@ -16,7 +16,7 @@ final: prev: with prev; {
       {
         vimrcConfig.customRC =
           builtins.replaceStrings [ "let g:skip_plug_load = 0" ] [ "let g:skip_plug_load = 1" ]
-            (builtins.unsafeDiscardStringContext (builtins.readFile "${./../dotfiles/.vimrc}"));
+            (builtins.unsafeDiscardStringContext (builtins.readFile "${./../config/.vimrc}"));
 
         vimrcConfig.packages.myVimPackges = {
           start = [

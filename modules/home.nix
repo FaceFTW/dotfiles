@@ -89,7 +89,7 @@
   oh-my-posh.enable = true;
   oh-my-posh.enableZshIntegration = true;
   oh-my-posh.settings = builtins.fromJSON (
-    builtins.unsafeDiscardStringContext (builtins.readFile "${./../dotfiles/omp-theme.json}")
+    builtins.unsafeDiscardStringContext (builtins.readFile "${./../config/omp-theme.json}")
   );
 
   ############################################
@@ -125,6 +125,6 @@
   ############################################
   fastfetch.enable = true;
   fastfetch.settings = builtins.fromJSON (
-    builtins.unsafeDiscardStringContext (builtins.readFile "${./../dotfiles/fastfetch.jsonc}")
+    builtins.unsafeDiscardStringContext (builtins.readFile "${./../config/fastfetch.jsonc}")
   );
 }
