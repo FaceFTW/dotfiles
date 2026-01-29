@@ -32,7 +32,7 @@ menu menuitem:hover {
 }
 #workspaces button.urgent {
   color: #11111b;
-  background: #a6e3a1;
+  background:rgb(227, 161, 161);
   border-radius: 10px;
 }
 #workspaces button:hover {

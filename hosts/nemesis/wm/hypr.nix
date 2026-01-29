@@ -46,10 +46,10 @@ in
     wayland.windowManager.hyprland.settings.monitor = [ "eDP-1,2400x1600@120,0x0,1" ];
 
     wayland.windowManager.hyprland.settings.workspace = [
-      "1,monitor:MONITOR_1"
-      "2,monitor:MONITOR_1"
-      "3,monitor:MONITOR_1"
-      "4,monitor:MONITOR_1"
+      "1,monitor:MONITOR_1,persistent:true,default=true"
+      "2,monitor:MONITOR_1,persistent:true"
+      "3,monitor:MONITOR_1,persistent:true"
+      "4,monitor:MONITOR_1,persistent:true"
     ];
 
     #######################################################
@@ -351,11 +351,16 @@ in
       windowrule = match:class tuned-gui, float on
       windowrule = match:class tuned-gui, center on
 
+      windowrule = match:class \.blueman.*, float on
+      windowrule = match:class \.blueman.*, center on
+
       windowrule = match:class thunar, float on
       windowrule = match:class thunar, center on
 
-      windowrule = match:class firefox, hyprbars:no_bar on
+      windowrule = match:class hyprpwcenter, float on
+      windowrule = match:class hyprpwcenter, center on
 
+      windowrule = match:class firefox, hyprbars:no_bar on
 
       windowrule = match:class steam, hyprbars:no_bar on
       windowrule = match:class steam match:initialTitle: Settings, float on
