@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, ... }:
 {
 
   ############################################
@@ -13,6 +8,29 @@
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
+
+  hardware.bluetooth.enable = true;
+  ############################################
+  # Kernel Config
+  ############################################
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "thunderbolt"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+  ];
+  boot.initrd.kernelModules = [
+    "nvidia"
+    "i915"
+    "nvidia_modeset"
+    "nvidia_drm"
+  ];
+  boot.kernelModules = [
+    "kvm-intel"
+    "btusb"
+  ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
   ############################################
   # Bootloader Configuration
@@ -40,7 +58,6 @@
   ############################################
   # udev rules
   ############################################
-
   services.udev.enable = true;
   services.udev.extraRules = ''
     KERNEL=="card*", KERNELS=="0000:00:02.0", SUBSYSTEM=="drm", SUBSYSTEMS=="pci", SYMLINK+="dri/intel_gpu"
@@ -82,24 +99,8 @@
   '';
 
   ############################################
-  #  hardware-configuration.nix
+  # Filesystem Config
   ############################################
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "thunderbolt"
-    "nvme"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [
-    "nvidia"
-    "i915"
-    "nvidia_modeset"
-    "nvidia_drm"
-  ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
-
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/5ad1e2a9-84d0-45e1-8663-2b6744626d57";
     fsType = "ext4";
@@ -134,5 +135,4 @@
     { device = "/dev/disk/by-uuid/5813e031-07db-4496-b818-11e165caeee7"; }
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

@@ -22,11 +22,14 @@
   # Bluetooth management
   services.blueman.enable = true;
 
+  # Ad-hoc disk mounting
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 
+  # Gnome
   programs.dconf.enable = true;
 
+  # Syncthing
   service.syncthing.enable = true;
   service.syncthing.key = "/run/secrets/syncthing/key.pem";
   service.syncthing.cert = "/run/secrets/syncthing/cert.pem";
