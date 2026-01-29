@@ -360,7 +360,12 @@ in
       windowrule = match:class hyprpwcenter, float on
       windowrule = match:class hyprpwcenter, center on
 
+      windowrule = match:class Bitwarden, float on
+      windowrule = match:class Bitwarden, center on
+
       windowrule = match:class firefox, hyprbars:no_bar on
+
+      windowrule = match:class code, hyprbars:no_bar on
 
       windowrule = match:class steam, hyprbars:no_bar on
       windowrule = match:class steam match:initialTitle: Settings, float on
