@@ -135,12 +135,20 @@ in
   packages.steam = true;
   packages.steam-nvidia-prime = true;
 
+  programs.vscode.enable = true;
+  programs.vscode.defaultEditor = false;
+
   environment.systemPackages = [
     pkgs.sbctl
     pkgs.alacritty
     pkgs.thunar
     pkgs.firefox
     pkgs.xdg-utils
+    pkgs.bitwarden-desktop
+    pkgs.bitwarden-cli
+    pkgs.kdePackages.kleopatra
+    pkgs.gimp
+    pkgs.inkscape
 	pkgs.nvidia-offload
   ];
 

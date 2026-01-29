@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -35,4 +35,13 @@
   service.syncthing.cert = "/run/secrets/syncthing/cert.pem";
   service.syncthing.accessibleFolders = [ "/mnt/citadel/Workspaces" ];
   service.syncthing.folderOwner = "face";
+
+  # GPG Things
+  programs.gnupg.agent.enable = true;
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
+
+  # Keyring
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.hyprland.enableGnomeKeyring = true;
+
 }
