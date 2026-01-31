@@ -20,7 +20,7 @@ in
     ../../modules/core.nix
     ../../modules/kernel.nix
     ../../modules/packages
-	../../modules/services
+    ../../modules/services
     ./hardware.nix
     ./networking.nix
     ./services.nix
@@ -50,7 +50,7 @@ in
     extraGroups = [
       "wheel"
       "networkmanager"
-	  "syncthing"
+      "syncthing"
     ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
@@ -71,7 +71,9 @@ in
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
   sops.secrets."syncthing/cert.pem".key = "syncthing_cert_pem";
+  sops.secrets."syncthing/cert.pem".owner = "face";
   sops.secrets."syncthing/key.pem".key = "syncthing_key_pem";
+  sops.secrets."syncthing/key.pem".owner = "face";
 
   ############################################
   # Nix Settings
@@ -149,7 +151,7 @@ in
     pkgs.kdePackages.kleopatra
     pkgs.gimp
     pkgs.inkscape
-	pkgs.nvidia-offload
+    pkgs.nvidia-offload
   ];
 
   system.stateVersion = "25.05"; # Don't change this

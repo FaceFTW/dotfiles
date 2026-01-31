@@ -37,6 +37,7 @@
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     hyprpaper.url = "github:hyprwm/hyprpaper";
+    hyprlock.url = "github:hyprwm/hyprlock";
 
     # Hyprcursor
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
@@ -46,6 +47,7 @@
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
     vicinae-extensions.url = "github:vicinaehq/extensions";
+
   };
 
   outputs =
@@ -75,6 +77,7 @@
             inputs.hyprland.overlays.default
             inputs.hyprland-plugins.overlays.default
             inputs.hyprpaper.overlays.default
+            inputs.hyprlock.overlays.default
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);

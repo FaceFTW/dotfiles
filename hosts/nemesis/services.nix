@@ -31,10 +31,10 @@
 
   # Syncthing
   service.syncthing.enable = true;
+  service.syncthing.user-level = true;
   service.syncthing.key = "/run/secrets/syncthing/key.pem";
   service.syncthing.cert = "/run/secrets/syncthing/cert.pem";
-  service.syncthing.accessibleFolders = [ "/mnt/citadel/Workspaces" ];
-  service.syncthing.folderOwner = "face";
+  service.syncthing.user = "face";
 
   # GPG Things
   programs.gnupg.agent.enable = true;
