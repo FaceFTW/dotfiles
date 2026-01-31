@@ -70,10 +70,10 @@ in
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
-  sops.secrets."syncthing/cert.pem".key = "syncthing_cert_pem";
-  sops.secrets."syncthing/cert.pem".owner = "face";
-  sops.secrets."syncthing/key.pem".key = "syncthing_key_pem";
-  sops.secrets."syncthing/key.pem".owner = "face";
+  sops.secrets."syncthing_cert.pem".key = "syncthing_cert_pem";
+  sops.secrets."syncthing_cert.pem".owner = "face";
+  sops.secrets."syncthing_key.pem".key = "syncthing_key_pem";
+  sops.secrets."syncthing_key.pem".owner = "face";
 
   ############################################
   # Nix Settings

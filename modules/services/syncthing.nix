@@ -78,23 +78,26 @@ in
       ];
 
       home-manager.users.${service.syncthing.user} = {
-        systemd.user.tmpfiles.rules = [
-          "L /run/secrets/syncthing/cert.pem - - - - /home/${service.syncthing.user}/.config/syncthing/cert.pem"
-          "L /run/secrets/syncthing/key.pem - - - - /home/${service.syncthing.user}/.config/syncthing/key.pem"
-        ];
         # home.file.".config/syncthing/cert.pem" = "/run/secrets/syncthing/cert.pem";
         # home.file.".config/syncthing/key.pem" = "/run/secrets/syncthing/key.pem";
       };
 
+      systemd.user.tmpfiles.rules = [
+        "L /home/${service.syncthing.user}/.config/syncthing/cert.pem - - - - /run/secrets/syncthing_cert.pem"
+        "L /home/${service.syncthing.user}/.config/syncthing/key.pem - - - - /run/secrets/syncthing_key.pem"
+      ];
+
       systemd.user.services.syncthing = {
         description = "Syncthing service";
         after = [ "network.target" ];
-        wantedBy = [ "multi-user.target" ];
+        wantedBy = [
+          "default.target"
+        ];
 
         environment.STNORESTART = "yes";
         environment.STNOUPGRADE = "yes";
 
-        serviceConfig.ExecStart = "${pkgs.syncthing}/bin/syncthing server --no-browser --no-restart";
+        serviceConfig.ExecStart = "${pkgs.syncthing}/bin/syncthing serve --no-browser --no-restart";
         serviceConfig.Restart = "on-failure";
         serviceConfig.RestartSec = 1;
         serviceConfig.SuccessExitStatus = "3 4";

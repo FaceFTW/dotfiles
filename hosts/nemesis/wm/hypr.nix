@@ -64,10 +64,10 @@ in
 
       "${pkgs.vicinae}/bin/vicinae server &"
 
-      # exec-once = nm-applet --indicator &
       # exec-once = blueman-applet &
 
       "${pkgs.hyprpaper}/bin/hyprpaper &"
+      "${hyprctl} dispatch workspace 1 &"
 
       # exec-once = hypridle &
 
