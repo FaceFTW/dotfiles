@@ -13,6 +13,11 @@ in
       vicinae-extensions.bluetooth
       vicinae-extensions.nix
       vicinae-extensions.power-profile
+      vicinae-extensions.hypr-keybinds
+      # vicinae-extensions.systemd
+      vicinae-extensions.firefox
+      # vicinae-extensions.dbus
+
     ];
     services.vicinae.settings = {
       close_on_focus_loss = true;

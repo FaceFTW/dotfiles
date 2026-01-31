@@ -120,6 +120,7 @@
     fsType = "ntfs";
     options = [
       "noatime"
+      "discard"
       "uid=face"
       "gid=users"
       "dmask=0002"
