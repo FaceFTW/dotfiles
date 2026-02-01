@@ -6,25 +6,38 @@
 		"editor.defaultFormatter": "xaver.clang-format"
 	},
 	"[css]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[github-actions-workflow]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml",
+		"editor.detectIndentation": false,
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+		"editor.useTabStops": false,
+		"files.trimTrailingWhitespace": true
 	},
 	"[html]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "vscode.html-language-features"
 	},
 	"[java]": {
 		"editor.defaultFormatter": "redhat.java"
 	},
 	"[javascript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[json]": {
-		"editor.defaultFormatter": "vscode.json-language-features"
+		"editor.defaultFormatter": "vscode.json-language-features",
+		"editor.tabSize": 2
 	},
 	"[jsonc]": {
 		"editor.defaultFormatter": "vscode.json-language-features"
 	},
 	"[markdown]": {
 		"editor.defaultFormatter": "yzhang.markdown-all-in-one"
+	},
+	"[mdx]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features",
+		"editor.wordWrap": "on"
 	},
 	"[python]": {
 		"editor.formatOnType": true
@@ -33,6 +46,13 @@
 		"editor.detectIndentation": false,
 		"editor.tabSize": 2
 	},
+	"[rust]": {
+		"editor.defaultColorDecorators": "auto",
+		"editor.defaultFormatter": "rust-lang.rust-analyzer",
+		"editor.detectIndentation": false,
+		"editor.fontFamily": "Hack NF,\u0027monospace\u0027",
+		"editor.insertSpaces": true
+	},
 	"[scss]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
@@ -40,20 +60,30 @@
 		"editor.defaultFormatter": "mtxr.sqltools"
 	},
 	"[typescript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.detectIndentation": false,
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2
 	},
 	"[typescriptreact]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.detectIndentation": false,
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2
 	},
 	"[xml]": {
 		"editor.defaultFormatter": "DotJoshJohnson.xml"
 	},
 	"[yaml]": {
 		"editor.defaultFormatter": "redhat.vscode-yaml",
-		"editor.detectIndentation": true,
-		"editor.insertSpaces": false,
+		"editor.detectIndentation": false,
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
 		"editor.useTabStops": false,
 		"files.trimTrailingWhitespace": true
+	},
+	"accessibility.signals.terminalBell": {
+		"sound": "on"
 	},
 	"better-comments.highlightPlainText": true,
 	"better-comments.tags": [
@@ -128,9 +158,71 @@
 			"strikethrough": false,
 			"tag": "fix",
 			"underline": false
+		},
+		{
+			"backgroundColor": "#91ff00",
+			"bold": true,
+			"color": "#000000",
+			"italic": true,
+			"strikethrough": false,
+			"tag": "safety",
+			"underline": true
 		}
 	],
+	"biome.rename": true,
+	"cSpell.enableFiletypes": [
+		"!asciidoc",
+		"!c",
+		"!cpp",
+		"!csharp",
+		"!css",
+		"!elixir",
+		"!erlang",
+		"!git-commit",
+		"!go",
+		"!graphql",
+		"!handlebars",
+		"!haskell",
+		"!html",
+		"!jade",
+		"!java",
+		"!javascript",
+		"!javascriptreact",
+		"!jsonc",
+		"!php",
+		"!pug",
+		"!python",
+		"!rust",
+		"!scss",
+		"!swift",
+		"!typescript",
+		"!typescriptreact",
+		"!vue",
+		"!yaml",
+		"!yml",
+		"markdown-math",
+		"markdown_latex_combined"
+	],
+	"cSpell.language": "en,en-US",
+	"cSpell.userWords": [
+		"ABNF",
+		"Chaim",
+		"combinators",
+		"Cowsay",
+		"jank",
+		"laggy",
+		"Naur",
+		"pikachu",
+		"pokemonsay",
+		"psuedocode",
+		"struct",
+		"Truecolor",
+		"unixporn",
+		"usize"
+	],
 	"cmake.configureOnOpen": false,
+	"cmake.options.statusBarVisibility": "visible",
+	"cmake.showOptionsMovedNotification": false,
 	"csharp.inlayHints.enableInlayHintsForImplicitObjectCreation": true,
 	"csharp.inlayHints.enableInlayHintsForImplicitVariableTypes": true,
 	"csharp.inlayHints.enableInlayHintsForLambdaParameterTypes": true,
@@ -139,7 +231,7 @@
 	"csharp.suppressProjectJsonWarning": true,
 	"debug.terminal.clearBeforeReusing": true,
 	"diffEditor.codeLens": true,
-	"diffEditor.ignoreTrimWhitespace": false,
+	"diffEditor.ignoreTrimWhitespace": true,
 	"discord.suppressNotifications": true,
 	"dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
 	"dotnet.inlayHints.enableInlayHintsForParameters": true,
@@ -147,7 +239,7 @@
 	"editor.autoIndent": "advanced",
 	"editor.detectIndentation": false,
 	"editor.foldingImportsByDefault": true,
-	"editor.fontFamily": "Hack NF",
+	"editor.fontFamily": "Hack Nerd Font Mono",
 	"editor.fontSize": 12,
 	"editor.inlineSuggest.enabled": true,
 	"editor.insertSpaces": false,
@@ -161,6 +253,8 @@
 			"comments": "#509f50"
 		}
 	},
+	"editor.unicodeHighlight.ambiguousCharacters": false,
+	"editor.unicodeHighlight.invisibleCharacters": false,
 	"editor.unicodeHighlight.nonBasicASCII": false,
 	"editor.wrappingStrategy": "advanced",
 	"eslint.alwaysShowStatus": true,
@@ -168,15 +262,23 @@
 	"eslint.lintTask.enable": true,
 	"explorer.confirmDelete": false,
 	"explorer.confirmDragAndDrop": false,
+	"extensions.autoCheckUpdates": false,
+	"extensions.ignoreRecommendations": true,
+	"extensions.showRecommendationsOnlyOnDemand": true,
+	"emmet.includeLanguages": {
+		"njk": "html"
+	},
 	"files.associations": {
+		"*.mdx": "mdx",
 		"*.meta": "ini"
 	},
 	"files.exclude": {
 		"**/node_modules": true
 	},
 	"files.trimTrailingWhitespace": true,
-	"git.autofetch": true,
+	"git-graph.repository.commits.fetchAvatars": true,
 	"git.autoStash": true,
+	"git.autofetch": false,
 	"git.confirmSync": false,
 	"git.enableCommitSigning": true,
 	"git.enableSmartCommit": true,
@@ -187,7 +289,7 @@
 	"git.supportCancellation": true,
 	"git.terminalAuthentication": false,
 	"github.copilot.enable": {
-		"*": true,
+		"*": false,
 		"markdown": true,
 		"plaintext": true,
 		"scminput": false,
@@ -197,16 +299,24 @@
 	"githubPullRequests.pullBranch": "never",
 	"githubPullRequests.queries": [
 		{
+			"label": "Local Pull Request Branches",
+			"query": "default"
+		},
+		{
 			"label": "Waiting For My Review",
-			"query": "is:open review-requested:${user}"
+			"query": "repo:${owner}/${repository} is:open review-requested:${user}"
 		},
 		{
 			"label": "Assigned To Me",
-			"query": "is:open assignee:${user}"
+			"query": "repo:${owner}/${repository} is:open assignee:${user}"
 		},
 		{
 			"label": "Created By Me",
-			"query": "is:open author:${user}"
+			"query": "repo:${owner}/${repository} is:open author:${user}"
+		},
+		{
+			"label": "All Open",
+			"query": "default"
 		}
 	],
 	"java.completion.guessMethodArguments": true,
@@ -217,14 +327,9 @@
 	"java.maven.downloadSources": true,
 	"javascript.format.semicolons": "insert",
 	"javascript.updateImportsOnFileMove.enabled": "always",
-	"json.schemas": [
-		{
-			"fileMatch": [
-				"*.schema.json"
-			],
-			"url": "http://json-schema.org/draft-07/schema"
-		}
-	],
+	"lldb.suppressUpdateNotifications": true,
+	"ltex.statusBarItem": true,
+	"markdown.extension.tableFormatter.delimiterRowNoPadding": true,
 	"markdown.extension.tableFormatter.normalizeIndentation": true,
 	"markdown.preview.breaks": true,
 	"markdown.preview.typographer": true,
@@ -243,6 +348,7 @@
 	},
 	"notebook.formatOnSave.enabled": true,
 	"notebook.lineNumbers": "on",
+	"npm.fetchOnlinePackageInfo": false,
 	"omnisharp.enableDecompilationSupport": true,
 	"omnisharp.enableRoslynAnalyzers": true,
 	"omnisharp.loggingLevel": "trace",
@@ -270,26 +376,31 @@
 	"razor.devmode": true,
 	"razor.languageServer.debug": true,
 	"redhat.telemetry.enabled": true,
+	"remote.SSH.remotePlatform": {
+		"192.168.0.83": "linux"
+	},
+	"rust-analyzer.cargo.target": null,
+	"rust-analyzer.inlayHints.closureCaptureHints.enable": true,
 	"security.workspace.trust.banner": "never",
 	"security.workspace.trust.untrustedFiles": "open",
+	"tailwindCSS.emmetCompletions": true,
+	"telemetry.enableCrashReporter": false,
+	"telemetry.enableTelemetry": false,
 	"terminal.integrated.allowChords": false,
 	"terminal.integrated.altClickMovesCursor": false,
 	"terminal.integrated.defaultProfile.linux": "zsh",
 	"terminal.integrated.defaultProfile.windows": "PowerShell",
-	"terminal.integrated.enableBell": true,
 	"terminal.integrated.enableMultiLinePasteWarning": false,
-	"terminal.integrated.fontFamily": "Hack NF",
-	"terminal.integrated.fontSize": 12,
+	"terminal.integrated.enableVisualBell": true,
+	"terminal.integrated.fontFamily": "Hack Nerd Font Mono",
+	"terminal.integrated.fontSize": 10,
 	"terminal.integrated.macOptionClickForcesSelection": true,
 	"terminal.integrated.persistentSessionReviveProcess": "never",
 	"terminal.integrated.profiles.windows": {
 		"Command Prompt": {
-			"args": [],
+			"args": "",
 			"icon": "terminal-cmd",
-			"path": [
-				"${env:windir}\\Sysnative\\cmd.exe",
-				"${env:windir}\\System32\\cmd.exe"
-			]
+			"path": "${env:windir}\\Sysnative\\cmd.exe ${env:windir}\\System32\\cmd.exe"
 		},
 		"Git Bash": {
 			"source": "Git Bash"
@@ -299,10 +410,7 @@
 			"source": "PowerShell"
 		},
 		"VS 2022 Dev Prompt": {
-			"args": [
-				"-NoExit",
-				"-Command \"&{Import-Module \"\"\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell ad4ae33a -DevCmdArguments \"\"\"-arch=x64 -host_arch=x64\"\"\"}\""
-			],
+			"args": "-NoExit -Command \"\u0026{Import-Module \"\"\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell ad4ae33a -DevCmdArguments \"\"\"-arch=x64 -host_arch=x64\"\"\"}\"",
 			"icon": "code",
 			"source": "PowerShell"
 		}
@@ -312,17 +420,21 @@
 	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
 	"typescript.format.semicolons": "insert",
 	"typescript.updateImportsOnFileMove.enabled": "always",
-	"update.mode": "start",
+	"update.mode": "manual",
+	"update.showReleaseNotes": false,
 	"vim.foldfix": true,
 	"vim.handleKeys": {
-		"<C-d>": true,
-		"<C-f>": false,
-		"<C-h>": false
+		"\u003cC-d\u003e": true,
+		"\u003cC-f\u003e": false,
+		"\u003cC-h\u003e": false
 	},
 	"vim.highlightedyank.enable": true,
+	"vim.smartRelativeLine": true,
+	"vim.visualModeKeyBindings": [],
 	"vim.visualstar": true,
 	"window.commandCenter": true,
 	"window.menuBarVisibility": "compact",
+	"window.newWindowProfile": "Default",
 	"window.restoreWindows": "all",
 	"workbench.colorCustomizations": {
 		"activityBar.activeBorder": "#087f23",
@@ -348,24 +460,190 @@
 		"statusBar.background": "#087f23",
 		"statusBar.noFolderBackground": "#087f23",
 		"statusBarItem.remoteBackground": "#064e17",
-		"tab.activeBorder": "#087f23",
+		"tab.activeBorder": "#087f23"
 	},
+	"workbench.editor.empty.hint": "hidden",
 	"workbench.editor.enablePreview": false,
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.revealIfOpen": true,
 	"workbench.editor.splitInGroupLayout": "vertical",
-	"workbench.editor.untitled.hint": "hidden",
 	"workbench.editorAssociations": {
 		"*.ipynb": "jupyter-notebook"
 	},
+	"workbench.enableExperiments": false,
+	"workbench.experimental.enableNewProfilesUI": true,
 	"workbench.layoutControl.enabled": false,
-	"workbench.productIconTheme": "icons-carbon",
+	"workbench.settings.applyToAllProfiles": [
+		"editor.fontFamily"
+	],
 	"workbench.settings.useSplitJSON": true,
 	"workbench.startupEditor": "none",
 	"workbench.tips.enabled": false,
 	"workbench.tree.indent": 16,
 	"workbench.tree.renderIndentGuides": "always",
 	"zenMode.hideLineNumbers": false,
-	"extensions.ignoreRecommendations": true,
-	"workbench.colorTheme": "Visual Studio 2019 Dark"
+	"chat.commandCenter.enabled": false,
+	"security.allowedUNCHosts": [
+		"wsl.localhost"
+	],
+	"powershell.promptToUpdatePowerShell": false,
+	"telemetry.telemetryLevel": "off",
+	"chat.detectParticipant.enabled": false,
+	"chat.editing.confirmEditRequestRemoval": false,
+	"chat.editing.confirmEditRequestRetry": false,
+	"chat.experimental.offerSetup": false,
+	"inlineChat.holdToSpeech": false,
+	"inlineChat.lineNaturalLanguageHint": false,
+	"vim.normalModeKeyBindingsNonRecursive": [
+		{
+			"before": [
+				"<leader>",
+				"y"
+			],
+			"after": [
+				"\"",
+				"+",
+				"y"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"p"
+			],
+			"after": [
+				"\"",
+				"+",
+				"p"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"a"
+			],
+			"after": [
+				"g",
+				"g",
+				"V",
+				"G"
+			]
+		}
+	],
+	"vim.visualModeKeyBindingsNonRecursive": [
+		{
+			"before": [
+				"<leader>",
+				"y"
+			],
+			"after": [
+				"\"",
+				"+",
+				"y"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"p"
+			],
+			"after": [
+				"\"",
+				"+",
+				"p"
+			]
+		},
+		{
+			"before": [
+				"<leader>",
+				"x"
+			],
+			"after": [
+				"\"",
+				"+",
+				"x"
+			]
+		}
+	],
+	"[astro]": {
+		"editor.defaultFormatter": "astro-build.astro-vscode"
+	},
+	"liveServer.settings.donotShowInfoMsg": true,
+	"[postcss]": {
+		"editor.tabSize": 2,
+		"editor.detectIndentation": false
+	},
+	"workbench.iconTheme": "vscode-icons",
+	"workbench.colorTheme": "Default Dark+",
+	"ltex.configurationTarget": {
+		"dictionary": "user"
+	},
+	"ltex.hiddenFalsePositives": {},
+	"terminal.integrated.scrollback": 10000,
+	"biome.suggestInstallingGlobally": false,
+	"ltex.dictionary": {
+		"en-US": [
+			"Codeberg",
+			"devlogs",
+			"Docusaurus",
+			"Dotfiles",
+			"DotMan",
+			"Eleventy",
+			"footguns",
+			"Nunjucks",
+			"Rustnomicon",
+			"Shiki",
+			"templating",
+			"Tokio",
+			"Vercel",
+			"Vite",
+			"Zig"
+		]
+	},
+	"diffEditor.renderSideBySide": false,
+	"vsicons.dontShowNewVersionMessage": true,
+	"chat.agent.enabled": false,
+	"telemetry.feedback.enabled": false,
+	"chat.mcp.enabled": false,
+	"chat.checkpoints.enabled": false,
+	"chat.edits2.enabled": false,
+	"chat.emptyChatState.enabled": false,
+	"chat.extensionTools.enabled": false,
+	"chat.implicitContext.suggestedContext": false,
+	"chat.sendElementsToChat.attachCSS": false,
+	"chat.sendElementsToChat.enabled": false,
+	"chat.sendElementsToChat.attachImages": false,
+	"chat.tools.useTreePicker": false,
+	"chat.undoRequests.restoreInput": false,
+	"chat.useFileStorage": false,
+	"inlineChat.accessibleDiffView": "off",
+	"editor.allowVariableLineHeights": false,
+	"powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+	"powershell.codeFormatting.useConstantStrings": true,
+	"powershell.codeFormatting.whitespaceBetweenParameters": true,
+	"powershell.analyzeOpenDocumentsOnly": true,
+	"powershell.integratedConsole.showOnStartup": false,
+	"powershell.integratedConsole.startInBackground": true,
+	"rust-analyzer.server.path": null,
+	"nix.enableLanguageServer": true,
+	"nix.serverSettings": {
+		"nil": {
+			"formatting": {
+				"command": [
+					"nixfmt"
+				]
+			},
+			"nix": {
+				"flake": {
+					"autoArchive": false,
+				}
+			}
+		}
+	},
+	"nix.hiddenLanguageServerErrors": [
+		"textDocument/documentSymbol"
+	],
+	"[nix]": {
+		"editor.detectIndentation": false
+	}
 }
