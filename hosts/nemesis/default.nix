@@ -148,10 +148,10 @@ in
     pkgs.xdg-utils
     pkgs.bitwarden-desktop
     pkgs.bitwarden-cli
-    pkgs.kdePackages.kleopatra
     pkgs.gimp
     pkgs.inkscape
     pkgs.nvidia-offload
+
   ];
 
   system.stateVersion = "25.05"; # Don't change this

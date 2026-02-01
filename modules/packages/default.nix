@@ -17,6 +17,7 @@ in
     ./secrets.nix
     ./steam.nix
     ./virtualization.nix
+    ./zed.nix
   ];
 
   options.packages = {
