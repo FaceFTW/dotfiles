@@ -24,7 +24,6 @@ in
     wayland.windowManager.hyprland.portalPackage = null;
     wayland.windowManager.hyprland.plugins = [
       pkgs.hyprlandPlugins.hyprbars
-      pkgs.hyprlandPlugins.hyprexpo
       # pkgs.hyprlandPlugins.csgo-vulkan-fix
     ];
     wayland.windowManager.hyprland.systemd.enable = false;
@@ -184,12 +183,12 @@ in
     # PLUGINS
     #######################################################
     wayland.windowManager.hyprland.settings.plugin.hyprbars = {
-      bar_height = 20;
+      bar_height = 32;
 
       # (R->L) hyprbars-button = color, size, on-click
       hyprbars-button = [
-        " rgb(ff4040), 10, 󰖭, hyprctl dispatch killactive"
-        " rgb(eeee11), 10, , hyprctl dispatch fullscreen 1"
+        " rgb(ff4040), 20, 󰖭, hyprctl dispatch killactive"
+        " rgb(eeee11), 20, , hyprctl dispatch fullscreen 1"
       ];
 
       # cmd to run on double click of the bar
@@ -204,12 +203,6 @@ in
       vkfix-app = [ "cs2, 2400, 1600" ];
     };
 
-    wayland.windowManager.hyprland.settings.plugin.hyprexpo = {
-      columns = 4;
-      gap_size = 25;
-      workspace_method = "first current";
-      skip_empty = true;
-    };
 
     #######################################################
     # KEYBINDS
@@ -219,14 +212,14 @@ in
       "SUPER, SPACE, Open Menu, exec, $menu"
       "SUPER, T, Open Preferred Terminal, exec, $terminal"
       "SUPER, E, Open Preferred File Manager, exec, $fileManager"
-      "SUPER, F, Open Preferred Browser, exec, $browser"
+      "SUPER, B, Open Preferred Browser, exec, $browser"
       "SUPER, C, Open Preferred Editor, exec, $editor"
       "SUPER, J, Open Preferred Color Picker, exec, $colorPicker"
       "SUPER, $LESS, Open Notification Center, exec, sleep 0.1 && swaync-client -t -sw"
 
       "SUPER, V, Clipboard History, exec, ${pkgs.vicinae}/bin/vicinae vicinae://extensions/vicinae/clipboard/history"
 
-      "SUPER, TAB, Workspace View, hyprexpo:expo, toggle"
+      "SUPER, TAB, Workspace View, overview:toggle, all"
 
       # Window Behaivior
       "SUPER, X, Close Active Window, killactive"
@@ -240,7 +233,7 @@ in
 
       "ALT, F4, Force Close Window, signal, 9"
 
-      "SUPER SHIFT, F, Toggle Window Float, togglefloating, active"
+      "SUPER, F, Toggle Window Float, togglefloating, active"
 
       "SUPER ALT, left, Shrink Window Horizontally, resizeactive, -10 0"
       "SUPER ALT, right, Grow Window Horizontally, resizeactive, 10 0"
@@ -351,8 +344,8 @@ in
       windowrule = match:class tuned-gui, float on
       windowrule = match:class tuned-gui, center on
 
-      windowrule = match:class blueman, float on
-      windowrule = match:class blueman, center on
+      windowrule = match:class .blueman-manager-wrapped, float on
+      windowrule = match:class .blueman-manager-wrapped, center on
 
       windowrule = match:class thunar, float on
       windowrule = match:class thunar, center on

@@ -41,7 +41,9 @@
   programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
 
   # Keyring
+  programs.seahorse.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.hyprland.enableGnomeKeyring = true;
+  xdg.portal.extraPortals = [ pkgs.microsoft-identity-broker ];
 
 }
