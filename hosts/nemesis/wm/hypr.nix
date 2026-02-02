@@ -164,7 +164,7 @@ in
       "layersOut, 1, 1.5, linear, fade"
       "fadeLayersIn, 1, 1.79, almostLinear"
       "fadeLayersOut, 1, 1.39, almostLinear"
-      "workspaces, 1, 1.94, almostLinear, fade"
+      "workspaces, 1, 1.5, easeInOutCubic, slide"
       "workspacesIn, 1, 1.21, almostLinear, fade"
       "workspacesOut, 1, 1.94, almostLinear, fade"
     ];
@@ -219,8 +219,6 @@ in
 
       "SUPER, V, Clipboard History, exec, ${pkgs.vicinae}/bin/vicinae vicinae://extensions/vicinae/clipboard/history"
 
-      "SUPER, TAB, Workspace View, overview:toggle, all"
-
       # Window Behaivior
       "SUPER, X, Close Active Window, killactive"
       "SUPER, Q, Toggle Fullscreen, fullscreenstate, 3 0"
@@ -234,6 +232,17 @@ in
       "ALT, F4, Force Close Window, signal, 9"
 
       "SUPER, F, Toggle Window Float, togglefloating, active"
+
+      "SUPER, left, Switch Workspace \"Right\", workspace, -1"
+      "SUPER, right, Switch Workspace \"Left\", workspace, +1"
+      # "SUPER, up, Move Focus up, movefocus, u"
+      # "SUPER, down, Move Focus down, movefocus, d"
+
+      # Focus Interactions
+      "SUPER SHIFT, left, Move Focus left, movefocus, l"
+      "SUPER SHIFT, right, Move Focus right, movefocus, r"
+      "SUPER SHIFT, up, Move Focus up, movefocus, u"
+      "SUPER SHIFT, down, Move Focus down, movefocus, d"
 
       "SUPER ALT, left, Shrink Window Horizontally, resizeactive, -10 0"
       "SUPER ALT, right, Grow Window Horizontally, resizeactive, 10 0"
@@ -251,11 +260,6 @@ in
       "SUPER, O, Reboot PC, exec, reboot"
       "SUPER, P, Shutdown PC, exec, poweroff"
 
-      # Focus Interactions
-      "SUPER, left, Move Focus left, movefocus, l"
-      "SUPER, right, Move Focus right, movefocus, r"
-      "SUPER, up, Move Focus up, movefocus, u"
-      "SUPER, down, Move Focus down, movefocus, d"
 
       # Switch workspaces F[1-10]
       "SUPER , F1, Open Workspace 1, workspace, 1"
@@ -345,7 +349,13 @@ in
       windowrule = match:class tuned-gui, center on
 
       windowrule = match:class .blueman-manager-wrapped, float on
-      windowrule = match:class .blueman-manager-wrapped, center on
+      windowrule = match:class .blueman-manager-wrapped, float on
+
+      windowrule = match:class xdg-desktop-portal-gtk, float on
+      windowrule = match:class xdg-desktop-portal-gtk, center on
+
+      windowrule = match:class firefox match:title Extension, float on
+      windowrule = match:class firefox match:title Extension, center on
 
       windowrule = match:class thunar, float on
       windowrule = match:class thunar, center on
