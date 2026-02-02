@@ -48,6 +48,8 @@
     vicinae.url = "github:vicinaehq/vicinae";
     vicinae-extensions.url = "github:vicinaehq/extensions";
 
+    # VS Code Extensions Mirror
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs =
@@ -78,6 +80,7 @@
             inputs.hyprland-plugins.overlays.default
             inputs.hyprpaper.overlays.default
             inputs.hyprlock.overlays.default
+            inputs.nix-vscode-extensions.overlays.default
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);

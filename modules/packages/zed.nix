@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -9,6 +10,7 @@ let
   inherit (lib) mkIf mkMerge mkEnableOption;
 in
 {
+  imports = [ inputs.nixos-wsl.nixosModules.default ];
   options.packages.zed.enable = mkEnableOption "Zed Editor";
   options.packages.zed.wslFixes = mkEnableOption "Systemd service to start the Zed remote server automatically";
 

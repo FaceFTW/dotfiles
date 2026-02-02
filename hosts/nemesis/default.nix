@@ -136,11 +136,8 @@ in
   packages.nodejs.node = true;
   packages.steam = true;
   packages.steam-nvidia-prime = true;
-  packages.zed.enable = true;
-
-  programs.vscode.enable = true;
-  programs.vscode.defaultEditor = false;
-
+  packages.vscode.enable = true;
+  # packages.zed.enable = true;
 
   environment.systemPackages = [
     pkgs.sbctl

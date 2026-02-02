@@ -17,7 +17,8 @@ in
     ./secrets.nix
     ./steam.nix
     ./virtualization.nix
-    ./zed.nix
+    ./vscode.nix
+    # ./zed.nix   # Not entirely ready for primetime :(
   ];
 
   options.packages = {
