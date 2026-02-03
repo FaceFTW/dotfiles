@@ -63,6 +63,7 @@ in
   nix.package = pkgs.lix;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
+    deprecated-features = broken-string-escape or-as-identifier
   '';
   nixpkgs.hostPlatform = "x86_64-linux";
 

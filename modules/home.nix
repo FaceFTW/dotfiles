@@ -23,22 +23,22 @@
   zsh.shellAliases.clean-nix = "sudo nix-collect-garbage -d";
   zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
   zsh.shellAliases.rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
-  zsh.shellAliases.build-manifold-image = "sudo nix run --print-build-logs ~/.config/dotfiles#nixosConfigurations.manifold.config.system.build.tarballBuilder";
-  zsh.shellAliases.build-manifold-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.manifold.config.system.build.toplevel --no-link --keep-going --print-out-paths";
-  zsh.shellAliases.rebuild-manifold = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#manifold";
-  zsh.shellAliases.build-portal-image = "sudo nix run --print-build-logs .#nixosConfigurations.portal.config.system.build.tarballBuilder";
-  zsh.shellAliases.build-portal-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.portal.config.system.build.toplevel --no-link --keep-going --print-out-paths";
-  zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#portal";
+  #   zsh.shellAliases.build-manifold-image = "sudo nix run --print-build-logs ~/.config/dotfiles#nixosConfigurations.manifold.config.system.build.tarballBuilder";
+  #   zsh.shellAliases.build-manifold-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.manifold.config.system.build.toplevel --no-link --keep-going --print-out-paths";
+  #   zsh.shellAliases.rebuild-manifold = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#manifold";
+  #   zsh.shellAliases.build-portal-image = "sudo nix run --print-build-logs .#nixosConfigurations.portal.config.system.build.tarballBuilder";
+  #   zsh.shellAliases.build-portal-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.portal.config.system.build.toplevel --no-link --keep-going --print-out-paths";
+  #   zsh.shellAliases.rebuild-portal = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#portal";
   zsh.shellAliases.build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
-  zsh.shellAliases.build-fabricator-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.fabricator.config.system.build.toplevel --no-link --keep-going --print-out-paths";
-  zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#fabricator";
-  zsh.shellAliases.rebuild-fabricator-remote = "(){nixos-rebuild switch --print-build-logs --max-jobs 8 --cores 8 --flake .#fabricator --sudo --ask-sudo-password --keep-going --target-host \"face@$1\"}";
-  zsh.shellAliases.build-archiver-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.archiver.config.system.build.toplevel --no-link --keep-going --print-out-paths";
-  zsh.shellAliases.rebuild-archiver = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#archiver";
-  zsh.shellAliases.rebuild-archiver-remote = "(){nixos-rebuild switch --print-build-logs --max-jobs 8 --cores 8 --flake .#archiver --sudo --ask-sudo-password --keep-going --target-host \"face@$1\"}";
-  zsh.shellAliases.build-nemesis-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.nemesis.config.system.build.toplevel --no-link --keep-going --print-out-paths";
-  zsh.shellAliases.rebuild-nemesis = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#nemesis";
-  zsh.shellAliases.rebuild-nemesis-remote = "(){nixos-rebuild switch --print-build-logs --max-jobs 8 --cores 8 --flake .#nemesis --sudo --ask-sudo-password --keep-going --target-host \"face@$1\"}";
+  #   zsh.shellAliases.build-fabricator-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.fabricator.config.system.build.toplevel --no-link --keep-going --print-out-paths";
+  #   zsh.shellAliases.rebuild-fabricator = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#fabricator";
+  #   zsh.shellAliases.rebuild-fabricator-remote = "(){nixos-rebuild switch --print-build-logs --max-jobs 8 --cores 8 --flake .#fabricator --sudo --ask-sudo-password --keep-going --target-host \"face@$1\"}";
+  #   zsh.shellAliases.build-archiver-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.archiver.config.system.build.toplevel --no-link --keep-going --print-out-paths";
+  #   zsh.shellAliases.rebuild-archiver = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#archiver";
+  #   zsh.shellAliases.rebuild-archiver-remote = "(){nixos-rebuild switch --print-build-logs --max-jobs 8 --cores 8 --flake .#archiver --sudo --ask-sudo-password --keep-going --target-host \"face@$1\"}";
+  #   zsh.shellAliases.build-nemesis-closure = "nix build --print-build-logs ~/.config/dotfiles#nixosConfigurations.nemesis.config.system.build.toplevel --no-link --keep-going --print-out-paths";
+  #   zsh.shellAliases.rebuild-nemesis = "sudo nixos-rebuild switch --print-build-logs --flake ~/.config/dotfiles#nemesis";
+  #   zsh.shellAliases.rebuild-nemesis-remote = "(){nixos-rebuild switch --print-build-logs --max-jobs 8 --cores 8 --flake .#nemesis --sudo --ask-sudo-password --keep-going --target-host \"face@$1\"}";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;
@@ -75,11 +75,67 @@
         export PATH=$HOME/.local/share/bin:$PATH
       '';
 
+      nix-utils = lib.mkOrder 1200 ''
+        function build-closure() {
+          ### PARAMETERS
+          host=$1
+          shift 1
+          ### END PARAMETERS
+
+          case "$host" in
+          manifold-wsl) host="manifold" ;;
+          esac
+
+          nix build \
+            --print-build-logs \
+            --keep-going \
+            --no-link \
+            --extra-deprecated-features "broken-string-escape" \
+            --extra-deprecated-features or-as-identifier \
+            "/home/face/.config/dotfiles#nixosConfigurations.$host.config.system.build.toplevel" \
+            "$@"
+        }
+
+        function rebuild-nix() {
+          ### PARAMETERS
+          ### END PARAMETERS
+
+          hostname=$(cat /etc/hostname)
+          case "$hostname" in
+          manifold-wsl) hostname="manifold" ;;
+          esac
+
+          sudo nixos-rebuild switch \
+            --print-build-logs \
+            --keep-going \
+            --no-reexec \
+            --flake "/home/face/.config/dotfiles#$hostname" \
+            "$@"
+        }
+
+        function deploy-nix() {
+          ### PARAMETERS
+          host=$1
+          addr=$2
+          shift 2
+          ### END PARAMETERS
+          nixos-rebuild switch \
+            --print-build-logs \
+            --keep-going \
+            --no-reexec \
+            --flake "/home/face/.config/dotfiles#$host" \
+            --sudo --ask-sudo-password \
+            --target-host "face@$addr" \
+            "$@"
+        }
+      '';
+
       runAfter = lib.mkOrder 1500 "sh-toy";
 
     in
     lib.mkMerge [
       initFirst
+      nix-utils
       runAfter
     ];
 
@@ -117,7 +173,7 @@
   ############################################
   ssh.enable = true;
   ssh.enableDefaultConfig = false;
-  ssh.extraConfig = ''AddKeysToAgent yes'';
+  ssh.extraConfig = "AddKeysToAgent yes";
   ssh.matchBlocks."*" = { };
 
   ############################################

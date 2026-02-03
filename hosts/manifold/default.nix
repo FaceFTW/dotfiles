@@ -119,8 +119,8 @@ in
   packages.secrets.wslGpgForwarding = true;
   packages.virtualization.docker = true;
   packages.virtualization.armVirtualization = true;
-  packages.zed.enable = true;
-  packages.zed.wslFixes = true;
+  # packages.zed.enable = true;
+  # packages.zed.wslFixes = true;
 
   environment.systemPackages = [ ];
 
