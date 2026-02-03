@@ -96,7 +96,7 @@
       nixosConfigurations.manifold = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
-        modules = withOverlays ./hosts/manifold/default.nix;
+        modules = withOverlays ./modules/wsl.nix ++ [ { networking.hostName = "manifold-wsl"; } ];
       };
 
       ############################################
@@ -105,7 +105,7 @@
       nixosConfigurations.portal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
-        modules = withOverlays ./hosts/portal/default.nix;
+        modules = withOverlays ./modules/wsl.nix ++ [ { networking.hostName = "portal-wsl"; } ];
       };
 
       ############################################
