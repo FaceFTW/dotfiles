@@ -10,6 +10,7 @@ let
 in
 {
   imports = [
+    inputs.determinate.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     inputs.disko.nixosModules.disko
@@ -140,6 +141,7 @@ in
   nix.package = pkgs.nix;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
+    eval-cores = 0
   '';
   nixpkgs.hostPlatform = "x86_64-linux";
 

@@ -27,6 +27,17 @@
   ];
   nix.settings.auto-optimise-store = true;
 
+  environment.etc."determinate/config.json".text = ''
+    {
+      "garbageCollector": {
+        "strategy": "disabled"
+      },
+      "builder": {
+        "cpuCount": 4
+      }
+    }
+  '';
+
   ############################################
   # Sudo Settings
   ############################################

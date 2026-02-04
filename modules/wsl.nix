@@ -3,19 +3,14 @@
   inputs,
   pkgs,
   lib,
-  # WSLhostName,
   ...
 }:
 let
   user = "face";
 in
 {
-  # options.WSLhostName = lib.mkOption {
-  #   type = lib.types.str;
-  # };
-
   imports = [
-    inputs.lix-module.nixosModules.default
+    inputs.determinate.nixosModules.default
     inputs.nixos-wsl.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     ./core.nix
@@ -68,7 +63,7 @@ in
       "${user}"
       "@wheel"
     ];
-    nix.package = pkgs.lix;
+    # nix.package = pkgs.lix;
     nix.extraOptions = ''
       experimental-features = nix-command flakes
     '';

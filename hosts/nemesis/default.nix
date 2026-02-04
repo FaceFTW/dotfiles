@@ -14,7 +14,7 @@ in
     inputs.nixos-hardware.nixosModules.common-cpu-intel
     inputs.nixos-hardware.nixosModules.common-gpu-intel
     inputs.nixos-hardware.nixosModules.common-pc-ssd
-    inputs.lix-module.nixosModules.default
+    inputs.determinate.nixosModules.default
     inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
     ../../modules/core.nix
@@ -88,10 +88,9 @@ in
     "${user}"
     "@wheel"
   ];
-  nix.package = pkgs.lix;
+  # nix.package = pkgs.lix;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
-    deprecated-features = broken-string-escape or-as-identifier
   '';
   nixpkgs.hostPlatform = "x86_64-linux";
 

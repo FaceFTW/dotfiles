@@ -15,13 +15,8 @@
     fenix.url = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Lix
-    lix.url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-    lix.flake = false;
-
-    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
-    lix-module.inputs.lix.follows = "lix";
+    # Determinate nix
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     # sops
     sops-nix.url = "github:Mic92/sops-nix";
