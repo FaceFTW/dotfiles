@@ -121,6 +121,10 @@ in
   sops.secrets.immich_secrets.group = "immich";
   sops.secrets."syncthing/cert.pem".key = "syncthing_cert_pem";
   sops.secrets."syncthing/key.pem".key = "syncthing_key_pem";
+  sops.secrets.linkwarden_nextauth_secret.owner = "linkwarden";
+  sops.secrets.linkwarden_nextauth_secret.group = "linkwarden";
+  sops.secrets.linkwarden_postgres_password.owner = "linkwarden";
+  sops.secrets.linkwarden_postgres_password.group = "linkwarden";
 
   ############################################
   # Nix Settings
@@ -138,7 +142,6 @@ in
     "${user}"
     "@wheel"
   ];
-  nix.package = pkgs.nix;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
     eval-cores = 0

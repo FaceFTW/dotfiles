@@ -113,6 +113,28 @@
   };
 
   ############################################
+  # Linkwarden
+  ############################################
+  users.users.linkwarden = {
+    isSystemUser = true;
+    home = "/mnt/motorway/var/linkwarden";
+    group = "linkwarden";
+  };
+  users.groups.linkwarden = { };
+  services.linkwarden.enable = true;
+  services.linkwarden.user = "linkwarden";
+  services.linkwarden.group = "linkwarden";
+
+  services.linkwarden.port = 3015;
+  services.linkwarden.openFirewall = true;
+
+  services.linkwarden.cacheLocation = "/mnt/motorway/var/linkwarden/cache";
+  services.linkwarden.storageLocation = "/mnt/motorway/var/linkwarden/data";
+  services.linkwarden.secretFiles.NEXTAUTH_SECRET = "/run/secrets/linkwarden_nextauth_secret";
+  services.linkwarden.secretFiles.POSTGRES_PASSWORD = "/run/secrets/linkwarden_postgres_password";
+  services.linkwarden.enableRegistration = true;
+
+  ############################################
   # Mirror to Backup
   ############################################
   systemd.timers."archive-offline-mirror" = {
@@ -147,9 +169,9 @@
           --partial \
           --progress \
           --delete-before \
-          --exclude /SteamBackups
-          --exclude /Misc_Large
-          --exclude /SteamLibrary
+          --exclude /SteamBackups \
+          --exclude /Misc_Large \
+          --exclude /SteamLibrary \
           /mnt/archive/ \
           /mnt/freeman
 
