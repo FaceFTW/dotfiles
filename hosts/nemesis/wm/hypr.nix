@@ -72,7 +72,8 @@ in
 
       # exec-once = ${systemctl} --user start app-org.kde.xwaylandvideobridge@autostart.service &
 
-      "sleep 1; ${pkgs.waybar}/bin/waybar -c \"/home/face/.config/waybar/config\" &"
+      # "sleep 1; ${pkgs.waybar}/bin/waybar -c \"/home/face/.config/waybar/config\" &"
+      "sleep 1; ${pkgs.ashell}/bin/ashell"
       "sleep 5; $hyprscripts/check_setup_warnings.sh &"
     ];
 

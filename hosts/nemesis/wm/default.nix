@@ -5,6 +5,7 @@
     ./swaync.nix
     ./vicinae.nix
     ./waybar.nix
+    ./ashell.nix
   ];
 
   # services.xserver.enable = true;
