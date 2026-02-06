@@ -10,6 +10,8 @@
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
 
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
   ############################################
   # Kernel Config
   ############################################
