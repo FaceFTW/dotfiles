@@ -76,8 +76,6 @@
             --print-build-logs \
             --keep-going \
             --no-link \
-            --extra-deprecated-features "broken-string-escape" \
-            --extra-deprecated-features or-as-identifier \
             "/home/face/.config/dotfiles#nixosConfigurations.$host.config.system.build.toplevel" \
             "$@"
         }

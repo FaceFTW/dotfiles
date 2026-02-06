@@ -39,6 +39,9 @@
     rose-pine-hyprcursor.inputs.nixpkgs.follows = "nixpkgs";
     rose-pine-hyprcursor.inputs.hyprlang.follows = "hyprland/hyprlang";
 
+    # ashell
+    ashell.url = "github:MalpenZibo/ashell";
+
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
     vicinae-extensions.url = "github:vicinaehq/extensions";
@@ -49,7 +52,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
+    { nixpkgs, ashell, ... }@inputs:
     let
       globalOverlays = builtins.map (n: import (./overlays + ("/" + n))) (
         (builtins.filter (n: builtins.match ".*\\.nix" n != null)) (
@@ -77,6 +80,9 @@
             inputs.hyprpaper.overlays.default
             inputs.hyprlock.overlays.default
             inputs.nix4vscode.overlays.default
+            (final: prev: {
+              ashell = inputs.ashell.packages.${prev.stdenv.hostPlatform.system}.default;
+            })
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);
