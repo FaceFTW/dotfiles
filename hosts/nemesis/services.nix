@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -24,6 +24,7 @@
 
   # Ad-hoc disk mounting
   services.gvfs.enable = true;
+  services.gvfs.package = lib.mkForce pkgs.gnome.gvfs;
   services.tumbler.enable = true;
 
   # Gnome

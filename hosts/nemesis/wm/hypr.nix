@@ -45,10 +45,12 @@ in
     wayland.windowManager.hyprland.settings.monitor = [ "eDP-1,2400x1600@120,0x0,1" ];
 
     wayland.windowManager.hyprland.settings.workspace = [
-      "1,monitor:MONITOR_1,persistent:true,default=true"
-      "2,monitor:MONITOR_1,persistent:true"
-      "3,monitor:MONITOR_1,persistent:true"
-      "4,monitor:MONITOR_1,persistent:true"
+      "1,monitor:eDP-1,persistent:true,default=true"
+      "2,monitor:eDP-1,persistent:true"
+      "3,monitor:eDP-1,persistent:true"
+      "4,monitor:eDP-1,persistent:true"
+      "5,monitor:eDP-1,persistent:true"
+      "6,monitor:eDP-1,persistent:true"
     ];
 
     #######################################################
