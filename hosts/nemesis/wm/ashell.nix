@@ -17,19 +17,23 @@
     programs.ashell.settings.modules.right = [
       "SystemInfo"
       [
-        "Clock"
+        "Tray"
         "Privacy"
         "Settings"
-        "Tray"
       ]
+      "Clock"
     ];
 
     programs.ashell.settings.appearance.style = "Islands";
+    programs.ashell.settings.appearance.scale_factor = 1.5;
+    programs.ashell.settings.appearance.primary_color = "#3686fd";
+    programs.ashell.settings.appearance.workspace_colors = [ "#3686fd" ];
+    programs.ashell.settings.appearance.special_workspace_colors = [ "#fd3b3b" ];
 
     programs.ashell.settings.workspaces.enable_workspace_filling = true;
-    programs.ashell.settings.workspaces.max_workspace = 6;
+    programs.ashell.settings.workspaces.max_workspaces = 6;
 
-    programs.ashell.settings.clock.format = ":%D | %H:%M";
+    programs.ashell.settings.clock.format = "%D | %H:%M";
 
     programs.ashell.settings.settings.indicators = [
       "IdleInhibitor"
@@ -51,7 +55,8 @@
     programs.ashell.settings.settings.lock_cmd = "${pkgs.hyprlock}/bin/hyprlock &";
     programs.ashell.settings.settings.wifi_more_cmd =
       "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
-    programs.ashell.settings.settings.bluetooth_more_cmd = "${pkgs.blueman}/bin/blueman-manager";
+    programs.ashell.settings.settings.bluetooth_more_cmd =
+      "${pkgs.blueman}/bin/blueman-manager-wrapped";
 
   };
 }

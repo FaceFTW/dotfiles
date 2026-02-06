@@ -139,10 +139,15 @@ in
   packages.vscode.enable = true;
   # packages.zed.enable = true;
 
+  programs.thunar.enable = true;
+  programs.thunar.plugins = [
+    pkgs.thunar-volman
+    pkgs.thunar-archive-plugin
+  ];
+
   environment.systemPackages = [
     pkgs.sbctl
     pkgs.alacritty
-    pkgs.thunar
     pkgs.firefox
     pkgs.xdg-utils
     pkgs.bitwarden-desktop
@@ -151,6 +156,10 @@ in
     pkgs.inkscape
     pkgs.nvidia-offload
 
+    # For Tumbler
+    pkgs.ffmpegthumbnailer
+    pkgs.icoextract
+    pkgs.webp-pixbuf-loader
   ];
 
   system.stateVersion = "25.05"; # Don't change this
