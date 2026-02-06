@@ -28,6 +28,10 @@
               server localhost:8384 ;
           }
 
+          upstream linkwarden {
+              server localhost:3015 ;
+          }
+
           server {
               listen 0.0.0.0:2284 ;
               listen [::0]:2284 ;
@@ -55,6 +59,21 @@
                   proxy_set_header Upgrade $http_upgrade;
                   proxy_set_header Connection $connection_upgrade;
                   proxy_set_header Host localhost; # https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              }
+          }
+
+          server {
+              listen 0.0.0.0:3014 ;
+              listen [::0]:3014 ;
+              server_name archiver;
+              client_max_body_size 1g;
+              location / {
+                  proxy_pass http://linkwarden;
+                  proxy_redirect off;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection $connection_upgrade;
                   proxy_set_header X-Real-IP $remote_addr;
                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
               }

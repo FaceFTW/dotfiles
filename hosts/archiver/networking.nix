@@ -6,6 +6,8 @@
     111 # Something Samba Related (Service Discovery?)
     2283 # Immich Direct
     2284 # Immich Proxy
+    3014 # Linkwarden Proxy
+    3015 # Linkwarden
     8384 # Syncthing GUI
     8385 # Syncthing GUI Proxy
   ];
@@ -18,7 +20,7 @@
   # systemd networkd+resolved
   ############################################
   services.resolved.enable = true;
-  services.resolved.extraConfig = "MulticastDNS=yes";
+  # services.resolved.settings.MulticastDNS = "yes";
   services.resolved.llmnr = "resolve";
 
   # NOTE: Local router gives static IP
