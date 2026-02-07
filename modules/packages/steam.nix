@@ -6,15 +6,15 @@
 }:
 let
   packages = config.packages;
-  # patchDesktop =
-  #   pkg: appName: from: to:
-  #   lib.hiPrio (
-  #     pkgs.runCommand "$patched-desktop-entry-for-${appName}" { } ''
-  #       ${pkgs.coreutils}/bin/mkdir -p $out/share/applications
-  #       ${pkgs.gnused}/bin/sed 's#${from}#${to}#g' < ${pkg}/share/applications/${appName}.desktop > $out/share/applications/${appName}.desktop
-  #     ''
-  #   );
-  # GPUOffloadApp = pkg: desktopName: patchDesktop pkg desktopName "^Exec=" "Exec=nvidia-offload ";
+  patchDesktop =
+    pkg: appName: from: to:
+    lib.hiPrio (
+      pkgs.runCommand "$patched-desktop-entry-for-${appName}" { } ''
+        ${pkgs.coreutils}/bin/mkdir -p $out/share/applications
+        ${pkgs.gnused}/bin/sed 's#${from}#${to}#g' < ${pkg}/share/applications/${appName}.desktop > $out/share/applications/${appName}.desktop
+      ''
+    );
+  GPUOffloadApp = pkg: desktopName: patchDesktop pkg desktopName "^Exec=" "Exec=nvidia-offload ";
   inherit (lib) mkIf mkMerge mkEnableOption;
 in
 {
@@ -56,22 +56,41 @@ in
         }
       );
 
+      environment.systemPackages = [
+        (GPUOffloadApp pkgs.steam "steam")
+      ];
+
+      users.users.face.packages = [
+        (pkgs.writeShellScriptBin "patch-steam-desktop-entries" ''
+          #!/bin/bash
+          cd ~/.local/share/applications
+          IFS=
+          for file in $(${pkgs.coreutils}/bin/grep -l steam://rungameid *.desktop); do
+            ${pkgs.gnused}/bin/sed 's#^Exec=#Exec=nvidia-offload #g' < "$file" > "$file"
+          done
+        '')
+      ];
+
       # Monitor this path to ensure that .desktop files calling steam also do nvidia prime thing
       # This is because steam-generated shortcuts are not really manageable in nix-store
 
-      # systemd.user.paths."home-local-share-applications" = {
-      #   pathConfig.PathChanged = "/home/face/.local/share/applications";
-      #   pathConfig.Unit = "fix-steam-desktop-entries";
-      # };
+      systemd.user.paths."fix-steam-desktop-entries" = {
+        pathConfig.PathChanged = "%h/.local/share/applications";
+        # pathConfig.Unit = "fix-steam-desktop-entries";
+        wantedBy = [ "default.target" ];
+      };
 
-      # systemd.user.services.fix-steam-desktop-entries = {
-      #   script=''
-      #     readarray files <(${pkgs.coreutils}/bin/grep -l steam://rungameid *.desktop)
-      #     for file in "''${files[@]}"; do
-      #       if [[ $(grep) ]]
-      #     done
-      #   '';
-      # };
+      systemd.user.services.fix-steam-desktop-entries = {
+        script = ''
+          cd ~/.local/share/applications
+          IFS=
+          for file in $(${pkgs.coreutils}/bin/grep -l steam://rungameid *.desktop); do
+            ${pkgs.gnused}/bin/sed 's#^Exec=#Exec=nvidia-offload #g' < "$file" > "$file"
+          done
+        '';
+      };
+
+
     })
   ];
 }

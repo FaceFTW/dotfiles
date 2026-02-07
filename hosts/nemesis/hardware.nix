@@ -77,7 +77,7 @@
     "nvidia"
   ];
 
-  hardware.nvidia.open = false;
+  hardware.nvidia.open = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.nvidiaSettings = true; # accessible via `nvidia-settings`.
