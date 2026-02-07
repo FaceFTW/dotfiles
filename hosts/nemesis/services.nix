@@ -45,6 +45,16 @@
   programs.seahorse.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.hyprland.enableGnomeKeyring = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+  services.dbus.packages = [
+    pkgs.gnome-keyring
+    pkgs.gcr
+  ];
+  services.xserver.displayManager.sessionCommands=''
+    eval $(gnome-keyring-daemon --start --daemonize --components=ssh,secrets)
+    export SSH_AUTH_SOCK
+  '';
+
   xdg.portal.extraPortals = [ pkgs.microsoft-identity-broker ];
 
 }
