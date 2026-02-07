@@ -236,8 +236,8 @@ in
 
       "SUPER, F, Toggle Window Float, togglefloating, active"
 
-      "SUPER, left, Switch Workspace \"Right\", workspace, -1"
-      "SUPER, right, Switch Workspace \"Left\", workspace, +1"
+      "SUPER, TAB, Switch Workspace \"Right\", workspace, +1"
+      "SUPER SHIFT, TAB, Switch Workspace \"Left\", workspace, -1"
       # "SUPER, up, Move Focus up, movefocus, u"
       # "SUPER, down, Move Focus down, movefocus, d"
 
@@ -466,7 +466,7 @@ in
 
     programs.hyprlock.settings.image = {
       monitor = "";
-      path = "${./assets/sddm/face.face.icon}";
+      path = "${./assets/face.png}";
       size = 100;
       border_size = 2;
       border_color = "rgba(242,243,244,0.75)";
