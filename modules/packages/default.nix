@@ -23,11 +23,13 @@ in
 
   options.packages = {
     direnv = mkEnableOption "Use direnv";
+    ghidra = mkEnableOption "Ghidra";
     gitFull = mkEnableOption "Use gitFull with perl";
     monitoring = mkEnableOption "Extra System Monitoring Utils";
     ncdu = mkEnableOption "ncdu";
     networking = mkEnableOption "Extra Networking Things";
     nixTools = mkEnableOption "Nix Dev Tools";
+
   };
 
   config = mkMerge [
@@ -122,6 +124,28 @@ in
         pkgs.nil
       ];
     })
+    ############################################
+    # Nix Tools
+    ############################################
+    (mkIf packages.ghidra {
+      environment.systemPackages = [
+        (pkgs.ghidra.withExtensions (p: [
+          p.findcrypt
+          p.ghidra-delinker-extension
+          p.ghidra-firmware-utils
+          p.ghidra-golanganalyzerextension
+          p.ghidraninja-ghidra-scripts
+          # p.gnudisassembler
+          p.kaiju
+          p.lightkeeper
+          p.machinelearning
+          p.ret-sync
+          p.sleighdevtools
+          p.wasm
+        ]))
+      ];
+    }
 
+    )
   ];
 }

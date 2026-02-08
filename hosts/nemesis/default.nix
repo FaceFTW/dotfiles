@@ -130,6 +130,7 @@ in
   packages.networking = true;
   packages.secrets.base = true;
   packages.direnv = true;
+  packages.ghidra = true;
   packages.gitFull = true;
   packages.nixTools = true;
   packages.rust = "nightly";
@@ -137,6 +138,8 @@ in
   packages.steam = true;
   packages.steam-nvidia-prime = true;
   packages.vscode.enable = true;
+
+  services.flatpak.enable = true;
   # packages.zed.enable = true;
 
   programs.thunar.enable = true;
@@ -155,6 +158,8 @@ in
     pkgs.gimp
     pkgs.inkscape
     pkgs.nvidia-offload
+    pkgs.imhex
+    pkgs.bottles
 
     # For Tumbler
     pkgs.ffmpegthumbnailer
