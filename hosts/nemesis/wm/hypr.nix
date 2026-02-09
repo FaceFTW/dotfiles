@@ -16,35 +16,36 @@ in
 
   environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/intel_gpu:/dev/dri/nvidia_gpu";
 
-  home-manager.users.face = {
-    # imports = [ inputs.hyprland.homeManagerModules.default ];
-
-    wayland.windowManager.hyprland.enable = true;
-    wayland.windowManager.hyprland.package = null;
-    wayland.windowManager.hyprland.portalPackage = null;
-    wayland.windowManager.hyprland.plugins = [
+  #######################################################
+  # Hyprland
+  #######################################################
+  home-manager.users.face.wayland.windowManager.hyprland = {
+    enable = true;
+    package = null;
+    portalPackage = null;
+    plugins = [
       pkgs.hyprlandPlugins.hyprbars
       # pkgs.hyprlandPlugins.csgo-vulkan-fix
     ];
-    wayland.windowManager.hyprland.systemd.enable = false;
+    systemd.enable = false;
 
     #######################################################
     # BASIC ALIASES
     #######################################################
-    wayland.windowManager.hyprland.settings."$terminal" = "${pkgs.alacritty}/bin/alacritty";
-    wayland.windowManager.hyprland.settings."$fileManager" = "${pkgs.thunar}/bin/thunar";
-    wayland.windowManager.hyprland.settings."$menu" = "${pkgs.vicinae}/bin/vicinae toggle";
-    wayland.windowManager.hyprland.settings."$browser" =
+    settings."$terminal" = "${pkgs.alacritty}/bin/alacritty";
+    settings."$fileManager" = "${pkgs.thunar}/bin/thunar";
+    settings."$menu" = "${pkgs.vicinae}/bin/vicinae toggle";
+    settings."$browser" =
       "hyprctl dispatch exec \"firefox --ozone-platform=wayland --enable-features=useozoneplatform\"";
-    wayland.windowManager.hyprland.settings."$editor" = "${pkgs.vimCustom}/bin/vim";
-    wayland.windowManager.hyprland.settings."$wallpaper" = "${./assets/deep_blue_invert.png}";
-    wayland.windowManager.hyprland.settings."$cursor" = "rose-pine-hyprcursor";
+    settings."$editor" = "${pkgs.vimCustom}/bin/vim";
+    settings."$wallpaper" = "${./assets/deep_blue_invert.png}";
+    settings."$cursor" = "rose-pine-hyprcursor";
     # $screenshot = hyprshot --mode
     # $colorPicker = hyprpicker --autocopy --format hex
 
-    wayland.windowManager.hyprland.settings.monitor = [ "eDP-1,2400x1600@120,0x0,1" ];
+    settings.monitor = [ "eDP-1,2400x1600@120,0x0,1" ];
 
-    wayland.windowManager.hyprland.settings.workspace = [
+    settings.workspace = [
       "1,monitor:eDP-1,persistent:true,default=true"
       "2,monitor:eDP-1,persistent:true"
       "3,monitor:eDP-1,persistent:true"
@@ -56,7 +57,7 @@ in
     #######################################################
     # AUTOSTART
     #######################################################
-    wayland.windowManager.hyprland.settings.exec-once = [
+    settings.exec-once = [
       "${systemctl} --user start hyprpolkitagent &"
       "${hyprctl} keyword input:kb_numlock true && date \"+%Y-%m-%d %H:%M:%S\" > /tmp/numlock-set"
       "${hyprctl} setcursor $cursor 24"
@@ -82,7 +83,7 @@ in
     #######################################################
     # LOOK AND FEEL
     #######################################################
-    wayland.windowManager.hyprland.settings.general = {
+    settings.general = {
       gaps_in = 5;
       gaps_out = 5;
       border_size = 3;
@@ -99,7 +100,7 @@ in
       "snap:window_gap" = 20;
     };
 
-    wayland.windowManager.hyprland.settings.group = {
+    settings.group = {
       "col.border_active" = "rgba(a591ffdd) rgba(91f8ffaa) 70deg";
       "col.border_inactive" = "rgba(404040aa)";
 
@@ -119,7 +120,7 @@ in
 
     };
 
-    wayland.windowManager.hyprland.settings.decoration = {
+    settings.decoration = {
       rounding = 5;
       rounding_power = 5;
 
@@ -145,15 +146,15 @@ in
       };
     };
 
-    wayland.windowManager.hyprland.settings.animations.enabled = true;
-    wayland.windowManager.hyprland.settings.animations.bezier = [
+    settings.animations.enabled = true;
+    settings.animations.bezier = [
       "easeOutQuint,0.23,1,0.32,1"
       "easeInOutCubic,0.65,0.05,0.36,1"
       "linear,0,0,1,1"
       "almostLinear,0.5,0.5,0.75,1.0"
       "quick,0.15,0,0.1,1"
     ];
-    wayland.windowManager.hyprland.settings.animations.animation = [
+    settings.animations.animation = [
       "global, 1, 10, default"
       "border, 1, 5.39, easeOutQuint"
       "windows, 1, 4.79, easeOutQuint"
@@ -172,20 +173,20 @@ in
       "workspacesOut, 1, 1.94, almostLinear, fade"
     ];
 
-    wayland.windowManager.hyprland.settings.dwindle.pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-    wayland.windowManager.hyprland.settings.dwindle.preserve_split = true; # You probably want this
+    settings.dwindle.pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    settings.dwindle.preserve_split = true; # You probably want this
 
-    wayland.windowManager.hyprland.settings.master.new_status = "master";
+    settings.master.new_status = "master";
 
-    wayland.windowManager.hyprland.settings.misc.vfr = true;
-    wayland.windowManager.hyprland.settings.misc.force_default_wallpaper = 0; # Set to 0 or 1 to disable the anime mascot wallpapers
-    wayland.windowManager.hyprland.settings.misc.disable_hyprland_logo = true; # If true disables the random hyprland logo / anime girl background. :(
-    wayland.windowManager.hyprland.settings.misc.focus_on_activate = true;
+    settings.misc.vfr = true;
+    settings.misc.force_default_wallpaper = 0; # Set to 0 or 1 to disable the anime mascot wallpapers
+    settings.misc.disable_hyprland_logo = true; # If true disables the random hyprland logo / anime girl background. :(
+    settings.misc.focus_on_activate = true;
 
     #######################################################
     # PLUGINS
     #######################################################
-    wayland.windowManager.hyprland.settings.plugin.hyprbars = {
+    settings.plugin.hyprbars = {
       bar_height = 32;
 
       # (R->L) hyprbars-button = color, size, on-click
@@ -198,7 +199,7 @@ in
       on_double_click = "hyprctl dispatch fullscreen 1";
     };
 
-    wayland.windowManager.hyprland.settings.plugin.csgo-vulkan-fix = {
+    settings.plugin.csgo-vulkan-fix = {
       # Whether to fix the mouse position. A select few apps might be wonky with this.
       fix_mouse = true;
 
@@ -206,11 +207,10 @@ in
       vkfix-app = [ "cs2, 2400, 1600" ];
     };
 
-
     #######################################################
     # KEYBINDS
     #######################################################
-    wayland.windowManager.hyprland.settings.bindd = [
+    settings.bindd = [
       # Open Programms
       "SUPER, SPACE, Open Menu, exec, $menu"
       "SUPER, T, Open Preferred Terminal, exec, $terminal"
@@ -263,7 +263,6 @@ in
       "SUPER, O, Reboot PC, exec, reboot"
       "SUPER, P, Shutdown PC, exec, poweroff"
 
-
       # Switch workspaces F[1-10]
       "SUPER , F1, Open Workspace 1, workspace, 1"
       "SUPER , F2, Open Workspace 2, workspace, 2"
@@ -277,7 +276,7 @@ in
       "SUPER SHIFT, F4, Move to Workspace 4, movetoworkspace, 4"
     ];
 
-    wayland.windowManager.hyprland.settings.bindeld = [
+    settings.bindeld = [
       # Laptop multimedia Interactions and LCD brightness
       ",XF86AudioLowerVolume, Lower Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ",XF86AudioRaiseVolume, Rise Volume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
@@ -304,7 +303,7 @@ in
     #######################################################
     # WINDOW RULES
     #######################################################
-    wayland.windowManager.hyprland.extraConfig = ''
+    extraConfig = ''
       # Ignore maximize requests from apps. You'll probably like this.
       # windowrule = suppressevent maximize, class:.*
 
@@ -382,25 +381,29 @@ in
       layerrule = match:namespace vicinae, no_anim on
     '';
 
-    #######################################################
-    # WALLPAPER
-    #######################################################
-    services.hyprpaper.enable = true;
-    services.hyprpaper.settings.wallpaper = [
+  };
+  #######################################################
+  # WALLPAPER
+  #######################################################
+  home-manager.users.face.services.hyprpaper = {
+    enable = true;
+    settings.wallpaper = [
       {
         monitor = "eDP-1";
         path = "${./assets/deep_blue_invert.png}";
         fit_mode = "contain";
       }
     ];
+  };
 
-    #######################################################
-    # LOCK SCREEN
-    #######################################################
-    programs.hyprlock.enable = true;
-    programs.hyprlock.package = pkgs.hyprlock;
+  #######################################################
+  # LOCK SCREEN
+  #######################################################
+  home-manager.users.face.programs.hyprlock = {
+    enable = true;
+    package = pkgs.hyprlock;
 
-    programs.hyprlock.settings.general = {
+    settings.general = {
       no_fade_in = true;
       no_fade_out = true;
       hide_cursor = false;
@@ -408,7 +411,7 @@ in
       disable_loading_bar = true;
     };
 
-    programs.hyprlock.settings.background = {
+    settings.background = {
       monitor = "";
       path = "${./assets/deep_blue_invert.png}";
       blur_passes = 2;
@@ -418,7 +421,7 @@ in
       vibrancy_darkness = 0.2;
     };
 
-    programs.hyprlock.settings.input-field = {
+    settings.input-field = {
       monitor = "";
       size = "250, 60";
       outline_thickness = 2;
@@ -438,7 +441,7 @@ in
       valign = "center";
     };
 
-    programs.hyprlock.settings.label = [
+    settings.label = [
       # DATE
       {
         monitor = "";
@@ -464,7 +467,7 @@ in
       }
     ];
 
-    programs.hyprlock.settings.image = {
+    settings.image = {
       monitor = "";
       path = "${./assets/face.png}";
       size = 100;
@@ -474,6 +477,5 @@ in
       halign = "center";
       valign = "center";
     };
-
   };
 }
