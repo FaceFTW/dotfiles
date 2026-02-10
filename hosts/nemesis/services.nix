@@ -22,11 +22,11 @@
   ############################################
   # Syncthing
   ############################################
-  services-custom.syncthing.enable = true;
-  services-custom.syncthing.user-level = true;
-  services-custom.syncthing.key = "/run/secrets/syncthing/key.pem";
-  services-custom.syncthing.cert = "/run/secrets/syncthing/cert.pem";
-  services-custom.syncthing.user = "face";
+  servicesCustom.syncthing.enable = true;
+  servicesCustom.syncthing.user-level = true;
+  servicesCustom.syncthing.key = "/run/secrets/syncthing/key.pem";
+  servicesCustom.syncthing.cert = "/run/secrets/syncthing/cert.pem";
+  servicesCustom.syncthing.user = "face";
 
   # GPG Things
   # programs.gnupg.agent.enable = true;
@@ -35,8 +35,8 @@
   ############################################
   # SSH Server
   ############################################
-  services-custom.ssh-server.enable = true;
-  services-custom.ssh-server.authorizedKeys = [
+  servicesCustom.ssh-server.enable = true;
+  servicesCustom.ssh-server.authorizedKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuQw4U+Wam1gjuEXyH/cObZfnfYiA/LPF0kjQPFTz9x face@manifold-wsl"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"

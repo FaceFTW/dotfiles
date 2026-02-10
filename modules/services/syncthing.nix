@@ -5,9 +5,7 @@
   ...
 }:
 let
-  # TODO This is to prevent overlapping with the nixpkgs "services"
-  # attribute set
-  service = config.service;
+  servicesCustom = config.servicesCustom;
   inherit (lib)
     mkIf
     mkMerge
@@ -18,7 +16,7 @@ let
 
 in
 {
-  options.service.syncthing = {
+  options.servicesCustom.syncthing = {
     enable = mkEnableOption "Enable Syncthing";
     user-level = mkEnableOption "Syncthing as user-level service";
     key = mkOption {
@@ -36,7 +34,7 @@ in
     };
     accessibleFolders = mkOption {
       description = "List of paths that should be R/W-able by Syncthing";
-      type = types.listOf types.str;
+      type = with types; listOf str;
       default = [ ];
     };
     folderOwner = mkOption {
@@ -48,7 +46,7 @@ in
   };
 
   config = mkMerge [
-    (mkIf (service.syncthing.enable && !service.syncthing.user-level) {
+    (mkIf (servicesCustom.syncthing.enable && !servicesCustom.syncthing.user-level) {
       # https://nitinpassa.com/running-syncthing-as-a-system-user-on-nixos/
       users.users.syncthing = {
         isSystemUser = true;
@@ -59,32 +57,32 @@ in
       users.groups.syncthing = { };
       services.syncthing.enable = true;
       services.syncthing.openDefaultPorts = true;
-      services.syncthing.key = service.syncthing.key;
-      services.syncthing.cert = service.syncthing.cert;
+      services.syncthing.key = servicesCustom.syncthing.key;
+      services.syncthing.cert = servicesCustom.syncthing.cert;
 
       systemd.services.syncthing.serviceConfig.UMask = "0007";
       systemd.tmpfiles.rules = (
         map (folder: ''
-          d ${folder} 2770 ${service.syncthing.folderOwner} syncthing - -
-        '') service.syncthing.accessibleFolders
+          d ${folder} 2770 ${servicesCustom.syncthing.folderOwner} syncthing - -
+        '') servicesCustom.syncthing.accessibleFolders
       );
 
     })
-    (mkIf (service.syncthing.enable && service.syncthing.user-level) {
+    (mkIf (servicesCustom.syncthing.enable && servicesCustom.syncthing.user-level) {
       networking.firewall.allowedTCPPorts = [ 22000 ];
       networking.firewall.allowedUDPPorts = [
         21027
         22000
       ];
 
-      home-manager.users.${service.syncthing.user} = {
+      home-manager.users.${servicesCustom.syncthing.user} = {
         # home.file.".config/syncthing/cert.pem" = "/run/secrets/syncthing/cert.pem";
         # home.file.".config/syncthing/key.pem" = "/run/secrets/syncthing/key.pem";
       };
 
       systemd.user.tmpfiles.rules = [
-        "L /home/${service.syncthing.user}/.config/syncthing/cert.pem - - - - /run/secrets/syncthing_cert.pem"
-        "L /home/${service.syncthing.user}/.config/syncthing/key.pem - - - - /run/secrets/syncthing_key.pem"
+        "L /home/${servicesCustom.syncthing.user}/.config/syncthing/cert.pem - - - - /run/secrets/syncthing_cert.pem"
+        "L /home/${servicesCustom.syncthing.user}/.config/syncthing/key.pem - - - - /run/secrets/syncthing_key.pem"
       ];
 
       systemd.user.services.syncthing = {

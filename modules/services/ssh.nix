@@ -5,7 +5,7 @@
   ...
 }:
 let
-  services-custom = config.services-custom;
+  servicesCustom = config.servicesCustom;
   inherit (lib)
     mkIf
     mkEnableOption
@@ -15,7 +15,7 @@ let
 
 in
 {
-  options.services-custom.ssh-server = {
+  options.servicesCustom.ssh-server = {
     enable = mkEnableOption "Enable SSH Server";
 
     authorizedKeys = mkOption {
@@ -25,7 +25,7 @@ in
     };
   };
 
-  config = mkIf services-custom.ssh-server.enable {
+  config = mkIf servicesCustom.ssh-server.enable {
     # Some settings derived from: https://infosec.mozilla.org/guidelines/openssh
     services.openssh.enable = true;
 
@@ -70,7 +70,7 @@ in
     services.openssh.settings.LogLevel = "VERBOSE";
     services.openssh.settings.Subsystem = "sftp ${pkgs.openssh}/libexec/sftp-server -f AUTHPRIV -l INFO";
 
-    users.users.face.openssh.authorizedKeys.keys = services-custom.ssh-server.authorizedKeys;
+    users.users.face.openssh.authorizedKeys.keys = servicesCustom.ssh-server.authorizedKeys;
   };
 
 }

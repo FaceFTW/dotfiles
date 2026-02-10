@@ -12,6 +12,7 @@
     ../../modules/core.nix
     ../../modules/kernel.nix
     ../../modules/packages
+    ../../modules/user.nix
     ./hardware.nix
     ./klipper.nix
     ./networking.nix
