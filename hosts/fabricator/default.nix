@@ -5,9 +5,6 @@
   lib,
   ...
 }:
-let
-  user = "face";
-in
 {
   imports = [
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
@@ -16,10 +13,13 @@ in
     ../../modules/core.nix
     ../../modules/kernel.nix
     ../../modules/packages
-    ./networking.nix
+    ./hardware.nix
     ./klipper.nix
+    ./networking.nix
     ./sd-image
   ];
+
+  nixpkgs.hostPlatform = "aarch64-linux";
 
   ############################################
   # User Settings
@@ -37,8 +37,8 @@ in
     home.stateVersion = "25.05";
   };
 
-  users.users.${user} = {
-    home = "/home/${user}";
+  users.users.face = {
+    home = "/home/face";
     isNormalUser = true;
     extraGroups = [
       "wheel"
@@ -68,71 +68,6 @@ in
   sops.secrets.moonraker_key = { };
 
   ############################################
-  # Nix Settings
-  ############################################
-  nix.nixPath = [
-    "nixos-config=/home/${user}/.config/dotfiles:/etc/nixos"
-    "nixpkgs=flake:nixpkgs"
-  ];
-  nix.settings.allowed-users = [ "${user}" ];
-  nix.settings.trusted-users = [
-    "@admin"
-    "${user}"
-    "@wheel"
-  ];
-  nix.package = pkgs.nix;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    download-buffer-size = 1073741824
-  '';
-  nixpkgs.hostPlatform = "aarch64-linux";
-
-  ############################################
-  # Hardware Configuration
-  ############################################
-  boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
-  boot.kernelModules = [ ];
-  boot.blacklistedKernelModules = [
-    "dw_hdmi"
-    "bluetooth"
-    "btusb"
-  ];
-  hardware.bluetooth.enable = false;
-
-  hardware.raspberry-pi."4".i2c0.enable = true;
-  hardware.raspberry-pi."4".i2c1.enable = true;
-  hardware.raspberry-pi."4".fkms-3d.enable = true;
-  hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
-  hardware.deviceTree.enable = true;
-  hardware.deviceTree.overlays = [
-    {
-      name = "spi";
-      dtsFile = ./devicetree/spi0-0cs-overlay.dts;
-    }
-    {
-      name = "imx708";
-      dtsFile = ./devicetree/imx708-overlay.dts;
-    }
-    {
-      name = "display";
-      dtsFile = ./devicetree/display-overlay.dts;
-    }
-    {
-      name = "disable-bt";
-      dtsFile = ./devicetree/disable-bt-overlay.dts;
-    }
-    # {
-    #   name = "ov5647";
-    #   dtsFile = ./devicetree/ov5647-overlay.dts;
-    # }
-  ];
-
-  ############################################
-  # Program Options
-  ############################################
-  programs.zsh.enable = true;
-
-  ############################################
   # Services
   ############################################
   services-custom.ssh-server.enable = true;
@@ -157,22 +92,14 @@ in
   ];
   time.timeZone = "America/New_York";
 
-  services.udev.enable = true;
-  services.udev.extraRules = ''
-    SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{name}=="ADS7846*", SYMLINK+="input/touchscreen"
-    SUBSYSTEM=="video4linux", KERNEL=="video[01]", GROUP="camera", MODE="660"
-    # https://raspberrypi.stackexchange.com/a/141107
-    SUBSYSTEM=="dma_heap", GROUP="video", MODE="0660"
-    # If I ever want to enable SPI
-    # SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
-  '';
-
   ############################################
   # Global Packages
   ############################################
   packages.monitoring = true;
   packages.networking = true;
   packages.secrets.base = true;
+
+  programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
     libraspberrypi

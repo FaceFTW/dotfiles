@@ -14,20 +14,21 @@
     pkgs.nerd-fonts.hack
     pkgs.ubuntu-sans
   ];
-
   fonts.fontconfig.defaultFonts.monospace = [
     "Hack NF Mono"
     "Ubuntu Mono"
   ];
 
-  services.displayManager.ly.enable = true;
-  services.displayManager.ly.settings.default_input = "login";
-  services.displayManager.ly.settings.animation = "colormix";
-  services.displayManager.ly.settings.bigclock = "en";
-  services.displayManager.ly.settings.colormix_col1 = "0x003686FD";
-  services.displayManager.ly.settings.colormix_col2 = "0x00143466";
-  services.displayManager.ly.settings.colormix_col3 = "0x20000000";
-  services.displayManager.ly.settings.full_color = true;
+  services.displayManager.ly = {
+    enable = true;
+    settings.default_input = "login";
+    settings.animation = "colormix";
+    settings.bigclock = "en";
+    settings.colormix_col1 = "0x003686FD";
+    settings.colormix_col2 = "0x00143466";
+    settings.colormix_col3 = "0x20000000";
+    settings.full_color = true;
+  };
 
   qt.enable = true;
   qt.platformTheme = "qt5ct";

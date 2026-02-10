@@ -13,6 +13,19 @@
   ############################################
   # Nix Common Settings
   ############################################
+  nix.nixPath = [
+    "nixos-config=/home/face/.config/dotfiles:/etc/nixos"
+    "nixpkgs=flake:nixpkgs"
+  ];
+  nix.settings.allowed-users = [ "face" ];
+  nix.settings.trusted-users = [
+    "@admin"
+    "face"
+    "@wheel"
+  ];
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
   nix.settings.warn-dirty = false;
   nix.settings.substituters = [
     "https://nix-community.cachix.org"

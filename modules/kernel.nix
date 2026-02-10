@@ -4,8 +4,6 @@ let
   inherit (pkgs.lib) mkIf mkEnableOption;
 in
 {
-  imports = [ ];
-
   options.kernel = {
     isWSL = mkEnableOption "Apply WSL-Specific Kernel Configs";
   };

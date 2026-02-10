@@ -104,19 +104,17 @@ in
       "col.border_active" = "rgba(a591ffdd) rgba(91f8ffaa) 70deg";
       "col.border_inactive" = "rgba(404040aa)";
 
-      groupbar = {
-        font_size = 14;
-        height = 22;
-        scrolling = false;
-        gradients = true;
-        gradient_rounding = 10;
-        indicator_height = 0;
-        gaps_in = 10;
-        gaps_out = 3;
-        text_color = "rgba(ffffffaa)";
-        "col.active" = "rgba(a591ffdd)";
-        "col.inactive" = "rgba(404040aa)";
-      };
+      groupbar.font_size = 14;
+      groupbar.height = 22;
+      groupbar.scrolling = false;
+      groupbar.gradients = true;
+      groupbar.gradient_rounding = 10;
+      groupbar.indicator_height = 0;
+      groupbar.gaps_in = 10;
+      groupbar.gaps_out = 3;
+      groupbar.text_color = "rgba(ffffffaa)";
+      groupbar."col.active" = "rgba(a591ffdd)";
+      groupbar."col.inactive" = "rgba(404040aa)";
 
     };
 
@@ -128,22 +126,17 @@ in
       active_opacity = 1.0;
       inactive_opacity = 0.9;
 
-      shadow = {
-        enabled = true;
-        range = 5;
-        render_power = 3;
-        color = " rgba(1a1a1aee)";
-      };
+      shadow.enabled = true;
+      shadow.range = 5;
+      shadow.render_power = 3;
+      shadow.color = " rgba(1a1a1aee)";
 
-      blur = {
-        enabled = true;
-        size = 3;
-        passes = 3;
-        xray = true;
-        popups = true;
-
-        vibrancy = 0.1696;
-      };
+      blur.enabled = true;
+      blur.size = 3;
+      blur.passes = 3;
+      blur.xray = true;
+      blur.popups = true;
+      blur.vibrancy = 0.1696;
     };
 
     settings.animations.enabled = true;

@@ -5,9 +5,6 @@
   lib,
   ...
 }:
-let
-  user = "face";
-in
 {
   imports = [
     inputs.determinate.nixosModules.default
@@ -23,6 +20,8 @@ in
     ./nginx.nix
     ./services.nix
   ];
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   ############################################
   # User Settings
@@ -90,8 +89,8 @@ in
     home.stateVersion = "25.05";
   };
 
-  users.users.${user} = {
-    home = "/home/${user}";
+  users.users.face = {
+    home = "/home/face";
     isNormalUser = true;
     extraGroups = [
       "wheel"
@@ -120,28 +119,6 @@ in
   sops.secrets.linkwarden_nextauth_secret.group = "linkwarden";
   sops.secrets.linkwarden_postgres_password.owner = "linkwarden";
   sops.secrets.linkwarden_postgres_password.group = "linkwarden";
-
-  ############################################
-  # Nix Settings
-  ############################################
-  nix.nixPath = [
-    "nixos-config=/home/${user}/.config/dotfiles:/etc/nixos"
-    "nixpkgs=flake:nixpkgs"
-  ];
-  nix.settings.allowed-users = [
-    "${user}"
-    "nix-serve"
-  ];
-  nix.settings.trusted-users = [
-    "@admin"
-    "${user}"
-    "@wheel"
-  ];
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    eval-cores = 0
-  '';
-  nixpkgs.hostPlatform = "x86_64-linux";
 
   ############################################
   # Hardware Configuration
