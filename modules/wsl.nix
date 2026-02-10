@@ -44,9 +44,6 @@ in
         "docker"
       ];
       shell = pkgs.zsh;
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
-      ];
       packages = [ pkgs.wslKeySetup ];
     };
 
@@ -91,11 +88,7 @@ in
     ############################################
     # Services
     ############################################
-    services.openssh.enable = true;
-    services.openssh.settings.PasswordAuthentication = false;
-    services.openssh.settings.PermitRootLogin = "no";
-    services.openssh.settings.KbdInteractiveAuthentication = false;
-    services.openssh.settings.AllowUsers = [ "face" ];
+
 
     ############################################
     # Misc System Configuration

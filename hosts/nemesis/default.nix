@@ -100,12 +100,6 @@ in
   programs.zsh.enable = true;
 
   ############################################
-  # Services
-  ############################################
-  services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = false; # "Hardening"
-
-  ############################################
   # Misc System Configuration
   ############################################
   time.timeZone = "America/New_York";

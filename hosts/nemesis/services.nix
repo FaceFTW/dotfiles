@@ -1,9 +1,8 @@
 { pkgs, lib, ... }:
 {
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
+  ############################################
+  # Audio
+  ############################################
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire.enable = true;
@@ -13,35 +12,39 @@
   # If you want to use JACK applications, uncomment this
   #jack.enable = true;
 
-  services.fwupd.enable = true;
-
+  ############################################
+  # Power Management
+  ############################################
   services.tuned.enable = true;
   services.upower.enable = true;
   services.upower.criticalPowerAction = "Hibernate";
 
-  # Bluetooth management
-  services.blueman.enable = true;
-
-  # Ad-hoc disk mounting
-  services.gvfs.enable = true;
-  services.gvfs.package = lib.mkForce pkgs.gnome.gvfs;
-  services.tumbler.enable = true;
-
-  # Gnome
-  programs.dconf.enable = true;
-
+  ############################################
   # Syncthing
-  service.syncthing.enable = true;
-  service.syncthing.user-level = true;
-  service.syncthing.key = "/run/secrets/syncthing/key.pem";
-  service.syncthing.cert = "/run/secrets/syncthing/cert.pem";
-  service.syncthing.user = "face";
+  ############################################
+  services-custom.syncthing.enable = true;
+  services-custom.syncthing.user-level = true;
+  services-custom.syncthing.key = "/run/secrets/syncthing/key.pem";
+  services-custom.syncthing.cert = "/run/secrets/syncthing/cert.pem";
+  services-custom.syncthing.user = "face";
 
   # GPG Things
-  programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
+  # programs.gnupg.agent.enable = true;
+  # programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
 
-  # Keyring
+  ############################################
+  # SSH Server
+  ############################################
+  services-custom.ssh-server.enable = true;
+  services-custom.ssh-server.authorizedKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuQw4U+Wam1gjuEXyH/cObZfnfYiA/LPF0kjQPFTz9x face@manifold-wsl"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
+  ];
+
+  ############################################
+  # Keyring-related
+  ############################################
   programs.seahorse.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.hyprland.enableGnomeKeyring = true;
@@ -50,11 +53,37 @@
     pkgs.gnome-keyring
     pkgs.gcr
   ];
-  services.xserver.displayManager.sessionCommands=''
+  services.xserver.displayManager.sessionCommands = ''
     eval $(gnome-keyring-daemon --start --daemonize --components=ssh,secrets)
     export SSH_AUTH_SOCK
   '';
 
-  xdg.portal.extraPortals = [ pkgs.microsoft-identity-broker ];
+  ############################################
+  # Miscellaneous
+  ############################################
+  # Bluetooth management
+  services.blueman.enable = true;
 
+  # GNOME-Related things that are use somewhere
+  services.gvfs.enable = true;
+  services.gvfs.package = lib.mkForce pkgs.gnome.gvfs;
+  services.tumbler.enable = true;
+  programs.dconf.enable = true;
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Allows querying FW updates
+  services.fwupd.enable = true;
+
+  # Autostart btop monitor as a kiosk
+  systemd.services."getty@tty1" = {
+    overrideStrategy = "asDropin";
+    serviceConfig.ExecStart = [
+      ""
+      "${pkgs.btop}/bin/btop --config /home/face/.config/btop/btop.conf --preset 1 --force-utf --no-tty"
+    ];
+    serviceConfig.User = "face"; # this is unconventional
+    serviceConfig.Group = "users";
+  };
 }

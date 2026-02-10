@@ -99,11 +99,6 @@ in
       "jellyfin"
     ];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuQw4U+Wam1gjuEXyH/cObZfnfYiA/LPF0kjQPFTz9x face@manifold-wsl"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
-    ];
     # initialPassword = ""; #For bootstrapping!
     hashedPasswordFile = config.sops.secrets.user_passwd.path;
     packages = [ ];
@@ -201,27 +196,6 @@ in
   # Program Options
   ############################################
   programs.zsh.enable = true;
-
-  ############################################
-  # Services
-  ############################################
-  services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = false; # "Hardening"
-
-  # Autostart btop monitor as a kiosk
-  systemd.services."getty@tty1" = {
-    overrideStrategy = "asDropin";
-    # serviceConfig.ExecPreStart = [
-    #   ""
-    #   # "setfont ter-v14n"
-    # ];
-    serviceConfig.ExecStart = [
-      ""
-      "${pkgs.btop}/bin/btop --config /home/face/.config/btop/btop.conf --preset 1 --force-utf --no-tty"
-    ];
-    serviceConfig.User = "face"; # this is unconventional
-    serviceConfig.Group = "users";
-  };
 
   ############################################
   # Misc System Configuration
