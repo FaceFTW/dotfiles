@@ -1,8 +1,6 @@
 {
-  config,
   inputs,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -13,6 +11,7 @@
     ./core.nix
     ./kernel.nix
     ./packages
+    ./user.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -20,30 +19,11 @@
   ############################################
   # User Settings
   ############################################
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.users.face = {
-    home.enableNixpkgsReleaseCheck = false;
-    home.username = "face";
-    home.homeDirectory = "/home/face";
-    xdg.enable = true;
-
-    programs = (import ./home.nix { inherit config pkgs lib; });
-
-    home.stateVersion = "25.05";
-
-  };
-
-  users.users.face = {
-    home = "/home/face";
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "docker"
-    ];
-    shell = pkgs.zsh;
-    packages = [ pkgs.wslKeySetup ];
-  };
+  # Didn't setup sops for WSL and don't plan to really...
+  defaultUser.password.type = "initialPassword";
+  defaultUser.password.value = "";
+  defaultUser.extraGroups = [ "docker" ];
+  defaultUser.extraPackages = [ pkgs.wslKeySetup ];
 
   ############################################
   # WSL Configuration

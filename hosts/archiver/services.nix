@@ -10,6 +10,17 @@
     serviceConfig.ExecStart = "${pkgs.ugreen-led-mon}/bin/ugreen-led-mon";
   };
 
+  # Autostart btop monitor as a kiosk
+  systemd.services."getty@tty1" = {
+    overrideStrategy = "asDropin";
+    serviceConfig.ExecStart = [
+      ""
+      "${pkgs.btop}/bin/btop --config /home/face/.config/btop/btop.conf --preset 1 --force-utf --no-tty"
+    ];
+    serviceConfig.User = "face"; # this is unconventional
+    serviceConfig.Group = "users";
+  };
+
   ############################################
   # SSH Server
   ############################################

@@ -2,7 +2,6 @@
   config,
   inputs,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -14,6 +13,7 @@
     ../../modules/kernel.nix
     ../../modules/packages
     ../../modules/services
+    ../../modules/user.nix
     ./hardware.nix
     ./networking.nix
     ./services.nix
@@ -25,33 +25,14 @@
   ############################################
   # User Settings
   ############################################
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
+  defaultUser.password.type = "sops";
+  defaultUser.password.value = config.sops.secrets.user_passwd.path;
+  defaultUser.extraGroups = [
+    "networkmanager"
+    "syncthing"
+  ];
+
   home-manager.backupFileExtension = "bak";
-  home-manager.users.face = {
-    home.enableNixpkgsReleaseCheck = false;
-    home.username = "face";
-    home.homeDirectory = "/home/face";
-    xdg.enable = true;
-
-    programs = (import ../../modules/home.nix { inherit config pkgs lib; });
-
-    home.stateVersion = "25.05";
-  };
-
-  users.users.face = {
-    home = "/home/face";
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "syncthing"
-    ];
-    shell = pkgs.zsh;
-    # initialPassword = ""; # For bootstrapping!
-    hashedPasswordFile = config.sops.secrets.user_passwd.path;
-    packages = [ ];
-  };
 
   ############################################
   # SOPS Settings

@@ -2,7 +2,6 @@
   config,
   inputs,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -24,30 +23,9 @@
   ############################################
   # User Settings
   ############################################
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.users.face = {
-    home.enableNixpkgsReleaseCheck = false;
-    home.username = "face";
-    home.homeDirectory = "/home/face";
-    xdg.enable = true;
-
-    programs = (import ../../modules/home.nix { inherit config pkgs lib; });
-
-    home.stateVersion = "25.05";
-  };
-
-  users.users.face = {
-    home = "/home/face";
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-    ];
-    shell = pkgs.zsh;
-    initialPassword = "***REMOVED***"; # For bootstrapping!
-    # hashedPasswordFile = config.sops.secrets.user_passwd.path;
-    packages = [ ];
-  };
+  defaultUser.password.type = "initialPassword";
+  defaultUser.password.value = "";
+  # defaultUser.password.value = config.sops.secrets.user_passwd.path;
 
   # The following are system users/groups defined for various services
   # Unless they are defined elsewhere, in which here I document it for tracking
