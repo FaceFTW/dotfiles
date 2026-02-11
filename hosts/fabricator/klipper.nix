@@ -4,13 +4,8 @@
   ...
 }:
 {
-  users.users.klipper = {
-    isSystemUser = true;
-    group = "klipper";
-    createHome = false;
-    extraGroups = [ "video" ];
-  };
-  users.groups.klipper = { };
+  systemUser.klipper.home = "/var/lib/klipper";
+  systemUser.klipper.extraGroups = [ "video" ];
 
   environment.systemPackages = [
     pkgs.klipperscreen

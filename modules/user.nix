@@ -17,13 +17,15 @@ let
   sysUserSpec =
     with types;
     submodule {
-      home = mkOption {
+      options.home = mkOption {
         type = types.str;
         description = "Path to the home directory of this system user";
+        default = "/var/empty";
       };
-      extraGroups = mkOption {
+      options.extraGroups = mkOption {
         type = with types; listOf str;
         description = "Additional groups this system user should have";
+        default = [ ];
       };
     };
 
@@ -112,13 +114,25 @@ in
         hashedPasswordFile = mkIf (defaultUser.password.type == "sops") defaultUser.password.value;
       };
     }
-    # (builtins.mapAttrs (name: userdef: {
-    #   name = "${name}";
-    #   value = {
-    #     users.users.${name} = (mkSysUser name userdef);
-    #     users.groups.${name} = { };
-    #   };
-    # }) systemUser)
+    {
+      users.users =
+        let
+          sysUsers = lib.mapAttrs' (name: userdef: {
+            name = "${name}";
+            value = (mkSysUser name userdef);
+          }) systemUser;
+        in
+        sysUsers;
+
+      users.groups =
+        let
+          sysGroups = lib.mapAttrs' (name: userdef: {
+            name = "${name}";
+            value = { };
+          }) systemUser;
+        in
+        sysGroups;
+    }
   ];
 
 }

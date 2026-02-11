@@ -16,6 +16,8 @@ let
 
 in
 {
+  imports = [ ../user.nix ];
+
   options.servicesCustom.syncthing = {
     enable = mkEnableOption "Enable Syncthing";
     user-level = mkEnableOption "Syncthing as user-level service";
@@ -48,13 +50,9 @@ in
   config = mkMerge [
     (mkIf (servicesCustom.syncthing.enable && !servicesCustom.syncthing.user-level) {
       # https://nitinpassa.com/running-syncthing-as-a-system-user-on-nixos/
-      users.users.syncthing = {
-        isSystemUser = true;
-        home = "/var/lib/syncthing";
-        group = "syncthing";
-        extraGroups = [ "users" ];
-      };
-      users.groups.syncthing = { };
+      systemUser.syncthing.home = "/var/lib/syncthing";
+      systemUser.syncthing.extraGroups = [ "users" ];
+
       services.syncthing.enable = true;
       services.syncthing.openDefaultPorts = true;
       services.syncthing.key = servicesCustom.syncthing.key;

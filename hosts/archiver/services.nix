@@ -24,8 +24,8 @@
   ############################################
   # SSH Server
   ############################################
-  services-custom.ssh-server.enable = true;
-  services-custom.ssh-server.authorizedKeys = [
+  servicesCustom.ssh-server.enable = true;
+  servicesCustom.ssh-server.authorizedKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHn2LRPb2U5JR4lIKsZzXLofDvXeBinzC6a4s/+6G/5E awest@manifold"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuQw4U+Wam1gjuEXyH/cObZfnfYiA/LPF0kjQPFTz9x face@manifold-wsl"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
@@ -34,12 +34,8 @@
   ############################################
   # Jellyfin
   ############################################
-  users.users.jellyfin = {
-    isSystemUser = true;
-    home = "/mnt/motorway/var/jellyfin";
-    group = "jellyfin";
-  };
-  users.groups.jellyfin = { };
+  systemUser.jellyfin.home = "/mnt/motorway/var/jellyfin";
+
   services.jellyfin.enable = true;
   services.jellyfin.cacheDir = "/mnt/motorway/var/jellyfin/cache";
   services.jellyfin.configDir = "/mnt/motorway/var/jellyfin/config";
@@ -53,21 +49,17 @@
   ############################################
   # Syncthing
   ############################################
-  service.syncthing.enable = true;
-  service.syncthing.key = "/run/secrets/syncthing/key.pem";
-  service.syncthing.cert = "/run/secrets/syncthing/cert.pem";
-  service.syncthing.accessibleFolders = [ "/mnt/motorway/Workspaces" ];
-  service.syncthing.folderOwner = "face";
+  servicesCustom.syncthing.enable = true;
+  servicesCustom.syncthing.key = "/run/secrets/syncthing/key.pem";
+  servicesCustom.syncthing.cert = "/run/secrets/syncthing/cert.pem";
+  servicesCustom.syncthing.accessibleFolders = [ "/mnt/motorway/Workspaces" ];
+  servicesCustom.syncthing.folderOwner = "face";
 
   ############################################
   # Immich
   ############################################
-  users.users.immich = {
-    isSystemUser = true;
-    home = "/mnt/motorway/var/immich";
-    group = "immich";
-  };
-  users.groups.immich = { };
+  systemUser.immich.home = "/mnt/motorway/var/immich";
+
   services.immich.enable = true;
   services.immich.user = "immich";
   services.immich.group = "immich";
@@ -76,12 +68,6 @@
   services.immich.mediaLocation = "/mnt/motorway/var/immich/data";
   services.immich.database.enable = true;
   services.immich.database.enableVectorChord = true;
-  users.users.postgres = {
-    isSystemUser = true;
-    home = "/mnt/motorway/var/postgres";
-    group = "postgres";
-  };
-  services.postgresql.dataDir = "/mnt/motorway/var/postgres";
 
   systemd.timers."immich-mirror" = {
     wantedBy = [ "timers.target" ];
@@ -136,12 +122,8 @@
   ############################################
   # Linkwarden
   ############################################
-  users.users.linkwarden = {
-    isSystemUser = true;
-    home = "/mnt/motorway/var/linkwarden";
-    group = "linkwarden";
-  };
-  users.groups.linkwarden = { };
+  systemUser.linkwarden.home = "/mnt/motorway/var/linkwarden";
+
   services.linkwarden.enable = true;
   services.linkwarden.user = "linkwarden";
   services.linkwarden.group = "linkwarden";
@@ -154,6 +136,12 @@
   services.linkwarden.secretFiles.NEXTAUTH_SECRET = "/run/secrets/linkwarden_nextauth_secret";
   services.linkwarden.secretFiles.POSTGRES_PASSWORD = "/run/secrets/linkwarden_postgres_password";
   services.linkwarden.enableRegistration = true;
+
+  ############################################
+  # Postgres (Shared)
+  ############################################
+  systemUser.postgres.home = "/mnt/motorway/var/postgres";
+  services.postgresql.dataDir = "/mnt/motorway/var/postgres";
 
   ############################################
   # Mirror to Backup
