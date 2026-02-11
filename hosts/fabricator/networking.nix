@@ -17,10 +17,11 @@
   networking.useDHCP = false;
 
   services.resolved.enable = true;
-  services.resolved.extraConfig = ''
-    MulticastDNS=yes
-  '';
-  services.resolved.llmnr = "resolve";
+  # services.resolved.extraConfig = ''
+  #   MulticastDNS=yes
+  # '';
+  # services.resolved.llmnr = "resolve";
+  services.resolved.settings.Resolve.LLMNR = true;
 
   systemd.network.enable = true;
   systemd.network.networks."10-end0" = {

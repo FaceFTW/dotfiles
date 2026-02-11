@@ -21,7 +21,7 @@
   ############################################
   services.resolved.enable = true;
   # services.resolved.settings.MulticastDNS = "yes";
-  services.resolved.llmnr = "resolve";
+  services.resolved.settings.Resolve.LLMNR = true;
 
   # NOTE: Local router gives static IP
   networking.useDHCP = false;
