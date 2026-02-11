@@ -6,7 +6,16 @@
 }:
 let
   packages = config.packages;
-  inherit (lib) mkIf mkMerge mkEnableOption;
+  inherit (lib)
+    mkIf
+    mkMerge
+    mkEnableOption
+    map
+    filter
+    fromJSON
+    unsafeDiscardStringContext
+    readFile
+    ;
 
   extenstionPatches = {
     "rust-lang.rust-analyzer" =
@@ -21,11 +30,9 @@ let
   };
 
   extensionsNix = pkgs.nix4vscode.forVscodeExt extenstionPatches (
-    builtins.map (ext: ext.identifier.id) (
-      builtins.filter (ext: ext.identifier ? uuid) (
-        builtins.fromJSON (
-          builtins.unsafeDiscardStringContext (builtins.readFile ../../config/vscode/extensions.json)
-        )
+    map (ext: ext.identifier.id) (
+      filter (ext: ext.identifier ? uuid) (
+        fromJSON (unsafeDiscardStringContext (readFile ../../config/vscode/extensions.json))
       )
     )
   );

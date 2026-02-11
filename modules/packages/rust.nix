@@ -6,7 +6,12 @@
 }:
 let
   rust = config.packages.rust;
-  inherit (lib) mkOption makeLibraryPath lists;
+  inherit (lib)
+    mkOption
+    makeLibraryPath
+    lists
+    map
+    ;
 in
 {
   options.packages.rust = mkOption {
@@ -84,7 +89,7 @@ in
     environment.variables = {
       LIBCLANG_PATH = makeLibraryPath [ pkgs.llvmPackages_latest.libclang.lib ];
       RUSTFLAGS = (
-        builtins.map (a: ''-L ${a}/lib'') [
+        map (a: "-L ${a}/lib") [
           (pkgs.openssl.dev)
         ]
       );
@@ -92,7 +97,7 @@ in
         pkgs.openssl.dev
       ];
       BINDGEN_EXTRA_CLANG_ARGS =
-        (builtins.map (a: ''-I"${a}/include"'') [
+        (map (a: ''-I"${a}/include"'') [
           pkgs.glibc.dev
           pkgs.openssl.dev
         ])

@@ -78,7 +78,7 @@
     wantedBy = [ "multi-user.target" ];
     requires = [ "network-online.target" ];
     serviceConfig.ExecStart = (
-      builtins.foldl' (acc: e: acc + " " + e) "" [
+      lib.foldl' (acc: e: acc + " " + e) "" [
         "${pkgs.libcamera}/bin/libcamerify"
         "${pkgs.ustreamer}/bin/ustreamer"
         "--device=/dev/video0"

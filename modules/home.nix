@@ -4,6 +4,10 @@
   lib,
   ...
 }:
+let
+  inherit (lib) readFile fromJSON unsafeDiscardStringContext;
+  fromRepoJson = path: fromJSON unsafeDiscardStringContext readFile path;
+in
 {
   ############################################
   # ZSH Config
@@ -129,9 +133,7 @@
   ############################################
   oh-my-posh.enable = true;
   oh-my-posh.enableZshIntegration = true;
-  oh-my-posh.settings = builtins.fromJSON (
-    builtins.unsafeDiscardStringContext (builtins.readFile "${./../config/omp-theme.json}")
-  );
+  oh-my-posh.settings = fromRepoJson "${./../config/omp-theme.json}";
 
   ############################################
   # Git Config
@@ -165,7 +167,6 @@
   # fastfetch Config
   ############################################
   fastfetch.enable = true;
-  fastfetch.settings = builtins.fromJSON (
-    builtins.unsafeDiscardStringContext (builtins.readFile "${./../config/fastfetch.jsonc}")
-  );
+  fastfetch.settings = fromRepoJson "${./../config/fastfetch.jsonc}";
+
 }

@@ -54,19 +54,19 @@
   outputs =
     { nixpkgs, ashell, ... }@inputs:
     let
-      globalOverlays = builtins.map (n: import (./overlays + ("/" + n))) (
-        (builtins.filter (n: builtins.match ".*\\.nix" n != null)) (
-          builtins.attrNames (builtins.readDir ./overlays)
-        )
-      );
+      inherit (nixpkgs) lib;
+      globalOverlays =
+        with lib;
+        map (n: import (./overlays + ("/" + n))) (
+          (filter (n: match ".*\\.nix" n != null)) (attrNames (readDir ./overlays))
+        );
       # Assumes machine path
       specificOverlays =
         machinePath:
-        if builtins.pathExists "${(builtins.dirOf machinePath)}/overlays" then
-          (builtins.map (n: import ("${(builtins.dirOf machinePath)}/overlays" + ("/" + n))) (
-            (builtins.filter (n: builtins.match ".*\\.nix" n != null)) (
-              builtins.attrNames (builtins.readDir "${(builtins.dirOf machinePath)}/overlays")
-            )
+        with lib;
+        if pathExists "${(dirOf machinePath)}/overlays" then
+          (map (n: import ("${(dirOf machinePath)}/overlays" + ("/" + n))) (
+            (filter (n: match ".*\\.nix" n != null)) (attrNames (readDir "${(dirOf machinePath)}/overlays"))
           ))
         else
           [ ];
