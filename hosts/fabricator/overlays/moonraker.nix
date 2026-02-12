@@ -1,11 +1,11 @@
 final: prev: with prev; {
-  final.moonraker = moonraker.overrideAttrs {
-    version = "nightly-2025-12-13";
-    src = fetchGit {
-      url = "https://github.com/Arksine/moonraker.git";
-      rev = "5b92e52e296d99ce43d1612ae83fb588ae47fc27";
-    };
-  };
+  # final.moonraker = moonraker.overrideAttrs {
+  #   version = "nightly-2025-12-13";
+  #   src = fetchGit {
+  #     url = "https://github.com/Arksine/moonraker.git";
+  #     rev = "5b92e52e296d99ce43d1612ae83fb588ae47fc27";
+  #   };
+  # };
 
   # NOTE: There is quite a bit of hard-coding of paths here
   moonrakerSopsApiKey = writeShellApplication {

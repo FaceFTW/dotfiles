@@ -5,8 +5,7 @@
   ...
 }:
 let
-  inherit (lib) readFile fromJSON unsafeDiscardStringContext;
-  fromRepoJson = path: fromJSON unsafeDiscardStringContext readFile path;
+  fromRepoJson = with lib; path: fromJSON (unsafeDiscardStringContext (readFile path));
 in
 {
   ############################################
