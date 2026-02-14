@@ -59,6 +59,9 @@
     { nixpkgs, ashell, ... }@inputs:
     let
       inherit (nixpkgs) lib;
+      ############################################
+      # Overlay Setup
+      ############################################
       globalOverlays =
         with lib;
         map (n: import (./overlays + ("/" + n))) (
@@ -92,6 +95,14 @@
           ++ (specificOverlays configModule);
         }
         configModule
+      ];
+
+      ############################################
+      # Dev Shell Utils
+      ############################################
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
       ];
     in
     rec {
@@ -140,5 +151,23 @@
         specialArgs = { inherit inputs; };
         modules = withOverlays ./hosts/archiver/default.nix;
       };
+
+      ############################################
+      # Dev Shells
+      ############################################
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              inputs.fenix.overlays.default
+            ];
+          };
+        in
+        {
+          rust = import ./shells/rust.nix { inherit pkgs system; };
+        }
+      );
     };
 }
