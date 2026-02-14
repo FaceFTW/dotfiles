@@ -27,6 +27,7 @@ in
   zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
   zsh.shellAliases.rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
   zsh.shellAliases.build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
+  # zsh.shellAliases.reload-zshrc ="source ~/.config/zsh/.zshrc";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;
@@ -118,12 +119,27 @@ in
         }
       '';
 
+      misc-utils = lib.mkOrder 1300 ''
+        function setup-envrc() {
+          ### PARAMETERS
+          path=$1
+          shellName=$2
+          ### PARAMETERS
+          echo "use flake ~/.config/dotfiles#$shellName" > "$path/.envrc"
+          current_dir=$(pwd)
+          cd "$path"
+          direnv allow
+          cd "$current_dir"
+        }
+      '';
+
       runAfter = lib.mkOrder 1500 "sh-toy";
 
     in
     lib.mkMerge [
       initFirst
       nix-utils
+      misc-utils
       runAfter
     ];
 

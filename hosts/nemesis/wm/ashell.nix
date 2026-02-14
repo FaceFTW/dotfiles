@@ -12,7 +12,7 @@
       ];
 
       modules.center = [
-
+        "Clock"
       ];
 
       modules.right = [
@@ -22,7 +22,6 @@
           "Privacy"
           "Settings"
         ]
-        "Clock"
       ];
 
       appearance.style = "Islands";

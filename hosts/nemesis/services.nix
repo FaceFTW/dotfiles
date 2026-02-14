@@ -54,9 +54,13 @@
     pkgs.gcr
   ];
   services.xserver.displayManager.sessionCommands = ''
-    eval $(gnome-keyring-daemon --start --daemonize --components=ssh,secrets)
+    eval $(${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --daemonize --components=ssh,secrets)
     export SSH_AUTH_SOCK
   '';
+  environment.systemPackages = [
+    pkgs.libsecret
+  ];
+  environment.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/gcr/ssh";
 
   ############################################
   # Miscellaneous
