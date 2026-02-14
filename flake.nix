@@ -39,6 +39,10 @@
     rose-pine-hyprcursor.inputs.nixpkgs.follows = "nixpkgs";
     rose-pine-hyprcursor.inputs.hyprlang.follows = "hyprland/hyprlang";
 
+    # Silent SDDM Theme
+    silentSDDM.url = "github:uiriansan/SilentSDDM";
+    silentSDDM.inputs.nixpkgs.follows = "nixpkgs";
+
     # ashell
     ashell.url = "github:MalpenZibo/ashell";
 

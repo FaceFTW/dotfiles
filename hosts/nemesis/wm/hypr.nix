@@ -61,23 +61,19 @@ in
       "${systemctl} --user start hyprpolkitagent &"
       "${hyprctl} keyword input:kb_numlock true && date \"+%Y-%m-%d %H:%M:%S\" > /tmp/numlock-set"
       "${hyprctl} setcursor $cursor 24"
-
-      "${pkgs.swaynotificationcenter}/bin/swaync &"
-
-      "${pkgs.vicinae}/bin/vicinae server &"
-
-      # exec-once = blueman-applet &
-
-      "${pkgs.hyprpaper}/bin/hyprpaper &"
       "${hyprctl} dispatch workspace 1 &"
 
+      "${pkgs.hyprpaper}/bin/hyprpaper &"
+      "${pkgs.swaynotificationcenter}/bin/swaync &"
+      "${pkgs.vicinae}/bin/vicinae server &"
       # exec-once = hypridle &
 
       # exec-once = ${systemctl} --user start app-org.kde.xwaylandvideobridge@autostart.service &
 
-      # "sleep 1; ${pkgs.waybar}/bin/waybar -c \"/home/face/.config/waybar/config\" &"
       "sleep 1; ${pkgs.ashell}/bin/ashell"
       "sleep 5; $hyprscripts/check_setup_warnings.sh &"
+
+      "${pkgs.bitwarden-desktop}/bin/bitwarden &"
     ];
 
     #######################################################
@@ -172,8 +168,9 @@ in
     settings.master.new_status = "master";
 
     settings.misc.vfr = true;
-    settings.misc.force_default_wallpaper = 0; # Set to 0 or 1 to disable the anime mascot wallpapers
-    settings.misc.disable_hyprland_logo = true; # If true disables the random hyprland logo / anime girl background. :(
+    settings.misc.force_default_wallpaper = 0;
+    settings.misc.disable_hyprland_logo = true;
+    settings.misc.disable_splash_rendering = true;
     settings.misc.focus_on_activate = true;
 
     #######################################################

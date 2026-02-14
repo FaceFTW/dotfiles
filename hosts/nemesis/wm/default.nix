@@ -1,4 +1,5 @@
 { pkgs, inputs, ... }:
+
 {
   imports = [
     ./hypr.nix
@@ -19,16 +20,46 @@
     "Ubuntu Mono"
   ];
 
-  services.displayManager.ly = {
+  # This replace SDDM configuration
+  services.displayManager.defaultSession = "hyprland";
+  programs.silentSDDM = {
     enable = true;
-    settings.default_input = "login";
-    settings.animation = "colormix";
-    settings.bigclock = "en";
-    settings.colormix_col1 = "0x003686FD";
-    settings.colormix_col2 = "0x00143466";
-    settings.colormix_col3 = "0x20000000";
-    settings.full_color = true;
+    theme = "default";
+    backgrounds.main = ./assets/deep_blue_invert.png;
+    profileIcons.face = ./assets/face.png;
+    settings."LoginScreen".background = "deep_blue_invert.png";
+    settings."LockScreen".background = "deep_blue_invert.png";
+    settings."LoginScreen.LoginArea.Avatar".shape = "circle";
   };
+
+  # services.displayManager.ly = {
+  #   enable = true;
+  #   settings.default_input = "login";
+  #   settings.animation = "colormix";
+  #   settings.bigclock = "en";
+  #   settings.colormix_col1 = "0x003686FD";
+  #   settings.colormix_col2 = "0x00143466";
+  #   settings.colormix_col3 = "0x20000000";
+  #   settings.full_color = true;
+  # };
+
+  # services.xserver.displayManager.lightdm = {
+  #   greeter.
+  #   enable = true;
+  #   greeters.slick.enable = true;
+  #   greeters.slick.iconTheme.name = "Fluent-dark";
+  #   greeters.slick.iconTheme.package = pkgs.fluent-icon-theme;
+  #   greeters.slick.theme.name = "Fluent-round-Dark-compact";
+  #   greeters.slick.theme.package = pkgs.fluent-gtk-theme;
+  #   greeters.slick.extraConfig = ''
+  #     [Greeter]
+  #     show-hostname=true
+  #     show-power=true
+  #     show-clock=true
+  #     show-quit=true
+  #     background=${./assets/deep_blue_invert.png}
+  #   '';
+  # };
 
   qt.enable = true;
   qt.platformTheme = "qt5ct";
@@ -50,17 +81,7 @@
     gtk.enable = true;
     gtk.colorScheme = "dark";
     gtk.theme.name = "Fluent-round-Dark-compact";
-    gtk.theme.package = pkgs.fluent-gtk-theme.override {
-      tweaks = [
-        "solid"
-        "round"
-      ];
-
-      sizeVariants = [
-        "standard"
-        "compact"
-      ];
-    };
+    gtk.theme.package = pkgs.fluent-gtk-theme;
     gtk.iconTheme.package = pkgs.fluent-icon-theme;
     gtk.iconTheme.name = "Fluent-dark";
 

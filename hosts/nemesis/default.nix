@@ -9,6 +9,7 @@
     inputs.determinate.nixosModules.default
     inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
+    inputs.silentSDDM.nixosModules.default
     ../../modules/core.nix
     ../../modules/kernel.nix
     ../../modules/packages
