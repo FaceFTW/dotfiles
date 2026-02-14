@@ -45,6 +45,10 @@
   ];
   boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
+  # so I can play deadlock
+  boot.kernel.sysctl."vm.max_map_count" = 1048576;
+
+
   ############################################
   # Bootloader Configuration
   ############################################
@@ -112,6 +116,7 @@
     options nvidia "NVreg_DynamicPowerManagement=0x00"
   '';
 
+
   ############################################
   # Filesystem Config
   ############################################
@@ -140,7 +145,7 @@
       "dmask=0002"
       "fmask=0002"
       "acl"
-      "windows_names"
+      # "windows_names" # This screws up proton
       # "iocharset=utf8"
     ];
 

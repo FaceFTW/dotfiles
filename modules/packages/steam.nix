@@ -31,30 +31,39 @@ in
       programs.steam.localNetworkGameTransfers.openFirewall = true;
 
       programs.steam.protontricks.enable = true;
+
+      programs.steam.package = pkgs.steam.override {
+        extraPkgs = pkgs: [
+          pkgs.primus
+          pkgs.bumblebee
+          pkgs.mesa-demos
+          pkgs.gamemode
+        ];
+      };
     })
     ############################################
     # Patching Steam/Games for NVIDIA Optimus
     ############################################
     (mkIf packages.steam-nvidia-prime {
-      programs.steam.package = pkgs.steam.overrideAttrs (
-        final: prev: {
-          postInstall = ''
-            rm $out/bin/steamdeps
+      # programs.steam.package = pkgs.steam.overrideAttrs (
+      #   final: prev: {
+      #     postInstall = ''
+      #       rm $out/bin/steamdeps
 
-            # install udev rules
-            mkdir -p $out/etc/udev/rules.d/
-            cp ./subprojects/steam-devices/*.rules $out/etc/udev/rules.d/
-            substituteInPlace $out/etc/udev/rules.d/60-steam-input.rules \
-              --replace-fail "/bin/sh" "${pkgs.bash}/bin/bash"
+      #       # install udev rules
+      #       mkdir -p $out/etc/udev/rules.d/
+      #       cp ./subprojects/steam-devices/*.rules $out/etc/udev/rules.d/
+      #       substituteInPlace $out/etc/udev/rules.d/60-steam-input.rules \
+      #         --replace-fail "/bin/sh" "${pkgs.bash}/bin/bash"
 
-            # this just installs a link, "steam.desktop -> /lib/steam/steam.desktop"
-            rm $out/share/applications/steam.desktop
-            substitute steam.desktop $out/share/applications/steam.desktop \
-              --replace-fail /usr/bin/steam steam \
-              --replace-fail "Exec=" "Exec=${pkgs.nvidia-offload}/bin/nvidia-offload "
-          '';
-        }
-      );
+      #       # this just installs a link, "steam.desktop -> /lib/steam/steam.desktop"
+      #       rm $out/share/applications/steam.desktop
+      #       substitute steam.desktop $out/share/applications/steam.desktop \
+      #         --replace-fail /usr/bin/steam steam \
+      #         --replace-fail "Exec=" "Exec=${pkgs.nvidia-offload}/bin/nvidia-offload "
+      #     '';
+      #   }
+      # );
 
       environment.systemPackages = [
         (GPUOffloadApp pkgs.steam "steam")
@@ -89,7 +98,6 @@ in
           done
         '';
       };
-
 
     })
   ];

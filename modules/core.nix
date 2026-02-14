@@ -9,6 +9,7 @@
   nixpkgs.config.allowUnsupportedSystem = true;
   nixpkgs.config.documentation.doc.enable = false;
   nixpkgs.config.documentation.info.enable = false;
+  nixpkgs.config.nvidia.acceptLicense = true;
 
   ############################################
   # Nix Common Settings

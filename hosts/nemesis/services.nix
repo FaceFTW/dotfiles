@@ -29,8 +29,8 @@
   servicesCustom.syncthing.user = "face";
 
   # GPG Things
-  # programs.gnupg.agent.enable = true;
-  # programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
+  programs.gnupg.agent.enable = true;
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-qt;
 
   ############################################
   # SSH Server
@@ -61,6 +61,14 @@
     pkgs.libsecret
   ];
   environment.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/gcr/ssh";
+
+  ############################################
+  # Howdy
+  ############################################
+  # services.howdy.enable = true;
+  # services.linux-enable-ir-emitter.enable = true;
+  # security.pam.howdy.enable = true;
+  # security.pam.services.hyprland.howdy.enable = true;
 
   ############################################
   # Miscellaneous
