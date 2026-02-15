@@ -22,12 +22,20 @@ in
   zsh.shellAliases.doafunny = "sh-toy";
   zsh.shellAliases.clearmemcache = "echo 3 | sudo tee /proc/sys/vm/drop_caches";
 
+  # systemctl aliases
+  zsh.shellAliases.system-units = "sudo systemctl list-units";
+  zsh.shellAliases.user-units = "sudo systemctl --user list-units";
+  zsh.shellAliases.service-status = "sudo systemctl status";
+  zsh.shellAliases.user-service-status = "systemctl --user status";
+
+  # Other nice aliases
+  zsh.shellAliases.battery-info = "watch upower -i /org/freedesktop/UPower/devices/battery_BAT1";
+
   # Nix Specific Aliases
   zsh.shellAliases.clean-nix = "sudo nix-collect-garbage -d";
   zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
   zsh.shellAliases.rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
   zsh.shellAliases.build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
-  # zsh.shellAliases.reload-zshrc ="source ~/.config/zsh/.zshrc";
 
   zsh.history.append = true;
   zsh.history.ignoreAllDups = true;
@@ -36,9 +44,10 @@ in
     "ls*"
     "pwd"
     "git add \."
-    "git commit"
+    "git commit *"
   ];
   zsh.history.share = true;
+  zsh.history.saveNoDups = true;
   zsh.historySubstringSearch.enable = true;
 
   zsh.oh-my-zsh.enable = true;
@@ -168,6 +177,7 @@ in
   git.ignores = [
     "*.swp"
     ".envrc"
+    ".direnv/*"
   ];
 
   ############################################

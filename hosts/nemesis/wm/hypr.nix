@@ -1,7 +1,17 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 let
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   systemctl = "${pkgs.systemd}/bin/systemctl";
+
+  mkFloatRule = class: [
+    "match:class ${class}, float on"
+    "match:class ${class}, center on"
+  ];
 in
 {
   imports = [ inputs.hyprland.nixosModules.default ];
@@ -247,23 +257,22 @@ in
       "SUPER SHIFT ALT, down, Half Window Size Vertically, resizeactive, 0 50%"
       "SUPER SHIFT ALT, up, Double Window Size Vertically, resizeactive, 0 200%"
 
-      # System Interactions
-      "SUPER, L, Lock Screen, exec, hyprlock"
-      "SUPER, M, Exit Hyprland, exit,"
-      "SUPER, O, Reboot PC, exec, reboot"
-      "SUPER, P, Shutdown PC, exec, poweroff"
 
       # Switch workspaces F[1-10]
       "SUPER , F1, Open Workspace 1, workspace, 1"
       "SUPER , F2, Open Workspace 2, workspace, 2"
       "SUPER , F3, Open Workspace 3, workspace, 3"
       "SUPER , F4, Open Workspace 4, workspace, 4"
+      "SUPER , F5, Open Workspace 6, workspace, 5"
+      "SUPER , F6, Open Workspace 5, workspace, 6"
 
       # Move active window to a workspace with SHIFT + F[1-10]
       "SUPER SHIFT, F1, Move to Workspace 1, movetoworkspace, 1"
       "SUPER SHIFT, F2, Move to Workspace 2, movetoworkspace, 2"
       "SUPER SHIFT, F3, Move to Workspace 3, movetoworkspace, 3"
       "SUPER SHIFT, F4, Move to Workspace 4, movetoworkspace, 4"
+      "SUPER SHIFT, F5, Move to Workspace 5, movetoworkspace, 5"
+      "SUPER SHIFT, F6, Move to Workspace 6, movetoworkspace, 6"
     ];
 
     settings.bindeld = [
@@ -286,90 +295,61 @@ in
     #a bindd = $mainMod, $HOME, Take Screenshot of Monitor, exec, $screenshot output --raw | satty --filename -
     # bindd = , $HOME, Take Screenshot of Region, exec, $screenshot region --raw | satty --filename -
 
-    # Scroll through existing workspaces with mainMod + scroll
-    # bindd = $mainMod, mouse_down, Go to Next Workspace, workspace, e+1
-    # bindd = $mainMod, mouse_up, Go to Last Workspace, workspace, e-1
-
     #######################################################
     # WINDOW RULES
     #######################################################
-    extraConfig = ''
-      # Ignore maximize requests from apps. You'll probably like this.
-      # windowrule = suppressevent maximize, class:.*
+    settings.windowrule = lib.flatten [
+      [
+        {
+          # Fix some dragging issues with XWayland
+          name = "fix-xwayland-drags";
+          "match:class" = "^$";
+          "match:title" = "^$";
+          "match:xwayland" = true;
+          "match:float" = true;
+          "match:fullscreen" = false;
+          "match:pin" = false;
 
-      windowrule {
-        # Fix some dragging issues with XWayland
-        name = fix-xwayland-drags
-        match:class = ^$
-        match:title = ^$
-        match:xwayland = true
-        match:float = true
-        match:fullscreen = false
-        match:pin = false
+          no_focus = true;
+        }
+        {
+          name = "xwayland-video-bridge-fixes";
+          "match:class" = "xwaylandvideobridge";
 
-        no_focus = true
-      }
+          no_initial_focus = true;
+          no_focus = true;
+          no_anim = true;
+          no_blur = true;
+          max_size = "1 1";
+          opacity = 0.0;
+        }
+      ]
 
-      windowrule {
-          name = xwayland-video-bridge-fixes
-          match:class = xwaylandvideobridge
+      (mkFloatRule "org.pulseaudio.pavucontrol")
+      (mkFloatRule "blueman-manager")
+      (mkFloatRule "nm-connection-editor")
+      (mkFloatRule "waypaper")
+      (mkFloatRule "Tk")
+      (mkFloatRule "tuned-gui")
+      (mkFloatRule ".blueman-manager-wrapped")
+      (mkFloatRule "xdg-desktop-portal-gtk")
+      (mkFloatRule "firefox match:title Extension")
+      (mkFloatRule "thunar")
+      (mkFloatRule "Bitwarden")
+      (mkFloatRule "hyprpwcenter")
 
-          no_initial_focus = true
-          no_focus = true
-          no_anim = true
-          no_blur = true
-          max_size = 1 1
-          opacity = 0.0
-      }
+      "match:class firefox, hyprbars:no_bar on"
+      "match:class code, hyprbars:no_bar on"
+      "match:class steam, hyprbars:no_bar on"
 
-      windowrule = match:class org.pulseaudio.pavucontrol, float on
-      windowrule = match:class org.pulseaudio.pavucontrol, center on
+      "match:class cs2, immediate yes"
+    ];
 
-      windowrule = match:class blueman-manager, float on
-      windowrule = match:class blueman-manager, center on
-
-      windowrule = match:class nm-connection-editor, float on
-      windowrule = match:class nm-connection-editor, center on
-
-      windowrule = match:class waypaper, float on
-      windowrule = match:class waypaper, center on
-
-      windowrule = match:class Tk, float on
-      windowrule = match:class Tk, center on
-
-      windowrule = match:class tuned-gui, float on
-      windowrule = match:class tuned-gui, center on
-
-      windowrule = match:class .blueman-manager-wrapped, float on
-      windowrule = match:class .blueman-manager-wrapped, float on
-
-      windowrule = match:class xdg-desktop-portal-gtk, float on
-      windowrule = match:class xdg-desktop-portal-gtk, center on
-
-      windowrule = match:class firefox match:title Extension, float on
-      windowrule = match:class firefox match:title Extension, center on
-
-      windowrule = match:class thunar, float on
-      windowrule = match:class thunar, center on
-
-      windowrule = match:class hyprpwcenter, float on
-      windowrule = match:class hyprpwcenter, center on
-
-      windowrule = match:class Bitwarden, float on
-      windowrule = match:class Bitwarden, center on
-
-      windowrule = match:class firefox, hyprbars:no_bar on
-
-      windowrule = match:class code, hyprbars:no_bar on
-
-      windowrule = match:class steam, hyprbars:no_bar on
-      windowrule = match:class steam match:initialTitle: Settings, float on
-      windowrule = match:class cs2, immediate yes
-
-      layerrule = match:namespace vicinae, blur on
-      layerrule = match:namespace vicinae, ignore_alpha 0
-      layerrule = match:namespace vicinae, no_anim on
-    '';
+    settings.layerrule = [
+      "match:namespace vicinae, blur on"
+      "match:namespace vicinae, ignore_alpha 0"
+      "match:namespace vicinae, no_anim on"
+    ];
 
   };
   #######################################################
