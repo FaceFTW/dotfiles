@@ -11,7 +11,7 @@
       "control-center-layer" = "top";
       "layer-shell" = true;
       "layer-shell-cover-screen" = true;
-      "cssPriority" = "application";
+      "cssPriority" = "user";
       "control-center-margin-top" = 10;
       "control-center-margin-bottom" = 10;
       "control-center-margin-right" = 10;
@@ -77,23 +77,6 @@
         "label" = {
           "max-lines" = 5;
           "text" = "Label Text";
-        };
-        "mpris" = {
-          "image-size" = 96;
-          "image-radius" = 12;
-          "blacklist" = [ ];
-        };
-        "buttons-grid" = {
-          "actions" = [
-            {
-              "label" = "直";
-              "type" = "toggle";
-              "active" = true;
-              "command" =
-                "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'";
-              "update-command" = "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'";
-            }
-          ];
         };
 
       };

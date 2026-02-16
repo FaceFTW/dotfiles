@@ -22,6 +22,7 @@
           "Privacy"
           "Settings"
         ]
+        "CustomNotifications"
       ];
 
       appearance.style = "Islands";
@@ -55,6 +56,17 @@
       settings.lock_cmd = "${pkgs.hyprlock}/bin/hyprlock &";
       settings.wifi_more_cmd = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
       settings.bluetooth_more_cmd = "${pkgs.blueman}/bin/blueman-manager-wrapped";
+
+      CustomModule = [
+        {
+          name = "CustomNotifications";
+          icon = "";
+          command = "swaync-client -t -sw";
+          listen_cmd = "swaync-client -swb";
+          "icons.'dnd.*'" = "";
+          alert = ".*notification";
+        }
+      ];
 
     };
   };

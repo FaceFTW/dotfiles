@@ -74,7 +74,7 @@ in
       "${hyprctl} dispatch workspace 1 &"
 
       "${pkgs.hyprpaper}/bin/hyprpaper &"
-      "${pkgs.swaynotificationcenter}/bin/swaync &"
+      "${pkgs.swaynotificationcenter}/bin/swaync --config ~/.config/swaync/config.json &"
       "${pkgs.vicinae}/bin/vicinae server &"
       # exec-once = hypridle &
 
@@ -349,6 +349,10 @@ in
       "match:namespace vicinae, blur on"
       "match:namespace vicinae, ignore_alpha 0"
       "match:namespace vicinae, no_anim on"
+      "match:namespace swaync-control-center, ignore_alpha 0"
+      "match:namespace swaync-control-center, no_anim on"
+      "match:namespace swaync-notification-window, ignore_alpha 0"
+      "match:namespace swaync-notification-window, no_anim on"
     ];
 
   };
