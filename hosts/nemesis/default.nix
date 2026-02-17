@@ -100,6 +100,8 @@
     pkgs.nvidia-offload
     pkgs.imhex
     pkgs.bottles
+    pkgs.flameshot
+
 
     # For Tumbler
     pkgs.ffmpegthumbnailer

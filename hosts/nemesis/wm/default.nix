@@ -43,24 +43,6 @@
   #   settings.full_color = true;
   # };
 
-  # services.xserver.displayManager.lightdm = {
-  #   greeter.
-  #   enable = true;
-  #   greeters.slick.enable = true;
-  #   greeters.slick.iconTheme.name = "Fluent-dark";
-  #   greeters.slick.iconTheme.package = pkgs.fluent-icon-theme;
-  #   greeters.slick.theme.name = "Fluent-round-Dark-compact";
-  #   greeters.slick.theme.package = pkgs.fluent-gtk-theme;
-  #   greeters.slick.extraConfig = ''
-  #     [Greeter]
-  #     show-hostname=true
-  #     show-power=true
-  #     show-clock=true
-  #     show-quit=true
-  #     background=${./assets/deep_blue_invert.png}
-  #   '';
-  # };
-
   qt.enable = true;
   qt.platformTheme = "qt5ct";
   qt.style = "kvantum";
@@ -94,6 +76,11 @@
 
     xdg.terminal-exec.enable = true;
     xdg.terminal-exec.settings.default = [ "alacritty.desktop" ];
+
+    services.flameshot.enable = true;
+    services.flameshot.settings.General.disabledGrimWarning = true;
+    services.flameshot.settings.General.useGrimAdapter = true;
+    services.flameshot.settings.General.disabledTrayIcon = true;
   };
 
 }

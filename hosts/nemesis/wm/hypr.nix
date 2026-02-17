@@ -50,8 +50,6 @@ in
     settings."$editor" = "${pkgs.vimCustom}/bin/vim";
     settings."$wallpaper" = "${./assets/deep_blue_invert.png}";
     settings."$cursor" = "rose-pine-hyprcursor";
-    # $screenshot = hyprshot --mode
-    # $colorPicker = hyprpicker --autocopy --format hex
 
     settings.monitor = [ "eDP-1,2400x1600@120,0x0,1" ];
 
@@ -70,17 +68,14 @@ in
     settings.exec-once = [
       "${systemctl} --user start hyprpolkitagent &"
       "${hyprctl} keyword input:kb_numlock true && date \"+%Y-%m-%d %H:%M:%S\" > /tmp/numlock-set"
-      "${hyprctl} setcursor $cursor 24"
+      "${hyprctl} setcursor $cursor 36"
       "${hyprctl} dispatch workspace 1 &"
 
       "${pkgs.hyprpaper}/bin/hyprpaper &"
       "${pkgs.swaynotificationcenter}/bin/swaync --config ~/.config/swaync/config.json &"
       "${pkgs.vicinae}/bin/vicinae server &"
-      # exec-once = hypridle &
-
-      # exec-once = ${systemctl} --user start app-org.kde.xwaylandvideobridge@autostart.service &
-
       "sleep 1; ${pkgs.ashell}/bin/ashell"
+
       "sleep 5; $hyprscripts/check_setup_warnings.sh &"
 
       "${pkgs.bitwarden-desktop}/bin/bitwarden &"
@@ -94,7 +89,7 @@ in
       gaps_out = 5;
       border_size = 3;
 
-      "col.active_border" = "rgba(a591ffdd) rgba(91f8ffaa) 70deg";
+      "col.active_border" = "rgba(3686fdaa)";
       "col.inactive_border" = "rgba(404040aa)";
       resize_on_border = true;
       allow_tearing = true;
@@ -107,7 +102,7 @@ in
     };
 
     settings.group = {
-      "col.border_active" = "rgba(a591ffdd) rgba(91f8ffaa) 70deg";
+      "col.border_active" = "rgba(3686fdaa)";
       "col.border_inactive" = "rgba(404040aa)";
 
       groupbar.font_size = 14;
@@ -119,7 +114,7 @@ in
       groupbar.gaps_in = 10;
       groupbar.gaps_out = 3;
       groupbar.text_color = "rgba(ffffffaa)";
-      groupbar."col.active" = "rgba(a591ffdd)";
+      groupbar."col.active" = "rgba(3686fddd)";
       groupbar."col.inactive" = "rgba(404040aa)";
 
     };
@@ -241,6 +236,8 @@ in
       # "SUPER, up, Move Focus up, movefocus, u"
       # "SUPER, down, Move Focus down, movefocus, d"
 
+      "SUPER SHIFT, S, Take Screenshot, exec, ${pkgs.flameshot}/bin/flameshot gui"
+
       # Focus Interactions
       "SUPER SHIFT, left, Move Focus left, movefocus, l"
       "SUPER SHIFT, right, Move Focus right, movefocus, r"
@@ -256,7 +253,6 @@ in
       "SUPER SHIFT ALT, right, Double Window Size Horizontally, resizeactive, 200% 0"
       "SUPER SHIFT ALT, down, Half Window Size Vertically, resizeactive, 0 50%"
       "SUPER SHIFT ALT, up, Double Window Size Vertically, resizeactive, 0 200%"
-
 
       # Switch workspaces F[1-10]
       "SUPER , F1, Open Workspace 1, workspace, 1"
