@@ -2,7 +2,6 @@
 {
   home-manager.users.face = {
     services.swaync.enable = true;
-    services.swaync.style = ./assets/swaync.css;
     services.swaync.settings = {
       "$schema" = "/etc/xdg/swaync/configSchema.json";
       "positionX" = "right";
@@ -35,24 +34,8 @@
       "hide-on-clear" = false;
       "hide-on-action" = true;
       "text-empty" = "No Notifications";
-      "script-fail-notify" = true;
-      "scripts" = {
-        "example-script" = {
-          "exec" = "echo 'Do something...'";
-          "urgency" = "Normal";
-        };
-        "example-action-script" = {
-          "exec" = "echo 'Do something actionable!'";
-          "urgency" = "Normal";
-          "run-on" = "action";
-        };
-      };
       "notification-visibility" = {
-        "example-name" = {
-          "state" = "muted";
-          "urgency" = "Low";
-          "app-name" = "Spotify";
-        };
+
       };
       "widgets" = [
         "inhibitors"

@@ -334,6 +334,10 @@ in
       (mkFloatRule "Bitwarden")
       (mkFloatRule "hyprpwcenter")
 
+      # For some reason there is no class?
+      "match:title flameshot, float on"
+      "match:title flameshot, center on"
+
       "match:class firefox, hyprbars:no_bar on"
       "match:class code, hyprbars:no_bar on"
       "match:class steam, hyprbars:no_bar on"

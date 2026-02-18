@@ -59,6 +59,7 @@
     home.pointerCursor.package =
       inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default;
     home.pointerCursor.name = "rose-pine-hyprcursor";
+    home.pointerCursor.
 
     gtk.enable = true;
     gtk.colorScheme = "dark";
@@ -81,6 +82,10 @@
     services.flameshot.settings.General.disabledGrimWarning = true;
     services.flameshot.settings.General.useGrimAdapter = true;
     services.flameshot.settings.General.disabledTrayIcon = true;
+    services.flameshot.settings.General.uiColor = "#3686bd";
+    services.flameshot.settings.General.contrastColor = "#2060a0";
+    services.flameshot.settings.General.checkForUpdates = false;
+
   };
 
 }
