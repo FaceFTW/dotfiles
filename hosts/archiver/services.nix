@@ -69,55 +69,17 @@
   services.immich.database.enable = true;
   services.immich.database.enableVectorChord = true;
 
-  systemd.timers."immich-mirror" = {
-    wantedBy = [ "timers.target" ];
-    timerConfig.OnCalendar = "*-*-* 3:00:00";
-    timerConfig.Persistent = true;
-  };
-  systemd.services."immich-mirror" = {
-    wants = [
-      "mnt-archive.mount"
-      "mnt-motorway.mount"
-    ];
-    serviceConfig.Type = "oneshot";
-    script = ''
-
-      token=$(cat /run/secrets/pushover_api_key)
-      user=$(cat /run/secrets/pushover_user_key)
-
-      ${pkgs.curl}/bin/curl \
-        --retry 5 \
-        --retry-delay 30 \
-        --form-string "token=''${token}" \
-        --form-string "user=''${user}" \
-        --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
-        --form-string "title=Archiver - Immich Mirror" \
-        --form-string "message=Starting backup" \
-        https://api.pushover.net/1/messages.json
-
-
-      ${pkgs.rsync}/bin/rsync -aPt \
-          --archive \
-          --partial \
-          --progress \
-          --delete-before \
-          /mnt/motorway/var/immich/data/ \
-          /mnt/archive/immich
-
-      ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/immich
-
-
-      ${pkgs.curl}/bin/curl \
-        --retry 5 \
-        --retry-delay 30 \
-        --form-string "token=''${token}" \
-        --form-string "user=''${user}" \
-        --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
-        --form-string "title=Archiver - Immich Mirror" \
-        --form-string "message=Backup Job completed. Check logs for more info" \
-        https://api.pushover.net/1/messages.json
-    '';
-  };
+  servicesCustom.mirror.archive-immich.notification-title = "Archiver - Freeman Mirror";
+  servicesCustom.mirror.archive-immich.cron = "*-*-* 3:00:00";
+  servicesCustom.mirror.archive-immich.source = "/mnt/motorway/var/immich/data";
+  servicesCustom.mirror.archive-immich.destination = "/mnt/archive/immich";
+  servicesCustom.mirror.archive-immich.mounts = [
+    "mnt-archive.mount"
+    "mnt-motorway.mount"
+  ];
+  servicesCustom.mirror.archive-immich.post-mirror-cmds = ''
+    ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/immich
+  '';
 
   ############################################
   # Linkwarden
@@ -146,54 +108,18 @@
   ############################################
   # Mirror to Backup
   ############################################
-  systemd.timers."archive-offline-mirror" = {
-    wantedBy = [ "timers.target" ];
-    timerConfig.OnCalendar = "weekly";
-    timerConfig.Persistent = true;
-  };
-  systemd.services."archive-offline-mirror" = {
-    wants = [
-      "mnt-archive.mount"
-      "mnt-freeman.mount"
-    ];
-    serviceConfig.Type = "oneshot";
-    script = ''
+  servicesCustom.mirror.archive-freeman.notification-title = "Archiver - Freeman Mirror";
+  servicesCustom.mirror.archive-freeman.cron = "weekly"; # TODO cronify
+  servicesCustom.mirror.archive-freeman.source = "/mnt/archive";
+  servicesCustom.mirror.archive-freeman.destination = "/mnt/freeman";
+  servicesCustom.mirror.archive-freeman.mounts = [
+    "mnt-archive.mount"
+    "mnt-freeman.mount"
+  ];
+  servicesCustom.mirror.archive-freeman.exclude = [
+    "/SteamBackups"
+    "/Misc_Large"
+    "/SteamLibrary"
+  ];
 
-      token=$(cat /run/secrets/pushover_api_key)
-      user=$(cat /run/secrets/pushover_user_key)
-
-      ${pkgs.curl}/bin/curl \
-        --retry 5 \
-        --retry-delay 30 \
-        --form-string "token=''${token}" \
-        --form-string "user=''${user}" \
-        --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
-        --form-string "title=Archive Offline Mirror" \
-        --form-string "message=Starting backup job" \
-        https://api.pushover.net/1/messages.json
-
-
-      ${pkgs.rsync}/bin/rsync -aPt \
-          --archive \
-          --partial \
-          --progress \
-          --delete-before \
-          --exclude /SteamBackups \
-          --exclude /Misc_Large \
-          --exclude /SteamLibrary \
-          /mnt/archive/ \
-          /mnt/freeman
-
-      ${pkgs.curl}/bin/curl \
-        --retry 5 \
-        --retry-delay 30 \
-        --form-string "token=''${token}" \
-        --form-string "user=''${user}" \
-        --form-string "timestamp=''$(${pkgs.coreutils}/bin/date +%s)" \
-        --form-string "title=Archive Offline Mirror" \
-        --form-string "message=Backup Job completed. Check logs for more info" \
-        https://api.pushover.net/1/messages.json
-    '';
-
-  };
 }
