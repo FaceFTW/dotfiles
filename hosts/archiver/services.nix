@@ -69,18 +69,6 @@
   services.immich.database.enable = true;
   services.immich.database.enableVectorChord = true;
 
-  servicesCustom.mirror.archive-immich.notification-title = "Archiver - Freeman Mirror";
-  servicesCustom.mirror.archive-immich.cron = "*-*-* 3:00:00";
-  servicesCustom.mirror.archive-immich.source = "/mnt/motorway/var/immich/data";
-  servicesCustom.mirror.archive-immich.destination = "/mnt/archive/immich";
-  servicesCustom.mirror.archive-immich.mounts = [
-    "mnt-archive.mount"
-    "mnt-motorway.mount"
-  ];
-  servicesCustom.mirror.archive-immich.post-mirror-cmds = ''
-    ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/immich
-  '';
-
   ############################################
   # Linkwarden
   ############################################
@@ -104,22 +92,37 @@
   ############################################
   systemUser.postgres.home = "/mnt/motorway/var/postgres";
   services.postgresql.dataDir = "/mnt/motorway/var/postgres";
+  services.postgresql.settings.max_connections = 200;
 
   ############################################
-  # Mirror to Backup
+  # Mirror Jobs
   ############################################
-  servicesCustom.mirror.archive-freeman.notification-title = "Archiver - Freeman Mirror";
-  servicesCustom.mirror.archive-freeman.cron = "weekly"; # TODO cronify
-  servicesCustom.mirror.archive-freeman.source = "/mnt/archive";
-  servicesCustom.mirror.archive-freeman.destination = "/mnt/freeman";
-  servicesCustom.mirror.archive-freeman.mounts = [
-    "mnt-archive.mount"
-    "mnt-freeman.mount"
-  ];
-  servicesCustom.mirror.archive-freeman.exclude = [
-    "/SteamBackups"
-    "/Misc_Large"
-    "/SteamLibrary"
-  ];
+  servicesCustom.mirror = {
+    archive-freeman.notification-title = "Archiver - Freeman Mirror";
+    archive-freeman.cron = "weekly"; # TODO cronify
+    archive-freeman.source = "/mnt/archive";
+    archive-freeman.destination = "/mnt/freeman";
+    archive-freeman.mounts = [
+      "mnt-archive.mount"
+      "mnt-freeman.mount"
+    ];
+    archive-freeman.exclude = [
+      "/SteamBackups"
+      "/Misc_Large"
+      "/SteamLibrary"
+    ];
+
+    archive-immich.notification-title = "Archiver - Freeman Mirror";
+    archive-immich.cron = "*-*-* 3:00:00";
+    archive-immich.source = "/mnt/motorway/var/immich/data";
+    archive-immich.destination = "/mnt/archive/immich";
+    archive-immich.mounts = [
+      "mnt-archive.mount"
+      "mnt-motorway.mount"
+    ];
+    archive-immich.post-mirror-cmds = ''
+      ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/immich
+    '';
+  };
 
 }
