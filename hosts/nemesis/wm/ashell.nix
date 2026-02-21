@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   home-manager.users.face = {
     programs.ashell.enable = true;

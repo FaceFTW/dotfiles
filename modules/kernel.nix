@@ -1,4 +1,8 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 let
   kernel = config.kernel;
   inherit (pkgs.lib) mkIf mkEnableOption;

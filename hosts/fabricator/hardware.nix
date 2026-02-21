@@ -1,4 +1,7 @@
-{ inputs, pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   ############################################
   # Hardware Configuration
