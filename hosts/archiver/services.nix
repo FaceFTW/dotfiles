@@ -103,7 +103,7 @@
   ############################################
   servicesCustom.mirror = {
     archive-freeman.notification-title = "Archiver - Freeman Mirror";
-    archive-freeman.cron = "weekly"; # TODO cronify
+    archive-freeman.cron = "Sun *-*-* 09:00:00";
     archive-freeman.source = "/mnt/archive";
     archive-freeman.destination = "/mnt/freeman";
     archive-freeman.mounts = [
@@ -114,6 +114,22 @@
       "/SteamBackups"
       "/Misc_Large"
       "/SteamLibrary"
+    ];
+
+    archive-kleiner.notification-title = "Archiver - Kleiner Mirror";
+    archive-kleiner.cron = "Sun *-*-* 10:00:00";
+    archive-kleiner.source = "/mnt/archive";
+    archive-kleiner.destination = "/mnt/kleiner";
+    archive-kleiner.mounts = [
+      "mnt-archive.mount"
+      "mnt-freeman.mount"
+    ];
+    archive-kleiner.exclude = [
+      "/SteamBackups"
+      "/Misc_Large"
+      "/SteamLibrary"
+      "/TV Shows"
+      "/Movies"
     ];
 
     archive-immich.notification-title = "Archiver - Freeman Mirror";
