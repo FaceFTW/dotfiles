@@ -25,9 +25,9 @@
   ############################################
   # User Settings
   ############################################
-  defaultUser.password.type = "initialPassword";
-  defaultUser.password.value = "";
-  # defaultUser.password.value = config.sops.secrets.user_passwd.path;
+  defaultUser.password.type = "sops";
+  # defaultUser.password.value = "";
+  defaultUser.password.value = config.sops.secrets.user_passwd.path;
 
   # The following are system users/groups defined for various services
   # Unless they are defined elsewhere, in which here I document it for tracking
@@ -43,9 +43,13 @@
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
   sops.secrets.wifi_secrets = {
+    owner = config.users.users.wpa_supplicant.name;
     group = config.users.users.systemd-network.group;
   };
-  sops.secrets.moonraker_key = { };
+  sops.secrets.moonraker_key = {
+    owner = "klipper";
+    group = "klipper";
+  };
 
   ############################################
   # Services

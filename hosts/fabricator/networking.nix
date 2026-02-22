@@ -8,6 +8,7 @@
     22
     80
     5123
+    5353
     7125
   ];
   networking.wireless.enable = true;
