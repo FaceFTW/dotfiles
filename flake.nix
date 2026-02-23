@@ -167,6 +167,7 @@
         in
         {
           rust = import ./shells/rust.nix { inherit pkgs system; };
+          troubleshoot = import ./shells/troubleshoot.nix { inherit pkgs system; };
         }
       );
     };
