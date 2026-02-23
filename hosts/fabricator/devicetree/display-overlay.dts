@@ -1,133 +1,135 @@
-/*
- * vc4-kms-dsi-ili9881-7inch-overlay.dts
- */
+/* Merged Device Tree Overlay For Raspberry Pi 7"
+* created with ovmerge -p -s -t -T -w vc4-kms-dsi-7inch-overlay.dts
+* Using https://github.com/raspberrypi/linux/commit/b073c38ceaa34d674e778197a327fb17cc4114b0
+*/
 
 /dts-v1/;
 /plugin/;
 
-#include <dt-bindings/gpio/gpio.h>
-
 / {
 	compatible = "brcm,bcm2711";
-
-	i2c_frag: fragment@0 {
-		target = <&i2c_csi_dsi>;
+	dsi_frag: fragment@0 {
+		target = <&dsi1>;
 		__overlay__ {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "okay";
-
-			display_mcu: display_mcu@45
-			{
-				compatible = "raspberrypi,v2-touchscreen-panel-regulator";
-				reg = <0x45>;
-				gpio-controller;
-				#gpio-cells = <2>;
-			};
-
-			gt911: gt911@38 {
-				compatible = "goodix,gt911";
-				reg = <0x38>;
-				AVDD28-supply = <&touch_reg>;
-				touchscreen-size-x = <720>;
-				touchscreen-size-y = <1280>;
-				touchscreen-x-mm = <62>;
-				touchscreen-y-mm = <111>;
-			};
-		};
-	};
-
-	dsi_frag: fragment@1 {
-		target = <&dsi1>;
-		__overlay__  {
-			#address-cells = <1>;
-			#size-cells = <0>;
-			status = "okay";
-
-			port {
-				dsi_out: endpoint {
-					remote-endpoint = <&panel_in>;
-				};
-			};
-
-			dsi_panel: dsi_panel@0 {
+			bridge@0 {
+				compatible = "toshiba,tc358762";
 				reg = <0>;
-				compatible = "raspberrypi,dsi-5inch";
-				reset-gpio = <&display_mcu 0 GPIO_ACTIVE_LOW>;
-				backlight = <&display_mcu>;
-
-				port {
-					panel_in: endpoint {
-						remote-endpoint = <&dsi_out>;
+				vddc-supply = <&reg_bridge>;
+				ports {
+					#address-cells = <1>;
+					#size-cells = <0>;
+					port@0 {
+						reg = <0>;
+						bridge_in: endpoint {
+							remote-endpoint = <&dsi_out>;
+						};
+					};
+					port@1 {
+						reg = <1>;
+						bridge_out: endpoint {
+							remote-endpoint = <&panel_in>;
+						};
 					};
 				};
 			};
+			port {
+				dsi_out: endpoint {
+					remote-endpoint = <&bridge_in>;
+				};
+			};
 		};
 	};
-
-	fragment@2 {
+	fragment@1 {
+		target-path = "/";
+		__overlay__ {
+			panel_disp: panel_disp@1 {
+				backlight = <&reg_display>;
+				compatible = "raspberrypi,7inch-dsi", "simple-panel";
+				power-supply = <&reg_display>;
+				reg = <1>;
+				port {
+					panel_in: endpoint {
+						remote-endpoint = <&bridge_out>;
+					};
+				};
+			};
+			reg_bridge: reg_bridge@1 {
+				compatible = "regulator-fixed";
+				enable-active-high;
+				gpio = <&reg_display 0 0>;
+				reg = <1>;
+				regulator-name = "bridge_reg";
+				vin-supply = <&reg_display>;
+			};
+		};
+	};
+	i2c_frag: fragment@2 {
+		target = <&i2c_csi_dsi>;
+		i2cbus: __overlay__ {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "okay";
+			reg_display: reg_display@45 {
+				#gpio-cells = <2>;
+				compatible = "raspberrypi,7inch-touchscreen-panel-regulator";
+				gpio-controller;
+				reg = <0x45>;
+			};
+		};
+	};
+	fragment@3 {
 		target = <&i2c0if>;
 		__overlay__ {
 			status = "okay";
 		};
 	};
-
-	fragment@3 {
+	fragment@4 {
 		target = <&i2c0mux>;
 		__overlay__ {
 			status = "okay";
 		};
 	};
-
-	fragment@4 {
-		target-path = "/";
+	fragment@5 {
+		target = <&ft5406>;
 		__overlay__ {
-			touch_reg: touch_reg@1 {
-				reg = <1>;
-				compatible = "regulator-fixed";
-				regulator-name = "touch_reg_1";
-				gpio = <&display_mcu 1 GPIO_ACTIVE_HIGH>;
-				startup-delay-us = <50000>;
-				enable-active-high;
+			touchscreen-inverted-x;
+		};
+	};
+	fragment@6 {
+		target = <&ft5406>;
+		__overlay__ {
+			touchscreen-inverted-y;
+		};
+	};
+	fragment@7 {
+		target = <&i2cbus>;
+		__overlay__ {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			ft5406: ts@38 {
+				compatible = "edt,edt-ft5506";
+				reg = <0x38>;
+				reset-gpio = <&reg_display 1 1>;
+				touchscreen-size-x = <800>;
+				touchscreen-size-y = <480>;
+				vcc-supply = <&reg_display>;
 			};
 		};
 	};
-//
-//	fragment@10 {
-//		target = <&gt911>;
-//		__dormant__ {
-//			touchscreen-inverted-x;
-//		};
-//	};
-//
-//	fragment@11 {
-//		target = <&gt911>;
-//		__dormant__ {
-//			touchscreen-inverted-y;
-//		};
-//	};
-//
 	__overrides__ {
-		dsi0 = <&dsi_frag>, "target:0=",<&dsi0>,
-		       <&i2c_frag>, "target:0=",<&i2c_csi_dsi0>,
-		       <&touch_reg>, "reg:0=0",
-		       <&touch_reg>, "regulator-name=touch_reg_0";
-		sizex = <&gt911>,"touchscreen-size-x:0";
-		sizey = <&gt911>,"touchscreen-size-y:0";
-		invx = <0>, "+10";
-		invy = <0>, "+11";
-		swapxy = <&gt911>,"touchscreen-swapped-x-y?";
-		disable_touch = <&gt911>, "status=disabled";
-		rotation = <&dsi_panel>, "rotation:0";
+		disable_touch = <&ft5406>, "status=disabled";
+		dsi0 =  <&dsi_frag>, "target:0=", <&dsi0>,
+				<&i2c_frag>, "target:0=", <&i2c_csi_dsi0>,
+				<&panel_disp>, "reg:0=0",
+				<&reg_bridge>, "reg:0=0",
+				<&reg_bridge>, "regulator-name=bridge_reg_0";
+		invx = <0>, "-5";
+		invy = <0>, "-6";
+		sizex = <&ft5406>, "touchscreen-size-x:0";
+		sizey = <&ft5406>, "touchscreen-size-y:0";
+		swapxy = <&ft5406>, "touchscreen-swapped-x-y?";
 	};
 };
-
-
-// &gt911 {
-// 	touchscreen-x-mm = <62>;
-// 	touchscreen-y-mm = <110>;
-// };
-//
-// &dsi_panel {
-// 	compatible = "raspberrypi,dsi-5inch";
-// };

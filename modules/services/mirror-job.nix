@@ -65,7 +65,7 @@ let
       ...
     }:
     let
-      excludes = concatMapStrings (x: "  --exclude ${x} \\\\n") exclude;
+      excludes = concatMapStrings (x: "--exclude \"${x}\" \\\\n") exclude;
     in
     {
 
@@ -92,7 +92,7 @@ let
             --progress \
             --delete-before \
             ${excludes} \
-            ${source}/ \
+            "${source}/" \
             ${destination}
 
         ${post-mirror-cmds}
