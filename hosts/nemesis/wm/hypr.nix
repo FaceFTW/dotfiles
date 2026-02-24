@@ -127,12 +127,12 @@ in
       active_opacity = 1.0;
       inactive_opacity = 0.9;
 
-      shadow.enabled = true;
+      shadow.enabled = false;
       shadow.range = 5;
       shadow.render_power = 3;
       shadow.color = " rgba(1a1a1aee)";
 
-      blur.enabled = true;
+      blur.enabled = false;
       blur.size = 3;
       blur.passes = 3;
       blur.xray = true;
