@@ -194,23 +194,31 @@
   services.xserver.enable = true;
   services.xserver.xkb.layout = "us";
   services.libinput.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "face";
+  # services.xserver.displayManager.lightdm.enable = true;
+  # services.displayManager.autoLogin.enable = true;
+  # services.displayManager.autoLogin.user = "face";
 
-  services.xserver.windowManager.openbox.enable = true;
-  services.displayManager.defaultSession = "none+openbox";
+  # services.xserver.windowManager.openbox.enable = true;
+  # services.displayManager.defaultSession = "none+openbox";
 
-  environment.etc."openbox/autostart".source = pkgs.writers.writeBash "autostart" ''
-        #!${pkgs.bash}/bin/bash
-        ${pkgs.klipperscreen}/bin/KlipperScreen &
-    	# I don't like this :(
-    	sleep 10;
-        export DISPLAY=:0
-        export XAUTHORITY=/home/face/.Xauthority
-        ${pkgs.wmctrl}/bin/wmctrl -r KlipperScreen -b toggle,fullscreen &
-    	${pkgs.xorg.xset}/bin/xset -dpms &
-        ${pkgs.xorg.xset}/bin/xset s off &
-        ${pkgs.xorg.xset}/bin/xset s noblank &
+  # environment.etc."openbox/autostart".source = pkgs.writers.writeBash "autostart" ''
+  #       #!${pkgs.bash}/bin/bash
+  #       ${pkgs.klipperscreen}/bin/KlipperScreen &
+  #   	# I don't like this :(
+  #   	sleep 10;
+  #       export DISPLAY=:0
+  #       export XAUTHORITY=/home/face/.Xauthority
+  #       ${pkgs.wmctrl}/bin/wmctrl -r KlipperScreen -b toggle,fullscreen &
+  #   	${pkgs.xorg.xset}/bin/xset -dpms &
+  #       ${pkgs.xorg.xset}/bin/xset s off &
+  #       ${pkgs.xorg.xset}/bin/xset s noblank &
+  # '';
+
+  services.cage.enable = true;
+  # services.cage.environment.WLR_RENDER_DRM_DEVICE="/dev/dri/";
+  services.cage.program = pkgs.writeShellScript "cage-program" ''
+    cd /home/face
+    "${pkgs.klipperscreen}/bin/KlipperScreen"
   '';
+  services.cage.user = "face";
 }

@@ -1,5 +1,6 @@
 /*
  * vc4-kms-v3d-pi4-overlay.dts
+ * Disabled HDMI since we use DSI connector for display
  */
 
 /dts-v1/;
@@ -20,28 +21,28 @@
 	fragment@1 {
 		target = <&ddc0>;
 		__overlay__  {
-			status = "okay";
+			status = "disabled";
 		};
 	};
 
 	fragment@2 {
 		target = <&ddc1>;
 		__overlay__  {
-			status = "okay";
+			status = "disabled";
 		};
 	};
 
 	fragment@3 {
 		target = <&hdmi0>;
 		__overlay__  {
-			status = "okay";
+			status = "disabled";
 		};
 	};
 
 	fragment@4 {
 		target = <&hdmi1>;
 		__overlay__  {
-			status = "okay";
+			status = "disabled";
 		};
 	};
 
@@ -69,7 +70,7 @@
 	fragment@8 {
 		target = <&pixelvalve2>;
 		__overlay__  {
-			status = "okay";
+			status = "disable";
 		};
 	};
 
@@ -83,7 +84,7 @@
 	fragment@10 {
 		target = <&pixelvalve4>;
 		__overlay__  {
-			status = "okay";
+			status = "disable";
 		};
 	};
 
@@ -111,7 +112,7 @@
 	fragment@14 {
 		target = <&fb>;
 		__overlay__  {
-			status = "disabled";
+			status = "okay";
 		};
 	};
 

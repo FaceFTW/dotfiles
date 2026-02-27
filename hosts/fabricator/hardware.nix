@@ -29,37 +29,38 @@
     "fsck.repair=yes"
     "rootwait"
     "cfg80211.ieee80211_regdom=US"
+    "kunit.enable=0"
   ];
 
   hardware.bluetooth.enable = false;
 
-  hardware.raspberry-pi."4".i2c0.enable = true;
-  hardware.raspberry-pi."4".i2c1.enable = true;
-  # hardware.raspberry-pi."4".fkms-3d.enable = true;
+  #   hardware.raspberry-pi."4".i2c0.enable = true;
+  #   hardware.raspberry-pi."4".i2c1.enable = true;
+    hardware.raspberry-pi."4".fkms-3d.enable = true;
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
   hardware.deviceTree.enable = true;
   hardware.deviceTree.filter = "bcm2711-rpi-4*.dtb";
   hardware.deviceTree.overlays = [
-    # {
-    #   name = "disable-bt";
-    #   dtsFile = ./devicetree/disable-bt-overlay.dts;
-    # }
-    # {
-    #   name = "spi";
-    #   dtsFile = ./devicetree/spi0-0cs-overlay.dts;
-    # }
-    # {
-    #   name = "imx708";
-    #   dtsFile = ./devicetree/imx708-overlay.dts;
-    # }
+    {
+      name = "disable-bt";
+      dtsFile = ./devicetree/disable-bt-overlay.dts;
+    }
+    {
+      name = "spi";
+      dtsFile = ./devicetree/spi0-0cs-overlay.dts;
+    }
+    {
+      name = "imx708";
+      dtsFile = ./devicetree/imx708-overlay.dts;
+    }
     {
       name = "display";
       dtsFile = ./devicetree/display-overlay.dts;
     }
-    {
-      name = "kms";
-      dtsFile = ./devicetree/kms-overlay.dts;
-    }
+    # {
+    #   name = "kms";
+    #   dtsFile = ./devicetree/kms-overlay.dts;
+    # }
     # {
     #   name = "ov5647";
     #   dtsFile = ./devicetree/ov5647-overlay.dts;
@@ -71,12 +72,31 @@
   ############################################
   services.udev.enable = true;
   services.udev.extraRules = ''
-    SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{name}=="ADS7846*", SYMLINK+="input/touchscreen"
+    # SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{name}=="ADS7846*", SYMLINK+="input/touchscreen"
+
     SUBSYSTEM=="video4linux", KERNEL=="video[01]", GROUP="camera", MODE="660"
+
     # https://raspberrypi.stackexchange.com/a/141107
     SUBSYSTEM=="dma_heap", GROUP="video", MODE="0660"
+
     # If I ever want to enable SPI
     # SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
+
+    # Makes video device visible to cage
+    ACTION=="add", SUBSYSTEM=="drm", KERNEL=="card2", TAG+="systemd"
   '';
 
+  services.xserver.videoDrivers = [
+    "modesetting" # Prefer the modesetting driver in X11
+    # "fbdev" # Fallback to fbdev
+  ];
+
+  environment.etc."xorg.conf.d/99-v3d.conf".text = ''
+    Section "OutputClass"
+      Identifier "vc4"
+      MatchDriver "vc4"
+      Driver "modesetting"
+      Option "PrimaryGPU" "true"
+    EndSection
+  '';
 }
