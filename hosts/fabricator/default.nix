@@ -31,7 +31,6 @@
 
   # The following are system users/groups defined for various services
   # Unless they are defined elsewhere, in which here I document it for tracking
-  #
   users.groups.camera = { }; # For accessing the camera via udev
   users.groups.wifi = { }; # For ensuring wpa_supplicant can access the secrets reasonably
   # users.users.klipper = {}; # Klipper system user for Klipper/Moonraker/Nginx
@@ -61,10 +60,6 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
   ];
 
-  services.speechd.enable = false;
-  services.printing.enable = false;
-  # services.getty.autologinUser = "face";
-
   ############################################
   # Misc System Configuration
   ############################################
@@ -88,7 +83,6 @@
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom
-    firefox
   ];
 
   system.stateVersion = "25.05"; # Don't change this

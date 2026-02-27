@@ -11,17 +11,17 @@
     5353
     7125
   ];
-  networking.wireless.enable = true;
-  networking.wireless.interfaces = [ "wlan0" ];
-  networking.wireless.secretsFile = config.sops.secrets.wifi_secrets.path;
-  networking.wireless.networks."Orbi89".pskRaw = "ext:home-psk";
+
+  networking.wireless = {
+    enable = true;
+    interfaces = [ "wlan0" ];
+    secretsFile = config.sops.secrets.wifi_secrets.path;
+    networks."Orbi89".pskRaw = "ext:home-psk";
+  };
+
   networking.useDHCP = false;
 
   services.resolved.enable = true;
-  # services.resolved.extraConfig = ''
-  #   MulticastDNS=yes
-  # '';
-  # services.resolved.llmnr = "resolve";
   services.resolved.settings.Resolve.LLMNR = true;
 
   systemd.network.enable = true;

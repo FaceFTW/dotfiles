@@ -27,11 +27,14 @@
 
   hardware.bluetooth.enable = false;
 
-  hardware.raspberry-pi."4".i2c0.enable = true;
-  hardware.raspberry-pi."4".i2c1.enable = true;
-  hardware.raspberry-pi."4".fkms-3d.enable = true;
-  hardware.raspberry-pi."4".touch-ft5406.enable = true;
-  hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
+  hardware.raspberry-pi."4" = {
+    i2c0.enable = true;
+    i2c1.enable = true;
+    fkms-3d.enable = true;
+    touch-ft5406.enable = true;
+    apply-overlays-dtmerge.enable = true;
+  };
+
   hardware.deviceTree.enable = true;
   hardware.deviceTree.filter = "bcm2711-rpi-4*.dtb";
   hardware.deviceTree.overlays = [

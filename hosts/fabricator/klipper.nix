@@ -11,14 +11,15 @@
     pkgs.klipperscreen
   ];
 
-  services.klipper.enable = true;
-  services.klipper.user = "klipper";
-  services.klipper.group = "klipper";
-  services.klipper.firmwares.fabricator.enable = true;
-  services.klipper.firmwares.fabricator.configFile = ./klipper/Kconfig;
-  services.klipper.firmwares.fabricator.serial =
-    /dev/serial/by-id/usb-Klipper_stm32g0b0xx_36004C0001504E5238363120-if00;
-  services.klipper.configFile = ./klipper/printer.cfg;
+  services.klipper = {
+    enable = true;
+    user = "klipper";
+    group = "klipper";
+    firmwares.fabricator.enable = true;
+    firmwares.fabricator.configFile = ./klipper/Kconfig;
+    firmwares.fabricator.serial = /dev/serial/by-id/usb-Klipper_stm32g0b0xx_36004C0001504E5238363120-if00;
+    configFile = ./klipper/printer.cfg;
+  };
 
   ############################################
   # Moonraker Config
@@ -197,5 +198,6 @@
     cd /home/face
     "${pkgs.klipperscreen}/bin/KlipperScreen"
   '';
+  services.cage.extraArguments = [ "-d" ];
   services.cage.user = "face";
 }
