@@ -42,46 +42,48 @@
   services.samba.openFirewall = true;
   services.samba-wsdd.enable = true;
   services.samba-wsdd.openFirewall = true;
-  services.samba.settings.global."log level" = "3";
-  services.samba.settings.global."syslog" = "3";
-  services.samba.settings.global."workgroup" = "WORKGROUP";
-  services.samba.settings.global."server string" = "archiver";
-  services.samba.settings.global."netbios name" = "archiver";
-  services.samba.settings.global."passdb backend" = "smbpasswd";
-  services.samba.settings.global."smb passwd file" = "/etc/samba/smbpasswd";
-  services.samba.settings.global."server role" = "standalone server";
-  # services.samba.settings.global."server min protocol" = "SMB3_11";   # Broken somehow
-  services.samba.settings.global."server smb encrypt" = "required";
-  services.samba.settings.global."server signing" = "mandatory";
-  services.samba.settings.global."winbind nss info" = "rfc2307";
-  services.samba.settings.global."security" = "user";
-  services.samba.settings.global."hosts allow" = "192.168.0. 127.0.0.1 localhost";
-  services.samba.settings.global."hosts deny" = "0.0.0.0/0";
-  services.samba.settings.global."map to guest" = "bad user";
-  services.samba.settings.global."deadtime" = "5";
-  services.samba.settings.global."acl allow execute always" = "yes";
+  services.samba.settings = {
+    global."log level" = "3";
+    global."syslog" = "3";
+    global."workgroup" = "WORKGROUP";
+    global."server string" = "archiver";
+    global."netbios name" = "archiver";
+    global."passdb backend" = "smbpasswd";
+    global."smb passwd file" = "/etc/samba/smbpasswd";
+    global."server role" = "standalone server";
+    # services.samba.settings.global."server min protocol" = "SMB3_11";   # Broken somehow
+    global."server smb encrypt" = "required";
+    global."server signing" = "mandatory";
+    global."winbind nss info" = "rfc2307";
+    global."security" = "user";
+    global."hosts allow" = "192.168.0. 127.0.0.1 localhost";
+    global."hosts deny" = "0.0.0.0/0";
+    global."map to guest" = "bad user";
+    global."deadtime" = "5";
+    global."acl allow execute always" = "yes";
 
-  # Disable samba printing because of course that is a thing
-  services.samba.settings.global."printing" = "bsd";
-  services.samba.settings.global."printcap name" = "/dev/null";
-  services.samba.settings.global."load printers" = "no";
-  services.samba.settings.global."disable spoolss" = "yes";
+    # Disable samba printing because of course that is a thing
+    global."printing" = "bsd";
+    global."printcap name" = "/dev/null";
+    global."load printers" = "no";
+    global."disable spoolss" = "yes";
 
-  # Motorway Share
-  services.samba.settings.motorway."path" = "/export/motorway";
-  services.samba.settings.motorway."browseable" = "yes";
-  services.samba.settings.motorway."writable" = "yes";
-  services.samba.settings.motorway."create mask" = "0777";
-  services.samba.settings.motorway."directory mask" = "0755";
-  services.samba.settings.motorway."force user" = "face";
-  services.samba.settings.motorway."force group" = "users";
+    # Motorway Share
+    motorway."path" = "/export/motorway";
+    motorway."browseable" = "yes";
+    motorway."writable" = "yes";
+    motorway."create mask" = "0777";
+    motorway."directory mask" = "0755";
+    motorway."force user" = "face";
+    motorway."force group" = "users";
 
-  # Archive Share
-  services.samba.settings.archive."path" = "/export/archive";
-  services.samba.settings.archive."browseable" = "yes";
-  services.samba.settings.archive."writable" = "yes";
-  services.samba.settings.archive."create mask" = "0777";
-  services.samba.settings.archive."directory mask" = "0755";
-  services.samba.settings.archive."force user" = "face";
-  services.samba.settings.archive."force group" = "users";
+    # Archive Share
+    archive."path" = "/export/archive";
+    archive."browseable" = "yes";
+    archive."writable" = "yes";
+    archive."create mask" = "0777";
+    archive."directory mask" = "0755";
+    archive."force user" = "face";
+    archive."force group" = "users";
+  };
 }

@@ -91,17 +91,23 @@
   ############################################
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.secrets.user_passwd.neededForUsers = true;
-  sops.secrets.pushover_api_key = { };
-  sops.secrets.pushover_user_key = { };
-  sops.secrets.immich_secrets.owner = "immich";
-  sops.secrets.immich_secrets.group = "immich";
-  sops.secrets."syncthing/cert.pem".key = "syncthing_cert_pem";
-  sops.secrets."syncthing/key.pem".key = "syncthing_key_pem";
-  sops.secrets.linkwarden_nextauth_secret.owner = "linkwarden";
-  sops.secrets.linkwarden_nextauth_secret.group = "linkwarden";
-  sops.secrets.linkwarden_postgres_password.owner = "linkwarden";
-  sops.secrets.linkwarden_postgres_password.group = "linkwarden";
+  sops.secrets = {
+    user_passwd.neededForUsers = true;
+
+    pushover_api_key = { };
+    pushover_user_key = { };
+
+    immich_secrets.owner = "immich";
+    immich_secrets.group = "immich";
+
+    "syncthing/cert.pem".key = "syncthing_cert_pem";
+    "syncthing/key.pem".key = "syncthing_key_pem";
+
+    linkwarden_nextauth_secret.owner = "linkwarden";
+    linkwarden_nextauth_secret.group = "linkwarden";
+    linkwarden_postgres_password.owner = "linkwarden";
+    linkwarden_postgres_password.group = "linkwarden";
+  };
 
   ############################################
   # Misc System Configuration

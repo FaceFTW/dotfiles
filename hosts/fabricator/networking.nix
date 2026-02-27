@@ -8,9 +8,12 @@
     22
     80
     5123
-    5353
     7125
   ];
+  networking.firewall.allowedUDPPorts = [
+    5353 # mDNS
+  ];
+  networking.firewall.allowPing = true;
 
   networking.wireless = {
     enable = true;
