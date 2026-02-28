@@ -18,7 +18,6 @@
     ./disks.nix
     ./hardware.nix
     ./networking.nix
-    ./nginx.nix
     ./services.nix
   ];
 

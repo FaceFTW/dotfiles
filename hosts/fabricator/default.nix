@@ -15,9 +15,9 @@
     ../../modules/services
     ../../modules/user.nix
     ./hardware.nix
-    ./klipper.nix
     ./image.nix
     ./networking.nix
+    ./services.nix
   ];
 
   nixpkgs.hostPlatform = "aarch64-linux";

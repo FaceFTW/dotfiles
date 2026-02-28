@@ -106,86 +106,42 @@
     enable = true;
     user = "klipper";
     group = "klipper";
-    # modules = [ pkgs.nginxModules.lua ];
-    # Manual config because I need to do some _wacky shit_
-    config = ''
-      error_log stderr;
-      events { }
-      http {
-          # Load mime types and configure maximum size of the types hash tables.
-          include ${pkgs.nginx}/conf/mime.types;
-          types_hash_max_size 2688;
-          default_type application/octet-stream;
-          ssl_protocols TLSv1.2 TLSv1.3;
-          ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305;
-          # $connection_upgrade is used for websocket proxying
-          map $http_upgrade $connection_upgrade {
-              default upgrade;
-              '''      close;
-          }
-          client_max_body_size 10m;
-          server_tokens off;
 
-          upstream mainsail-apiserver {
-              server 127.0.0.1:7125 ;
-          }
-          upstream webcam-server {
-              server 127.0.0.1:5123 ;
-          }
-
-          server {
-              listen 0.0.0.0:80 ;
-              listen [::0]:80 ;
-              root ${pkgs.mainsail}/share/mainsail;
-              index index.html;
-              server_name fabricator;
-              location / {
-                  try_files $uri $uri/ /index.html;
-              }
-              location /index.html {
-                  add_header Cache-Control "no-store, no-cache, must-revalidate";
-              }
-              location /websocket {
-                  proxy_pass http://mainsail-apiserver/websocket;
-                  proxy_http_version 1.1;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection $connection_upgrade;
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_read_timeout 86400;
-              }
-              location ~ ^/(printer|api|access|machine|server)/ {
-                  proxy_pass http://mainsail-apiserver$request_uri;
-                  proxy_http_version 1.1;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection $connection_upgrade;
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              }
-              location ~ ^/(webcam)/ {
-                  proxy_pass http://webcam-server$request_uri;
-                  proxy_http_version 1.1;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection $connection_upgrade;
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              }
-          }
-      }
+    httpConfig = ''
+      client_max_body_size 10m;
     '';
-  };
 
-  services.logrotate.settings.nginx = {
-    files = [ "/var/log/nginx/*.log" ];
-    frequency = "weekly";
-    su = "klipper klipper";
-    rotate = 26;
-    compress = true;
-    delaycompress = true;
-    postrotate = "[ ! -f /var/run/nginx/nginx.pid ] || kill -USR1 `cat /var/run/nginx/nginx.pid`";
+    upstreams.mainsail-apiserver.servers."localhost:7125" = { };
+    upstreams.webcam-server.servers."localhost:5123" = { };
+
+    virtualHosts.ingress = {
+      serverName = "fabricator";
+      listenAddresses = [
+        "0.0.0.0"
+        "[::0]"
+      ];
+      extraConfig = "client_max_body_size 1g;";
+
+	  root = "${pkgs.mainsail}/share/mainsail";
+
+      locations."/".tryFiles = "$uri $uri/ /index.html";
+
+      locations."/index.html".extraConfig =
+        "add_header Cache-Control \"no-store, no-cache, must-revalidate\"";
+
+      locations."/websocket".proxyPass = "http://mainsail-apiserver/websocket";
+      locations."/websocket".recommendedProxySettings = true;
+      locations."/websocket".proxyWebsockets = true;
+
+      locations."~ ^/(webcam)".proxyPass = "http://webcam-server$request_uri";
+      locations."~ ^/(webcam)".recommendedProxySettings = true;
+      locations."~ ^/(webcam)".proxyWebsockets = true;
+
+      locations."~ ^/(printer|api|access|machine|server)/".proxyPass =
+        "http://mainsail-apiserver$request_uri";
+      locations."~ ^/(printer|api|access|machine|server)/".recommendedProxySettings = true;
+      locations."~ ^/(printer|api|access|machine|server)/".proxyWebsockets = true;
+    };
   };
 
   ############################################
