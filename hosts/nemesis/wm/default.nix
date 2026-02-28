@@ -23,7 +23,7 @@
     "Ubuntu Mono"
   ];
 
-  # This replace SDDM configuration
+  # This replaces SDDM configuration
   services.displayManager.defaultSession = "hyprland";
   programs.silentSDDM = {
     enable = true;
@@ -64,12 +64,14 @@
     home.pointerCursor.name = "rose-pine-hyprcursor";
     home.pointerCursor.
 
-    gtk.enable = true;
-    gtk.colorScheme = "dark";
-    gtk.theme.name = "Fluent-round-Dark-compact";
-    gtk.theme.package = pkgs.fluent-gtk-theme;
-    gtk.iconTheme.package = pkgs.fluent-icon-theme;
-    gtk.iconTheme.name = "Fluent-dark";
+    gtk = {
+      enable = true;
+      colorScheme = "dark";
+      theme.name = "Fluent-round-Dark-compact";
+      theme.package = pkgs.fluent-gtk-theme;
+      iconTheme.package = pkgs.fluent-icon-theme;
+      iconTheme.name = "Fluent-dark";
+    };
 
     xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.kvconfig".source = ./assets/Fluent-Dark.kvconfig;
     xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.svg".source = ./assets/Fluent-round-solidDark.svg;
@@ -82,13 +84,14 @@
     xdg.terminal-exec.settings.default = [ "alacritty.desktop" ];
 
     services.flameshot.enable = true;
-    services.flameshot.settings.General.disabledGrimWarning = true;
-    services.flameshot.settings.General.useGrimAdapter = true;
-    services.flameshot.settings.General.disabledTrayIcon = true;
-    services.flameshot.settings.General.uiColor = "#3686bd";
-    services.flameshot.settings.General.contrastColor = "#2060a0";
-    services.flameshot.settings.General.checkForUpdates = false;
-
+    services.flameshot.settings = {
+      General.disabledGrimWarning = true;
+      General.useGrimAdapter = true;
+      General.disabledTrayIcon = true;
+      General.uiColor = "#3686bd";
+      General.contrastColor = "#2060a0";
+      General.checkForUpdates = false;
+    };
   };
 
 }

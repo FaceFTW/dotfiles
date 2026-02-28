@@ -3,7 +3,7 @@
   networking.hostName = "nemesis";
   networking.networkmanager.enable = true;
 
-  networking.firewall.allowedTCPPorts = [
+  networking.firewall.allowedUDPPorts = [
     5353 # mDNS
   ];
 

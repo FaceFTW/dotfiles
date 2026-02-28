@@ -45,26 +45,6 @@ in
     # Patching Steam/Games for NVIDIA Optimus
     ############################################
     (mkIf packages.steam-nvidia-prime {
-      # programs.steam.package = pkgs.steam.overrideAttrs (
-      #   final: prev: {
-      #     postInstall = ''
-      #       rm $out/bin/steamdeps
-
-      #       # install udev rules
-      #       mkdir -p $out/etc/udev/rules.d/
-      #       cp ./subprojects/steam-devices/*.rules $out/etc/udev/rules.d/
-      #       substituteInPlace $out/etc/udev/rules.d/60-steam-input.rules \
-      #         --replace-fail "/bin/sh" "${pkgs.bash}/bin/bash"
-
-      #       # this just installs a link, "steam.desktop -> /lib/steam/steam.desktop"
-      #       rm $out/share/applications/steam.desktop
-      #       substitute steam.desktop $out/share/applications/steam.desktop \
-      #         --replace-fail /usr/bin/steam steam \
-      #         --replace-fail "Exec=" "Exec=${pkgs.nvidia-offload}/bin/nvidia-offload "
-      #     '';
-      #   }
-      # );
-
       environment.systemPackages = [
         (GPUOffloadApp pkgs.steam "steam")
       ];
@@ -83,21 +63,21 @@ in
       # Monitor this path to ensure that .desktop files calling steam also do nvidia prime thing
       # This is because steam-generated shortcuts are not really manageable in nix-store
 
-      systemd.user.paths."fix-steam-desktop-entries" = {
-        pathConfig.PathChanged = "%h/.local/share/applications";
-        # pathConfig.Unit = "fix-steam-desktop-entries";
-        wantedBy = [ "default.target" ];
-      };
+      # systemd.user.paths."fix-steam-desktop-entries" = {
+      #   pathConfig.PathChanged = "%h/.local/share/applications";
+      #   # pathConfig.Unit = "fix-steam-desktop-entries";
+      #   wantedBy = [ "default.target" ];
+      # };
 
-      systemd.user.services.fix-steam-desktop-entries = {
-        script = ''
-          cd ~/.local/share/applications
-          IFS=
-          for file in $(${pkgs.coreutils}/bin/grep -l steam://rungameid *.desktop); do
-            ${pkgs.gnused}/bin/sed 's#^Exec=#Exec=nvidia-offload #g' < "$file" > "$file"
-          done
-        '';
-      };
+      # systemd.user.services.fix-steam-desktop-entries = {
+      #   script = ''
+      #     cd ~/.local/share/applications
+      #     IFS=
+      #     for file in $(${pkgs.coreutils}/bin/grep -l steam://rungameid *.desktop); do
+      #       ${pkgs.gnused}/bin/sed 's#^Exec=#Exec=nvidia-offload #g' < "$file" > "$file"
+      #     done
+      #   '';
+      # };
 
     })
   ];

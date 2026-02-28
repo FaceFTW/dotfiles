@@ -6,7 +6,7 @@ final: prev: with prev; {
     (vim-full.override {
       features = "normal";
       guiSupport = false;
-      waylandSupport = false;
+      waylandSupport = true;
       luaSupport = false;
       pythonSupport = false;
       rubySupport = false;

@@ -14,43 +14,49 @@ in
   zsh.enable = true;
   zsh.dotDir = "${config.home-manager.users.face.xdg.configHome}/zsh"; # Using default XDG Home config
 
-  zsh.shellAliases.la = "ls -a";
-  zsh.shellAliases.ll = "ls -al";
-  zsh.shellAliases.clear = "reset; sh-toy";
-  zsh.shellAliases.search = "rg -p --glob '!node_modules/*'  $@";
-  zsh.shellAliases.zshconfig = "vim ~/.zshrc";
-  zsh.shellAliases.doafunny = "sh-toy";
-  zsh.shellAliases.clearmemcache = "echo 3 | sudo tee /proc/sys/vm/drop_caches";
+  zsh.shellAliases = {
+    la = "ls -a";
+    ll = "ls -al";
+    clear = "reset; sh-toy";
+    search = "rg -p --glob '!node_modules/*'  $@";
+    zshconfig = "vim ~/.zshrc";
+    doafunny = "sh-toy";
+    clearmemcache = "echo 3 | sudo tee /proc/sys/vm/drop_caches";
 
-  # systemctl aliases
-  zsh.shellAliases.system-units = "sudo systemctl list-units";
-  zsh.shellAliases.user-units = "sudo systemctl --user list-units";
-  zsh.shellAliases.service-status = "sudo systemctl status";
-  zsh.shellAliases.user-service-status = "systemctl --user status";
+    # systemctl aliases
+    system-units = "sudo systemctl list-units";
+    user-units = "sudo systemctl --user list-units";
+    service-status = "sudo systemctl status";
+    user-service-status = "systemctl --user status";
+    syslog = "sudo journalctl";
 
-  # Other nice aliases
-  zsh.shellAliases.battery-info = "watch upower -i /org/freedesktop/UPower/devices/battery_BAT1";
+    # Other nice aliases
+    battery-info = "watch upower -i /org/freedesktop/UPower/devices/battery_BAT1";
 
-  # Nix Specific Aliases
-  zsh.shellAliases.clean-nix = "sudo nix-collect-garbage -d";
-  zsh.shellAliases.nix-generations = "nixos-rebuild list-generations";
-  zsh.shellAliases.rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
-  zsh.shellAliases.build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
+    # Nix Specific Aliases
+    clean-nix = "sudo nix-collect-garbage -d";
+    nix-generations = "nixos-rebuild list-generations";
+    rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
+    build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
+  };
 
-  zsh.history.append = true;
-  zsh.history.ignoreAllDups = true;
-  zsh.history.ignorePatterns = [
-    "cd *"
-    "ls*"
-    "pwd"
-    "git add \."
-    "git commit *"
-  ];
-  zsh.history.share = true;
-  zsh.history.saveNoDups = true;
+  zsh.history = {
+    append = true;
+    share = true;
+    saveNoDups = true;
+    ignoreAllDups = true;
+    ignorePatterns = [
+      "cd *"
+      "ls*"
+      "pwd"
+      "git add \."
+      "git commit *"
+    ];
+  };
   zsh.historySubstringSearch.enable = true;
 
   zsh.oh-my-zsh.enable = true;
+  zsh.oh-my-zsh.extraConfig = "zstyle ':omz:update' mode disabled";
   zsh.oh-my-zsh.plugins = [
     "z"
     "colorize"
@@ -58,9 +64,6 @@ in
     "cp"
     "vscode"
   ];
-  zsh.oh-my-zsh.extraConfig = ''
-    zstyle ':omz:update' mode disabled
-  '';
 
   zsh.initContent =
     let
@@ -164,14 +167,16 @@ in
   ############################################
   git.enable = true;
   git.lfs.enable = true;
-  git.settings.user.name = "Alex Westerman";
-  git.settings.user.email = "alex@faceftw.dev";
-  git.settings.init.defaultBranch = "main";
-  git.settings.core.editor = "vim";
-  git.settings.core.autocrlf = "input";
-  git.settings.commit.gpgsign = true;
-  git.settings.pull.rebase = true;
-  git.settings.rebase.autoStash = true;
+  git.settings = {
+    user.name = "Alex Westerman";
+    user.email = "alex@faceftw.dev";
+    init.defaultBranch = "main";
+    core.editor = "vim";
+    core.autocrlf = "input";
+    commit.gpgsign = true;
+    pull.rebase = true;
+    rebase.autoStash = true;
+  };
   git.signing.key = "CB9CCE0E558306B21891063A9EB573C02E056DA8";
   git.signing.signer = "${pkgs.gnupg}/bin/gpg --default-key 2e056da8";
   git.ignores = [
