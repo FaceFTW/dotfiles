@@ -78,6 +78,7 @@
   packages.steam = true;
   packages.steam-nvidia-prime = true;
   packages.vscode.enable = true;
+  packages.virtualization.armVirtualization = true;
 
   services.flatpak.enable = true;
   # packages.zed.enable = true;
@@ -102,7 +103,6 @@
     pkgs.imhex
     pkgs.bottles
     pkgs.flameshot
-
 
     # For Tumbler
     pkgs.ffmpegthumbnailer

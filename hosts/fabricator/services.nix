@@ -73,7 +73,7 @@
   # Webcam Daemon
   ############################################
   systemd.services.webcamd = {
-    enable = false;
+    enable = true;
     description = "Webcam Stream Daemon";
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
