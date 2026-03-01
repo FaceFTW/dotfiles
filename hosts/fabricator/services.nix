@@ -107,27 +107,32 @@
     user = "klipper";
     group = "klipper";
 
-    httpConfig = ''
-      client_max_body_size 10m;
-    '';
-
-    upstreams.mainsail-apiserver.servers."localhost:7125" = { };
-    upstreams.webcam-server.servers."localhost:5123" = { };
+    upstreams.mainsail-apiserver.servers."127.0.0.1:7125" = { };
+    upstreams.webcam-server.servers."127.0.0.1:5123" = { };
 
     virtualHosts.ingress = {
       serverName = "fabricator";
-      listenAddresses = [
-        "0.0.0.0"
-        "[::0]"
+      listen = [
+        {
+          addr = "0.0.0.0";
+          port = 80;
+        }
+        {
+          addr = "[::0]";
+          port = 80;
+        }
       ];
-      extraConfig = "client_max_body_size 1g;";
+      extraConfig = ''
+        index index.html;
+        client_max_body_size 1g;
+      '';
 
-	  root = "${pkgs.mainsail}/share/mainsail";
+      root = "${pkgs.mainsail}/share/mainsail";
 
       locations."/".tryFiles = "$uri $uri/ /index.html";
 
       locations."/index.html".extraConfig =
-        "add_header Cache-Control \"no-store, no-cache, must-revalidate\"";
+        "add_header Cache-Control \"no-store, no-cache, must-revalidate\";";
 
       locations."/websocket".proxyPass = "http://mainsail-apiserver/websocket";
       locations."/websocket".recommendedProxySettings = true;
