@@ -36,7 +36,10 @@
       root.content.extraArgs = [ "-f" ];
       root.content.mountpoint = "/";
       root.content.subvolumes = {
-        "/".mountpoint = "/";
+        "/" = {
+          mountOptions = [ "compress=zstd" ];
+          mountpoint = "/";
+        };
 
         "/home" = {
           mountOptions = [ "compress=zstd" ];
