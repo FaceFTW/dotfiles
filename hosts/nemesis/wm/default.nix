@@ -62,7 +62,6 @@
     home.pointerCursor.package =
       inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default;
     home.pointerCursor.name = "rose-pine-hyprcursor";
-    home.pointerCursor.
 
     gtk = {
       enable = true;

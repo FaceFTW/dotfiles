@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  inputs,
   ...
 }:
 let
@@ -14,8 +13,6 @@ let
   ];
 in
 {
-  imports = [ inputs.hyprland.nixosModules.default ];
-
   programs.hyprland.enable = true;
   programs.hyprland.package = pkgs.hyprland;
   programs.hyprland.portalPackage = pkgs.xdg-desktop-portal-hyprland;

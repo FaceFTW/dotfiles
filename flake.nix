@@ -27,17 +27,13 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hyprland Ecosystem
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
-    hyprland-plugins.inputs.hyprland.follows = "hyprland";
-    hyprpaper.url = "github:hyprwm/hyprpaper";
-    hyprlock.url = "github:hyprwm/hyprlock";
+    hyprnix.url = "github:FaceFTW/hyprnix/FaceFTW-patch-1";
+    hyprnix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hyprcursor
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
     rose-pine-hyprcursor.inputs.nixpkgs.follows = "nixpkgs";
-    rose-pine-hyprcursor.inputs.hyprlang.follows = "hyprland/hyprlang";
+    rose-pine-hyprcursor.inputs.hyprlang.follows = "hyprnix/hyprlang";
 
     # Silent SDDM Theme
     silentSDDM.url = "github:uiriansan/SilentSDDM";
@@ -82,14 +78,11 @@
           nixpkgs.overlays = [
             inputs.fenix.overlays.default
             inputs.vicinae.overlays.default
-            inputs.hyprland.overlays.default
-            inputs.hyprland-plugins.overlays.default
-            inputs.hyprpaper.overlays.default
-            inputs.hyprlock.overlays.default
             inputs.nix4vscode.overlays.default
             (final: prev: {
               ashell = inputs.ashell.packages.${prev.stdenv.hostPlatform.system}.default;
             })
+            inputs.hyprnix.overlays.default
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);
