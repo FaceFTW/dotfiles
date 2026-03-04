@@ -79,6 +79,20 @@
   };
 
   ############################################
+  # Backrest
+  ############################################
+  systemUser.backrest.home = "/mnt/motorway/var/backrest";
+
+  servicesCustom.backrest = {
+    enable = true;
+    configPath = "/mnt/motorway/var/backrest/config.json";
+    dataDir = "/mnt/motorway/var/backrest/data";
+    cacheDir = "/mnt/motorway/var/backrest/cache";
+    user = "backrest";
+    group = "backrest";
+  };
+
+  ############################################
   # Linkwarden
   ############################################
   systemUser.linkwarden.home = "/mnt/motorway/var/linkwarden";
@@ -114,6 +128,7 @@
     upstreams.immich.servers."localhost:2283" = { };
     upstreams.syncthing-gui.servers."localhost:8384" = { };
     upstreams.linkwarden.servers."localhost:3015" = { };
+    upstreams.backrest.servers."127.0.0.1:9898" = { };
 
     virtualHosts.immich = {
       serverName = "archiver";
@@ -172,6 +187,24 @@
       ];
 
       locations."/".proxyPass = "http://linkwarden";
+      locations."/".recommendedProxySettings = true;
+      locations."/".proxyWebsockets = true;
+    };
+
+    virtualHosts.backrest = {
+      serverName = "archiver";
+      listen = [
+        {
+          addr = "0.0.0.0";
+          port = 9897;
+        }
+        {
+          addr = "[::0]";
+          port = 9897;
+        }
+      ];
+
+      locations."/".proxyPass = "http://backrest";
       locations."/".recommendedProxySettings = true;
       locations."/".proxyWebsockets = true;
     };

@@ -10,6 +10,8 @@
     3015 # Linkwarden
     8384 # Syncthing GUI
     8385 # Syncthing GUI Proxy
+    9897 # Backrest Proxy
+    9898 # Backrest
   ];
   networking.firewall.allowedUDPPorts = [
     5353 # mDNS
