@@ -103,6 +103,7 @@
     pkgs.imhex
     pkgs.bottles
     pkgs.flameshot
+    pkgs.freecad
 
     # For Tumbler
     pkgs.ffmpegthumbnailer
