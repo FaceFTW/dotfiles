@@ -27,8 +27,10 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hyprland Ecosystem
-    hyprnix.url = "github:FaceFTW/hyprnix/FaceFTW-patch-1";
+    hyprnix.url = "github:hyprwm/hyprnix";
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
+    hyprland-plugins.inputs.hyprland.follows = "hyprnix/hyprland";
 
     # Hyprcursor
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
@@ -83,6 +85,7 @@
               ashell = inputs.ashell.packages.${prev.stdenv.hostPlatform.system}.default;
             })
             inputs.hyprnix.overlays.default
+            inputs.hyprland-plugins.overlays.default
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);

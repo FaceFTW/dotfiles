@@ -14,7 +14,7 @@ in
     ];
     services.vicinae.enable = true;
     services.vicinae.extensions = [
-      vicinae-extensions.bluetooth
+      # vicinae-extensions.bluetooth
       vicinae-extensions.nix
       vicinae-extensions.power-profile
       vicinae-extensions.hypr-keybinds
