@@ -155,6 +155,7 @@
   # the main MDADM array. Since this is external, it is not managed by disko
   fileSystems."/mnt/freeman".device = "/dev/disk/by-partuuid/b976fd48-c9e9-4c0a-aed1-b105f2bfe7c7";
   fileSystems."/mnt/freeman".fsType = "exfat";
+  fileSystems."/mnt/freeman".noCheck = true;
   fileSystems."/mnt/freeman".options = [
     "uid=face"
     "gid=users"
@@ -168,6 +169,7 @@
   # Another external SSD, but smaller
   fileSystems."/mnt/kleiner".device = "/dev/disk/by-partuuid/c524f2dc-4057-4b30-80c1-a70397c1bbd2";
   fileSystems."/mnt/kleiner".fsType = "exfat";
+  fileSystems."/mnt/kleiner".noCheck = true;
   fileSystems."/mnt/kleiner".options = [
     "uid=face"
     "gid=users"
