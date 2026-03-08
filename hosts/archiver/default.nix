@@ -106,6 +106,13 @@
     linkwarden_nextauth_secret.group = "linkwarden";
     linkwarden_postgres_password.owner = "linkwarden";
     linkwarden_postgres_password.group = "linkwarden";
+
+    garage_rpc_secret.owner = "garage";
+    garage_rpc_secret.group = "garage";
+    garage_admin_token.owner = "garage";
+    garage_admin_token.group = "garage";
+    garage_metrics_token.owner = "garage";
+    garage_metrics_token.group = "garage";
   };
 
   ############################################
