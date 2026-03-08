@@ -46,6 +46,7 @@
   sops.secrets."syncthing_cert.pem".owner = "face";
   sops.secrets."syncthing_key.pem".key = "syncthing_key_pem";
   sops.secrets."syncthing_key.pem".owner = "face";
+  sops.secrets.nix_cache_pem = { };
 
   ############################################
   # Misc System Configuration
@@ -62,6 +63,11 @@
   i18n.extraLocaleSettings.LC_PAPER = "en_US.UTF-8";
   i18n.extraLocaleSettings.LC_TELEPHONE = "en_US.UTF-8";
   i18n.extraLocaleSettings.LC_TIME = "en_US.UTF-8";
+
+  nix.settings.secret-key-files = "/run/secrets/nix_cache_pem";
+  nix.settings.substituters = [
+    "s3://nix-cache?region=archiver&endpoint=archiver.local:3900&scheme=http"
+  ];
 
   ############################################
   # Global Packages

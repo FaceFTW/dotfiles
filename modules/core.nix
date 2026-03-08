@@ -33,7 +33,6 @@
   nix.settings.warn-dirty = false;
   nix.settings.substituters = [
     "https://nix-community.cachix.org"
-    "https://cache.nixos.org/"
     "https://vicinae.cachix.org"
     "https://hyprland.cachix.org"
   ];
@@ -41,6 +40,7 @@
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
     "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    "nix-cache.archiver.local-1:BFfK+JlyUtf42YxfT5btH/kbvk+hPxaVuJXDZgQyo8A="
   ];
   nix.settings.auto-optimise-store = true;
 

@@ -43,6 +43,15 @@
   ############################################
   # networking.hostName = "${WSLhostName}-wsl";
   time.timeZone = "America/New_York";
+  systemd.services.nix-daemon = {
+    serviceConfig.Environment = [ "AWS_SHARED_CREDENTIALS_FILE=%d/AWS_SHARED_CREDENTIALS_FILE" ];
+    serviceConfig.LoadCredential = [ "AWS_SHARED_CREDENTIALS_FILE:/etc/secrets/aws/credentials" ];
+  };
+
+  nix.settings.secret-key-files = "/etc/secrets/nix-cache.pem";
+  nix.settings.substituters = [
+    "s3://nix-cache?region=archiver&endpoint=192.168.0.172:3900&scheme=http"
+  ];
 
   ############################################
   # Global Packages
