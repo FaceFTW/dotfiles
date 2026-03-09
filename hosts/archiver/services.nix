@@ -259,23 +259,23 @@
       "/SteamLibrary"
     ];
   };
-  # servicesCustom.mirror.mirror-kleiner = {
-  #   notification-title = "Archiver - Kleiner Mirror";
-  #   cron = "Sun *-*-* 10:00:00";
-  #   source = "/mnt/archive";
-  #   destination = "/mnt/kleiner";
-  #   mounts = [
-  #     "mnt-archive.mount"
-  #     "mnt-freeman.mount"
-  #   ];
-  #   exclude = [
-  #     "/SteamBackups"
-  #     "/Misc_Large"
-  #     "/SteamLibrary"
-  #     "/TV Shows"
-  #     "/Movies"
-  #   ];
-  # };
+  servicesCustom.mirror.mirror-kleiner = {
+    notification-title = "Archiver - Kleiner Mirror";
+    cron = "Sun *-*-* 10:00:00";
+    source = "/mnt/archive";
+    destination = "/mnt/kleiner";
+    mounts = [
+      "mnt-archive.mount"
+      "mnt-freeman.mount"
+    ];
+    exclude = [
+      "/SteamBackups"
+      "/Misc_Large"
+      "/SteamLibrary"
+      "/TV\ Shows"
+      "/Movies"
+    ];
+  };
 
   servicesCustom.mirror.archive-immich = {
     notification-title = "Archiver - Immich Mirror";

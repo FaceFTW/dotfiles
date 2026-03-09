@@ -65,7 +65,7 @@ let
       ...
     }:
     let
-      excludes = concatMapStrings (x: "--exclude \"${x}\" \\\\n") exclude;
+      excludes = concatMapStrings (x: "--exclude \"${x}\" ") exclude;
     in
     {
 
