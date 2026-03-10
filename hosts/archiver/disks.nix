@@ -151,20 +151,20 @@
   fileSystems."/export/archive".depends = [ "/mnt/archive" ];
   fileSystems."/export/archive".options = [ "bind" ];
 
-  # This is an external SSD to be used as a "offline mirror" separate from
-  # the main MDADM array. Since this is external, it is not managed by disko
-  fileSystems."/mnt/freeman".device = "/dev/disk/by-partuuid/b976fd48-c9e9-4c0a-aed1-b105f2bfe7c7";
-  fileSystems."/mnt/freeman".fsType = "exfat";
-  # fileSystems."/mnt/freeman".noCheck = true;
-  fileSystems."/mnt/freeman".options = [
-    "uid=face"
-    "gid=users"
-    "nofail"
-  ];
-  fileSystems."/mnt/freeman".depends = [
-    "/mnt/archive"
-    "/mnt/motorway"
-  ];
+  # # This is an external SSD to be used as a "offline mirror" separate from
+  # # the main MDADM array. Since this is external, it is not managed by disko
+  # fileSystems."/mnt/freeman".device = "/dev/disk/by-partuuid/b976fd48-c9e9-4c0a-aed1-b105f2bfe7c7";
+  # fileSystems."/mnt/freeman".fsType = "exfat";
+  # # fileSystems."/mnt/freeman".noCheck = true;
+  # fileSystems."/mnt/freeman".options = [
+  #   "uid=face"
+  #   "gid=users"
+  #   "nofail"
+  # ];
+  # fileSystems."/mnt/freeman".depends = [
+  #   "/mnt/archive"
+  #   "/mnt/motorway"
+  # ];
 
   # Another external SSD, but smaller
   fileSystems."/mnt/kleiner".device = "/dev/disk/by-partuuid/c524f2dc-4057-4b30-80c1-a70397c1bbd2";

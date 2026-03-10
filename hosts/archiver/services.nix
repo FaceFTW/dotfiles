@@ -244,22 +244,22 @@
   ############################################
   # Mirror Jobs
   ############################################
-  servicesCustom.mirror.archive-freeman = {
-    notification-title = "Archiver - Freeman Mirror";
-    cron = "Sun *-*-* 09:00:00";
-    source = "/mnt/archive";
-    destination = "/mnt/freeman";
-    mounts = [
-      "mnt-archive.mount"
-      "mnt-freeman.mount"
-    ];
-    exclude = [
-      "/SteamBackups"
-      "/Misc_Large"
-      "/SteamLibrary"
-    ];
-  };
-  servicesCustom.mirror.mirror-kleiner = {
+#   servicesCustom.mirror.archive-freeman = {
+#     notification-title = "Archiver - Freeman Mirror";
+#     cron = "Sun *-*-* 09:00:00";
+#     source = "/mnt/archive";
+#     destination = "/mnt/freeman";
+#     mounts = [
+#       "mnt-archive.mount"
+#       "mnt-freeman.mount"
+#     ];
+#     exclude = [
+#       "/SteamBackups"
+#       "/Misc_Large"
+#       "/SteamLibrary"
+#     ];
+#   };
+  servicesCustom.mirror.archive-kleiner = {
     notification-title = "Archiver - Kleiner Mirror";
     cron = "Sun *-*-* 10:00:00";
     source = "/mnt/archive";
