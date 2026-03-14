@@ -48,6 +48,13 @@
   sops.secrets."syncthing_key.pem".owner = "face";
   sops.secrets.nix_cache_pem = { };
 
+  sops.secrets.nix-cache-credentials-user.key = "nix_cache_credentials";
+  sops.secrets.nix-cache-credentials-user.path = "/home/face/.aws/credentials";
+  sops.secrets.nix-cache-credentials-user.owner = "face";
+
+  sops.secrets.nix-cache-credentials-root.key = "nix_cache_credentials";
+  sops.secrets.nix-cache-credentials-root.path = "/root/.aws/credentials";
+
   ############################################
   # Misc System Configuration
   ############################################
@@ -66,7 +73,7 @@
 
   nix.settings.secret-key-files = "/run/secrets/nix_cache_pem";
   nix.settings.substituters = [
-    "s3://nix-cache?region=archiver&endpoint=archiver.local:3900&scheme=http"
+    "s3://nix-cache?region=archiver&endpoint=192.168.0.172:3900&scheme=http"
   ];
 
   ############################################
