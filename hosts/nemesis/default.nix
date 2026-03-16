@@ -117,6 +117,8 @@
     pkgs.bottles
     pkgs.flameshot
     pkgs.freecad
+    pkgs.biome
+    pkgs.package-version-server
 
     # For Tumbler
     pkgs.ffmpegthumbnailer
