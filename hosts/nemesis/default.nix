@@ -94,7 +94,7 @@
   packages.virtualization.armVirtualization = true;
 
   services.flatpak.enable = true;
-  # packages.zed.enable = true;
+  packages.zed.enable = true;
 
   programs.zsh.enable = true;
   programs.thunar.enable = true;

@@ -70,8 +70,8 @@
   packages.secrets.wslGpgForwarding = true;
   packages.virtualization.docker = true;
   packages.virtualization.armVirtualization = true;
-  # packages.zed.enable = true;
-  # packages.zed.wslFixes = true;
+  packages.zed.enable = true;
+  packages.zed.wslFixes = true;
 
   programs.zsh.enable = true;
   programs.ssh.startAgent = true;

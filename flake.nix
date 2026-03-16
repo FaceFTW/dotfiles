@@ -43,6 +43,7 @@
 
     # ashell
     ashell.url = "github:MalpenZibo/ashell";
+    ashell.inputs.nixpkgs.follows = "nixpkgs";
 
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
