@@ -1,29 +1,30 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
-	"on_last_window_closed": "quit_app",
-	"when_closing_with_no_tabs": "keep_window_open",
-	"ui_font_family": ".ZedSans",
-	"toolbar": {
-		"agent_review": false,
+	"agent": {
+		"enabled": false,
+		"button": false,
+		"favorite_models": [],
+		"model_parameters": [],
 	},
-	"which_key": {
-		"enabled": true,
+	"auto_update": false,
+	"base_keymap": "VSCode",
+	"buffer_font_family": "Hack Nerd Font Mono",
+	"buffer_font_size": 14,
+	"buffer_line_height": "standard",
+	"collaboration_panel": {
+		"button": false,
 	},
-	"vim": {
-		"toggle_relative_line_numbers": true,
-		"custom_digraphs": {},
+	"disable_ai": true,
+	"file_types": {
+		"mdx": ["*.mdx"],
+		"ini": ["*.meta"],
 	},
-	"minimap": {
-		"show": "auto",
+	"git": {
+		"inline_blame": {
+			"delay_ms": 1000,
+		},
 	},
-	"relative_line_numbers": "disabled",
+	"hard_tabs": true,
+	"icon_theme": "VSCode Icons for Zed (Dark)",
 	"languages": {
 		"Nix": {
 			"language_servers": ["nil", "!nixd"],
@@ -34,58 +35,94 @@
 			"tab_size": 2,
 		},
 	},
-	"project_panel": {
-		"entry_spacing": "standard",
+	"linked_edits": true,
+	"minimap": {
+		"show": "auto",
 	},
-	"collaboration_panel": {
-		"button": false,
-	},
+	"on_last_window_closed": "quit_app",
 	"outline_panel": {
 		"button": false,
-	},
-	"git": {
-		"inline_blame": {
-			"delay_ms": 1100,
-		},
-	},
-	"disable_ai": true,
-	"buffer_line_height": "standard",
-	"auto_update": false,
-	"icon_theme": "VSCode Icons for Zed (Dark)",
-	"vim_mode": true,
-	"terminal": {
-		"font_size": 10.0,
-		"font_family": "Hack Nerd Font Mono",
-		"max_scroll_history_lines": 10000,
-	},
-	"telemetry": {
-		"diagnostics": false,
-		"metrics": false,
-	},
-	"base_keymap": "VSCode",
-	"agent": {
-		"enabled": false,
-		"button": false,
-		"favorite_models": [],
-		"model_parameters": [],
 	},
 	"preview_tabs": {
 		"enabled": false,
 	},
-	"buffer_font_family": "Hack Nerd Font Mono",
-	"file_types": {
-		"mdx": ["*.mdx"],
-		"ini": ["*.meta"],
+	"project_panel": {
+		"entry_spacing": "standard",
 	},
-	"linked_edits": true,
-	"show_whitespaces": "all",
+	"relative_line_numbers": "disabled",
 	"show_edit_predictions": true,
-	"hard_tabs": true,
-	"ui_font_size": 18.0,
-	"buffer_font_size": 14.0,
+	"show_whitespaces": "all",
+	"telemetry": {
+		"diagnostics": false,
+		"metrics": false,
+	},
+	"terminal": {
+		"font_size": 10,
+		"font_family": "Hack Nerd Font Mono",
+		"max_scroll_history_lines": 10000,
+	},
 	"theme": {
 		"mode": "system",
 		"light": "One Light",
 		"dark": "VSCode Dark Modern",
+	},
+	"theme_overrides": {
+		"VSCode Dark Modern": {
+			"syntax": {
+				"constant.comment.todo": {
+					"color": "#000000",
+					"background_color": "#FF8C00",
+					"font_weight": 900,
+					"font_style": "italic",
+				},
+				"constant.comment.todo.text": {
+					"color": "#000000",
+					"background_color": "#FF8C00",
+				},
+				"string.comment.info": {
+					"color": "#000000",
+					"background_color": "#2563EB",
+					"font_weight": 900,
+					"font_style": "italic",
+				},
+				"string.comment.info.text": {
+					"color": "#000000",
+					"background_color": "#2563EB",
+				},
+				"keyword.comment.warn": {
+					"color": "#000000",
+					"background_color": "#FBBF24",
+					"font_weight": 900,
+					"font_style": "italic",
+				},
+				"keyword.comment.warn.text": {
+					"color": "#000000",
+					"background_color": "#FBBF24",
+				},
+				"property.comment.error": {
+					"color": "#000000",
+					"background_color": "#DC2626",
+					"font_weight": 900,
+					"font_style": "italic",
+				},
+				"property.comment.error.text": {
+					"color": "#000000",
+					"background_color": "#DC2626",
+				},
+			},
+		},
+	},
+	"toolbar": {
+		"agent_review": false,
+	},
+	"ui_font_family": ".ZedSans",
+	"ui_font_size": 18,
+	"vim": {
+		"toggle_relative_line_numbers": true,
+	},
+	"vim_mode": true,
+	"when_closing_with_no_tabs": "keep_window_open",
+	"which_key": {
+		"enabled": true,
 	},
 }
