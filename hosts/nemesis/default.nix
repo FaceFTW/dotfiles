@@ -47,6 +47,8 @@
   sops.secrets."syncthing_key.pem".key = "syncthing_key_pem";
   sops.secrets."syncthing_key.pem".owner = "face";
   sops.secrets.nix_cache_pem = { };
+  sops.secrets."/etc/secrets/nix_cache.pem".key = "nix_cache_pem";
+
 
   sops.secrets.nix-cache-credentials-user.key = "nix_cache_credentials";
   sops.secrets.nix-cache-credentials-user.path = "/home/face/.aws/credentials";

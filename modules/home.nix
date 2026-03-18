@@ -35,8 +35,6 @@ in
 
     # Nix Specific Aliases
     clean-nix = "sudo nix-collect-garbage -d";
-    nix-store-sign-all = "sudo nix store sign --all --key-file /etc/secrets/nix-cache.pem";
-    nix-push-cache = "nix copy --all --to 's3://nix-cache?endpoint=192.168.0.172:3900&scheme=http&region=archiver' --option narinfo-cache-positive-ttl 0 ";
     nix-generations = "nixos-rebuild list-generations";
     rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
     build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
@@ -114,6 +112,15 @@ in
             "$@"
         }
 
+        function push-nix-cache() {
+          sudo nix store sign --all \
+            --key-file /etc/secrets/nix-cache.pem
+
+          nix copy --all \
+            --to 's3://nix-cache?endpoint=192.168.0.172:3900&scheme=http&region=archiver' \
+            --option narinfo-cache-positive-ttl 0
+        }
+
         function rebuild-nix() {
           ### PARAMETERS
           ### END PARAMETERS
@@ -131,8 +138,6 @@ in
             --flake "/home/face/.config/dotfiles#$hostname" \
             "$@"
         }
-
-
 
         function deploy-nix() {
           ### PARAMETERS
