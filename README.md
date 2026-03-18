@@ -41,12 +41,7 @@ Legend
 | Vim                                                                       | :white_check_mark: Using `vim_plug`       | :white_check_mark: Using `vim_plug`       | :white_check_mark: Plugins installed via Nix |
 | Zsh                                                                       | :x:                                       | :white_check_mark:                        | :white_check_mark: via Home Manager          |
 | Counter-Strike 2                                                          | :white_check_mark:                        | :white_circle:                            | :white_circle:                               |
-
+| Zed                                                                       | :white_check_mark:                        | :white_circle:                            | :white_check_mark:                               |
 ### Additional Notes
 
-The Nemesis "rice" is based off of [Firstp1ck/Hyprland-Simple-Setup](https://github.com/Firstp1ck/Hyprland-Simple-Setup/tree/main), but altered to fit my needs. A pretty decent non-NixOS starting point for a noob like me :)
-
-Kvantum Theme from: https://github.com/vinceliuice/Fluent-kde/tree/main
-GTK Theme: Fluent GTK
-Cursor Theme: rose-pine-hyprcursors
-
+Information about the Nemesis rice is in-progress

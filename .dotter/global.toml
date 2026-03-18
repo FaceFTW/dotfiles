@@ -10,7 +10,7 @@ depends = []
 "config/cowsay" = "~/.config/cowsay"
 "config/fortunes.txt" = "~/.config/fortunes.txt"
 "config/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
-"config/fastfetch.jsonc" = {target = "~/.config/fastfetch/config.jsonc", type="symbolic"}
+"config/fastfetch.jsonc" = { target = "~/.config/fastfetch/config.jsonc", type="symbolic" }
 
 
 [default.variables]
@@ -29,6 +29,8 @@ depends = []
 "bin/executable_sh-toy.exe" = { target = "~/.local/bin/sh-toy.exe", type = "symbolic" }
 "config/profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
 "config/filepilot.json" = { target ="~/AppData/Roaming/Voidstar/FilePilot/FPilot-Config.json", type = "symbolic" }
+"config/zed/settings.json" = { target = "~/AppData/Roaming/Zed/settings.json", type = "symbolic" }
+"config/zed/keymap.json" = { target = "~/AppData/Roaming/Zed/keymap.json", type = "symbolic" }
 
 [cs2]
 depends = []
@@ -45,6 +47,8 @@ depends = []
 "config/.zshrc" = "~/.zshrc"
 "config/profile" = "~/.profile"
 "bin/executable_sh-toy" = { target = "~/.local/bin/sh-toy", type = "symbolic" }
+"config/zed/settings.json" = { target = "~/.config/zed/settings.json", type = "symbolic" }
+"config/zed/keymap.json" = { target = "~/.config/zed/keymap.json", type = "symbolic" }
 
 
 [settings]
