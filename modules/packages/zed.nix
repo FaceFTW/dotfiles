@@ -42,6 +42,7 @@ in
       environment.systemPackages = [
         pkgs.zed-editor
         pkgs.openssl_3
+        pkgs.package-version-server
       ];
     })
     (mkIf packages.zed.wslFixes {

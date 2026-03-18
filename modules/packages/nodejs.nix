@@ -5,13 +5,14 @@
   ...
 }:
 let
-  node = config.packages.nodejs.node;
-  vscodePatch = config.packages.nodejs.vsCodeRemotePatch;
+  nodejs = config.packages.nodejs;
+
   inherit (lib) mkIf mkMerge mkEnableOption;
 in
 {
   options.packages.nodejs.node = mkEnableOption "NodeJS";
   options.packages.nodejs.vsCodeRemotePatch = mkEnableOption "VS Code Remote Server Patch";
+  options.packages.nodejs.biome = mkEnableOption "Install Biome";
 
   config = mkMerge [
     ############################################
@@ -20,7 +21,7 @@ in
     {
       assertions = [
         {
-          assertion = !vscodePatch || (vscodePatch && node);
+          assertion = !nodejs.vsCodeRemotePatch || (nodejs.vsCodeRemotePatch && nodejs.node);
           message = "VS Code Remote Server Patch requires Node!";
         }
       ];
@@ -28,15 +29,23 @@ in
     ############################################
     # NodeJS
     ############################################
-    (mkIf node {
+    (mkIf nodejs.node {
       environment.systemPackages = [
         pkgs.nodejs_24
       ];
     })
     ############################################
+    # Biome
+    ############################################
+    (mkIf nodejs.biome {
+      environment.systemPackages = [
+        pkgs.biome
+      ];
+    })
+    ############################################
     # VS Code Remote Server Patch
     ############################################
-    (mkIf vscodePatch {
+    (mkIf nodejs.vsCodeRemotePatch {
       systemd.user.paths.vscode-remote-workaround = {
         wantedBy = [ "default.target" ];
         pathConfig.PathChanged = "%h/.vscode-server/bin";

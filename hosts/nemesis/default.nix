@@ -88,6 +88,7 @@
   packages.nixTools = true;
   packages.rust = "nightly";
   packages.nodejs.node = true;
+  packages.nodejs.biome = true;
   packages.steam = true;
   packages.steam-nvidia-prime = true;
   packages.vscode.enable = true;
@@ -122,8 +123,6 @@
     pkgs.bottles
     pkgs.flameshot
     pkgs.freecad
-    pkgs.biome
-    pkgs.package-version-server
 
     # For Tumbler
     pkgs.ffmpegthumbnailer
