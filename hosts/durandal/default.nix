@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    inputs.nixos-hardware.nixosModules.raspberry-pi-3
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     ../../modules/core.nix
@@ -25,30 +25,25 @@
   ############################################
   # User Settings
   ############################################
-  defaultUser.password.type = "sops";
-  # defaultUser.password.value = "";
-  defaultUser.password.value = config.sops.secrets.user_passwd.path;
+  defaultUser.password.type = "initialPassword";
+  defaultUser.password.value = "";
+  # defaultUser.password.value = config.sops.secrets.user_passwd.path;
 
-  # The following are system users/groups defined for various services
-  # Unless they are defined elsewhere, in which here I document it for tracking
-  users.groups.camera = { }; # For accessing the camera via udev
-  users.groups.wifi = { }; # For ensuring wpa_supplicant can access the secrets reasonably
-  # users.users.klipper = {}; # Klipper system user for Klipper/Moonraker/Nginx
 
   ############################################
   # SOPS Settings
   ############################################
-  sops.defaultSopsFile = ./secrets.yaml;
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.secrets.user_passwd.neededForUsers = true;
-  sops.secrets.wifi_secrets = {
-    owner = config.users.users.wpa_supplicant.name;
-    group = config.users.users.systemd-network.group;
-  };
-  sops.secrets.moonraker_key = {
-    owner = "klipper";
-    group = "klipper";
-  };
+  # sops.defaultSopsFile = ./secrets.yaml;
+  # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  # sops.secrets.user_passwd.neededForUsers = true;
+  # sops.secrets.wifi_secrets = {
+  #   owner = config.users.users.wpa_supplicant.name;
+  #   group = config.users.users.systemd-network.group;
+  # };
+  # sops.secrets.moonraker_key = {
+  #   owner = "klipper";
+  #   group = "klipper";
+  # };
 
   ############################################
   # Services
@@ -67,7 +62,7 @@
   swapDevices = [
     {
       device = "/var/swapfile";
-      size = 4096;
+      size = 2048;
     }
   ];
   time.timeZone = "America/New_York";

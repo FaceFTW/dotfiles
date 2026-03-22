@@ -150,6 +150,16 @@
       };
 
       ############################################
+      # durandal
+      ############################################
+      nixosConfigurations.durandal = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = withOverlays ./hosts/durandal/default.nix;
+      };
+      images.durandal = nixosConfigurations.durandal.config.system.build.image;
+
+      ############################################
       # Dev Shells
       ############################################
       devShells = forAllSystems (
