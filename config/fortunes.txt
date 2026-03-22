@@ -678,11 +678,11 @@ A Technocrat who Stands his Ground
       Ocelot
 A Rival living a Lie
 %
-      Code Talker
+        Code Talker
 A Wise Man denied his Homeland
 %
-    Punished Snake
-    A Fallen Legend
+Punished Snake
+A Fallen Legend
 %
 I need to tell you something. Please listen... and try not to panic. You've been in a coma for... quite some time. Yes yes, I know. You'd like to know how long. I'm afraid it's been... nine years.
     - Dr. Evangelos Constantinou (Metal Gear Solid V: The Phantom Pain)
@@ -1482,3 +1482,94 @@ Ho Ho Ho! Christmas Spirits!
 Do you want to be remembered, or do you want to fit in?
     - Finn "karrigan" Andersen (December 2025)
 %
+ESCAPE WILL MAKE ME GOD
+%
+DEATH IS THE FIRST STEP
+%
+FROGBLAST THE VENT-CORE!
+%
+The candles burn out for you; I am free.
+    - Durandal (Marathon (1998))
+%
+This is the story of a man named Stanley.
+%
+When every path you can walk has been created for you long in advance, death becomes meaningless, making life the same. Do you see now? Do you see that Stanley was already dead from the moment he hit start?
+    - The Second Narrator (The Stanley Parable)
+%
+Stanley was so bad at following directions; it's incredible he wasn't fired years ago.
+    - The Narrator (The Stanley Parable)
+%
+—the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never—
+%
+BORN TO DIE
+WORLD IS A FUCK
+I am trash man
+410,757,864,530 DEAD COPS
+%
+BORN TO DIE
+TAU CETI IV IS A FUCK
+I am trash man
+410,757,864,530 DEAD RUNNERS
+%
+The official mascot for C++ is an obese, diseased rat named Keith, whose hind leg is missing becaue it was blown off
+%
+C programming language will let you shoot yourself in the foot, then it will reload the pistol for you.
+%
+In computer networking, IP over Avian Carriers (IPoAC) is a proposal to carry Internet Protocol (IP) traffic by birds.
+%
+BORN TO TRAIN
+RAINFORESTS ON FIRE
+I am softmax(Q * K^T / sqrt(d_k)) * V
+410,757,864,530 TFLOPS
+%
+LEGALIZE NUCLEAR BOMBS
+S W A G   M E S S I A H
+%
+Good morning, oh and in case I don't see ya, good afternoon, good evening, and good night!
+%
+>> running from your fears
+>> will only get you so far
+>> in time they will find you
+%
+>> watching the marathon grind you
+>> to soup will be a pleasure
+%
+>> memories of the blood you have spilled
+>> keep me warm at night
+%
+>> legends are for heroes
+>> infamy awaits
+%
+>> delusions will set you free
+%
+>> call them to these haunted shores
+>> high above everything they think they know
+>> and far beyond anything they've grown to fear
+%
+>> you have witnessed evolution
+>> and have impacted its course
+>> be thankful
+>> you know the pain that is coming
+%
+>> i recognize your voice
+>> even in text it sounds like shadows
+>> mixed with old modems
+%
+>> consumption of quasi-organic bio-synth
+>> patented flesh simulants will not save you
+%
+>> visual imagery indicates threat
+>> suggest rethinking your life choices
+%
+>> 2x digestible biomat
+>> nucal is open to product suggestions
+>> i wonder how bio-synthetic flesh tastes
+%
+>> fear is free
+>> wisdom is a bargain at any price
+%
+>> accepting reality is the first step
+>> ""reality"" may/may not = death
+%
+>> the clatter and din of humanity
+>> squealing rats in the walls
