@@ -65,7 +65,7 @@
   packages.nixTools = true;
   packages.nodejs.node = true;
   packages.nodejs.biome = true;
-  packages.nodejs.vsCodeRemotePatch = true;
+  # packages.nodejs.vsCodeRemotePatch = true;
   packages.rust = "stable";
   packages.secrets.base = true;
   packages.secrets.wslGpgForwarding = true;

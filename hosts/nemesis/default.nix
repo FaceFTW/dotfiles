@@ -46,9 +46,8 @@
   sops.secrets."syncthing_cert.pem".owner = "face";
   sops.secrets."syncthing_key.pem".key = "syncthing_key_pem";
   sops.secrets."syncthing_key.pem".owner = "face";
-  sops.secrets.nix_cache_pem = { };
+  # sops.secrets.nix_cache_pem = { };
   sops.secrets."/etc/secrets/nix_cache.pem".key = "nix_cache_pem";
-
 
   sops.secrets.nix-cache-credentials-user.key = "nix_cache_credentials";
   sops.secrets.nix-cache-credentials-user.path = "/home/face/.aws/credentials";
@@ -93,7 +92,7 @@
   packages.nodejs.biome = true;
   packages.steam = true;
   packages.steam-nvidia-prime = true;
-  packages.vscode.enable = true;
+  # packages.vscode.enable = true;
   packages.virtualization.armVirtualization = true;
 
   packages.zed.enable = true;

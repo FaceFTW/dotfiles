@@ -75,7 +75,6 @@
     secretsFile = config.sops.secrets.immich_secrets.path;
     mediaLocation = "/mnt/motorway/var/immich/data";
     database.enable = true;
-    database.enableVectorChord = true;
   };
 
   ############################################

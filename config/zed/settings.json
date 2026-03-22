@@ -8,7 +8,7 @@
 	"auto_update": false,
 	"base_keymap": "VSCode",
 	"buffer_font_family": "Hack Nerd Font Mono",
-	"buffer_font_size": 14,
+	"buffer_font_size": 12,
 	"buffer_line_height": "standard",
 	"collaboration_panel": {
 		"button": false
@@ -36,6 +36,13 @@
 		}
 	},
 	"linked_edits": true,
+	"lsp": {
+		"nil": {
+			"settings": {
+				"autoArchive": true
+			}
+		}
+	},
 	"minimap": {
 		"show": "auto"
 	},
@@ -52,6 +59,10 @@
 	"relative_line_numbers": "disabled",
 	"show_edit_predictions": true,
 	"show_whitespaces": "all",
+	"tabs": {
+		"file_icons": true,
+		"git_status": true
+	},
 	"telemetry": {
 		"diagnostics": false,
 		"metrics": false
@@ -134,7 +145,7 @@
 		"agent_review": false
 	},
 	"ui_font_family": ".ZedSans",
-	"ui_font_size": 18,
+	"ui_font_size": 16,
 	"vim": {
 		"toggle_relative_line_numbers": true
 	},

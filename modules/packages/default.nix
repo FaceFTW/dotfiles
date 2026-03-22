@@ -42,7 +42,10 @@ in
 
         pkgs.bash-completion
         pkgs.bat
-        pkgs.coreutils
+        # pkgs.coreutils
+        pkgs.uutils-coreutils-noprefix
+        pkgs.uutils-findutils
+        pkgs.uutils-diffutils
         pkgs.curl
         # openssh # I don't think I need this for sshd
         pkgs.vimCustom # See overlays/vim.nix for config
