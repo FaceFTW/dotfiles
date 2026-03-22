@@ -1,0 +1,17 @@
+# Taken from https://www.asciiart.eu/art/6891d11998b35720
+$the_cow = <<EOC;
+    $thoughts
+     $thoughts
+      $thoughts        ,-.
+             /  (  '
+     *  _.--'!   '--._
+      ,'              ''.
+'    |!                   \
+   _.'  O      ___       ! \
+  (_.-^, __..-'  ''''--.   )
+      /,'        '    _.' /
+   '         *    .-''    |
+                 (..--^.  '
+                       | /
+                       '
+EOC
