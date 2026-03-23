@@ -39,7 +39,11 @@
 	"lsp": {
 		"nil": {
 			"settings": {
-				"autoArchive": true
+				"nix": {
+					"flake": {
+						"autoArchive": true
+					}
+				}
 			}
 		}
 	},
