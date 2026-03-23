@@ -6,7 +6,7 @@
   ############################################
   # Hardware Configuration
   ############################################
-  boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi3;
+  boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
   boot.kernelModules = [ ];
   boot.blacklistedKernelModules = [
     "dw_hdmi"
@@ -28,51 +28,24 @@
   hardware.bluetooth.enable = false;
 
   hardware.raspberry-pi."4" = {
-    i2c0.enable = true;
-    i2c1.enable = true;
-    fkms-3d.enable = true;
-    touch-ft5406.enable = true;
     apply-overlays-dtmerge.enable = true;
+    poe-plus-hat.enable = true;
   };
 
-  # hardware.deviceTree.enable = true;
-  # hardware.deviceTree.filter = "bcm2711-rpi-4*.dtb";
-  # hardware.deviceTree.overlays = [
-  #   {
-  #     name = "disable-bt";
-  #     dtsFile = ./devicetree/disable-bt-overlay.dts;
-  #   }
-  #   {
-  #     name = "spi";
-  #     dtsFile = ./devicetree/spi0-0cs-overlay.dts;
-  #   }
-  #   {
-  #     name = "imx708";
-  #     dtsFile = ./devicetree/imx708-overlay.dts;
-  #   }
-  #   # {
-  #   #   name = "ov5647";
-  #   #   dtsFile = ./devicetree/ov5647-overlay.dts;
-  #   # }
-  # ];
+  hardware.deviceTree.enable = true;
+  hardware.deviceTree.filter = "bcm2711-rpi-4*.dtb";
+  hardware.deviceTree.overlays = [
+    {
+      name = "disable-bt";
+      dtsFile = ../../devicetree/disable-bt-overlay.dts;
+    }
+  ];
 
   ############################################
   # udev Configuration
   ############################################
   services.udev.enable = true;
   # services.udev.extraRules = ''
-  #   # SUBSYSTEM=="input", KERNEL=="event[0-9]*", ATTRS{name}=="ADS7846*", SYMLINK+="input/touchscreen"
-
-  #   SUBSYSTEM=="video4linux", KERNEL=="video[01]", GROUP="camera", MODE="660"
-
-  #   # https://raspberrypi.stackexchange.com/a/141107
-  #   SUBSYSTEM=="dma_heap", GROUP="video", MODE="0660"
-
-  #   # If I ever want to enable SPI
-  #   # SUBSYSTEM=="spidev", KERNEL=="spidev0.0", GROUP="spi", MODE="0660"
-
-  #   # Makes video device visible to cage
-  #   ACTION=="add", SUBSYSTEM=="drm", KERNEL=="card2", TAG+="systemd"
   # '';
 
 }

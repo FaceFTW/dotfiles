@@ -40,15 +40,15 @@
   hardware.deviceTree.overlays = [
     {
       name = "disable-bt";
-      dtsFile = ./devicetree/disable-bt-overlay.dts;
+      dtsFile = ../../devicetree/disable-bt-overlay.dts;
     }
     {
       name = "spi";
-      dtsFile = ./devicetree/spi0-0cs-overlay.dts;
+      dtsFile = ../../devicetree/spi0-0cs-overlay.dts;
     }
     {
       name = "imx708";
-      dtsFile = ./devicetree/imx708-overlay.dts;
+      dtsFile = ../../devicetree/imx708-overlay.dts;
     }
     # {
     #   name = "ov5647";

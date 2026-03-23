@@ -1,43 +1,38 @@
 keys:
-  # - &key_lockpick D384406EE3E09652DA84CC0ACCE34B296644C01B!
-  - &host_archiver age100vv3rkgwqzerc8w6lrkvwud866pfxetp9pfgh35azlqxly5ja4s85racc
-  - &host_fabricator age1nnc8r26x3rgmtfwve2jvewmhlflsvw2gfrak86gz7ahfaghj73aq7pq0ac
-  - &host_manifold age1ng2en0a2nv2ucdj7ejcydyzr6qqky25sh4qfsx9q7k4g4gl55drqay8eql
-  - &host_nemesis age1j6v3hw4n8me2flq2z5n9m7fw0uuqxzdm2r87q6uv3c9ar0jqlv6skp3hn5
-  - &user_face_manifold age145ltxlne4wy497exp3fw4an9ss8mxy80wvwnzzckfnpv5jw50dhqrlfrvu
+    # - &key_lockpick D384406EE3E09652DA84CC0ACCE34B296644C01B!
+    - &host_archiver age100vv3rkgwqzerc8w6lrkvwud866pfxetp9pfgh35azlqxly5ja4s85racc
+    - &host_fabricator age1nnc8r26x3rgmtfwve2jvewmhlflsvw2gfrak86gz7ahfaghj73aq7pq0ac
+    - &host_manifold age1ng2en0a2nv2ucdj7ejcydyzr6qqky25sh4qfsx9q7k4g4gl55drqay8eql
+    - &host_nemesis age1j6v3hw4n8me2flq2z5n9m7fw0uuqxzdm2r87q6uv3c9ar0jqlv6skp3hn5
+    - &user_face_manifold age145ltxlne4wy497exp3fw4an9ss8mxy80wvwnzzckfnpv5jw50dhqrlfrvu
+    - &host_durandal age1s7gjazppqkz6j9uvtewfpu8vgq27wzg6xtp4hvq797zhtaaumelqa52qrh
 
 creation_rules:
-  - path_regex: hosts/fabricator/[^/]+\.(yaml|json|env|ini)$
-    shamir_threshold: 2
-    key_groups:
-      # - pgp:
-      # - *key_lockpick
-      - age:
-          - *host_fabricator
-          - *user_face_manifold
-          # - *host_manifold # For config changes off machine
-  - path_regex: hosts/manifold/[^/]+\.(yaml|json|env|ini)$
-    shamir_threshold: 2
-    key_groups:
-      # - pgp:
-      # - *key_lockpick
-      - age:
-          - *host_manifold
-  - path_regex: hosts/archiver/[^/]+\.(yaml|json|env|ini)$
-    shamir_threshold: 2
-    key_groups:
-      # - pgp:
-      # - *key_lockpick
-      - age:
-          - *host_archiver
-          - *user_face_manifold
-          # - *host_manifold # For config changes off machine
+    - path_regex: hosts/fabricator/[^/]+\.(yaml|json|env|ini)$
+      key_groups:
+          - age:
+                - *host_fabricator
+                - *user_face_manifold
 
-  - path_regex: hosts/nemesis/[^/]+\.(yaml|json|env|ini)$
-    shamir_threshold: 2
-    key_groups:
-      # - pgp:
-      # - *key_lockpick
-      - age:
-          - *host_nemesis
-          - *user_face_manifold
+    - path_regex: hosts/manifold/[^/]+\.(yaml|json|env|ini)$
+      key_groups:
+          - age:
+                - *host_manifold
+
+    - path_regex: hosts/archiver/[^/]+\.(yaml|json|env|ini)$
+      key_groups:
+          - age:
+                - *host_archiver
+                - *user_face_manifold
+
+    - path_regex: hosts/nemesis/[^/]+\.(yaml|json|env|ini)$
+      key_groups:
+          - age:
+                - *host_nemesis
+                - *user_face_manifold
+
+    - path_regex: hosts/durandal/[^/]+\.(yaml|json|env|ini)$
+      key_groups:
+          - age:
+                - *host_durandal
+                - *user_face_manifold

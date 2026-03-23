@@ -38,6 +38,7 @@ in
     nix-generations = "nixos-rebuild list-generations";
     rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
     build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
+    build-durandal-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.durandal";
   };
 
   zsh.history = {
