@@ -1,6 +1,6 @@
 # Using Raspberry Pi fork of libcamera
 final: prev: {
-  libcamera = (
+  libcamera-rpi = (
     prev.libcamera.overrideAttrs {
       src = prev.fetchgit {
         url = "https://github.com/raspberrypi/libcamera.git";
