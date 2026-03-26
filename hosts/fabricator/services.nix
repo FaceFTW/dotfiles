@@ -5,7 +5,7 @@
 }:
 {
   systemUser.klipper.home = "/var/lib/klipper";
-  systemUser.klipper.extraGroups = [ "video" ];
+  systemUser.klipper.extraGroups = [ "camera" ];
 
   environment.systemPackages = [
     pkgs.klipperscreen
@@ -81,7 +81,7 @@
     requires = [ "network-online.target" ];
     serviceConfig.ExecStart = (
       lib.foldl' (acc: e: acc + " " + e) "" [
-        "${pkgs.libcamera-rpi}/bin/libcamerify"
+        "${pkgs.libcamera}/bin/libcamerify"
         "${pkgs.ustreamer}/bin/ustreamer"
         "--device=/dev/video0"
         "--format=uyvy"
