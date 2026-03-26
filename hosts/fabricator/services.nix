@@ -81,8 +81,10 @@
     requires = [ "network-online.target" ];
     serviceConfig.ExecStart = (
       lib.foldl' (acc: e: acc + " " + e) "" [
-        "${pkgs.libcamera}/bin/libcamerify"
-        "${pkgs.ustreamer}/bin/ustreamer"
+        # "${pkgs.libcamera-rpi}/bin/libcamerify"
+        # "--debug"
+        # "${pkgs.ustreamer}/bin/ustreamer"
+        "${pkgs.camera-streamer}/bin/camera-streamer"
         "--device=/dev/video0"
         "--format=uyvy"
         "--encoder=M2M-VIDEO"
