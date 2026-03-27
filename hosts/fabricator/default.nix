@@ -33,6 +33,7 @@
   # Unless they are defined elsewhere, in which here I document it for tracking
   users.groups.camera = { }; # For accessing the camera via udev
   users.groups.wifi = { }; # For ensuring wpa_supplicant can access the secrets reasonably
+  users.groups.i2c = { };
   # users.users.klipper = {}; # Klipper system user for Klipper/Moonraker/Nginx
 
   ############################################

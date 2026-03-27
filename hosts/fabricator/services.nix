@@ -79,27 +79,35 @@
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
     requires = [ "network-online.target" ];
+    unitConfig.ConditionPathExists = "/sys/bus/i2c/drivers/imx708/10-001a/video4linux";
+
     serviceConfig.ExecStart = (
       lib.foldl' (acc: e: acc + " " + e) "" [
-        # "${pkgs.libcamera-rpi}/bin/libcamerify"
-        # "--debug"
-        # "${pkgs.ustreamer}/bin/ustreamer"
         "${pkgs.camera-streamer}/bin/camera-streamer"
-        "--device=/dev/video0"
-        "--format=uyvy"
-        "--encoder=M2M-VIDEO"
-        "--resolution=1280x720"
-        "--desired-fps=15"
-        "--allow-origin=http://localhost:*"
-        "--host=0.0.0.0"
-        "--port=5123"
-        "--verbose"
+        "--camera-path=/base/soc/i2c0mux/i2c@1/imx708@1a"
+        "--camera-path=/dev/video0"
+        "--camera-type=v4l2"
+        "--camera-format=YUYV"
+        "--camera-width=4608"
+        "--camera-height=2592"
+        "--camera-fps=15"
+        "--camera-nbufs=2"
+        "--camera-snapshot.height=1080"
+        "--camera-video.height=720"
+        "--camera-stream.height=480"
+        "--camera-options=AfMode=2"
+        "--camera-options=AfRange=2"
+        "--http-listen=0.0.0.0"
+        "--http-port=5123"
       ]
     );
 
     serviceConfig.User = "klipper";
     serviceConfig.Group = "klipper";
-    serviceConfig.SupplementaryGroups = [ "camera" ];
+    serviceConfig.SupplementaryGroups = [
+      "camera"
+      "i2c"
+    ];
   };
 
   ############################################
