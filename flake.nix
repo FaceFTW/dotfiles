@@ -85,7 +85,7 @@
           nixpkgs.overlays = [
             inputs.fenix.overlays.default
             inputs.vicinae.overlays.default
-            inputs.nix4vscode.overlays.default
+            # inputs.nix4vscode.overlays.default
             (final: prev: {
               ashell = inputs.ashell.packages.${prev.stdenv.hostPlatform.system}.default;
             })
