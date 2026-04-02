@@ -17,6 +17,7 @@
 
     # Determinate nix
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    determinate.inputs.nixpkgs.follows = "nixpkgs";
 
     # sops
     sops-nix.url = "github:Mic92/sops-nix";
@@ -31,6 +32,7 @@
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprnix/hyprland";
+    hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hyprcursor
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
@@ -47,11 +49,13 @@
 
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
+    vicinae.inputs.nixpkgs.follows = "nixpkgs";
     vicinae-extensions.url = "github:vicinaehq/extensions";
+    vicinae-extensions.inputs.nixpkgs.follows = "nixpkgs";
 
     # VS Code Extensions Mirror
-    nix4vscode.url = "github:nix-community/nix4vscode";
-    nix4vscode.inputs.nixpkgs.follows = "nixpkgs";
+    # nix4vscode.url = "github:nix-community/nix4vscode";
+    # nix4vscode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
