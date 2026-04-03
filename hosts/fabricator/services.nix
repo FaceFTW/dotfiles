@@ -79,6 +79,9 @@
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
     requires = [ "network-online.target" ];
+    path = [
+      pkgs.v4l-utils
+    ];
     unitConfig.ConditionPathExists = "/sys/bus/i2c/drivers/imx708/10-001a/video4linux";
 
     serviceConfig.ExecStart = (
