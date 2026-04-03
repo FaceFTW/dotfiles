@@ -136,9 +136,9 @@
       library.content.mountOptions = [
         "compress=zstd:9"
         "noatime"
+        "x-systemd.mount-timeout=5m" # prevents a stupid timeout
       ];
     };
-
   };
 
   # Bind mounts for Samba Shares
