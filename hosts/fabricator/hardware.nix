@@ -62,6 +62,7 @@
   services.udev.enable = true;
   services.udev.extraRules = ''
     SUBSYSTEM=="video4linux", KERNEL=="video[01]", GROUP="camera", MODE="660"
+    SUBSYSTEM=="media", KERNEL=="media2", GROUP="camera", MODE="660"
     SUBSYSTEM=="i2c", GROUP="i2c", MODE="660"
 
     # https://raspberrypi.stackexchange.com/a/141107
