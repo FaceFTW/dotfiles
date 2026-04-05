@@ -45,7 +45,6 @@ in
     settings."$browser" =
       "hyprctl dispatch exec \"firefox --ozone-platform=wayland --enable-features=useozoneplatform\"";
     settings."$editor" = "${pkgs.vimCustom}/bin/vim";
-    settings."$wallpaper" = "${./assets/deep_blue_invert.png}";
     settings."$cursor" = "rose-pine-hyprcursor";
 
     settings.monitor = [ "eDP-1,2400x1600@120,0x0,1" ];
@@ -86,8 +85,6 @@ in
       gaps_out = 5;
       border_size = 3;
 
-      "col.active_border" = "rgba(3686fdaa)";
-      "col.inactive_border" = "rgba(404040aa)";
       resize_on_border = true;
       allow_tearing = true;
       layout = "dwindle";
@@ -99,21 +96,9 @@ in
     };
 
     settings.group = {
-      "col.border_active" = "rgba(3686fdaa)";
-      "col.border_inactive" = "rgba(404040aa)";
-
-      groupbar.font_size = 14;
-      groupbar.height = 22;
       groupbar.scrolling = false;
-      groupbar.gradients = true;
-      groupbar.gradient_rounding = 10;
-      groupbar.indicator_height = 0;
       groupbar.gaps_in = 10;
       groupbar.gaps_out = 3;
-      groupbar.text_color = "rgba(ffffffaa)";
-      groupbar."col.active" = "rgba(3686fddd)";
-      groupbar."col.inactive" = "rgba(404040aa)";
-
     };
 
     settings.decoration = {
@@ -125,16 +110,7 @@ in
       inactive_opacity = 0.9;
 
       shadow.enabled = false;
-      shadow.range = 5;
-      shadow.render_power = 3;
-      shadow.color = " rgba(1a1a1aee)";
-
       blur.enabled = false;
-      blur.size = 3;
-      blur.passes = 3;
-      blur.xray = true;
-      blur.popups = true;
-      blur.vibrancy = 0.1696;
     };
 
     settings.animations.enabled = true;
@@ -353,19 +329,6 @@ in
     ];
 
   };
-  #######################################################
-  # WALLPAPER
-  #######################################################
-  home-manager.users.face.services.hyprpaper = {
-    enable = true;
-    settings.wallpaper = [
-      {
-        monitor = "eDP-1";
-        path = "${./assets/deep_blue_invert.png}";
-        fit_mode = "contain";
-      }
-    ];
-  };
 
   #######################################################
   # LOCK SCREEN
@@ -382,16 +345,6 @@ in
       disable_loading_bar = true;
     };
 
-    settings.background = {
-      monitor = "";
-      path = "${./assets/deep_blue_invert.png}";
-      blur_passes = 2;
-      contrast = 1;
-      brightness = 0.5;
-      vibrancy = 0.2;
-      vibrancy_darkness = 0.2;
-    };
-
     settings.input-field = {
       monitor = "";
       size = "250, 60";
@@ -399,44 +352,13 @@ in
       dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
       dots_spacing = 0.35; # Scale of dots' absolute size, 0.0 - 1.0
       dots_center = true;
-      outer_color = "rgba(0, 0, 0, 0)";
-      inner_color = "rgba(0, 0, 0, 0.2)";
-      font_color = "rgba(220,220,220,1)";
       fade_on_empty = false;
       rounding = -1;
-      check_color = "rgb(204, 136, 34)";
-      placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
       hide_input = false;
       position = "0, -200";
       halign = "center";
       valign = "center";
     };
-
-    settings.label = [
-      # DATE
-      {
-        monitor = "";
-        text = ''cmd[update:1000] echo "$(date +"%A, %B %d")"'';
-        color = "rgba(242, 243, 244, 0.75)";
-        font_size = 22;
-        font_family = "Hack Mono Bold";
-        position = "0, 300";
-        halign = "center";
-        valign = "center";
-      }
-
-      # TIME
-      {
-        monitor = "";
-        text = ''cmd[update:1000] echo "$(date +"%-I:%M")"'';
-        color = "rgba(242, 243, 244, 0.75)";
-        font_size = 95;
-        font_family = "Hack Mono Bold";
-        position = "0, 200";
-        halign = "center";
-        valign = "center";
-      }
-    ];
 
     settings.image = {
       monitor = "";

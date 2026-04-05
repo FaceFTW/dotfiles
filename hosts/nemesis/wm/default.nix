@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  config,
   ...
 }:
 {
@@ -9,6 +10,9 @@
     ./swaync.nix
     ./vicinae.nix
     ./ashell.nix
+    # THEMES
+    ./themes/deep-blue
+    # ./themes/fraud
   ];
 
   services.xserver.xkb.layout = "us";
@@ -28,10 +32,7 @@
   programs.silentSDDM = {
     enable = true;
     theme = "default";
-    backgrounds.main = ./assets/deep_blue_invert.png;
     profileIcons.face = ./assets/face.png;
-    settings."LoginScreen".background = "deep_blue_invert.png";
-    settings."LockScreen".background = "deep_blue_invert.png";
     settings."LoginScreen.LoginArea.Avatar".shape = "circle";
   };
 
@@ -70,7 +71,13 @@
       theme.package = pkgs.fluent-gtk-theme;
       iconTheme.package = pkgs.fluent-icon-theme;
       iconTheme.name = "Fluent-dark";
+      gtk4.theme.name = "Fluent-round-Dark-compact";
+      gtk4.theme.package = pkgs.fluent-gtk-theme;
+      gtk4.iconTheme.package = pkgs.fluent-icon-theme;
+      gtk4.iconTheme.name = "Fluent-dark";
     };
+
+
 
     xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.kvconfig".source = ./assets/Fluent-Dark.kvconfig;
     xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.svg".source = ./assets/Fluent-round-solidDark.svg;

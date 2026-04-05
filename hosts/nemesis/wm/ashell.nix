@@ -30,10 +30,6 @@
 
       appearance.style = "Islands";
       appearance.scale_factor = 1.5;
-      appearance.primary_color = "#3686fd";
-      appearance.background_color = "#2b2b2b";
-      appearance.workspace_colors = [ "#3686fd" ];
-      appearance.special_workspace_colors = [ "#fd3b3b" ];
 
       workspaces.enable_workspace_filling = true;
       workspaces.max_workspaces = 6;
