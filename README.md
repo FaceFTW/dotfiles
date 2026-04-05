@@ -47,3 +47,5 @@ Legend
 ### Additional Notes
 
 Information about the Nemesis rice is in-progress
+
+All wallpapers are slightly altered from the original work of [Francis Xie](https://x.com/FrancisXie_sfw). It features V1 from [ULTRAKILL by Hakita](https://store.steampowered.com/app/1229490/ULTRAKILL/), which is a copyright of New Blood Interactive (I do not own any of this obviously).

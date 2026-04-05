@@ -1,6 +1,4 @@
 {
-  pkgs,
-  lib,
   ...
 }:
 {
@@ -109,7 +107,6 @@
     settings."LoginScreen".background = "deep_blue_invert.png";
     settings."LockScreen".background = "deep_blue_invert.png";
   };
-
 
   #######################################################
   # Limine

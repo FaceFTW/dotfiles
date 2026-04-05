@@ -1,6 +1,4 @@
 {
-  pkgs,
-  lib,
   ...
 }:
 {
@@ -9,12 +7,12 @@
   #######################################################
   home-manager.users.face.wayland.windowManager.hyprland = {
     settings.general = {
-      "col.active_border" = "rgba(3686fdaa)";
+      "col.active_border" = "rgba(fa6982aa) rgba(fafa00aa) rgba(96f06eaa) rgba(6ec8faaa) rgba(dc6ea5aa)";
       "col.inactive_border" = "rgba(404040aa)";
     };
 
     settings.group = {
-      "col.border_active" = "rgba(3686fdaa)";
+      "col.border_active" = "rgba(fa6982aa) rgba(fafa00aa) rgba(96f06eaa) rgba(6ec8faaa) rgba(dc6ea5aa)";
       "col.border_inactive" = "rgba(404040aa)";
 
       groupbar.font_size = 14;
@@ -23,7 +21,8 @@
       groupbar.gradient_rounding = 10;
       groupbar.indicator_height = 0;
       groupbar.text_color = "rgba(ffffffaa)";
-      groupbar."col.active" = "rgba(3686fddd)";
+      groupbar."col.active" =
+        "rgba(fa6982aa) rgba(fafa00aa) rgba(96f06eaa) rgba(6ec8faaa) rgba(dc6ea5aa)";
       groupbar."col.inactive" = "rgba(404040aa)";
     };
   };
@@ -36,8 +35,9 @@
     settings.wallpaper = [
       {
         monitor = "eDP-1";
-        # path = "${./deep_blue_invert.png}";
+        path = "${./wallpapers}";
         fit_mode = "contain";
+        timeout = 300;
       }
     ];
   };
@@ -48,7 +48,7 @@
   home-manager.users.face.programs.hyprlock = {
     settings.background = {
       monitor = "";
-      # path = "${./deep_blue_invert.png}";
+      path = "${./wallpapers/fraud-3-wallpaper.png}";
       blur_passes = 2;
       contrast = 1;
       brightness = 0.5;
@@ -98,8 +98,32 @@
   home-manager.users.face.programs.ashell.settings = {
     appearance.primary_color = "#3686fd";
     appearance.background_color = "#2b2b2b";
-    appearance.workspace_colors = [ "#3686fd" ];
+    appearance.workspace_colors = [
+      "#3686fd"
+      # "#fa6982"
+      # "#fafa00"
+      # "#96f06e"
+      # "#6ec8fa"
+      # "#dc6ea5"
+    ];
     appearance.special_workspace_colors = [ "#fd3b3b" ];
-
   };
+
+  #######################################################
+  # silentSDDM
+  #######################################################
+  programs.silentSDDM = {
+    backgrounds.main = ./wallpapers/fraud-3-wallpaper.png;
+    settings."LoginScreen".background = "./wallpapers/fraud-3-wallpaper.png";
+    settings."LockScreen".background = "./wallpapers/fraud-3-wallpaper.png";
+  };
+
+  #######################################################
+  # Limine
+  #######################################################
+  boot.loader.limine.style.wallpapers = [
+    ./wallpapers/fraud-1-wallpaper.png
+    ./wallpapers/fraud-2-wallpaper.png
+    ./wallpapers/fraud-3-wallpaper.png
+  ];
 }

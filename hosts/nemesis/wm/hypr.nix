@@ -242,6 +242,9 @@ in
       "SUPER SHIFT, F4, Move to Workspace 4, movetoworkspace, 4"
       "SUPER SHIFT, F5, Move to Workspace 5, movetoworkspace, 5"
       "SUPER SHIFT, F6, Move to Workspace 6, movetoworkspace, 6"
+
+      # Power Control
+      "SUPER, L, Lock screen, exec, hyprlock"
     ];
 
     settings.bindeld = [
@@ -255,14 +258,6 @@ in
       ",XF86MonBrightnessUp, Turn Up Brightness, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%+"
       ",XF86MonBrightnessDown, Turn Down Brightness, exec, ${pkgs.brightnessctl}/bin/brightnessctl s 5%-"
     ];
-
-    # bindmd = $mainMod, mouse:272, Move Window, movewindow
-    # bindmd = $mainMod, mouse:273, Resize Window, resizewindow
-
-    # # Screenshots
-    # bindd = $mainMod, Y, Take Screenshot of Window, exec, $screenshot window --raw | satty --filename -
-    #a bindd = $mainMod, $HOME, Take Screenshot of Monitor, exec, $screenshot output --raw | satty --filename -
-    # bindd = , $HOME, Take Screenshot of Region, exec, $screenshot region --raw | satty --filename -
 
     #######################################################
     # WINDOW RULES

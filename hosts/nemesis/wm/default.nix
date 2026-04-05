@@ -1,7 +1,6 @@
 {
   pkgs,
   inputs,
-  config,
   ...
 }:
 {
@@ -11,8 +10,8 @@
     ./vicinae.nix
     ./ashell.nix
     # THEMES
-    ./themes/deep-blue
-    # ./themes/fraud
+    # ./themes/deep-blue
+    ./themes/fraud
   ];
 
   services.xserver.xkb.layout = "us";
@@ -76,8 +75,6 @@
       gtk4.iconTheme.package = pkgs.fluent-icon-theme;
       gtk4.iconTheme.name = "Fluent-dark";
     };
-
-
 
     xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.kvconfig".source = ./assets/Fluent-Dark.kvconfig;
     xdg.configFile."Kvantum/KvFluentDark/KvFluentDark.svg".source = ./assets/Fluent-round-solidDark.svg;
