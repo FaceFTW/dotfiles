@@ -15,11 +15,11 @@
     ../../modules/packages
     ../../modules/services
     ../../modules/user.nix
+    ./desktop.nix
     ./disks.nix
     ./hardware.nix
     ./networking.nix
     ./services.nix
-    ./wm
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";

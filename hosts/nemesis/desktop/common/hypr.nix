@@ -357,7 +357,7 @@ in
 
     settings.image = {
       monitor = "";
-      path = "${./assets/face.png}";
+      path = "${./face.png}";
       size = 100;
       border_size = 2;
       border_color = "rgba(242,243,244,0.75)";

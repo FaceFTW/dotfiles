@@ -114,8 +114,8 @@
   #######################################################
   programs.silentSDDM = {
     backgrounds.main = ./wallpapers/fraud-3-wallpaper.png;
-    settings."LoginScreen".background = "./wallpapers/fraud-3-wallpaper.png";
-    settings."LockScreen".background = "./wallpapers/fraud-3-wallpaper.png";
+    settings."LoginScreen".background = "./fraud-3-wallpaper.png";
+    settings."LockScreen".background = "./fraud-3-wallpaper.png";
   };
 
   #######################################################
