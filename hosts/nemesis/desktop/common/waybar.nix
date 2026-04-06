@@ -20,14 +20,10 @@ let
   '';
 in
 {
-  imports = [
-    ../common/waybar.nix
-  ];
-
   home-manager.users.face = {
     programs.waybar.enable = true;
     programs.waybar.style = ./waybar.css;
-    programs.waybar.settings = {
+    programs.waybar.settings.mainBar = {
       reload_style_on_change = true;
       position = "top";
       margin-top = 1;
@@ -42,7 +38,7 @@ in
         "clock"
       ];
       modules-right = [
-        "group/tray-expander"
+        "tray"
         "backlight"
         "bluetooth"
         "pulseaudio"
@@ -202,25 +198,10 @@ in
         };
       };
 
-      "group/tray-expander" = {
-        "orientation" = "inherit";
-        "drawer" = {
-          "transition-duration" = 600;
-          "children-class" = "tray-group-item";
+        "tray" = {
+          "icon-size" = 12;
+          "spacing" = 12;
         };
-        "modules" = [
-          "custom/expand-icon"
-          "tray"
-        ];
-      };
-      "custom/expand-icon" = {
-        "format" = "";
-        "tooltip" = false;
-      };
-      "tray" = {
-        "icon-size" = 12;
-        "spacing" = 12;
-      };
       # "custom/screenrecording-indicator": {
       #   "on-click": "omarchy-cmd-screenrecord",
       #   "exec": "$OMARCHY_PATH/default/waybar/indicators/screen-recording.sh",

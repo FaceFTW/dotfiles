@@ -3,6 +3,10 @@
   ...
 }:
 {
+  imports = [
+    ../common/waybar.nix
+  ];
+
   #######################################################
   # Hyprland
   #######################################################
@@ -28,7 +32,7 @@
     };
 
     settings.exec-once = [
-      "sleep 1; ${pkgs.waybar}/bin/waybar"
+      "sleep 1; ${pkgs.waybar}/bin/waybar &"
     ];
   };
 
