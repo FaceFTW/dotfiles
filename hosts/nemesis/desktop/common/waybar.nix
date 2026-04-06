@@ -26,9 +26,9 @@ in
     programs.waybar.settings.mainBar = {
       reload_style_on_change = true;
       position = "top";
-      margin-top = 1;
-      height = 25;
-      width = 1100;
+      margin-top = 2;
+      height = 32;
+      width = 2400;
       margin-bottom = 0;
 
       modules-left = [
@@ -50,7 +50,8 @@ in
 
       "hyprland/workspaces" = {
         on-click = "activate";
-        format = "{icon}";
+        format = "{icon}: {windows}";
+        format-window-separator = " ";
         format-icons = {
           "1" = "1";
           "2" = "2";
@@ -58,10 +59,6 @@ in
           "4" = "4";
           "5" = "5";
           "6" = "6";
-          "7" = "7";
-          "8" = "8";
-          "9" = "9";
-          "10" = "10";
         };
         persistent-workspaces = {
           "1" = [ ];
@@ -69,6 +66,13 @@ in
           "3" = [ ];
           "4" = [ ];
           "5" = [ ];
+        };
+        workspace-taskbar = {
+          enable = true;
+          update-active-window = false;
+          format = "{icon}";
+          icon-size = 28;
+          on-click-window = "${focus_window}/bin/focus-window.sh {address} {button}";
         };
       };
 
@@ -102,25 +106,25 @@ in
           "󰤥"
           "󰤨"
         ];
-        "format" = "{icon}";
-        "format-wifi" = "{icon}";
-        "format-ethernet" = "󰀂";
-        "format-disconnected" = "󰖪";
-        "tooltip-format-wifi" = "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
-        "tooltip-format-ethernet" = "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
-        "tooltip-format-disconnected" = "Disconnected";
-        "interval" = 3;
-        "nospacing" = 1;
-        # "on-click": "alacritty --class=Impala -e impala"
+        format = "{icon}";
+        format-wifi = "{icon}";
+        format-ethernet = "󰀂";
+        format-disconnected = "󰖪";
+        tooltip-format-wifi = "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
+        tooltip-format-ethernet = "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
+        tooltip-format-disconnected = "Disconnected";
+        interval = 3;
+        nospacing = 1;
+        on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
       };
 
       "battery" = {
-        "format" = "{capacity}% {icon}";
-        "format-discharging" = "{capacity}% {icon}";
-        "format-charging" = "{icon}";
-        "format-plugged" = "{power}";
-        "format-icons" = {
-          "charging" = [
+        format = "{capacity}% {icon}";
+        format-discharging = "{capacity}% {icon}";
+        format-charging = "{capacity}% {icon}";
+        format-plugged = "{power}";
+        format-icons = {
+          charging = [
             "󰢜"
             "󰂆"
             "󰂇"
@@ -132,7 +136,7 @@ in
             "󰂋"
             "󰂅"
           ];
-          "default" = [
+          default = [
             "󰁺"
             "󰁻"
             "󰁼"
@@ -145,23 +149,23 @@ in
             "󰁹"
           ];
         };
-        "format-full" = "󰂅";
-        "tooltip-format-discharging" = "{power:>1.0f}W↓ {capacity}%";
-        "tooltip-format-charging" = "{power:>1.0f}W↑ {capacity}%";
-        "interval" = 5;
-        "states" = {
-          "warning" = 20;
-          "critical" = 10;
+        format-full = "󰂅";
+        tooltip-format-discharging = "{power:>1.0f}W↓ {capacity}%";
+        tooltip-format-charging = "{power:>1.0f}W↑ {capacity}%";
+        interval = 5;
+        states = {
+          warning = 20;
+          critical = 10;
         };
       };
 
-      "bluetooth" = {
-        "format" = "";
-        "format-disabled" = "󰂲";
-        "format-off" = "󰂲";
-        "format-connected" = "";
-        "tooltip-format" = "Devices connected: {num_connections}";
-        # "on-click": "omarchy-launch-bluetooth"
+      bluetooth = {
+        format = "";
+        format-disabled = "󰂲";
+        format-off = "󰂲";
+        format-connected = "";
+        tooltip-format = "Devices connected: {num_connections}";
+        on-click = "${pkgs.blueman}/bin/blueman-manager-wrapped";
       };
 
       # "backlight": {
@@ -184,8 +188,8 @@ in
 
       "pulseaudio" = {
         "format" = "{icon}";
-        # "on-click": "omarchy-launch-or-focus-tui wiremix",
-        # "on-click-right"= "pamixer -t",
+        "on-click" = "";
+        "on-click-right" = "${pkgs.hyprpwcenter}/bin/hyprpwcenter";
         "tooltip-format" = "Playing at {volume}%";
         "scroll-step" = 5;
         "format-muted" = "";
@@ -198,16 +202,10 @@ in
         };
       };
 
-        "tray" = {
-          "icon-size" = 12;
-          "spacing" = 12;
-        };
-      # "custom/screenrecording-indicator": {
-      #   "on-click": "omarchy-cmd-screenrecord",
-      #   "exec": "$OMARCHY_PATH/default/waybar/indicators/screen-recording.sh",
-      #   "signal": 8,
-      #   "return-type": "json"
-      # };
+      "tray" = {
+        "icon-size" = 28;
+        "spacing" = 28;
+      };
     };
   };
 }

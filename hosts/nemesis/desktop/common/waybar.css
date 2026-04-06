@@ -4,7 +4,7 @@
 
 * {
 	font-family: "Hack Nerd Font Propo";
-	font-size: 12px;
+	font-size: 18px;
 	font-weight: bold;
 	min-height: 0px;
 }
@@ -14,18 +14,18 @@ window#waybar {
 	background: linear-gradient(180deg, @background 75%, @foreground);
 	transition-duration: 0.5s;
 	border-radius: 24px;
+	margin: 8px 0px;
 }
 
 /* --- Sub-Groups ---*/
 
 .modules-left {
-	border-radius: 24px;
+	border-radius: 32px;
 	opacity: 0.95;
 	border: 2px solid alpha(@foreground, 0.8);
 	background-color: alpha(@background, 0.9);
 	margin: 0px;
 	padding: 0px 8px;
-	padding-right: 2px;
 	color: @foreground;
 }
 
@@ -50,14 +50,14 @@ window#waybar {
 }
 
 /* --- Workspaces --- */
-#workspaces {
+/*#workspaces {
 	border: 2px solid alpha(@foreground, 0.8);
 	border-radius: 24px;
 	background-color: alpha(@background, 1);
 	opacity: 0.95;
 	margin: 0px;
 	padding: 2px 1px 2px;
-}
+}*/
 
 #workspaces button {
 	padding: 0px 2px;
@@ -101,8 +101,6 @@ window#waybar {
 /* --- General Modules --- */
 
 #tray,
-#group-tray-expander,
-#mpris,
 #cpu,
 #clock,
 #battery,
@@ -110,14 +108,7 @@ window#waybar {
 #backlight,
 #bluetooth,
 #pulseaudio,
-#memory,
-#custom-weather,
-#custom-update,
-#idle_inhibitor,
-#custom-screenrecording-indicator,
-#custom-idle-indicator,
-#custom-screenrecording-indicator,
-#custom-updatespacman {
+#memory {
 	min-width: 14px;
 	margin: 0 4px 0 2px;
 	padding: 0 3px;
@@ -132,12 +123,7 @@ window#waybar {
 #temperature:hover,
 #battery:hover,
 #bluetooth:hover,
-#custom-omarchy:hover,
-#custom-weather:hover,
-#custom-update:hover,
 #idle_inhibitor:hover,
-#custom-screenrecording-indicator,
-#custom-updatespacman:hover,
 #network:hover,
 #pulseaudio:hover {
 	color: @foreground;
@@ -178,14 +164,12 @@ window#waybar {
 }
 
 tooltip {
-	padding: 4px;
+	padding: 8px;
 	background-color: alpha(@background, 1);
 	opacity: 0.95;
-	font-size: 10px;
 	border: 2px solid alpha(@foreground, 0.8);
 	border-radius: 24px;
 	box-shadow: 1px 1px 3px 1px #131313;
-	font-size: 12px;
 }
 tooltip label {
 	color: @foreground;
