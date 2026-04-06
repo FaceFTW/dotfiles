@@ -1,0 +1,193 @@
+/* --- Global-Settings ---*/
+@define-color foreground "#e6d9db";
+@define-color background "2c2525";
+
+* {
+	font-family: "Hack Nerd Font Propo";
+	font-size: 12px;
+	font-weight: bold;
+	min-height: 0px;
+}
+
+/* --- Waybar ---*/
+window#waybar {
+	background: linear-gradient(180deg, @background 75%, @foreground);
+	transition-duration: 0.5s;
+	border-radius: 24px;
+}
+
+/* --- Sub-Groups ---*/
+
+.modules-left {
+	border-radius: 24px;
+	opacity: 0.95;
+	border: 2px solid alpha(@foreground, 0.8);
+	background-color: alpha(@background, 0.9);
+	margin: 0px;
+	padding: 0px 8px;
+	padding-right: 2px;
+	color: @foreground;
+}
+
+/* --- Modules ---*/
+
+.modules-center {
+	color: @foreground;
+	margin: 0px;
+	border-radius: 16px;
+	opacity: 0.95;
+	border: 2px solid alpha(@foreground, 0.8);
+	background-color: alpha(@background, 0.9);
+}
+
+.modules-right {
+	color: @foreground;
+	margin: 0px;
+	border-radius: 16px;
+	opacity: 0.95;
+	border: 2px solid alpha(@foreground, 0.8);
+	background-color: alpha(@background, 0.9);
+}
+
+/* --- Workspaces --- */
+#workspaces {
+	border: 2px solid alpha(@foreground, 0.8);
+	border-radius: 24px;
+	background-color: alpha(@background, 1);
+	opacity: 0.95;
+	margin: 0px;
+	padding: 2px 1px 2px;
+}
+
+#workspaces button {
+	padding: 0px 2px;
+	margin: 1px 2px;
+	border-radius: 24px;
+	background-color: alpha(@foreground, 0.5);
+	color: @background;
+	transition: all 0.3s ease-in-out;
+	opacity: 0.95;
+}
+
+#workspaces button.active {
+	color: @background;
+	background-color: alpha(@foreground, 0.9);
+	border-radius: 24px;
+	opacity: 1;
+	transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.empty {
+	background-color: alpha(@foreground, 0.4);
+	border: 1px groove alpha(@foreground, 0.9);
+	color: @foreground;
+	opacity: 0.45;
+	border-radius: 24px;
+	transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+	color: @foreground;
+	border-radius: 24px;
+	opacity: 0.9;
+	background: linear-gradient(180deg, @background 75%, @foreground);
+}
+
+#workspaces button.empty.active {
+	background-color: @foreground;
+	color: @background;
+}
+
+/* --- General Modules --- */
+
+#tray,
+#group-tray-expander,
+#mpris,
+#cpu,
+#clock,
+#battery,
+#network,
+#backlight,
+#bluetooth,
+#pulseaudio,
+#memory,
+#custom-weather,
+#custom-update,
+#idle_inhibitor,
+#custom-screenrecording-indicator,
+#custom-idle-indicator,
+#custom-screenrecording-indicator,
+#custom-updatespacman {
+	min-width: 14px;
+	margin: 0 4px 0 2px;
+	padding: 0 3px;
+}
+
+/* --- Hover right module  --- */
+#clock:hover,
+#tray:hover,
+#custom-expand-icon:hover,
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#battery:hover,
+#bluetooth:hover,
+#custom-omarchy:hover,
+#custom-weather:hover,
+#custom-update:hover,
+#idle_inhibitor:hover,
+#custom-screenrecording-indicator,
+#custom-updatespacman:hover,
+#network:hover,
+#pulseaudio:hover {
+	color: @foreground;
+	border-radius: 2px;
+	opacity: 0.9;
+	background: linear-gradient(180deg, @background 75%, @foreground);
+}
+
+/* Specific Module */
+
+#group-tray-expander {
+	background-color: @background;
+	color: @foreground;
+	border-radius: 24px;
+}
+
+#custom-expand-icon {
+	padding: 0px 2px;
+	margin-left: 4px;
+}
+
+#tray {
+	background-color: @background;
+	margin: 0 10px;
+}
+
+#tray > .passive {
+	-gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+	-gtk-icon-effect: highlight;
+	background-color: @transparent;
+}
+
+.hidden {
+	opacity: 0;
+}
+
+tooltip {
+	padding: 4px;
+	background-color: alpha(@background, 1);
+	opacity: 0.95;
+	font-size: 10px;
+	border: 2px solid alpha(@foreground, 0.8);
+	border-radius: 24px;
+	box-shadow: 1px 1px 3px 1px #131313;
+	font-size: 12px;
+}
+tooltip label {
+	color: @foreground;
+	font-weight: normal;
+}

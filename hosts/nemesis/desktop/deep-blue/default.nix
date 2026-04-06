@@ -1,7 +1,11 @@
 {
+  pkgs,
   ...
 }:
 {
+  imports = [
+    ../common/ashell.nix
+  ];
   #######################################################
   # Hyprland
   #######################################################
@@ -24,6 +28,10 @@
       groupbar."col.active" = "rgba(3686fddd)";
       groupbar."col.inactive" = "rgba(404040aa)";
     };
+
+    settings.exec-once = [
+      "sleep 1; ${pkgs.ashell}/bin/ashell"
+    ];
   };
 
   #######################################################

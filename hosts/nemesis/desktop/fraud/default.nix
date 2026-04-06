@@ -1,4 +1,5 @@
 {
+  pkgs,
   ...
 }:
 {
@@ -25,6 +26,10 @@
         "rgba(fa6982aa) rgba(fafa00aa) rgba(96f06eaa) rgba(6ec8faaa) rgba(dc6ea5aa)";
       groupbar."col.inactive" = "rgba(404040aa)";
     };
+
+    settings.exec-once = [
+      "sleep 1; ${pkgs.waybar}/bin/waybar"
+    ];
   };
 
   #######################################################

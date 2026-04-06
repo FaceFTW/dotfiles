@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    ./desktop/common/ashell.nix
+    # ./desktop/common/ashell.nix
     ./desktop/common/flameshot.nix
     ./desktop/common/frameworks.nix
     ./desktop/common/hypr.nix
