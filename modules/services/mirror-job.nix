@@ -10,6 +10,7 @@ let
     types
     concatMapStrings
     ;
+
   jobSpec =
     with types;
     submodule {
@@ -45,6 +46,12 @@ let
         default = [ ];
       };
 
+      options.filters = mkOption{
+        type = with types; listOf str;
+        description = "List of rsync filters to add to the arguments";
+        default = [ ];
+      };
+
       options.post-mirror-cmds = mkOption {
         type = types.str;
         description = "Commands to run after the main mirror command is finished";
@@ -61,11 +68,13 @@ let
       source,
       destination,
       exclude,
+      filters,
       post-mirror-cmds,
       ...
     }:
     let
       excludes = concatMapStrings (x: "--exclude \"${x}\" ") exclude;
+      filterz = concatMapStrings (x: "--filter \"${x}\" ") filters;
     in
     {
 
@@ -92,6 +101,7 @@ let
             --progress \
             --delete-before \
             ${excludes} \
+            ${filterz} \
             "${source}/" \
             ${destination}
 

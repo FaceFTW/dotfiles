@@ -243,21 +243,26 @@
   ############################################
   # Mirror Jobs
   ############################################
-  # servicesCustom.mirror.archive-freeman = {
-  #   notification-title = "Archiver - Freeman Mirror";
-  #   cron = "Sun *-*-* 09:00:00";
-  #   source = "/mnt/archive";
-  #   destination = "/mnt/freeman";
-  #   mounts = [
-  #     "mnt-archive.mount"
-  #     "mnt-freeman.mount"
-  #   ];
-  #   exclude = [
-  #     "/SteamBackups"
-  #     "/Misc_Large"
-  #     "/SteamLibrary"
-  #   ];
-  # };
+  servicesCustom.mirror.archive-freeman = {
+    notification-title = "Archiver - Freeman Mirror";
+    cron = "Sun *-*-* 09:00:00";
+    source = "/mnt/archive";
+    destination = "/mnt/freeman";
+    mounts = [
+      "mnt-archive.mount"
+      "mnt-freeman.mount"
+    ];
+    exclude = [
+      "/SteamBackups"
+      "/Misc_Large"
+      "/SteamLibrary"
+    ];
+    filters = [
+      "protect Autorun.inf"
+      "protect .VolumeIcon.ico"
+      "protect .VolumeIcon.icns"
+    ];
+  };
 
   servicesCustom.mirror.archive-kleiner = {
     notification-title = "Archiver - Kleiner Mirror";
@@ -274,6 +279,11 @@
       "/SteamLibrary"
       "/TV\ Shows"
       "/Movies"
+    ];
+    filters = [
+      "protect Autorun.inf"
+      "protect .VolumeIcon.ico"
+      "protect .VolumeIcon.icns"
     ];
   };
 
