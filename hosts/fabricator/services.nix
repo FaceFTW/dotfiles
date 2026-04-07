@@ -84,7 +84,6 @@
       pkgs.v4l-utils
       pkgs.libcamera-rpi
     ];
-    # unitConfig.ConditionPathExists = "/sys/bus/i2c/drivers/imx708/10-001a/video4linux";
     environment.LIBCAMERA_LOG_LEVEL="0";
     environment.LIBCAMERA_IPA_MODULE_PATH="${pkgs.libcamera-rpi}/share/libcamera/ipa";
     environment.LIBCAMERA_RPI_CONFIG_FILE="${pkgs.libcamera-rpi}/share/libcamera/pipeline/rpi/vc4/rpi_apps.yaml";
@@ -95,9 +94,11 @@
         "${pkgs.libcamera-rpi}/bin/libcamerify"
         "${pkgs.ustreamer}/bin/ustreamer"
         "--device=/dev/video0"
-        "--format=uyvy"
-        "--encoder=M2M-VIDEO"
+        "--format=YUYV"
+        "--slowdown"
+        "--encoder=HW"
         "--resolution=1280x720"
+        "--drop-same-frames=30"
         "--desired-fps=15"
         "--allow-origin=http://localhost:*"
         "--host=0.0.0.0"
@@ -105,28 +106,6 @@
         "--verbose"
       ]
     );
-
-    # serviceConfig.ExecStart = (
-    #   lib.foldl' (acc: e: acc + " " + e) "" [
-    #     "${pkgs.camera-streamer}/bin/camera-streamer"
-    #     "--camera-path=/base/soc/i2c0mux/i2c@1/imx708@1a"
-    #     "--camera-type=libcamera"
-    #     "--camera-format=YUYV"
-    #     "--camera-width=4608"
-    #     "--camera-height=2592"
-    #     "--camera-fps=15"
-    #     "--camera-nbufs=2"
-    #     "--camera-snapshot.height=1080"
-    #     "--camera-video.height=720"
-    #     "--camera-stream.height=480"
-    #     "--camera-options=AfMode=2"
-    #     "--camera-options=AfRange=2"
-    #     "--http-listen=0.0.0.0"
-    #     "--http-port=5123"
-    #     "--log-debug"
-    #     "--log-verbose"
-    #   ]
-    # );
 
     serviceConfig.User = "klipper";
     serviceConfig.Group = "klipper";

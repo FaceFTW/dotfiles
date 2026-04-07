@@ -46,10 +46,10 @@
       name = "spi";
       dtsFile = ../../devicetree/spi0-0cs-overlay.dts;
     }
-    {
-      name = "imx708";
-      dtsFile = ../../devicetree/imx708-overlay.dts;
-    }
+    # {
+    #   name = "imx708";
+    #   dtsFile = ../../devicetree/imx708-overlay.dts;
+    # }
     # {
     #   name = "ov5647";
     #   dtsFile = ./devicetree/ov5647-overlay.dts;
@@ -62,8 +62,8 @@
   services.udev.enable = true;
   services.udev.extraRules = ''
     SUBSYSTEM=="video4linux", KERNEL=="video[01]", GROUP="camera", MODE="660"
-    SUBSYSTEM=="media", KERNEL=="media2", GROUP="camera", MODE="660"
-    SUBSYSTEM=="i2c", GROUP="i2c", MODE="660"
+    # SUBSYSTEM=="media", KERNEL=="media2", GROUP="camera", MODE="660"
+    # SUBSYSTEM=="i2c", GROUP="i2c", MODE="660"
 
     # https://raspberrypi.stackexchange.com/a/141107
     SUBSYSTEM=="dma_heap", GROUP="camera", MODE="0660"
