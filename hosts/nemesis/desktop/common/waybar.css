@@ -1,52 +1,76 @@
 /* --- Global-Settings ---*/
 @define-color foreground #e6d9db;
 @define-color background #2c2525;
+@define-color red #fa6982;
+@define-color red-dimmed #AD495A;
+@define-color orange #faad45;
+@define-color orange-dimmed #AD7731;
+@define-color yellow #fafa00;
+@define-color yellow-dimmed #ADAD00;
+@define-color green #96f06e;
+@define-color green-dimmed #66A34B;
+@define-color blue #63c8fa;
+@define-color blue-dimmed #458BAD;
+@define-color purple #dc6ea5;
+@define-color purple-dimmed #8F476B;
 
 * {
 	font-family: "Hack Nerd Font Propo";
 	font-size: 18px;
-	font-weight: bold;
-	min-height: 0px;
+	/* font-weight: bold; */
+	/* min-height: 0px; */
 }
 
 /* --- Waybar ---*/
 window#waybar {
-	background: linear-gradient(180deg, @background 75%, @foreground);
+	background:
+		linear-gradient(@background, @background) padding-box,
+		linear-gradient(
+				90deg,
+				@red 0%,
+				@yellow 20%,
+				@green 40%,
+				@blue 60%,
+				@purple 80%,
+				@red 100%
+			)
+			border-box;
 	transition-duration: 0.5s;
 	border-radius: 24px;
-	margin: 8px 0px;
-}
-
-/* --- Sub-Groups ---*/
-
-.modules-left {
-	border-radius: 32px;
-	opacity: 0.95;
-	border: 2px solid alpha(@foreground, 0.8);
-	background-color: alpha(@background, 0.9);
-	margin: 0px;
-	padding: 0px 8px;
-	color: @foreground;
+	border-bottom: 4px solid transparent;
+	border-top: 4px solid transparent;
 }
 
 /* --- Modules ---*/
 
+.modules-left {
+	padding: 4px 0px;
+	/* border-radius: 32px;
+	opacity: 0.95;
+	border: 2px solid alpha(@foreground, 0.8);
+	background-color: alpha(@background, 0.9);
+	margin: 0px;
+	color: @foreground; */
+}
+
 .modules-center {
-	color: @foreground;
+	padding: 4px 0px;
+	/* color: @foreground;
 	margin: 0px;
 	border-radius: 16px;
 	opacity: 0.95;
 	border: 2px solid alpha(@foreground, 0.8);
-	background-color: alpha(@background, 0.9);
+	background-color: alpha(@background, 0.9); */
 }
 
 .modules-right {
-	color: @foreground;
+	padding: 4px 8px;
+	/* color: @foreground;
 	margin: 0px;
 	border-radius: 16px;
 	opacity: 0.95;
 	border: 2px solid alpha(@foreground, 0.8);
-	background-color: alpha(@background, 0.9);
+	background-color: alpha(@background, 0.9); */
 }
 
 /* --- Workspaces --- */
@@ -60,42 +84,107 @@ window#waybar {
 }*/
 
 #workspaces button {
-	padding: 0px 2px;
+	padding: 0px 8px;
 	margin: 1px 2px;
 	border-radius: 24px;
-	background-color: alpha(@foreground, 0.5);
-	color: @background;
 	transition: all 0.3s ease-in-out;
 	opacity: 0.95;
+	border: 1px groove alpha(@background, 0.9);
 }
-
 #workspaces button.active {
-	color: @background;
-	background-color: alpha(@foreground, 0.9);
-	border-radius: 24px;
 	opacity: 1;
 	transition: all 0.3s ease-in-out;
 }
-
-#workspaces button.empty {
-	background-color: alpha(@foreground, 0.4);
-	border: 1px groove alpha(@foreground, 0.9);
-	color: @foreground;
+/* #workspaces button.empty {
 	opacity: 0.45;
-	border-radius: 24px;
 	transition: all 0.3s ease-in-out;
-}
-
+} */
 #workspaces button:hover {
-	color: @foreground;
-	border-radius: 24px;
 	opacity: 0.9;
-	background: linear-gradient(180deg, @background 75%, @foreground);
 }
 
-#workspaces button.empty.active {
-	background-color: @foreground;
+#workspaces button:nth-child(1) {
+	background-color: alpha(@red-dimmed, 0.9);
 	color: @background;
+}
+#workspaces button:nth-child(1).active {
+	color: @background;
+	background-color: alpha(@red, 0.9);
+}
+#workspaces button:nth-child(1):hover {
+	color: @background;
+	opacity: 0.9;
+	background: linear-gradient(180deg, @red 75%, @red-dimmed);
+}
+
+#workspaces button:nth-child(2) {
+	background-color: alpha(@orange-dimmed, 0.9);
+	color: @background;
+}
+#workspaces button:nth-child(2).active {
+	color: @background;
+	background-color: alpha(@orange, 0.9);
+}
+#workspaces button:nth-child(2):hover {
+	color: @background;
+	opacity: 0.9;
+	background: linear-gradient(180deg, @orange 75%, @orange-dimmed);
+}
+
+#workspaces button:nth-child(3) {
+	background-color: alpha(@yellow-dimmed, 0.9);
+	color: @background;
+}
+#workspaces button:nth-child(3).active {
+	color: @background;
+	background-color: alpha(@yellow, 0.9);
+}
+#workspaces button:nth-child(3):hover {
+	color: @background;
+	opacity: 0.9;
+	background: linear-gradient(180deg, @yellow 75%, @yellow-dimmed);
+}
+
+#workspaces button:nth-child(4) {
+	background-color: alpha(@green-dimmed, 0.9);
+	color: @background;
+}
+#workspaces button:nth-child(4).active {
+	color: @background;
+	background-color: alpha(@green, 0.9);
+}
+#workspaces button:nth-child(4):hover {
+	color: @background;
+	opacity: 0.9;
+	background: linear-gradient(180deg, @green 75%, @green-dimmed);
+}
+
+#workspaces button:nth-child(5) {
+	background-color: alpha(@blue-dimmed, 0.9);
+	color: @background;
+}
+#workspaces button:nth-child(5).active {
+	color: @background;
+	background-color: alpha(@blue, 0.9);
+}
+#workspaces button:nth-child(5):hover {
+	color: @background;
+	opacity: 0.9;
+	background: linear-gradient(180deg, @blue 75%, @blue-dimmed);
+}
+
+#workspaces button:nth-child(6) {
+	background-color: alpha(@purple-dimmed, 0.9);
+	color: @background;
+}
+#workspaces button:nth-child(6).active {
+	color: @background;
+	background-color: alpha(@purple, 0.9);
+}
+#workspaces button:nth-child(6):hover {
+	color: @background;
+	opacity: 0.9;
+	background: linear-gradient(180deg, @purple 75%, @purple-dimmed);
 }
 
 /* --- General Modules --- */

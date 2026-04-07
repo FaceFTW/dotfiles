@@ -28,7 +28,7 @@ in
       position = "top";
       margin-top = 2;
       height = 32;
-      width = 2400;
+      width = 2380;
       margin-bottom = 0;
 
       modules-left = [
