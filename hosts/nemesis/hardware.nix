@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.microsoft-surface-common
+    # inputs.nixos-hardware.nixosModules.microsoft-surface-common
     inputs.nixos-hardware.nixosModules.common-cpu-intel
     inputs.nixos-hardware.nixosModules.common-gpu-intel
     inputs.nixos-hardware.nixosModules.common-pc-ssd
@@ -15,7 +15,7 @@
   ############################################
   # Hardware Configuration
   ############################################
-  hardware.microsoft-surface.kernelVersion = "stable";
+  # hardware.microsoft-surface.kernelVersion = "stable";
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
@@ -45,6 +45,10 @@
   ];
   boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
+  boot.kernelParams = [
+    "mem_sleep_default=deep"
+  ];
+
   # so I can play deadlock
   boot.kernel.sysctl."vm.max_map_count" = 1048576;
 
@@ -65,7 +69,9 @@
 
   ############################################
   # Surface-related things
-  ############################################
+  ###########################################
+  services.tlp.enable = false;
+  hardware.enableRedistributableFirmware = true;
   services.iptsd.enable = true;
   environment.systemPackages = [ pkgs.surface-control ];
 
