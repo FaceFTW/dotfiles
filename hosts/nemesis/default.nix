@@ -18,6 +18,7 @@
     ./desktop.nix
     ./disks.nix
     ./hardware.nix
+    ./kernel.nix
     ./networking.nix
     ./services.nix
   ];
