@@ -3,6 +3,9 @@
   patchSrc,
   version,
 }:
+let
+  inherit (lib) mkForce;
+in
 [
   {
     ############################################
@@ -14,33 +17,33 @@
       ##
       ## Surface Aggregator Module
       ##
-      CONFIG_SURFACE_AGGREGATOR = module;
-      # CONFIG_SURFACE_AGGREGATOR_ERROR_INJECTION is not set
-      CONFIG_SURFACE_AGGREGATOR_BUS = yes;
-      CONFIG_SURFACE_AGGREGATOR_CDEV = module;
-      CONFIG_SURFACE_AGGREGATOR_HUB = module;
-      CONFIG_SURFACE_AGGREGATOR_REGISTRY = module;
-      CONFIG_SURFACE_AGGREGATOR_TABLET_SWITCH = module;
+      SURFACE_AGGREGATOR = module;
+      # SURFACE_AGGREGATOR_ERROR_INJECTION is not set
+      SURFACE_AGGREGATOR_BUS = yes;
+      SURFACE_AGGREGATOR_CDEV = module;
+      SURFACE_AGGREGATOR_HUB = module;
+      SURFACE_AGGREGATOR_REGISTRY = module;
+      SURFACE_AGGREGATOR_TABLET_SWITCH = module;
 
-      CONFIG_SURFACE_ACPI_NOTIFY = module;
-      CONFIG_SURFACE_DTX = module;
-      CONFIG_SURFACE_PLATFORM_PROFILE = module;
+      SURFACE_ACPI_NOTIFY = module;
+      SURFACE_DTX = module;
+      SURFACE_PLATFORM_PROFILE = module;
 
-      CONFIG_SURFACE_HID = module;
-      CONFIG_SURFACE_KBD = module;
+      SURFACE_HID = module;
+      SURFACE_KBD = module;
 
-      CONFIG_BATTERY_SURFACE = module;
-      CONFIG_CHARGER_SURFACE = module;
+      BATTERY_SURFACE = module;
+      CHARGER_SURFACE = module;
 
-      CONFIG_SENSORS_SURFACE_TEMP = module;
-      CONFIG_SENSORS_SURFACE_FAN = module;
+      SENSORS_SURFACE_TEMP = module;
+      SENSORS_SURFACE_FAN = module;
 
-      CONFIG_RTC_DRV_SURFACE = module;
+      RTC_DRV_SURFACE = module;
 
       ##
       ## Surface Hotplug
       ##
-      CONFIG_SURFACE_HOTPLUG = module;
+      SURFACE_HOTPLUG = module;
 
       ##
       ## IPTS and ITHC touchscreen
@@ -48,55 +51,55 @@
       ## This only enables the user interface for IPTS/ITHC data.
       ## For the touchscreen to work, you need to install iptsd.
       ##
-      CONFIG_HID_IPTS = module;
-      CONFIG_HID_ITHC = module;
-      CONFIG_INTEL_THC_HID = module;
-      CONFIG_INTEL_QUICKSPI = module;
+      HID_IPTS = module;
+      HID_ITHC = module;
+      INTEL_THC_HID = module;
+      INTEL_QUICKSPI = module;
 
       ##
       ## Cameras: IPU3
       ##
-      CONFIG_VIDEO_DW9719 = module;
-      CONFIG_VIDEO_IPU3_IMGU = module;
-      CONFIG_VIDEO_IPU3_CIO2 = module;
-      CONFIG_IPU_BRIDGE = module;
-      CONFIG_INTEL_SKL_INT3472 = module;
-      CONFIG_REGULATOR_TPS68470 = module;
-      CONFIG_COMMON_CLK_TPS68470 = module;
-      CONFIG_LEDS_TPS68470 = module;
+      VIDEO_DW9719 = module;
+      VIDEO_IPU3_IMGU = module;
+      VIDEO_IPU3_CIO2 = module;
+      IPU_BRIDGE = module;
+      INTEL_SKL_INT3472 = module;
+      REGULATOR_TPS68470 = module;
+      COMMON_CLK_TPS68470 = module;
+      LEDS_TPS68470 = module;
 
       ##
       ## Cameras: Sensor drivers
       ##
-      CONFIG_VIDEO_OV5693 = module;
-      CONFIG_VIDEO_OV7251 = module;
-      CONFIG_VIDEO_OV8865 = module;
+      VIDEO_OV5693 = module;
+      VIDEO_OV7251 = module;
+      VIDEO_OV8865 = module;
 
       ##
       ## Surface 3: atomisp causes problems (see issue #1095). Disable it for now.
       ##
-      # CONFIG_INTEL_ATOMISP is not set
+      # INTEL_ATOMISP is not set
 
       ##
       ## ALS Sensor for Surface Book 3, Surface Laptop 3, Surface Pro 7
       ##
-      CONFIG_APDS9960 = module;
+      APDS9960 = module;
 
       ##
       ## Build-in UFS support (required for some Surface Go devices)
       ##
-      CONFIG_SCSI_UFSHCD = module;
-      CONFIG_SCSI_UFSHCD_PCI = module;
+      SCSI_UFSHCD = module;
+      SCSI_UFSHCD_PCI = module;
 
       ##
       ## Other Drivers
       ##
-      CONFIG_INPUT_SOC_BUTTON_ARRAY = module;
-      CONFIG_SURFACE_3_POWER_OPREGION = module;
-      CONFIG_SURFACE_PRO3_BUTTON = module;
-      CONFIG_SURFACE_GPE = module;
-      CONFIG_SURFACE_BOOK1_DGPU_SWITCH = module;
-      CONFIG_HID_SURFACE = module;
+      INPUT_SOC_BUTTON_ARRAY = module;
+      SURFACE_3_POWER_OPREGION = module;
+      SURFACE_PRO3_BUTTON = module;
+      SURFACE_GPE = module;
+      SURFACE_BOOK1_DGPU_SWITCH = module;
+      HID_SURFACE = module;
     };
   }
   {
@@ -171,2533 +174,1760 @@
   ############################################
   # Config to reduce extra module builds
   ############################################
+  # This is an Intel System, skip building AMD things
   {
     name = "97-skip-amd-support";
     patch = null;
     structuredExtraConfig = with lib.kernel; {
-      CONFIG_CPU_SUP_AMD = no;
-      CONFIG_AGP_AMD = no;
-      CONFIG_AGP_AMD64 = no;
+      CPU_SUP_AMD = no;
+      AGP_AMD = no;
+      AGP_AMD64 = no;
       COFNIG_X86_AMD_PSTATE = no;
-      CONFIG_AMD_IOMMU_V2 = no;
-      CONFIG_DRM_AMDGPU = no;
+      AMD_IOMMU_V2 = no;
+      DRM_AMDGPU = no;
     };
   }
 
+  # These are modules that I really will likely not need
   {
     name = "98-dont-build-unused-drivers";
     patch = null;
     structuredExtraConfig = with lib.kernel; {
-      CONFIG_GOOGLE_FIRMWARE = no;
-      CONFIG_GOOGLE_SMI = no;
-      CONFIG_GOOGLE_CBMEM = no;
-      CONFIG_GOOGLE_COREBOOT_TABLE = no;
-      CONFIG_GOOGLE_MEMCONSOLE = no;
-      CONFIG_GOOGLE_MEMCONSOLE_X86_LEGACY = no;
-      CONFIG_GOOGLE_FRAMEBUFFER_COREBOOT = no;
-      CONFIG_GOOGLE_MEMCONSOLE_COREBOOT = no;
-      CONFIG_GOOGLE_VPD = no;
+      GOOGLE_FIRMWARE = lib.mkForce no;
+      GOOGLE_SMI = no;
+      GOOGLE_CBMEM = no;
+      GOOGLE_COREBOOT_TABLE = no;
+      GOOGLE_MEMCONSOLE = no;
+      GOOGLE_MEMCONSOLE_X86_LEGACY = no;
+      GOOGLE_FRAMEBUFFER_COREBOOT = no;
+      GOOGLE_MEMCONSOLE_COREBOOT = no;
+      GOOGLE_VPD = no;
 
       # General modules I don't use
-      CONFIG_HAMRADIO = no;
-      CONFIG_PCCARD = no;
-      CONFIG_PCMCIA = no;
-      CONFIG_PCMCIA_LOAD_CIS = no;
-      CONFIG_CARDBUS = no;
+      HAMRADIO = lib.mkForce no;
+      PCCARD = no;
+      PCMCIA = no;
+      PCMCIA_LOAD_CIS = no;
+      CARDBUS = no;
 
-      CONFIG_YENTA = no;
-      CONFIG_YENTA_O2 = no;
-      CONFIG_YENTA_RICOH = no;
-      CONFIG_YENTA_TI = no;
-      CONFIG_YENTA_ENE_TUNE = no;
-      CONFIG_YENTA_TOSHIBA = no;
-      CONFIG_PD6729 = no;
-      CONFIG_I82092 = no;
-      CONFIG_PCCARD_NONSTATIC = no;
+      YENTA = no;
+      YENTA_O2 = no;
+      YENTA_RICOH = no;
+      YENTA_TI = no;
+      YENTA_ENE_TUNE = no;
+      YENTA_TOSHIBA = no;
+      PD6729 = no;
+      I82092 = no;
+      PCCARD_NONSTATIC = no;
 
-      CONFIG_MOXTET = no;
+      MOXTET = no;
 
-      CONFIG_PCIE_CADENCE_PLAT_HOST = no;
-      CONFIG_PCIE_PLDA_HOST = no;
-      CONFIG_PCIE_MICROCHIP_HOST = no;
+      PCIE_CADENCE_PLAT_HOST = no;
+      PCIE_PLDA_HOST = no;
+      PCIE_MICROCHIP_HOST = no;
 
-      CONFIG_SENSORS_LIS3LV02D = no;
-      CONFIG_AD525X_DPOT = no;
-      CONFIG_AD525X_DPOT_I2C = no;
-      CONFIG_AD525X_DPOT_SPI = no;
+      SENSORS_LIS3LV02D = no;
+      AD525X_DPOT = no;
+      AD525X_DPOT_I2C = no;
+      AD525X_DPOT_SPI = no;
 
-      CONFIG_DUMMY_IRQ = no;
-      CONFIG_IBM_ASM = no;
-      CONFIG_PHANTOM = no;
-      CONFIG_ICS932S401 = no;
-      CONFIG_SMPRO_ERRMON = no;
-      CONFIG_SMPRO_MISC = no;
-      CONFIG_HI6421V600_IRQ = no;
-      CONFIG_HP_ILO = no;
-      CONFIG_APDS9802ALS = no;
-      CONFIG_ISL29003 = no;
-      CONFIG_ISL29020 = no;
-      CONFIG_SENSORS_TSL2550 = no;
-      CONFIG_SENSORS_BH1770 = no;
-      CONFIG_SENSORS_APDS990X = no;
-      CONFIG_HMC6352 = no;
-      CONFIG_DS1682 = no;
-      CONFIG_VMWARE_BALLOON = no;
-      CONFIG_LATTICE_ECP3_CONFIG = no;
-      CONFIG_DW_XDATA_PCIE = no;
-      CONFIG_PCI_ENDPOINT_TEST = no;
-      CONFIG_XILINX_SDFEC = no;
-      CONFIG_HISI_HIKEY_USB = no;
-      CONFIG_OPEN_DICE = no;
-      CONFIG_VCPU_STALL_DETECTOR = no;
-      CONFIG_TPS6594_ESM = no;
-      CONFIG_TPS6594_PFSM = no;
-      CONFIG_NSM = no;
-      CONFIG_MCHP_LAN966X_PCI = no;
-      CONFIG_C2PORT = no;
-      CONFIG_C2PORT_DURAMAR_2150 = no;
-      CONFIG_SENSORS_LIS3_I2C = no;
-      CONFIG_GENWQE = no;
-      CONFIG_BCM_VK = no;
-      CONFIG_MISC_ALCOR_PCI = no;
-      CONFIG_MISC_RTSX_PCI = no;
-      CONFIG_GP_PCI1XXXX = no;
-      CONFIG_KEBA_CP500 = no;
-      CONFIG_KEBA_LAN9252 = no;
-      CONFIG_MISC_RP1 = no;
-      CONFIG_SCSI_SAS_ATA = no;
-      CONFIG_SCSI_PPA = no;
-      CONFIG_SCSI_IMM = no;
-      CONFIG_QEDI = no;
-      CONFIG_QEDF = no;
-      CONFIG_SCSI_LOWLEVEL_PCMCIA = no;
-      CONFIG_PCMCIA_AHA152X = no;
-      CONFIG_PCMCIA_FDOMAIN = no;
-      CONFIG_PCMCIA_QLOGIC = no;
-      CONFIG_PCMCIA_SYM53C500 = no;
-      CONFIG_ATA = no;
-      CONFIG_SATA_HOST = no;
-      CONFIG_PATA_TIMINGS = no;
-      CONFIG_ATA_VERBOSE_ERROR = no;
-      CONFIG_ATA_FORCE = no;
-      CONFIG_ATA_ACPI = no;
-      # CONFIG_SATA_ZPODD is not set
-      CONFIG_SATA_PMP = no;
-
-      #
-      # Controllers with non-SFF native interface
-      #
-      CONFIG_SATA_AHCI = no;
-      CONFIG_SATA_AHCI_PLATFORM = no;
-      CONFIG_AHCI_DWC = no;
-      CONFIG_AHCI_CEVA = no;
-      CONFIG_SATA_INIC162X = no;
-      CONFIG_SATA_ACARD_AHCI = no;
-      CONFIG_SATA_SIL24 = no;
-      CONFIG_ATA_SFF = no;
-
-      #
-      # SFF controllers with custom DMA interface
-      #
-      CONFIG_PDC_ADMA = no;
-      CONFIG_SATA_QSTOR = no;
-      CONFIG_SATA_SX4 = no;
-      CONFIG_ATA_BMDMA = no;
-
-      #
-      # SATA SFF controllers with BMDMA
-      #
-      CONFIG_ATA_PIIX = no;
-      CONFIG_SATA_DWC = no;
-      # CONFIG_SATA_DWC_OLD_DMA is not set
-      CONFIG_SATA_MV = no;
-      CONFIG_SATA_NV = no;
-      CONFIG_SATA_PROMISE = no;
-      CONFIG_SATA_SIL = no;
-      CONFIG_SATA_SIS = no;
-      CONFIG_SATA_SVW = no;
-      CONFIG_SATA_ULI = no;
-      CONFIG_SATA_VIA = no;
-      CONFIG_SATA_VITESSE = no;
+      DUMMY_IRQ = no;
+      IBM_ASM = no;
+      PHANTOM = no;
+      ICS932S401 = no;
+      SMPRO_ERRMON = no;
+      SMPRO_MISC = no;
+      HI6421V600_IRQ = no;
+      HP_ILO = no;
+      APDS9802ALS = no;
+      ISL29003 = no;
+      ISL29020 = no;
+      SENSORS_TSL2550 = no;
+      SENSORS_BH1770 = no;
+      SENSORS_APDS990X = no;
+      HMC6352 = no;
+      DS1682 = no;
+      VMWARE_BALLOON = no;
+      LATTICE_ECP3_CONFIG = no;
+      DW_XDATA_PCIE = no;
+      PCI_ENDPOINT_TEST = no;
+      XILINX_SDFEC = no;
+      HISI_HIKEY_USB = no;
+      OPEN_DICE = no;
+      VCPU_STALL_DETECTOR = no;
+      TPS6594_ESM = no;
+      TPS6594_PFSM = no;
+      NSM = no;
+      MCHP_LAN966X_PCI = no;
+      C2PORT = no;
+      C2PORT_DURAMAR_2150 = no;
+      SENSORS_LIS3_I2C = no;
+      GENWQE = no;
+      BCM_VK = no;
+      MISC_ALCOR_PCI = no;
+      MISC_RTSX_PCI = no;
+      GP_PCI1XXXX = no;
+      KEBA_CP500 = no;
+      KEBA_LAN9252 = no;
+      MISC_RP1 = no;
+      SCSI_PPA = no;
+      SCSI_IMM = no;
+      QEDI = no;
+      QEDF = no;
+      SCSI_LOWLEVEL_PCMCIA = mkForce no;
+      PCMCIA_AHA152X = no;
+      PCMCIA_FDOMAIN = no;
+      PCMCIA_QLOGIC = no;
+      PCMCIA_SYM53C500 = no;
+      PATA_TIMINGS = no;
 
       #
       # PATA SFF controllers with BMDMA
       #
-      CONFIG_PATA_ALI = no;
-      CONFIG_PATA_AMD = no;
-      CONFIG_PATA_ARTOP = no;
-      CONFIG_PATA_ATIIXP = no;
-      CONFIG_PATA_ATP867X = no;
-      CONFIG_PATA_CMD64X = no;
-      CONFIG_PATA_CYPRESS = no;
-      CONFIG_PATA_EFAR = no;
-      CONFIG_PATA_HPT366 = no;
-      CONFIG_PATA_HPT37X = no;
-      CONFIG_PATA_HPT3X2N = no;
-      CONFIG_PATA_HPT3X3 = no;
-      # CONFIG_PATA_HPT3X3_DMA is not set
-      CONFIG_PATA_IT8213 = no;
-      CONFIG_PATA_IT821X = no;
-      CONFIG_PATA_JMICRON = no;
-      CONFIG_PATA_MARVELL = no;
-      CONFIG_PATA_NETCELL = no;
-      CONFIG_PATA_NINJA32 = no;
-      CONFIG_PATA_NS87415 = no;
-      CONFIG_PATA_OLDPIIX = no;
-      CONFIG_PATA_OPTIDMA = no;
-      CONFIG_PATA_PDC2027X = no;
-      CONFIG_PATA_PDC_OLD = no;
-      CONFIG_PATA_RADISYS = no;
-      CONFIG_PATA_RDC = no;
-      CONFIG_PATA_SCH = no;
-      CONFIG_PATA_SERVERWORKS = no;
-      CONFIG_PATA_SIL680 = no;
-      CONFIG_PATA_SIS = no;
-      CONFIG_PATA_TOSHIBA = no;
-      CONFIG_PATA_TRIFLEX = no;
-      CONFIG_PATA_VIA = no;
-      CONFIG_PATA_WINBOND = no;
+      PATA_ALI = no;
+      PATA_AMD = no;
+      PATA_ARTOP = no;
+      PATA_ATIIXP = no;
+      PATA_ATP867X = no;
+      PATA_CMD64X = no;
+      PATA_CYPRESS = no;
+      PATA_EFAR = no;
+      PATA_HPT366 = no;
+      PATA_HPT37X = no;
+      PATA_HPT3X2N = no;
+      PATA_HPT3X3 = no;
+      # PATA_HPT3X3_DMA is not set
+      PATA_IT8213 = no;
+      PATA_IT821X = no;
+      PATA_JMICRON = no;
+      PATA_MARVELL = no;
+      PATA_NETCELL = no;
+      PATA_NINJA32 = no;
+      PATA_NS87415 = no;
+      PATA_OLDPIIX = no;
+      PATA_OPTIDMA = no;
+      PATA_PDC2027X = no;
+      PATA_PDC_OLD = no;
+      PATA_RADISYS = no;
+      PATA_RDC = no;
+      PATA_SCH = no;
+      PATA_SERVERWORKS = no;
+      PATA_SIL680 = no;
+      PATA_SIS = no;
+      PATA_TOSHIBA = no;
+      PATA_TRIFLEX = no;
+      PATA_VIA = no;
+      PATA_WINBOND = no;
 
       #
       # PIO-only SFF controllers
       #
-      CONFIG_PATA_CMD640_PCI = no;
-      CONFIG_PATA_MPIIX = no;
-      CONFIG_PATA_NS87410 = no;
-      CONFIG_PATA_OPTI = no;
-      CONFIG_PATA_PCMCIA = no;
-      CONFIG_PATA_PLATFORM = no;
-      CONFIG_PATA_OF_PLATFORM = no;
-      CONFIG_PATA_RZ1000 = no;
-      CONFIG_PATA_PARPORT = no;
+      PATA_CMD640_PCI = no;
+      PATA_MPIIX = no;
+      PATA_NS87410 = no;
+      PATA_OPTI = no;
+      PATA_PCMCIA = no;
+      PATA_PLATFORM = no;
+      PATA_OF_PLATFORM = no;
+      PATA_RZ1000 = no;
+      PATA_PARPORT = no;
 
       #
       # Parallel IDE protocol modules
       #
-      CONFIG_PATA_PARPORT_ATEN = no;
-      CONFIG_PATA_PARPORT_BPCK = no;
-      CONFIG_PATA_PARPORT_BPCK6 = no;
-      CONFIG_PATA_PARPORT_COMM = no;
-      CONFIG_PATA_PARPORT_DSTR = no;
-      CONFIG_PATA_PARPORT_FIT2 = no;
-      CONFIG_PATA_PARPORT_FIT3 = no;
-      CONFIG_PATA_PARPORT_EPAT = no;
-      # CONFIG_PATA_PARPORT_EPATC8 is not set
-      CONFIG_PATA_PARPORT_EPIA = no;
-      CONFIG_PATA_PARPORT_FRIQ = no;
-      CONFIG_PATA_PARPORT_FRPW = no;
-      CONFIG_PATA_PARPORT_KBIC = no;
-      CONFIG_PATA_PARPORT_KTTI = no;
-      CONFIG_PATA_PARPORT_ON20 = no;
-      CONFIG_PATA_PARPORT_ON26 = no;
+      PATA_PARPORT_ATEN = no;
+      PATA_PARPORT_BPCK = no;
+      PATA_PARPORT_BPCK6 = no;
+      PATA_PARPORT_COMM = no;
+      PATA_PARPORT_DSTR = no;
+      PATA_PARPORT_FIT2 = no;
+      PATA_PARPORT_FIT3 = no;
+      PATA_PARPORT_EPAT = no;
+      # PATA_PARPORT_EPATC8 is not set
+      PATA_PARPORT_EPIA = no;
+      PATA_PARPORT_FRIQ = no;
+      PATA_PARPORT_FRPW = no;
+      PATA_PARPORT_KBIC = no;
+      PATA_PARPORT_KTTI = no;
+      PATA_PARPORT_ON20 = no;
+      PATA_PARPORT_ON26 = no;
 
       #
       # Generic fallback / legacy drivers
       #
-      CONFIG_PATA_ACPI = no;
-      CONFIG_ATA_GENERIC = no;
-      CONFIG_PATA_LEGACY = no;
+      PATA_ACPI = no;
+      PATA_LEGACY = no;
 
-      CONFIG_SBP_TARGET = no;
+      SBP_TARGET = no;
 
-      CONFIG_FUSION = no;
-      CONFIG_FUSION_SPI = no;
-      CONFIG_FUSION_FC = no;
-      CONFIG_FUSION_SAS = no;
-      CONFIG_FUSION_CTL = no;
-      CONFIG_FUSION_LAN = no;
+      # FUSION = no;
+      # FUSION_SPI = no;
+      # FUSION_FC = no;
+      # FUSION_SAS = no;
+      # FUSION_CTL = no;
+      # FUSION_LAN = no;
 
-      CONFIG_FIREWIRE = no;
-      CONFIG_FIREWIRE_OHCI = no;
-      CONFIG_FIREWIRE_SBP2 = no;
-      CONFIG_FIREWIRE_NET = no;
-      CONFIG_FIREWIRE_NOSY = no;
+      FIREWIRE = no;
+      FIREWIRE_OHCI = no;
+      FIREWIRE_SBP2 = no;
+      FIREWIRE_NET = no;
+      FIREWIRE_NOSY = no;
 
-      CONFIG_MACINTOSH_DRIVERS = no;
-      CONFIG_MAC_EMUMOUSEBTN = no;
+      MACINTOSH_DRIVERS = no;
+      MAC_EMUMOUSEBTN = no;
 
-      CONFIG_NTB_NETDEV = no;
+      NTB_NETDEV = no;
 
-      CONFIG_SUNGEM_PHY = no;
-      CONFIG_ARCNET = no;
-      CONFIG_ARCNET_1201 = no;
-      CONFIG_ARCNET_1051 = no;
-      CONFIG_ARCNET_RAW = no;
-      CONFIG_ARCNET_CAP = no;
-      CONFIG_ARCNET_COM90xx = no;
-      CONFIG_ARCNET_COM90xxIO = no;
-      CONFIG_ARCNET_RIM_I = no;
-      CONFIG_ARCNET_COM20020 = no;
-      CONFIG_ARCNET_COM20020_PCI = no;
-      CONFIG_ARCNET_COM20020_CS = no;
+      SUNGEM_PHY = no;
+      ARCNET = no;
+      ARCNET_1201 = no;
+      ARCNET_1051 = no;
+      ARCNET_RAW = no;
+      ARCNET_CAP = no;
+      ARCNET_COM90xx = no;
+      ARCNET_COM90xxIO = no;
+      ARCNET_RIM_I = no;
+      ARCNET_COM20020 = no;
+      ARCNET_COM20020_PCI = no;
+      ARCNET_COM20020_CS = no;
 
-      CONFIG_B53 = no;
-      CONFIG_B53_SPI_DRIVER = no;
-      CONFIG_B53_MDIO_DRIVER = no;
-      CONFIG_B53_MMAP_DRIVER = no;
-      CONFIG_B53_SRAB_DRIVER = no;
-      CONFIG_B53_SERDES = no;
-      CONFIG_NET_DSA_BCM_SF2 = no;
-      CONFIG_NET_DSA_LOOP = no;
-      CONFIG_NET_DSA_HIRSCHMANN_HELLCREEK = no;
-      CONFIG_NET_DSA_LANTIQ_GSWIP = no;
-      CONFIG_NET_DSA_MT7530 = no;
-      CONFIG_NET_DSA_MT7530_MDIO = no;
-      CONFIG_NET_DSA_MT7530_MMIO = no;
-      CONFIG_NET_DSA_MV88E6060 = no;
-      CONFIG_NET_DSA_MICROCHIP_KSZ_COMMON = no;
-      CONFIG_NET_DSA_MICROCHIP_KSZ9477_I2C = no;
-      CONFIG_NET_DSA_MICROCHIP_KSZ_SPI = no;
-      # CONFIG_NET_DSA_MICROCHIP_KSZ_PTP is not set
-      CONFIG_NET_DSA_MICROCHIP_KSZ8863_SMI = no;
-      CONFIG_NET_DSA_MV88E6XXX = no;
-      # CONFIG_NET_DSA_MV88E6XXX_PTP is not set
-      CONFIG_NET_DSA_MV88E6XXX_LEDS = no;
-      CONFIG_NET_DSA_MSCC_FELIX_DSA_LIB = no;
-      CONFIG_NET_DSA_MSCC_OCELOT_EXT = no;
-      CONFIG_NET_DSA_MSCC_SEVILLE = no;
-      CONFIG_NET_DSA_AR9331 = no;
-      CONFIG_NET_DSA_QCA8K = no;
-      # CONFIG_NET_DSA_QCA8K_LEDS_SUPPORT is not set
-      CONFIG_NET_DSA_SJA1105 = no;
-      # CONFIG_NET_DSA_SJA1105_PTP is not set
-      CONFIG_NET_DSA_XRS700X = no;
-      CONFIG_NET_DSA_XRS700X_I2C = no;
-      CONFIG_NET_DSA_XRS700X_MDIO = no;
-      CONFIG_NET_DSA_REALTEK = no;
-      # CONFIG_NET_DSA_REALTEK_MDIO is not set
-      # CONFIG_NET_DSA_REALTEK_SMI is not set
-      CONFIG_NET_DSA_KS8995 = no;
-      CONFIG_NET_DSA_SMSC_LAN9303 = no;
-      CONFIG_NET_DSA_SMSC_LAN9303_I2C = no;
-      CONFIG_NET_DSA_SMSC_LAN9303_MDIO = no;
-      CONFIG_NET_DSA_VITESSE_VSC73XX = no;
-      CONFIG_NET_DSA_VITESSE_VSC73XX_SPI = no;
-      CONFIG_NET_DSA_VITESSE_VSC73XX_PLATFORM = no;
+      B53 = no;
+      B53_SPI_DRIVER = no;
+      B53_MDIO_DRIVER = no;
+      B53_MMAP_DRIVER = no;
+      B53_SRAB_DRIVER = no;
+      B53_SERDES = no;
+      NET_DSA_BCM_SF2 = no;
+      NET_DSA_LOOP = no;
+      NET_DSA_HIRSCHMANN_HELLCREEK = no;
+      NET_DSA_LANTIQ_GSWIP = no;
+      NET_DSA_MT7530 = no;
+      NET_DSA_MT7530_MDIO = no;
+      NET_DSA_MT7530_MMIO = no;
+      NET_DSA_MV88E6060 = no;
+      NET_DSA_MICROCHIP_KSZ_COMMON = no;
+      NET_DSA_MICROCHIP_KSZ9477_I2C = no;
+      NET_DSA_MICROCHIP_KSZ_SPI = no;
+      # NET_DSA_MICROCHIP_KSZ_PTP is not set
+      NET_DSA_MICROCHIP_KSZ8863_SMI = no;
+      NET_DSA_MV88E6XXX = no;
+      # NET_DSA_MV88E6XXX_PTP is not set
+      NET_DSA_MV88E6XXX_LEDS = no;
+      NET_DSA_MSCC_FELIX_DSA_LIB = no;
+      NET_DSA_MSCC_OCELOT_EXT = no;
+      NET_DSA_MSCC_SEVILLE = no;
+      NET_DSA_AR9331 = no;
+      NET_DSA_QCA8K = no;
+      # NET_DSA_QCA8K_LEDS_SUPPORT is not set
+      NET_DSA_SJA1105 = no;
+      # NET_DSA_SJA1105_PTP is not set
+      NET_DSA_XRS700X = no;
+      NET_DSA_XRS700X_I2C = no;
+      NET_DSA_XRS700X_MDIO = no;
+      NET_DSA_REALTEK = no;
+      # NET_DSA_REALTEK_MDIO is not set
+      # NET_DSA_REALTEK_SMI is not set
+      NET_DSA_KS8995 = no;
+      NET_DSA_SMSC_LAN9303 = no;
+      NET_DSA_SMSC_LAN9303_I2C = no;
+      NET_DSA_SMSC_LAN9303_MDIO = no;
+      NET_DSA_VITESSE_VSC73XX = no;
+      NET_DSA_VITESSE_VSC73XX_SPI = no;
+      NET_DSA_VITESSE_VSC73XX_PLATFORM = no;
 
-      CONFIG_NET_VENDOR_3COM = no;
-      CONFIG_PCMCIA_3C574 = no;
-      CONFIG_PCMCIA_3C589 = no;
-      CONFIG_VORTEX = no;
-      CONFIG_TYPHOON = no;
-      CONFIG_NET_VENDOR_ADAPTEC = no;
-      CONFIG_ADAPTEC_STARFIRE = no;
-      CONFIG_NET_VENDOR_AGERE = no;
-      CONFIG_ET131X = no;
-      CONFIG_NET_VENDOR_ALACRITECH = no;
-      CONFIG_SLICOSS = no;
-      CONFIG_NET_VENDOR_ALTEON = no;
-      CONFIG_ACENIC = no;
-      # CONFIG_ACENIC_OMIT_TIGON_I is not set
-      CONFIG_ALTERA_TSE = no;
-      CONFIG_NET_VENDOR_AMAZON = no;
-      CONFIG_ENA_ETHERNET = no;
-      CONFIG_NET_VENDOR_AMD = no;
-      CONFIG_AMD8111_ETH = no;
-      CONFIG_PCNET32 = no;
-      CONFIG_PCMCIA_NMCLAN = no;
-      CONFIG_AMD_XGBE = no;
-      # CONFIG_AMD_XGBE_DCB is not set
-      CONFIG_AMD_XGBE_HAVE_ECC = no;
-      CONFIG_PDS_CORE = no;
-      CONFIG_NET_VENDOR_AQUANTIA = no;
-      CONFIG_AQTION = no;
-      CONFIG_NET_VENDOR_ARC = no;
-      CONFIG_NET_VENDOR_ASIX = no;
-      CONFIG_SPI_AX88796C = no;
-      # CONFIG_SPI_AX88796C_COMPRESSION is not set
-      CONFIG_NET_VENDOR_ATHEROS = no;
-      CONFIG_ATL2 = no;
-      CONFIG_ATL1 = no;
-      CONFIG_ATL1E = no;
-      CONFIG_ATL1C = no;
-      CONFIG_ALX = no;
-      CONFIG_CX_ECAT = no;
+      NET_VENDOR_3COM = no;
+      PCMCIA_3C574 = no;
+      PCMCIA_3C589 = no;
+      VORTEX = no;
+      TYPHOON = no;
+      NET_VENDOR_ADAPTEC = no;
+      ADAPTEC_STARFIRE = no;
+      NET_VENDOR_AGERE = no;
+      ET131X = no;
+      NET_VENDOR_ALACRITECH = no;
+      SLICOSS = no;
+      NET_VENDOR_ALTEON = no;
+      ACENIC = no;
+      # ACENIC_OMIT_TIGON_I is not set
+      ALTERA_TSE = no;
+      NET_VENDOR_AMAZON = no;
+      ENA_ETHERNET = no;
+      NET_VENDOR_AMD = no;
+      AMD8111_ETH = no;
+      PCNET32 = no;
+      PCMCIA_NMCLAN = no;
+      AMD_XGBE = no;
+      # AMD_XGBE_DCB is not set
+      AMD_XGBE_HAVE_ECC = no;
+      PDS_CORE = no;
+      NET_VENDOR_AQUANTIA = no;
+      AQTION = no;
+      NET_VENDOR_ARC = no;
+      NET_VENDOR_ASIX = no;
+      SPI_AX88796C = no;
+      # SPI_AX88796C_COMPRESSION is not set
+      NET_VENDOR_ATHEROS = no;
+      ATL2 = no;
+      ATL1 = no;
+      ATL1E = no;
+      ATL1C = no;
+      ALX = no;
+      CX_ECAT = no;
 
-      CONFIG_B44 = no;
-      CONFIG_B44_PCI_AUTOSELECT = no;
-      CONFIG_B44_PCICORE_AUTOSELECT = no;
-      CONFIG_B44_PCI = no;
-      CONFIG_BCMGENET = no;
+      B44 = no;
+      B44_PCI_AUTOSELECT = no;
+      B44_PCICORE_AUTOSELECT = no;
+      B44_PCI = no;
+      BCMGENET = no;
 
-      CONFIG_TIGON3 = no;
-      CONFIG_TIGON3_HWMON = no;
-      CONFIG_BNX2X = no;
-      CONFIG_BNX2X_SRIOV = no;
-      CONFIG_SYSTEMPORT = no;
-      CONFIG_BNXT = no;
-      CONFIG_BNXT_SRIOV = no;
-      CONFIG_BNXT_FLOWER_OFFLOAD = no;
-      # CONFIG_BNXT_DCB is not set
-      CONFIG_BNXT_HWMON = no;
-      CONFIG_BNGE = no;
-      CONFIG_NET_VENDOR_CADENCE = no;
-      CONFIG_MACB = no;
-      CONFIG_MACB_USE_HWSTAMP = no;
-      CONFIG_MACB_PCI = no;
-      CONFIG_NET_VENDOR_CAVIUM = no;
-      CONFIG_THUNDER_NIC_PF = no;
-      CONFIG_THUNDER_NIC_VF = no;
-      CONFIG_THUNDER_NIC_BGX = no;
-      CONFIG_THUNDER_NIC_RGX = no;
-      CONFIG_CAVIUM_PTP = no;
-      CONFIG_LIQUIDIO_CORE = no;
-      CONFIG_LIQUIDIO = no;
-      CONFIG_LIQUIDIO_VF = no;
+      TIGON3 = no;
+      TIGON3_HWMON = no;
+      BNX2X = no;
+      BNX2X_SRIOV = no;
+      SYSTEMPORT = no;
+      BNXT = no;
+      BNXT_SRIOV = no;
+      BNXT_FLOWER_OFFLOAD = no;
+      # BNXT_DCB is not set
+      BNXT_HWMON = no;
+      BNGE = no;
+      NET_VENDOR_CADENCE = no;
+      MACB = no;
+      MACB_USE_HWSTAMP = no;
+      MACB_PCI = no;
+      NET_VENDOR_CAVIUM = no;
+      THUNDER_NIC_PF = no;
+      THUNDER_NIC_VF = no;
+      THUNDER_NIC_BGX = no;
+      THUNDER_NIC_RGX = no;
+      CAVIUM_PTP = no;
+      LIQUIDIO_CORE = no;
+      LIQUIDIO = no;
+      LIQUIDIO_VF = no;
 
-      CONFIG_CHELSIO_T1 = no;
-      CONFIG_CHELSIO_T4VF = no;
-      CONFIG_CHELSIO_INLINE_CRYPTO = no;
-      CONFIG_CHELSIO_IPSEC_INLINE = no;
-      CONFIG_CHELSIO_TLS_DEVICE = no;
+      CHELSIO_T1 = no;
+      CHELSIO_T4VF = no;
+      CHELSIO_INLINE_CRYPTO = no;
+      CHELSIO_IPSEC_INLINE = no;
+      CHELSIO_TLS_DEVICE = no;
 
-      CONFIG_NET_VENDOR_CORTINA = no;
-      CONFIG_GEMINI_ETHERNET = no;
-      CONFIG_NET_VENDOR_DAVICOM = no;
-      CONFIG_DM9051 = no;
-      CONFIG_DNET = no;
-      CONFIG_NET_VENDOR_DEC = no;
-      CONFIG_NET_TULIP = no;
-      CONFIG_DE2104X = no;
-      CONFIG_TULIP = no;
-      # CONFIG_TULIP_MWI is not set
-      # CONFIG_TULIP_MMIO is not set
-      # CONFIG_TULIP_NAPI is not set
-      CONFIG_WINBOND_840 = no;
-      CONFIG_DM9102 = no;
-      CONFIG_ULI526X = no;
-      CONFIG_PCMCIA_XIRCOM = no;
-      CONFIG_NET_VENDOR_DLINK = no;
-      CONFIG_DL2K = no;
-      CONFIG_SUNDANCE = no;
+      NET_VENDOR_CORTINA = no;
+      GEMINI_ETHERNET = no;
+      NET_VENDOR_DAVICOM = no;
+      DM9051 = no;
+      DNET = no;
+      NET_VENDOR_DEC = no;
+      NET_TULIP = no;
+      DE2104X = no;
+      TULIP = no;
+      # TULIP_MWI is not set
+      # TULIP_MMIO is not set
+      # TULIP_NAPI is not set
+      WINBOND_840 = no;
+      DM9102 = no;
+      ULI526X = no;
+      PCMCIA_XIRCOM = no;
+      NET_VENDOR_DLINK = no;
+      DL2K = no;
+      SUNDANCE = no;
 
-      CONFIG_BE2NET_HWMON = no;
-      CONFIG_BE2NET_BE2 = no;
-      CONFIG_BE2NET_BE3 = no;
-      CONFIG_BE2NET_LANCER = no;
-      CONFIG_BE2NET_SKYHAWK = no;
-      CONFIG_NET_VENDOR_ENGLEDER = no;
-      CONFIG_TSNEP = no;
-      # CONFIG_TSNEP_SELFTESTS is not set
-      CONFIG_NET_VENDOR_EZCHIP = no;
-      CONFIG_EZCHIP_NPS_MANAGEMENT_ENET = no;
-      CONFIG_NET_VENDOR_FUJITSU = no;
-      CONFIG_PCMCIA_FMVJ18X = no;
-      CONFIG_NET_VENDOR_FUNGIBLE = no;
-      CONFIG_FUN_CORE = no;
-      CONFIG_FUN_ETH = no;
-      CONFIG_NET_VENDOR_GOOGLE = no;
-      CONFIG_GVE = no;
-      CONFIG_NET_VENDOR_HISILICON = no;
-      CONFIG_HIBMCGE = no;
-      CONFIG_NET_VENDOR_HUAWEI = no;
-      CONFIG_HINIC = no;
-      CONFIG_HINIC3 = no;
-      CONFIG_NET_VENDOR_I825XX = no;
+      BE2NET_HWMON = no;
+      BE2NET_BE2 = no;
+      BE2NET_BE3 = no;
+      BE2NET_LANCER = no;
+      BE2NET_SKYHAWK = no;
+      NET_VENDOR_ENGLEDER = no;
+      TSNEP = no;
+      # TSNEP_SELFTESTS is not set
+      NET_VENDOR_EZCHIP = no;
+      EZCHIP_NPS_MANAGEMENT_ENET = no;
+      NET_VENDOR_FUJITSU = no;
+      PCMCIA_FMVJ18X = no;
+      NET_VENDOR_FUNGIBLE = no;
+      FUN_CORE = no;
+      FUN_ETH = no;
+      NET_VENDOR_GOOGLE = no;
+      GVE = no;
+      NET_VENDOR_HISILICON = no;
+      HIBMCGE = no;
+      NET_VENDOR_HUAWEI = no;
+      HINIC = no;
+      HINIC3 = no;
+      NET_VENDOR_I825XX = no;
 
-      CONFIG_JME = no;
-      CONFIG_NET_VENDOR_ADI = no;
-      CONFIG_ADIN1110 = no;
-      CONFIG_NET_VENDOR_LITEX = no;
-      CONFIG_LITEX_LITEETH = no;
-      CONFIG_NET_VENDOR_MARVELL = no;
-      CONFIG_MVMDIO = no;
-      CONFIG_SKGE = no;
-      # CONFIG_SKGE_DEBUG is not set
-      # CONFIG_SKGE_GENESIS is not set
-      CONFIG_SKY2 = no;
-      # CONFIG_SKY2_DEBUG is not set
-      CONFIG_OCTEON_EP = no;
-      CONFIG_OCTEON_EP_VF = no;
-      CONFIG_PRESTERA = no;
-      CONFIG_PRESTERA_PCI = no;
+      JME = no;
+      NET_VENDOR_ADI = no;
+      ADIN1110 = no;
+      NET_VENDOR_LITEX = no;
+      LITEX_LITEETH = no;
+      NET_VENDOR_MARVELL = no;
+      MVMDIO = no;
+      SKGE = no;
+      # SKGE_DEBUG is not set
+      # SKGE_GENESIS is not set
+      SKY2 = no;
+      # SKY2_DEBUG is not set
+      OCTEON_EP = no;
+      OCTEON_EP_VF = no;
+      PRESTERA = no;
+      PRESTERA_PCI = no;
 
-      CONFIG_MLX4_EN = no;
-      CONFIG_MLX4_EN_DCB = no;
+      MLX4_EN = no;
+      MLX4_EN_DCB = no;
 
-      CONFIG_MLX4_DEBUG = no;
-      CONFIG_MLX4_CORE_GEN2 = no;
-      CONFIG_MLX5_CORE = no;
-      # CONFIG_MLX5_FPGA is not set
-      CONFIG_MLX5_CORE_EN = no;
-      CONFIG_MLX5_EN_ARFS = no;
-      CONFIG_MLX5_EN_RXNFC = no;
-      CONFIG_MLX5_MPFS = no;
-      CONFIG_MLX5_ESWITCH = no;
-      CONFIG_MLX5_BRIDGE = no;
-      CONFIG_MLX5_CORE_EN_DCB = no;
-      # CONFIG_MLX5_CORE_IPOIB is not set
-      # CONFIG_MLX5_MACSEC is not set
-      # CONFIG_MLX5_EN_IPSEC is not set
-      # CONFIG_MLX5_EN_TLS is not set
-      CONFIG_MLX5_SW_STEERING = no;
-      CONFIG_MLX5_HW_STEERING = no;
-      # CONFIG_MLX5_SF is not set
-      CONFIG_MLX5_DPLL = no;
-      CONFIG_MLXSW_CORE = no;
-      CONFIG_MLXSW_CORE_HWMON = no;
-      CONFIG_MLXSW_CORE_THERMAL = no;
-      CONFIG_MLXSW_PCI = no;
-      CONFIG_MLXSW_I2C = no;
-      CONFIG_MLXSW_SPECTRUM = no;
-      CONFIG_MLXSW_SPECTRUM_DCB = no;
-      CONFIG_MLXSW_MINIMAL = no;
-      CONFIG_MLXFW = no;
-      CONFIG_NET_VENDOR_META = no;
-      CONFIG_FBNIC = no;
-      CONFIG_NET_VENDOR_MICREL = no;
-      CONFIG_KS8842 = no;
-      CONFIG_KS8851 = no;
-      CONFIG_KS8851_MLL = no;
-      CONFIG_KSZ884X_PCI = no;
-      CONFIG_NET_VENDOR_MICROCHIP = no;
-      CONFIG_ENC28J60 = no;
-      # CONFIG_ENC28J60_WRITEVERIFY is not set
-      CONFIG_ENCX24J600 = no;
-      CONFIG_LAN743X = no;
-      CONFIG_LAN865X = no;
-      CONFIG_LAN966X_SWITCH = no;
-      CONFIG_LAN966X_DCB = no;
-      CONFIG_VCAP = no;
-      CONFIG_FDMA = no;
-      CONFIG_NET_VENDOR_MICROSEMI = no;
-      CONFIG_MSCC_OCELOT_SWITCH_LIB = no;
-      CONFIG_MSCC_OCELOT_SWITCH = no;
-      CONFIG_NET_VENDOR_MICROSOFT = no;
-      CONFIG_MICROSOFT_MANA = no;
-      CONFIG_NET_VENDOR_MYRI = no;
-      CONFIG_MYRI10GE = no;
-      CONFIG_MYRI10GE_DCA = no;
-      CONFIG_FEALNX = no;
-      CONFIG_NET_VENDOR_NI = no;
-      CONFIG_NI_XGE_MANAGEMENT_ENET = no;
-      CONFIG_NET_VENDOR_NATSEMI = no;
-      CONFIG_NATSEMI = no;
-      CONFIG_NS83820 = no;
-      CONFIG_NET_VENDOR_NETERION = no;
-      CONFIG_S2IO = no;
-      CONFIG_NET_VENDOR_NETRONOME = no;
-      CONFIG_NFP = no;
-      CONFIG_NFP_APP_FLOWER = no;
-      CONFIG_NFP_APP_ABM_NIC = no;
-      CONFIG_NFP_NET_IPSEC = no;
-      # CONFIG_NFP_DEBUG is not set
-      CONFIG_NET_VENDOR_8390 = no;
-      CONFIG_PCMCIA_AXNET = no;
-      CONFIG_NE2K_PCI = no;
-      CONFIG_PCMCIA_PCNET = no;
-      CONFIG_NET_VENDOR_NVIDIA = no;
-      CONFIG_FORCEDETH = no;
-      CONFIG_NET_VENDOR_OKI = no;
-      CONFIG_ETHOC = no;
-      CONFIG_OA_TC6 = no;
-      CONFIG_NET_VENDOR_PACKET_ENGINES = no;
-      CONFIG_HAMACHI = no;
-      CONFIG_YELLOWFIN = no;
-      CONFIG_NET_VENDOR_PENSANDO = no;
-      CONFIG_IONIC = no;
-      CONFIG_NET_VENDOR_QLOGIC = no;
-      CONFIG_QLA3XXX = no;
-      CONFIG_QLCNIC = no;
-      CONFIG_QLCNIC_SRIOV = no;
-      CONFIG_QLCNIC_DCB = no;
-      CONFIG_QLCNIC_HWMON = no;
-      CONFIG_NETXEN_NIC = no;
-      CONFIG_QED = no;
-      CONFIG_QED_LL2 = no;
-      CONFIG_QED_SRIOV = no;
-      CONFIG_QEDE = no;
-      CONFIG_QED_RDMA = no;
-      CONFIG_QED_ISCSI = no;
-      CONFIG_QED_FCOE = no;
-      CONFIG_QED_OOO = no;
-      CONFIG_NET_VENDOR_BROCADE = no;
-      CONFIG_BNA = no;
-      CONFIG_NET_VENDOR_QUALCOMM = no;
-      CONFIG_QCA7000 = no;
-      CONFIG_QCA7000_SPI = no;
-      CONFIG_QCA7000_UART = no;
-      CONFIG_QCOM_EMAC = no;
-      CONFIG_RMNET = no;
-      CONFIG_NET_VENDOR_RDC = no;
-      CONFIG_R6040 = no;
-      CONFIG_NET_VENDOR_REALTEK = no;
-      CONFIG_ATP = no;
-      CONFIG_8139CP = no;
-      CONFIG_8139TOO = no;
-      # CONFIG_8139TOO_PIO is not set
-      # CONFIG_8139TOO_TUNE_TWISTER is not set
-      CONFIG_8139TOO_8129 = no;
-      # CONFIG_8139_OLD_RX_RESET is not set
-      CONFIG_R8169 = no;
-      # CONFIG_R8169_LEDS is not set
-      CONFIG_RTASE = no;
-      CONFIG_NET_VENDOR_RENESAS = no;
-      CONFIG_NET_VENDOR_ROCKER = no;
-      CONFIG_ROCKER = no;
-      CONFIG_NET_VENDOR_SAMSUNG = no;
-      CONFIG_SXGBE_ETH = no;
-      CONFIG_NET_VENDOR_SEEQ = no;
-      CONFIG_NET_VENDOR_SILAN = no;
-      CONFIG_SC92031 = no;
-      CONFIG_NET_VENDOR_SIS = no;
-      CONFIG_SIS900 = no;
-      CONFIG_SIS190 = no;
-      CONFIG_NET_VENDOR_SOLARFLARE = no;
-      CONFIG_SFC = no;
-      CONFIG_SFC_MTD = no;
-      CONFIG_SFC_MCDI_MON = no;
-      CONFIG_SFC_SRIOV = no;
-      CONFIG_SFC_MCDI_LOGGING = no;
-      CONFIG_SFC_FALCON = no;
-      CONFIG_SFC_FALCON_MTD = no;
-      CONFIG_SFC_SIENA = no;
-      CONFIG_SFC_SIENA_MTD = no;
-      CONFIG_SFC_SIENA_MCDI_MON = no;
-      # CONFIG_SFC_SIENA_SRIOV is not set
-      CONFIG_SFC_SIENA_MCDI_LOGGING = no;
-      CONFIG_NET_VENDOR_SMSC = no;
-      CONFIG_PCMCIA_SMC91C92 = no;
-      CONFIG_EPIC100 = no;
-      CONFIG_SMSC911X = no;
-      CONFIG_SMSC9420 = no;
-      CONFIG_NET_VENDOR_SOCIONEXT = no;
-      CONFIG_NET_VENDOR_STMICRO = no;
-      CONFIG_STMMAC_ETH = no;
-      # CONFIG_STMMAC_SELFTESTS is not set
-      CONFIG_STMMAC_PLATFORM = no;
-      CONFIG_DWMAC_DWC_QOS_ETH = no;
-      CONFIG_DWMAC_GENERIC = no;
-      CONFIG_DWMAC_INTEL_PLAT = no;
-      CONFIG_DWMAC_INTEL = no;
-      CONFIG_STMMAC_PCI = no;
-      CONFIG_NET_VENDOR_SUN = no;
-      CONFIG_HAPPYMEAL = no;
-      CONFIG_SUNGEM = no;
-      CONFIG_CASSINI = no;
-      CONFIG_NIU = no;
-      CONFIG_NET_VENDOR_SYNOPSYS = no;
-      CONFIG_DWC_XLGMAC = no;
-      CONFIG_DWC_XLGMAC_PCI = no;
-      CONFIG_NET_VENDOR_TEHUTI = no;
-      CONFIG_TEHUTI = no;
-      CONFIG_TEHUTI_TN40 = no;
-      CONFIG_NET_VENDOR_TI = no;
-      # CONFIG_TI_CPSW_PHY_SEL is not set
-      CONFIG_TLAN = no;
-      CONFIG_NET_VENDOR_VERTEXCOM = no;
-      CONFIG_MSE102X = no;
-      CONFIG_NET_VENDOR_VIA = no;
-      CONFIG_VIA_RHINE = no;
-      # CONFIG_VIA_RHINE_MMIO is not set
-      CONFIG_VIA_VELOCITY = no;
-      CONFIG_NET_VENDOR_WANGXUN = no;
-      CONFIG_LIBWX = no;
-      CONFIG_NGBE = no;
-      CONFIG_TXGBE = no;
-      CONFIG_TXGBEVF = no;
-      CONFIG_NGBEVF = no;
-      CONFIG_NET_VENDOR_WIZNET = no;
-      CONFIG_WIZNET_W5100 = no;
-      CONFIG_WIZNET_W5300 = no;
-      # CONFIG_WIZNET_BUS_DIRECT is not set
-      # CONFIG_WIZNET_BUS_INDIRECT is not set
-      CONFIG_WIZNET_BUS_ANY = no;
-      CONFIG_WIZNET_W5100_SPI = no;
-      CONFIG_NET_VENDOR_XILINX = no;
-      CONFIG_XILINX_EMACLITE = no;
-      CONFIG_XILINX_AXI_EMAC = no;
-      CONFIG_XILINX_LL_TEMAC = no;
-      CONFIG_NET_VENDOR_XIRCOM = no;
-      CONFIG_PCMCIA_XIRC2PS = no;
-      CONFIG_FDDI = no;
-      CONFIG_DEFXX = no;
-      CONFIG_SKFP = no;
-      CONFIG_HIPPI = no;
-      CONFIG_ROADRUNNER = no;
+      MLX4_DEBUG = no;
+      MLX4_CORE_GEN2 = no;
+      MLX5_CORE = no;
+      MLXSW_CORE = no;
+      MLXSW_CORE_HWMON = no;
+      MLXSW_CORE_THERMAL = no;
+      MLXSW_PCI = no;
+      MLXSW_I2C = no;
+      MLXSW_SPECTRUM = no;
+      MLXSW_SPECTRUM_DCB = no;
+      MLXSW_MINIMAL = no;
+      MLXFW = no;
+      NET_VENDOR_META = no;
+      FBNIC = no;
+      NET_VENDOR_MICREL = no;
+      KS8842 = no;
+      KS8851 = no;
+      KS8851_MLL = no;
+      KSZ884X_PCI = no;
+      NET_VENDOR_MICROCHIP = no;
+      ENC28J60 = no;
+      # ENC28J60_WRITEVERIFY is not set
+      ENCX24J600 = no;
+      LAN743X = no;
+      LAN865X = no;
+      LAN966X_SWITCH = no;
+      LAN966X_DCB = no;
+      VCAP = no;
+      FDMA = no;
+      NET_VENDOR_MICROSEMI = no;
+      MSCC_OCELOT_SWITCH_LIB = no;
+      MSCC_OCELOT_SWITCH = no;
+      NET_VENDOR_MICROSOFT = no;
+      MICROSOFT_MANA = no;
+      NET_VENDOR_MYRI = no;
+      MYRI10GE = no;
+      MYRI10GE_DCA = no;
+      FEALNX = no;
+      NET_VENDOR_NI = no;
+      NI_XGE_MANAGEMENT_ENET = no;
+      NET_VENDOR_NATSEMI = no;
+      NATSEMI = no;
+      NS83820 = no;
+      NET_VENDOR_NETERION = no;
+      S2IO = no;
+      NET_VENDOR_NETRONOME = no;
+      NFP = no;
+      NFP_APP_FLOWER = no;
+      NFP_APP_ABM_NIC = no;
+      NFP_NET_IPSEC = no;
+      # NFP_DEBUG is not set
+      NET_VENDOR_8390 = no;
+      PCMCIA_AXNET = no;
+      NE2K_PCI = no;
+      PCMCIA_PCNET = no;
+      NET_VENDOR_NVIDIA = no;
+      FORCEDETH = no;
+      NET_VENDOR_OKI = no;
+      ETHOC = no;
+      OA_TC6 = no;
+      NET_VENDOR_PACKET_ENGINES = no;
+      HAMACHI = no;
+      YELLOWFIN = no;
+      NET_VENDOR_PENSANDO = no;
+      IONIC = no;
+      NET_VENDOR_QLOGIC = no;
+      QLA3XXX = no;
+      QLCNIC = no;
+      QLCNIC_SRIOV = no;
+      QLCNIC_DCB = no;
+      QLCNIC_HWMON = no;
+      NETXEN_NIC = no;
+      QED = no;
+      QED_LL2 = no;
+      QED_SRIOV = no;
+      QEDE = no;
+      QED_RDMA = no;
+      QED_ISCSI = no;
+      QED_FCOE = no;
+      QED_OOO = no;
+      NET_VENDOR_BROCADE = no;
+      BNA = no;
+      NET_VENDOR_QUALCOMM = no;
+      QCA7000 = no;
+      QCA7000_SPI = no;
+      QCA7000_UART = no;
+      QCOM_EMAC = no;
+      RMNET = no;
+      NET_VENDOR_RDC = no;
+      R6040 = no;
+      NET_VENDOR_REALTEK = no;
+      ATP = no;
+      "8139CP" = no;
+      "8139TOO" = no;
+      # 8139TOO_PIO is not set
+      # 8139TOO_TUNE_TWISTER is not set
+      # "8139TOO_8129" = no;
+      # 8139_OLD_RX_RESET is not set
+      R8169 = no;
+      # R8169_LEDS is not set
+      RTASE = no;
+      NET_VENDOR_RENESAS = no;
+      NET_VENDOR_ROCKER = no;
+      ROCKER = no;
+      NET_VENDOR_SAMSUNG = no;
+      SXGBE_ETH = no;
+      NET_VENDOR_SEEQ = no;
+      NET_VENDOR_SILAN = no;
+      SC92031 = no;
+      NET_VENDOR_SIS = no;
+      SIS900 = no;
+      SIS190 = no;
+      NET_VENDOR_SOLARFLARE = no;
+      SFC = no;
+      SFC_MTD = no;
+      SFC_MCDI_MON = no;
+      SFC_SRIOV = no;
+      SFC_MCDI_LOGGING = no;
+      SFC_FALCON = no;
+      SFC_FALCON_MTD = no;
+      SFC_SIENA = no;
+      SFC_SIENA_MTD = no;
+      SFC_SIENA_MCDI_MON = no;
+      # SFC_SIENA_SRIOV is not set
+      SFC_SIENA_MCDI_LOGGING = no;
+      NET_VENDOR_SMSC = no;
+      PCMCIA_SMC91C92 = no;
+      EPIC100 = no;
+      SMSC911X = no;
+      SMSC9420 = no;
+      NET_VENDOR_SOCIONEXT = no;
+      NET_VENDOR_STMICRO = no;
+      STMMAC_ETH = no;
+      # STMMAC_SELFTESTS is not set
+      STMMAC_PLATFORM = no;
+      DWMAC_DWC_QOS_ETH = no;
+      DWMAC_GENERIC = no;
+      DWMAC_INTEL_PLAT = no;
+      DWMAC_INTEL = no;
+      STMMAC_PCI = no;
+      NET_VENDOR_SUN = no;
+      HAPPYMEAL = no;
+      SUNGEM = no;
+      CASSINI = no;
+      NIU = no;
+      NET_VENDOR_SYNOPSYS = no;
+      DWC_XLGMAC = no;
+      DWC_XLGMAC_PCI = no;
+      NET_VENDOR_TEHUTI = no;
+      TEHUTI = no;
+      TEHUTI_TN40 = no;
+      NET_VENDOR_TI = no;
+      # TI_CPSW_PHY_SEL is not set
+      TLAN = no;
+      NET_VENDOR_VERTEXCOM = no;
+      MSE102X = no;
+      NET_VENDOR_VIA = no;
+      VIA_RHINE = no;
+      # VIA_RHINE_MMIO is not set
+      VIA_VELOCITY = no;
+      NET_VENDOR_WANGXUN = no;
+      LIBWX = no;
+      NGBE = no;
+      TXGBE = no;
+      TXGBEVF = no;
+      NGBEVF = no;
+      NET_VENDOR_WIZNET = no;
+      WIZNET_W5100 = no;
+      WIZNET_W5300 = no;
+      # WIZNET_BUS_DIRECT is not set
+      # WIZNET_BUS_INDIRECT is not set
+      WIZNET_BUS_ANY = no;
+      WIZNET_W5100_SPI = no;
+      NET_VENDOR_XILINX = no;
+      XILINX_EMACLITE = no;
+      XILINX_AXI_EMAC = no;
+      XILINX_LL_TEMAC = no;
+      NET_VENDOR_XIRCOM = no;
+      PCMCIA_XIRC2PS = no;
+      FDDI = no;
+      DEFXX = no;
+      SKFP = no;
+      HIPPI = mkForce no;
+      ROADRUNNER = no;
 
-      CONFIG_PHYLIB_LEDS = no;
-      CONFIG_QCA807X_PHY = no;
+      PHYLIB_LEDS = no;
+      QCA807X_PHY = no;
 
-      CONFIG_CAN_NETLINK = no;
-      CONFIG_CAN_CALC_BITTIMING = no;
-      CONFIG_CAN_RX_OFFLOAD = no;
-      CONFIG_CAN_CAN327 = no;
-      CONFIG_CAN_FLEXCAN = no;
-      CONFIG_CAN_GRCAN = no;
-      CONFIG_CAN_JANZ_ICAN3 = no;
-      CONFIG_CAN_KVASER_PCIEFD = no;
-      CONFIG_CAN_SLCAN = no;
-      CONFIG_CAN_C_CAN = no;
-      CONFIG_CAN_C_CAN_PLATFORM = no;
-      CONFIG_CAN_C_CAN_PCI = no;
-      CONFIG_CAN_CC770 = no;
-      CONFIG_CAN_CC770_ISA = no;
-      CONFIG_CAN_CC770_PLATFORM = no;
-      CONFIG_CAN_CTUCANFD = no;
-      CONFIG_CAN_CTUCANFD_PCI = no;
-      CONFIG_CAN_CTUCANFD_PLATFORM = no;
-      CONFIG_CAN_ESD_402_PCI = no;
-      CONFIG_CAN_IFI_CANFD = no;
-      CONFIG_CAN_M_CAN = no;
-      CONFIG_CAN_M_CAN_PCI = no;
-      CONFIG_CAN_M_CAN_PLATFORM = no;
-      CONFIG_CAN_M_CAN_TCAN4X5X = no;
-      CONFIG_CAN_PEAK_PCIEFD = no;
-      CONFIG_CAN_SJA1000 = no;
-      CONFIG_CAN_EMS_PCI = no;
-      CONFIG_CAN_EMS_PCMCIA = no;
-      CONFIG_CAN_F81601 = no;
-      CONFIG_CAN_KVASER_PCI = no;
-      CONFIG_CAN_PEAK_PCI = no;
-      CONFIG_CAN_PEAK_PCIEC = no;
-      CONFIG_CAN_PEAK_PCMCIA = no;
-      CONFIG_CAN_PLX_PCI = no;
-      CONFIG_CAN_SJA1000_ISA = no;
-      CONFIG_CAN_SJA1000_PLATFORM = no;
-      CONFIG_CAN_SOFTING = no;
-      CONFIG_CAN_SOFTING_CS = no;
+      CAN_NETLINK = no;
+      CAN_CALC_BITTIMING = no;
+      CAN_RX_OFFLOAD = no;
+      CAN_CAN327 = no;
+      CAN_FLEXCAN = no;
+      CAN_GRCAN = no;
+      CAN_JANZ_ICAN3 = no;
+      CAN_KVASER_PCIEFD = no;
+      CAN_SLCAN = no;
+      CAN_C_CAN = no;
+      CAN_C_CAN_PLATFORM = no;
+      CAN_C_CAN_PCI = no;
+      CAN_CC770 = no;
+      CAN_CC770_ISA = no;
+      CAN_CC770_PLATFORM = no;
+      CAN_CTUCANFD = no;
+      CAN_CTUCANFD_PCI = no;
+      CAN_CTUCANFD_PLATFORM = no;
+      CAN_ESD_402_PCI = no;
+      CAN_IFI_CANFD = no;
+      CAN_M_CAN = no;
+      CAN_M_CAN_PCI = no;
+      CAN_M_CAN_PLATFORM = no;
+      CAN_M_CAN_TCAN4X5X = no;
+      CAN_PEAK_PCIEFD = no;
+      CAN_SJA1000 = no;
+      CAN_EMS_PCI = no;
+      CAN_EMS_PCMCIA = no;
+      CAN_F81601 = no;
+      CAN_KVASER_PCI = no;
+      CAN_PEAK_PCI = no;
+      CAN_PEAK_PCIEC = no;
+      CAN_PEAK_PCMCIA = no;
+      CAN_PLX_PCI = no;
+      CAN_SJA1000_ISA = no;
+      CAN_SJA1000_PLATFORM = no;
+      CAN_SOFTING = no;
+      CAN_SOFTING_CS = no;
 
       #
       # CAN SPI interfaces
       #
-      CONFIG_CAN_HI311X = no;
-      CONFIG_CAN_MCP251X = no;
-      CONFIG_CAN_MCP251XFD = no;
-      # CONFIG_CAN_MCP251XFD_SANITY is not set
+      CAN_HI311X = no;
+      CAN_MCP251X = no;
+      CAN_MCP251XFD = no;
+      # CAN_MCP251XFD_SANITY is not set
       # end of CAN SPI interfaces
 
       #
       # CAN USB interfaces
       #
-      CONFIG_CAN_8DEV_USB = no;
-      CONFIG_CAN_EMS_USB = no;
-      CONFIG_CAN_ESD_USB = no;
-      CONFIG_CAN_ETAS_ES58X = no;
-      CONFIG_CAN_F81604 = no;
-      CONFIG_CAN_GS_USB = no;
-      CONFIG_CAN_KVASER_USB = no;
-      CONFIG_CAN_MCBA_USB = no;
-      CONFIG_CAN_NCT6694 = no;
-      CONFIG_CAN_PEAK_USB = no;
-      CONFIG_CAN_UCAN = no;
+      CAN_8DEV_USB = no;
+      CAN_EMS_USB = no;
+      CAN_ESD_USB = no;
+      CAN_ETAS_ES58X = no;
+      CAN_F81604 = no;
+      CAN_GS_USB = no;
+      CAN_KVASER_USB = no;
+      CAN_MCBA_USB = no;
+      CAN_NCT6694 = no;
+      CAN_PEAK_USB = no;
+      CAN_UCAN = no;
       # end of CAN USB interfaces
 
-      CONFIG_MDIO_BITBANG = no;
-      CONFIG_MDIO_BCM_UNIMAC = no;
-      CONFIG_MDIO_CAVIUM = no;
-      CONFIG_MDIO_GPIO = no;
-      CONFIG_MDIO_HISI_FEMAC = no;
-      CONFIG_MDIO_MVUSB = no;
-      CONFIG_MDIO_MSCC_MIIM = no;
-      CONFIG_MDIO_OCTEON = no;
-      CONFIG_MDIO_IPQ4019 = no;
-      CONFIG_MDIO_IPQ8064 = no;
-      CONFIG_MDIO_REGMAP = no;
-      CONFIG_MDIO_THUNDER = no;
-      CONFIG_MDIO_BUS_MUX = no;
-      CONFIG_MDIO_BUS_MUX_GPIO = no;
-      CONFIG_MDIO_BUS_MUX_MULTIPLEXER = no;
-      CONFIG_MDIO_BUS_MUX_MMIOREG = no;
-      CONFIG_PCS_XPCS = no;
-      CONFIG_PCS_LYNX = no;
-      CONFIG_PCS_MTK_LYNXI = no;
-      CONFIG_PLIP = no;
+      MDIO_BITBANG = no;
+      MDIO_BCM_UNIMAC = no;
+      MDIO_CAVIUM = no;
+      MDIO_GPIO = no;
+      MDIO_HISI_FEMAC = no;
+      MDIO_MVUSB = no;
+      MDIO_MSCC_MIIM = no;
+      MDIO_OCTEON = no;
+      MDIO_IPQ4019 = no;
+      MDIO_IPQ8064 = no;
+      MDIO_REGMAP = no;
+      MDIO_THUNDER = no;
+      MDIO_BUS_MUX = no;
+      MDIO_BUS_MUX_GPIO = no;
+      MDIO_BUS_MUX_MULTIPLEXER = no;
+      MDIO_BUS_MUX_MMIOREG = no;
+      PCS_XPCS = no;
+      PCS_LYNX = no;
+      PCS_MTK_LYNXI = no;
+      PLIP = no;
 
-      CONFIG_WLAN_VENDOR_ADMTEK = no;
-      CONFIG_ADM8211 = no;
-      CONFIG_ATH_COMMON = no;
-      CONFIG_WLAN_VENDOR_ATH = no;
-      # CONFIG_ATH_DEBUG is not set
-      # CONFIG_ATH_REG_DYNAMIC_USER_REG_HINTS is not set
-      CONFIG_ATH5K = no;
-      # CONFIG_ATH5K_DEBUG is not set
-      # CONFIG_ATH5K_TRACER is not set
-      CONFIG_ATH5K_PCI = no;
-      # CONFIG_ATH5K_TEST_CHANNELS is not set
-      CONFIG_ATH9K_HW = no;
-      CONFIG_ATH9K_COMMON = no;
-      CONFIG_ATH9K_BTCOEX_SUPPORT = no;
-      CONFIG_ATH9K = no;
-      CONFIG_ATH9K_PCI = no;
-      CONFIG_ATH9K_AHB = no;
-      # CONFIG_ATH9K_DEBUGFS is not set
-      CONFIG_ATH9K_DFS_CERTIFIED = no;
-      # CONFIG_ATH9K_DYNACK is not set
-      # CONFIG_ATH9K_WOW is not set
-      CONFIG_ATH9K_RFKILL = no;
-      # CONFIG_ATH9K_CHANNEL_CONTEXT is not set
-      CONFIG_ATH9K_PCOEM = no;
-      CONFIG_ATH9K_PCI_NO_EEPROM = no;
-      CONFIG_ATH9K_HTC = no;
-      # CONFIG_ATH9K_HTC_DEBUGFS is not set
-      # CONFIG_ATH9K_HWRNG is not set
-      CONFIG_CARL9170 = no;
-      CONFIG_CARL9170_LEDS = no;
-      # CONFIG_CARL9170_DEBUGFS is not set
-      CONFIG_CARL9170_WPC = no;
-      # CONFIG_CARL9170_HWRNG is not set
-      CONFIG_ATH6KL = no;
-      CONFIG_ATH6KL_SDIO = no;
-      CONFIG_ATH6KL_USB = no;
-      # CONFIG_ATH6KL_DEBUG is not set
-      # CONFIG_ATH6KL_TRACING is not set
-      # CONFIG_ATH6KL_REGDOMAIN is not set
-      CONFIG_AR5523 = no;
-      CONFIG_WIL6210 = no;
-      CONFIG_WIL6210_ISR_COR = no;
-      # CONFIG_WIL6210_TRACING is not set
-      CONFIG_WIL6210_DEBUGFS = no;
-      CONFIG_ATH10K = no;
-      CONFIG_ATH10K_CE = no;
-      CONFIG_ATH10K_PCI = no;
-      # CONFIG_ATH10K_AHB is not set
-      CONFIG_ATH10K_SDIO = no;
-      CONFIG_ATH10K_USB = no;
-      # CONFIG_ATH10K_DEBUG is not set
-      # CONFIG_ATH10K_DEBUGFS is not set
-      CONFIG_ATH10K_LEDS = no;
-      # CONFIG_ATH10K_TRACING is not set
-      CONFIG_ATH10K_DFS_CERTIFIED = no;
-      CONFIG_WCN36XX = no;
-      # CONFIG_WCN36XX_DEBUGFS is not set
-      CONFIG_ATH11K = no;
-      CONFIG_ATH11K_PCI = no;
-      # CONFIG_ATH11K_DEBUG is not set
-      # CONFIG_ATH11K_DEBUGFS is not set
-      # CONFIG_ATH11K_TRACING is not set
-      CONFIG_ATH12K = no;
-      # CONFIG_ATH12K_DEBUG is not set
-      # CONFIG_ATH12K_DEBUGFS is not set
-      # CONFIG_ATH12K_TRACING is not set
-      # CONFIG_ATH12K_COREDUMP is not set
-      CONFIG_WLAN_VENDOR_ATMEL = no;
-      CONFIG_AT76C50X_USB = no;
-      CONFIG_WLAN_VENDOR_BROADCOM = no;
-      CONFIG_B43 = no;
-      CONFIG_B43_BCMA = no;
-      CONFIG_B43_SSB = no;
-      CONFIG_B43_BUSES_BCMA_AND_SSB = no;
-      # CONFIG_B43_BUSES_BCMA is not set
-      # CONFIG_B43_BUSES_SSB is not set
-      CONFIG_B43_PCI_AUTOSELECT = no;
-      CONFIG_B43_PCICORE_AUTOSELECT = no;
-      # CONFIG_B43_SDIO is not set
-      CONFIG_B43_BCMA_PIO = no;
-      CONFIG_B43_PIO = no;
-      CONFIG_B43_PHY_G = no;
-      CONFIG_B43_PHY_N = no;
-      CONFIG_B43_PHY_LP = no;
-      CONFIG_B43_PHY_HT = no;
-      CONFIG_B43_LEDS = no;
-      CONFIG_B43_HWRNG = no;
-      # CONFIG_B43_DEBUG is not set
-      CONFIG_B43LEGACY = no;
-      CONFIG_B43LEGACY_PCI_AUTOSELECT = no;
-      CONFIG_B43LEGACY_PCICORE_AUTOSELECT = no;
-      CONFIG_B43LEGACY_LEDS = no;
-      CONFIG_B43LEGACY_HWRNG = no;
-      CONFIG_B43LEGACY_DEBUG = no;
-      CONFIG_B43LEGACY_DMA = no;
-      CONFIG_B43LEGACY_PIO = no;
-      CONFIG_B43LEGACY_DMA_AND_PIO_MODE = no;
-      # CONFIG_B43LEGACY_DMA_MODE is not set
-      # CONFIG_B43LEGACY_PIO_MODE is not set
-      CONFIG_BRCMUTIL = no;
-      CONFIG_BRCMSMAC = no;
-      CONFIG_BRCMFMAC = no;
-      CONFIG_BRCMFMAC_PROTO_BCDC = no;
-      CONFIG_BRCMFMAC_PROTO_MSGBUF = no;
-      CONFIG_BRCMFMAC_SDIO = no;
-      CONFIG_BRCMFMAC_USB = no;
-      CONFIG_BRCMFMAC_PCIE = no;
+      ADM8211 = no;
+      CARL9170 = no;
+      AR5523 = no;
+      WIL6210 = no;
+      WLAN_VENDOR_ADMTEK = no;
+      WLAN_VENDOR_ATH = no;
+      WLAN_VENDOR_ATMEL = no;
+      WLAN_VENDOR_BROADCOM = no;
+      WLAN_VENDOR_INTERSIL = no;
+      WLAN_VENDOR_MARVELL = no;
+      WLAN_VENDOR_MEDIATEK = no;
+      WLAN_VENDOR_MICROCHIP = no;
+      WLAN_VENDOR_PURELIFI = no;
+      WLAN_VENDOR_RALINK = no;
+      WLAN_VENDOR_REALTEK = no;
+      LIBERTAS = no;
 
-      CONFIG_IPW2100 = no;
-      CONFIG_IPW2100_MONITOR = no;
-      # CONFIG_IPW2100_DEBUG is not set
-      CONFIG_IPW2200 = no;
-      CONFIG_IPW2200_MONITOR = no;
-      # CONFIG_IPW2200_RADIOTAP is not set
-      # CONFIG_IPW2200_PROMISCUOUS is not set
-      # CONFIG_IPW2200_QOS is not set
-      # CONFIG_IPW2200_DEBUG is not set
-      CONFIG_LIBIPW = no;
-      # CONFIG_LIBIPW_DEBUG is not set
-      CONFIG_IWLEGACY = no;
-      CONFIG_IWL4965 = no;
-      CONFIG_IWL3945 = no;
+      IPW2100 = no;
+      IPW2200 = no;
+      LIBIPW = no;
+      IWLEGACY = no;
+      IWL4965 = no;
+      IWL3945 = no;
 
-      #
-      # iwl3945 / iwl4965 Debugging Options
-      #
-      # CONFIG_IWLEGACY_DEBUG is not set
-      # CONFIG_IWLEGACY_DEBUGFS is not set
-      # end of iwl3945 / iwl4965 Debugging Options
+      P54_COMMON = no;
+      MWIFIEX = no;
+      MWIFIEX_SDIO = no;
+      MWIFIEX_PCIE = no;
+      MWIFIEX_USB = no;
+      MWL8K = no;
+      WILC1000 = no;
+      WILC1000_SDIO = no;
+      WILC1000_SPI = no;
+      # WILC1000_HW_OOB_INTR is not set
+      PLFXLC = no;
+      RT2X00 = no;
+      RT2400PCI = no;
+      RT2500PCI = no;
+      RT61PCI = no;
+      RT2800PCI = no;
+      RT2800PCI_RT33XX = no;
+      RT2800PCI_RT35XX = no;
+      RT2800PCI_RT53XX = no;
+      RT2800PCI_RT3290 = no;
+      RT2500USB = no;
+      RT73USB = no;
+      RT2800USB = no;
+      RT2800USB_RT33XX = no;
+      RT2800USB_RT35XX = no;
+      # RT2800USB_RT3573 is not set
+      RT2800USB_RT53XX = mkForce no;
+      RT2800USB_RT55XX = mkForce no;
+      # RT2800USB_UNKNOWN is not set
+      RT2800_LIB = no;
+      RT2800_LIB_MMIO = no;
+      RT2X00_LIB_MMIO = no;
+      RT2X00_LIB_PCI = no;
+      RT2X00_LIB_USB = no;
+      RT2X00_LIB = no;
+      RT2X00_LIB_FIRMWARE = no;
+      RT2X00_LIB_CRYPTO = no;
+      RT2X00_LIB_LEDS = no;
+      # RT2X00_LIB_DEBUGFS is not set
+      # RT2X00_DEBUG is not set
+      RTL8180 = no;
+      RTL8187 = no;
+      RTL8187_LEDS = no;
+      RTL_CARDS = no;
+      RTL8192CE = no;
+      RTL8192SE = no;
+      RTL8192DE = no;
+      RTL8723AE = no;
+      RTL8723BE = no;
+      RTL8188EE = no;
+      RTL8192EE = no;
+      RTL8821AE = no;
+      RTL8192CU = no;
+      RTL8192DU = no;
+      RTLWIFI = no;
+      RTLWIFI_PCI = no;
+      RTLWIFI_USB = no;
+      RTLWIFI_DEBUG = no;
+      RTL8192C_COMMON = no;
+      RTL8192D_COMMON = no;
+      RTL8723_COMMON = no;
+      RTLBTCOEXIST = no;
+      RTL8XXXU = no;
+      RTL8XXXU_UNTESTED = mkForce no;
+      RTW88 = mkForce no;
+      RTW89 = mkForce no;
+      WLAN_VENDOR_RSI = no;
+      RSI_91X = no;
+      RSI_DEBUGFS = no;
+      RSI_SDIO = no;
+      RSI_USB = no;
+      RSI_COEX = no;
+      WLAN_VENDOR_SILABS = no;
+      WFX = no;
+      WLAN_VENDOR_ST = no;
+      CW1200 = no;
+      CW1200_WLAN_SDIO = no;
+      CW1200_WLAN_SPI = no;
+      WLAN_VENDOR_TI = no;
+      WL1251 = no;
+      WL1251_SPI = no;
+      WL1251_SDIO = no;
+      WL12XX = no;
+      WL18XX = no;
+      WLCORE = no;
+      WLCORE_SPI = no;
+      WLCORE_SDIO = no;
+      WLAN_VENDOR_ZYDAS = no;
+      ZD1211RW = no;
+      # ZD1211RW_DEBUG is not set
+      WLAN_VENDOR_QUANTENNA = no;
+      QTNFMAC = no;
+      QTNFMAC_PCIE = no;
+      MAC80211_HWSIM = no;
+      VIRT_WIFI = no;
+      WAN = mkForce no;
+      HDLC = no;
+      HDLC_RAW = no;
+      HDLC_RAW_ETH = no;
+      HDLC_CISCO = no;
+      HDLC_FR = no;
+      HDLC_PPP = no;
+      HDLC_X25 = no;
+      FRAMER = no;
+      GENERIC_FRAMER = no;
+      FRAMER_PEF2256 = no;
+      PCI200SYN = no;
+      WANXL = no;
+      PC300TOO = no;
+      FARSYNC = no;
+      LAPBETHER = no;
 
-      CONFIG_WLAN_VENDOR_INTERSIL = no;
-      CONFIG_P54_COMMON = no;
-      CONFIG_P54_USB = no;
-      CONFIG_P54_PCI = no;
-      CONFIG_P54_SPI = no;
-      # CONFIG_P54_SPI_DEFAULT_EEPROM is not set
-      CONFIG_P54_LEDS = no;
-      CONFIG_WLAN_VENDOR_MARVELL = no;
-      CONFIG_LIBERTAS = no;
-      CONFIG_LIBERTAS_USB = no;
-      CONFIG_LIBERTAS_SDIO = no;
-      CONFIG_LIBERTAS_SPI = no;
-      # CONFIG_LIBERTAS_DEBUG is not set
-      # CONFIG_LIBERTAS_MESH is not set
-      CONFIG_LIBERTAS_THINFIRM = no;
-      # CONFIG_LIBERTAS_THINFIRM_DEBUG is not set
-      CONFIG_LIBERTAS_THINFIRM_USB = no;
-      CONFIG_MWIFIEX = no;
-      CONFIG_MWIFIEX_SDIO = no;
-      CONFIG_MWIFIEX_PCIE = no;
-      CONFIG_MWIFIEX_USB = no;
-      CONFIG_MWL8K = no;
-      CONFIG_WLAN_VENDOR_MEDIATEK = no;
-      CONFIG_MT7601U = no;
-      CONFIG_MT76_CORE = no;
-      CONFIG_MT76_LEDS = no;
-      CONFIG_MT76_USB = no;
-      CONFIG_MT76_SDIO = no;
-      CONFIG_MT76x02_LIB = no;
-      CONFIG_MT76x02_USB = no;
-      CONFIG_MT76_CONNAC_LIB = no;
-      CONFIG_MT792x_LIB = no;
-      CONFIG_MT792x_USB = no;
-      CONFIG_MT76x0_COMMON = no;
-      CONFIG_MT76x0U = no;
-      CONFIG_MT76x0E = no;
-      CONFIG_MT76x2_COMMON = no;
-      CONFIG_MT76x2E = no;
-      CONFIG_MT76x2U = no;
-      CONFIG_MT7603E = no;
-      CONFIG_MT7615_COMMON = no;
-      CONFIG_MT7615E = no;
-      CONFIG_MT7663_USB_SDIO_COMMON = no;
-      CONFIG_MT7663U = no;
-      CONFIG_MT7663S = no;
-      CONFIG_MT7915E = no;
-      CONFIG_MT7921_COMMON = no;
-      CONFIG_MT7921E = no;
-      CONFIG_MT7921S = no;
-      CONFIG_MT7921U = no;
-      CONFIG_MT7996E = no;
-      CONFIG_MT7925_COMMON = no;
-      CONFIG_MT7925E = no;
-      CONFIG_MT7925U = no;
-      CONFIG_WLAN_VENDOR_MICROCHIP = no;
-      CONFIG_WILC1000 = no;
-      CONFIG_WILC1000_SDIO = no;
-      CONFIG_WILC1000_SPI = no;
-      # CONFIG_WILC1000_HW_OOB_INTR is not set
-      CONFIG_WLAN_VENDOR_PURELIFI = no;
-      CONFIG_PLFXLC = no;
-      CONFIG_WLAN_VENDOR_RALINK = no;
-      CONFIG_RT2X00 = no;
-      CONFIG_RT2400PCI = no;
-      CONFIG_RT2500PCI = no;
-      CONFIG_RT61PCI = no;
-      CONFIG_RT2800PCI = no;
-      CONFIG_RT2800PCI_RT33XX = no;
-      CONFIG_RT2800PCI_RT35XX = no;
-      CONFIG_RT2800PCI_RT53XX = no;
-      CONFIG_RT2800PCI_RT3290 = no;
-      CONFIG_RT2500USB = no;
-      CONFIG_RT73USB = no;
-      CONFIG_RT2800USB = no;
-      CONFIG_RT2800USB_RT33XX = no;
-      CONFIG_RT2800USB_RT35XX = no;
-      # CONFIG_RT2800USB_RT3573 is not set
-      CONFIG_RT2800USB_RT53XX = no;
-      CONFIG_RT2800USB_RT55XX = no;
-      # CONFIG_RT2800USB_UNKNOWN is not set
-      CONFIG_RT2800_LIB = no;
-      CONFIG_RT2800_LIB_MMIO = no;
-      CONFIG_RT2X00_LIB_MMIO = no;
-      CONFIG_RT2X00_LIB_PCI = no;
-      CONFIG_RT2X00_LIB_USB = no;
-      CONFIG_RT2X00_LIB = no;
-      CONFIG_RT2X00_LIB_FIRMWARE = no;
-      CONFIG_RT2X00_LIB_CRYPTO = no;
-      CONFIG_RT2X00_LIB_LEDS = no;
-      # CONFIG_RT2X00_LIB_DEBUGFS is not set
-      # CONFIG_RT2X00_DEBUG is not set
-      CONFIG_WLAN_VENDOR_REALTEK = no;
-      CONFIG_RTL8180 = no;
-      CONFIG_RTL8187 = no;
-      CONFIG_RTL8187_LEDS = no;
-      CONFIG_RTL_CARDS = no;
-      CONFIG_RTL8192CE = no;
-      CONFIG_RTL8192SE = no;
-      CONFIG_RTL8192DE = no;
-      CONFIG_RTL8723AE = no;
-      CONFIG_RTL8723BE = no;
-      CONFIG_RTL8188EE = no;
-      CONFIG_RTL8192EE = no;
-      CONFIG_RTL8821AE = no;
-      CONFIG_RTL8192CU = no;
-      CONFIG_RTL8192DU = no;
-      CONFIG_RTLWIFI = no;
-      CONFIG_RTLWIFI_PCI = no;
-      CONFIG_RTLWIFI_USB = no;
-      CONFIG_RTLWIFI_DEBUG = no;
-      CONFIG_RTL8192C_COMMON = no;
-      CONFIG_RTL8192D_COMMON = no;
-      CONFIG_RTL8723_COMMON = no;
-      CONFIG_RTLBTCOEXIST = no;
-      CONFIG_RTL8XXXU = no;
-      CONFIG_RTL8XXXU_UNTESTED = no;
-      CONFIG_RTW88 = no;
-      CONFIG_RTW88_CORE = no;
-      CONFIG_RTW88_PCI = no;
-      CONFIG_RTW88_SDIO = no;
-      CONFIG_RTW88_USB = no;
-      CONFIG_RTW88_8822B = no;
-      CONFIG_RTW88_8822C = no;
-      CONFIG_RTW88_8723X = no;
-      CONFIG_RTW88_8703B = no;
-      CONFIG_RTW88_8723D = no;
-      CONFIG_RTW88_8821C = no;
-      CONFIG_RTW88_88XXA = no;
-      CONFIG_RTW88_8821A = no;
-      CONFIG_RTW88_8812A = no;
-      CONFIG_RTW88_8814A = no;
-      CONFIG_RTW88_8822BE = no;
-      CONFIG_RTW88_8822BS = no;
-      CONFIG_RTW88_8822BU = no;
-      CONFIG_RTW88_8822CE = no;
-      CONFIG_RTW88_8822CS = no;
-      CONFIG_RTW88_8822CU = no;
-      CONFIG_RTW88_8723DE = no;
-      CONFIG_RTW88_8723DS = no;
-      CONFIG_RTW88_8723CS = no;
-      CONFIG_RTW88_8723DU = no;
-      CONFIG_RTW88_8821CE = no;
-      CONFIG_RTW88_8821CS = no;
-      CONFIG_RTW88_8821CU = no;
-      CONFIG_RTW88_8821AU = no;
-      CONFIG_RTW88_8812AU = no;
-      CONFIG_RTW88_8814AE = no;
-      CONFIG_RTW88_8814AU = no;
-      # CONFIG_RTW88_DEBUG is not set
-      # CONFIG_RTW88_DEBUGFS is not set
-      CONFIG_RTW88_LEDS = no;
-      CONFIG_RTW89 = no;
-      CONFIG_RTW89_CORE = no;
-      CONFIG_RTW89_PCI = no;
-      CONFIG_RTW89_USB = no;
-      CONFIG_RTW89_8851B = no;
-      CONFIG_RTW89_8852A = no;
-      CONFIG_RTW89_8852B_COMMON = no;
-      CONFIG_RTW89_8852B = no;
-      CONFIG_RTW89_8852BT = no;
-      CONFIG_RTW89_8852C = no;
-      CONFIG_RTW89_8922A = no;
-      CONFIG_RTW89_8851BE = no;
-      CONFIG_RTW89_8851BU = no;
-      CONFIG_RTW89_8852AE = no;
-      CONFIG_RTW89_8852BE = no;
-      CONFIG_RTW89_8852BU = no;
-      CONFIG_RTW89_8852BTE = no;
-      CONFIG_RTW89_8852CE = no;
-      CONFIG_RTW89_8922AE = no;
-      # CONFIG_RTW89_DEBUGMSG is not set
-      # CONFIG_RTW89_DEBUGFS is not set
-      CONFIG_WLAN_VENDOR_RSI = no;
-      CONFIG_RSI_91X = no;
-      CONFIG_RSI_DEBUGFS = no;
-      CONFIG_RSI_SDIO = no;
-      CONFIG_RSI_USB = no;
-      CONFIG_RSI_COEX = no;
-      CONFIG_WLAN_VENDOR_SILABS = no;
-      CONFIG_WFX = no;
-      CONFIG_WLAN_VENDOR_ST = no;
-      CONFIG_CW1200 = no;
-      CONFIG_CW1200_WLAN_SDIO = no;
-      CONFIG_CW1200_WLAN_SPI = no;
-      CONFIG_WLAN_VENDOR_TI = no;
-      CONFIG_WL1251 = no;
-      CONFIG_WL1251_SPI = no;
-      CONFIG_WL1251_SDIO = no;
-      CONFIG_WL12XX = no;
-      CONFIG_WL18XX = no;
-      CONFIG_WLCORE = no;
-      CONFIG_WLCORE_SPI = no;
-      CONFIG_WLCORE_SDIO = no;
-      CONFIG_WLAN_VENDOR_ZYDAS = no;
-      CONFIG_ZD1211RW = no;
-      # CONFIG_ZD1211RW_DEBUG is not set
-      CONFIG_WLAN_VENDOR_QUANTENNA = no;
-      CONFIG_QTNFMAC = no;
-      CONFIG_QTNFMAC_PCIE = no;
-      CONFIG_MAC80211_HWSIM = no;
-      CONFIG_VIRT_WIFI = no;
-      CONFIG_WAN = no;
-      CONFIG_HDLC = no;
-      CONFIG_HDLC_RAW = no;
-      CONFIG_HDLC_RAW_ETH = no;
-      CONFIG_HDLC_CISCO = no;
-      CONFIG_HDLC_FR = no;
-      CONFIG_HDLC_PPP = no;
-      CONFIG_HDLC_X25 = no;
-      CONFIG_FRAMER = no;
-      CONFIG_GENERIC_FRAMER = no;
-      CONFIG_FRAMER_PEF2256 = no;
-      CONFIG_PCI200SYN = no;
-      CONFIG_WANXL = no;
-      CONFIG_PC300TOO = no;
-      CONFIG_FARSYNC = no;
-      CONFIG_LAPBETHER = no;
+      FUJITSU_ES = no;
 
-      CONFIG_FUJITSU_ES = no;
+      HYPERV_NET = no;
 
-      CONFIG_HYPERV_NET = no;
+      KEYBOARD_ADC = no;
+      KEYBOARD_ADP5585 = no;
+      KEYBOARD_ADP5588 = no;
+      KEYBOARD_APPLESPI = mkForce no;
+      # KEYBOARD_ATKBD = no;
+      KEYBOARD_QT1050 = no;
+      KEYBOARD_QT1070 = no;
+      KEYBOARD_QT2160 = no;
+      KEYBOARD_DLINK_DIR685 = no;
+      KEYBOARD_LKKBD = no;
 
-      CONFIG_KEYBOARD_ADC = no;
-      CONFIG_KEYBOARD_ADP5585 = no;
-      CONFIG_KEYBOARD_ADP5588 = no;
-      CONFIG_KEYBOARD_APPLESPI = no;
-      CONFIG_KEYBOARD_ATKBD = no;
-      CONFIG_KEYBOARD_QT1050 = no;
-      CONFIG_KEYBOARD_QT1070 = no;
-      CONFIG_KEYBOARD_QT2160 = no;
-      CONFIG_KEYBOARD_DLINK_DIR685 = no;
-      CONFIG_KEYBOARD_LKKBD = no;
+      KEYBOARD_TCA8418 = no;
 
-      CONFIG_KEYBOARD_TCA8418 = no;
+      KEYBOARD_LM8323 = no;
+      KEYBOARD_LM8333 = no;
+      KEYBOARD_MAX7359 = no;
+      KEYBOARD_MAX7360 = no;
+      KEYBOARD_MPR121 = no;
+      KEYBOARD_NEWTON = no;
+      KEYBOARD_OPENCORES = no;
+      KEYBOARD_PINEPHONE = no;
+      KEYBOARD_SAMSUNG = no;
+      KEYBOARD_STOWAWAY = no;
+      KEYBOARD_SUNKBD = no;
+      KEYBOARD_STMPE = no;
+      KEYBOARD_IQS62X = no;
+      KEYBOARD_OMAP4 = no;
+      KEYBOARD_TM2_TOUCHKEY = no;
+      KEYBOARD_XTKBD = no;
+      KEYBOARD_CROS_EC = no;
+      KEYBOARD_CAP11XX = no;
+      KEYBOARD_BCM = no;
+      KEYBOARD_MTK_PMIC = no;
+      KEYBOARD_CYPRESS_SF = no;
 
-      CONFIG_KEYBOARD_LM8323 = no;
-      CONFIG_KEYBOARD_LM8333 = no;
-      CONFIG_KEYBOARD_MAX7359 = no;
-      CONFIG_KEYBOARD_MAX7360 = no;
-      CONFIG_KEYBOARD_MPR121 = no;
-      CONFIG_KEYBOARD_NEWTON = no;
-      CONFIG_KEYBOARD_OPENCORES = no;
-      CONFIG_KEYBOARD_PINEPHONE = no;
-      CONFIG_KEYBOARD_SAMSUNG = no;
-      CONFIG_KEYBOARD_STOWAWAY = no;
-      CONFIG_KEYBOARD_SUNKBD = no;
-      CONFIG_KEYBOARD_STMPE = no;
-      CONFIG_KEYBOARD_IQS62X = no;
-      CONFIG_KEYBOARD_OMAP4 = no;
-      CONFIG_KEYBOARD_TM2_TOUCHKEY = no;
-      CONFIG_KEYBOARD_XTKBD = no;
-      CONFIG_KEYBOARD_CROS_EC = no;
-      CONFIG_KEYBOARD_CAP11XX = no;
-      CONFIG_KEYBOARD_BCM = no;
-      CONFIG_KEYBOARD_MTK_PMIC = no;
-      CONFIG_KEYBOARD_CYPRESS_SF = no;
+      MOUSE_PS2 = no;
+      MOUSE_PS2_ALPS = no;
+      MOUSE_PS2_BYD = no;
+      MOUSE_PS2_LOGIPS2PP = no;
+      MOUSE_PS2_SYNAPTICS = no;
+      MOUSE_PS2_SYNAPTICS_SMBUS = no;
+      MOUSE_PS2_CYPRESS = no;
+      MOUSE_PS2_LIFEBOOK = no;
+      MOUSE_PS2_TRACKPOINT = no;
+      MOUSE_PS2_ELANTECH = mkForce no;
+      MOUSE_PS2_ELANTECH_SMBUS = mkForce no;
+      # MOUSE_PS2_SENTELIC is not set
+      # MOUSE_PS2_TOUCHKIT is not set
+      MOUSE_PS2_FOCALTECH = no;
+      MOUSE_PS2_VMMOUSE = mkForce no;
+      MOUSE_PS2_SMBUS = no;
 
-      CONFIG_MOUSE_PS2 = no;
-      CONFIG_MOUSE_PS2_ALPS = no;
-      CONFIG_MOUSE_PS2_BYD = no;
-      CONFIG_MOUSE_PS2_LOGIPS2PP = no;
-      CONFIG_MOUSE_PS2_SYNAPTICS = no;
-      CONFIG_MOUSE_PS2_SYNAPTICS_SMBUS = no;
-      CONFIG_MOUSE_PS2_CYPRESS = no;
-      CONFIG_MOUSE_PS2_LIFEBOOK = no;
-      CONFIG_MOUSE_PS2_TRACKPOINT = no;
-      CONFIG_MOUSE_PS2_ELANTECH = no;
-      CONFIG_MOUSE_PS2_ELANTECH_SMBUS = no;
-      # CONFIG_MOUSE_PS2_SENTELIC is not set
-      # CONFIG_MOUSE_PS2_TOUCHKIT is not set
-      CONFIG_MOUSE_PS2_FOCALTECH = no;
-      CONFIG_MOUSE_PS2_VMMOUSE = no;
-      CONFIG_MOUSE_PS2_SMBUS = no;
+      MOUSE_APPLETOUCH = no;
+      MOUSE_BCM5974 = no;
+      MOUSE_CYAPA = no;
+      MOUSE_ELAN_I2C = no;
+      MOUSE_ELAN_I2C_I2C = no;
+      MOUSE_ELAN_I2C_SMBUS = mkForce no;
+      MOUSE_VSXXXAA = no;
+      JOYSTICK_ADC = no;
+      JOYSTICK_DB9 = no;
+      JOYSTICK_GAMECON = no;
+      JOYSTICK_TURBOGRAFX = no;
+      JOYSTICK_WALKERA0701 = no;
 
-      CONFIG_MOUSE_APPLETOUCH = no;
-      CONFIG_MOUSE_BCM5974 = no;
-      CONFIG_MOUSE_CYAPA = no;
-      CONFIG_MOUSE_ELAN_I2C = no;
-      CONFIG_MOUSE_ELAN_I2C_I2C = no;
-      CONFIG_MOUSE_ELAN_I2C_SMBUS = no;
-      CONFIG_MOUSE_VSXXXAA = no;
-      CONFIG_JOYSTICK_ADC = no;
-      CONFIG_JOYSTICK_DB9 = no;
-      CONFIG_JOYSTICK_GAMECON = no;
-      CONFIG_JOYSTICK_TURBOGRAFX = no;
-      CONFIG_JOYSTICK_WALKERA0701 = no;
+      INPUT_TABLET = no;
+      TABLET_USB_ACECAD = no;
+      TABLET_USB_AIPTEK = no;
+      TABLET_USB_HANWANG = no;
+      TABLET_USB_KBTAB = no;
+      TABLET_USB_PEGASUS = no;
+      TABLET_SERIAL_WACOM4 = no;
+      INPUT_TOUCHSCREEN = no;
+      TOUCHSCREEN_ADS7846 = no;
+      TOUCHSCREEN_AD7877 = no;
+      TOUCHSCREEN_AD7879 = no;
+      TOUCHSCREEN_AD7879_I2C = no;
+      TOUCHSCREEN_AD7879_SPI = no;
+      TOUCHSCREEN_ADC = no;
+      TOUCHSCREEN_AR1021_I2C = no;
+      TOUCHSCREEN_ATMEL_MXT = no;
+      # TOUCHSCREEN_ATMEL_MXT_T37 is not set
+      TOUCHSCREEN_AUO_PIXCIR = no;
+      TOUCHSCREEN_BU21013 = no;
+      TOUCHSCREEN_BU21029 = no;
+      TOUCHSCREEN_CHIPONE_ICN8318 = no;
+      TOUCHSCREEN_CHIPONE_ICN8505 = no;
+      TOUCHSCREEN_CY8CTMA140 = no;
+      TOUCHSCREEN_CY8CTMG110 = no;
+      TOUCHSCREEN_CYTTSP_CORE = no;
+      TOUCHSCREEN_CYTTSP_I2C = no;
+      TOUCHSCREEN_CYTTSP_SPI = no;
+      TOUCHSCREEN_CYTTSP5 = no;
+      TOUCHSCREEN_DYNAPRO = no;
+      TOUCHSCREEN_HAMPSHIRE = no;
+      TOUCHSCREEN_EETI = no;
+      TOUCHSCREEN_EGALAX = no;
+      TOUCHSCREEN_EGALAX_SERIAL = no;
+      TOUCHSCREEN_EXC3000 = no;
+      TOUCHSCREEN_FUJITSU = no;
+      TOUCHSCREEN_GOODIX = no;
+      TOUCHSCREEN_GOODIX_BERLIN_CORE = no;
+      TOUCHSCREEN_GOODIX_BERLIN_I2C = no;
+      TOUCHSCREEN_GOODIX_BERLIN_SPI = no;
+      TOUCHSCREEN_HIDEEP = no;
+      TOUCHSCREEN_HIMAX_HX852X = no;
+      TOUCHSCREEN_HYCON_HY46XX = no;
+      TOUCHSCREEN_HYNITRON_CSTXXX = no;
+      TOUCHSCREEN_HYNITRON_CST816X = no;
+      TOUCHSCREEN_ILI210X = no;
+      TOUCHSCREEN_ILITEK = no;
+      TOUCHSCREEN_S6SY761 = no;
+      TOUCHSCREEN_GUNZE = no;
+      TOUCHSCREEN_EKTF2127 = no;
+      TOUCHSCREEN_ELAN = no;
+      TOUCHSCREEN_ELO = no;
+      TOUCHSCREEN_WACOM_W8001 = no;
+      TOUCHSCREEN_WACOM_I2C = no;
+      TOUCHSCREEN_MAX11801 = no;
+      TOUCHSCREEN_MMS114 = no;
+      TOUCHSCREEN_MELFAS_MIP4 = no;
+      TOUCHSCREEN_MSG2638 = no;
+      TOUCHSCREEN_MTOUCH = no;
+      TOUCHSCREEN_NOVATEK_NVT_TS = no;
+      TOUCHSCREEN_IMAGIS = no;
+      TOUCHSCREEN_IMX6UL_TSC = no;
+      TOUCHSCREEN_INEXIO = no;
+      TOUCHSCREEN_PENMOUNT = no;
+      TOUCHSCREEN_EDT_FT5X06 = no;
+      TOUCHSCREEN_TOUCHRIGHT = no;
+      TOUCHSCREEN_TOUCHWIN = no;
+      TOUCHSCREEN_PIXCIR = no;
+      TOUCHSCREEN_WDT87XX_I2C = no;
+      TOUCHSCREEN_WM97XX = no;
+      TOUCHSCREEN_WM9705 = no;
+      TOUCHSCREEN_WM9712 = no;
+      TOUCHSCREEN_WM9713 = no;
+      TOUCHSCREEN_USB_COMPOSITE = no;
+      TOUCHSCREEN_MC13783 = no;
+      TOUCHSCREEN_USB_EGALAX = no;
+      TOUCHSCREEN_USB_PANJIT = no;
+      TOUCHSCREEN_USB_3M = no;
+      TOUCHSCREEN_USB_ITM = no;
+      TOUCHSCREEN_USB_ETURBO = no;
+      TOUCHSCREEN_USB_GUNZE = no;
+      TOUCHSCREEN_USB_DMC_TSC10 = no;
+      TOUCHSCREEN_USB_IRTOUCH = no;
+      TOUCHSCREEN_USB_IDEALTEK = no;
+      TOUCHSCREEN_USB_GENERAL_TOUCH = no;
+      TOUCHSCREEN_USB_GOTOP = no;
+      TOUCHSCREEN_USB_JASTEC = no;
+      TOUCHSCREEN_USB_ELO = no;
+      TOUCHSCREEN_USB_E2I = no;
+      TOUCHSCREEN_USB_ZYTRONIC = no;
+      TOUCHSCREEN_USB_ETT_TC45USB = no;
+      TOUCHSCREEN_USB_NEXIO = no;
+      TOUCHSCREEN_USB_EASYTOUCH = no;
+      TOUCHSCREEN_TOUCHIT213 = no;
+      TOUCHSCREEN_TSC_SERIO = no;
+      TOUCHSCREEN_TSC200X_CORE = no;
+      TOUCHSCREEN_TSC2004 = no;
+      TOUCHSCREEN_TSC2005 = no;
+      TOUCHSCREEN_TSC2007 = no;
+      # TOUCHSCREEN_TSC2007_IIO is not set
+      TOUCHSCREEN_RM_TS = no;
+      TOUCHSCREEN_SILEAD = no;
+      TOUCHSCREEN_SIS_I2C = no;
+      TOUCHSCREEN_ST1232 = no;
+      TOUCHSCREEN_STMFTS = no;
+      TOUCHSCREEN_STMPE = no;
+      TOUCHSCREEN_SUR40 = no;
+      TOUCHSCREEN_SURFACE3_SPI = no;
+      TOUCHSCREEN_SX8654 = no;
+      TOUCHSCREEN_TPS6507X = no;
+      TOUCHSCREEN_ZET6223 = no;
+      TOUCHSCREEN_ZFORCE = no;
+      TOUCHSCREEN_COLIBRI_VF50 = no;
+      TOUCHSCREEN_ROHM_BU21023 = no;
+      TOUCHSCREEN_IQS5XX = no;
+      TOUCHSCREEN_IQS7211 = no;
+      TOUCHSCREEN_ZINITIX = no;
+      TOUCHSCREEN_HIMAX_HX83112B = no;
+      INPUT_MISC = no;
+      INPUT_88PM80X_ONKEY = no;
+      INPUT_AD714X = no;
+      INPUT_AD714X_I2C = no;
+      INPUT_AD714X_SPI = no;
+      INPUT_ARIZONA_HAPTICS = no;
+      INPUT_ATC260X_ONKEY = no;
+      INPUT_ATMEL_CAPTOUCH = no;
+      INPUT_AW86927 = no;
+      INPUT_BMA150 = no;
+      INPUT_CS40L50_VIBRA = no;
+      INPUT_E3X0_BUTTON = no;
+      INPUT_PCSPKR = no;
+      INPUT_MAX7360_ROTARY = no;
+      INPUT_MAX77650_ONKEY = no;
+      INPUT_MAX77693_HAPTIC = no;
+      INPUT_MC13783_PWRBUTTON = no;
+      INPUT_MMA8450 = no;
+      INPUT_APANEL = no;
+      INPUT_GPIO_BEEPER = no;
+      INPUT_GPIO_DECODER = no;
+      INPUT_GPIO_VIBRA = no;
+      INPUT_CPCAP_PWRBUTTON = no;
+      INPUT_ATLAS_BTNS = no;
+      INPUT_ATI_REMOTE2 = no;
+      INPUT_KEYSPAN_REMOTE = no;
+      INPUT_KXTJ9 = no;
+      INPUT_POWERMATE = no;
+      INPUT_YEALINK = no;
+      INPUT_CM109 = no;
+      INPUT_REGULATOR_HAPTIC = no;
+      INPUT_RETU_PWRBUTTON = no;
+      INPUT_TPS65218_PWRBUTTON = no;
+      INPUT_TPS65219_PWRBUTTON = no;
+      INPUT_TPS6594_PWRBUTTON = no;
+      INPUT_AXP20X_PEK = no;
+      INPUT_UINPUT = no;
+      INPUT_PALMAS_PWRBUTTON = no;
+      INPUT_PCF8574 = no;
+      INPUT_PWM_BEEPER = no;
+      INPUT_PWM_VIBRA = no;
+      INPUT_RK805_PWRKEY = no;
+      INPUT_GPIO_ROTARY_ENCODER = no;
+      INPUT_DA7280_HAPTICS = no;
+      INPUT_DA9063_ONKEY = no;
+      INPUT_ADXL34X = no;
+      INPUT_ADXL34X_I2C = no;
+      INPUT_ADXL34X_SPI = no;
+      INPUT_IBM_PANEL = no;
+      INPUT_IMS_PCU = no;
+      INPUT_IQS269A = no;
+      INPUT_IQS626A = no;
+      INPUT_IQS7222 = no;
+      INPUT_CMA3000 = no;
+      INPUT_CMA3000_I2C = no;
+      INPUT_XEN_KBDDEV_FRONTEND = no;
+      INPUT_IDEAPAD_SLIDEBAR = no;
+      INPUT_DRV260X_HAPTICS = no;
+      INPUT_DRV2665_HAPTICS = no;
+      INPUT_DRV2667_HAPTICS = no;
+      INPUT_QNAP_MCU = no;
+      INPUT_RAVE_SP_PWRBUTTON = no;
+      INPUT_RT5120_PWRKEY = no;
+      INPUT_STPMIC1_ONKEY = no;
 
-      CONFIG_INPUT_TABLET = no;
-      CONFIG_TABLET_USB_ACECAD = no;
-      CONFIG_TABLET_USB_AIPTEK = no;
-      CONFIG_TABLET_USB_HANWANG = no;
-      CONFIG_TABLET_USB_KBTAB = no;
-      CONFIG_TABLET_USB_PEGASUS = no;
-      CONFIG_TABLET_SERIAL_WACOM4 = no;
-      CONFIG_INPUT_TOUCHSCREEN = no;
-      CONFIG_TOUCHSCREEN_ADS7846 = no;
-      CONFIG_TOUCHSCREEN_AD7877 = no;
-      CONFIG_TOUCHSCREEN_AD7879 = no;
-      CONFIG_TOUCHSCREEN_AD7879_I2C = no;
-      CONFIG_TOUCHSCREEN_AD7879_SPI = no;
-      CONFIG_TOUCHSCREEN_ADC = no;
-      CONFIG_TOUCHSCREEN_AR1021_I2C = no;
-      CONFIG_TOUCHSCREEN_ATMEL_MXT = no;
-      # CONFIG_TOUCHSCREEN_ATMEL_MXT_T37 is not set
-      CONFIG_TOUCHSCREEN_AUO_PIXCIR = no;
-      CONFIG_TOUCHSCREEN_BU21013 = no;
-      CONFIG_TOUCHSCREEN_BU21029 = no;
-      CONFIG_TOUCHSCREEN_CHIPONE_ICN8318 = no;
-      CONFIG_TOUCHSCREEN_CHIPONE_ICN8505 = no;
-      CONFIG_TOUCHSCREEN_CY8CTMA140 = no;
-      CONFIG_TOUCHSCREEN_CY8CTMG110 = no;
-      CONFIG_TOUCHSCREEN_CYTTSP_CORE = no;
-      CONFIG_TOUCHSCREEN_CYTTSP_I2C = no;
-      CONFIG_TOUCHSCREEN_CYTTSP_SPI = no;
-      CONFIG_TOUCHSCREEN_CYTTSP5 = no;
-      CONFIG_TOUCHSCREEN_DYNAPRO = no;
-      CONFIG_TOUCHSCREEN_HAMPSHIRE = no;
-      CONFIG_TOUCHSCREEN_EETI = no;
-      CONFIG_TOUCHSCREEN_EGALAX = no;
-      CONFIG_TOUCHSCREEN_EGALAX_SERIAL = no;
-      CONFIG_TOUCHSCREEN_EXC3000 = no;
-      CONFIG_TOUCHSCREEN_FUJITSU = no;
-      CONFIG_TOUCHSCREEN_GOODIX = no;
-      CONFIG_TOUCHSCREEN_GOODIX_BERLIN_CORE = no;
-      CONFIG_TOUCHSCREEN_GOODIX_BERLIN_I2C = no;
-      CONFIG_TOUCHSCREEN_GOODIX_BERLIN_SPI = no;
-      CONFIG_TOUCHSCREEN_HIDEEP = no;
-      CONFIG_TOUCHSCREEN_HIMAX_HX852X = no;
-      CONFIG_TOUCHSCREEN_HYCON_HY46XX = no;
-      CONFIG_TOUCHSCREEN_HYNITRON_CSTXXX = no;
-      CONFIG_TOUCHSCREEN_HYNITRON_CST816X = no;
-      CONFIG_TOUCHSCREEN_ILI210X = no;
-      CONFIG_TOUCHSCREEN_ILITEK = no;
-      CONFIG_TOUCHSCREEN_S6SY761 = no;
-      CONFIG_TOUCHSCREEN_GUNZE = no;
-      CONFIG_TOUCHSCREEN_EKTF2127 = no;
-      CONFIG_TOUCHSCREEN_ELAN = no;
-      CONFIG_TOUCHSCREEN_ELO = no;
-      CONFIG_TOUCHSCREEN_WACOM_W8001 = no;
-      CONFIG_TOUCHSCREEN_WACOM_I2C = no;
-      CONFIG_TOUCHSCREEN_MAX11801 = no;
-      CONFIG_TOUCHSCREEN_MMS114 = no;
-      CONFIG_TOUCHSCREEN_MELFAS_MIP4 = no;
-      CONFIG_TOUCHSCREEN_MSG2638 = no;
-      CONFIG_TOUCHSCREEN_MTOUCH = no;
-      CONFIG_TOUCHSCREEN_NOVATEK_NVT_TS = no;
-      CONFIG_TOUCHSCREEN_IMAGIS = no;
-      CONFIG_TOUCHSCREEN_IMX6UL_TSC = no;
-      CONFIG_TOUCHSCREEN_INEXIO = no;
-      CONFIG_TOUCHSCREEN_PENMOUNT = no;
-      CONFIG_TOUCHSCREEN_EDT_FT5X06 = no;
-      CONFIG_TOUCHSCREEN_TOUCHRIGHT = no;
-      CONFIG_TOUCHSCREEN_TOUCHWIN = no;
-      CONFIG_TOUCHSCREEN_PIXCIR = no;
-      CONFIG_TOUCHSCREEN_WDT87XX_I2C = no;
-      CONFIG_TOUCHSCREEN_WM97XX = no;
-      CONFIG_TOUCHSCREEN_WM9705 = no;
-      CONFIG_TOUCHSCREEN_WM9712 = no;
-      CONFIG_TOUCHSCREEN_WM9713 = no;
-      CONFIG_TOUCHSCREEN_USB_COMPOSITE = no;
-      CONFIG_TOUCHSCREEN_MC13783 = no;
-      CONFIG_TOUCHSCREEN_USB_EGALAX = no;
-      CONFIG_TOUCHSCREEN_USB_PANJIT = no;
-      CONFIG_TOUCHSCREEN_USB_3M = no;
-      CONFIG_TOUCHSCREEN_USB_ITM = no;
-      CONFIG_TOUCHSCREEN_USB_ETURBO = no;
-      CONFIG_TOUCHSCREEN_USB_GUNZE = no;
-      CONFIG_TOUCHSCREEN_USB_DMC_TSC10 = no;
-      CONFIG_TOUCHSCREEN_USB_IRTOUCH = no;
-      CONFIG_TOUCHSCREEN_USB_IDEALTEK = no;
-      CONFIG_TOUCHSCREEN_USB_GENERAL_TOUCH = no;
-      CONFIG_TOUCHSCREEN_USB_GOTOP = no;
-      CONFIG_TOUCHSCREEN_USB_JASTEC = no;
-      CONFIG_TOUCHSCREEN_USB_ELO = no;
-      CONFIG_TOUCHSCREEN_USB_E2I = no;
-      CONFIG_TOUCHSCREEN_USB_ZYTRONIC = no;
-      CONFIG_TOUCHSCREEN_USB_ETT_TC45USB = no;
-      CONFIG_TOUCHSCREEN_USB_NEXIO = no;
-      CONFIG_TOUCHSCREEN_USB_EASYTOUCH = no;
-      CONFIG_TOUCHSCREEN_TOUCHIT213 = no;
-      CONFIG_TOUCHSCREEN_TSC_SERIO = no;
-      CONFIG_TOUCHSCREEN_TSC200X_CORE = no;
-      CONFIG_TOUCHSCREEN_TSC2004 = no;
-      CONFIG_TOUCHSCREEN_TSC2005 = no;
-      CONFIG_TOUCHSCREEN_TSC2007 = no;
-      # CONFIG_TOUCHSCREEN_TSC2007_IIO is not set
-      CONFIG_TOUCHSCREEN_RM_TS = no;
-      CONFIG_TOUCHSCREEN_SILEAD = no;
-      CONFIG_TOUCHSCREEN_SIS_I2C = no;
-      CONFIG_TOUCHSCREEN_ST1232 = no;
-      CONFIG_TOUCHSCREEN_STMFTS = no;
-      CONFIG_TOUCHSCREEN_STMPE = no;
-      CONFIG_TOUCHSCREEN_SUR40 = no;
-      CONFIG_TOUCHSCREEN_SURFACE3_SPI = no;
-      CONFIG_TOUCHSCREEN_SX8654 = no;
-      CONFIG_TOUCHSCREEN_TPS6507X = no;
-      CONFIG_TOUCHSCREEN_ZET6223 = no;
-      CONFIG_TOUCHSCREEN_ZFORCE = no;
-      CONFIG_TOUCHSCREEN_COLIBRI_VF50 = no;
-      CONFIG_TOUCHSCREEN_ROHM_BU21023 = no;
-      CONFIG_TOUCHSCREEN_IQS5XX = no;
-      CONFIG_TOUCHSCREEN_IQS7211 = no;
-      CONFIG_TOUCHSCREEN_ZINITIX = no;
-      CONFIG_TOUCHSCREEN_HIMAX_HX83112B = no;
-      CONFIG_INPUT_MISC = no;
-      CONFIG_INPUT_88PM80X_ONKEY = no;
-      CONFIG_INPUT_AD714X = no;
-      CONFIG_INPUT_AD714X_I2C = no;
-      CONFIG_INPUT_AD714X_SPI = no;
-      CONFIG_INPUT_ARIZONA_HAPTICS = no;
-      CONFIG_INPUT_ATC260X_ONKEY = no;
-      CONFIG_INPUT_ATMEL_CAPTOUCH = no;
-      CONFIG_INPUT_AW86927 = no;
-      CONFIG_INPUT_BMA150 = no;
-      CONFIG_INPUT_CS40L50_VIBRA = no;
-      CONFIG_INPUT_E3X0_BUTTON = no;
-      CONFIG_INPUT_PCSPKR = no;
-      CONFIG_INPUT_MAX7360_ROTARY = no;
-      CONFIG_INPUT_MAX77650_ONKEY = no;
-      CONFIG_INPUT_MAX77693_HAPTIC = no;
-      CONFIG_INPUT_MC13783_PWRBUTTON = no;
-      CONFIG_INPUT_MMA8450 = no;
-      CONFIG_INPUT_APANEL = no;
-      CONFIG_INPUT_GPIO_BEEPER = no;
-      CONFIG_INPUT_GPIO_DECODER = no;
-      CONFIG_INPUT_GPIO_VIBRA = no;
-      CONFIG_INPUT_CPCAP_PWRBUTTON = no;
-      CONFIG_INPUT_ATLAS_BTNS = no;
-      CONFIG_INPUT_ATI_REMOTE2 = no;
-      CONFIG_INPUT_KEYSPAN_REMOTE = no;
-      CONFIG_INPUT_KXTJ9 = no;
-      CONFIG_INPUT_POWERMATE = no;
-      CONFIG_INPUT_YEALINK = no;
-      CONFIG_INPUT_CM109 = no;
-      CONFIG_INPUT_REGULATOR_HAPTIC = no;
-      CONFIG_INPUT_RETU_PWRBUTTON = no;
-      CONFIG_INPUT_TPS65218_PWRBUTTON = no;
-      CONFIG_INPUT_TPS65219_PWRBUTTON = no;
-      CONFIG_INPUT_TPS6594_PWRBUTTON = no;
-      CONFIG_INPUT_AXP20X_PEK = no;
-      CONFIG_INPUT_UINPUT = no;
-      CONFIG_INPUT_PALMAS_PWRBUTTON = no;
-      CONFIG_INPUT_PCF8574 = no;
-      CONFIG_INPUT_PWM_BEEPER = no;
-      CONFIG_INPUT_PWM_VIBRA = no;
-      CONFIG_INPUT_RK805_PWRKEY = no;
-      CONFIG_INPUT_GPIO_ROTARY_ENCODER = no;
-      CONFIG_INPUT_DA7280_HAPTICS = no;
-      CONFIG_INPUT_DA9063_ONKEY = no;
-      CONFIG_INPUT_ADXL34X = no;
-      CONFIG_INPUT_ADXL34X_I2C = no;
-      CONFIG_INPUT_ADXL34X_SPI = no;
-      CONFIG_INPUT_IBM_PANEL = no;
-      CONFIG_INPUT_IMS_PCU = no;
-      CONFIG_INPUT_IQS269A = no;
-      CONFIG_INPUT_IQS626A = no;
-      CONFIG_INPUT_IQS7222 = no;
-      CONFIG_INPUT_CMA3000 = no;
-      CONFIG_INPUT_CMA3000_I2C = no;
-      CONFIG_INPUT_XEN_KBDDEV_FRONTEND = no;
-      CONFIG_INPUT_IDEAPAD_SLIDEBAR = no;
-      CONFIG_INPUT_DRV260X_HAPTICS = no;
-      CONFIG_INPUT_DRV2665_HAPTICS = no;
-      CONFIG_INPUT_DRV2667_HAPTICS = no;
-      CONFIG_INPUT_QNAP_MCU = no;
-      CONFIG_INPUT_RAVE_SP_PWRBUTTON = no;
-      CONFIG_INPUT_RT5120_PWRKEY = no;
-      CONFIG_INPUT_STPMIC1_ONKEY = no;
+      SERIO_I8042 = no;
+      SERIO_CT82C710 = no;
+      SERIO_PARKBD = no;
+      SERIO_PCIPS2 = no;
+      SERIO_LIBPS2 = no;
+      SERIO_ALTERA_PS2 = no;
+      SERIO_PS2MULT = no;
+      SERIO_ARC_PS2 = no;
+      SERIO_APBPS2 = no;
+      SERIO_GPIO_PS2 = no;
+      GAMEPORT_EMU10K1 = no;
+      GAMEPORT_FM801 = no;
 
-      CONFIG_SERIO_I8042 = no;
-      CONFIG_SERIO_CT82C710 = no;
-      CONFIG_SERIO_PARKBD = no;
-      CONFIG_SERIO_PCIPS2 = no;
-      CONFIG_SERIO_LIBPS2 = no;
-      CONFIG_SERIO_ALTERA_PS2 = no;
-      CONFIG_SERIO_PS2MULT = no;
-      CONFIG_SERIO_ARC_PS2 = no;
-      CONFIG_SERIO_APBPS2 = no;
-      CONFIG_SERIO_GPIO_PS2 = no;
-      CONFIG_GAMEPORT_EMU10K1 = no;
-      CONFIG_GAMEPORT_FM801 = no;
+      SERIAL_8250_CS = no;
+      SERIAL_8250_MEN_MCB = no;
+      SERIAL_8250_DFL = no;
 
-      CONFIG_SERIAL_8250_CS = no;
-      CONFIG_SERIAL_8250_MEN_MCB = no;
-      CONFIG_SERIAL_8250_DFL = no;
+      SERIAL_SIFIVE = no;
+      SERIAL_XILINX_PS_UART = no;
+      SERIAL_CONEXANT_DIGICOLOR = no;
+      SERIAL_MEN_Z135 = no;
+      SERIAL_LITEUART = no;
 
-      CONFIG_SERIAL_SIFIVE = no;
-      CONFIG_SERIAL_XILINX_PS_UART = no;
-      CONFIG_SERIAL_CONEXANT_DIGICOLOR = no;
-      CONFIG_SERIAL_MEN_Z135 = no;
-      CONFIG_SERIAL_LITEUART = no;
+      SERIAL_NONSTANDARD = no;
+      MOXA_INTELLIO = no;
+      MOXA_SMARTIO = no;
+      N_HDLC = no;
+      IPWIRELESS = no;
+      N_GSM = no;
+      NOZOMI = no;
 
-      CONFIG_SERIAL_NONSTANDARD = no;
-      CONFIG_MOXA_INTELLIO = no;
-      CONFIG_MOXA_SMARTIO = no;
-      CONFIG_N_HDLC = no;
-      CONFIG_IPWIRELESS = no;
-      CONFIG_N_GSM = no;
-      CONFIG_NOZOMI = no;
+      PRINTER = no;
+      # LP_CONSOLE is not set
+      PPDEV = no;
 
-      CONFIG_PRINTER = no;
-      # CONFIG_LP_CONSOLE is not set
-      CONFIG_PPDEV = no;
+      IPMB_DEVICE_INTERFACE = no;
+      HW_RANDOM_CCTRNG = no;
+      APPLICOM = no;
+      MWAVE = no;
+      TELCLOCK = no;
+      XILLYBUS_CLASS = no;
+      XILLYBUS = no;
+      XILLYBUS_PCIE = no;
+      XILLYBUS_OF = no;
+      XILLYUSB = no;
 
-      CONFIG_IPMB_DEVICE_INTERFACE = no;
-      CONFIG_HW_RANDOM_CCTRNG = no;
-      CONFIG_APPLICOM = no;
-      CONFIG_MWAVE = no;
-      CONFIG_TELCLOCK = no;
-      CONFIG_XILLYBUS_CLASS = no;
-      CONFIG_XILLYBUS = no;
-      CONFIG_XILLYBUS_PCIE = no;
-      CONFIG_XILLYBUS_OF = no;
-      CONFIG_XILLYUSB = no;
+      HSI = no;
+      HSI_BOARDINFO = no;
 
-      CONFIG_HSI = no;
-      CONFIG_HSI_BOARDINFO = no;
+      ZL3073X = no;
+      SSB = no;
+      BCMA = no;
 
-      CONFIG_ZL3073X = no;
-      CONFIG_SSB = no;
-      CONFIG_BCMA = no;
+      RC_CORE = mkForce no;
+      RC_DECODERS = mkForce no;
+      RC_DEVICES = mkForce no;
 
-      CONFIG_RC_CORE = no;
-      # CONFIG_BPF_LIRC_MODE2 is not set
-      CONFIG_LIRC = no;
-      CONFIG_RC_MAP = no;
-      CONFIG_RC_DECODERS = no;
-      CONFIG_IR_IMON_DECODER = no;
-      CONFIG_IR_JVC_DECODER = no;
-      CONFIG_IR_MCE_KBD_DECODER = no;
-      CONFIG_IR_NEC_DECODER = no;
-      CONFIG_IR_RC5_DECODER = no;
-      CONFIG_IR_RC6_DECODER = no;
-      CONFIG_IR_RCMM_DECODER = no;
-      CONFIG_IR_SANYO_DECODER = no;
-      CONFIG_IR_SHARP_DECODER = no;
-      CONFIG_IR_SONY_DECODER = no;
-      CONFIG_IR_XMP_DECODER = no;
-      CONFIG_RC_DEVICES = no;
-      CONFIG_IR_ENE = no;
-      CONFIG_IR_FINTEK = no;
-      CONFIG_IR_GPIO_CIR = no;
-      CONFIG_IR_GPIO_TX = no;
-      CONFIG_IR_HIX5HD2 = no;
-      CONFIG_IR_IGORPLUGUSB = no;
-      CONFIG_IR_IGUANA = no;
-      CONFIG_IR_IMON = no;
-      CONFIG_IR_IMON_RAW = no;
-      CONFIG_IR_ITE_CIR = no;
-      CONFIG_IR_MCEUSB = no;
-      CONFIG_IR_NUVOTON = no;
-      CONFIG_IR_PWM_TX = no;
-      CONFIG_IR_REDRAT3 = no;
-      CONFIG_IR_SERIAL = no;
-      # CONFIG_IR_SERIAL_TRANSMITTER is not set
-      CONFIG_IR_SPI = no;
-      CONFIG_IR_STREAMZAP = no;
-      CONFIG_IR_TOY = no;
-      CONFIG_IR_TTUSBIR = no;
-      CONFIG_IR_WINBOND_CIR = no;
-      CONFIG_RC_ATI_REMOTE = no;
-      CONFIG_RC_LOOPBACK = no;
-      CONFIG_RC_XBOX_DVD = no;
+      MEDIA_CEC_RC = mkForce no;
+      VIDEO_TUNER = no;
+      MEDIA_CONTROLLER_DVB = no;
+      USB_S2255 = no;
+      VIDEO_USBTV = no;
+      USB_VIDEO_CLASS = no;
+      USB_VIDEO_CLASS_INPUT_EVDEV = no;
 
-      CONFIG_MEDIA_CEC_RC = no;
-      CONFIG_DVB_CORE = no;
-      CONFIG_VIDEO_TUNER = no;
-      CONFIG_MEDIA_CONTROLLER_DVB = no;
-      CONFIG_DVB_NET = no;
-      CONFIG_DVB_DYNAMIC_MINORS = no;
-      CONFIG_USB_S2255 = no;
-      CONFIG_VIDEO_USBTV = no;
-      CONFIG_USB_VIDEO_CLASS = no;
-      CONFIG_USB_VIDEO_CLASS_INPUT_EVDEV = no;
+      VIDEO_GO7007 = no;
+      VIDEO_GO7007_USB = no;
+      VIDEO_GO7007_LOADER = no;
+      VIDEO_GO7007_USB_S2250_BOARD = no;
+      VIDEO_HDPVR = no;
+      VIDEO_PVRUSB2 = no;
+      VIDEO_PVRUSB2_SYSFS = no;
+      VIDEO_PVRUSB2_DVB = no;
+      # VIDEO_PVRUSB2_DEBUGIFC is not set
+      VIDEO_STK1160 = no;
 
-      CONFIG_VIDEO_GO7007 = no;
-      CONFIG_VIDEO_GO7007_USB = no;
-      CONFIG_VIDEO_GO7007_LOADER = no;
-      CONFIG_VIDEO_GO7007_USB_S2250_BOARD = no;
-      CONFIG_VIDEO_HDPVR = no;
-      CONFIG_VIDEO_PVRUSB2 = no;
-      CONFIG_VIDEO_PVRUSB2_SYSFS = no;
-      CONFIG_VIDEO_PVRUSB2_DVB = no;
-      # CONFIG_VIDEO_PVRUSB2_DEBUGIFC is not set
-      CONFIG_VIDEO_STK1160 = no;
+      VIDEO_AU0828 = no;
+      VIDEO_AU0828_V4L2 = no;
+      # VIDEO_AU0828_RC is not set
+      VIDEO_CX231XX = no;
+      VIDEO_CX231XX_RC = no;
+      VIDEO_CX231XX_ALSA = no;
+      VIDEO_CX231XX_DVB = no;
 
-      CONFIG_VIDEO_AU0828 = no;
-      CONFIG_VIDEO_AU0828_V4L2 = no;
-      # CONFIG_VIDEO_AU0828_RC is not set
-      CONFIG_VIDEO_CX231XX = no;
-      CONFIG_VIDEO_CX231XX_RC = no;
-      CONFIG_VIDEO_CX231XX_ALSA = no;
-      CONFIG_VIDEO_CX231XX_DVB = no;
+      VIDEO_EM28XX = no;
+      VIDEO_EM28XX_V4L2 = no;
+      VIDEO_EM28XX_ALSA = no;
+      VIDEO_EM28XX_DVB = no;
+      VIDEO_EM28XX_RC = no;
 
-      CONFIG_DVB_AS102 = no;
-      CONFIG_DVB_B2C2_FLEXCOP_USB = no;
-      # CONFIG_DVB_B2C2_FLEXCOP_USB_DEBUG is not set
-      CONFIG_DVB_USB_V2 = no;
-      CONFIG_DVB_USB_AF9015 = no;
-      CONFIG_DVB_USB_AF9035 = no;
-      CONFIG_DVB_USB_ANYSEE = no;
-      CONFIG_DVB_USB_AU6610 = no;
-      CONFIG_DVB_USB_AZ6007 = no;
-      CONFIG_DVB_USB_CE6230 = no;
-      CONFIG_DVB_USB_DVBSKY = no;
-      CONFIG_DVB_USB_EC168 = no;
-      CONFIG_DVB_USB_GL861 = no;
-      CONFIG_DVB_USB_LME2510 = no;
-      CONFIG_DVB_USB_MXL111SF = no;
-      CONFIG_DVB_USB_RTL28XXU = no;
-      CONFIG_DVB_USB_ZD1301 = no;
-      CONFIG_DVB_USB = no;
-      # CONFIG_DVB_USB_DEBUG is not set
-      CONFIG_DVB_USB_A800 = no;
-      CONFIG_DVB_USB_AF9005 = no;
-      CONFIG_DVB_USB_AF9005_REMOTE = no;
-      CONFIG_DVB_USB_AZ6027 = no;
-      CONFIG_DVB_USB_CINERGY_T2 = no;
-      CONFIG_DVB_USB_CXUSB = no;
-      # CONFIG_DVB_USB_CXUSB_ANALOG is not set
-      CONFIG_DVB_USB_DIB0700 = no;
-      CONFIG_DVB_USB_DIB3000MC = no;
-      CONFIG_DVB_USB_DIBUSB_MB = no;
-      # CONFIG_DVB_USB_DIBUSB_MB_FAULTY is not set
-      CONFIG_DVB_USB_DIBUSB_MC = no;
-      CONFIG_DVB_USB_DIGITV = no;
-      CONFIG_DVB_USB_DTT200U = no;
-      CONFIG_DVB_USB_DTV5100 = no;
-      CONFIG_DVB_USB_DW2102 = no;
-      CONFIG_DVB_USB_GP8PSK = no;
-      CONFIG_DVB_USB_M920X = no;
-      CONFIG_DVB_USB_NOVA_T_USB2 = no;
-      CONFIG_DVB_USB_OPERA1 = no;
-      CONFIG_DVB_USB_PCTV452E = no;
-      CONFIG_DVB_USB_TECHNISAT_USB2 = no;
-      CONFIG_DVB_USB_TTUSB2 = no;
-      CONFIG_DVB_USB_UMT_010 = no;
-      CONFIG_DVB_USB_VP702X = no;
-      CONFIG_DVB_USB_VP7045 = no;
-      CONFIG_SMS_USB_DRV = no;
-      CONFIG_DVB_TTUSB_BUDGET = no;
-      CONFIG_DVB_TTUSB_DEC = no;
-
-      CONFIG_VIDEO_EM28XX = no;
-      CONFIG_VIDEO_EM28XX_V4L2 = no;
-      CONFIG_VIDEO_EM28XX_ALSA = no;
-      CONFIG_VIDEO_EM28XX_DVB = no;
-      CONFIG_VIDEO_EM28XX_RC = no;
-
-      CONFIG_USB_AIRSPY = no;
-      CONFIG_USB_HACKRF = no;
-      CONFIG_USB_MSI2500 = no;
-      CONFIG_MEDIA_PCI_SUPPORT = no;
+      MEDIA_PCI_SUPPORT = mkForce no;
 
       #
       # Media capture support
       #
-      CONFIG_VIDEO_MGB4 = no;
-      CONFIG_VIDEO_SOLO6X10 = no;
-      CONFIG_VIDEO_TW5864 = no;
-      CONFIG_VIDEO_TW68 = no;
-      CONFIG_VIDEO_TW686X = no;
-      CONFIG_VIDEO_ZORAN = no;
-      # CONFIG_VIDEO_ZORAN_DC30 is not set
-      # CONFIG_VIDEO_ZORAN_ZR36060 is not set
+      VIDEO_MGB4 = no;
+      VIDEO_SOLO6X10 = no;
+      VIDEO_TW5864 = no;
+      VIDEO_TW68 = no;
+      VIDEO_TW686X = no;
+      VIDEO_ZORAN = no;
+      # VIDEO_ZORAN_DC30 is not set
+      # VIDEO_ZORAN_ZR36060 is not set
 
       #
       # Media capture/analog TV support
       #
-      CONFIG_VIDEO_DT3155 = no;
-      CONFIG_VIDEO_IVTV = no;
-      CONFIG_VIDEO_IVTV_ALSA = no;
-      CONFIG_VIDEO_FB_IVTV = no;
-      # CONFIG_VIDEO_FB_IVTV_FORCE_PAT is not set
-      CONFIG_VIDEO_HEXIUM_GEMINI = no;
-      CONFIG_VIDEO_HEXIUM_ORION = no;
-      CONFIG_VIDEO_MXB = no;
+      VIDEO_DT3155 = no;
+      VIDEO_IVTV = no;
+      VIDEO_IVTV_ALSA = no;
+      VIDEO_FB_IVTV = no;
+      # VIDEO_FB_IVTV_FORCE_PAT is not set
+      VIDEO_HEXIUM_GEMINI = no;
+      VIDEO_HEXIUM_ORION = no;
+      VIDEO_MXB = no;
 
       #
       # Media capture/analog/hybrid TV support
       #
-      CONFIG_VIDEO_BT848 = no;
-      CONFIG_DVB_BT8XX = no;
-      CONFIG_VIDEO_CX18 = no;
-      CONFIG_VIDEO_CX18_ALSA = no;
-      CONFIG_VIDEO_CX23885 = no;
-      CONFIG_MEDIA_ALTERA_CI = no;
-      CONFIG_VIDEO_CX25821 = no;
-      CONFIG_VIDEO_CX25821_ALSA = no;
-      CONFIG_VIDEO_CX88 = no;
-      CONFIG_VIDEO_CX88_ALSA = no;
-      CONFIG_VIDEO_CX88_BLACKBIRD = no;
-      CONFIG_VIDEO_CX88_DVB = no;
-      CONFIG_VIDEO_CX88_ENABLE_VP3054 = no;
-      CONFIG_VIDEO_CX88_VP3054 = no;
-      CONFIG_VIDEO_CX88_MPEG = no;
-      CONFIG_VIDEO_SAA7134 = no;
-      CONFIG_VIDEO_SAA7134_ALSA = no;
-      CONFIG_VIDEO_SAA7134_RC = no;
-      CONFIG_VIDEO_SAA7134_DVB = no;
-      CONFIG_VIDEO_SAA7134_GO7007 = no;
-      CONFIG_VIDEO_SAA7164 = no;
+      VIDEO_BT848 = no;
+      DVB_BT8XX = no;
+      VIDEO_CX18 = no;
+      VIDEO_CX18_ALSA = no;
+      VIDEO_CX23885 = no;
+      MEDIA_ALTERA_CI = no;
+      VIDEO_CX25821 = no;
+      VIDEO_CX25821_ALSA = no;
+      VIDEO_CX88 = no;
+      VIDEO_CX88_ALSA = no;
+      VIDEO_CX88_BLACKBIRD = no;
+      VIDEO_CX88_DVB = no;
+      VIDEO_CX88_ENABLE_VP3054 = no;
+      VIDEO_CX88_VP3054 = no;
+      VIDEO_CX88_MPEG = no;
+      VIDEO_SAA7134 = no;
+      VIDEO_SAA7134_ALSA = no;
+      VIDEO_SAA7134_RC = no;
+      VIDEO_SAA7134_DVB = no;
+      VIDEO_SAA7134_GO7007 = no;
+      VIDEO_SAA7164 = no;
 
-      #
-      # Media digital TV PCI Adapters
-      #
-      CONFIG_DVB_B2C2_FLEXCOP_PCI = no;
-      # CONFIG_DVB_B2C2_FLEXCOP_PCI_DEBUG is not set
-      CONFIG_DVB_DDBRIDGE = no;
-      # CONFIG_DVB_DDBRIDGE_MSIENABLE is not set
-      CONFIG_DVB_DM1105 = no;
-      CONFIG_MANTIS_CORE = no;
-      CONFIG_DVB_MANTIS = no;
-      CONFIG_DVB_HOPPER = no;
-      CONFIG_DVB_NETUP_UNIDVB = no;
-      CONFIG_DVB_NGENE = no;
-      CONFIG_DVB_PLUTO2 = no;
-      CONFIG_DVB_PT1 = no;
-      CONFIG_DVB_PT3 = no;
-      CONFIG_DVB_SMIPCIE = no;
-      CONFIG_DVB_BUDGET_CORE = no;
-      CONFIG_DVB_BUDGET = no;
-      CONFIG_DVB_BUDGET_CI = no;
-      CONFIG_DVB_BUDGET_AV = no;
-      CONFIG_RADIO_ADAPTERS = no;
-      CONFIG_RADIO_MAXIRADIO = no;
-      CONFIG_RADIO_SAA7706H = no;
-      CONFIG_RADIO_SHARK = no;
-      CONFIG_RADIO_SHARK2 = no;
-      CONFIG_RADIO_SI4713 = no;
-      CONFIG_RADIO_SI476X = no;
-      CONFIG_RADIO_TEA575X = no;
-      CONFIG_RADIO_TEA5764 = no;
-      CONFIG_RADIO_TEF6862 = no;
-      CONFIG_USB_DSBR = no;
-      CONFIG_USB_KEENE = no;
-      CONFIG_USB_MA901 = no;
-      CONFIG_USB_MR800 = no;
-      CONFIG_USB_RAREMONO = no;
-      CONFIG_RADIO_SI470X = no;
-      CONFIG_USB_SI470X = no;
-      CONFIG_I2C_SI470X = no;
-      CONFIG_USB_SI4713 = no;
-      CONFIG_PLATFORM_SI4713 = no;
-      CONFIG_I2C_SI4713 = no;
+      RADIO_ADAPTERS = no;
+      USB_DSBR = no;
+      USB_KEENE = no;
+      USB_MA901 = no;
+      USB_MR800 = no;
+      USB_RAREMONO = no;
+      USB_SI470X = no;
+      I2C_SI470X = no;
+      USB_SI4713 = no;
+      PLATFORM_SI4713 = no;
+      I2C_SI4713 = no;
 
-      CONFIG_VIDEO_CADENCE_CSI2RX = no;
-      CONFIG_VIDEO_CADENCE_CSI2TX = no;
+      VIDEO_CADENCE_CSI2RX = no;
+      VIDEO_CADENCE_CSI2TX = no;
 
-      CONFIG_VIDEO_RP1_CFE = no;
+      VIDEO_RP1_CFE = no;
 
-      CONFIG_SMS_SDIO_DRV = no;
+      SMS_SDIO_DRV = no;
 
-      CONFIG_DVB_FIREDTV = no;
-      CONFIG_DVB_FIREDTV_INPUT = no;
-      CONFIG_MEDIA_COMMON_OPTIONS = no;
+      MEDIA_COMMON_OPTIONS = no;
 
-      CONFIG_CYPRESS_FIRMWARE = no;
-      CONFIG_TTPCI_EEPROM = no;
+      CYPRESS_FIRMWARE = no;
+      TTPCI_EEPROM = no;
 
-      CONFIG_VIDEO_CX2341X = no;
-      CONFIG_VIDEO_TVEEPROM = no;
-      CONFIG_DVB_B2C2_FLEXCOP = no;
-      CONFIG_VIDEO_SAA7146 = no;
-      CONFIG_VIDEO_SAA7146_VV = no;
-      CONFIG_SMS_SIANO_MDTV = no;
-      CONFIG_SMS_SIANO_RC = no;
-      CONFIG_VIDEOBUF2_DMA_CONTIG = no;
-      CONFIG_VIDEOBUF2_DVB = no;
+      VIDEO_CX2341X = no;
+      VIDEO_TVEEPROM = no;
+      VIDEO_SAA7146 = no;
+      VIDEO_SAA7146_VV = no;
+      SMS_SIANO_MDTV = no;
+      SMS_SIANO_RC = no;
+      VIDEOBUF2_DMA_CONTIG = no;
 
-      CONFIG_VIDEO_ADP1653 = no;
-      CONFIG_VIDEO_LM3560 = no;
-      CONFIG_VIDEO_LM3646 = no;
+      VIDEO_ADP1653 = no;
+      VIDEO_LM3560 = no;
+      VIDEO_LM3646 = no;
 
-      CONFIG_VIDEO_CS3308 = no;
-      CONFIG_VIDEO_CS5345 = no;
-      CONFIG_VIDEO_CS53L32A = no;
-      CONFIG_VIDEO_MSP3400 = no;
-      CONFIG_VIDEO_SONY_BTF_MPX = no;
-      CONFIG_VIDEO_TDA1997X = no;
-      CONFIG_VIDEO_TDA7432 = no;
-      CONFIG_VIDEO_TDA9840 = no;
-      CONFIG_VIDEO_TEA6415C = no;
-      CONFIG_VIDEO_TEA6420 = no;
-      CONFIG_VIDEO_TLV320AIC23B = no;
-      CONFIG_VIDEO_TVAUDIO = no;
-      CONFIG_VIDEO_UDA1342 = no;
-      CONFIG_VIDEO_VP27SMPX = no;
-      CONFIG_VIDEO_WM8739 = no;
-      CONFIG_VIDEO_WM8775 = no;
+      VIDEO_CS3308 = no;
+      VIDEO_CS5345 = no;
+      VIDEO_CS53L32A = no;
+      VIDEO_MSP3400 = no;
+      VIDEO_SONY_BTF_MPX = no;
+      VIDEO_TDA1997X = no;
+      VIDEO_TDA7432 = no;
+      VIDEO_TDA9840 = no;
+      VIDEO_TEA6415C = no;
+      VIDEO_TEA6420 = no;
+      VIDEO_TLV320AIC23B = no;
+      VIDEO_TVAUDIO = no;
+      VIDEO_UDA1342 = no;
+      VIDEO_VP27SMPX = no;
+      VIDEO_WM8739 = no;
+      VIDEO_WM8775 = no;
 
-      CONFIG_VIDEO_SAA6588 = no;
+      VIDEO_SAA6588 = no;
 
-      CONFIG_VIDEO_ADV7180 = no;
-      CONFIG_VIDEO_ADV7183 = no;
-      CONFIG_VIDEO_ADV748X = no;
-      CONFIG_VIDEO_ADV7604 = no;
-      # CONFIG_VIDEO_ADV7604_CEC is not set
-      CONFIG_VIDEO_ADV7842 = no;
-      # CONFIG_VIDEO_ADV7842_CEC is not set
-      CONFIG_VIDEO_BT819 = no;
-      CONFIG_VIDEO_BT856 = no;
-      CONFIG_VIDEO_BT866 = no;
-      CONFIG_VIDEO_ISL7998X = no;
-      CONFIG_VIDEO_LT6911UXE = no;
-      CONFIG_VIDEO_KS0127 = no;
-      CONFIG_VIDEO_MAX9286 = no;
-      CONFIG_VIDEO_ML86V7667 = no;
-      CONFIG_VIDEO_SAA7110 = no;
-      CONFIG_VIDEO_SAA711X = no;
-      CONFIG_VIDEO_TC358743 = no;
-      # CONFIG_VIDEO_TC358743_CEC is not set
-      CONFIG_VIDEO_TC358746 = no;
-      CONFIG_VIDEO_TVP514X = no;
-      CONFIG_VIDEO_TVP5150 = no;
-      CONFIG_VIDEO_TVP7002 = no;
-      CONFIG_VIDEO_TW2804 = no;
-      CONFIG_VIDEO_TW9900 = no;
-      CONFIG_VIDEO_TW9903 = no;
-      CONFIG_VIDEO_TW9906 = no;
-      CONFIG_VIDEO_TW9910 = no;
-      CONFIG_VIDEO_VPX3220 = no;
+      VIDEO_ADV7180 = no;
+      VIDEO_ADV7183 = no;
+      VIDEO_ADV748X = no;
+      VIDEO_ADV7604 = no;
+      # VIDEO_ADV7604_CEC is not set
+      VIDEO_ADV7842 = no;
+      # VIDEO_ADV7842_CEC is not set
+      VIDEO_BT819 = no;
+      VIDEO_BT856 = no;
+      VIDEO_BT866 = no;
+      VIDEO_ISL7998X = no;
+      VIDEO_LT6911UXE = no;
+      VIDEO_KS0127 = no;
+      VIDEO_MAX9286 = no;
+      VIDEO_ML86V7667 = no;
+      VIDEO_SAA7110 = no;
+      VIDEO_SAA711X = no;
+      VIDEO_TC358743 = no;
+      # VIDEO_TC358743_CEC is not set
+      VIDEO_TC358746 = no;
+      VIDEO_TVP514X = no;
+      VIDEO_TVP5150 = no;
+      VIDEO_TVP7002 = no;
+      VIDEO_TW2804 = no;
+      VIDEO_TW9900 = no;
+      VIDEO_TW9903 = no;
+      VIDEO_TW9906 = no;
+      VIDEO_TW9910 = no;
+      VIDEO_VPX3220 = no;
 
-      CONFIG_VIDEO_SAA717X = no;
-      CONFIG_VIDEO_CX25840 = no;
+      VIDEO_SAA717X = no;
+      VIDEO_CX25840 = no;
 
-      CONFIG_VIDEO_ADV7170 = no;
-      CONFIG_VIDEO_ADV7175 = no;
-      CONFIG_VIDEO_ADV7343 = no;
-      CONFIG_VIDEO_ADV7393 = no;
-      CONFIG_VIDEO_AK881X = no;
-      CONFIG_VIDEO_SAA7127 = no;
-      CONFIG_VIDEO_SAA7185 = no;
-      CONFIG_VIDEO_THS8200 = no;
+      VIDEO_ADV7170 = no;
+      VIDEO_ADV7175 = no;
+      VIDEO_ADV7343 = no;
+      VIDEO_ADV7393 = no;
+      VIDEO_AK881X = no;
+      VIDEO_SAA7127 = no;
+      VIDEO_SAA7185 = no;
+      VIDEO_THS8200 = no;
 
-      CONFIG_VIDEO_UPD64031A = no;
-      CONFIG_VIDEO_UPD64083 = no;
+      VIDEO_UPD64031A = no;
+      VIDEO_UPD64083 = no;
 
-      CONFIG_VIDEO_SAA6752HS = no;
+      VIDEO_SAA6752HS = no;
 
-      CONFIG_SDR_MAX2175 = no;
+      SDR_MAX2175 = no;
 
-      CONFIG_VIDEO_I2C = no;
-      CONFIG_VIDEO_M52790 = no;
-      CONFIG_VIDEO_ST_MIPID02 = no;
-      CONFIG_VIDEO_THS7303 = no;
+      VIDEO_I2C = no;
+      VIDEO_M52790 = no;
+      VIDEO_ST_MIPID02 = no;
+      VIDEO_THS7303 = no;
 
-      CONFIG_VIDEO_DS90UB913 = no;
-      CONFIG_VIDEO_DS90UB953 = no;
-      CONFIG_VIDEO_DS90UB960 = no;
-      CONFIG_VIDEO_MAX96714 = no;
-      CONFIG_VIDEO_MAX96717 = no;
+      VIDEO_DS90UB913 = no;
+      VIDEO_DS90UB953 = no;
+      VIDEO_DS90UB960 = no;
+      VIDEO_MAX96714 = no;
+      VIDEO_MAX96717 = no;
 
-      CONFIG_CXD2880_SPI_DRV = no;
-      CONFIG_VIDEO_GS1662 = no;
+      CXD2880_SPI_DRV = no;
+      VIDEO_GS1662 = no;
 
-      CONFIG_MEDIA_TUNER_E4000 = no;
-      CONFIG_MEDIA_TUNER_FC0011 = no;
-      CONFIG_MEDIA_TUNER_FC0012 = no;
-      CONFIG_MEDIA_TUNER_FC0013 = no;
-      CONFIG_MEDIA_TUNER_FC2580 = no;
-      CONFIG_MEDIA_TUNER_IT913X = no;
-      CONFIG_MEDIA_TUNER_M88RS6000T = no;
-      CONFIG_MEDIA_TUNER_MAX2165 = no;
-      CONFIG_MEDIA_TUNER_MC44S803 = no;
-      CONFIG_MEDIA_TUNER_MSI001 = no;
-      CONFIG_MEDIA_TUNER_MT2060 = no;
-      CONFIG_MEDIA_TUNER_MT2063 = no;
-      CONFIG_MEDIA_TUNER_MT20XX = no;
-      CONFIG_MEDIA_TUNER_MT2131 = no;
-      CONFIG_MEDIA_TUNER_MT2266 = no;
-      CONFIG_MEDIA_TUNER_MXL301RF = no;
-      CONFIG_MEDIA_TUNER_MXL5005S = no;
-      CONFIG_MEDIA_TUNER_MXL5007T = no;
-      CONFIG_MEDIA_TUNER_QM1D1B0004 = no;
-      CONFIG_MEDIA_TUNER_QM1D1C0042 = no;
-      CONFIG_MEDIA_TUNER_QT1010 = no;
-      CONFIG_MEDIA_TUNER_R820T = no;
-      CONFIG_MEDIA_TUNER_SI2157 = no;
-      CONFIG_MEDIA_TUNER_SIMPLE = no;
-      CONFIG_MEDIA_TUNER_TDA18212 = no;
-      CONFIG_MEDIA_TUNER_TDA18218 = no;
-      CONFIG_MEDIA_TUNER_TDA18250 = no;
-      CONFIG_MEDIA_TUNER_TDA18271 = no;
-      CONFIG_MEDIA_TUNER_TDA827X = no;
-      CONFIG_MEDIA_TUNER_TDA8290 = no;
-      CONFIG_MEDIA_TUNER_TDA9887 = no;
-      CONFIG_MEDIA_TUNER_TEA5761 = no;
-      CONFIG_MEDIA_TUNER_TEA5767 = no;
-      CONFIG_MEDIA_TUNER_TUA9001 = no;
-      CONFIG_MEDIA_TUNER_XC2028 = no;
-      CONFIG_MEDIA_TUNER_XC4000 = no;
-      CONFIG_MEDIA_TUNER_XC5000 = no;
+      MEDIA_DIGITAL_TV_SUPPORT = mkForce no;
+      MEDIA_ANALOG_TV_SUPPORT = mkForce no;
+      MEDIA_RADIO_SUPPORT = no;
+      MEDIA_SDR_SUPPORT = no;
 
-      CONFIG_DVB_M88DS3103 = no;
-      CONFIG_DVB_MXL5XX = no;
-      CONFIG_DVB_STB0899 = no;
-      CONFIG_DVB_STB6100 = no;
-      CONFIG_DVB_STV090x = no;
-      CONFIG_DVB_STV0910 = no;
-      CONFIG_DVB_STV6110x = no;
-      CONFIG_DVB_STV6111 = no;
+      SND_FIREWIRE = no;
+      SND_FIREWIRE_LIB = no;
+      SND_DICE = no;
+      SND_OXFW = no;
+      SND_ISIGHT = no;
+      SND_FIREWORKS = no;
+      SND_BEBOB = no;
+      SND_FIREWIRE_DIGI00X = no;
+      SND_FIREWIRE_TASCAM = no;
+      SND_FIREWIRE_MOTU = no;
+      SND_FIREFACE = no;
+      SND_PCMCIA = no;
+      SND_VXPOCKET = no;
+      SND_PDAUDIOCF = no;
 
-      #
-      # Multistandard (cable + terrestrial) frontends
-      #
-      CONFIG_DVB_DRXK = no;
-      CONFIG_DVB_MN88472 = no;
-      CONFIG_DVB_MN88473 = no;
-      CONFIG_DVB_SI2165 = no;
-      CONFIG_DVB_TDA18271C2DD = no;
+      SND_SOC_MIKROE_PROTO = no;
 
-      #
-      # DVB-S (satellite) frontends
-      #
-      CONFIG_DVB_CX24110 = no;
-      CONFIG_DVB_CX24116 = no;
-      CONFIG_DVB_CX24117 = no;
-      CONFIG_DVB_CX24120 = no;
-      CONFIG_DVB_CX24123 = no;
-      CONFIG_DVB_DS3000 = no;
-      CONFIG_DVB_MB86A16 = no;
-      CONFIG_DVB_MT312 = no;
-      CONFIG_DVB_S5H1420 = no;
-      CONFIG_DVB_SI21XX = no;
-      CONFIG_DVB_STB6000 = no;
-      CONFIG_DVB_STV0288 = no;
-      CONFIG_DVB_STV0299 = no;
-      CONFIG_DVB_STV0900 = no;
-      CONFIG_DVB_STV6110 = no;
-      CONFIG_DVB_TDA10071 = no;
-      CONFIG_DVB_TDA10086 = no;
-      CONFIG_DVB_TDA8083 = no;
-      CONFIG_DVB_TDA8261 = no;
-      CONFIG_DVB_TDA826X = no;
-      CONFIG_DVB_TS2020 = no;
-      CONFIG_DVB_TUA6100 = no;
-      CONFIG_DVB_TUNER_CX24113 = no;
-      CONFIG_DVB_TUNER_ITD1000 = no;
-      CONFIG_DVB_VES1X93 = no;
-      CONFIG_DVB_ZL10036 = no;
-      CONFIG_DVB_ZL10039 = no;
-
-      #
-      # DVB-T (terrestrial) frontends
-      #
-      CONFIG_DVB_AF9013 = no;
-      CONFIG_DVB_AS102_FE = no;
-      CONFIG_DVB_CX22700 = no;
-      CONFIG_DVB_CX22702 = no;
-      CONFIG_DVB_CXD2820R = no;
-      CONFIG_DVB_CXD2841ER = no;
-      CONFIG_DVB_DIB3000MB = no;
-      CONFIG_DVB_DIB3000MC = no;
-      CONFIG_DVB_DIB7000M = no;
-      CONFIG_DVB_DIB7000P = no;
-      CONFIG_DVB_DIB9000 = no;
-      CONFIG_DVB_DRXD = no;
-      CONFIG_DVB_EC100 = no;
-      CONFIG_DVB_GP8PSK_FE = no;
-      CONFIG_DVB_L64781 = no;
-      CONFIG_DVB_MT352 = no;
-      CONFIG_DVB_NXT6000 = no;
-      CONFIG_DVB_RTL2830 = no;
-      CONFIG_DVB_RTL2832 = no;
-      CONFIG_DVB_RTL2832_SDR = no;
-      CONFIG_DVB_S5H1432 = no;
-      CONFIG_DVB_SI2168 = no;
-      CONFIG_DVB_SP887X = no;
-      CONFIG_DVB_STV0367 = no;
-      CONFIG_DVB_TDA10048 = no;
-      CONFIG_DVB_TDA1004X = no;
-      CONFIG_DVB_ZD1301_DEMOD = no;
-      CONFIG_DVB_ZL10353 = no;
-      CONFIG_DVB_CXD2880 = no;
-
-      #
-      # DVB-C (cable) frontends
-      #
-      CONFIG_DVB_STV0297 = no;
-      CONFIG_DVB_TDA10021 = no;
-      CONFIG_DVB_TDA10023 = no;
-      CONFIG_DVB_VES1820 = no;
-
-      #
-      # ATSC (North American/Korean Terrestrial/Cable DTV) frontends
-      #
-      CONFIG_DVB_AU8522 = no;
-      CONFIG_DVB_AU8522_DTV = no;
-      CONFIG_DVB_AU8522_V4L = no;
-      CONFIG_DVB_BCM3510 = no;
-      CONFIG_DVB_LG2160 = no;
-      CONFIG_DVB_LGDT3305 = no;
-      CONFIG_DVB_LGDT3306A = no;
-      CONFIG_DVB_LGDT330X = no;
-      CONFIG_DVB_MXL692 = no;
-      CONFIG_DVB_NXT200X = no;
-      CONFIG_DVB_OR51132 = no;
-      CONFIG_DVB_OR51211 = no;
-      CONFIG_DVB_S5H1409 = no;
-      CONFIG_DVB_S5H1411 = no;
-
-      #
-      # ISDB-T (terrestrial) frontends
-      #
-      CONFIG_DVB_DIB8000 = no;
-      CONFIG_DVB_MB86A20S = no;
-      CONFIG_DVB_S921 = no;
-
-      #
-      # ISDB-S (satellite) & ISDB-T (terrestrial) frontends
-      #
-      CONFIG_DVB_MN88443X = no;
-      CONFIG_DVB_TC90522 = no;
-
-      #
-      # Digital terrestrial only tuners/PLL
-      #
-      CONFIG_DVB_PLL = no;
-      CONFIG_DVB_TUNER_DIB0070 = no;
-      CONFIG_DVB_TUNER_DIB0090 = no;
-
-      #
-      # SEC control devices for DVB-S
-      #
-      CONFIG_DVB_A8293 = no;
-      CONFIG_DVB_AF9033 = no;
-      CONFIG_DVB_ASCOT2E = no;
-      CONFIG_DVB_ATBM8830 = no;
-      CONFIG_DVB_HELENE = no;
-      CONFIG_DVB_HORUS3A = no;
-      CONFIG_DVB_ISL6405 = no;
-      CONFIG_DVB_ISL6421 = no;
-      CONFIG_DVB_ISL6423 = no;
-      CONFIG_DVB_IX2505V = no;
-      CONFIG_DVB_LGS8GL5 = no;
-      CONFIG_DVB_LGS8GXX = no;
-      CONFIG_DVB_LNBH25 = no;
-      CONFIG_DVB_LNBH29 = no;
-      CONFIG_DVB_LNBP21 = no;
-      CONFIG_DVB_LNBP22 = no;
-      CONFIG_DVB_M88RS2000 = no;
-      CONFIG_DVB_TDA665x = no;
-      CONFIG_DVB_DRX39XYJ = no;
-
-      #
-      # Common Interface (EN50221) controller drivers
-      #
-      CONFIG_DVB_CXD2099 = no;
-      CONFIG_DVB_SP2 = no;
-
-      CONFIG_DVB_DUMMY_FE = no;
-
-      CONFIG_SND_FIREWIRE = no;
-      CONFIG_SND_FIREWIRE_LIB = no;
-      CONFIG_SND_DICE = no;
-      CONFIG_SND_OXFW = no;
-      CONFIG_SND_ISIGHT = no;
-      CONFIG_SND_FIREWORKS = no;
-      CONFIG_SND_BEBOB = no;
-      CONFIG_SND_FIREWIRE_DIGI00X = no;
-      CONFIG_SND_FIREWIRE_TASCAM = no;
-      CONFIG_SND_FIREWIRE_MOTU = no;
-      CONFIG_SND_FIREFACE = no;
-      CONFIG_SND_PCMCIA = no;
-      CONFIG_SND_VXPOCKET = no;
-      CONFIG_SND_PDAUDIOCF = no;
-
-      CONFIG_SND_SOC_MIKROE_PROTO = no;
-
-      CONFIG_MEMSTICK = no;
-      # CONFIG_MEMSTICK_DEBUG is not set
+      MEMSTICK = no;
+      # MEMSTICK_DEBUG is not set
 
       #
       # MemoryStick drivers
       #
-      # CONFIG_MEMSTICK_UNSAFE_RESUME is not set
-      CONFIG_MSPRO_BLOCK = no;
-      CONFIG_MS_BLOCK = no;
+      # MEMSTICK_UNSAFE_RESUME is not set
+      MSPRO_BLOCK = no;
+      MS_BLOCK = no;
 
       #
       # MemoryStick Host Controller Drivers
       #
-      CONFIG_MEMSTICK_TIFM_MS = no;
-      CONFIG_MEMSTICK_JMICRON_38X = no;
-      CONFIG_MEMSTICK_R592 = no;
-      CONFIG_MEMSTICK_REALTEK_USB = no;
+      MEMSTICK_TIFM_MS = no;
+      MEMSTICK_JMICRON_38X = no;
+      MEMSTICK_R592 = no;
+      MEMSTICK_REALTEK_USB = no;
 
-      CONFIG_ACCESSIBILITY = no;
-      # CONFIG_A11Y_BRAILLE_CONSOLE is not set
+      ACCESSIBILITY = mkForce no; # Set in nixpkgs
+      SPEAKUP = no;
 
-      #
-      # Speakup console speech
-      #
-      CONFIG_SPEAKUP = no;
-      CONFIG_SPEAKUP_SYNTH_ACNTSA = no;
-      CONFIG_SPEAKUP_SYNTH_APOLLO = no;
-      CONFIG_SPEAKUP_SYNTH_AUDPTR = no;
-      CONFIG_SPEAKUP_SYNTH_BNS = no;
-      CONFIG_SPEAKUP_SYNTH_DECTLK = no;
-      CONFIG_SPEAKUP_SYNTH_DECEXT = no;
-      CONFIG_SPEAKUP_SYNTH_LTLK = no;
-      CONFIG_SPEAKUP_SYNTH_SOFT = no;
-      CONFIG_SPEAKUP_SYNTH_SPKOUT = no;
-      CONFIG_SPEAKUP_SYNTH_TXPRT = no;
-      CONFIG_SPEAKUP_SYNTH_DUMMY = no;
-      # end of Speakup console speech
-      #
-      #
-      CONFIG_GREYBUS = no;
-      CONFIG_GREYBUS_BEAGLEPLAY = no;
-      CONFIG_GREYBUS_ES2 = no;
-      CONFIG_COMEDI = no;
-
-      # CONFIG_COMEDI_MISC_DRIVERS is not set
-      CONFIG_COMEDI_PCI_DRIVERS = no;
-      CONFIG_COMEDI_8255_PCI = no;
-      CONFIG_COMEDI_ADDI_WATCHDOG = no;
-      CONFIG_COMEDI_ADDI_APCI_1032 = no;
-      CONFIG_COMEDI_ADDI_APCI_1500 = no;
-      CONFIG_COMEDI_ADDI_APCI_1516 = no;
-      CONFIG_COMEDI_ADDI_APCI_1564 = no;
-      CONFIG_COMEDI_ADDI_APCI_16XX = no;
-      CONFIG_COMEDI_ADDI_APCI_2032 = no;
-      CONFIG_COMEDI_ADDI_APCI_2200 = no;
-      CONFIG_COMEDI_ADDI_APCI_3120 = no;
-      CONFIG_COMEDI_ADDI_APCI_3501 = no;
-      CONFIG_COMEDI_ADDI_APCI_3XXX = no;
-      CONFIG_COMEDI_ADL_PCI6208 = no;
-      CONFIG_COMEDI_ADL_PCI7250 = no;
-      CONFIG_COMEDI_ADL_PCI7X3X = no;
-      CONFIG_COMEDI_ADL_PCI8164 = no;
-      CONFIG_COMEDI_ADL_PCI9111 = no;
-      CONFIG_COMEDI_ADL_PCI9118 = no;
-      CONFIG_COMEDI_ADV_PCI1710 = no;
-      CONFIG_COMEDI_ADV_PCI1720 = no;
-      CONFIG_COMEDI_ADV_PCI1723 = no;
-      CONFIG_COMEDI_ADV_PCI1724 = no;
-      CONFIG_COMEDI_ADV_PCI1760 = no;
-      CONFIG_COMEDI_ADV_PCI_DIO = no;
-      CONFIG_COMEDI_AMPLC_DIO200_PCI = no;
-      CONFIG_COMEDI_AMPLC_PC236_PCI = no;
-      CONFIG_COMEDI_AMPLC_PC263_PCI = no;
-      CONFIG_COMEDI_AMPLC_PCI224 = no;
-      CONFIG_COMEDI_AMPLC_PCI230 = no;
-      CONFIG_COMEDI_CONTEC_PCI_DIO = no;
-      CONFIG_COMEDI_DAS08_PCI = no;
-      CONFIG_COMEDI_DT3000 = no;
-      CONFIG_COMEDI_DYNA_PCI10XX = no;
-      CONFIG_COMEDI_GSC_HPDI = no;
-      CONFIG_COMEDI_MF6X4 = no;
-      CONFIG_COMEDI_ICP_MULTI = no;
-      CONFIG_COMEDI_DAQBOARD2000 = no;
-      CONFIG_COMEDI_JR3_PCI = no;
-      CONFIG_COMEDI_KE_COUNTER = no;
-      CONFIG_COMEDI_CB_PCIDAS64 = no;
-      CONFIG_COMEDI_CB_PCIDAS = no;
-      CONFIG_COMEDI_CB_PCIDDA = no;
-      CONFIG_COMEDI_CB_PCIMDAS = no;
-      CONFIG_COMEDI_CB_PCIMDDA = no;
-      CONFIG_COMEDI_ME4000 = no;
-      CONFIG_COMEDI_ME_DAQ = no;
-      CONFIG_COMEDI_NI_6527 = no;
-      CONFIG_COMEDI_NI_65XX = no;
-      CONFIG_COMEDI_NI_660X = no;
-      CONFIG_COMEDI_NI_670X = no;
-      CONFIG_COMEDI_NI_LABPC_PCI = no;
-      CONFIG_COMEDI_NI_PCIDIO = no;
-      CONFIG_COMEDI_NI_PCIMIO = no;
-      CONFIG_COMEDI_RTD520 = no;
-      CONFIG_COMEDI_S626 = no;
-      CONFIG_COMEDI_MITE = no;
-      CONFIG_COMEDI_NI_TIOCMD = no;
-      CONFIG_COMEDI_PCMCIA_DRIVERS = no;
-      CONFIG_COMEDI_CB_DAS16_CS = no;
-      CONFIG_COMEDI_DAS08_CS = no;
-      CONFIG_COMEDI_NI_DAQ_700_CS = no;
-      CONFIG_COMEDI_NI_DAQ_DIO24_CS = no;
-      CONFIG_COMEDI_NI_LABPC_CS = no;
-      CONFIG_COMEDI_NI_MIO_CS = no;
-      CONFIG_COMEDI_QUATECH_DAQP_CS = no;
-      CONFIG_COMEDI_USB_DRIVERS = no;
-      CONFIG_COMEDI_DT9812 = no;
-      CONFIG_COMEDI_NI_USB6501 = no;
-      CONFIG_COMEDI_USBDUX = no;
-      CONFIG_COMEDI_USBDUXFAST = no;
-      CONFIG_COMEDI_USBDUXSIGMA = no;
-      CONFIG_COMEDI_VMK80XX = no;
-      CONFIG_COMEDI_8254 = no;
-      CONFIG_COMEDI_8255 = no;
-      CONFIG_COMEDI_8255_SA = no;
-      CONFIG_COMEDI_KCOMEDILIB = no;
-      CONFIG_COMEDI_AMPLC_DIO200 = no;
-      CONFIG_COMEDI_AMPLC_PC236 = no;
-      CONFIG_COMEDI_DAS08 = no;
-      CONFIG_COMEDI_NI_LABPC = no;
-      CONFIG_COMEDI_NI_TIO = no;
-      CONFIG_COMEDI_NI_ROUTING = no;
-      CONFIG_COMEDI_TESTS = no;
-      CONFIG_COMEDI_TESTS_EXAMPLE = no;
-      CONFIG_COMEDI_TESTS_NI_ROUTES = no;
-      CONFIG_STAGING = no;
-      CONFIG_RTL8723BS = no;
+      GREYBUS = no;
+      COMEDI = no;
+      STAGING = mkForce no;
+      RTL8723BS = no;
 
       #
       # IIO staging drivers
       #
 
-      #
-      # Accelerometers
-      #
-      CONFIG_ADIS16203 = no;
-      # end of Accelerometers
-
-      #
-      # Analog to digital converters
-      #
-      CONFIG_AD7816 = no;
-      # end of Analog to digital converters
-
-      #
-      # Analog digital bi-direction converters
-      #
-      CONFIG_ADT7316 = no;
-      CONFIG_ADT7316_SPI = no;
-      CONFIG_ADT7316_I2C = no;
-      # end of Analog digital bi-direction converters
-
-      #
-      # Direct Digital Synthesis
-      #
-      CONFIG_AD9832 = no;
-      CONFIG_AD9834 = no;
-      # end of Direct Digital Synthesis
-
-      #
-      # Network Analyzer, Impedance Converters
-      #
-      CONFIG_AD5933 = no;
-      # end of Network Analyzer, Impedance Converters
+      ADIS16203 = no;
+      AD7816 = no;
+      ADT7316 = no;
+      ADT7316_SPI = no;
+      ADT7316_I2C = no;
+      AD9832 = no;
+      AD9834 = no;
+      AD5933 = no;
       # end of IIO staging drivers
 
-      CONFIG_FB_SM750 = no;
-      CONFIG_STAGING_MEDIA = no;
-      # CONFIG_INTEL_ATOMISP is not set
-      CONFIG_DVB_AV7110_IR = no;
-      CONFIG_DVB_AV7110 = no;
-      CONFIG_DVB_AV7110_OSD = no;
-      CONFIG_DVB_SP8870 = no;
-      CONFIG_VIDEO_MAX96712 = no;
+      FB_SM750 = no;
+      STAGING_MEDIA = mkForce no;
+      VIDEO_MAX96712 = no;
 
       #
       # StarFive media platform drivers
       #
-      # CONFIG_STAGING_MEDIA_DEPRECATED is not set
-      CONFIG_FB_TFT = no;
-      CONFIG_FB_TFT_AGM1264K_FL = no;
-      CONFIG_FB_TFT_BD663474 = no;
-      CONFIG_FB_TFT_HX8340BN = no;
-      CONFIG_FB_TFT_HX8347D = no;
-      CONFIG_FB_TFT_HX8353D = no;
-      CONFIG_FB_TFT_HX8357D = no;
-      CONFIG_FB_TFT_ILI9163 = no;
-      CONFIG_FB_TFT_ILI9320 = no;
-      CONFIG_FB_TFT_ILI9325 = no;
-      CONFIG_FB_TFT_ILI9340 = no;
-      CONFIG_FB_TFT_ILI9341 = no;
-      CONFIG_FB_TFT_ILI9481 = no;
-      CONFIG_FB_TFT_ILI9486 = no;
-      CONFIG_FB_TFT_PCD8544 = no;
-      CONFIG_FB_TFT_RA8875 = no;
-      CONFIG_FB_TFT_S6D02A1 = no;
-      CONFIG_FB_TFT_S6D1121 = no;
-      CONFIG_FB_TFT_SEPS525 = no;
-      CONFIG_FB_TFT_SH1106 = no;
-      CONFIG_FB_TFT_SSD1289 = no;
-      CONFIG_FB_TFT_SSD1305 = no;
-      CONFIG_FB_TFT_SSD1306 = no;
-      CONFIG_FB_TFT_SSD1331 = no;
-      CONFIG_FB_TFT_SSD1351 = no;
-      CONFIG_FB_TFT_ST7735R = no;
-      CONFIG_FB_TFT_ST7789V = no;
-      CONFIG_FB_TFT_TINYLCD = no;
-      CONFIG_FB_TFT_TLS8204 = no;
-      CONFIG_FB_TFT_UC1611 = no;
-      CONFIG_FB_TFT_UC1701 = no;
-      CONFIG_FB_TFT_UPD161704 = no;
-      CONFIG_MOST_COMPONENTS = no;
-      CONFIG_MOST_NET = no;
-      CONFIG_MOST_VIDEO = no;
-      CONFIG_MOST_DIM2 = no;
-      CONFIG_GREYBUS_AUDIO = no;
-      CONFIG_GREYBUS_AUDIO_APB_CODEC = no;
-      CONFIG_GREYBUS_BOOTROM = no;
-      CONFIG_GREYBUS_FIRMWARE = no;
-      CONFIG_GREYBUS_HID = no;
-      CONFIG_GREYBUS_LIGHT = no;
-      CONFIG_GREYBUS_LOG = no;
-      CONFIG_GREYBUS_LOOPBACK = no;
-      CONFIG_GREYBUS_POWER = no;
-      CONFIG_GREYBUS_RAW = no;
-      CONFIG_GREYBUS_VIBRATOR = no;
-      CONFIG_GREYBUS_BRIDGED_PHY = no;
-      CONFIG_GREYBUS_GPIO = no;
-      CONFIG_GREYBUS_I2C = no;
-      CONFIG_GREYBUS_PWM = no;
-      CONFIG_GREYBUS_SDIO = no;
-      CONFIG_GREYBUS_SPI = no;
-      CONFIG_GREYBUS_UART = no;
-      CONFIG_GREYBUS_USB = no;
-      CONFIG_XIL_AXIS_FIFO = no;
-      # CONFIG_VME_BUS is not set
-      CONFIG_GPIB = no;
-      CONFIG_GPIB_COMMON = no;
-      CONFIG_GPIB_AGILENT_82350B = no;
-      CONFIG_GPIB_AGILENT_82357A = no;
-      CONFIG_GPIB_CEC_PCI = no;
-      CONFIG_GPIB_NI_PCI_ISA = no;
-      CONFIG_GPIB_CB7210 = no;
-      CONFIG_GPIB_NI_USB = no;
-      CONFIG_GPIB_FLUKE = no;
-      CONFIG_GPIB_FMH = no;
-      CONFIG_GPIB_INES = no;
-      CONFIG_GPIB_PCMCIA = no;
-      CONFIG_GPIB_LPVO = no;
-      CONFIG_GPIB_TMS9914 = no;
-      CONFIG_GPIB_NEC7210 = no;
+      FB_TFT = no;
+      FB_TFT_AGM1264K_FL = no;
+      FB_TFT_BD663474 = no;
+      FB_TFT_HX8340BN = no;
+      FB_TFT_HX8347D = no;
+      FB_TFT_HX8353D = no;
+      FB_TFT_HX8357D = no;
+      FB_TFT_ILI9163 = no;
+      FB_TFT_ILI9320 = no;
+      FB_TFT_ILI9325 = no;
+      FB_TFT_ILI9340 = no;
+      FB_TFT_ILI9341 = no;
+      FB_TFT_ILI9481 = no;
+      FB_TFT_ILI9486 = no;
+      FB_TFT_PCD8544 = no;
+      FB_TFT_RA8875 = no;
+      FB_TFT_S6D02A1 = no;
+      FB_TFT_S6D1121 = no;
+      FB_TFT_SEPS525 = no;
+      FB_TFT_SH1106 = no;
+      FB_TFT_SSD1289 = no;
+      FB_TFT_SSD1305 = no;
+      FB_TFT_SSD1306 = no;
+      FB_TFT_SSD1331 = no;
+      FB_TFT_SSD1351 = no;
+      FB_TFT_ST7735R = no;
+      FB_TFT_ST7789V = no;
+      FB_TFT_TINYLCD = no;
+      FB_TFT_TLS8204 = no;
+      FB_TFT_UC1611 = no;
+      FB_TFT_UC1701 = no;
+      FB_TFT_UPD161704 = no;
+      MOST_COMPONENTS = no;
+      MOST_NET = no;
+      MOST_VIDEO = no;
+      MOST_DIM2 = no;
 
-      CONFIG_CHROME_PLATFORMS = no;
-      CONFIG_CHROMEOS_ACPI = no;
-      CONFIG_CHROMEOS_LAPTOP = no;
-      CONFIG_CHROMEOS_PSTORE = no;
-      CONFIG_CHROMEOS_TBMC = no;
-      CONFIG_CHROMEOS_OF_HW_PROBER = no;
-      CONFIG_CROS_EC = no;
-      CONFIG_CROS_EC_I2C = no;
-      CONFIG_CROS_EC_RPMSG = no;
-      CONFIG_CROS_EC_ISHTP = no;
-      CONFIG_CROS_EC_SPI = no;
-      CONFIG_CROS_EC_UART = no;
-      CONFIG_CROS_EC_LPC = no;
-      CONFIG_CROS_EC_PROTO = no;
-      CONFIG_CROS_KBD_LED_BACKLIGHT = no;
-      CONFIG_CROS_EC_CHARDEV = no;
-      CONFIG_CROS_EC_LIGHTBAR = no;
-      CONFIG_CROS_EC_VBC = no;
-      CONFIG_CROS_EC_DEBUGFS = no;
-      CONFIG_CROS_EC_SENSORHUB = no;
-      CONFIG_CROS_EC_SYSFS = no;
-      CONFIG_CROS_EC_TYPEC_ALTMODES = no;
-      CONFIG_CROS_EC_TYPEC = no;
-      CONFIG_CROS_HPS_I2C = no;
-      CONFIG_CROS_USBPD_LOGGER = no;
-      CONFIG_CROS_USBPD_NOTIFY = no;
-      CONFIG_CHROMEOS_PRIVACY_SCREEN = no;
-      CONFIG_CROS_TYPEC_SWITCH = no;
-      CONFIG_WILCO_EC = no;
-      CONFIG_WILCO_EC_DEBUGFS = no;
-      CONFIG_WILCO_EC_EVENTS = no;
-      CONFIG_WILCO_EC_TELEMETRY = no;
+      XIL_AXIS_FIFO = no;
+      # VME_BUS is not set
+      GPIB = no;
+      GPIB_COMMON = no;
+      GPIB_AGILENT_82350B = no;
+      GPIB_AGILENT_82357A = no;
+      GPIB_CEC_PCI = no;
+      GPIB_NI_PCI_ISA = no;
+      GPIB_CB7210 = no;
+      GPIB_NI_USB = no;
+      GPIB_FLUKE = no;
+      GPIB_FMH = no;
+      GPIB_INES = no;
+      GPIB_PCMCIA = no;
+      GPIB_LPVO = no;
+      GPIB_TMS9914 = no;
+      GPIB_NEC7210 = no;
 
-      CONFIG_IDEAPAD_LAPTOP = no;
-      CONFIG_LENOVO_YMC = no;
-      CONFIG_MSI_LAPTOP = no;
-      CONFIG_SAMSUNG_GALAXYBOOK = no;
-      CONFIG_SAMSUNG_LAPTOP = no;
-      CONFIG_SAMSUNG_Q10 = no;
-      CONFIG_ACPI_TOSHIBA = no;
+      CHROME_PLATFORMS = mkForce no;
 
-      CONFIG_LITEX = no;
-      CONFIG_LITEX_SOC_CONTROLLER = no;
+      WILCO_EC = no;
+      WILCO_EC_DEBUGFS = no;
+      WILCO_EC_EVENTS = no;
+      WILCO_EC_TELEMETRY = no;
+
+      IDEAPAD_LAPTOP = no;
+      LENOVO_YMC = no;
+      MSI_LAPTOP = no;
+      SAMSUNG_GALAXYBOOK = no;
+      SAMSUNG_LAPTOP = no;
+      SAMSUNG_Q10 = no;
+      ACPI_TOSHIBA = no;
+
+      LITEX = no;
+      LITEX_SOC_CONTROLLER = no;
       # end of Enable LiteX SoC Builder specific drivers
 
-      CONFIG_WPCM450_SOC = no;
-      # CONFIG_WPCM450_SOC is not set
+      WPCM450_SOC = no;
+      # WPCM450_SOC is not set
 
       #
       # Qualcomm SoC drivers
       #
-      CONFIG_QCOM_PDR_HELPERS = no;
-      CONFIG_QCOM_PDR_MSG = no;
-      CONFIG_QCOM_PMIC_PDCHARGER_ULOG = no;
-      CONFIG_QCOM_PMIC_GLINK = no;
-      CONFIG_QCOM_QMI_HELPERS = no;
-      CONFIG_QCOM_PBS = no;
+      QCOM_PDR_HELPERS = no;
+      QCOM_PDR_MSG = no;
+      QCOM_PMIC_PDCHARGER_ULOG = no;
+      QCOM_PMIC_GLINK = no;
+      QCOM_QMI_HELPERS = no;
+      QCOM_PBS = no;
 
-      CONFIG_IIO = no;
-      CONFIG_IIO_BUFFER = no;
-      CONFIG_IIO_BUFFER_CB = no;
-      CONFIG_IIO_BUFFER_DMA = no;
-      CONFIG_IIO_BUFFER_DMAENGINE = no;
-      CONFIG_IIO_BUFFER_HW_CONSUMER = no;
-      CONFIG_IIO_KFIFO_BUF = no;
-      CONFIG_IIO_TRIGGERED_BUFFER = no;
-      CONFIG_IIO_CONFIGFS = no;
-      CONFIG_IIO_GTS_HELPER = no;
-      CONFIG_IIO_TRIGGER = no;
-      CONFIG_IIO_SW_DEVICE = no;
-      CONFIG_IIO_SW_TRIGGER = no;
-      CONFIG_IIO_TRIGGERED_EVENT = no;
-      CONFIG_IIO_BACKEND = no;
+      IIO = no;
+      IIO_BUFFER = no;
+      IIO_BUFFER_CB = no;
+      IIO_BUFFER_DMA = no;
+      IIO_BUFFER_DMAENGINE = no;
+      IIO_BUFFER_HW_CONSUMER = no;
+      IIO_KFIFO_BUF = no;
+      IIO_TRIGGERED_BUFFER = no;
+      IIO_CONFIGFS = no;
+      IIO_GTS_HELPER = no;
+      IIO_TRIGGER = no;
+      IIO_SW_DEVICE = no;
+      IIO_SW_TRIGGER = no;
+      IIO_TRIGGERED_EVENT = no;
+      IIO_BACKEND = no;
 
       #
       # Accelerometers
       #
-      CONFIG_ADIS16201 = no;
-      CONFIG_ADIS16209 = no;
-      CONFIG_ADXL313 = no;
-      CONFIG_ADXL313_I2C = no;
-      CONFIG_ADXL313_SPI = no;
-      CONFIG_ADXL355 = no;
-      CONFIG_ADXL355_I2C = no;
-      CONFIG_ADXL355_SPI = no;
-      CONFIG_ADXL367 = no;
-      CONFIG_ADXL367_SPI = no;
-      CONFIG_ADXL367_I2C = no;
-      CONFIG_ADXL372 = no;
-      CONFIG_ADXL372_SPI = no;
-      CONFIG_ADXL372_I2C = no;
-      CONFIG_ADXL380 = no;
-      CONFIG_ADXL380_SPI = no;
-      CONFIG_ADXL380_I2C = no;
-      CONFIG_BMA220 = no;
-      CONFIG_BMA400 = no;
-      CONFIG_BMA400_I2C = no;
-      CONFIG_BMA400_SPI = no;
-      CONFIG_BMC150_ACCEL = no;
-      CONFIG_BMC150_ACCEL_I2C = no;
-      CONFIG_BMC150_ACCEL_SPI = no;
-      CONFIG_BMI088_ACCEL = no;
-      CONFIG_BMI088_ACCEL_I2C = no;
-      CONFIG_BMI088_ACCEL_SPI = no;
-      CONFIG_DA280 = no;
-      CONFIG_DA311 = no;
-      CONFIG_DMARD06 = no;
-      CONFIG_DMARD09 = no;
-      CONFIG_DMARD10 = no;
-      CONFIG_FXLS8962AF = no;
-      CONFIG_FXLS8962AF_I2C = no;
-      CONFIG_FXLS8962AF_SPI = no;
-      CONFIG_HID_SENSOR_ACCEL_3D = no;
-      CONFIG_IIO_CROS_EC_ACCEL_LEGACY = no;
-      CONFIG_IIO_ST_ACCEL_3AXIS = no;
-      CONFIG_IIO_ST_ACCEL_I2C_3AXIS = no;
-      CONFIG_IIO_ST_ACCEL_SPI_3AXIS = no;
-      CONFIG_IIO_KX022A = no;
-      CONFIG_IIO_KX022A_SPI = no;
-      CONFIG_IIO_KX022A_I2C = no;
-      CONFIG_KXSD9 = no;
-      CONFIG_KXSD9_SPI = no;
-      CONFIG_KXSD9_I2C = no;
-      CONFIG_KXCJK1013 = no;
-      CONFIG_MC3230 = no;
-      CONFIG_MMA7455 = no;
-      CONFIG_MMA7455_I2C = no;
-      CONFIG_MMA7455_SPI = no;
-      CONFIG_MMA7660 = no;
-      CONFIG_MMA8452 = no;
-      CONFIG_MMA9551_CORE = no;
-      CONFIG_MMA9551 = no;
-      CONFIG_MMA9553 = no;
-      CONFIG_MSA311 = no;
-      CONFIG_MXC4005 = no;
-      CONFIG_MXC6255 = no;
-      CONFIG_SCA3000 = no;
-      CONFIG_SCA3300 = no;
-      CONFIG_STK8312 = no;
-      CONFIG_STK8BA50 = no;
+      ADIS16201 = no;
+      ADIS16209 = no;
+      ADXL313 = no;
+      ADXL313_I2C = no;
+      ADXL313_SPI = no;
+      ADXL355 = no;
+      ADXL355_I2C = no;
+      ADXL355_SPI = no;
+      ADXL367 = no;
+      ADXL367_SPI = no;
+      ADXL367_I2C = no;
+      ADXL372 = no;
+      ADXL372_SPI = no;
+      ADXL372_I2C = no;
+      ADXL380 = no;
+      ADXL380_SPI = no;
+      ADXL380_I2C = no;
+      BMA220 = no;
+      BMA400 = no;
+      BMA400_I2C = no;
+      BMA400_SPI = no;
+      BMC150_ACCEL = no;
+      BMC150_ACCEL_I2C = no;
+      BMC150_ACCEL_SPI = no;
+      BMI088_ACCEL = no;
+      BMI088_ACCEL_I2C = no;
+      BMI088_ACCEL_SPI = no;
+      DA280 = no;
+      DA311 = no;
+      DMARD06 = no;
+      DMARD09 = no;
+      DMARD10 = no;
+      FXLS8962AF = no;
+      FXLS8962AF_I2C = no;
+      FXLS8962AF_SPI = no;
+      HID_SENSOR_ACCEL_3D = no;
+      IIO_CROS_EC_ACCEL_LEGACY = no;
+      IIO_ST_ACCEL_3AXIS = no;
+      IIO_ST_ACCEL_I2C_3AXIS = no;
+      IIO_ST_ACCEL_SPI_3AXIS = no;
+      IIO_KX022A = no;
+      IIO_KX022A_SPI = no;
+      IIO_KX022A_I2C = no;
+      KXSD9 = no;
+      KXSD9_SPI = no;
+      KXSD9_I2C = no;
+      KXCJK1013 = no;
+      MC3230 = no;
+      MMA7455 = no;
+      MMA7455_I2C = no;
+      MMA7455_SPI = no;
+      MMA7660 = no;
+      MMA8452 = no;
+      MMA9551_CORE = no;
+      MMA9551 = no;
+      MMA9553 = no;
+      MSA311 = no;
+      MXC4005 = no;
+      MXC6255 = no;
+      SCA3000 = no;
+      SCA3300 = no;
+      STK8312 = no;
+      STK8BA50 = no;
       # end of Accelerometers
 
       #
       # Analog to digital converters
       #
-      CONFIG_IIO_ADC_HELPER = no;
-      CONFIG_AD_SIGMA_DELTA = no;
-      CONFIG_AD4000 = no;
-      CONFIG_AD4030 = no;
-      CONFIG_AD4080 = no;
-      CONFIG_AD4130 = no;
-      CONFIG_AD4170_4 = no;
-      CONFIG_AD4695 = no;
-      CONFIG_AD4851 = no;
-      CONFIG_AD7091R = no;
-      CONFIG_AD7091R5 = no;
-      CONFIG_AD7091R8 = no;
-      CONFIG_AD7124 = no;
-      CONFIG_AD7173 = no;
-      CONFIG_AD7191 = no;
-      CONFIG_AD7192 = no;
-      CONFIG_AD7266 = no;
-      CONFIG_AD7280 = no;
-      CONFIG_AD7291 = no;
-      CONFIG_AD7292 = no;
-      CONFIG_AD7298 = no;
-      CONFIG_AD7380 = no;
-      CONFIG_AD7405 = no;
-      CONFIG_AD7476 = no;
-      CONFIG_AD7606 = no;
-      CONFIG_AD7606_IFACE_PARALLEL = no;
-      CONFIG_AD7606_IFACE_SPI = no;
-      CONFIG_AD7625 = no;
-      CONFIG_AD7766 = no;
-      CONFIG_AD7768_1 = no;
-      CONFIG_AD7779 = no;
-      CONFIG_AD7780 = no;
-      CONFIG_AD7791 = no;
-      CONFIG_AD7793 = no;
-      CONFIG_AD7887 = no;
-      CONFIG_AD7923 = no;
-      CONFIG_AD7944 = no;
-      CONFIG_AD7949 = no;
-      CONFIG_AD799X = no;
-      CONFIG_AD9467 = no;
-      CONFIG_ADE9000 = no;
-      CONFIG_AXP20X_ADC = no;
-      CONFIG_AXP288_ADC = no;
-      CONFIG_CC10001_ADC = no;
-      CONFIG_CPCAP_ADC = no;
-      CONFIG_DA9150_GPADC = no;
-      CONFIG_DLN2_ADC = no;
-      CONFIG_ENVELOPE_DETECTOR = no;
-      CONFIG_GEHC_PMC_ADC = no;
-      CONFIG_HI8435 = no;
-      CONFIG_HX711 = no;
-      CONFIG_INA2XX_ADC = no;
-      CONFIG_INTEL_DC_TI_ADC = no;
-      CONFIG_INTEL_MRFLD_ADC = no;
-      CONFIG_LTC2309 = no;
-      CONFIG_LTC2471 = no;
-      CONFIG_LTC2485 = no;
-      CONFIG_LTC2496 = no;
-      CONFIG_LTC2497 = no;
-      CONFIG_MAX1027 = no;
-      CONFIG_MAX11100 = no;
-      CONFIG_MAX1118 = no;
-      CONFIG_MAX11205 = no;
-      CONFIG_MAX11410 = no;
-      CONFIG_MAX1241 = no;
-      CONFIG_MAX1363 = no;
-      CONFIG_MAX34408 = no;
-      CONFIG_MAX77541_ADC = no;
-      CONFIG_MAX9611 = no;
-      CONFIG_MCP320X = no;
-      CONFIG_MCP3422 = no;
-      CONFIG_MCP3564 = no;
-      CONFIG_MCP3911 = no;
-      CONFIG_MEDIATEK_MT6359_AUXADC = no;
-      CONFIG_MEDIATEK_MT6360_ADC = no;
-      CONFIG_MEDIATEK_MT6370_ADC = no;
-      CONFIG_MEN_Z188_ADC = no;
-      CONFIG_MP2629_ADC = no;
-      CONFIG_NAU7802 = no;
-      CONFIG_NCT7201 = no;
-      CONFIG_PAC1921 = no;
-      CONFIG_PAC1934 = no;
-      CONFIG_PALMAS_GPADC = no;
-      CONFIG_QCOM_VADC_COMMON = no;
-      CONFIG_QCOM_SPMI_IADC = no;
-      CONFIG_QCOM_SPMI_VADC = no;
-      CONFIG_QCOM_SPMI_ADC5 = no;
-      CONFIG_RN5T618_ADC = no;
-      CONFIG_ROHM_BD79112 = no;
-      CONFIG_ROHM_BD79124 = no;
-      CONFIG_RICHTEK_RTQ6056 = no;
-      CONFIG_SD_ADC_MODULATOR = no;
-      CONFIG_STMPE_ADC = no;
-      CONFIG_TI_ADC081C = no;
-      CONFIG_TI_ADC0832 = no;
-      CONFIG_TI_ADC084S021 = no;
-      CONFIG_TI_ADC108S102 = no;
-      CONFIG_TI_ADC12138 = no;
-      CONFIG_TI_ADC128S052 = no;
-      CONFIG_TI_ADC161S626 = no;
-      CONFIG_TI_ADS1015 = no;
-      CONFIG_TI_ADS1100 = no;
-      CONFIG_TI_ADS1119 = no;
-      CONFIG_TI_ADS124S08 = no;
-      CONFIG_TI_ADS1298 = no;
-      CONFIG_TI_ADS131E08 = no;
-      CONFIG_TI_ADS7138 = no;
-      CONFIG_TI_ADS7924 = no;
-      CONFIG_TI_ADS7950 = no;
-      CONFIG_TI_ADS8344 = no;
-      CONFIG_TI_ADS8688 = no;
-      CONFIG_TI_LMP92064 = no;
-      CONFIG_TI_TLC4541 = no;
-      CONFIG_TI_TSC2046 = no;
-      CONFIG_VF610_ADC = no;
-      CONFIG_VIPERBOARD_ADC = no;
-      CONFIG_XILINX_XADC = no;
+      IIO_ADC_HELPER = no;
+      AD_SIGMA_DELTA = no;
+      AD4000 = no;
+      AD4030 = no;
+      AD4080 = no;
+      AD4130 = no;
+      AD4170_4 = no;
+      AD4695 = no;
+      AD4851 = no;
+      AD7091R = no;
+      AD7091R5 = no;
+      AD7091R8 = no;
+      AD7124 = no;
+      AD7173 = no;
+      AD7191 = no;
+      AD7192 = no;
+      AD7266 = no;
+      AD7280 = no;
+      AD7291 = no;
+      AD7292 = no;
+      AD7298 = no;
+      AD7380 = no;
+      AD7405 = no;
+      AD7476 = no;
+      AD7606 = no;
+      AD7606_IFACE_PARALLEL = no;
+      AD7606_IFACE_SPI = no;
+      AD7625 = no;
+      AD7766 = no;
+      AD7768_1 = no;
+      AD7779 = no;
+      AD7780 = no;
+      AD7791 = no;
+      AD7793 = no;
+      AD7887 = no;
+      AD7923 = no;
+      AD7944 = no;
+      AD7949 = no;
+      AD799X = no;
+      AD9467 = no;
+      ADE9000 = no;
+      AXP20X_ADC = no;
+      AXP288_ADC = no;
+      CC10001_ADC = no;
+      CPCAP_ADC = no;
+      DA9150_GPADC = no;
+      DLN2_ADC = no;
+      ENVELOPE_DETECTOR = no;
+      GEHC_PMC_ADC = no;
+      HI8435 = no;
+      HX711 = no;
+      INA2XX_ADC = no;
+      INTEL_DC_TI_ADC = no;
+      INTEL_MRFLD_ADC = no;
+      LTC2309 = no;
+      LTC2471 = no;
+      LTC2485 = no;
+      LTC2496 = no;
+      LTC2497 = no;
+      MAX1027 = no;
+      MAX11100 = no;
+      MAX1118 = no;
+      MAX11205 = no;
+      MAX11410 = no;
+      MAX1241 = no;
+      MAX1363 = no;
+      MAX34408 = no;
+      MAX77541_ADC = no;
+      MAX9611 = no;
+      MCP320X = no;
+      MCP3422 = no;
+      MCP3564 = no;
+      MCP3911 = no;
+      MEDIATEK_MT6359_AUXADC = no;
+      MEDIATEK_MT6360_ADC = no;
+      MEDIATEK_MT6370_ADC = no;
+      MEN_Z188_ADC = no;
+      MP2629_ADC = no;
+      NAU7802 = no;
+      NCT7201 = no;
+      PAC1921 = no;
+      PAC1934 = no;
+      PALMAS_GPADC = no;
+      QCOM_VADC_COMMON = no;
+      QCOM_SPMI_IADC = no;
+      QCOM_SPMI_VADC = no;
+      QCOM_SPMI_ADC5 = no;
+      RN5T618_ADC = no;
+      ROHM_BD79112 = no;
+      ROHM_BD79124 = no;
+      RICHTEK_RTQ6056 = no;
+      SD_ADC_MODULATOR = no;
+      STMPE_ADC = no;
+      TI_ADC081C = no;
+      TI_ADC0832 = no;
+      TI_ADC084S021 = no;
+      TI_ADC108S102 = no;
+      TI_ADC12138 = no;
+      TI_ADC128S052 = no;
+      TI_ADC161S626 = no;
+      TI_ADS1015 = no;
+      TI_ADS1100 = no;
+      TI_ADS1119 = no;
+      TI_ADS124S08 = no;
+      TI_ADS1298 = no;
+      TI_ADS131E08 = no;
+      TI_ADS7138 = no;
+      TI_ADS7924 = no;
+      TI_ADS7950 = no;
+      TI_ADS8344 = no;
+      TI_ADS8688 = no;
+      TI_LMP92064 = no;
+      TI_TLC4541 = no;
+      TI_TSC2046 = no;
+      VF610_ADC = no;
+      VIPERBOARD_ADC = no;
+      XILINX_XADC = no;
       # end of Analog to digital converters
 
       #
       # Analog to digital and digital to analog converters
       #
-      CONFIG_AD74115 = no;
-      CONFIG_AD74413R = no;
+      AD74115 = no;
+      AD74413R = no;
       # end of Analog to digital and digital to analog converters
 
       #
       # Analog Front Ends
       #
-      CONFIG_IIO_RESCALE = no;
+      IIO_RESCALE = no;
       # end of Analog Front Ends
 
       #
       # Amplifiers
       #
-      CONFIG_AD8366 = no;
-      CONFIG_ADA4250 = no;
-      CONFIG_HMC425 = no;
+      AD8366 = no;
+      ADA4250 = no;
+      HMC425 = no;
       # end of Amplifiers
 
       #
       # Capacitance to digital converters
       #
-      CONFIG_AD7150 = no;
-      CONFIG_AD7746 = no;
+      AD7150 = no;
+      AD7746 = no;
       # end of Capacitance to digital converters
 
       #
       # Chemical Sensors
       #
-      CONFIG_AOSONG_AGS02MA = no;
-      CONFIG_ATLAS_PH_SENSOR = no;
-      CONFIG_ATLAS_EZO_SENSOR = no;
-      CONFIG_BME680 = no;
-      CONFIG_BME680_I2C = no;
-      CONFIG_BME680_SPI = no;
-      CONFIG_CCS811 = no;
-      CONFIG_ENS160 = no;
-      CONFIG_ENS160_I2C = no;
-      CONFIG_ENS160_SPI = no;
-      CONFIG_IAQCORE = no;
-      CONFIG_MHZ19B = no;
-      CONFIG_PMS7003 = no;
-      CONFIG_SCD30_CORE = no;
-      CONFIG_SCD30_I2C = no;
-      CONFIG_SCD30_SERIAL = no;
-      CONFIG_SCD4X = no;
-      CONFIG_SEN0322 = no;
-      CONFIG_SENSIRION_SGP30 = no;
-      CONFIG_SENSIRION_SGP40 = no;
-      CONFIG_SPS30 = no;
-      CONFIG_SPS30_I2C = no;
-      CONFIG_SPS30_SERIAL = no;
-      CONFIG_SENSEAIR_SUNRISE_CO2 = no;
-      CONFIG_VZ89X = no;
+      AOSONG_AGS02MA = no;
+      ATLAS_PH_SENSOR = no;
+      ATLAS_EZO_SENSOR = no;
+      BME680 = no;
+      BME680_I2C = no;
+      BME680_SPI = no;
+      CCS811 = no;
+      ENS160 = no;
+      ENS160_I2C = no;
+      ENS160_SPI = no;
+      IAQCORE = no;
+      MHZ19B = no;
+      PMS7003 = no;
+      SCD30_CORE = no;
+      SCD30_I2C = no;
+      SCD30_SERIAL = no;
+      SCD4X = no;
+      SEN0322 = no;
+      SENSIRION_SGP30 = no;
+      SENSIRION_SGP40 = no;
+      SPS30 = no;
+      SPS30_I2C = no;
+      SPS30_SERIAL = no;
+      SENSEAIR_SUNRISE_CO2 = no;
+      VZ89X = no;
       # end of Chemical Sensors
 
-      CONFIG_IIO_CROS_EC_SENSORS_CORE = no;
-      CONFIG_IIO_CROS_EC_SENSORS = no;
-      CONFIG_IIO_CROS_EC_SENSORS_LID_ANGLE = no;
-      CONFIG_IIO_CROS_EC_ACTIVITY = no;
+      IIO_CROS_EC_SENSORS_CORE = no;
+      IIO_CROS_EC_SENSORS = no;
+      IIO_CROS_EC_SENSORS_LID_ANGLE = no;
+      IIO_CROS_EC_ACTIVITY = no;
 
       #
       # Hid Sensor IIO Common
       #
-      CONFIG_HID_SENSOR_IIO_COMMON = no;
-      CONFIG_HID_SENSOR_IIO_TRIGGER = no;
+      HID_SENSOR_IIO_COMMON = no;
+      HID_SENSOR_IIO_TRIGGER = no;
       # end of Hid Sensor IIO Common
 
-      CONFIG_IIO_INV_SENSORS_TIMESTAMP = no;
-      CONFIG_IIO_MS_SENSORS_I2C = no;
+      IIO_INV_SENSORS_TIMESTAMP = no;
+      IIO_MS_SENSORS_I2C = no;
 
       #
       # IIO SCMI Sensors
@@ -2707,81 +1937,81 @@
       #
       # SSP Sensor Common
       #
-      CONFIG_IIO_SSP_SENSORS_COMMONS = no;
-      CONFIG_IIO_SSP_SENSORHUB = no;
+      IIO_SSP_SENSORS_COMMONS = no;
+      IIO_SSP_SENSORHUB = no;
       # end of SSP Sensor Common
 
-      CONFIG_IIO_ST_SENSORS_I2C = no;
-      CONFIG_IIO_ST_SENSORS_SPI = no;
-      CONFIG_IIO_ST_SENSORS_CORE = no;
+      IIO_ST_SENSORS_I2C = no;
+      IIO_ST_SENSORS_SPI = no;
+      IIO_ST_SENSORS_CORE = no;
 
       #
       # Digital to analog converters
       #
-      CONFIG_AD3530R = no;
-      CONFIG_AD3552R_HS = no;
-      CONFIG_AD3552R_LIB = no;
-      CONFIG_AD3552R = no;
-      CONFIG_AD5064 = no;
-      CONFIG_AD5360 = no;
-      CONFIG_AD5380 = no;
-      CONFIG_AD5421 = no;
-      CONFIG_AD5446 = no;
-      CONFIG_AD5449 = no;
-      CONFIG_AD5592R_BASE = no;
-      CONFIG_AD5592R = no;
-      CONFIG_AD5593R = no;
-      CONFIG_AD5504 = no;
-      CONFIG_AD5624R_SPI = no;
-      CONFIG_AD9739A = no;
-      CONFIG_LTC2688 = no;
-      CONFIG_AD5686 = no;
-      CONFIG_AD5686_SPI = no;
-      CONFIG_AD5696_I2C = no;
-      CONFIG_AD5755 = no;
-      CONFIG_AD5758 = no;
-      CONFIG_AD5761 = no;
-      CONFIG_AD5764 = no;
-      CONFIG_AD5766 = no;
-      CONFIG_AD5770R = no;
-      CONFIG_AD5791 = no;
-      CONFIG_AD7293 = no;
-      CONFIG_AD7303 = no;
-      CONFIG_AD8460 = no;
-      CONFIG_AD8801 = no;
-      CONFIG_BD79703 = no;
-      CONFIG_DPOT_DAC = no;
-      CONFIG_DS4424 = no;
-      CONFIG_LTC1660 = no;
-      CONFIG_LTC2632 = no;
-      CONFIG_LTC2664 = no;
-      CONFIG_M62332 = no;
-      CONFIG_MAX517 = no;
-      CONFIG_MAX5522 = no;
-      CONFIG_MAX5821 = no;
-      CONFIG_MCP4725 = no;
-      CONFIG_MCP4728 = no;
-      CONFIG_MCP4821 = no;
-      CONFIG_MCP4922 = no;
-      CONFIG_TI_DAC082S085 = no;
-      CONFIG_TI_DAC5571 = no;
-      CONFIG_TI_DAC7311 = no;
-      CONFIG_TI_DAC7612 = no;
-      CONFIG_VF610_DAC = no;
+      AD3530R = no;
+      AD3552R_HS = no;
+      AD3552R_LIB = no;
+      AD3552R = no;
+      AD5064 = no;
+      AD5360 = no;
+      AD5380 = no;
+      AD5421 = no;
+      AD5446 = no;
+      AD5449 = no;
+      AD5592R_BASE = no;
+      AD5592R = no;
+      AD5593R = no;
+      AD5504 = no;
+      AD5624R_SPI = no;
+      AD9739A = no;
+      LTC2688 = no;
+      AD5686 = no;
+      AD5686_SPI = no;
+      AD5696_I2C = no;
+      AD5755 = no;
+      AD5758 = no;
+      AD5761 = no;
+      AD5764 = no;
+      AD5766 = no;
+      AD5770R = no;
+      AD5791 = no;
+      AD7293 = no;
+      AD7303 = no;
+      AD8460 = no;
+      AD8801 = no;
+      BD79703 = no;
+      DPOT_DAC = no;
+      DS4424 = no;
+      LTC1660 = no;
+      LTC2632 = no;
+      LTC2664 = no;
+      M62332 = no;
+      MAX517 = no;
+      MAX5522 = no;
+      MAX5821 = no;
+      MCP4725 = no;
+      MCP4728 = no;
+      MCP4821 = no;
+      MCP4922 = no;
+      TI_DAC082S085 = no;
+      TI_DAC5571 = no;
+      TI_DAC7311 = no;
+      TI_DAC7612 = no;
+      VF610_DAC = no;
       # end of Digital to analog converters
 
       #
       # IIO dummy driver
       #
-      CONFIG_IIO_SIMPLE_DUMMY = no;
-      # CONFIG_IIO_SIMPLE_DUMMY_EVENTS is not set
-      # CONFIG_IIO_SIMPLE_DUMMY_BUFFER is not set
+      IIO_SIMPLE_DUMMY = no;
+      # IIO_SIMPLE_DUMMY_EVENTS is not set
+      # IIO_SIMPLE_DUMMY_BUFFER is not set
       # end of IIO dummy driver
 
       #
       # Filters
       #
-      CONFIG_ADMV8818 = no;
+      ADMV8818 = no;
       # end of Filters
 
       #
@@ -2791,45 +2021,45 @@
       #
       # Clock Generator/Distribution
       #
-      CONFIG_AD9523 = no;
+      AD9523 = no;
       # end of Clock Generator/Distribution
 
       #
       # Phase-Locked Loop (PLL) frequency synthesizers
       #
-      CONFIG_ADF4350 = no;
-      CONFIG_ADF4371 = no;
-      CONFIG_ADF4377 = no;
-      CONFIG_ADMFM2000 = no;
-      CONFIG_ADMV1013 = no;
-      CONFIG_ADMV1014 = no;
-      CONFIG_ADMV4420 = no;
-      CONFIG_ADRF6780 = no;
+      ADF4350 = no;
+      ADF4371 = no;
+      ADF4377 = no;
+      ADMFM2000 = no;
+      ADMV1013 = no;
+      ADMV1014 = no;
+      ADMV4420 = no;
+      ADRF6780 = no;
       # end of Phase-Locked Loop (PLL) frequency synthesizers
       # end of Frequency Synthesizers DDS/PLL
 
       #
       # Digital gyroscope sensors
       #
-      CONFIG_ADIS16080 = no;
-      CONFIG_ADIS16130 = no;
-      CONFIG_ADIS16136 = no;
-      CONFIG_ADIS16260 = no;
-      CONFIG_ADXRS290 = no;
-      CONFIG_ADXRS450 = no;
-      CONFIG_BMG160 = no;
-      CONFIG_BMG160_I2C = no;
-      CONFIG_BMG160_SPI = no;
-      CONFIG_FXAS21002C = no;
-      CONFIG_FXAS21002C_I2C = no;
-      CONFIG_FXAS21002C_SPI = no;
-      CONFIG_HID_SENSOR_GYRO_3D = no;
-      CONFIG_MPU3050 = no;
-      CONFIG_MPU3050_I2C = no;
-      CONFIG_IIO_ST_GYRO_3AXIS = no;
-      CONFIG_IIO_ST_GYRO_I2C_3AXIS = no;
-      CONFIG_IIO_ST_GYRO_SPI_3AXIS = no;
-      CONFIG_ITG3200 = no;
+      ADIS16080 = no;
+      ADIS16130 = no;
+      ADIS16136 = no;
+      ADIS16260 = no;
+      ADXRS290 = no;
+      ADXRS450 = no;
+      BMG160 = no;
+      BMG160_I2C = no;
+      BMG160_SPI = no;
+      FXAS21002C = no;
+      FXAS21002C_I2C = no;
+      FXAS21002C_SPI = no;
+      HID_SENSOR_GYRO_3D = no;
+      MPU3050 = no;
+      MPU3050_I2C = no;
+      IIO_ST_GYRO_3AXIS = no;
+      IIO_ST_GYRO_I2C_3AXIS = no;
+      IIO_ST_GYRO_SPI_3AXIS = no;
+      ITG3200 = no;
       # end of Digital gyroscope sensors
 
       #
@@ -2839,388 +2069,363 @@
       #
       # Heart Rate Monitors
       #
-      CONFIG_AFE4403 = no;
-      CONFIG_AFE4404 = no;
-      CONFIG_MAX30100 = no;
-      CONFIG_MAX30102 = no;
+      AFE4403 = no;
+      AFE4404 = no;
+      MAX30100 = no;
+      MAX30102 = no;
       # end of Heart Rate Monitors
       # end of Health Sensors
 
       #
       # Humidity sensors
       #
-      CONFIG_AM2315 = no;
-      CONFIG_DHT11 = no;
-      CONFIG_ENS210 = no;
-      CONFIG_HDC100X = no;
-      CONFIG_HDC2010 = no;
-      CONFIG_HDC3020 = no;
-      CONFIG_HID_SENSOR_HUMIDITY = no;
-      CONFIG_HTS221 = no;
-      CONFIG_HTS221_I2C = no;
-      CONFIG_HTS221_SPI = no;
-      CONFIG_HTU21 = no;
-      CONFIG_SI7005 = no;
-      CONFIG_SI7020 = no;
+      AM2315 = no;
+      DHT11 = no;
+      ENS210 = no;
+      HDC100X = no;
+      HDC2010 = no;
+      HDC3020 = no;
+      HID_SENSOR_HUMIDITY = no;
+      HTS221 = no;
+      HTS221_I2C = no;
+      HTS221_SPI = no;
+      HTU21 = no;
+      SI7005 = no;
+      SI7020 = no;
       # end of Humidity sensors
 
       #
       # Inertial measurement units
       #
-      CONFIG_ADIS16400 = no;
-      CONFIG_ADIS16460 = no;
-      CONFIG_ADIS16475 = no;
-      CONFIG_ADIS16480 = no;
-      CONFIG_ADIS16550 = no;
-      CONFIG_BMI160 = no;
-      CONFIG_BMI160_I2C = no;
-      CONFIG_BMI160_SPI = no;
-      CONFIG_BMI270 = no;
-      CONFIG_BMI270_I2C = no;
-      CONFIG_BMI270_SPI = no;
-      CONFIG_BMI323 = no;
-      CONFIG_BMI323_I2C = no;
-      CONFIG_BMI323_SPI = no;
-      CONFIG_BOSCH_BNO055 = no;
-      CONFIG_BOSCH_BNO055_SERIAL = no;
-      CONFIG_BOSCH_BNO055_I2C = no;
-      CONFIG_FXOS8700 = no;
-      CONFIG_FXOS8700_I2C = no;
-      CONFIG_FXOS8700_SPI = no;
-      CONFIG_KMX61 = no;
-      CONFIG_INV_ICM42600 = no;
-      CONFIG_INV_ICM42600_I2C = no;
-      CONFIG_INV_ICM42600_SPI = no;
-      CONFIG_INV_MPU6050_IIO = no;
-      CONFIG_INV_MPU6050_I2C = no;
-      CONFIG_INV_MPU6050_SPI = no;
-      CONFIG_SMI240 = no;
-      CONFIG_IIO_ST_LSM6DSX = no;
-      CONFIG_IIO_ST_LSM6DSX_I2C = no;
-      CONFIG_IIO_ST_LSM6DSX_SPI = no;
-      CONFIG_IIO_ST_LSM6DSX_I3C = no;
-      CONFIG_IIO_ST_LSM9DS0 = no;
-      CONFIG_IIO_ST_LSM9DS0_I2C = no;
-      CONFIG_IIO_ST_LSM9DS0_SPI = no;
+      ADIS16400 = no;
+      ADIS16460 = no;
+      ADIS16475 = no;
+      ADIS16480 = no;
+      ADIS16550 = no;
+      BMI160 = no;
+      BMI160_I2C = no;
+      BMI160_SPI = no;
+      BMI270 = no;
+      BMI270_I2C = no;
+      BMI270_SPI = no;
+      BMI323 = no;
+      BMI323_I2C = no;
+      BMI323_SPI = no;
+      BOSCH_BNO055 = no;
+      BOSCH_BNO055_SERIAL = no;
+      BOSCH_BNO055_I2C = no;
+      FXOS8700 = no;
+      FXOS8700_I2C = no;
+      FXOS8700_SPI = no;
+      KMX61 = no;
+      INV_ICM42600 = no;
+      INV_ICM42600_I2C = no;
+      INV_ICM42600_SPI = no;
+      INV_MPU6050_IIO = no;
+      INV_MPU6050_I2C = no;
+      INV_MPU6050_SPI = no;
+      SMI240 = no;
+      IIO_ST_LSM6DSX = no;
+      IIO_ST_LSM6DSX_I2C = no;
+      IIO_ST_LSM6DSX_SPI = no;
+      IIO_ST_LSM6DSX_I3C = no;
+      IIO_ST_LSM9DS0 = no;
+      IIO_ST_LSM9DS0_I2C = no;
+      IIO_ST_LSM9DS0_SPI = no;
       # end of Inertial measurement units
 
-      CONFIG_IIO_ADIS_LIB = no;
-      CONFIG_IIO_ADIS_LIB_BUFFER = no;
+      IIO_ADIS_LIB = no;
+      IIO_ADIS_LIB_BUFFER = no;
 
       #
       # Light sensors
       #
-      CONFIG_ACPI_ALS = no;
-      CONFIG_ADJD_S311 = no;
-      CONFIG_ADUX1020 = no;
-      CONFIG_AL3000A = no;
-      CONFIG_AL3010 = no;
-      CONFIG_AL3320A = no;
-      CONFIG_APDS9160 = no;
-      CONFIG_APDS9300 = no;
-      CONFIG_APDS9306 = no;
-      CONFIG_AS73211 = no;
-      CONFIG_BH1745 = no;
-      CONFIG_BH1750 = no;
-      CONFIG_BH1780 = no;
-      CONFIG_CM32181 = no;
-      CONFIG_CM3232 = no;
-      CONFIG_CM3323 = no;
-      CONFIG_CM3605 = no;
-      CONFIG_CM36651 = no;
-      CONFIG_IIO_CROS_EC_LIGHT_PROX = no;
-      CONFIG_GP2AP002 = no;
-      CONFIG_GP2AP020A00F = no;
-      CONFIG_IQS621_ALS = no;
-      CONFIG_SENSORS_ISL29018 = no;
-      CONFIG_SENSORS_ISL29028 = no;
-      CONFIG_ISL29125 = no;
-      CONFIG_ISL76682 = no;
-      CONFIG_HID_SENSOR_ALS = no;
-      CONFIG_HID_SENSOR_PROX = no;
-      CONFIG_JSA1212 = no;
-      CONFIG_ROHM_BU27034 = no;
-      CONFIG_RPR0521 = no;
-      CONFIG_SENSORS_LM3533 = no;
-      CONFIG_LTR390 = no;
-      CONFIG_LTR501 = no;
-      CONFIG_LTRF216A = no;
-      CONFIG_LV0104CS = no;
-      CONFIG_MAX44000 = no;
-      CONFIG_MAX44009 = no;
-      CONFIG_NOA1305 = no;
-      CONFIG_OPT3001 = no;
-      CONFIG_OPT4001 = no;
-      CONFIG_OPT4060 = no;
-      CONFIG_PA12203001 = no;
-      CONFIG_SI1133 = no;
-      CONFIG_SI1145 = no;
-      CONFIG_STK3310 = no;
-      CONFIG_ST_UVIS25 = no;
-      CONFIG_ST_UVIS25_I2C = no;
-      CONFIG_ST_UVIS25_SPI = no;
-      CONFIG_TCS3414 = no;
-      CONFIG_TCS3472 = no;
-      CONFIG_SENSORS_TSL2563 = no;
-      CONFIG_TSL2583 = no;
-      CONFIG_TSL2591 = no;
-      CONFIG_TSL2772 = no;
-      CONFIG_TSL4531 = no;
-      CONFIG_US5182D = no;
-      CONFIG_VCNL4000 = no;
-      CONFIG_VCNL4035 = no;
-      CONFIG_VEML3235 = no;
-      CONFIG_VEML6030 = no;
-      CONFIG_VEML6040 = no;
-      CONFIG_VEML6046X00 = no;
-      CONFIG_VEML6070 = no;
-      CONFIG_VEML6075 = no;
-      CONFIG_VL6180 = no;
-      CONFIG_ZOPT2201 = no;
+      ACPI_ALS = no;
+      ADJD_S311 = no;
+      ADUX1020 = no;
+      AL3000A = no;
+      AL3010 = no;
+      AL3320A = no;
+      APDS9160 = no;
+      APDS9300 = no;
+      APDS9306 = no;
+      AS73211 = no;
+      BH1745 = no;
+      BH1750 = no;
+      BH1780 = no;
+      CM32181 = no;
+      CM3232 = no;
+      CM3323 = no;
+      CM3605 = no;
+      CM36651 = no;
+      IIO_CROS_EC_LIGHT_PROX = no;
+      GP2AP002 = no;
+      GP2AP020A00F = no;
+      IQS621_ALS = no;
+      SENSORS_ISL29018 = no;
+      SENSORS_ISL29028 = no;
+      ISL29125 = no;
+      ISL76682 = no;
+      HID_SENSOR_ALS = no;
+      HID_SENSOR_PROX = no;
+      JSA1212 = no;
+      ROHM_BU27034 = no;
+      RPR0521 = no;
+      SENSORS_LM3533 = no;
+      LTR390 = no;
+      LTR501 = no;
+      LTRF216A = no;
+      LV0104CS = no;
+      MAX44000 = no;
+      MAX44009 = no;
+      NOA1305 = no;
+      OPT3001 = no;
+      OPT4001 = no;
+      OPT4060 = no;
+      PA12203001 = no;
+      SI1133 = no;
+      SI1145 = no;
+      STK3310 = no;
+      ST_UVIS25 = no;
+      ST_UVIS25_I2C = no;
+      ST_UVIS25_SPI = no;
+      TCS3414 = no;
+      TCS3472 = no;
+      SENSORS_TSL2563 = no;
+      TSL2583 = no;
+      TSL2591 = no;
+      TSL2772 = no;
+      TSL4531 = no;
+      US5182D = no;
+      VCNL4000 = no;
+      VCNL4035 = no;
+      VEML3235 = no;
+      VEML6030 = no;
+      VEML6040 = no;
+      VEML6046X00 = no;
+      VEML6070 = no;
+      VEML6075 = no;
+      VL6180 = no;
+      ZOPT2201 = no;
       # end of Light sensors
 
       #
       # Magnetometer sensors
       #
-      CONFIG_AF8133J = no;
-      CONFIG_AK8974 = no;
-      CONFIG_AK8975 = no;
-      CONFIG_AK09911 = no;
-      CONFIG_ALS31300 = no;
-      CONFIG_BMC150_MAGN = no;
-      CONFIG_BMC150_MAGN_I2C = no;
-      CONFIG_BMC150_MAGN_SPI = no;
-      CONFIG_MAG3110 = no;
-      CONFIG_HID_SENSOR_MAGNETOMETER_3D = no;
-      CONFIG_MMC35240 = no;
-      CONFIG_IIO_ST_MAGN_3AXIS = no;
-      CONFIG_IIO_ST_MAGN_I2C_3AXIS = no;
-      CONFIG_IIO_ST_MAGN_SPI_3AXIS = no;
-      CONFIG_INFINEON_TLV493D = no;
-      CONFIG_SENSORS_HMC5843 = no;
-      CONFIG_SENSORS_HMC5843_I2C = no;
-      CONFIG_SENSORS_HMC5843_SPI = no;
-      CONFIG_SENSORS_RM3100 = no;
-      CONFIG_SENSORS_RM3100_I2C = no;
-      CONFIG_SENSORS_RM3100_SPI = no;
-      CONFIG_SI7210 = no;
-      CONFIG_TI_TMAG5273 = no;
-      CONFIG_YAMAHA_YAS530 = no;
+      AF8133J = no;
+      AK8974 = no;
+      AK8975 = no;
+      AK09911 = no;
+      ALS31300 = no;
+      BMC150_MAGN = no;
+      BMC150_MAGN_I2C = no;
+      BMC150_MAGN_SPI = no;
+      MAG3110 = no;
+      HID_SENSOR_MAGNETOMETER_3D = no;
+      MMC35240 = no;
+      IIO_ST_MAGN_3AXIS = no;
+      IIO_ST_MAGN_I2C_3AXIS = no;
+      IIO_ST_MAGN_SPI_3AXIS = no;
+      INFINEON_TLV493D = no;
+      SENSORS_HMC5843 = no;
+      SENSORS_HMC5843_I2C = no;
+      SENSORS_HMC5843_SPI = no;
+      SENSORS_RM3100 = no;
+      SENSORS_RM3100_I2C = no;
+      SENSORS_RM3100_SPI = no;
+      SI7210 = no;
+      TI_TMAG5273 = no;
+      YAMAHA_YAS530 = no;
       # end of Magnetometer sensors
 
       #
       # Multiplexers
       #
-      CONFIG_IIO_MUX = no;
+      IIO_MUX = no;
       # end of Multiplexers
 
       #
       # Inclinometer sensors
       #
-      CONFIG_HID_SENSOR_INCLINOMETER_3D = no;
-      CONFIG_HID_SENSOR_DEVICE_ROTATION = no;
+      HID_SENSOR_INCLINOMETER_3D = no;
+      HID_SENSOR_DEVICE_ROTATION = no;
       # end of Inclinometer sensors
 
       #
       # Triggers - standalone
       #
-      CONFIG_IIO_HRTIMER_TRIGGER = no;
-      CONFIG_IIO_INTERRUPT_TRIGGER = no;
-      CONFIG_IIO_TIGHTLOOP_TRIGGER = no;
-      CONFIG_IIO_SYSFS_TRIGGER = no;
+      IIO_HRTIMER_TRIGGER = no;
+      IIO_INTERRUPT_TRIGGER = no;
+      IIO_TIGHTLOOP_TRIGGER = no;
+      IIO_SYSFS_TRIGGER = no;
       # end of Triggers - standalone
 
       #
       # Linear and angular position sensors
       #
-      CONFIG_IQS624_POS = no;
-      CONFIG_HID_SENSOR_CUSTOM_INTEL_HINGE = no;
+      IQS624_POS = no;
+      HID_SENSOR_CUSTOM_INTEL_HINGE = no;
       # end of Linear and angular position sensors
 
       #
       # Digital potentiometers
       #
-      CONFIG_AD5110 = no;
-      CONFIG_AD5272 = no;
-      CONFIG_DS1803 = no;
-      CONFIG_MAX5432 = no;
-      CONFIG_MAX5481 = no;
-      CONFIG_MAX5487 = no;
-      CONFIG_MCP4018 = no;
-      CONFIG_MCP4131 = no;
-      CONFIG_MCP4531 = no;
-      CONFIG_MCP41010 = no;
-      CONFIG_TPL0102 = no;
-      CONFIG_X9250 = no;
+      AD5110 = no;
+      AD5272 = no;
+      DS1803 = no;
+      MAX5432 = no;
+      MAX5481 = no;
+      MAX5487 = no;
+      MCP4018 = no;
+      MCP4131 = no;
+      MCP4531 = no;
+      MCP41010 = no;
+      TPL0102 = no;
+      X9250 = no;
       # end of Digital potentiometers
 
       #
       # Digital potentiostats
       #
-      CONFIG_LMP91000 = no;
+      LMP91000 = no;
       # end of Digital potentiostats
 
       #
       # Pressure sensors
       #
-      CONFIG_ABP060MG = no;
-      CONFIG_ROHM_BM1390 = no;
-      CONFIG_BMP280 = no;
-      CONFIG_BMP280_I2C = no;
-      CONFIG_BMP280_SPI = no;
-      CONFIG_IIO_CROS_EC_BARO = no;
-      CONFIG_DLHL60D = no;
-      CONFIG_DPS310 = no;
-      CONFIG_HID_SENSOR_PRESS = no;
-      CONFIG_HP03 = no;
-      CONFIG_HSC030PA = no;
-      CONFIG_HSC030PA_I2C = no;
-      CONFIG_HSC030PA_SPI = no;
-      CONFIG_ICP10100 = no;
-      CONFIG_MPL115 = no;
-      CONFIG_MPL115_I2C = no;
-      CONFIG_MPL115_SPI = no;
-      CONFIG_MPL3115 = no;
-      CONFIG_MPRLS0025PA = no;
-      CONFIG_MPRLS0025PA_I2C = no;
-      CONFIG_MPRLS0025PA_SPI = no;
-      CONFIG_MS5611 = no;
-      CONFIG_MS5611_I2C = no;
-      CONFIG_MS5611_SPI = no;
-      CONFIG_MS5637 = no;
-      CONFIG_SDP500 = no;
-      CONFIG_IIO_ST_PRESS = no;
-      CONFIG_IIO_ST_PRESS_I2C = no;
-      CONFIG_IIO_ST_PRESS_SPI = no;
-      CONFIG_T5403 = no;
-      CONFIG_HP206C = no;
-      CONFIG_ZPA2326 = no;
-      CONFIG_ZPA2326_I2C = no;
-      CONFIG_ZPA2326_SPI = no;
+      ABP060MG = no;
+      ROHM_BM1390 = no;
+      BMP280 = no;
+      BMP280_I2C = no;
+      BMP280_SPI = no;
+      IIO_CROS_EC_BARO = no;
+      DLHL60D = no;
+      DPS310 = no;
+      HID_SENSOR_PRESS = no;
+      HP03 = no;
+      HSC030PA = no;
+      HSC030PA_I2C = no;
+      HSC030PA_SPI = no;
+      ICP10100 = no;
+      MPL115 = no;
+      MPL115_I2C = no;
+      MPL115_SPI = no;
+      MPL3115 = no;
+      MPRLS0025PA = no;
+      MPRLS0025PA_I2C = no;
+      MPRLS0025PA_SPI = no;
+      MS5611 = no;
+      MS5611_I2C = no;
+      MS5611_SPI = no;
+      MS5637 = no;
+      SDP500 = no;
+      IIO_ST_PRESS = no;
+      IIO_ST_PRESS_I2C = no;
+      IIO_ST_PRESS_SPI = no;
+      T5403 = no;
+      HP206C = no;
+      ZPA2326 = no;
+      ZPA2326_I2C = no;
+      ZPA2326_SPI = no;
       # end of Pressure sensors
 
       #
       # Lightning sensors
       #
-      CONFIG_AS3935 = no;
+      AS3935 = no;
       # end of Lightning sensors
 
       #
       # Proximity and distance sensors
       #
-      CONFIG_CROS_EC_MKBP_PROXIMITY = no;
-      CONFIG_D3323AA = no;
-      CONFIG_HX9023S = no;
-      CONFIG_IRSD200 = no;
-      CONFIG_ISL29501 = no;
-      CONFIG_LIDAR_LITE_V2 = no;
-      CONFIG_MB1232 = no;
-      CONFIG_PING = no;
-      CONFIG_RFD77402 = no;
-      CONFIG_SRF04 = no;
-      CONFIG_SX_COMMON = no;
-      CONFIG_SX9310 = no;
-      CONFIG_SX9324 = no;
-      CONFIG_SX9360 = no;
-      CONFIG_SX9500 = no;
-      CONFIG_SRF08 = no;
-      CONFIG_VCNL3020 = no;
-      CONFIG_VL53L0X_I2C = no;
-      CONFIG_AW96103 = no;
+      CROS_EC_MKBP_PROXIMITY = no;
+      D3323AA = no;
+      HX9023S = no;
+      IRSD200 = no;
+      ISL29501 = no;
+      LIDAR_LITE_V2 = no;
+      MB1232 = no;
+      PING = no;
+      RFD77402 = no;
+      SRF04 = no;
+      SX_COMMON = no;
+      SX9310 = no;
+      SX9324 = no;
+      SX9360 = no;
+      SX9500 = no;
+      SRF08 = no;
+      VCNL3020 = no;
+      VL53L0X_I2C = no;
+      AW96103 = no;
       # end of Proximity and distance sensors
 
       #
       # Resolver to digital converters
       #
-      CONFIG_AD2S90 = no;
-      CONFIG_AD2S1200 = no;
-      CONFIG_AD2S1210 = no;
+      AD2S90 = no;
+      AD2S1200 = no;
+      AD2S1210 = no;
       # end of Resolver to digital converters
 
       #
       # Temperature sensors
       #
-      CONFIG_IQS620AT_TEMP = no;
-      CONFIG_LTC2983 = no;
-      CONFIG_MAXIM_THERMOCOUPLE = no;
-      CONFIG_HID_SENSOR_TEMP = no;
-      CONFIG_MLX90614 = no;
-      CONFIG_MLX90632 = no;
-      CONFIG_MLX90635 = no;
-      CONFIG_TMP006 = no;
-      CONFIG_TMP007 = no;
-      CONFIG_TMP117 = no;
-      CONFIG_TSYS01 = no;
-      CONFIG_TSYS02D = no;
-      CONFIG_MAX30208 = no;
-      CONFIG_MAX31856 = no;
-      CONFIG_MAX31865 = no;
-      CONFIG_MCP9600 = no;
+      IQS620AT_TEMP = no;
+      LTC2983 = no;
+      MAXIM_THERMOCOUPLE = no;
+      HID_SENSOR_TEMP = no;
+      MLX90614 = no;
+      MLX90632 = no;
+      MLX90635 = no;
+      TMP006 = no;
+      TMP007 = no;
+      TMP117 = no;
+      TSYS01 = no;
+      TSYS02D = no;
+      MAX30208 = no;
+      MAX31856 = no;
+      MAX31865 = no;
+      MCP9600 = no;
       # end of Temperature sensors
 
-      CONFIG_NTB = no;
-      # CONFIG_NTB_MSI is not set
-      CONFIG_NTB_AMD = no;
-      CONFIG_NTB_IDT = no;
-      CONFIG_NTB_INTEL = no;
-      CONFIG_NTB_EPF = no;
-      CONFIG_NTB_SWITCHTEC = no;
-      CONFIG_NTB_PINGPONG = no;
-      CONFIG_NTB_TOOL = no;
-      CONFIG_NTB_PERF = no;
-      CONFIG_NTB_TRANSPORT = no;
+      NTB = no;
+      # NTB_MSI is not set
+      NTB_AMD = no;
+      NTB_IDT = no;
+      NTB_INTEL = no;
+      NTB_EPF = no;
+      NTB_SWITCHTEC = no;
+      NTB_PINGPONG = no;
+      NTB_TOOL = no;
+      NTB_PERF = no;
+      NTB_TRANSPORT = no;
 
-      CONFIG_FPGA = no;
-      CONFIG_ALTERA_PR_IP_CORE = no;
-      CONFIG_ALTERA_PR_IP_CORE_PLAT = no;
-      CONFIG_FPGA_MGR_ALTERA_PS_SPI = no;
-      CONFIG_FPGA_MGR_ALTERA_CVP = no;
-      CONFIG_FPGA_MGR_XILINX_CORE = no;
-      CONFIG_FPGA_MGR_XILINX_SELECTMAP = no;
-      CONFIG_FPGA_MGR_XILINX_SPI = no;
-      CONFIG_FPGA_MGR_ICE40_SPI = no;
-      CONFIG_FPGA_MGR_MACHXO2_SPI = no;
-      CONFIG_FPGA_BRIDGE = no;
-      CONFIG_ALTERA_FREEZE_BRIDGE = no;
-      CONFIG_XILINX_PR_DECOUPLER = no;
-      CONFIG_FPGA_REGION = no;
-      CONFIG_OF_FPGA_REGION = no;
-      CONFIG_FPGA_DFL = no;
-      CONFIG_FPGA_DFL_FME = no;
-      CONFIG_FPGA_DFL_FME_MGR = no;
-      CONFIG_FPGA_DFL_FME_BRIDGE = no;
-      CONFIG_FPGA_DFL_FME_REGION = no;
-      CONFIG_FPGA_DFL_AFU = no;
-      CONFIG_FPGA_DFL_NIOS_INTEL_PAC_N3000 = no;
-      CONFIG_FPGA_DFL_PCI = no;
-      CONFIG_FPGA_M10_BMC_SEC_UPDATE = no;
-      CONFIG_FPGA_MGR_MICROCHIP_SPI = no;
-      CONFIG_FPGA_MGR_LATTICE_SYSCONFIG = no;
-      CONFIG_FPGA_MGR_LATTICE_SYSCONFIG_SPI = no;
-      CONFIG_FSI = no;
-      # CONFIG_FSI_NEW_DEV_NODE is not set
-      CONFIG_FSI_MASTER_GPIO = no;
-      CONFIG_FSI_MASTER_HUB = no;
-      CONFIG_FSI_MASTER_ASPEED = no;
-      CONFIG_FSI_MASTER_I2CR = no;
-      CONFIG_FSI_SCOM = no;
-      CONFIG_FSI_SBEFIFO = no;
-      CONFIG_FSI_OCC = no;
-      CONFIG_I2CR_SCOM = no;
+      FPGA = no;
+      FSI = no;
 
-      CONFIG_MOST = no;
-      CONFIG_MOST_USB_HDM = no;
-      CONFIG_MOST_CDEV = no;
-      CONFIG_MOST_SND = no;
-      CONFIG_PECI = no;
-      CONFIG_PECI_CPU = no;
-      CONFIG_SIOX = no;
-      CONFIG_SIOX_BUS_GPIO = no;
-      CONFIG_SLIMBUS = no;
-      CONFIG_MUX_ADG792A = no;
-      CONFIG_MUX_ADGS1408 = no;
-      CONFIG_MUX_GPIO = no;
-      CONFIG_MUX_MMIO = no;
+      # FSI_NEW_DEV_NODE is not set
+      FSI_MASTER_GPIO = no;
+      FSI_MASTER_HUB = no;
+      FSI_MASTER_ASPEED = no;
+      FSI_MASTER_I2CR = no;
+      FSI_SCOM = no;
+      FSI_SBEFIFO = no;
+      FSI_OCC = no;
+      I2CR_SCOM = no;
+
+      MOST = no;
+      MOST_USB_HDM = no;
+      MOST_CDEV = no;
+      MOST_SND = no;
+      PECI = no;
+      PECI_CPU = no;
+      SIOX = no;
+      SIOX_BUS_GPIO = no;
+      SLIMBUS = no;
+      MUX_ADG792A = no;
+      MUX_ADGS1408 = no;
+      MUX_GPIO = no;
+      MUX_MMIO = no;
     };
   }
 ]
