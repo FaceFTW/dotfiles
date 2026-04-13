@@ -206,20 +206,6 @@ in
       # General modules I don't use
       HAMRADIO = lib.mkForce no;
       PCCARD = no;
-      PCMCIA = no;
-      PCMCIA_LOAD_CIS = no;
-      CARDBUS = no;
-
-      YENTA = no;
-      YENTA_O2 = no;
-      YENTA_RICOH = no;
-      YENTA_TI = no;
-      YENTA_ENE_TUNE = no;
-      YENTA_TOSHIBA = no;
-      PD6729 = no;
-      I82092 = no;
-      PCCARD_NONSTATIC = no;
-
       MOXTET = no;
 
       PCIE_CADENCE_PLAT_HOST = no;
@@ -300,7 +286,7 @@ in
       PATA_IT8213 = no;
       PATA_IT821X = no;
       PATA_JMICRON = no;
-      PATA_MARVELL = no;
+      # PATA_MARVELL = no;
       PATA_NETCELL = no;
       PATA_NINJA32 = no;
       PATA_NS87415 = no;
@@ -331,26 +317,6 @@ in
       PATA_OF_PLATFORM = no;
       PATA_RZ1000 = no;
       PATA_PARPORT = no;
-
-      #
-      # Parallel IDE protocol modules
-      #
-      PATA_PARPORT_ATEN = no;
-      PATA_PARPORT_BPCK = no;
-      PATA_PARPORT_BPCK6 = no;
-      PATA_PARPORT_COMM = no;
-      PATA_PARPORT_DSTR = no;
-      PATA_PARPORT_FIT2 = no;
-      PATA_PARPORT_FIT3 = no;
-      PATA_PARPORT_EPAT = no;
-      # PATA_PARPORT_EPATC8 is not set
-      PATA_PARPORT_EPIA = no;
-      PATA_PARPORT_FRIQ = no;
-      PATA_PARPORT_FRPW = no;
-      PATA_PARPORT_KBIC = no;
-      PATA_PARPORT_KTTI = no;
-      PATA_PARPORT_ON20 = no;
-      PATA_PARPORT_ON26 = no;
 
       #
       # Generic fallback / legacy drivers
@@ -455,7 +421,6 @@ in
       NET_VENDOR_AMD = no;
       AMD8111_ETH = no;
       PCNET32 = no;
-      PCMCIA_NMCLAN = no;
       AMD_XGBE = no;
       # AMD_XGBE_DCB is not set
       AMD_XGBE_HAVE_ECC = no;
@@ -641,20 +606,6 @@ in
       NET_VENDOR_PENSANDO = no;
       IONIC = no;
       NET_VENDOR_QLOGIC = no;
-      QLA3XXX = no;
-      QLCNIC = no;
-      QLCNIC_SRIOV = no;
-      QLCNIC_DCB = no;
-      QLCNIC_HWMON = no;
-      NETXEN_NIC = no;
-      QED = no;
-      QED_LL2 = no;
-      QED_SRIOV = no;
-      QEDE = no;
-      QED_RDMA = no;
-      QED_ISCSI = no;
-      QED_FCOE = no;
-      QED_OOO = no;
       NET_VENDOR_BROCADE = no;
       BNA = no;
       NET_VENDOR_QUALCOMM = no;
@@ -1054,12 +1005,6 @@ in
       JOYSTICK_WALKERA0701 = no;
 
       INPUT_TABLET = no;
-      TABLET_USB_ACECAD = no;
-      TABLET_USB_AIPTEK = no;
-      TABLET_USB_HANWANG = no;
-      TABLET_USB_KBTAB = no;
-      TABLET_USB_PEGASUS = no;
-      TABLET_SERIAL_WACOM4 = no;
       INPUT_TOUCHSCREEN = no;
       TOUCHSCREEN_ADS7846 = no;
       TOUCHSCREEN_AD7877 = no;
@@ -1188,6 +1133,7 @@ in
       INPUT_MAX77693_HAPTIC = no;
       INPUT_MC13783_PWRBUTTON = no;
       INPUT_MMA8450 = no;
+      
       INPUT_APANEL = no;
       INPUT_GPIO_BEEPER = no;
       INPUT_GPIO_DECODER = no;
@@ -1235,22 +1181,22 @@ in
       INPUT_RT5120_PWRKEY = no;
       INPUT_STPMIC1_ONKEY = no;
 
-      SERIO_I8042 = no;
-      SERIO_CT82C710 = no;
-      SERIO_PARKBD = no;
-      SERIO_PCIPS2 = no;
-      SERIO_LIBPS2 = no;
-      SERIO_ALTERA_PS2 = no;
-      SERIO_PS2MULT = no;
-      SERIO_ARC_PS2 = no;
-      SERIO_APBPS2 = no;
-      SERIO_GPIO_PS2 = no;
-      GAMEPORT_EMU10K1 = no;
-      GAMEPORT_FM801 = no;
+      # SERIO_I8042 = no;
+      # SERIO_CT82C710 = no;
+      # SERIO_PARKBD = no;
+      # SERIO_PCIPS2 = no;
+      # SERIO_LIBPS2 = no;
+      # SERIO_ALTERA_PS2 = no;
+      # SERIO_PS2MULT = no;
+      # SERIO_ARC_PS2 = no;
+      # SERIO_APBPS2 = no;
+      # SERIO_GPIO_PS2 = no;
+      # GAMEPORT_EMU10K1 = no;
+      # GAMEPORT_FM801 = no;
 
-      SERIAL_8250_CS = no;
-      SERIAL_8250_MEN_MCB = no;
-      SERIAL_8250_DFL = no;
+      # SERIAL_8250_CS = no;
+      # SERIAL_8250_MEN_MCB = no;
+      # SERIAL_8250_DFL = no;
 
       SERIAL_SIFIVE = no;
       SERIAL_XILINX_PS_UART = no;
@@ -1301,29 +1247,12 @@ in
       USB_VIDEO_CLASS_INPUT_EVDEV = no;
 
       VIDEO_GO7007 = no;
-      VIDEO_GO7007_USB = no;
-      VIDEO_GO7007_LOADER = no;
-      VIDEO_GO7007_USB_S2250_BOARD = no;
       VIDEO_HDPVR = no;
       VIDEO_PVRUSB2 = no;
-      VIDEO_PVRUSB2_SYSFS = no;
-      VIDEO_PVRUSB2_DVB = no;
-      # VIDEO_PVRUSB2_DEBUGIFC is not set
       VIDEO_STK1160 = no;
-
       VIDEO_AU0828 = no;
-      VIDEO_AU0828_V4L2 = no;
-      # VIDEO_AU0828_RC is not set
       VIDEO_CX231XX = no;
-      VIDEO_CX231XX_RC = no;
-      VIDEO_CX231XX_ALSA = no;
-      VIDEO_CX231XX_DVB = no;
-
       VIDEO_EM28XX = no;
-      VIDEO_EM28XX_V4L2 = no;
-      VIDEO_EM28XX_ALSA = no;
-      VIDEO_EM28XX_DVB = no;
-      VIDEO_EM28XX_RC = no;
 
       MEDIA_PCI_SUPPORT = mkForce no;
 
@@ -1336,17 +1265,13 @@ in
       VIDEO_TW68 = no;
       VIDEO_TW686X = no;
       VIDEO_ZORAN = no;
-      # VIDEO_ZORAN_DC30 is not set
-      # VIDEO_ZORAN_ZR36060 is not set
 
       #
       # Media capture/analog TV support
       #
       VIDEO_DT3155 = no;
       VIDEO_IVTV = no;
-      VIDEO_IVTV_ALSA = no;
       VIDEO_FB_IVTV = no;
-      # VIDEO_FB_IVTV_FORCE_PAT is not set
       VIDEO_HEXIUM_GEMINI = no;
       VIDEO_HEXIUM_ORION = no;
       VIDEO_MXB = no;
@@ -1357,23 +1282,11 @@ in
       VIDEO_BT848 = no;
       DVB_BT8XX = no;
       VIDEO_CX18 = no;
-      VIDEO_CX18_ALSA = no;
       VIDEO_CX23885 = no;
       MEDIA_ALTERA_CI = no;
       VIDEO_CX25821 = no;
-      VIDEO_CX25821_ALSA = no;
       VIDEO_CX88 = no;
-      VIDEO_CX88_ALSA = no;
-      VIDEO_CX88_BLACKBIRD = no;
-      VIDEO_CX88_DVB = no;
-      VIDEO_CX88_ENABLE_VP3054 = no;
-      VIDEO_CX88_VP3054 = no;
-      VIDEO_CX88_MPEG = no;
       VIDEO_SAA7134 = no;
-      VIDEO_SAA7134_ALSA = no;
-      VIDEO_SAA7134_RC = no;
-      VIDEO_SAA7134_DVB = no;
-      VIDEO_SAA7134_GO7007 = no;
       VIDEO_SAA7164 = no;
 
       RADIO_ADAPTERS = no;
@@ -1403,7 +1316,6 @@ in
       VIDEO_CX2341X = no;
       VIDEO_TVEEPROM = no;
       VIDEO_SAA7146 = no;
-      VIDEO_SAA7146_VV = no;
       SMS_SIANO_MDTV = no;
       SMS_SIANO_RC = no;
       VIDEOBUF2_DMA_CONTIG = no;
