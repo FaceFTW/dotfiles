@@ -49,3 +49,5 @@ Legend
 Information about the Nemesis rice is in-progress
 
 All wallpapers are slightly altered from the original work of [Francis Xie](https://x.com/FrancisXie_sfw). It features V1 from [ULTRAKILL by Hakita](https://store.steampowered.com/app/1229490/ULTRAKILL/), which is a copyright of New Blood Interactive (I do not own any of this obviously).
+
+This repository distributes a copy of the VCR OSD Mono font by Riciery Leal, which is 100% free. It can be found on [DaFont](https://www.dafont.com/vcr-osd-mono.font) with this link.

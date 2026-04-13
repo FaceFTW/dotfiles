@@ -24,6 +24,7 @@
   fonts.packages = [
     pkgs.nerd-fonts.hack
     pkgs.ubuntu-sans
+    pkgs.vcr-osd-mono-font
   ];
   fonts.fontconfig.defaultFonts.monospace = [
     "Hack NF Mono"
