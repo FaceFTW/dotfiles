@@ -15,7 +15,7 @@
 @define-color purple-dimmed #8F476B;
 
 * {
-	font-family: "Hack Nerd Font Propo";
+	font-family: "VCR OSD Mono";
 	font-size: 18px;
 	/* font-weight: bold; */
 	/* min-height: 0px; */
@@ -214,7 +214,8 @@ window#waybar {
 #bluetooth:hover,
 #idle_inhibitor:hover,
 #network:hover,
-#pulseaudio:hover {
+#pulseaudio:hover,
+#perf:hover {
 	color: @foreground;
 	border-radius: 2px;
 	opacity: 0.9;
@@ -222,17 +223,6 @@ window#waybar {
 }
 
 /* Specific Module */
-
-#group-tray-expander {
-	background-color: @background;
-	color: @foreground;
-	border-radius: 24px;
-}
-
-#custom-expand-icon {
-	padding: 0px 2px;
-	margin-left: 4px;
-}
 
 #tray {
 	background-color: @background;
@@ -253,6 +243,7 @@ window#waybar {
 }
 
 tooltip {
+	margin: 4px;
 	padding: 8px;
 	background-color: alpha(@background, 1);
 	opacity: 0.95;
@@ -263,4 +254,5 @@ tooltip {
 tooltip label {
 	color: @foreground;
 	font-weight: normal;
+	margin: 4px 6px;
 }

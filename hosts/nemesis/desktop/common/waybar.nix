@@ -39,12 +39,11 @@ in
       ];
       modules-right = [
         "tray"
-        "backlight"
+        "power-profiles-daemon"
+        "group/perf"
         "bluetooth"
         "pulseaudio"
         "network"
-        "memory"
-        "cpu"
         "battery"
       ];
 
@@ -76,10 +75,21 @@ in
         };
       };
 
+      "group/perf" = {
+        orientation = "horizontal";
+        modules = [
+          "cpu"
+          "memory"
+        ];
+      };
+
       cpu = {
         interval = 5;
-        format = "{usage}% 󰍛";
-        # "on-click"= "omarchy-launch-or-focus-tui btop"
+        format = "󰍛 {usage}%";
+      };
+      memory = {
+        interval = 5;
+        format = " {percentage}%";
       };
 
       clock = {
@@ -165,7 +175,7 @@ in
         format-off = "󰂲";
         format-connected = "";
         tooltip-format = "Devices connected: {num_connections}";
-        on-click = "${pkgs.blueman}/bin/blueman-manager-wrapped";
+        on-click = "${pkgs.blueman}/bin/blueman-manager";
       };
 
       # "backlight": {
@@ -180,10 +190,16 @@ in
       #   ]
       # },
 
-      "memory" = {
-        "interval" = 2;
-        "format" = "{percentage}% ";
-        # "on-click": "omarchy-launch-or-focus-tui btop"
+      power-profiles-daemon = {
+        format = "{icon} ";
+        tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+        tooltip = true;
+        format-icons = {
+          "default" = "";
+          "performance" = "";
+          "balanced" = "";
+          "power-saver" = "";
+        };
       };
 
       "pulseaudio" = {
