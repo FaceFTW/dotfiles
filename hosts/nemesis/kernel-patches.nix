@@ -12,7 +12,7 @@ in
     # linux-surface patches
     ############################################
     name = "microsoft-surface-patches-linux-${version}";
-    patch = null;
+    patch = ./surface-kernel-patches-v7.0.patch ;
     structuredExtraConfig = with lib.kernel; {
       ##
       ## Surface Aggregator Module
@@ -102,70 +102,71 @@ in
       HID_SURFACE = module;
     };
   }
-  {
-    name = "ms-surface/0001-secureboot";
-    patch = patchSrc + "/0001-secureboot.patch";
-  }
-  {
-    name = "ms-surface/0002-surface3";
-    patch = patchSrc + "/0002-surface3.patch";
-  }
-  {
-    name = "ms-surface/0003-mwifiex";
-    patch = patchSrc + "/0003-mwifiex.patch";
-  }
-  {
-    name = "ms-surface/0004-ath10k";
-    patch = patchSrc + "/0004-ath10k.patch";
-  }
-  {
-    name = "ms-surface/0005-ipts";
-    patch = patchSrc + "/0005-ipts.patch";
-  }
-  {
-    name = "ms-surface/0006-ithc";
-    patch = patchSrc + "/0006-ithc.patch";
-  }
-  {
-    name = "ms-surface/0007-surface-sam";
-    patch = patchSrc + "/0007-surface-sam.patch";
-  }
-  {
-    name = "ms-surface/0008-surface-sam-over-hid";
-    patch = patchSrc + "/0008-surface-sam-over-hid.patch";
-  }
-  {
-    name = "ms-surface/0009-surface-button";
-    patch = patchSrc + "/0009-surface-button.patch";
-  }
-  {
-    name = "ms-surface/0010-surface-typecover";
-    patch = patchSrc + "/0010-surface-typecover.patch";
-  }
-  {
-    name = "ms-surface/0011-surface-shutdown";
-    patch = patchSrc + "/0011-surface-shutdown.patch";
-  }
-  {
-    name = "ms-surface/0012-surface-gpe";
-    patch = patchSrc + "/0012-surface-gpe.patch";
-  }
-  {
-    name = "ms-surface/0013-cameras";
-    patch = patchSrc + "/0013-cameras.patch";
-  }
-  {
-    name = "ms-surface/0014-amd-gpio";
-    patch = patchSrc + "/0014-amd-gpio.patch";
-  }
-  {
-    name = "ms-surface/0015-rtc";
-    patch = patchSrc + "/0015-rtc.patch";
-  }
-  {
-    name = "ms-surface/0016-hid-surface";
-    patch = patchSrc + "/0016-hid-surface.patch";
-  }
+  # If I ever go back to using linux-surface upstream, uncomment as needed
+  # {
+  #   name = "ms-surface/0001-secureboot";
+  #   patch = patchSrc + "/0001-secureboot.patch";
+  # }
+  # {
+  #   name = "ms-surface/0002-surface3";
+  #   patch = patchSrc + "/0002-surface3.patch";
+  # }
+  # {
+  #   name = "ms-surface/0003-mwifiex";
+  #   patch = patchSrc + "/0003-mwifiex.patch";
+  # }
+  # {
+  #   name = "ms-surface/0004-ath10k";
+  #   patch = patchSrc + "/0004-ath10k.patch";
+  # }
+  # {
+  #   name = "ms-surface/0005-ipts";
+  #   patch = patchSrc + "/0005-ipts.patch";
+  # }
+  # {
+  #   name = "ms-surface/0006-ithc";
+  #   patch = patchSrc + "/0006-ithc.patch";
+  # }
+  # {
+  #   name = "ms-surface/0007-surface-sam";
+  #   patch = patchSrc + "/0007-surface-sam.patch";
+  # }
+  # {
+  #   name = "ms-surface/0008-surface-sam-over-hid";
+  #   patch = patchSrc + "/0008-surface-sam-over-hid.patch";
+  # }
+  # {
+  #   name = "ms-surface/0009-surface-button";
+  #   patch = patchSrc + "/0009-surface-button.patch";
+  # }
+  # {
+  #   name = "ms-surface/0010-surface-typecover";
+  #   patch = patchSrc + "/0010-surface-typecover.patch";
+  # }
+  # {
+  #   name = "ms-surface/0011-surface-shutdown";
+  #   patch = patchSrc + "/0011-surface-shutdown.patch";
+  # }
+  # {
+  #   name = "ms-surface/0012-surface-gpe";
+  #   patch = patchSrc + "/0012-surface-gpe.patch";
+  # }
+  # {
+  #   name = "ms-surface/0013-cameras";
+  #   patch = patchSrc + "/0013-cameras.patch";
+  # }
+  # {
+  #   name = "ms-surface/0014-amd-gpio";
+  #   patch = patchSrc + "/0014-amd-gpio.patch";
+  # }
+  # {
+  #   name = "ms-surface/0015-rtc";
+  #   patch = patchSrc + "/0015-rtc.patch";
+  # }
+  # {
+  #   name = "ms-surface/0016-hid-surface";
+  #   patch = patchSrc + "/0016-hid-surface.patch";
+  # }
   # {
   #   name = "ms-surface/0017-powercap";
   #   patch = patchSrc + "/0017-powercap.patch";
@@ -174,20 +175,53 @@ in
   ############################################
   # Config to reduce extra module builds
   ############################################
-  # This is an Intel System, skip building AMD things
+  # Limit what CPU/GPU stuff is built
   {
-    name = "97-skip-amd-support";
+    name = "cpu-graphics-limit-support";
     patch = null;
     structuredExtraConfig = with lib.kernel; {
-      CPU_SUP_AMD = no;
-      AGP_AMD = no;
-      AGP_AMD64 = no;
-      COFNIG_X86_AMD_PSTATE = no;
-      AMD_IOMMU_V2 = no;
+
+      # Graphics
+      AGP=mkForce no;
       DRM_AMDGPU = no;
+      DRM_AST=no;
+      DRM_ETNAVIV=no;
+      DRM_GMA500 =mkForce no;
+      DRM_GUD=no;
+      DRM_HISI_HIBMC=no;
+      DRM_I915 = yes; # We do want intel graphics
+      DRM_MGAG200 =no;
+      DRM_NOUVEAU = no; # Using stupid nvidia proprietary drivers
+      DRM_PANEL_RASPBERRYPI_TOUCHSCREEN=no;
+      DRM_QXL=no;
+      DRM_RADEON=no;
+      DRM_ST7571=no;
+      DRM_SSD130x=no;
+      DRM_APPLETBDRM=no;
+      DRM_BOCHS=no;
+      DRM_CIRRUS_QEMU=no;
+      DRM_GM12U320= no;
+      DRM_VBOXVIDEO=no;
+      DRM_VGEM = no;
+      DRM_VMWGFX=no;
+      DRM_XE=no;
+
+
+      # CPU Support
+      CPU_SUP_AMD = no;
+      X86_EXTENDED_PLATFORM = no;
+      AMD_IOMMU_V2 = no;
+      INTEL_SKL_INT3472 = mkForce no; # Skips a compilation failure introduced in a patch
+
+      # Display Interface Bridges
+      DRM_I2C_NXP_TDA998X = no;
+      DRM_ANALOGIX_ANX78XX = no;
+
+
+
+
     };
   }
-
   # These are modules that I really will likely not need
   {
     name = "98-dont-build-unused-drivers";
@@ -1133,7 +1167,7 @@ in
       INPUT_MAX77693_HAPTIC = no;
       INPUT_MC13783_PWRBUTTON = no;
       INPUT_MMA8450 = no;
-      
+
       INPUT_APANEL = no;
       INPUT_GPIO_BEEPER = no;
       INPUT_GPIO_DECODER = no;

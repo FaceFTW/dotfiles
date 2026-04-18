@@ -21,16 +21,16 @@ let
   };
 
   betterLinuxPackage = pkgs.buildLinux {
-    version = "6.18.18";
+    version = "7.0";
     src = pkgs.fetchurl {
-      url = "mirror://kernel/linux/kernel/v6.x/linux-6.18.18.tar.xz";
-      hash = "sha256-9IVfOCwbc1yEByve8221vNXceww35C9RBDFxSaCkhu8=";
+      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.tar.xz";
+      hash = "sha256-u39tgLOHx1e30Uu5MCj8uQ95PFwNNnc27oFaEAs4kfA=";
       # hash = lib.fakeHash;
     };
 
     kernelPatches = import ./kernel-patches.nix {
       inherit lib;
-      version = "6.18.18";
+      version = "7.0";
       patchSrc = linux-surface + "/patches/6.18";
     };
 
