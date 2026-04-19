@@ -101,8 +101,6 @@
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.nvidiaSettings = true; # accessible via `nvidia-settings`.
 
-  hardware.nvidia.prime.offload.enable = true;
-  hardware.nvidia.prime.offload.enableOffloadCmd = true;
   hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
   hardware.nvidia.prime.nvidiaBusId = "PCI:243:0:0";
 
@@ -116,7 +114,5 @@
   # Experimental and only works on modern Nvidia GPUs (Turing or newer).
   hardware.nvidia.powerManagement.finegrained = false;
 
-  boot.extraModprobeConfig = ''
-    options nvidia "NVreg_DynamicPowerManagement=0x00"
-  '';
+
 }

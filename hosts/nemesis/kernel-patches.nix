@@ -12,7 +12,7 @@ in
     # linux-surface patches
     ############################################
     name = "microsoft-surface-patches-linux-${version}";
-    patch = ./surface-kernel-patches-v7.0.patch ;
+    patch = ./surface-kernel-patches-v7.0.patch;
     structuredExtraConfig = with lib.kernel; {
       ##
       ## Surface Aggregator Module
@@ -182,30 +182,29 @@ in
     structuredExtraConfig = with lib.kernel; {
 
       # Graphics
-      AGP=mkForce no;
+      AGP = mkForce no;
       DRM_AMDGPU = no;
-      DRM_AST=no;
-      DRM_ETNAVIV=no;
-      DRM_GMA500 =mkForce no;
-      DRM_GUD=no;
-      DRM_HISI_HIBMC=no;
+      DRM_AST = no;
+      DRM_ETNAVIV = no;
+      DRM_GMA500 = mkForce no;
+      DRM_GUD = no;
+      DRM_HISI_HIBMC = no;
       DRM_I915 = yes; # We do want intel graphics
-      DRM_MGAG200 =no;
+      DRM_MGAG200 = no;
       DRM_NOUVEAU = no; # Using stupid nvidia proprietary drivers
-      DRM_PANEL_RASPBERRYPI_TOUCHSCREEN=no;
-      DRM_QXL=no;
-      DRM_RADEON=no;
-      DRM_ST7571=no;
-      DRM_SSD130x=no;
-      DRM_APPLETBDRM=no;
-      DRM_BOCHS=no;
-      DRM_CIRRUS_QEMU=no;
-      DRM_GM12U320= no;
-      DRM_VBOXVIDEO=no;
+      DRM_PANEL_RASPBERRYPI_TOUCHSCREEN = no;
+      DRM_QXL = no;
+      DRM_RADEON = no;
+      DRM_ST7571 = no;
+      DRM_SSD130x = no;
+      DRM_APPLETBDRM = no;
+      DRM_BOCHS = no;
+      DRM_CIRRUS_QEMU = no;
+      DRM_GM12U320 = no;
+      DRM_VBOXVIDEO = no;
       DRM_VGEM = no;
-      DRM_VMWGFX=no;
-      DRM_XE=no;
-
+      DRM_VMWGFX = no;
+      DRM_XE = no;
 
       # CPU Support
       CPU_SUP_AMD = no;
@@ -216,9 +215,6 @@ in
       # Display Interface Bridges
       DRM_I2C_NXP_TDA998X = no;
       DRM_ANALOGIX_ANX78XX = no;
-
-
-
 
     };
   }
