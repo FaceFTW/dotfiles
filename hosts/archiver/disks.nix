@@ -144,10 +144,12 @@
   # Bind mounts for Samba Shares
   # Assumes we made the /export directory with perms
   fileSystems."/export/motorway".device = "/mnt/motorway";
+  fileSystems."/export/motorway".fsType = "auto";
   fileSystems."/export/motorway".depends = [ "/mnt/motorway" ];
   fileSystems."/export/motorway".options = [ "bind" ];
 
   fileSystems."/export/archive".device = "/mnt/archive";
+  fileSystems."/export/archive".fsType = "auto";
   fileSystems."/export/archive".depends = [ "/mnt/archive" ];
   fileSystems."/export/archive".options = [ "bind" ];
 
