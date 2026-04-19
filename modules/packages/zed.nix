@@ -41,7 +41,7 @@ in
     (mkIf packages.zed.enable {
       environment.systemPackages = [
         pkgs.zed-editor
-        pkgs.openssl_3
+        pkgs.openssl
         pkgs.package-version-server
       ];
     })
