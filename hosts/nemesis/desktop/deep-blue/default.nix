@@ -4,7 +4,7 @@
 }:
 {
   imports = [
-    ../common/ashell.nix
+    ./ashell.nix
   ];
   #######################################################
   # Hyprland
