@@ -175,9 +175,9 @@ in
   ############################################
   # Config to reduce extra module builds
   ############################################
-  # Limit what CPU/GPU stuff is built
+  # These are modules that I really will likely not need
   {
-    name = "cpu-graphics-limit-support";
+    name = "98-dont-build-unused-drivers";
     patch = null;
     structuredExtraConfig = with lib.kernel; {
 
@@ -205,6 +205,7 @@ in
       DRM_VGEM = no;
       DRM_VMWGFX = no;
       DRM_XE = no;
+      FB = mkForce no; # Replaced by DRM/KMS
 
       # CPU Support
       CPU_SUP_AMD = no;
@@ -212,23 +213,151 @@ in
       AMD_IOMMU_V2 = no;
       INTEL_SKL_INT3472 = mkForce no; # Skips a compilation failure introduced in a patch
 
+      # Networking Drivers
+      ARCNET = no;
+      B53 = no;
+      CAN_NETLINK = no;
+      WAN = mkForce no;
+      HYPERV_NET = no;
+      NET_FC = mkForce no;
+
+      NET_DSA_BCM_SF2 = no;
+      NET_DSA_LOOP = no;
+      NET_DSA_HIRSCHMANN_HELLCREEK = no;
+      NET_DSA_LANTIQ_GSWIP = no;
+      NET_DSA_MT7530 = no;
+      NET_DSA_MV88E6060 = no;
+      NET_DSA_MICROCHIP_KSZ_COMMON = no;
+      NET_DSA_MV88E6XXX = no;
+      NET_DSA_AR9331 = no;
+      NET_DSA_QCA8K = no;
+      NET_DSA_SJA1105 = no;
+      NET_DSA_XRS700X = no;
+      NET_DSA_REALTEK = no;
+      NET_DSA_KS8995 = no;
+      NET_DSA_VITESSE_VSC73XX = no;
+      NET_DSA_VITESSE_VSC73XX_PLATFORM = no;
+
+      NET_VENDOR_3COM = no;
+      NET_VENDOR_ADAPTEC = no;
+      NET_VENDOR_AGERE = no;
+      NET_VENDOR_ALACRITECH = no;
+      NET_VENDOR_ALTEON = no;
+      NET_VENDOR_AMAZON = no;
+      NET_VENDOR_AMD = no;
+      NET_VENDOR_AQUANTIA = no;
+      NET_VENDOR_ARC = no;
+      NET_VENDOR_ASIX = no;
+      NET_VENDOR_ATHEROS = no;
+      NET_VENDOR_BROADCOM = no;
+      NET_VENDOR_CADENCE = no;
+      NET_VENDOR_CAVIUM = no;
+      NET_VENDOR_CORTINA = no;
+      NET_VENDOR_DAVICOM = no;
+      NET_VENDOR_DEC = no;
+      NET_VENDOR_ENGLEDER = no;
+      NET_VENDOR_EZCHIP = no;
+      NET_VENDOR_FUNGIBLE = no;
+      NET_VENDOR_GOOGLE = no;
+      NET_VENDOR_HISILICON = no;
+      NET_VENDOR_HUAWEI = no;
+      NET_VENDOR_I825XX = no;
+      NET_VENDOR_ADI = no;
+      NET_VENDOR_LITEX = no;
+      NET_VENDOR_MARVELL = no;
+      NET_VENDOR_META = no;
+      NET_VENDOR_MICREL = no;
+      NET_VENDOR_MICROCHIP = no;
+      NET_VENDOR_MICROSEMI = no;
+      NET_VENDOR_MICROSOFT = no;
+      NET_VENDOR_MYRI = no;
+      NET_VENDOR_NI = no;
+      NET_VENDOR_NATSEMI = no;
+      NET_VENDOR_NETRONOME = no;
+      NET_VENDOR_8390 = no;
+      NET_VENDOR_NVIDIA = no;
+      NET_VENDOR_OKI = no;
+      NET_VENDOR_PACKET_ENGINES = no;
+      NET_VENDOR_PENSANDO = no;
+      NET_VENDOR_QLOGIC = no;
+      NET_VENDOR_BROCADE = no;
+      NET_VENDOR_QUALCOMM = no;
+      NET_VENDOR_RDC = no;
+      NET_VENDOR_REALTEK = no;
+      NET_VENDOR_RENESAS = no;
+      NET_VENDOR_ROCKER = no;
+      NET_VENDOR_SAMSUNG = no;
+      NET_VENDOR_SEEQ = no;
+      NET_VENDOR_SILAN = no;
+      NET_VENDOR_SIS = no;
+      NET_VENDOR_SOLARFLARE = no;
+      NET_VENDOR_SMSC = no;
+      NET_VENDOR_SOCIONEXT = no;
+      NET_VENDOR_STMICRO = no;
+      NET_VENDOR_SUN = no;
+      NET_VENDOR_SYNOPSYS = no;
+      NET_VENDOR_TEHUTI = no;
+      NET_VENDOR_TI = no;
+      NET_VENDOR_VERTEXCOM = no;
+      NET_VENDOR_VIA = no;
+      NET_VENDOR_WANGXUN = no;
+      NET_VENDOR_WIZNET = no;
+      NET_VENDOR_XILINX = no;
+
+      WLAN_VENDOR_ADMTEK = no;
+      WLAN_VENDOR_ATH = no;
+      WLAN_VENDOR_ATMEL = no;
+      WLAN_VENDOR_BROADCOM = no;
+      WLAN_VENDOR_INTERSIL = no;
+      WLAN_VENDOR_MARVELL = no;
+      WLAN_VENDOR_MEDIATEK = no;
+      WLAN_VENDOR_MICROCHIP = no;
+      WLAN_VENDOR_PURELIFI = no;
+      WLAN_VENDOR_RALINK = no;
+      WLAN_VENDOR_REALTEK = no;
+      WLAN_VENDOR_RSI = no;
+      WLAN_VENDOR_SILABS = no;
+      WLAN_VENDOR_ST = no;
+      WLAN_VENDOR_TI = no;
+      WLAN_VENDOR_ZYDAS = no;
+      WLAN_VENDOR_QUANTENNA = no;
+
       # Display Interface Bridges
       DRM_I2C_NXP_TDA998X = no;
       DRM_ANALOGIX_ANX78XX = no;
-
-    };
-  }
-  # These are modules that I really will likely not need
-  {
-    name = "98-dont-build-unused-drivers";
-    patch = null;
-    structuredExtraConfig = with lib.kernel; {
       GOOGLE_FIRMWARE = lib.mkForce no;
+
       # General modules I don't use
       HAMRADIO = lib.mkForce no;
       PCCARD = no;
       MOXTET = no;
       IIO = no;
+      PATA_ACPI = no;
+      PATA_LEGACY = no;
+      FIREWIRE = no;
+      FIREWIRE_NOSY = no;
+
+      MEMSTICK = no;
+      ACCESSIBILITY = mkForce no; # Set in nixpkgs
+      GREYBUS = no;
+      COMEDI = no;
+      STAGING = mkForce no;
+      CHROME_PLATFORMS = mkForce no;
+      INFINIBAND = mkForce no;
+      FUSION = mkForce no;
+      LIRC = mkForce no;
+      ATA_SFF = mkForce no;
+
+      MEDIA_ATTACH = mkForce no;
+      DVB_DYNAMIC_MINORS = mkForce no;
+      USB_AIRSPY = no;
+      USB_HACKRF = no;
+      USB_MSI2500 = no;
+      MEDIA_PLATFORM_DRIVERS = no;
+      VIDEO_TVEEPROM = no;
+      DVB_B2C2_FLEXCOP = no;
+      SMS_SIANO_MDTV = no;
+      CYPRESS_FIRMWARE = no;
 
       PCIE_CADENCE_PLAT_HOST = no;
       PCIE_MICROCHIP_HOST = no;
@@ -330,122 +459,10 @@ in
       PATA_RZ1000 = no;
       PATA_PARPORT = no;
 
-      #
-      # Generic fallback / legacy drivers
-      #
-      PATA_ACPI = no;
-      PATA_LEGACY = no;
-
       SBP_TARGET = no;
-
-      # FUSION = no;
-      # FUSION_SPI = no;
-      # FUSION_FC = no;
-      # FUSION_SAS = no;
-      # FUSION_CTL = no;
-      # FUSION_LAN = no;
-
-      FIREWIRE = no;
-      FIREWIRE_NOSY = no;
-
-      MACINTOSH_DRIVERS = no;
-      MAC_EMUMOUSEBTN = no;
-
-      NTB_NETDEV = no;
-
-      SUNGEM_PHY = no;
-      ARCNET = no;
-      B53 = no;
-
-      NET_DSA_BCM_SF2 = no;
-      NET_DSA_LOOP = no;
-      NET_DSA_HIRSCHMANN_HELLCREEK = no;
-      NET_DSA_LANTIQ_GSWIP = no;
-      NET_DSA_MT7530 = no;
-      NET_DSA_MV88E6060 = no;
-      NET_DSA_MICROCHIP_KSZ_COMMON = no;
-      NET_DSA_MV88E6XXX = no;
-      NET_DSA_AR9331 = no;
-      NET_DSA_QCA8K = no;
-      NET_DSA_SJA1105 = no;
-      NET_DSA_XRS700X = no;
-      NET_DSA_REALTEK = no;
-      NET_DSA_KS8995 = no;
-      NET_DSA_VITESSE_VSC73XX = no;
-      NET_DSA_VITESSE_VSC73XX_PLATFORM = no;
-
-      NET_VENDOR_3COM = no;
-      NET_VENDOR_ADAPTEC = no;
-      NET_VENDOR_AGERE = no;
-      NET_VENDOR_ALACRITECH = no;
-      NET_VENDOR_ALTEON = no;
-      NET_VENDOR_AMAZON = no;
-      NET_VENDOR_AMD = no;
-      NET_VENDOR_AQUANTIA = no;
-      NET_VENDOR_ARC = no;
-      NET_VENDOR_ASIX = no;
-      NET_VENDOR_ATHEROS = no;
-      NET_VENDOR_BROADCOM = no;
-      NET_VENDOR_CADENCE = no;
-      NET_VENDOR_CAVIUM = no;
-      NET_VENDOR_CORTINA = no;
-      NET_VENDOR_DAVICOM = no;
-      NET_VENDOR_DEC = no;
-      NET_VENDOR_ENGLEDER = no;
-      NET_VENDOR_EZCHIP = no;
-      NET_VENDOR_FUNGIBLE = no;
-      NET_VENDOR_GOOGLE = no;
-      NET_VENDOR_HISILICON = no;
-      NET_VENDOR_HUAWEI = no;
-      NET_VENDOR_I825XX = no;
-      NET_VENDOR_ADI = no;
-      NET_VENDOR_LITEX = no;
-      NET_VENDOR_MARVELL = no;
-      NET_VENDOR_META = no;
-      NET_VENDOR_MICREL = no;
-      NET_VENDOR_MICROCHIP = no;
-      NET_VENDOR_MICROSEMI = no;
-      NET_VENDOR_MICROSOFT = no;
-      NET_VENDOR_MYRI = no;
-      NET_VENDOR_NI = no;
-      NET_VENDOR_NATSEMI = no;
-      NET_VENDOR_NETRONOME = no;
-      NET_VENDOR_8390 = no;
-      NET_VENDOR_NVIDIA = no;
-      NET_VENDOR_OKI = no;
-      NET_VENDOR_PACKET_ENGINES = no;
-      NET_VENDOR_PENSANDO = no;
-      NET_VENDOR_QLOGIC = no;
-      NET_VENDOR_BROCADE = no;
-      NET_VENDOR_QUALCOMM = no;
-      NET_VENDOR_RDC = no;
-      NET_VENDOR_REALTEK = no;
-      NET_VENDOR_RENESAS = no;
-      NET_VENDOR_ROCKER = no;
-      NET_VENDOR_SAMSUNG = no;
-      NET_VENDOR_SEEQ = no;
-      NET_VENDOR_SILAN = no;
-      NET_VENDOR_SIS = no;
-      NET_VENDOR_SOLARFLARE = no;
-      NET_VENDOR_SMSC = no;
-      NET_VENDOR_SOCIONEXT = no;
-      NET_VENDOR_STMICRO = no;
-      NET_VENDOR_SUN = no;
-      NET_VENDOR_SYNOPSYS = no;
-      NET_VENDOR_TEHUTI = no;
-      NET_VENDOR_TI = no;
-      NET_VENDOR_VERTEXCOM = no;
-      NET_VENDOR_VIA = no;
-      NET_VENDOR_WANGXUN = no;
-      NET_VENDOR_WIZNET = no;
-      NET_VENDOR_XILINX = no;
-      HIPPI = mkForce no;
 
       PHYLIB_LEDS = no;
       QCA807X_PHY = no;
-
-      CAN_NETLINK = no;
-
 
       MDIO_BITBANG = no;
       MDIO_BCM_UNIMAC = no;
@@ -462,48 +479,15 @@ in
       PCS_LYNX = no;
       PLIP = no;
 
-      WLAN_VENDOR_ADMTEK = no;
-      WLAN_VENDOR_ATH = no;
-      WLAN_VENDOR_ATMEL = no;
-      WLAN_VENDOR_BROADCOM = no;
-      WLAN_VENDOR_INTERSIL = no;
-      WLAN_VENDOR_MARVELL = no;
-      WLAN_VENDOR_MEDIATEK = no;
-      WLAN_VENDOR_MICROCHIP = no;
-      WLAN_VENDOR_PURELIFI = no;
-      WLAN_VENDOR_RALINK = no;
-      WLAN_VENDOR_REALTEK = no;
-      WLAN_VENDOR_RSI = no;
-      WLAN_VENDOR_SILABS = no;
-      WLAN_VENDOR_ST = no;
-      WLAN_VENDOR_TI = no;
-      WLAN_VENDOR_ZYDAS = no;
-      WLAN_VENDOR_QUANTENNA = no;
-
       IPW2100 = no;
       IPW2200 = no;
-      LIBIPW = no;
-      IWLEGACY = no;
       IWL4965 = no;
       IWL3945 = no;
 
-      RT2800USB_RT53XX = mkForce no;
-      RT2800USB_RT55XX = mkForce no;
-      RTL8XXXU_UNTESTED = mkForce no;
-      RTW88 = mkForce no;
-      RTW89 = mkForce no;
-
-      WAN = mkForce no;
-      PCI200SYN = no;
-      WANXL = no;
-      PC300TOO = no;
-      FARSYNC = no;
-      LAPBETHER = no;
-
       FUJITSU_ES = no;
 
-      HYPERV_NET = no;
-
+      MACINTOSH_DRIVERS = no;
+      MAC_EMUMOUSEBTN = no;
       KEYBOARD_ADP5585 = no;
       KEYBOARD_ADP5588 = no;
       KEYBOARD_APPLESPI = mkForce no;
@@ -558,10 +542,6 @@ in
       SERIAL_MEN_Z135 = no;
 
       SERIAL_NONSTANDARD = no;
-      MOXA_INTELLIO = no;
-      MOXA_SMARTIO = no;
-      N_HDLC = no;
-      IPWIRELESS = no;
       N_GSM = no;
       NOZOMI = no;
 
@@ -585,6 +565,7 @@ in
 
       RC_CORE = mkForce no;
 
+      # TV tuners and things like what linux supported all this?
       VIDEO_TUNER = no;
       MEDIA_CONTROLLER_DVB = no;
       VIDEO_USBTV = no;
@@ -595,41 +576,254 @@ in
       MEDIA_PCI_SUPPORT = mkForce no;
       MEDIA_RADIO_SUPPORT = no;
       MEDIA_SDR_SUPPORT = no;
+      MEDIA_TEST_SUPPORT = no;
+      USB_GSPCA = no;
+      MEDIA_TUNER = no;
 
+      TOUCHSCREEN_SUR40 = no;
+
+      DVB_AS102 = no;
+      DVB_B2C2_FLEXCOP_USB = no;
+      # DVB_B2C2_FLEXCOP_USB_DEBUG is not set
+      DVB_USB_V2 = no;
+      DVB_USB_AF9015 = no;
+      DVB_USB_AF9035 = no;
+      DVB_USB_ANYSEE = no;
+      DVB_USB_AU6610 = no;
+      DVB_USB_AZ6007 = no;
+      DVB_USB_CE6230 = no;
+      DVB_USB_DVBSKY = no;
+      DVB_USB_EC168 = no;
+      DVB_USB_GL861 = no;
+      DVB_USB_MXL111SF = no;
+      DVB_USB_RTL28XXU = no;
+      DVB_USB_ZD1301 = no;
+      SMS_USB_DRV = no;
+      DVB_TTUSB_BUDGET = no;
+      DVB_TTUSB_DEC = no;
+
+      MEDIA_TUNER_E4000 = no;
+      MEDIA_TUNER_FC0011 = no;
+      MEDIA_TUNER_FC0012 = no;
+      MEDIA_TUNER_FC0013 = no;
+      MEDIA_TUNER_FC2580 = no;
+      MEDIA_TUNER_IT913X = no;
+      MEDIA_TUNER_M88RS6000T = no;
+      MEDIA_TUNER_MAX2165 = no;
+      MEDIA_TUNER_MC44S803 = no;
+      MEDIA_TUNER_MSI001 = no;
+      MEDIA_TUNER_MT2060 = no;
+      MEDIA_TUNER_MT2063 = no;
+      MEDIA_TUNER_MT20XX = no;
+      MEDIA_TUNER_MT2131 = no;
+      MEDIA_TUNER_MT2266 = no;
+      MEDIA_TUNER_MXL301RF = no;
+      MEDIA_TUNER_MXL5005S = no;
+      MEDIA_TUNER_MXL5007T = no;
+      MEDIA_TUNER_QM1D1B0004 = no;
+      MEDIA_TUNER_QM1D1C0042 = no;
+      MEDIA_TUNER_QT1010 = no;
+      MEDIA_TUNER_R820T = no;
+      MEDIA_TUNER_SI2157 = no;
+      MEDIA_TUNER_SIMPLE = no;
+      MEDIA_TUNER_TDA18212 = no;
+      MEDIA_TUNER_TDA18218 = no;
+      MEDIA_TUNER_TDA18250 = no;
+      MEDIA_TUNER_TDA18271 = no;
+      MEDIA_TUNER_TDA827X = no;
+      MEDIA_TUNER_TDA8290 = no;
+      MEDIA_TUNER_TDA9887 = no;
+      MEDIA_TUNER_TEA5761 = no;
+      MEDIA_TUNER_TEA5767 = no;
+      MEDIA_TUNER_TUA9001 = no;
+      MEDIA_TUNER_XC2028 = no;
+      MEDIA_TUNER_XC4000 = no;
+      MEDIA_TUNER_XC5000 = no;
+      # end of Customize TV tuners
+
+      #
+      # Customise DVB Frontends
+      #
+
+      #
+      # Multistandard (satellite) frontends
+      #
+      DVB_M88DS3103 = no;
+      DVB_MXL5XX = no;
+      DVB_STB0899 = no;
+      DVB_STB6100 = no;
+      DVB_STV090x = no;
+      DVB_STV0910 = no;
+      DVB_STV6110x = no;
+      DVB_STV6111 = no;
+
+      #
+      # Multistandard (cable + terrestrial) frontends
+      #
+      DVB_DRXK = no;
+      DVB_MN88472 = no;
+      DVB_MN88473 = no;
+      DVB_SI2165 = no;
+      DVB_TDA18271C2DD = no;
+
+      #
+      # DVB-S (satellite) frontends
+      #
+      DVB_CX24110 = no;
+      DVB_CX24116 = no;
+      DVB_CX24117 = no;
+      DVB_CX24120 = no;
+      DVB_CX24123 = no;
+      DVB_DS3000 = no;
+      DVB_MB86A16 = no;
+      DVB_MT312 = no;
+      DVB_S5H1420 = no;
+      DVB_SI21XX = no;
+      DVB_STB6000 = no;
+      DVB_STV0288 = no;
+      DVB_STV0299 = no;
+      DVB_STV0900 = no;
+      DVB_STV6110 = no;
+      DVB_TDA10071 = no;
+      DVB_TDA10086 = no;
+      DVB_TDA8083 = no;
+      DVB_TDA8261 = no;
+      DVB_TDA826X = no;
+      DVB_TS2020 = no;
+      DVB_TUA6100 = no;
+      DVB_TUNER_CX24113 = no;
+      DVB_TUNER_ITD1000 = no;
+      DVB_VES1X93 = no;
+      DVB_ZL10036 = no;
+      DVB_ZL10039 = no;
+
+      #
+      # DVB-T (terrestrial) frontends
+      #
+      DVB_AF9013 = no;
+      DVB_AS102_FE = no;
+      DVB_CX22700 = no;
+      DVB_CX22702 = no;
+      DVB_CXD2820R = no;
+      DVB_CXD2841ER = no;
+      DVB_DIB3000MB = no;
+      DVB_DIB3000MC = no;
+      DVB_DIB7000M = no;
+      DVB_DIB7000P = no;
+      DVB_DIB9000 = no;
+      DVB_DRXD = no;
+      DVB_EC100 = no;
+      DVB_L64781 = no;
+      DVB_MT352 = no;
+      DVB_NXT6000 = no;
+      DVB_RTL2830 = no;
+      DVB_RTL2832 = no;
+      DVB_RTL2832_SDR = no;
+      DVB_S5H1432 = no;
+      DVB_SI2168 = no;
+      DVB_SP887X = no;
+      DVB_STV0367 = no;
+      DVB_TDA10048 = no;
+      DVB_TDA1004X = no;
+      DVB_ZD1301_DEMOD = no;
+      DVB_ZL10353 = no;
+      DVB_CXD2880 = no;
+
+      #
+      # DVB-C (cable) frontends
+      #
+      DVB_STV0297 = no;
+      DVB_TDA10021 = no;
+      DVB_TDA10023 = no;
+      DVB_VES1820 = no;
+
+      #
+      # ATSC (North American/Korean Terrestrial/Cable DTV) frontends
+      #
+      DVB_AU8522 = no;
+      DVB_AU8522_DTV = no;
+      DVB_AU8522_V4L = no;
+      DVB_BCM3510 = no;
+      DVB_LG2160 = no;
+      DVB_LGDT3305 = no;
+      DVB_LGDT3306A = no;
+      DVB_LGDT330X = no;
+      DVB_MXL692 = no;
+      DVB_NXT200X = no;
+      DVB_OR51132 = no;
+      DVB_OR51211 = no;
+      DVB_S5H1409 = no;
+      DVB_S5H1411 = no;
+
+      #
+      # ISDB-T (terrestrial) frontends
+      #
+      DVB_DIB8000 = no;
+      DVB_MB86A20S = no;
+      DVB_S921 = no;
+
+      #
+      # ISDB-S (satellite) & ISDB-T (terrestrial) frontends
+      #
+      DVB_MN88443X = no;
+      DVB_TC90522 = no;
+
+      #
+      # Digital terrestrial only tuners/PLL
+      #
+      DVB_PLL = no;
+      DVB_TUNER_DIB0070 = no;
+      DVB_TUNER_DIB0090 = no;
+
+      #
+      # SEC control devices for DVB-S
+      #
+      DVB_A8293 = no;
+      DVB_AF9033 = no;
+      DVB_ASCOT2E = no;
+      DVB_ATBM8830 = no;
+      DVB_HELENE = no;
+      DVB_HORUS3A = no;
+      DVB_ISL6405 = no;
+      DVB_ISL6421 = no;
+      DVB_ISL6423 = no;
+      DVB_IX2505V = no;
+      DVB_LGS8GL5 = no;
+      DVB_LGS8GXX = no;
+      DVB_LNBH25 = no;
+      DVB_LNBH29 = no;
+      DVB_LNBP21 = no;
+      DVB_LNBP22 = no;
+      DVB_M88RS2000 = no;
+      DVB_TDA665x = no;
+      DVB_DRX39XYJ = no;
+
+      #
+      # Common Interface (EN50221) controller drivers
+      #
+      DVB_CXD2099 = no;
+      DVB_SP2 = no;
+      # end of Customise DVB Frontends
+
+      #
+      # Tools to develop new frontends
+      #
+      DVB_DUMMY_FE = no;
+      # end of Media ancillary drivers
       SND_SOC_MIKROE_PROTO = no;
 
-      MEMSTICK = no;
-      ACCESSIBILITY = mkForce no; # Set in nixpkgs
-      GREYBUS = no;
-      COMEDI = no;
-      STAGING = mkForce no;
       RTL8723BS = no;
 
-      STAGING_MEDIA = mkForce no;
-
-
-      XIL_AXIS_FIFO = no;
-      # VME_BUS is not set
       GPIB = no;
-      CHROME_PLATFORMS = mkForce no;
-
-      WILCO_EC = no;
 
       IDEAPAD_LAPTOP = no;
-      LENOVO_YMC = no;
       MSI_LAPTOP = no;
       SAMSUNG_GALAXYBOOK = no;
       SAMSUNG_LAPTOP = no;
       SAMSUNG_Q10 = no;
       ACPI_TOSHIBA = no;
 
-
       WPCM450_SOC = no;
-      # WPCM450_SOC is not set
-
-      #
-      # Qualcomm SoC drivers
-      #
       QCOM_PMIC_PDCHARGER_ULOG = no;
       QCOM_PMIC_GLINK = no;
       QCOM_PBS = no;
@@ -639,9 +833,7 @@ in
       FSI = no;
       MOST = no;
       PECI = no;
-      PECI_CPU = no;
       SIOX = no;
-      SIOX_BUS_GPIO = no;
       SLIMBUS = no;
       MUX_ADG792A = no;
       MUX_ADGS1408 = no;
