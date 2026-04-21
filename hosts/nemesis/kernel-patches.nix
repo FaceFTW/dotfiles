@@ -365,83 +365,6 @@ in
       DRM_ANALOGIX_ANX78XX = no;
       GOOGLE_FIRMWARE = lib.mkForce no;
 
-      # General modules I don't use
-      HAMRADIO = lib.mkForce no;
-      PCCARD = no;
-      MOXTET = no;
-      IIO = no;
-
-      FIREWIRE = no;
-      FIREWIRE_NOSY = no;
-
-      MEMSTICK = no;
-      ACCESSIBILITY = mkForce no; # Set in nixpkgs
-      GREYBUS = no;
-      COMEDI = no;
-      STAGING = mkForce no;
-      CHROME_PLATFORMS = mkForce no;
-      INFINIBAND = mkForce no;
-      FUSION = mkForce no;
-      LIRC = mkForce no;
-
-      MEDIA_ATTACH = mkForce no;
-      DVB_DYNAMIC_MINORS = mkForce no;
-      USB_AIRSPY = no;
-      USB_HACKRF = no;
-      USB_MSI2500 = no;
-      MEDIA_PLATFORM_DRIVERS = no;
-      VIDEO_TVEEPROM = no;
-      DVB_B2C2_FLEXCOP = no;
-      SMS_SIANO_MDTV = no;
-      CYPRESS_FIRMWARE = no;
-
-      PCIE_CADENCE_PLAT_HOST = no;
-      PCIE_MICROCHIP_HOST = no;
-
-      SENSORS_LIS3LV02D = no;
-      AD525X_DPOT = no;
-
-      DUMMY_IRQ = no;
-      IBM_ASM = no;
-      PHANTOM = no;
-      ICS932S401 = no;
-      SMPRO_ERRMON = no;
-      SMPRO_MISC = no;
-      HI6421V600_IRQ = no;
-      HP_ILO = no;
-      APDS9802ALS = no;
-      ISL29003 = no;
-      ISL29020 = no;
-      SENSORS_TSL2550 = no;
-      SENSORS_BH1770 = no;
-      SENSORS_APDS990X = no;
-      HMC6352 = no;
-      DS1682 = no;
-      VMWARE_BALLOON = no;
-      LATTICE_ECP3_CONFIG = no;
-      DW_XDATA_PCIE = no;
-      PCI_ENDPOINT_TEST = no;
-      XILINX_SDFEC = no;
-      HISI_HIKEY_USB = no;
-      OPEN_DICE = no;
-      VCPU_STALL_DETECTOR = no;
-      TPS6594_ESM = no;
-      TPS6594_PFSM = no;
-      NSM = no;
-      MCHP_LAN966X_PCI = no;
-      C2PORT = no;
-      C2PORT_DURAMAR_2150 = no;
-      SENSORS_LIS3_I2C = no;
-      GENWQE = no;
-      BCM_VK = no;
-      MISC_ALCOR_PCI = no;
-      MISC_RTSX_PCI = no;
-      GP_PCI1XXXX = no;
-      KEBA_CP500 = no;
-      MISC_RP1 = no;
-      SCSI_PPA = no;
-      SCSI_IMM = no;
-
       # Parallel ATA
       PATA_TIMINGS = no;
       PATA_ACPI = no;
@@ -491,27 +414,7 @@ in
       PATA_PARPORT = no;
       SBP_TARGET = no;
 
-      PHYLIB_LEDS = no;
-      QCA807X_PHY = no;
-
-      MDIO_BITBANG = no;
-      MDIO_BCM_UNIMAC = no;
-      MDIO_HISI_FEMAC = no;
-      MDIO_MVUSB = no;
-      MDIO_MSCC_MIIM = no;
-      MDIO_OCTEON = no;
-      MDIO_IPQ4019 = no;
-      MDIO_IPQ8064 = no;
-      MDIO_REGMAP = mkForce no;
-      MDIO_THUNDER = no;
-
-      PCS_XPCS = no;
-      PCS_LYNX = no;
-      PLIP = no;
-
-
-      FUJITSU_ES = no;
-
+      # HID/Input Drivers
       MACINTOSH_DRIVERS = no;
       MAC_EMUMOUSEBTN = no;
       KEYBOARD_ADP5585 = no;
@@ -562,41 +465,14 @@ in
       INPUT_TOUCHSCREEN = no;
       INPUT_MISC = no;
 
-      SERIAL_SIFIVE = no;
-      SERIAL_XILINX_PS_UART = no;
-      SERIAL_CONEXANT_DIGICOLOR = no;
-      SERIAL_MEN_Z135 = no;
-
-      SERIAL_NONSTANDARD = no;
-      N_GSM = no;
-      NOZOMI = no;
-
-      PRINTER = no;
-      # LP_CONSOLE is not set
-      PPDEV = no;
-
-      IPMB_DEVICE_INTERFACE = no;
-      HW_RANDOM_CCTRNG = no;
-      APPLICOM = no;
-      TELCLOCK = no;
-      XILLYBUS = no;
-      XILLYUSB = no;
-
-      HSI = no;
-      HSI_BOARDINFO = no;
-
-      ZL3073X = no;
-      # SSB = no;
-      BCMA = no;
-
-      RC_CORE = mkForce no;
-
       # TV tuners and things like what linux supported all this?
+      RC_CORE = mkForce no;
       VIDEO_TUNER = no;
       MEDIA_CONTROLLER_DVB = no;
       VIDEO_USBTV = no;
       RADIO_ADAPTERS = no;
       MEDIA_ANALOG_TV_SUPPORT = mkForce no;
+      MEDIA_CEC_SUPPORT = mkForce no;
       MEDIA_COMMON_OPTIONS = no;
       MEDIA_DIGITAL_TV_SUPPORT = mkForce no;
       MEDIA_PCI_SUPPORT = mkForce no;
@@ -779,12 +655,126 @@ in
       DVB_SP2 = no;
       DVB_DUMMY_FE = no;
 
-      # end of Media ancillary drivers
+      # SoC Drivers (Not on an SOC)
+      WPCM450_SOC = no;
+      QCOM_PMIC_PDCHARGER_ULOG = no;
+      QCOM_PMIC_GLINK = no;
+      QCOM_PBS = no;
+      SOC_TI = no;
+
+      # Miscellaneous Drivers
+      ACCESSIBILITY = mkForce no;
+      BCMA = no; # Broadcom Specific AMBA
+      CHROME_PLATFORMS = mkForce no;
+      COMEDI = no; # Scientific Data Collection Hardware
+      FIREWIRE = no;
+      FIREWIRE_NOSY = no; # Firewire Probe Thing?
+      FPGA = no;
+      FSI = no;
+      FUSION = mkForce no; # Fusion Message Passing Technology
+      GOLDFISH = no; # Goldfish Virtual Platform
+      GPIB = no; # General Purpose Interface Bus
+      GREYBUS = no;
+      HAMRADIO = lib.mkForce no; # Ham Radio Support
+      HSI = no; # High-spped synchronous Serial Interface
+      HSI_BOARDINFO = no;
+      HTE = no;
+      IIO = no; # Industrial I/O
+      INFINIBAND = mkForce no; # Before ethernet was fast or something
+      INTERCONNECT = no;
+      IPACK_BUS = no; # IndustryPack Bus
+      LIRC = mkForce no;
+      MCB = no;
+      MELLANOX_PLATFORM = no; # Mellanox Drivers
+      MEMSTICK = no; # Sony Memory Stick
+      MOST = no;
+      MOXTET = no;
+      NTB = no;
+      PCCARD = no; # Predecessor to PCMCIA
+      # PECI = no;
+      # PPS = no; # Pulse Per Second (GPS-related)
+      RAS = mkForce no;
+      REMOTEPROC = no;
+      RESET_CONTROLLER = no; # GPIO and similar Reset Controllers
+      # SSB = no; # Sonics Silicon Backplane - Why dependency???
+      SIOX = no;
+      SLIMBUS = no;
+      # W1 = no;
+
+      STAGING = mkForce no;
+
+      # Misc Drivers (Individual)
+      AD525X_DPOT = no; # Analog Devices Digital Potentiometers
+      ALTERA_STAPL = no; # Altera Firmware Download thing
+      APDS9802ALS = no; # Ambient Light Sensor
+      BCM_VK = no; # Broadcom VK Accelerators
+      C2PORT = no; # Silicon Labs C2 Port
+      # CB710_CORE = no; # PCI ENE CB710/720 Flash Memory card reader
+      DS1682 = no; # Elapsed Time Recorder with Alarm - Whatever that is
+      DUMMY_IRQ = no;
+      DW_XDATA_PCIE = no; # Synopsys DesignWare PCIe traffic generator IP
+      GENWQE = no; # IBM GenWQE Accelerators
+      HMC6352 = no; # A compass? huh
+      HP_ILO = no; # Used in HP ProLiant servers
+      IBM_ASM = no; # IBM RSA service processor
+      ICS932S401 = no; # A clock control chip
+      ISL29003 = no; # Ambient Light Sensor
+      ISL29020 = no; # Ambient Light Sensor
+      KEBA_CP500 = no; # KEBA CP500 System FPGA
+      MISC_ALCOR_PCI = no; # Alcor Micro PCI express card readers
+      MISC_RTSX_PCI = no; # Realtek PCI express card readers
+      NSM = no; # Nitro Security Module - AWS EC2
+      PCI_ENDPOINT_TEST = no;
+      PHANTOM = no; # Sensable PHANToM
+      SENSORS_APDS990X = no; # Ambient Light Sensor + Proximity Sensor
+      SENSORS_BH1770 = no; # Ambient Light Sensor + Proximity Sensor
+      SENSORS_LIS3_I2C = no; # Accelerometer
+      SENSORS_LIS3LV02D = no; # Accelerometer - but 3 axis digital
+      SENSORS_TSL2550 = no; # Ambient Light Sensor
+      TI_FPC202 = no; # Texas Instruments FPC202 Dual Port Controller
+      VMWARE_VMCI = no; # VMWare Virtual Machine Communication Interface
+      XILINX_SDFEC = no; # Xilinx Soft Decision Forward Error Correction Driver
+
+      # Cleanup eventually
+      MEDIA_ATTACH = mkForce no;
+      DVB_DYNAMIC_MINORS = mkForce no;
+      USB_AIRSPY = no;
+      USB_HACKRF = no;
+      USB_MSI2500 = no;
+      MEDIA_PLATFORM_DRIVERS = no;
+      VIDEO_TVEEPROM = no;
+      DVB_B2C2_FLEXCOP = no;
+      SMS_SIANO_MDTV = no;
+      CYPRESS_FIRMWARE = no;
+
+      PCIE_CADENCE_PLAT_HOST = no;
+      PCIE_MICROCHIP_HOST = no;
+
+      SMPRO_ERRMON = no;
+      SMPRO_MISC = no;
+      HI6421V600_IRQ = no;
+      VMWARE_BALLOON = no;
+      LATTICE_ECP3_CONFIG = no;
+      HISI_HIKEY_USB = no;
+      OPEN_DICE = no;
+      VCPU_STALL_DETECTOR = no;
+      TPS6594_ESM = no;
+      TPS6594_PFSM = no;
+      MCHP_LAN966X_PCI = no;
+      GP_PCI1XXXX = no;
+      MISC_RP1 = no;
+      SCSI_PPA = no;
+      SCSI_IMM = no;
+      MUX_ADG792A = no;
+      MUX_ADGS1408 = no;
+      MUX_GPIO = no;
+      MUX_MMIO = no;
+      DWC_PCIE_PMU = no;
+      RPMSG_QCOM_GLINK_RPM = no;
+
       SND_SOC_MIKROE_PROTO = no;
 
       RTL8723BS = no;
-
-      GPIB = no;
 
       IDEAPAD_LAPTOP = no;
       MSI_LAPTOP = no;
@@ -792,24 +782,47 @@ in
       SAMSUNG_LAPTOP = no;
       SAMSUNG_Q10 = no;
       ACPI_TOSHIBA = no;
+      PHYLIB_LEDS = no;
+      QCA807X_PHY = no;
 
-      WPCM450_SOC = no;
-      QCOM_PMIC_PDCHARGER_ULOG = no;
-      QCOM_PMIC_GLINK = no;
-      QCOM_PBS = no;
+      MDIO_BITBANG = no;
+      MDIO_BCM_UNIMAC = no;
+      MDIO_HISI_FEMAC = no;
+      MDIO_MVUSB = no;
+      MDIO_MSCC_MIIM = no;
+      MDIO_OCTEON = no;
+      MDIO_IPQ4019 = no;
+      MDIO_IPQ8064 = no;
+      MDIO_REGMAP = mkForce no;
+      MDIO_THUNDER = no;
 
-      # Miscellaneous Drivers
-      NTB = no;
-      FPGA = no;
-      FSI = no;
-      MOST = no;
-      PECI = no;
-      SIOX = no;
-      SLIMBUS = no;
-      MUX_ADG792A = no;
-      MUX_ADGS1408 = no;
-      MUX_GPIO = no;
-      MUX_MMIO = no;
+      PCS_XPCS = no;
+      PCS_LYNX = no;
+      PLIP = no;
+
+      FUJITSU_ES = no;
+
+      SERIAL_SIFIVE = no;
+      SERIAL_XILINX_PS_UART = no;
+      SERIAL_CONEXANT_DIGICOLOR = no;
+      SERIAL_MEN_Z135 = no;
+
+      SERIAL_NONSTANDARD = no;
+      N_GSM = no;
+      NOZOMI = no;
+
+      PRINTER = no;
+      # LP_CONSOLE is not set
+      PPDEV = no;
+
+      IPMB_DEVICE_INTERFACE = no;
+      HW_RANDOM_CCTRNG = no;
+      APPLICOM = no;
+      TELCLOCK = no;
+      XILLYBUS = no;
+      XILLYUSB = no;
+
+      ZL3073X = no;
     };
   }
 ]
