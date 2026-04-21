@@ -346,7 +346,6 @@ in
       INFINIBAND = mkForce no;
       FUSION = mkForce no;
       LIRC = mkForce no;
-      ATA_SFF = mkForce no;
 
       MEDIA_ATTACH = mkForce no;
       DVB_DYNAMIC_MINORS = mkForce no;
