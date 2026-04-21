@@ -181,6 +181,40 @@ in
     patch = null;
     structuredExtraConfig = with lib.kernel; {
 
+      # Filesystems
+      EROFS_FS = module; # containers use this?
+      HFS = module; # Probably might encounter this
+      HFSPLUS_FS = module;
+      PSTORE = module;
+      SQUASHFS = module; # Generally useful
+      JFS_FS = no;
+      XFS_FS = no;
+      GFS2_FS = no;
+      NILFS2_FS = no;
+      F2FS_FS = mkForce no;
+      ORANGEFS_FS = no;
+      ADFS_FS = no;
+      AFFS_FS = no;
+      BEFS_FS = no;
+      BFS_FS = no;
+      EFS_FS = no;
+      CRAMFS = no;
+      VXFS_FS = no;
+      MINIX_FS = no;
+      OMFS_FS = no;
+      HPFS_FS = no;
+      QNX4_FS = no;
+      QNX6_FS = no;
+      ROMFS_FS = no;
+      UFS_FS = no;
+      CEPH_FS = no;
+      CODA_FS = no;
+      AFS_FS = no;
+      "9P_FS" = no;
+      ROOT_NFS = no;
+
+      CONFIG_QFMT_V1 = no;
+
       # Graphics
       AGP = mkForce no;
       DRM_AMDGPU = no;
@@ -321,6 +355,10 @@ in
       WLAN_VENDOR_TI = no;
       WLAN_VENDOR_ZYDAS = no;
       WLAN_VENDOR_QUANTENNA = no;
+      IPW2100 = no;
+      IPW2200 = no;
+      IWL4965 = no;
+      IWL3945 = no;
 
       # Display Interface Bridges
       DRM_I2C_NXP_TDA998X = no;
@@ -332,8 +370,7 @@ in
       PCCARD = no;
       MOXTET = no;
       IIO = no;
-      PATA_ACPI = no;
-      PATA_LEGACY = no;
+
       FIREWIRE = no;
       FIREWIRE_NOSY = no;
 
@@ -405,11 +442,10 @@ in
       SCSI_PPA = no;
       SCSI_IMM = no;
 
+      # Parallel ATA
       PATA_TIMINGS = no;
-
-      #
-      # PATA SFF controllers with BMDMA
-      #
+      PATA_ACPI = no;
+      PATA_LEGACY = no;
       PATA_ALI = no;
       PATA_AMD = no;
       PATA_ARTOP = no;
@@ -444,10 +480,6 @@ in
       PATA_TRIFLEX = no;
       PATA_VIA = no;
       PATA_WINBOND = no;
-
-      #
-      # PIO-only SFF controllers
-      #
       PATA_CMD640_PCI = no;
       PATA_MPIIX = no;
       PATA_NS87410 = no;
@@ -457,7 +489,6 @@ in
       PATA_OF_PLATFORM = no;
       PATA_RZ1000 = no;
       PATA_PARPORT = no;
-
       SBP_TARGET = no;
 
       PHYLIB_LEDS = no;
@@ -478,10 +509,6 @@ in
       PCS_LYNX = no;
       PLIP = no;
 
-      IPW2100 = no;
-      IPW2200 = no;
-      IWL4965 = no;
-      IWL3945 = no;
 
       FUJITSU_ES = no;
 
@@ -578,9 +605,7 @@ in
       MEDIA_TEST_SUPPORT = no;
       USB_GSPCA = no;
       MEDIA_TUNER = no;
-
       TOUCHSCREEN_SUR40 = no;
-
       DVB_AS102 = no;
       DVB_B2C2_FLEXCOP_USB = no;
       # DVB_B2C2_FLEXCOP_USB_DEBUG is not set
@@ -600,7 +625,6 @@ in
       SMS_USB_DRV = no;
       DVB_TTUSB_BUDGET = no;
       DVB_TTUSB_DEC = no;
-
       MEDIA_TUNER_E4000 = no;
       MEDIA_TUNER_FC0011 = no;
       MEDIA_TUNER_FC0012 = no;
@@ -638,15 +662,6 @@ in
       MEDIA_TUNER_XC2028 = no;
       MEDIA_TUNER_XC4000 = no;
       MEDIA_TUNER_XC5000 = no;
-      # end of Customize TV tuners
-
-      #
-      # Customise DVB Frontends
-      #
-
-      #
-      # Multistandard (satellite) frontends
-      #
       DVB_M88DS3103 = no;
       DVB_MXL5XX = no;
       DVB_STB0899 = no;
@@ -655,19 +670,11 @@ in
       DVB_STV0910 = no;
       DVB_STV6110x = no;
       DVB_STV6111 = no;
-
-      #
-      # Multistandard (cable + terrestrial) frontends
-      #
       DVB_DRXK = no;
       DVB_MN88472 = no;
       DVB_MN88473 = no;
       DVB_SI2165 = no;
       DVB_TDA18271C2DD = no;
-
-      #
-      # DVB-S (satellite) frontends
-      #
       DVB_CX24110 = no;
       DVB_CX24116 = no;
       DVB_CX24117 = no;
@@ -695,10 +702,6 @@ in
       DVB_VES1X93 = no;
       DVB_ZL10036 = no;
       DVB_ZL10039 = no;
-
-      #
-      # DVB-T (terrestrial) frontends
-      #
       DVB_AF9013 = no;
       DVB_AS102_FE = no;
       DVB_CX22700 = no;
@@ -727,18 +730,10 @@ in
       DVB_ZD1301_DEMOD = no;
       DVB_ZL10353 = no;
       DVB_CXD2880 = no;
-
-      #
-      # DVB-C (cable) frontends
-      #
       DVB_STV0297 = no;
       DVB_TDA10021 = no;
       DVB_TDA10023 = no;
       DVB_VES1820 = no;
-
-      #
-      # ATSC (North American/Korean Terrestrial/Cable DTV) frontends
-      #
       DVB_AU8522 = no;
       DVB_AU8522_DTV = no;
       DVB_AU8522_V4L = no;
@@ -753,30 +748,14 @@ in
       DVB_OR51211 = no;
       DVB_S5H1409 = no;
       DVB_S5H1411 = no;
-
-      #
-      # ISDB-T (terrestrial) frontends
-      #
       DVB_DIB8000 = no;
       DVB_MB86A20S = no;
       DVB_S921 = no;
-
-      #
-      # ISDB-S (satellite) & ISDB-T (terrestrial) frontends
-      #
       DVB_MN88443X = no;
       DVB_TC90522 = no;
-
-      #
-      # Digital terrestrial only tuners/PLL
-      #
       DVB_PLL = no;
       DVB_TUNER_DIB0070 = no;
       DVB_TUNER_DIB0090 = no;
-
-      #
-      # SEC control devices for DVB-S
-      #
       DVB_A8293 = no;
       DVB_AF9033 = no;
       DVB_ASCOT2E = no;
@@ -796,18 +775,10 @@ in
       DVB_M88RS2000 = no;
       DVB_TDA665x = no;
       DVB_DRX39XYJ = no;
-
-      #
-      # Common Interface (EN50221) controller drivers
-      #
       DVB_CXD2099 = no;
       DVB_SP2 = no;
-      # end of Customise DVB Frontends
-
-      #
-      # Tools to develop new frontends
-      #
       DVB_DUMMY_FE = no;
+
       # end of Media ancillary drivers
       SND_SOC_MIKROE_PROTO = no;
 
@@ -827,6 +798,7 @@ in
       QCOM_PMIC_GLINK = no;
       QCOM_PBS = no;
 
+      # Miscellaneous Drivers
       NTB = no;
       FPGA = no;
       FSI = no;
