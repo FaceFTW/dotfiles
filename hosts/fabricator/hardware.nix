@@ -6,7 +6,6 @@
   ############################################
   # Hardware Configuration
   ############################################
-  boot.kernelPackages = pkgs.lib.mkForce pkgs.linuxPackages_rpi4;
   boot.kernelModules = [ ];
   boot.blacklistedKernelModules = [
     "dw_hdmi"
