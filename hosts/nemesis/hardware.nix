@@ -2,6 +2,7 @@
   inputs,
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -101,6 +102,13 @@
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.nvidiaSettings = true; # accessible via `nvidia-settings`.
 
+  # By default, use Prime offload, unless we use the sync specialization
+  hardware.nvidia.prime.offload.enable = lib.mkIf (config.specialisation != { }) true;
+  hardware.nvidia.prime.offload.enableOffloadCmd = lib.mkIf (config.specialisation != { }) true;
+  specialisation.prime-sync.configuration = {
+    hardware.nvidia.prime.sync.enable = true;
+  };
+
   hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
   hardware.nvidia.prime.nvidiaBusId = "PCI:243:0:0";
 
@@ -114,5 +122,10 @@
   # Experimental and only works on modern Nvidia GPUs (Turing or newer).
   hardware.nvidia.powerManagement.finegrained = false;
 
+  # If I ever experience the bug where the dGPU is stuck in D3Cold,
+  # uncomment this but remember it keeps it always on
+  #   boot.extraModprobeConfig = ''
+  #     options nvidia "NVreg_DynamicPowerManagement=0x00"
+  #   '';
 
 }

@@ -21,7 +21,6 @@
     ./kernel.nix
     ./networking.nix
     ./services.nix
-    ./specialization.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
