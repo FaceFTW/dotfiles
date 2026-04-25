@@ -29,7 +29,6 @@
   # defaultUser.password.value = "";
   defaultUser.password.value = config.sops.secrets.user_passwd.path;
 
-
   ############################################
   # SOPS Settings
   ############################################
