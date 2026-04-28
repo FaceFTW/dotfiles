@@ -366,7 +366,7 @@ in
       GOOGLE_FIRMWARE = lib.mkForce no;
 
       # Parallel ATA
-      PATA_TIMINGS = no;
+      # PATA_TIMINGS = no; # Set Incorrectly
       PATA_ACPI = no;
       PATA_LEGACY = no;
       PATA_ALI = no;
@@ -398,7 +398,7 @@ in
       PATA_SCH = no;
       PATA_SERVERWORKS = no;
       PATA_SIL680 = no;
-      PATA_SIS = no;
+      # PATA_SIS = no; # Set Incorrectly
       PATA_TOSHIBA = no;
       PATA_TRIFLEX = no;
       PATA_VIA = no;
@@ -407,11 +407,7 @@ in
       PATA_MPIIX = no;
       PATA_NS87410 = no;
       PATA_OPTI = no;
-      PATA_PCMCIA = no;
-      PATA_PLATFORM = no;
-      PATA_OF_PLATFORM = no;
       PATA_RZ1000 = no;
-      PATA_PARPORT = no;
       SBP_TARGET = no;
 
       # HID/Input Drivers
@@ -486,18 +482,6 @@ in
       DVB_B2C2_FLEXCOP_USB = no;
       # DVB_B2C2_FLEXCOP_USB_DEBUG is not set
       DVB_USB_V2 = no;
-      DVB_USB_AF9015 = no;
-      DVB_USB_AF9035 = no;
-      DVB_USB_ANYSEE = no;
-      DVB_USB_AU6610 = no;
-      DVB_USB_AZ6007 = no;
-      DVB_USB_CE6230 = no;
-      DVB_USB_DVBSKY = no;
-      DVB_USB_EC168 = no;
-      DVB_USB_GL861 = no;
-      DVB_USB_MXL111SF = no;
-      DVB_USB_RTL28XXU = no;
-      DVB_USB_ZD1301 = no;
       SMS_USB_DRV = no;
       DVB_TTUSB_BUDGET = no;
       DVB_TTUSB_DEC = no;
@@ -654,6 +638,12 @@ in
       DVB_CXD2099 = no;
       DVB_SP2 = no;
       DVB_DUMMY_FE = no;
+      CONFIG_VIDEO_GO7007= no;
+      CONFIG_VIDEO_HDPVR= no;
+      CONFIG_VIDEO_PVRUSB2= no;
+      CONFIG_VIDEO_STK1160= no;
+      CONFIG_VIDEO_AU0828= no;
+      CONFIG_VIDEO_CX231XX= no;
 
       # SoC Drivers (Not on an SOC)
       WPCM450_SOC = no;
@@ -661,6 +651,75 @@ in
       QCOM_PMIC_GLINK = no;
       QCOM_PBS = no;
       SOC_TI = no;
+
+      # x86 Platform Drivers
+      ACERHDF = no; # Acer Aspire One Temp Sensor/Fan
+      ACER_WIRELESS = no;
+      ACER_WMI = no;
+      ACPI_CMPC = no; # Intel Classmate PC from early 20xx
+      ADV_SWBUTTON = no; # Advantech software defined button
+      AMILO_RFKILL = no; # Wifi for Fujitsu-Siemens Amilo Laptops
+      APPLE_GMUX = no; # Gmux on Apple Laptops
+      ASUS_ARMORY = no;
+      ASUS_LAPTOP = no;
+      ASUS_NB_WMI = no;
+      ASUS_TF103C_DOCK = no;
+      ASUS_WIRELESS = no;
+      ASUS_WMI = no;
+      AYANEO_EC = no;
+      BARCO_P50_GPIO = no;
+      COMPAL_LAPTOP = no;
+      DASHARO_ACPI = no;
+      DELL_LAPTOP = no;
+      EEEPC_LAPTOP = no;
+      EEEPC_WMI = no;
+      FUJITSU_LAPTOP = no;
+      FUJITSU_TABLET = no;
+      GIGABYTE_WMI = no;
+      GPD_POCKET_FAN = no;
+      HUAWEI_WMI = no;
+      IDEAPAD_LAPTOP = no;
+      INSPUR_PLATFORM_PROFILE = no;
+      LENOVO_WMI_CAMERA = no;
+      LENOVO_WMI_HOTKEY_UTILITIES = no;
+      LENOVO_WMI_GAMEZONE = no;
+      LENOVO_WMI_TUNING = no;
+      LG_LAPTOP = no;
+      MERAKI_MX100 = no; # Cisco Meraki MX100 Appliance
+      MEEGOPAD_ANX7428 = no;
+      MSI_EC = no; # Userspace access for the MSI platform drivers we disabled
+      MSI_LAPTOP = no;
+      MSI_WMI = no;
+      MSI_WMI_PLATFORM = no;
+      OXP_EC = no; # OneXPlayer/AOKZOE embedded controller
+      PANASONIC_LAPTOP = no;
+      PCENGINES_APU2 = no;
+      PORTWELL_EC = no;
+      REDMI_WMI = no;
+      SAMSUNG_GALAXYBOOK = no;
+      SAMSUNG_LAPTOP = no;
+      SAMSUNG_Q10 = no;
+      SEL3350_PLATFORM = no;
+      SIEMENS_SIMATIC_IPC = no;
+      SILICOM_PLATFORM = no;
+      SONY_LAPTOP = no;
+      SYSTEM76_ACPI = no;
+      THINKPAD_ACPI = no; # IBM/Lenovo Thinkpad Stuff
+      THINKPAD_LMI = no; # Lenovo WMI system management driver
+      TOPSTAR_LAPTOP = no;
+      TOSHIBA_BT_RFKILL = no;
+      TOSHIBA_HAPS = no; # Toshiba Hard Drive Protection Thing
+      TOSHIBA_WMI = no;
+      TUXEDO_NB04_WMI_AB = no;
+      WINMATE_FM07_KEYS = no;
+      WIRELESS_HOTKEY = no; # Wireless button on AMD/HP/Xiaomi Laptops
+      XIAOMI_WMI = no;
+      X86_ANDROID_TABLETS = no;
+      X86_PLATFORM_DRIVERS_DELL = mkForce no;
+      X86_PLATFORM_DRIVERS_HP = mkForce no;
+      X86_PLATFORM_DRIVERS_UNIWILL = no;
+      YOGABOOK = no;
+      YT2_1380 = no; # Lenovo Yoga Tablet 2 1380 fast charging protocol
 
       # Miscellaneous Drivers
       ACCESSIBILITY = mkForce no;
@@ -687,13 +746,15 @@ in
       MCB = no;
       MELLANOX_PLATFORM = no; # Mellanox Drivers
       MEMSTICK = no; # Sony Memory Stick
-      MOST = no;
-      MOXTET = no;
+      MOST = no; # Media Oriented Systems Transport
       NTB = no;
+      OF = mkForce no; # Open Firmware/Device Trees - We use ACPI here
+      PARPORT = no; # Parallel Port - which we don't have
       PCCARD = no; # Predecessor to PCMCIA
       # PECI = no;
       # PPS = no; # Pulse Per Second (GPS-related)
       RAS = mkForce no;
+      REGULATOR = mkForce no; # Generic Voltage/Current Regulators - done via ACPI?
       REMOTEPROC = no;
       RESET_CONTROLLER = no; # GPIO and similar Reset Controllers
       # SSB = no; # Sonics Silicon Backplane - Why dependency???
@@ -723,6 +784,7 @@ in
       KEBA_CP500 = no; # KEBA CP500 System FPGA
       MISC_ALCOR_PCI = no; # Alcor Micro PCI express card readers
       MISC_RTSX_PCI = no; # Realtek PCI express card readers
+      MUX_ADG792A = no; # Multiplexer
       NSM = no; # Nitro Security Module - AWS EC2
       PCI_ENDPOINT_TEST = no;
       PHANTOM = no; # Sensable PHANToM
@@ -756,7 +818,6 @@ in
       VMWARE_BALLOON = no;
       LATTICE_ECP3_CONFIG = no;
       HISI_HIKEY_USB = no;
-      OPEN_DICE = no;
       VCPU_STALL_DETECTOR = no;
       TPS6594_ESM = no;
       TPS6594_PFSM = no;
@@ -765,7 +826,6 @@ in
       MISC_RP1 = no;
       SCSI_PPA = no;
       SCSI_IMM = no;
-      MUX_ADG792A = no;
       MUX_ADGS1408 = no;
       MUX_GPIO = no;
       MUX_MMIO = no;
@@ -776,12 +836,7 @@ in
 
       RTL8723BS = no;
 
-      IDEAPAD_LAPTOP = no;
-      MSI_LAPTOP = no;
-      SAMSUNG_GALAXYBOOK = no;
-      SAMSUNG_LAPTOP = no;
-      SAMSUNG_Q10 = no;
-      ACPI_TOSHIBA = no;
+      #
       PHYLIB_LEDS = no;
       QCA807X_PHY = no;
 
@@ -790,9 +845,6 @@ in
       MDIO_HISI_FEMAC = no;
       MDIO_MVUSB = no;
       MDIO_MSCC_MIIM = no;
-      MDIO_OCTEON = no;
-      MDIO_IPQ4019 = no;
-      MDIO_IPQ8064 = no;
       MDIO_REGMAP = mkForce no;
       MDIO_THUNDER = no;
 
@@ -811,7 +863,6 @@ in
       N_GSM = no;
       NOZOMI = no;
 
-      PRINTER = no;
       # LP_CONSOLE is not set
       PPDEV = no;
 
