@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   ...
 }:
@@ -18,6 +19,14 @@ let
         hyprctl dispatch closewindow address:$address
     fi
   '';
+
+  dunst-check = pkgs.writeShellScriptBin "check-dunst.sh" ''
+    COUNT=$(${pkgs.dunst}/bin/dunstctl count waiting)
+    ENABLED=
+    DISABLED=
+    if [ $COUNT != 0 ]; then DISABLED=" $COUNT"; fi
+    if ${pkgs.dunst}/bin/dunstctl is-paused | grep -q "false" ; then echo $ENABLED; else echo $DISABLED; fi
+  '';
 in
 {
   home-manager.users.face = {
@@ -28,7 +37,7 @@ in
       position = "top";
       margin-top = 2;
       height = 32;
-      width = 2380;
+      width = 2360;
       margin-bottom = 0;
 
       modules-left = [
@@ -45,6 +54,7 @@ in
         "pulseaudio"
         "network"
         "battery"
+        "custom/dunst"
       ];
 
       "hyprland/workspaces" = {
@@ -221,6 +231,12 @@ in
       "tray" = {
         "icon-size" = 28;
         "spacing" = 28;
+      };
+
+      "custom/dunst" = {
+        "exec" = "${lib.getExe dunst-check}";
+        "on-click" = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
+        "restart-interval" = 5;
       };
     };
   };

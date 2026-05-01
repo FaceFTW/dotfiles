@@ -197,7 +197,8 @@ window#waybar {
 #backlight,
 #bluetooth,
 #pulseaudio,
-#memory {
+#memory,
+#dunst {
 	min-width: 14px;
 	margin: 0 4px 0 2px;
 	padding: 0 3px;
