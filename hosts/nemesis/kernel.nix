@@ -21,10 +21,10 @@ let
   };
 
   betterLinuxPackage = pkgs.buildLinux {
-    version = "7.0.1";
+    version = "7.0.3";
     src = pkgs.fetchurl {
-      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.1.tar.xz";
-      hash = "sha256-ssk1o20kmA4R5ZvtPKVY6m1nYZ7ABl+qM1zcC2TYh78=";
+      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.3.tar.xz";
+      hash = "sha256-C+2tv1eIaT3eu8yRPIk/Gpc0mved3ecUTCqAtAGVnxw=";
       # hash = lib.fakeHash;
     };
 

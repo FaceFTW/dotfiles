@@ -30,7 +30,7 @@
     # Hyprland Ecosystem
     hyprnix.url = "github:hyprwm/hyprnix";
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins/6acc0738f298f5efe40a99db2c12449112d65633"; # pin until hyprland 0.55 is released
     hyprland-plugins.inputs.hyprland.follows = "hyprnix/hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
 

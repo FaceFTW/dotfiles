@@ -84,7 +84,7 @@
   packages.networking = true;
   packages.secrets.base = true;
   packages.direnv = true;
-  packages.ghidra = true;
+  # packages.ghidra = true;
   packages.gitFull = true;
   packages.nixTools = true;
   packages.rust = "nightly";
@@ -121,7 +121,7 @@
     pkgs.inkscape
     pkgs.nvidia-offload
     pkgs.imhex
-    pkgs.bottles
+    # pkgs.bottles
     pkgs.flameshot
     pkgs.freecad
 
