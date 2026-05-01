@@ -11,7 +11,6 @@
     ./desktop/common/hypr.nix
     # ./desktop/common/ly.nix
     ./desktop/common/silentsddm.nix
-    ./desktop/common/swaync.nix
     ./desktop/common/vicinae.nix
     # THEMES
     # ./themes/deep-blue

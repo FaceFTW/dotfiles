@@ -68,7 +68,6 @@ in
       "${hyprctl} dispatch workspace 1 &"
 
       "${pkgs.hyprpaper}/bin/hyprpaper &"
-      "${pkgs.swaynotificationcenter}/bin/swaync --config ~/.config/swaync/config.json &"
       "${pkgs.vicinae}/bin/vicinae server &"
 
       "sleep 5; $hyprscripts/check_setup_warnings.sh &"

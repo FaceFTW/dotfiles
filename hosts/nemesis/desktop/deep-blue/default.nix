@@ -5,6 +5,7 @@
 {
   imports = [
     ./ashell.nix
+    ./swaync.nix
   ];
   #######################################################
   # Hyprland
@@ -31,6 +32,7 @@
 
     settings.exec-once = [
       "sleep 1; ${pkgs.ashell}/bin/ashell"
+      "${pkgs.swaynotificationcenter}/bin/swaync --config ~/.config/swaync/config.json &"
     ];
   };
 
