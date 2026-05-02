@@ -102,30 +102,14 @@
   };
 
   #######################################################
-  # ashell
-  #######################################################
-
-  home-manager.users.face.programs.ashell.settings = {
-    appearance.primary_color = "#3686fd";
-    appearance.background_color = "#2b2b2b";
-    appearance.workspace_colors = [
-      "#3686fd"
-      # "#fa6982"
-      # "#fafa00"
-      # "#96f06e"
-      # "#6ec8fa"
-      # "#dc6ea5"
-    ];
-    appearance.special_workspace_colors = [ "#fd3b3b" ];
-  };
-
-  #######################################################
   # silentSDDM
   #######################################################
   programs.silentSDDM = {
     backgrounds.main = ./wallpapers/fraud-3-wallpaper.png;
-    settings."LoginScreen".background = "./fraud-3-wallpaper.png";
-    settings."LockScreen".background = "./fraud-3-wallpaper.png";
+    settings."LoginScreen".background = "fraud-3-wallpaper.png";
+    settings."LockScreen".background = "fraud-3-wallpaper.png";
+    settings."LoginScreen".blur = 75;
+
   };
 
   #######################################################
@@ -136,4 +120,5 @@
     ./wallpapers/fraud-2-wallpaper.png
     ./wallpapers/fraud-3-wallpaper.png
   ];
+  boot.loader.limine.style.interface.branding = "ENTERING LAYER 8 - FRAUD";
 }

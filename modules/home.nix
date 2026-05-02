@@ -140,6 +140,24 @@ in
             "$@"
         }
 
+        function rebuild-nix-nextboot() {
+          ### PARAMETERS
+          ### END PARAMETERS
+
+          hostname=$(cat /etc/hostname)
+          case "$hostname" in
+          manifold-wsl) hostname="manifold" ;;
+          portal-wsl) hostname="portal" ;;
+          esac
+
+          sudo nixos-rebuild boot \
+            --print-build-logs \
+            --keep-going \
+            --no-reexec \
+            --flake "/home/face/.config/dotfiles#$hostname" \
+            "$@"
+        }
+
         function deploy-nix() {
           ### PARAMETERS
           host=$1
@@ -147,6 +165,22 @@ in
           shift 2
           ### END PARAMETERS
           nixos-rebuild switch \
+            --print-build-logs \
+            --keep-going \
+            --no-reexec \
+            --flake "/home/face/.config/dotfiles#$host" \
+            --sudo --ask-sudo-password \
+            --target-host "face@$addr" \
+            "$@"
+        }
+
+        function deploy-nix-nextboot() {
+          ### PARAMETERS
+          host=$1
+          addr=$2
+          shift 2
+          ### END PARAMETERS
+          nixos-rebuild boot \
             --print-build-logs \
             --keep-going \
             --no-reexec \
