@@ -198,7 +198,7 @@ window#waybar {
 #bluetooth,
 #pulseaudio,
 #memory,
-#dunst {
+#custom-dunst {
 	min-width: 14px;
 	margin: 0 4px 0 2px;
 	padding: 0 3px;

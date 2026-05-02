@@ -8,7 +8,7 @@
       width = "(100, 300)";
       height = "(0, 300)";
       origin = "top-right";
-      offset = "(5, 15)";
+      offset = "(15, 15)";
       scale = 0;
       notification_limit = 10;
 
@@ -89,25 +89,23 @@
       force_xwayland = false;
       force_xinerama = false;
 
-      mouse_left_click = "close_current";
+      mouse_left_click = "context";
       mouse_middle_click = "do_action, close_current";
-      mouse_right_click = "close_all";
+      mouse_right_click = "close";
     };
 
     settings.urgency_low = {
       # IMPORTANT: colors have to be defined in quotation marks.
       # Otherwise the "#" and following would be interpreted as a comment.
-      background = "#222222";
-      foreground = "#ffffff";
+      background = "#2c2525";
+      foreground = "#e6d9db";
       highlight = "#722ae6, #e4b5cb";
       timeout = 20;
-      # Icon for notifications with low urgency
-      #default_icon = dialog-information
     };
 
     settings.urgency_normal = {
-      background = "#222222";
-      foreground = "#ffffff";
+      background = "#2c2525";
+      foreground = "#e6d9db";
       frame_color = "#5e5086";
       highlight = "#722ae6, #e4b5cb";
       timeout = 20;
@@ -116,8 +114,8 @@
       default_icon = "dialog-information";
     };
     settings.urgency_critical = {
-      background = "#222222";
-      foreground = "#ffffff";
+      background = "#2c2525";
+      foreground = "#e6d9db";
       frame_color = "#d54e53";
       highlight = "#d54e53, #f0f0f0";
       timeout = 0;

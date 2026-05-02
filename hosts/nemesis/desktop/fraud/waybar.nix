@@ -37,7 +37,7 @@ in
       position = "top";
       margin-top = 2;
       height = 32;
-      width = 2360;
+      width = 2380;
       margin-bottom = 0;
 
       modules-left = [
@@ -235,7 +235,8 @@ in
 
       "custom/dunst" = {
         "exec" = "${lib.getExe dunst-check}";
-        "on-click" = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
+        "on-click" = "${pkgs.dunst}/bin/dunstctl history-pop";
+        "on-right-click" = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
         "restart-interval" = 5;
       };
     };
