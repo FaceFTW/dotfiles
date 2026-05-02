@@ -23,6 +23,7 @@
 			"delay_ms": 1000
 		}
 	},
+	"git_panel": { "dock": "left" },
 	"hard_tabs": true,
 	"icon_theme": "VSCode Icons for Zed (Dark)",
 	"languages": {
@@ -33,6 +34,9 @@
 			"preferred_line_length": 80,
 			"hard_tabs": false,
 			"tab_size": 2
+		},
+		"JSON": {
+			"format_on_save": "off"
 		}
 	},
 	"linked_edits": true,
@@ -58,7 +62,10 @@
 		"enabled": false
 	},
 	"project_panel": {
-		"entry_spacing": "standard"
+		"entry_spacing": "standard",
+		"file_icons": true,
+		"folder_icons": true,
+		"dock": "left"
 	},
 	"relative_line_numbers": "disabled",
 	"show_edit_predictions": true,

@@ -176,6 +176,13 @@ let mapleader = '\'
 
 tnoremap <Esc> <C-\><C-n>
 noremap  <Leader>p "+p
+vnoremap  <Leader>p "+p
+noremap  <Leader>y "+y
+vnoremap  <Leader>y "+y
+noremap  <Leader>p "+x
+vnoremap  <Leader>p "+x
+noremap  <Leader>a ggVG
+vnoremap  <Leader>a ggVG
 inoremap <M-F> <C-o>:Neoformat<CR>
 nnoremap <M-F> :Neoformat<CR>
 
