@@ -12,7 +12,7 @@ in
     # linux-surface patches
     ############################################
     name = "microsoft-surface-patches-linux-${version}";
-    patch = ./surface-kernel-patches-v7.0.patch;
+    patch = ./surface-kernel-patches-v7.0.5.patch;
     structuredExtraConfig = with lib.kernel; {
       ##
       ## Surface Aggregator Module
@@ -181,11 +181,15 @@ in
     patch = null;
     structuredExtraConfig = with lib.kernel; {
 
+      # Vulnerability Mitigations
+      AF_RXRPC = no; # Dirty Frag
+      # 7.0.5 Has the ESP patch
+
       # Filesystems
       EROFS_FS = module; # containers use this?
       HFS = module; # Probably might encounter this
       HFSPLUS_FS = module;
-      PSTORE = module;
+      # PSTORE = module; # Set upstream
       SQUASHFS = module; # Generally useful
       JFS_FS = no;
       XFS_FS = no;
@@ -638,12 +642,12 @@ in
       DVB_CXD2099 = no;
       DVB_SP2 = no;
       DVB_DUMMY_FE = no;
-      CONFIG_VIDEO_GO7007= no;
-      CONFIG_VIDEO_HDPVR= no;
-      CONFIG_VIDEO_PVRUSB2= no;
-      CONFIG_VIDEO_STK1160= no;
-      CONFIG_VIDEO_AU0828= no;
-      CONFIG_VIDEO_CX231XX= no;
+      CONFIG_VIDEO_GO7007 = no;
+      CONFIG_VIDEO_HDPVR = no;
+      CONFIG_VIDEO_PVRUSB2 = no;
+      CONFIG_VIDEO_STK1160 = no;
+      CONFIG_VIDEO_AU0828 = no;
+      CONFIG_VIDEO_CX231XX = no;
 
       # SoC Drivers (Not on an SOC)
       WPCM450_SOC = no;
