@@ -3,7 +3,6 @@
   inputs = {
     # Core NixOS
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11-small";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
@@ -43,23 +42,15 @@
     silentSDDM.url = "github:uiriansan/SilentSDDM";
     silentSDDM.inputs.nixpkgs.follows = "nixpkgs";
 
-    # ashell
-    ashell.url = "github:MalpenZibo/ashell";
-    ashell.inputs.nixpkgs.follows = "nixpkgs";
-
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
     vicinae.inputs.nixpkgs.follows = "nixpkgs";
     vicinae-extensions.url = "github:vicinaehq/extensions";
     vicinae-extensions.inputs.nixpkgs.follows = "nixpkgs";
-
-    # VS Code Extensions Mirror
-    # nix4vscode.url = "github:nix-community/nix4vscode";
-    # nix4vscode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    { nixpkgs, ashell, ... }@inputs:
+    { nixpkgs, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       ############################################
@@ -85,10 +76,6 @@
           nixpkgs.overlays = [
             inputs.fenix.overlays.default
             inputs.vicinae.overlays.default
-            # inputs.nix4vscode.overlays.default
-            (final: prev: {
-              ashell = inputs.ashell.packages.${prev.stdenv.hostPlatform.system}.default;
-            })
             inputs.hyprnix.overlays.default
             inputs.hyprland-plugins.overlays.default
           ]
@@ -183,3 +170,22 @@
       );
     };
 }
+
+#######################################
+# OLD FRAGMENTS THAT I MAY NEED AGAIN
+#######################################
+# nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11-small";
+#
+# ashell - used in deep-blue
+# ashell.url = "github:MalpenZibo/ashell";
+# ashell.inputs.nixpkgs.follows = "nixpkgs";
+#
+# VS Code Extensions Mirror
+# nix4vscode.url = "github:nix-community/nix4vscode";
+# nix4vscode.inputs.nixpkgs.follows = "nixpkgs";
+#
+# overlay vvv
+# inputs.nix4vscode.overlays.default
+# (final: prev: {
+#   ashell = inputs.ashell.packages.${prev.stdenv.hostPlatform.system}.default;
+# })
