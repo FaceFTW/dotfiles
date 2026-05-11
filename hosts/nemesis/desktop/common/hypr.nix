@@ -143,8 +143,7 @@ in
 
     settings.master.new_status = "master";
 
-    settings.misc.vfr = true;
-    settings.misc.force_default_wallpaper = 0;
+    settings.misc.force_default_wallpaper = -1;
     settings.misc.disable_hyprland_logo = true;
     settings.misc.disable_splash_rendering = true;
     settings.misc.focus_on_activate = true;
@@ -191,9 +190,6 @@ in
       # Window Behaivior
       "SUPER, X, Close Active Window, killactive"
       "SUPER, Q, Toggle Fullscreen, fullscreenstate, 3 0"
-
-      "SUPER, B, Toggle Pseudo Layout, pseudo" # dwindle
-      "SUPER, N, Toggle Split Layout, togglesplit" # dwindle
 
       "SUPER ALT, G, Toggle Windowgroup, togglegroup"
       "ALT, TAB, Tab trough Windowgroup, changegroupactive, f"
@@ -304,9 +300,9 @@ in
       "match:title flameshot, float on"
       "match:title flameshot, center on"
 
-      "match:class firefox, hyprbars:no_bar on"
-      "match:class code, hyprbars:no_bar on"
-      "match:class steam, hyprbars:no_bar on"
+      # "match:class firefox, hyprbars:no_bar on"
+      # "match:class code, hyprbars:no_bar on"
+      # "match:class steam, hyprbars:no_bar on"
 
       "match:class cs2, immediate yes"
     ];
