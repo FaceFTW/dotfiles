@@ -1,17 +1,7 @@
 {
   pkgs,
-  lib,
   ...
 }:
-let
-  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-  systemctl = "${pkgs.systemd}/bin/systemctl";
-
-  mkFloatRule = class: [
-    "match:class ${class}, float on"
-    "match:class ${class}, center on"
-  ];
-in
 {
   programs.hyprland.enable = true;
   programs.hyprland.package = pkgs.hyprland;
@@ -35,6 +25,8 @@ in
       # pkgs.hyprlandPlugins.csgo-vulkan-fix
     ];
     systemd.enable = false;
+
+    # Config is set per theme
   };
 
   #######################################################

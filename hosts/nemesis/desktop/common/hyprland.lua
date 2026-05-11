@@ -51,12 +51,12 @@ end)
 hl.config({
 	general = {
 		gaps_in          = 5,
-		gaps_out         = 20,
+		gaps_out         = 10,
 
 		border_size      = 2,
 
 		col              = {
-			-- active_border   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
+			active_border   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
 			inactive_border = "XXX_COL_INACTIVE_BORDER_XXX",
 		},
 
@@ -70,7 +70,7 @@ hl.config({
 
 	group = {
 		col      = {
-			-- border_active   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
+			border_active   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
 			border_inactive = "XXX_COL_INACTIVE_BORDER_XXX",
 		},
 
@@ -212,7 +212,6 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(brightnessctl .. " -e4 -n2 set 
 ---- WINDOW RULES ----
 ----------------------
 hl.window_rule({
-	-- Fix some dragging issues with XWayland
 	name     = "fix-xwayland-drags",
 	match    = {
 		class      = "^$",
@@ -227,7 +226,6 @@ hl.window_rule({
 })
 
 local suppressMaximizeRule = hl.window_rule({
-	-- Ignore maximize requests from all apps. You'll probably like this.
 	name           = "suppress-maximize-events",
 	match          = { class = ".*" },
 
@@ -255,7 +253,7 @@ mkFloatRuleClass("hyprpwcenter")
 hl.window_rule({ match = { title = "flameshot" }, float = true, center = true })
 
 for i = 1, 6 do
-	hl.workspace_rule({ workspace = "i", persistent = true })
+	hl.workspace_rule({ workspace = tostring(i), persistent = true })
 end
 hl.workspace_rule({ workspace = "1", default = true })
 

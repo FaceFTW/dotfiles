@@ -180,10 +180,8 @@ in
     name = "98-dont-build-unused-drivers";
     patch = null;
     structuredExtraConfig = with lib.kernel; {
-
       # Vulnerability Mitigations
-      AF_RXRPC = no; # Dirty Frag
-      # 7.0.5 Has the ESP patch
+      # None yet
 
       # Filesystems
       EROFS_FS = module; # containers use this?

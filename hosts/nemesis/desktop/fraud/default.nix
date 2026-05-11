@@ -106,7 +106,7 @@ in
       #
       [
         "\"XXX_COL_ACTIVE_BORDER_XXX\""
-        "\"rgba(fa6982aa), rgba(fafa00aa), rgba(96f06eaa), rgba(6ec8faaa), rgba(dc6ea5aa)\""
+        "\"rgba(fa6982aa)\", \"rgba(fafa00aa)\", \"rgba(96f06eaa)\", \"rgba(6ec8faaa)\", \"rgba(dc6ea5aa)\""
       ]
       [
         "XXX_COL_INACTIVE_BORDER_XXX"
