@@ -13,12 +13,12 @@ hl.monitor({
 ---- GENERAL ALIASES ----
 -------------------------
 --- These are replaced when processed in the nix store
-local terminal = "${pkgs.alacritty}/bin/alacritty";
-local fileManager = "${pkgs.thunar}/bin/thunar";
-local menu = "${pkgs.vicinae}/bin/vicinae toggle";
+local terminal = "XXX_ALACRITTY_XXX";
+local fileManager = "XXX_THUNAR_XXX";
+local menu = "XXX_VICINAE_XXX";
 local clipboard_hist = "XXX_CLIPBOARD_HIST_XXX";
-local browser = "hyprctl dispatch exec \"firefox --ozone-platform=wayland --enable-features=useozoneplatform\"";
-local editor = "${pkgs.vimCustom}/bin/vim";
+local browser = "XXX_FIREFOX_XXX";
+local editor = "XXX_ZED_XXX";
 local screenshot = "XXX_SCREENSHOT_XXX";
 local wpctl = "XXX_WIREPLUMBER_XXX"
 local brightnessctl = "XXX_BRIGHTNESSCTL_XXX";
@@ -37,11 +37,11 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("XXX_START_HYPRPAPER_XXX")
 	hl.exec_cmd("XXX_START_VICINAE_XXX")
 
-    hl.exec_cmd("sleep 5; $hyprscripts/check_setup_warnings.sh &")
+	hl.exec_cmd("sleep 5; $hyprscripts/check_setup_warnings.sh &")
 
-    hl.exec_cmd("XXX_START_BITWARDEN_DESKTOP_XXX")
+	hl.exec_cmd("XXX_START_BITWARDEN_DESKTOP_XXX")
 
-    --- XXX_EXTRA_STARTUP_XXX
+	--- XXX_EXTRA_STARTUP_XXX
 end)
 
 
@@ -56,7 +56,7 @@ hl.config({
 		border_size      = 2,
 
 		col              = {
-			active_border   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
+			-- active_border   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
 			inactive_border = "XXX_COL_INACTIVE_BORDER_XXX",
 		},
 
@@ -69,26 +69,19 @@ hl.config({
 	},
 
 	group = {
-		scrolling = false,
-		gaps_in   = 10,
-		gaps_out  = 3,
-
-		col       = {
-			active_border   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
-			inactive_border = "XXX_COL_INACTIVE_BORDER_XXX",
+		col      = {
+			-- border_active   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
+			border_inactive = "XXX_COL_INACTIVE_BORDER_XXX",
 		},
 
-		groupbar  = {
+		groupbar = {
+			scrolling         = false,
 			font_size         = 14,
 			height            = 22,
 			gradients         = true,
 			gradient_rounding = 10,
 			indicator_height  = 0,
 			text_color        = "XXX_GROUPBAR_TEXT_COLOR_XXX",
-			col               = {
-				active_border   = { colors = { "XXX_COL_ACTIVE_BORDER_XXX" } },
-				inactive_border = "XXX_COL_INACTIVE_BORDER_XXX",
-			},
 		}
 	},
 
@@ -162,11 +155,11 @@ hl.bind("SUPER + V", hl.dsp.exec_cmd(clipboard_hist))
 
 --- Window Behavior
 hl.bind("SUPER + X", hl.dsp.window.kill())
-hl.bind("SUPER + Q", hl.dsp.window.fullscreen_state(3, 0))
-hl.bind("ALT + F4", hl.dsp.window.signal(9))
+hl.bind("SUPER + Q", hl.dsp.window.fullscreen_state({ internal = 3, client = 0 }))
+hl.bind("ALT + F4", hl.dsp.window.signal({ signal = 9 }))
 
 hl.bind("SUPER + ALT+ G", hl.dsp.group.toggle())
-hl.bind("ALT + TAB", hl.dsp.group.next)
+hl.bind("ALT + TAB", hl.dsp.group.next())
 
 hl.bind("SUPER + F", hl.dsp.window.float({ action = "toggle" }))
 
@@ -182,14 +175,14 @@ hl.bind("SUPER + SHIFT + up", hl.dsp.focus({ direction = "up" }))
 hl.bind("SUPER + SHIFT + down", hl.dsp.focus({ direction = "down" }))
 
 hl.bind("SUPER + ALT + left", hl.dsp.window.resize({ x = -10, y = 0 }))
-hl.bind("SUPER + ALT + right", hl.dsp.focus({ x = 10, y = 0 }))
-hl.bind("SUPER + ALT + up", hl.dsp.focus({ x = 0, y = 10 }))
-hl.bind("SUPER + ALT + down", hl.dsp.focus({ x = 0, y = -10 }))
+hl.bind("SUPER + ALT + right", hl.dsp.window.resize({ x = 10, y = 0 }))
+hl.bind("SUPER + ALT + up", hl.dsp.window.resize({ x = 0, y = 10 }))
+hl.bind("SUPER + ALT + down", hl.dsp.window.resize({ x = 0, y = -10 }))
 
 hl.bind("SUPER + SHIFT + ALT + left", hl.dsp.window.resize({ x = 50, y = 0, relative = true }))
-hl.bind("SUPER + SHIFT + ALT + right", hl.dsp.focus({ x = 200, y = 0, relative = true }))
-hl.bind("SUPER + SHIFT + ALT + up", hl.dsp.focus({ x = 0, y = 200, relative = true }))
-hl.bind("SUPER + SHIFT + ALT + down", hl.dsp.focus({ x = 0, y = 50, relative = true }))
+hl.bind("SUPER + SHIFT + ALT + right", hl.dsp.window.resize({ x = 200, y = 0, relative = true }))
+hl.bind("SUPER + SHIFT + ALT + up", hl.dsp.window.resize({ x = 0, y = 200, relative = true }))
+hl.bind("SUPER + SHIFT + ALT + down", hl.dsp.window.resize({ x = 0, y = 50, relative = true }))
 
 for i = 1, 10 do
 	local key = i % 10 -- 10 maps to key 0

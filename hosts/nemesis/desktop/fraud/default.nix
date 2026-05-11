@@ -1,7 +1,20 @@
 {
   pkgs,
+  lib,
   ...
 }:
+let
+  replaceByPairs =
+    with lib;
+    xs: str:
+    let
+      keys = map (x: elemAt x 0) xs;
+      vals = map (x: elemAt x 1) xs;
+    in
+    replaceStrings keys vals str;
+  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+  systemctl = "${pkgs.systemd}/bin/systemctl";
+in
 {
   imports = [
     ./waybar.nix
@@ -11,31 +24,100 @@
   #######################################################
   # Hyprland
   #######################################################
-  home-manager.users.face.wayland.windowManager.hyprland = {
-    settings.general = {
-      "col.active_border" = "rgba(fa6982aa) rgba(fafa00aa) rgba(96f06eaa) rgba(6ec8faaa) rgba(dc6ea5aa)";
-      "col.inactive_border" = "rgba(404040aa)";
-    };
+  home-manager.users.face.home.file.".config/hypr/hyprland.lua".text =
+    with lib;
+    replaceByPairs [
+      [
+        "XXX_ALACRITTY_XXX"
+        "${pkgs.alacritty}/bin/alacritty"
+      ]
+      [
+        "XXX_THUNAR_XXX"
+        "${pkgs.thunar}/bin/thunar"
+      ]
+      [
+        "XXX_VICINAE_XXX"
+        "${pkgs.vicinae}/bin/vicinae toggle"
+      ]
+      [
+        "XXX_CLIPBOARD_HIST_XXX"
+        "${pkgs.thunar}/bin/thunar"
+      ]
+      [
+        "XXX_FIREFOX_XXX"
+        "$firefox --ozone-platform=wayland --enable-features=useozoneplatform"
+      ]
+      [
+        "XXX_ZED_XXX"
+        "${pkgs.zed-editor}/bin/zeditor"
+      ]
+      [
+        "XXX_SCREENSHOT_XXX"
+        "${pkgs.flameshot}/bin/flameshot gui"
+      ]
+      [
+        "XXX_WIREPLUMBER_XXX"
+        "${pkgs.wireplumber}/bin/wpctl"
+      ]
+      [
+        "XXX_BRIGHTNESSCTL_XXX"
+        "${pkgs.brightnessctl}/bin/brightnessctl"
+      ]
+      [
+        "XXX_HYPRLOCK_XXX"
+        "${pkgs.hyprlock}/bin/hyprlock"
+      ]
+      [
+        "XXX_START_HYPRPOLKITAGENT_XXX"
+        "${systemctl} --user start hyprpolkitagent &"
+      ]
+      [
+        "XXX_START_HYPRCTL_NUMLOCK_XXX"
+        "${hyprctl} keyword input:kb_numlock true && date '+%Y-%m-%d %H:%M:%S' > /tmp/numlock-set"
+      ]
+      [
+        "XXX_START_HYPRCTL_SETCURSOR_XXX"
+        "${hyprctl} setcursor rose-pine-hyprcursor 36"
+      ]
+      [
+        "XXX_START_HYPRCTL_DISPATCH_XXX"
+        "${hyprctl} dispatch workspace 1 &"
+      ]
+      [
+        "XXX_START_HYPRPAPER_XXX"
+        "${pkgs.hyprpaper}/bin/hyprpaper &"
+      ]
+      [
+        "XXX_START_VICINAE_XXX"
+        "${pkgs.vicinae}/bin/vicinae server &"
+      ]
+      [
+        "XXX_START_BITWARDEN_DESKTOP_XXX"
+        "${pkgs.bitwarden-desktop}/bin/bitwarden &"
+      ]
+      [
+        "--- XXX_EXTRA_STARTUP_XXX"
+        ''
+          hl.exec_cmd("sleep 1; ${pkgs.waybar}/bin/waybar &")
+          hl.exec_cmd("sleep 10; ${systemctl} --user start syncthing")
+        ''
+      ]
+      # TODO probably a hypr bug
+      #
+      [
+        "\"XXX_COL_ACTIVE_BORDER_XXX\""
+        "\"rgba(fa6982aa), rgba(fafa00aa), rgba(96f06eaa), rgba(6ec8faaa), rgba(dc6ea5aa)\""
+      ]
+      [
+        "XXX_COL_INACTIVE_BORDER_XXX"
+        "rgba(404040aa)"
+      ]
+      [
+        "XXX_GROUPBAR_TEXT_COLOR_XXX"
+        "rgba(ffffffaa)"
+      ]
 
-    settings.group = {
-      "col.border_active" = "rgba(fa6982aa) rgba(fafa00aa) rgba(96f06eaa) rgba(6ec8faaa) rgba(dc6ea5aa)";
-      "col.border_inactive" = "rgba(404040aa)";
-
-      groupbar.font_size = 14;
-      groupbar.height = 22;
-      groupbar.gradients = true;
-      groupbar.gradient_rounding = 10;
-      groupbar.indicator_height = 0;
-      groupbar.text_color = "rgba(ffffffaa)";
-      groupbar."col.active" =
-        "rgba(fa6982aa) rgba(fafa00aa) rgba(96f06eaa) rgba(6ec8faaa) rgba(dc6ea5aa)";
-      groupbar."col.inactive" = "rgba(404040aa)";
-    };
-
-    settings.exec-once = [
-      "sleep 1; ${pkgs.waybar}/bin/waybar &"
-    ];
-  };
+    ] (unsafeDiscardStringContext (readFile ../common/hyprland.lua));
 
   #######################################################
   # Hyprpaper
