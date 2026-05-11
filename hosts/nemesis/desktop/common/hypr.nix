@@ -138,7 +138,7 @@ in
       "workspacesOut, 1, 1.94, almostLinear, fade"
     ];
 
-    settings.dwindle.pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    # settings.dwindle.pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
     settings.dwindle.preserve_split = true; # You probably want this
 
     settings.master.new_status = "master";
