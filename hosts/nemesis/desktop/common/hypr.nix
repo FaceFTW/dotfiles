@@ -31,7 +31,7 @@ in
     package = null;
     portalPackage = null;
     plugins = [
-      pkgs.hyprlandPlugins.hyprbars
+      # pkgs.hyprlandPlugins.hyprbars
       # pkgs.hyprlandPlugins.csgo-vulkan-fix
     ];
     systemd.enable = false;

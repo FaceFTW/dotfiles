@@ -43,6 +43,7 @@ in
         pkgs.zed-editor
         pkgs.openssl
         pkgs.package-version-server
+        pkgs.lua-language-server
       ];
     })
     (mkIf packages.zed.wslFixes {

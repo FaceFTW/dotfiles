@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
 
     # Home Manager
     home-manager.url = "github:nix-community/home-manager";
@@ -29,7 +30,7 @@
     # Hyprland Ecosystem
     hyprnix.url = "github:hyprwm/hyprnix";
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins/6acc0738f298f5efe40a99db2c12449112d65633"; # pin until hyprland 0.55 is released
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins"; # pin until hyprland 0.55 is released
     hyprland-plugins.inputs.hyprland.follows = "hyprnix/hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -78,6 +79,12 @@
             inputs.vicinae.overlays.default
             inputs.hyprnix.overlays.default
             inputs.hyprland-plugins.overlays.default
+            (final: prev: {
+              hyprland = prev.hyprland.override {
+                hyprgraphics = inputs.hyprnix.packages.${prev.stdenv.hostPlatform.system}.hyprgraphics;
+              };
+
+            })
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);
