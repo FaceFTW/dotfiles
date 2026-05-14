@@ -4,6 +4,14 @@
   ...
 }:
 {
+  imports = [
+    ./services/acme.nix
+    ./services/garage.nix
+    ./services/linkwarden.nix
+    ./services/mirror_jobs.nix
+    ./services/nginx.nix
+  ];
+
   services.smartd.enable = true;
   services.smartd.defaults.monitored = "-a -m <nomailer> -M exec ${pkgs.smartd-notif-event}/bin/smartd-notif-event -s (S/../.././03|L/../(2|4)/./04)";
 
@@ -92,213 +100,10 @@
   };
 
   ############################################
-  # Linkwarden
-  ############################################
-  systemUser.linkwarden.home = "/mnt/motorway/var/linkwarden";
-
-  services.linkwarden = {
-    enable = true;
-    user = "linkwarden";
-    group = "linkwarden";
-
-    port = 3015;
-    openFirewall = true;
-
-    cacheLocation = "/mnt/motorway/var/linkwarden/cache";
-    storageLocation = "/mnt/motorway/var/linkwarden/data";
-    secretFiles.NEXTAUTH_SECRET = "/run/secrets/linkwarden_nextauth_secret";
-    secretFiles.POSTGRES_PASSWORD = "/run/secrets/linkwarden_postgres_password";
-    enableRegistration = true;
-  };
-
-  ############################################
   # Postgres (Shared)
   ############################################
   systemUser.postgres.home = "/mnt/motorway/var/postgres";
   services.postgresql.dataDir = "/mnt/motorway/var/postgres";
   services.postgresql.settings.max_connections = 200;
-
-  ############################################
-  # Nix Binary Cache (S3 via Garage)
-  ############################################
-  systemUser.garage.home = "/mnt/motorway/var/garage";
-  services.garage.enable = true;
-  services.garage.settings = {
-    data_dir = "/mnt/motorway/var/garage/data";
-    metadata_dir = "/mnt/motorway/var/garage/metadata";
-
-    replication_factor = 1;
-
-    rpc_bind_addr = "[::]:3901";
-    rpc_public_addr = "localhost:3901";
-    rpc_secret_file = "/run/secrets/garage_rpc_secret";
-
-    s3_api.s3_region = "archiver";
-    s3_api.api_bind_addr = "[::]:3900";
-    s3_api.root_domain = ".s3.archiver.local";
-
-    s3_web.bind_addr = "[::]:3902";
-    s3_web.root_domain = ".s3-gui.archiver.local";
-    index = "index.html";
-
-    k2v_api.api_bind_addr = "[::]:3904";
-
-    admin.api_bind_addr = "[::]:3903";
-    admin.admin_token_file = "/run/secrets/garage_admin_token";
-    admin.metrics_token_file = "/run/secrets/garage_metrics_token";
-  };
-  services.garage.package = pkgs.garage_2;
-
-  ############################################
-  # Nginx
-  ############################################
-  services.nginx = {
-    enable = true;
-
-    upstreams.immich.servers."localhost:2283" = { };
-    upstreams.syncthing-gui.servers."localhost:8384" = { };
-    upstreams.linkwarden.servers."localhost:3015" = { };
-    upstreams.backrest.servers."127.0.0.1:9898" = { };
-
-    virtualHosts.immich = {
-      serverName = "archiver";
-      listen = [
-        {
-          addr = "0.0.0.0";
-          port = 2284;
-        }
-        {
-          addr = "[::0]";
-          port = 2284;
-        }
-      ];
-
-      extraConfig = "client_max_body_size 1g;";
-      locations."/".proxyPass = "http://immich";
-      locations."/".recommendedProxySettings = true;
-      locations."/".proxyWebsockets = true;
-    };
-
-    virtualHosts.syncthing-gui = {
-      serverName = "archiver";
-      listen = [
-        {
-          addr = "0.0.0.0";
-          port = 8385;
-        }
-        {
-          addr = "[::0]";
-          port = 8385;
-        }
-      ];
-
-      extraConfig = ''
-        proxy_set_header Host localhost; # https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Server $hostname;
-      '';
-      locations."/".proxyPass = "http://syncthing-gui";
-    };
-
-    virtualHosts.linkwarden = {
-      serverName = "archiver";
-      listen = [
-        {
-          addr = "0.0.0.0";
-          port = 3014;
-        }
-        {
-          addr = "[::0]";
-          port = 3014;
-        }
-      ];
-
-      locations."/".proxyPass = "http://linkwarden";
-      locations."/".recommendedProxySettings = true;
-      locations."/".proxyWebsockets = true;
-    };
-
-    virtualHosts.backrest = {
-      serverName = "archiver";
-      listen = [
-        {
-          addr = "0.0.0.0";
-          port = 9897;
-        }
-        {
-          addr = "[::0]";
-          port = 9897;
-        }
-      ];
-
-      locations."/".proxyPass = "http://backrest";
-      locations."/".recommendedProxySettings = true;
-      locations."/".proxyWebsockets = true;
-    };
-  };
-
-  ############################################
-  # Mirror Jobs
-  ############################################
-  servicesCustom.mirror.archive-freeman = {
-    notification-title = "Archiver - Freeman Mirror";
-    cron = "Sun *-*-* 09:00:00";
-    source = "/mnt/archive";
-    destination = "/mnt/freeman";
-    mounts = [
-      "mnt-archive.mount"
-      "mnt-freeman.mount"
-    ];
-    exclude = [
-      "/SteamBackups"
-      "/Misc_Large"
-      "/SteamLibrary"
-    ];
-    filters = [
-      "protect Autorun.inf"
-      "protect .VolumeIcon.ico"
-      "protect .VolumeIcon.icns"
-    ];
-  };
-
-  servicesCustom.mirror.archive-kleiner = {
-    notification-title = "Archiver - Kleiner Mirror";
-    cron = "Sun *-*-* 10:00:00";
-    source = "/mnt/archive";
-    destination = "/mnt/kleiner";
-    mounts = [
-      "mnt-archive.mount"
-      "mnt-freeman.mount"
-    ];
-    exclude = [
-      "/SteamBackups"
-      "/Misc_Large"
-      "/SteamLibrary"
-      "/TV\ Shows"
-      "/Movies"
-    ];
-    filters = [
-      "protect Autorun.inf"
-      "protect .VolumeIcon.ico"
-      "protect .VolumeIcon.icns"
-    ];
-  };
-
-  servicesCustom.mirror.archive-immich = {
-    notification-title = "Archiver - Immich Mirror";
-    cron = "*-*-* 3:00:00";
-    source = "/mnt/motorway/var/immich/data";
-    destination = "/mnt/archive/immich";
-    mounts = [
-      "mnt-archive.mount"
-      "mnt-motorway.mount"
-    ];
-    post-mirror-cmds = ''
-      ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/immich
-    '';
-  };
 
 }
