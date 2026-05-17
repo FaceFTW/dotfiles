@@ -115,8 +115,8 @@
     pkgs.alacritty
     pkgs.firefox
     pkgs.xdg-utils
-    pkgs.bitwarden-desktop
-    pkgs.bitwarden-cli
+    # pkgs.bitwarden-desktop
+    # pkgs.bitwarden-cli
     pkgs.gimp
     pkgs.inkscape
     pkgs.nvidia-offload
@@ -124,6 +124,7 @@
     # pkgs.bottles
     pkgs.flameshot
     pkgs.freecad
+    pkgs.keepassxc
 
     # For Tumbler
     pkgs.ffmpegthumbnailer

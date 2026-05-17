@@ -8,22 +8,34 @@
   # Self-hosted DNS for ACME
   ####################################
   services.bind = {
-    enable = true;
-    extraConfig = ''
-      include "/var/lib/secrets/dnskeys.conf";
-    '';
+    enable = false;
+    # extraConfig = ''
+    #   include "/var/lib/secrets/dnskeys.conf";
+    # '';
     forwarders = [
       "1.1.1.1"
       "1.0.0.1"
     ];
     zones = [
-      rec {
+      {
         name = "faceftw.me";
-        file = "/var/db/bind/${name}";
+        file = "/etc/bind/faceftw.me.zone";
         master = true;
         extraConfig = "allow-update { key rfc2136key.faceftw.me.; };";
       }
     ];
+  };
+
+  environment.etc."bind/zones/faceftw.me.zone" = {
+    enable = true;
+    user = "named";
+    group = "named";
+    mode = "0644";
+    text = ''
+      $ORIGIN .
+      $TTL 86400      ; 1 day
+      (...)
+    '';
   };
 
   # Now we can configure ACME
@@ -39,12 +51,12 @@
 
   systemd.services.dns-rfc2136-conf = {
     requiredBy = [
-      "acme-faceftw.me.service"
-      "bind.service"
+      # "acme-faceftw.me.service"
+      # "bind.service"
     ];
     before = [
-      "acme-faceftw.me.service"
-      "bind.service"
+      # "acme-faceftw.me.service"
+      # "bind.service"
     ];
     unitConfig = {
       ConditionPathExists = "!/var/lib/secrets/dnskeys.conf";
@@ -57,7 +69,7 @@
     script = ''
       mkdir -p /var/lib/secrets
       chmod 755 /var/lib/secrets
-      tsig-keygen rfc2136key.example.com > /var/lib/secrets/dnskeys.conf
+      tsig-keygen rfc2136key.faceftw.me > /var/lib/secrets/dnskeys.conf
       chown named:root /var/lib/secrets/dnskeys.conf
       chmod 400 /var/lib/secrets/dnskeys.conf
 

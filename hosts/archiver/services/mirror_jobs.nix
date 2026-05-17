@@ -7,7 +7,7 @@
   # Mirror Jobs
   ############################################
   servicesCustom.mirror.archive-freeman = {
-    notification-title = "Archiver - Freeman Mirror";
+    notification-title = "Archiver - Archive to Freeman Mirror";
     cron = "Sun *-*-* 09:00:00";
     source = "/mnt/archive";
     destination = "/mnt/freeman";
@@ -28,7 +28,7 @@
   };
 
   servicesCustom.mirror.archive-kleiner = {
-    notification-title = "Archiver - Kleiner Mirror";
+    notification-title = "Archiver - Archive to Kleiner Mirror";
     cron = "Sun *-*-* 10:00:00";
     source = "/mnt/archive";
     destination = "/mnt/kleiner";
@@ -50,8 +50,8 @@
     ];
   };
 
-  servicesCustom.mirror.archive-immich = {
-    notification-title = "Archiver - Immich Mirror";
+  servicesCustom.mirror.immich-archive = {
+    notification-title = "Archiver - Immich to Archive Mirror";
     cron = "*-*-* 3:00:00";
     source = "/mnt/motorway/var/immich/data";
     destination = "/mnt/archive/immich";
@@ -61,6 +61,34 @@
     ];
     post-mirror-cmds = ''
       ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/immich
+    '';
+  };
+
+  servicesCustom.mirror.workspace-archive = {
+    notification-title = "Archiver - Workspaces to Archive Mirror";
+    cron = "*-*-* 4:00:00";
+    source = "/mnt/motorway/Workspaces";
+    destination = "/mnt/archive/Workspaces";
+    mounts = [
+      "mnt-archive.mount"
+      "mnt-motorway.mount"
+    ];
+    post-mirror-cmds = ''
+      ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/Workspaces
+    '';
+  };
+
+  servicesCustom.mirror.vault-archive = {
+    notification-title = "Archiver - Vault to Archive Mirror";
+    cron = "*-*-* 4:00:00";
+    source = "/mnt/motorway/Vaults";
+    destination = "/mnt/archive/Vaults";
+    mounts = [
+      "mnt-archive.mount"
+      "mnt-motorway.mount"
+    ];
+    post-mirror-cmds = ''
+      ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/Vaults
     '';
   };
 }

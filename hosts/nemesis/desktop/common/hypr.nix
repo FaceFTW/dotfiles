@@ -27,6 +27,7 @@
     systemd.enable = false;
 
     # Config is set per theme
+    configType = "lua";
   };
 
   #######################################################
