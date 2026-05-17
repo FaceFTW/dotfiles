@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    # ./services/acme.nix
+    ./services/dns.nix
     ./services/garage.nix
     ./services/linkwarden.nix
     ./services/mirror_jobs.nix
