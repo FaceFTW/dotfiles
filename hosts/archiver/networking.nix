@@ -27,7 +27,7 @@
   ############################################
   services.resolved.enable = true;
   # services.resolved.settings.MulticastDNS = "yes";
-  services.resolved.settings.Resolve.LLMNR = true;
+  services.resolved.settings.Resolve.LLMNR = false;
 
   # NOTE: Local router gives static IP
   networking.useDHCP = false;
@@ -36,7 +36,7 @@
     matchConfig.Name = "enp2s0";
     networkConfig.DHCP = "ipv4";
     networkConfig.IPv6AcceptRA = true;
-    networkConfig.MulticastDNS = "yes";
+    networkConfig.MulticastDNS = "no";
     linkConfig.RequiredForOnline = true;
   };
 

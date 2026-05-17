@@ -10,7 +10,7 @@
 
   system.activationScripts.bind-zones.text = ''
     mkdir -p /etc/bind/zones
-    chown named:named /etc/bind/zones
+    chown -R named:named /etc/bind
   '';
 
   services.bind = {
@@ -19,7 +19,7 @@
     extraConfig = ''
       include "/var/lib/secrets/dnskeys.conf";
     '';
-    extraOptions = "-d verbose -g";
+    extraOptions = "";
     forwarders = [
       "1.1.1.1"
       "1.0.0.1"
@@ -49,16 +49,12 @@
                                                 300    ; Retry
                                                 3600   ; Expire
                                                 300)   ; Negative Cache TT
-                              IN NS     dns.faceftw.me
+                              IN NS     dns
 
 
       dns                     IN A      192.168.0.172
 
-      # Device subdomains
       archiver                IN A      192.168.0.172
-      durandal                IN A      192.168.0.7
-
-      # Reverse Proxy subdomains
       immich                  IN A      192.168.0.172
       linkwarden              IN A      192.168.0.172
       backrest                IN A      192.168.0.172
@@ -66,23 +62,24 @@
       garage                  IN A      192.168.0.172
       jellyfin                IN A      192.168.0.172
 
+      durandal                IN A      192.168.0.7
       pihole                  IN A      192.168.0.7
     '';
   };
 
   # Now we can configure ACME
-  security.acme.acceptTerms = true;
-  security.acme.defaults.email = "alex@faceftw.dev";
-  security.acme.certs."faceftw.me" = {
-    domain = "*.faceftw.me";
-    dnsProvider = "rfc2136";
-    environmentFile = "/var/lib/secrets/certs.secret";
-    # We don't need to wait for propagation since this is a local DNS server
-    dnsPropagationCheck = false;
+  # security.acme.acceptTerms = true;
+  # security.acme.defaults.email = "alex@faceftw.dev";
+  # security.acme.certs."faceftw.me" = {
+  #   domain = "*.faceftw.me";
+  #   dnsProvider = "rfc2136";
+  #   environmentFile = "/var/lib/secrets/certs.secret";
+  #   # We don't need to wait for propagation since this is a local DNS server
+  #   dnsPropagationCheck = false;
 
-    # preliminarySelfsigned = true;
-    # server = "https://acme-staging-v02.api.letsencrypt.org/directory";
-  };
+  #   # preliminarySelfsigned = true;
+  #   # server = "https://acme-staging-v02.api.letsencrypt.org/directory";
+  # };
 
   systemd.services.dns-rfc2136-conf = {
     requiredBy = [
