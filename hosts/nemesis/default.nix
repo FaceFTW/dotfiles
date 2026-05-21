@@ -12,6 +12,7 @@
     inputs.silentSDDM.nixosModules.default
     ../../modules/core.nix
     ../../modules/kernel.nix
+    ../../modules/kernel-patches.nix
     ../../modules/packages
     ../../modules/services
     ../../modules/user.nix
