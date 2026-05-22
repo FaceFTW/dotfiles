@@ -49,7 +49,7 @@ in
 
   config = {
     boot.kernelPatches = with lib.kernel; [
-      (definePatch "example" { })
+      # (definePatch "example" { })
       (definePatch "rm-unused-fs" {
         # Filesystems
         EROFS_FS = no; # containers use this?
@@ -82,6 +82,8 @@ in
         AFS_FS = no;
         "9P_FS" = no;
         ROOT_NFS = no;
+
+        CONFIG_QFMT_V1 = no;
       })
       (definePatch "rm-x86-platform-drivers" {
         # x86 Platform Drivers
@@ -154,7 +156,6 @@ in
         YT2_1380 = no; # Lenovo Yoga Tablet 2 1380 fast charging protocol
       })
       (definePatch "rm-unused-driver-categories" {
-
         ACCESSIBILITY = mkForce no;
         BCMA = no; # Broadcom Specific AMBA
         CHROME_PLATFORMS = mkForce no;
@@ -164,6 +165,7 @@ in
         FPGA = no;
         FSI = no;
         FUSION = mkForce no; # Fusion Message Passing Technology
+        GOOGLE_FIRMWARE = lib.mkForce no;
         GOLDFISH = no; # Goldfish Virtual Platform
         GPIB = no; # General Purpose Interface Bus
         GREYBUS = no;
@@ -181,8 +183,9 @@ in
         MEMSTICK = no; # Sony Memory Stick
         MOST = no; # Media Oriented Systems Transport
         NTB = no;
-        OF = mkForce no; # Open Firmware/Device Trees - We use ACPI here
+        # OF = mkForce no; # Open Firmware/Device Trees - We use ACPI here
         PARPORT = no; # Parallel Port - which we don't have
+        PPDEV = no;
         PCCARD = no; # Predecessor to PCMCIA
         # PECI = no;
         # PPS = no; # Pulse Per Second (GPS-related)
@@ -197,7 +200,7 @@ in
 
         STAGING = mkForce no;
       })
-      (definePatch "remove-unused-individual-drivers" {
+      (definePatch "rm-unused-individual-drivers" {
         # Misc Drivers (Individual)
         AD525X_DPOT = no; # Analog Devices Digital Potentiometers
         ALTERA_STAPL = no; # Altera Firmware Download thing
@@ -209,6 +212,8 @@ in
         DUMMY_IRQ = no;
         DW_XDATA_PCIE = no; # Synopsys DesignWare PCIe traffic generator IP
         GENWQE = no; # IBM GenWQE Accelerators
+        HI6421V600_IRQ = no; # IRQ handling for the thing on Kirin chipsets
+        HISI_HIKEY_USB = no; # USB GPIO Hub on HiSilicon Hikey 960/70
         HMC6352 = no; # A compass? huh
         HP_ILO = no; # Used in HP ProLiant servers
         IBM_ASM = no; # IBM RSA service processor
@@ -216,6 +221,7 @@ in
         ISL29003 = no; # Ambient Light Sensor
         ISL29020 = no; # Ambient Light Sensor
         KEBA_CP500 = no; # KEBA CP500 System FPGA
+        LATTICE_ECP3_CONFIG = no; # Programmer for Lattice ECP3 FPGA
         MISC_ALCOR_PCI = no; # Alcor Micro PCI express card readers
         MISC_RTSX_PCI = no; # Realtek PCI express card readers
         MUX_ADG792A = no; # Multiplexer
@@ -227,11 +233,55 @@ in
         SENSORS_LIS3_I2C = no; # Accelerometer
         SENSORS_LIS3LV02D = no; # Accelerometer - but 3 axis digital
         SENSORS_TSL2550 = no; # Ambient Light Sensor
+        SMPRO_ERRMON = no; # Ampere Computing SMPro Error Monitor
+        SMPRO_MISC = no; # Ampere Computing SMPro Misc Drivers
         TI_FPC202 = no; # Texas Instruments FPC202 Dual Port Controller
+        TPS6594_ESM = no; # TI TPS6594 PMIC Error Signal Monitor
+        TPS6594_PFSM = no; # TI TPS6594 PMIC Preconfigurable Finite State Machine
+        VCPU_STALL_DETECTOR = no;
+        VMWARE_BALLOON = no; # VMWare Memory Balloon
         VMWARE_VMCI = no; # VMWare Virtual Machine Communication Interface
         XILINX_SDFEC = no; # Xilinx Soft Decision Forward Error Correction Driver
       })
+      (definePatch "rm-net-top-level" {
+        # Top-level categories under Networking Drivers
+        # and dependencies that might enable them
+
+        HAMRADIO = no;
+        CAN = no;
+        AF_RXRPC = no;
+        MCTP = no;
+        NET_9P = no;
+        CAIF = no;
+        NFC = no;
+
+        ARCNET = no;
+        ATM_DRIVERs = no;
+
+        B53 = no;
+        FDDI = no; # Fiber Distributed Data Interface
+        HIPPI = no; # High Performance Parallel Interface
+        PPP = no;
+        SLIP = no;
+        USB_NET_DRIVERS = no;
+        WWAN = no;
+        VMXNET3 = no;
+        USB4_NET = no;
+        NETDEVSIM = no;
+        ISDN = no;
+        PLIP = no; # Parallel Line Internet Protocol
+        WAN = mkForce no;
+        HYPERV_NET = no;
+        NET_FC = mkForce no;
+        FUJITSU_ES = no; # Fujitsu Extended Socket Network Device
+
+        CEPH_LIB = no;
+        BLK_DEV_RBD = no; # Rados Block Device - Selects CEPH_LIB
+
+        MLX5_CORE = no;
+      })
       (definePatch "rm-net-dsa-drivers" {
+        B53 = no;
         NET_DSA_BCM_SF2 = no;
         NET_DSA_LOOP = no;
         NET_DSA_HIRSCHMANN_HELLCREEK = no;
@@ -248,14 +298,15 @@ in
         NET_DSA_KS8995 = no;
         NET_DSA_VITESSE_VSC73XX = no;
         NET_DSA_VITESSE_VSC73XX_PLATFORM = no;
-
       })
       (definePatch "rm-net-ethernet-drivers" {
         NET_VENDOR_3COM = no;
         NET_VENDOR_ADAPTEC = no;
+        NET_VENDOR_ADI = no;
         NET_VENDOR_AGERE = no;
         NET_VENDOR_ALACRITECH = no;
         NET_VENDOR_ALTEON = no;
+        ALTERA_TSE = no; # Altera Triple Speed Ethernet MAC
         NET_VENDOR_AMAZON = no;
         NET_VENDOR_AMD = no;
         NET_VENDOR_AQUANTIA = no;
@@ -268,17 +319,22 @@ in
         NET_VENDOR_CORTINA = no;
         NET_VENDOR_DAVICOM = no;
         NET_VENDOR_DEC = no;
+        DNET = no; # Dave Ethernet
         NET_VENDOR_ENGLEDER = no;
+        ETHOC = no; # OpenCores 10/100 Mbps Ethernet MAC
         NET_VENDOR_EZCHIP = no;
+        FEALNX = no; # Myson MTD-8xx PCI Ethernet
+        NET_VENDOR_FREESCALE = no;
         NET_VENDOR_FUNGIBLE = no;
         NET_VENDOR_GOOGLE = no;
         NET_VENDOR_HISILICON = no;
         NET_VENDOR_HUAWEI = no;
         NET_VENDOR_I825XX = no;
-        NET_VENDOR_ADI = no;
+        JME = no; # JMicron PCI-E Gigabit Ethernet
         NET_VENDOR_LITEX = no;
         NET_VENDOR_MARVELL = no;
         NET_VENDOR_META = no;
+        NET_VENDOR_MELLANOX = no;
         NET_VENDOR_MICREL = no;
         NET_VENDOR_MICROCHIP = no;
         NET_VENDOR_MICROSEMI = no;
@@ -340,6 +396,76 @@ in
         IPW2200 = no;
         IWL4965 = no;
         IWL3945 = no;
+        RTL8723BS = no;
+      })
+      (definePatch "rm-net-ethernet-specific-phy" {
+        AS21XXX_PHY = no;
+        AIR_EN8811H_PHY = no;
+        AMD_PHY = no;
+        ADIN_PHY = no;
+        ADIN1100_PHY = no;
+        AQUANTIA_PHY = no;
+        AX88796B_PHY = no;
+        CONFIG_BROADCOM_PHY = no;
+        CONFIG_BCM54140_PHY = no;
+        CONFIG_BCM7XXX_PHY = no;
+        CONFIG_BCM84881_PHY = no;
+        CONFIG_BCM87XX_PHY = no;
+        CONFIG_BCM_NET_PHYLIB = no;
+        CONFIG_BCM_NET_PHYPTP = no;
+        CICADA_PHY = no;
+        CORTINA_PHY = no;
+        DAVICOM_PHY = no;
+        ICPLUS_PHY = no;
+        LXT_PHY = no;
+        INTEL_XWAY_PHY = no;
+        LSI_ET1011C_PHY = no;
+        MARVELL_PHY = no;
+        MARVELL_10G_PHY = no;
+        MARVELL_88Q2XXX_PHY = no;
+        MARVELL_88X2222_PHY = no;
+        MAXLINEAR_GPHY = no;
+        MAXLINEAR_86110_PHY = no;
+        MEDIATEK_GE_PHY = no;
+        MICREL_PHY = no;
+        MICROCHIP_T1S_PHY = no;
+        MICROCHIP_PHY = no;
+        MICROCHIP_T1_PHY = no;
+        MICROSEMI_PHY = no;
+        MOTORCOMM_PHY = no;
+        NATIONAL_PHY = no;
+        NXP_CBTX_PHY = no;
+        NXP_C45_TJA11XX_PHY = no;
+        NXP_TJA11XX_PHY = no;
+        NCN26000_PHY = no;
+        AT803X_PHY = no;
+        QCA83XX_PHY = no;
+        QCA808X_PHY = no;
+        QCA807X_PHY = no;
+        QSEMI_PHY = no;
+        REALTEK_PHY = no;
+        RENESAS_PHY = no;
+        ROCKCHIP_PHY = no;
+        SMSC_PHY = no;
+        STE10XP = no;
+        TERANETICS_PHY = no;
+        DP83822_PHY = no;
+        DP83TC811_PHY = no;
+        DP83848_PHY = no;
+        DP83867_PHY = no;
+        DP83869_PHY = no;
+        DP83TD510_PHY = no;
+        DP83TG720_PHY = no;
+        VITESSE_PHY = no;
+        XILINX_GMII2RGMII = no;
+        PSE_CONTROLLER = no;
+        MDIO_HISI_FEMAC = no;
+        MDIO_MVUSB = no;
+        MDIO_MSCC_MIIM = no;
+        MDIO_OCTEON = no;
+        MDIO_IPQ4019 = no;
+        MDIO_IPQ8064 = no;
+        MDIO_THUNDER = no;
       })
       (definePatch "rm-parallel-ata" {
         # Parallel ATA
@@ -386,27 +512,148 @@ in
         PATA_OPTI = no;
         PATA_RZ1000 = no;
         SBP_TARGET = no;
+        PPDEV = no;
       })
-      (definePatch "example" { })
-      (definePatch "example" { })
-      (definePatch "example" { })
-      (definePatch "example" { })
+      (definePatch "rm-unused-graphics" {
+        # Graphics
+        AGP = mkForce no;
+        DRM_AMDGPU = no;
+        DRM_AST = no;
+        DRM_ETNAVIV = no;
+        DRM_GMA500 = mkForce no;
+        DRM_GUD = no;
+        DRM_HISI_HIBMC = no;
+        DRM_I915 = yes; # We do want intel graphics
+        DRM_MGAG200 = no;
+        DRM_NOUVEAU = no; # Using stupid nvidia proprietary drivers
+        DRM_PANEL_RASPBERRYPI_TOUCHSCREEN = no;
+        DRM_QXL = no;
+        DRM_RADEON = no;
+        DRM_ST7571 = no;
+        DRM_SSD130x = no;
+        DRM_APPLETBDRM = no;
+        DRM_BOCHS = no;
+        DRM_CIRRUS_QEMU = no;
+        DRM_GM12U320 = no;
+        DRM_VBOXVIDEO = no;
+        DRM_VGEM = no;
+        DRM_VMWGFX = no;
+        DRM_XE = no;
+        FB = mkForce no; # Replaced by DRM/KMS
+      })
+      (definePatch "rm-hid-specific-keyboard" {
+        # KEYBOARD_ATKBD = no; - Needed to use any laptop keyboard
+        # HID/Input Drivers
+        MACINTOSH_DRIVERS = no;
+        MAC_EMUMOUSEBTN = no;
+        KEYBOARD_ADP5585 = no;
+        KEYBOARD_ADP5588 = no;
+        KEYBOARD_APPLESPI = mkForce no;
+        KEYBOARD_QT1050 = no;
+        KEYBOARD_QT1070 = no;
+        KEYBOARD_QT2160 = no;
+        KEYBOARD_DLINK_DIR685 = no;
+        KEYBOARD_LKKBD = no;
+        KEYBOARD_TCA8418 = no;
+        KEYBOARD_LM8323 = no;
+        KEYBOARD_LM8333 = no;
+        KEYBOARD_MAX7359 = no;
+        KEYBOARD_MAX7360 = no;
+        KEYBOARD_MPR121 = no;
+        KEYBOARD_NEWTON = no;
+        KEYBOARD_OPENCORES = no;
+        KEYBOARD_PINEPHONE = no;
+        KEYBOARD_SAMSUNG = no;
+        KEYBOARD_STOWAWAY = no;
+        KEYBOARD_SUNKBD = no;
+        KEYBOARD_STMPE = no;
+        KEYBOARD_IQS62X = no;
+        KEYBOARD_OMAP4 = no;
+        KEYBOARD_TM2_TOUCHKEY = no;
+        KEYBOARD_XTKBD = no;
+        KEYBOARD_CAP11XX = no;
+        KEYBOARD_BCM = no;
+        KEYBOARD_MTK_PMIC = no;
+        KEYBOARD_CYPRESS_SF = no;
+      })
+      (definePatch "rm-hid-specific-mouse" {
+        MOUSE_PS2 = no;
+
+        MOUSE_APPLETOUCH = no;
+        MOUSE_BCM5974 = no;
+        MOUSE_CYAPA = no;
+        MOUSE_ELAN_I2C = no;
+        MOUSE_VSXXXAA = no;
+      })
+      (definePatch "rm-hid-misc" {
+        JOYSTICK_DB9 = no;
+        JOYSTICK_GAMECON = no;
+        JOYSTICK_TURBOGRAFX = no;
+        JOYSTICK_WALKERA0701 = no;
+
+        INPUT_TABLET = no;
+        INPUT_TOUCHSCREEN = no;
+        INPUT_MISC = no;
+      })
+
+      (definePatch "rm-pcie-top-level" {
+        PCI_SW_SWITCHTEC = no;
+        PCI_PWRCTRL_SLOT = no;
+        CXL_BUS = no;
+        PCCARD = no;
+        RAPIDIO = no;
+        PC104 = no;
+
+        MCHP_LAN966X_PCI = no; # Microchip LAN966X_PCIE
+        GP_PCI1XXXX = no; # Microchip PCI1XXXX PCIe to GPIO Expander + OTP/EEPROM Manager
+
+        DWC_PCIE_PMU = no; # Synopsys DesignWare PCIe PMU on Alibaba HW
+
+        PCIE_CADENCE_PLAT_HOST = no;
+        PCIE_MICROCHIP_HOST = no;
+
+        CB710_CORE = no; # ENE CB710 PCI Flash Memory Reader
+
+        APPLICOM = no; # Applicom intelligent fieldbus card
+        XILLYBUS = no;
+        XILLYUSB = no;
+      })
+      (definePatch "rm-scsi-top-level" {
+        CHR_DEV_ST = no; # SCSI Tape Drives
+        BLK_DEV_SR = no; # SCSI CD-ROM
+        CHR_DEV_SCH = no; # SCSI Media Changer (like in jukeboxes)
+
+        SCSI_SAS_ATTRS = no; # SCSI SAS Transport Attributes
+        SCSI_SAS_LIBSAS = no;
+        SCSI_PPA = no; # IOMEGA Parallel Port - older
+        SCSI_IMM = no; # IOMEGA Parallel Port - newer
+
+      })
       (definePatch "Remove Media Tuners" {
         # TV tuners and things like what linux supported all this?
         RC_CORE = mkForce no;
+        VIDEO_TVEEPROM = no;
         VIDEO_TUNER = no;
         MEDIA_CONTROLLER_DVB = no;
+        DVB_DYNAMIC_MINORS = mkForce no;
         VIDEO_USBTV = no;
         RADIO_ADAPTERS = no;
         MEDIA_ANALOG_TV_SUPPORT = mkForce no;
         MEDIA_CEC_SUPPORT = mkForce no;
         MEDIA_COMMON_OPTIONS = no;
         MEDIA_DIGITAL_TV_SUPPORT = mkForce no;
+        MEDIA_PLATFORM_DRIVERS = no;
         MEDIA_PCI_SUPPORT = mkForce no;
         MEDIA_RADIO_SUPPORT = no;
         MEDIA_SDR_SUPPORT = no;
         MEDIA_TEST_SUPPORT = no;
+        MEDIA_ATTACH = mkForce no;
+        CYPRESS_FIRMWARE = no;
         USB_GSPCA = no;
+        USB_AIRSPY = no;
+        USB_HACKRF = no;
+        USB_MSI2500 = no;
+        SMS_SIANO_MDTV = no;
         MEDIA_TUNER = no;
         TOUCHSCREEN_SUR40 = no;
         DVB_AS102 = no;
@@ -416,6 +663,7 @@ in
         SMS_USB_DRV = no;
         DVB_TTUSB_BUDGET = no;
         DVB_TTUSB_DEC = no;
+        DVB_B2C2_FLEXCOP = no;
         MEDIA_TUNER_E4000 = no;
         MEDIA_TUNER_FC0011 = no;
         MEDIA_TUNER_FC0012 = no;
