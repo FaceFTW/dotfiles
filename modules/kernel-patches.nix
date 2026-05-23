@@ -411,7 +411,8 @@ in
         ADIN_PHY = no;
         ADIN1100_PHY = no;
         AQUANTIA_PHY = no;
-        AX88796B_PHY = no;
+        # AX88796B_PHY = no;
+        # USB_NET_AX8817X = no;
         BROADCOM_PHY = no;
         BCM54140_PHY = no;
         BCM7XXX_PHY = no;
@@ -435,7 +436,8 @@ in
         MEDIATEK_GE_PHY = no;
         MICREL_PHY = no;
         MICROCHIP_T1S_PHY = no;
-        MICROCHIP_PHY = no;
+        # MICROCHIP_PHY = no;
+        USB_LAN78XX = no;
         MICROCHIP_T1_PHY = no;
         MICROSEMI_PHY = no;
         MOTORCOMM_PHY = no;
@@ -452,7 +454,10 @@ in
         REALTEK_PHY = no;
         RENESAS_PHY = no;
         ROCKCHIP_PHY = no;
-        SMSC_PHY = no;
+        # SMSC_PHY = no;
+        MESON_GXL_PHY = no;
+        USB_NET_SMSC95XX = no;
+        NET_DSA_SMSC_LAN9303 = no;
         STE10XP = no;
         TERANETICS_PHY = no;
         DP83822_PHY = no;

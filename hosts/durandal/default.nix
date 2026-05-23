@@ -11,11 +11,13 @@
     inputs.sops-nix.nixosModules.sops
     ../../modules/core.nix
     ../../modules/kernel.nix
+    ../../modules/kernel-patches.nix
     ../../modules/image.nix
     ../../modules/packages
     ../../modules/services
     ../../modules/user.nix
     ./hardware.nix
+    ./kernel.nix
     ./networking.nix
     ./services.nix
   ];
