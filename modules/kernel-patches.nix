@@ -21,6 +21,7 @@ let
       };
       options.overrides = mkOption {
         type = attrs;
+        default = { };
         description = "Structured Attrs Kernel config to override in the patchset";
       };
     };
@@ -274,6 +275,7 @@ in
         HYPERV_NET = no;
         NET_FC = mkForce no;
         FUJITSU_ES = no; # Fujitsu Extended Socket Network Device
+        INFINIBAND = no;
 
         CEPH_LIB = no;
         BLK_DEV_RBD = no; # Rados Block Device - Selects CEPH_LIB
@@ -294,10 +296,13 @@ in
         NET_DSA_QCA8K = no;
         NET_DSA_SJA1105 = no;
         NET_DSA_XRS700X = no;
+        NET_DSA_XRS700X_MDIO = no;
+        NET_DSA_XRS700X_I2C = no;
         NET_DSA_REALTEK = no;
         NET_DSA_KS8995 = no;
         NET_DSA_VITESSE_VSC73XX = no;
         NET_DSA_VITESSE_VSC73XX_PLATFORM = no;
+        NET_DSA_VITESSE_VSC73XX_SPI = no;
       })
       (definePatch "rm-net-ethernet-drivers" {
         NET_VENDOR_3COM = no;
@@ -343,6 +348,7 @@ in
         NET_VENDOR_NI = no;
         NET_VENDOR_NATSEMI = no;
         NET_VENDOR_NETRONOME = no;
+        NXP_ENETC4 = no;
         NET_VENDOR_8390 = no;
         NET_VENDOR_NVIDIA = no;
         NET_VENDOR_OKI = no;
@@ -406,13 +412,13 @@ in
         ADIN1100_PHY = no;
         AQUANTIA_PHY = no;
         AX88796B_PHY = no;
-        CONFIG_BROADCOM_PHY = no;
-        CONFIG_BCM54140_PHY = no;
-        CONFIG_BCM7XXX_PHY = no;
-        CONFIG_BCM84881_PHY = no;
-        CONFIG_BCM87XX_PHY = no;
-        CONFIG_BCM_NET_PHYLIB = no;
-        CONFIG_BCM_NET_PHYPTP = no;
+        BROADCOM_PHY = no;
+        BCM54140_PHY = no;
+        BCM7XXX_PHY = no;
+        BCM84881_PHY = no;
+        BCM87XX_PHY = no;
+        BCM_NET_PHYLIB = no;
+        BCM_NET_PHYPTP = no;
         CICADA_PHY = no;
         CORTINA_PHY = no;
         DAVICOM_PHY = no;
@@ -595,7 +601,6 @@ in
         INPUT_TOUCHSCREEN = no;
         INPUT_MISC = no;
       })
-
       (definePatch "rm-pcie-top-level" {
         PCI_SW_SWITCHTEC = no;
         PCI_PWRCTRL_SLOT = no;
@@ -613,6 +618,8 @@ in
         PCIE_MICROCHIP_HOST = no;
 
         CB710_CORE = no; # ENE CB710 PCI Flash Memory Reader
+        CB710_MMC = no; # ENE CB710 PCI Flash Memory Reader
+        MMC_CB710 = no;
 
         APPLICOM = no; # Applicom intelligent fieldbus card
         XILLYBUS = no;
@@ -629,7 +636,7 @@ in
         SCSI_IMM = no; # IOMEGA Parallel Port - newer
 
       })
-      (definePatch "Remove Media Tuners" {
+      (definePatch "rm-media-tuners" {
         # TV tuners and things like what linux supported all this?
         RC_CORE = mkForce no;
         VIDEO_TVEEPROM = no;
@@ -817,12 +824,436 @@ in
         DVB_CXD2099 = no;
         DVB_SP2 = no;
         DVB_DUMMY_FE = no;
-        CONFIG_VIDEO_GO7007 = no;
-        CONFIG_VIDEO_HDPVR = no;
-        CONFIG_VIDEO_PVRUSB2 = no;
-        CONFIG_VIDEO_STK1160 = no;
-        CONFIG_VIDEO_AU0828 = no;
-        CONFIG_VIDEO_CX231XX = no;
+        VIDEO_GO7007 = no;
+        VIDEO_HDPVR = no;
+        VIDEO_PVRUSB2 = no;
+        VIDEO_STK1160 = no;
+        VIDEO_AU0828 = no;
+        VIDEO_CX231XX = no;
+      })
+      (definePatch "rm-dallas-1wire" {
+        W1_MASTER_AMD_AXI = no;
+        W1_MASTER_MATROX = no;
+        W1_MASTER_DS2490 = no;
+        W1_MASTER_DS2482 = no;
+        W1_MASTER_SGI = no;
+
+        W1_SLAVE_DS2405 = no;
+        W1_SLAVE_DS2408 = no;
+        W1_SLAVE_DS2413 = no;
+        W1_SLAVE_DS2406 = no;
+        W1_SLAVE_DS2423 = no;
+        W1_SLAVE_DS2805 = no;
+        W1_SLAVE_DS2430 = no;
+        W1_SLAVE_DS2431 = no;
+        W1_SLAVE_DS2433 = no;
+        W1_SLAVE_DS2438 = no;
+        W1_SLAVE_DS250X = no;
+        W1_SLAVE_DS28E04 = no;
+      })
+      (definePatch "rm-watchdog-timers" {
+
+        LENOVO_SE10_WDT = no;
+        LENOVO_SE30_WDT = no;
+        ZIIRAVE_WATCHDOG = no;
+        MAX63XX_WATCHDOG = no;
+        ACQUIRE_WDT = no;
+        ADVANTECH_WDT = no;
+        ADVANTECH_EC_WDT = no;
+        ALIM1535_WDT = no;
+        ALIM7101_WDT = no;
+        EBC_C384_WDT = no;
+        EXAR_WDT = no;
+        F71808E_WDT = no;
+        SP5100_TCO = no;
+        SBC_FITPC2_WATCHDOG = no;
+        EUROTECH_WDT = no;
+        IB700_WDT = no;
+        IBMASR = no;
+        WAFER_WDT = no;
+        I6300ESB_WDT = no;
+        IE6XX_WDT = no;
+        ITCO_WDT = no;
+        IT8712F_WDT = no;
+        IT87_WDT = no;
+        HP_WATCHDOG = no;
+        HPWDT_NMI_DECODING = no;
+        SC1200_WDT = no;
+        PC87413_WDT = no;
+        NV_TCO = no;
+        "60XX_WDT" = no;
+        SMSC_SCH311X_WDT = no;
+        SMSC37B787_WDT = no;
+        TQMX86_WDT = no;
+        VIA_WDT = no;
+        W83627HF_WDT = no;
+        W83877F_WDT = no;
+        W83977F_WDT = no;
+        MACHZ_WDT = no;
+        SBC_EPX_C3_WATCHDOG = no;
+        MEN_A21_WDT = no;
+
+        PCIPCWATCHDOG = no;
+        WDTPCI = no;
+
+        USBPCWATCHDOG = no;
+      })
+      (definePatch "rm-multifunction-device" {
+        MFD_ADP5585 = no;
+        MFD_ACT8945A = no;
+        MFD_AS3711 = no;
+        MFD_SMPRO = no;
+        MFD_AS3722 = no;
+        PMIC_ADP5520 = no;
+        MFD_AAT2870_CORE = no;
+        MFD_ATMEL_FLEXCOM = no;
+        MFD_ATMEL_HLCDC = no;
+        CONFIG_MFD_BCM590XX = no;
+        MFD_BD9571MWV = no;
+        MFD_AXP20X_I2C = no;
+        MFD_CGBC = no;
+        MFD_CS40L50_I2C = no;
+        MFD_CS40L50_SPI = no;
+        MFD_CS42L43_I2C = no;
+        MFD_LOCHNAGAR = no;
+        MFD_MADERA = no;
+        PMIC_DA903X = no;
+        MFD_DA9052_SPI = no;
+        MFD_DA9052_I2C = no;
+        MFD_DA9055 = no;
+        MFD_DA9062 = no;
+        MFD_DA9063 = no;
+        MFD_DA9150 = no;
+        MFD_DLN2 = no;
+        MFD_GATEWORKS_GSC = no;
+        MFD_MC13XXX_SPI = no;
+        MFD_MC13XXX_I2C = no;
+        MFD_MP2629 = no;
+        MFD_HI6421_PMIC = no;
+        MFD_HI6421_SPMI = no;
+        MFD_INTEL_QUARK_I2C_GPIO = no;
+        LPC_ICH = no;
+        LPC_SCH = no;
+        MFD_INTEL_LPSS_PCI = no;
+        MFD_IQS62X = no;
+        MFD_JANZ_CMODIO = no;
+        MFD_KEMPLD = no;
+        MFD_88PM800 = no;
+        MFD_88PM805 = no;
+        MFD_88PM860X = no;
+        MFD_88PM886_PMIC = no;
+        MFD_MAX5970 = no;
+        MFD_MAX14577 = no;
+        MFD_MAX77541 = no;
+        MFD_MAX77620 = no;
+        MFD_MAX77650 = no;
+        MFD_MAX77686 = no;
+        MFD_MAX77693 = no;
+        MFD_MAX77705 = no;
+        MFD_MAX77714 = no;
+        MFD_MAX77759 = no;
+        MFD_MAX77843 = no;
+        MFD_MAX8907 = no;
+        MFD_MAX8925 = no;
+        MFD_MAX8997 = no;
+        MFD_MAX8998 = no;
+        MFD_MT6360 = no;
+        MFD_MT6370 = no;
+        MFD_MT6397 = no;
+        MFD_MENF21BMC = no;
+        MFD_NCT6694 = no;
+        MFD_OCELOT = no;
+        EZX_PCAP = no;
+        MFD_CPCAP = no;
+        MFD_VIPERBOARD = no;
+        MFD_NTXEC = no;
+        MFD_RETU = no;
+        MFD_SY7636A = no;
+        CONFIG_MFD_RDC321X = no;
+        MFD_RT4831 = no;
+        MFD_RT5033 = no;
+        MFD_RT5120 = no;
+        MFD_RC5T583 = no;
+        MFD_RK8XX_I2C = no;
+        MFD_RK8XX_SPI = no;
+        MFD_RN5T618 = no;
+        MFD_SEC_I2C = no;
+        MFD_SI476X_CORE = no;
+        MFD_SM501 = no;
+        MFD_SKY81452 = no;
+        MFD_STMPE = no;
+        MFD_LP3943 = no;
+        MFD_LP8788 = no;
+        MFD_TI_LMU = no;
+        MFD_BQ257XX = no;
+        MFD_PALMAS = no;
+        TPS6105X = no;
+        TPS65010 = no;
+        TPS6507X = no;
+        MFD_TPS65086 = no;
+        MFD_TPS65090 = no;
+        MFD_TPS65217 = no;
+        MFD_TI_LP873X = no;
+        MFD_TI_LP87565 = no;
+        MFD_TPS65218 = no;
+        MFD_TPS65219 = no;
+        MFD_TPS6586X = no;
+        MFD_TPS65910 = no;
+        MFD_TPS65912_I2C = no;
+        MFD_TPS65912_SPI = no;
+        MFD_TPS6594_I2C = no;
+        MFD_TPS6594_SPI = no;
+        TWL4030_CORE = no;
+        TWL6040_CORE = no;
+        MFD_WL1273_CORE = no;
+        MFD_LM3533 = no;
+        MFD_TC3589X = no;
+        MFD_TQMX86 = no;
+        MFD_VX855 = no;
+        GPIO_VX855 = no;
+        MFD_ARIZONA_I2C = no;
+        MFD_ARIZONA_SPI = no;
+        MFD_WM8400 = no;
+        MFD_WM831X_I2C = no;
+        MFD_WM831X_SPI = no;
+        MFD_WM8350_I2C = no;
+        MFD_WM8994 = no;
+        MFD_ROHM_BD718XX = no;
+        MFD_ROHM_BD71828 = no;
+        MFD_ROHM_BD957XMUF = no;
+        MFD_ROHM_BD96801 = no;
+        MFD_STPMIC1 = no;
+        CONFIG_MFD_STMFX = no;
+        PINCTRL_STMFX = no;
+        MFD_ATC260X_I2C = no;
+        MFD_QCOM_PM8008 = no;
+        RAVE_SP_CORE = no;
+        MFD_INTEL_M10_BMC_SPI = no;
+        MFD_QNAP_MCU = no;
+        MFD_RSMU_I2C = no;
+        MFD_RSMU_SPI = no;
+        MFD_MAX7360 = no;
+      })
+      (definePatch "rm-specific-regulators" {
+        REGULATOR_88PG86X = no;
+        REGULATOR_ACT8865 = no;
+        REGULATOR_AD5398 = no;
+        REGULATOR_ADP5055 = no;
+        REGULATOR_AW37503 = no;
+        REGULATOR_BCM590XX = no;
+        REGULATOR_DA9121 = no;
+        REGULATOR_DA9210 = no;
+        REGULATOR_DA9211 = no;
+        REGULATOR_FAN53555 = no;
+        REGULATOR_FAN53880 = no;
+        REGULATOR_ISL9305 = no;
+        REGULATOR_ISL6271A = no;
+        REGULATOR_LP3971 = no;
+        REGULATOR_LP3972 = no;
+        REGULATOR_LP872X = no;
+        REGULATOR_LP8755 = no;
+        REGULATOR_LTC3589 = no;
+        REGULATOR_LTC3676 = no;
+        REGULATOR_MAX1586 = no;
+        REGULATOR_MAX77503 = no;
+        REGULATOR_MAX77857 = no;
+        REGULATOR_MAX8649 = no;
+        REGULATOR_MAX8660 = no;
+        REGULATOR_MAX8893 = no;
+        REGULATOR_MAX8952 = no;
+        REGULATOR_MAX8973 = no;
+        REGULATOR_MAX20086 = no;
+        REGULATOR_MAX20411 = no;
+        REGULATOR_MAX77826 = no;
+        REGULATOR_MAX77838 = no;
+        REGULATOR_MCP16502 = no;
+        REGULATOR_MP5416 = no;
+        REGULATOR_MP8859 = no;
+        REGULATOR_MP886X = no;
+        REGULATOR_MPQ7920 = no;
+        REGULATOR_MT6311 = no;
+        REGULATOR_MT6315 = no;
+        REGULATOR_PCA9450 = no;
+        REGULATOR_PF9453 = no;
+        REGULATOR_PF0900 = no;
+        REGULATOR_PF530X = no;
+        REGULATOR_PF8X00 = no;
+        REGULATOR_PFUZE100 = no;
+        REGULATOR_PV88060 = no;
+        REGULATOR_PV88080 = no;
+        REGULATOR_PV88090 = no;
+        REGULATOR_QCOM_SPMI = no;
+        REGULATOR_QCOM_USB_VBUS = no;
+        REGULATOR_RAA215300 = no;
+        REGULATOR_RASPBERRYPI_TOUCHSCREEN_ATTINY = no;
+        REGULATOR_RASPBERRYPI_TOUCHSCREEN_V2 = no;
+        REGULATOR_RT4801 = no;
+        REGULATOR_RT4803 = no;
+        REGULATOR_RT5133 = no;
+        REGULATOR_RT5190A = no;
+        REGULATOR_RT5739 = no;
+        REGULATOR_RT5759 = no;
+        REGULATOR_RT6160 = no;
+        REGULATOR_RT6190 = no;
+        REGULATOR_RT6245 = no;
+        REGULATOR_RTQ2134 = no;
+        REGULATOR_RTMV20 = no;
+        REGULATOR_RTQ6752 = no;
+        REGULATOR_RTQ2208 = no;
+        REGULATOR_SLG51000 = no;
+        REGULATOR_SY8106A = no;
+        REGULATOR_SY8824X = no;
+        REGULATOR_SY8827N = no;
+        REGULATOR_TPS51632 = no;
+        REGULATOR_TPS62360 = no;
+        REGULATOR_TPS6286X = no;
+        REGULATOR_TPS6287X = no;
+        REGULATOR_TPS65023 = no;
+        REGULATOR_TPS6507X = no;
+        REGULATOR_TPS65132 = no;
+        REGULATOR_TPS6524X = no;
+        REGULATOR_QCOM_LABIBB = no;
+      })
+      (definePatch "rm-specific-graphics-drm" {
+        DRM_KOMEDA = no;
+
+        DRM_RADEON = no;
+        DRM_AMDGPU = no;
+        DRM_NOUVEAU = no;
+        DRM_I915 = no;
+        DRM_XE = no;
+        DRM_VGEM = no;
+        DRM_VKMS = no;
+        DRM_GMA500 = no;
+        DRM_UDL = no;
+        DRM_AST = no;
+        DRM_MGAG200 = no;
+        DRM_QXL = no;
+
+        DRM_PANEL_ABT_Y030XX067A = no;
+        DRM_PANEL_ARM_VERSATILE = no;
+        DRM_PANEL_AUO_A030JTN01 = no;
+        DRM_PANEL_LVDS = no;
+        DRM_PANEL_ILITEK_IL9322 = no;
+        DRM_PANEL_ILITEK_ILI9341 = no;
+        DRM_PANEL_INNOLUX_EJ030NA = no;
+        DRM_PANEL_LG_LB035Q02 = no;
+        DRM_PANEL_LG_LG4573 = no;
+        DRM_PANEL_NEC_NL8048HL11 = no;
+        DRM_PANEL_NEWVISION_NV3052C = no;
+        DRM_PANEL_NOVATEK_NT39016 = no;
+        DRM_PANEL_OLIMEX_LCD_OLINUXINO = no;
+        DRM_PANEL_ORISETECH_OTA5601A = no;
+        DRM_PANEL_SAMSUNG_S6E88A0_AMS452EF01 = no;
+        DRM_PANEL_SAMSUNG_ATNA33XC20 = no;
+        DRM_PANEL_SAMSUNG_DB7430 = no;
+        DRM_PANEL_SAMSUNG_LD9040 = no;
+        DRM_PANEL_SAMSUNG_S6D27A1 = no;
+        DRM_PANEL_SAMSUNG_S6D7AA0 = no;
+        DRM_PANEL_SAMSUNG_S6E63M0 = no;
+        DRM_PANEL_SAMSUNG_S6E8AA0 = no;
+        DRM_PANEL_SEIKO_43WVF1G = no;
+        DRM_PANEL_SHARP_LS037V7DW01 = no;
+        DRM_PANEL_SITRONIX_ST7701 = no;
+        DRM_PANEL_SITRONIX_ST7789V = no;
+        DRM_PANEL_SONY_ACX565AKM = no;
+        DRM_PANEL_EDP = no;
+        DRM_PANEL_SIMPLE = no;
+        DRM_PANEL_TPO_TD028TTEC1 = no;
+        DRM_PANEL_TPO_TD043MTEA1 = no;
+        DRM_PANEL_TPO_TPG110 = no;
+        DRM_PANEL_WIDECHIPS_WS2401 = no;
+
+        DRM_CHIPONE_ICN6211 = no;
+        DRM_CHRONTEL_CH7033 = no;
+        DRM_DISPLAY_CONNECTOR = no;
+        DRM_I2C_NXP_TDA998X = no;
+        DRM_ITE_IT6263 = no;
+        DRM_ITE_IT6505 = no;
+        DRM_LONTIUM_LT8912B = no;
+        DRM_LONTIUM_LT9211 = no;
+        DRM_LONTIUM_LT9611 = no;
+        DRM_LONTIUM_LT9611UXC = no;
+        DRM_ITE_IT66121 = no;
+        DRM_LVDS_CODEC = no;
+        DRM_MEGACHIPS_STDPXXXX_GE_B850V3_FW = no;
+        DRM_NWL_MIPI_DSI = no;
+        DRM_NXP_PTN3460 = no;
+        DRM_PARADE_PS8622 = no;
+        DRM_PARADE_PS8640 = no;
+        DRM_SAMSUNG_DSIM = no;
+        DRM_SIL_SII8620 = no;
+        DRM_SII902X = no;
+        DRM_SII9234 = no;
+        DRM_SIMPLE_BRIDGE = no;
+        DRM_SOLOMON_SSD2825 = no;
+        DRM_THINE_THC63LVD1024 = no;
+        DRM_TOSHIBA_TC358762 = no;
+        DRM_TOSHIBA_TC358764 = no;
+        DRM_TOSHIBA_TC358767 = no;
+        DRM_TOSHIBA_TC358768 = no;
+        DRM_TOSHIBA_TC358775 = no;
+        DRM_TI_DLPC3433 = no;
+        DRM_TI_TDP158 = no;
+        DRM_TI_TFP410 = no;
+        DRM_TI_SN65DSI83 = no;
+        DRM_TI_SN65DSI86 = no;
+        DRM_TI_TPD12S015 = no;
+        DRM_WAVESHARE_BRIDGE = no;
+        DRM_ANALOGIX_ANX6345 = no;
+        DRM_ANALOGIX_ANX78XX = no;
+        DRM_ANALOGIX_ANX7625 = no;
+        DRM_I2C_ADV7511 = no;
+        DRM_CDNS_DSI = no;
+        DRM_CDNS_MHDP8546 = no;
+        # end of Display Interface Bridges
+
+        DRM_ETNAVIV = no;
+        DRM_HISI_HIBMC = no;
+        DRM_LOGICVC = no;
+        DRM_APPLETBDRM = no;
+        DRM_ARCPGU = no;
+        DRM_BOCHS = no;
+        DRM_CIRRUS_QEMU = no;
+        DRM_GM12U320 = no;
+        DRM_PANEL_MIPI_DBI = no;
+        DRM_PIXPAPER = no;
+        TINYDRM_HX8357D = no;
+        TINYDRM_ILI9163 = no;
+        TINYDRM_ILI9225 = no;
+        TINYDRM_ILI9341 = no;
+        TINYDRM_ILI9486 = no;
+        TINYDRM_MI0283QT = no;
+        TINYDRM_REPAPER = no;
+        TINYDRM_SHARP_MEMORY = no;
+        DRM_VBOXVIDEO = no;
+        DRM_GUD = no;
+        DRM_ST7571_I2C = no;
+        DRM_ST7586 = no;
+        DRM_ST7735R = no;
+        DRM_SSD130X = no;
+
+        FB = no;
+      })
+      (definePatch "rm-specific-backlight-lcd" {
+        LCD_CLASS_DEVICE = no;
+        BACKLIGHT_KTD253 = no;
+        BACKLIGHT_KTD2801 = no;
+        BACKLIGHT_KTZ8866 = no;
+        BACKLIGHT_QCOM_WLED = no;
+        BACKLIGHT_SAHARA = no;
+        BACKLIGHT_ADP8860 = no;
+        BACKLIGHT_ADP8870 = no;
+        BACKLIGHT_LM3509 = no;
+        BACKLIGHT_LM3630A = no;
+        BACKLIGHT_LM3639 = no;
+        BACKLIGHT_LP855X = no;
+        BACKLIGHT_MP3309C = no;
+        BACKLIGHT_LV5207LP = no;
+        BACKLIGHT_BD6107 = no;
+        BACKLIGHT_ARCXCNN = no;
+      })
+      (definePatch "rm-specific-audio-drivers" {
       })
     ];
   };

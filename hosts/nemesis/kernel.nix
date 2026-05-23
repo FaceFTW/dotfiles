@@ -163,50 +163,49 @@ in
         HFS_PLUS = yes;
       };
     }
+    { name = "rm-x86-platform-drivers"; }
+    { name = "rm-unused-driver-categories"; }
+    { name = "rm-unused-individual-drivers"; }
+    { name = "rm-net-top-level"; }
+    { name = "rm-net-dsa-drivers"; }
+    { name = "rm-net-ethernet-drivers"; }
     {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
+      name = "rm-net-wlan-drivers";
+      overrides = with lib.kernel; {
+        WLAN_VENDOR_INTEL = yes;
+        IPW2100 = no;
+        IPW2200 = no;
+        IWL4965 = no;
+        IWL3945 = no;
+      };
     }
+    { name = "rm-net-ethernet-specific-phy"; }
+    { name = "rm-parallel-ata"; }
+    { name = "rm-unused-graphics"; }
+    { name = "rm-hid-specific-keyboard"; }
+    { name = "rm-hid-specific-mouse"; }
+    { name = "rm-hid-misc"; }
+    { name = "rm-pcie-top-level"; }
+    { name = "rm-scsi-top-level"; }
+    { name = "rm-media-tuners"; }
+    { name = "rm-dallas-1wire"; }
+    { name = "rm-watchdogs-timers"; }
     {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
+      name = "rm-multifunction-device";
+      overrides = with lib.kernel; {
+        LPC_ICH = yes;
+        LPC_SCH = yes;
+        MFD_INTEL_LPSS_PCI = yes;
+      };
     }
+    { name = "rm-specific-regulators"; }
     {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
+      name = "rm-specific-graphics-drm";
+      overrides = with lib.kernel; {
+        DRM_I915 = yes;
+      };
     }
-    {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
-    }
-    {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
-    }
-    {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
-    }
-    {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
-    }
-    {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
-    }
-    {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
-    }
-    {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
-    }
-    {
-      name = "rm-unused-fs";
-      overrides = with lib.kernel; { };
-    }
+    { name = "rm-specific-backlight-lcd"; }
   ];
 }
 
