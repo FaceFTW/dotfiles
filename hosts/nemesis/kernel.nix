@@ -13,10 +13,10 @@ let
     ;
 
   betterLinuxPackage = pkgs.buildLinux {
-    version = "7.0.8";
+    version = "7.0.9";
     src = pkgs.fetchurl {
-      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.8.tar.xz";
-      hash = "sha256-GUWvsiyfT3x42XEhDzu7fesJ9djEGji/rHct4l9tyyI=";
+      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.9.tar.xz";
+      hash = "sha256-rAes33bPRiHMUYeiZwJwoaaZUzyKayJeSHjEFq2D8cQ=";
       # hash = lib.fakeHash;
     };
 
@@ -25,7 +25,7 @@ let
         ############################################
         # linux-surface patches
         ############################################
-        name = "microsoft-surface-patches-linux-v7.0.8";
+        name = "microsoft-surface-patches-linux-v7.0.9";
         patch = ./surface-kernel-patches-v7.0.5.patch;
         structuredExtraConfig = with lib.kernel; {
           ##

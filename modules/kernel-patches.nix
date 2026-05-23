@@ -627,7 +627,7 @@ in
       })
       (definePatch "rm-scsi-top-level" {
         CHR_DEV_ST = no; # SCSI Tape Drives
-        BLK_DEV_SR = no; # SCSI CD-ROM
+        # BLK_DEV_SR = no; # SCSI CD-ROM
         CHR_DEV_SCH = no; # SCSI Media Changer (like in jukeboxes)
 
         SCSI_SAS_ATTRS = no; # SCSI SAS Transport Attributes
