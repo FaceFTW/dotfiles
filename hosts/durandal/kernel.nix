@@ -8,14 +8,20 @@ let
     recurseIntoAttrs
     mkForce
     ;
+  crossPkgs = (
+    import pkgs.path {
+      localSystem.system = "x86_64-linux";
+      crossSystem.system = "aarch64-linux";
+    }
+  );
 in
 {
   # We use the RPi LTS Kernel via nixos-hardware
   # Cut it down to size to reduce the compile time
   boot.kernelPackages = recurseIntoAttrs (
     pkgs.linuxPackagesFor (
-      pkgs.buildLinux {
-        version = "6.18.32-rpi";
+      crossPkgs.buildLinux {
+        version = "6.18.32";
         src = pkgs.fetchgit {
           url = "https://github.com/raspberrypi/linux";
           rev = "bb5a64adb1b761406d0e3b6570c3d2668e9198f8";
@@ -33,16 +39,70 @@ in
             patch = null;
             structuredExtraConfig = with lib.kernel; {
               MEDIA_SUPPORT = no;
-              WLAN = no;
+              # WLAN = no;
               IEEE802154_DRIVERS = no;
               USB_NET_DRIVERS = no;
-              SOUND = mkForce no;
-              SND = mkForce no;
+              # SOUND = mkForce no;
+              # SND = mkForce no;
               SND_SOC_FSL_ASOC_CARD = no;
-              DRM = mkForce no;
+              SND_SOC = no;
+              SND_IMX_SOC = no;
+              # DRM = mkForce no;
               AUXDISPLAY = mkForce no;
               FB = no;
               HIPPI = mkForce no;
+              I2C_ISCH = no;
+              # ATA = no;
+              BLK_DEV_NVME = no;
+              CDROM = no;
+              CFG80211 = no;
+              MAC80211 = no;
+              # WIRELESS = no;
+
+              ARCH_ACTIONS = no;
+              ARCH_AIROHA = no;
+              ARCH_SUNXI = no;
+              ARCH_ALPINE = no;
+              ARCH_APPLE = no;
+              ARCH_ARTPEC = no;
+              ARCH_AXIADO = no;
+              ARCH_BERLIN = no;
+              ARCH_BITMAIN = no;
+              ARCH_BLAIZE = no;
+              ARCH_CIX = no;
+              ARCH_EXYNOS = no;
+              ARCH_K3 = no;
+              ARCH_LG1K = no;
+              ARCH_HISI = no;
+              ARCH_KEEMBAY = no;
+              ARCH_MEDIATEK = no;
+              ARCH_MESON = no;
+              ARCH_MICROCHIP = no;
+              ARCH_MMP = no;
+              ARCH_MVEBU = no;
+              ARCH_NXP = no;
+              ARCH_MA35 = no;
+              ARCH_NPCM = no;
+              ARCH_PENSANDO = no;
+              ARCH_QCOM = no;
+              ARCH_REALTEK = no;
+              ARCH_RENESAS = no;
+              ARCH_ROCKCHIP = no;
+              ARCH_SEATTLE = no;
+              ARCH_INTEL_SOCFPGA = no;
+              ARCH_SOPHGO = no;
+              ARCH_STM32 = no;
+              ARCH_SYNQUACER = no;
+              ARCH_TEGRA = no;
+              ARCH_TESLA_FSD = no;
+              ARCH_SPRD = no;
+              ARCH_THUNDER = no;
+              ARCH_THUNDER32 = no;
+              ARCH_UNIPHIER = no;
+              ARCH_VEXPRESS = no;
+              ARCH_VISCONTI = no;
+              ARCH_XGENE = no;
+              ARCH_ZYNQMP = no;
             };
           }
         ];
@@ -69,7 +129,6 @@ in
     {
       name = "rm-net-ethernet-specific-phy";
       overrides = with lib.kernel; {
-
         BROADCOM_PHY = yes;
         BCM54140_PHY = yes;
         BCM7XXX_PHY = yes;
@@ -88,23 +147,22 @@ in
     { name = "rm-scsi-top-level"; }
     { name = "rm-media-tuners"; }
     { name = "rm-dallas-1wire"; }
-    { name = "rm-watchdogs-timers"; }
+    { name = "rm-watchdog-timers"; }
     {
       name = "rm-multifunction-device";
       overrides = with lib.kernel; {
-        LPC_ICH = yes;
-        LPC_SCH = yes;
-        MFD_INTEL_LPSS_PCI = yes;
+        # I can't for the life of me figure out why this thing gets selected
+        MFD_WM8994 = yes;
       };
     }
     { name = "rm-specific-regulators"; }
-    {
-      name = "rm-specific-graphics-drm";
-      overrides = with lib.kernel; {
-        DRM_I915 = yes;
-      };
-    }
+    { name = "rm-specific-graphics-drm"; }
     { name = "rm-specific-backlight-lcd"; }
+    { name = "rm-specific-battery-sensors"; }
+    { name = "rm-specific-rtc-clocks"; }
+    { name = "rm-specific-hw-clocks"; }
+    { name = "rm-specific-pinctrl"; }
+    { name = "rm-specific-serial"; }
   ];
 
 }
