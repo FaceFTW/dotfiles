@@ -261,7 +261,7 @@ in
 
         B53 = no;
         FDDI = no; # Fiber Distributed Data Interface
-        HIPPI = no; # High Performance Parallel Interface
+        HIPPI = mkForce no; # High Performance Parallel Interface
         PPP = no;
         SLIP = no;
         USB_NET_DRIVERS = no;
@@ -632,8 +632,8 @@ in
       })
       (definePatch "rm-scsi-top-level" {
         CHR_DEV_ST = no; # SCSI Tape Drives
-        BLK_DEV_SR = no; # SCSI CD-ROM
-        CDROM = no;
+        # BLK_DEV_SR = no; # SCSI CD-ROM
+        # CDROM = no;
         CHR_DEV_SCH = no; # SCSI Media Changer (like in jukeboxes)
 
         # SCSI_SAS_ATTRS = no; # SCSI SAS Transport Attributes

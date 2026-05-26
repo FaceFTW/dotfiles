@@ -38,26 +38,8 @@ in
             name = "98-dont-build-unused-drivers";
             patch = null;
             structuredExtraConfig = with lib.kernel; {
-              MEDIA_SUPPORT = no;
-              # WLAN = no;
-              IEEE802154_DRIVERS = no;
-              USB_NET_DRIVERS = no;
-              # SOUND = mkForce no;
-              # SND = mkForce no;
-              SND_SOC_FSL_ASOC_CARD = no;
-              SND_SOC = no;
-              SND_IMX_SOC = no;
-              # DRM = mkForce no;
-              AUXDISPLAY = mkForce no;
-              FB = no;
-              HIPPI = mkForce no;
               I2C_ISCH = no;
-              # ATA = no;
-              BLK_DEV_NVME = no;
-              CDROM = no;
-              CFG80211 = no;
-              MAC80211 = no;
-              # WIRELESS = no;
+              DMA_BCM2708 = yes; # https://github.com/raspberrypi/linux/issues/1150
 
               ARCH_ACTIONS = no;
               ARCH_AIROHA = no;
@@ -153,6 +135,8 @@ in
       overrides = with lib.kernel; {
         # I can't for the life of me figure out why this thing gets selected
         MFD_WM8994 = yes;
+        MFD_ARIZONA_I2C = module;
+        MFD_ARIZONA_SPI = module;
       };
     }
     { name = "rm-specific-regulators"; }
