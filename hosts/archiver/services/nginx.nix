@@ -11,20 +11,16 @@
     enable = true;
 
     upstreams.immich.servers."localhost:2283" = { };
-    upstreams.syncthing-gui.servers."localhost:8384" = { };
-    upstreams.linkwarden.servers."localhost:3015" = { };
-    upstreams.backrest.servers."127.0.0.1:9898" = { };
 
-    virtualHosts.immich = {
-      serverName = "archiver";
+    virtualHosts."immich.faceftw.local" = {
+      # enableACME = true;
+      # forceSSL = true;
+
+      serverName = "immich.faceftw.local";
       listen = [
         {
           addr = "0.0.0.0";
-          port = 2284;
-        }
-        {
-          addr = "[::0]";
-          port = 2284;
+          port = 80;
         }
       ];
 
@@ -34,16 +30,13 @@
       locations."/".proxyWebsockets = true;
     };
 
-    virtualHosts.syncthing-gui = {
+    upstreams.syncthing-gui.servers."localhost:8384" = { };
+    virtualHosts."syncthing.archiver.faceftw.local" = {
       serverName = "archiver";
       listen = [
         {
           addr = "0.0.0.0";
-          port = 8385;
-        }
-        {
-          addr = "[::0]";
-          port = 8385;
+          port = 80;
         }
       ];
 
@@ -58,16 +51,13 @@
       locations."/".proxyPass = "http://syncthing-gui";
     };
 
-    virtualHosts.linkwarden = {
+    upstreams.linkwarden.servers."localhost:3015" = { };
+    virtualHosts."linkwarden.faceftw.local" = {
       serverName = "archiver";
       listen = [
         {
           addr = "0.0.0.0";
-          port = 3014;
-        }
-        {
-          addr = "[::0]";
-          port = 3014;
+          port = 80;
         }
       ];
 
@@ -76,20 +66,47 @@
       locations."/".proxyWebsockets = true;
     };
 
-    virtualHosts.backrest = {
-      serverName = "archiver";
+    upstreams.backrest.servers."127.0.0.1:9898" = { };
+    virtualHosts."backrest.faceftw.local" = {
+      serverName = "backrest.faceftw.local";
       listen = [
         {
           addr = "0.0.0.0";
-          port = 9897;
-        }
-        {
-          addr = "[::0]";
-          port = 9897;
+          port = 80;
         }
       ];
 
       locations."/".proxyPass = "http://backrest";
+      locations."/".recommendedProxySettings = true;
+      locations."/".proxyWebsockets = true;
+    };
+
+    upstreams.navidrome.servers."127.0.0.1:4533" = { };
+    virtualHosts."navidrome.faceftw.local" = {
+      serverName = "navidrome.faceftw.local";
+      listen = [
+        {
+          addr = "0.0.0.0";
+          port = 80;
+        }
+      ];
+
+      locations."/".proxyPass = "http://navidrome";
+      locations."/".recommendedProxySettings = true;
+      locations."/".proxyWebsockets = true;
+    };
+
+    upstreams.jellyfin.servers."127.0.0.1:8096" = { };
+    virtualHosts."jellyfin.faceftw.local" = {
+      serverName = "jellyfin.faceftw.local";
+      listen = [
+        {
+          addr = "0.0.0.0";
+          port = 80;
+        }
+      ];
+
+      locations."/".proxyPass = "http://jellyfin";
       locations."/".recommendedProxySettings = true;
       locations."/".proxyWebsockets = true;
     };

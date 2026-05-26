@@ -62,6 +62,7 @@
       syncthing.archiver     IN A      192.168.0.172
       garage                 IN A      192.168.0.172
       jellyfin               IN A      192.168.0.172
+      navidrome              IN A      192.168.0.172
 
       durandal               IN A      192.168.0.7
       pihole                 IN A      192.168.0.7

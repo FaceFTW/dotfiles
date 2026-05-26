@@ -8,6 +8,7 @@
     ./services/garage.nix
     ./services/linkwarden.nix
     ./services/mirror_jobs.nix
+    ./services/navidrome.nix
     ./services/nginx.nix
   ];
 

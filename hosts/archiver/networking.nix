@@ -3,6 +3,7 @@
   networking.hostName = "archiver";
   networking.firewall.allowedTCPPorts = [
     22 # SSH
+    80 # HTTP
     111 # Something Samba Related (Service Discovery?)
     2283 # Immich Direct
     2284 # Immich Proxy
