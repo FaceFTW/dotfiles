@@ -13,10 +13,10 @@ let
     ;
 
   betterLinuxPackage = pkgs.buildLinux {
-    version = "7.0.9";
+    version = "7.0.10";
     src = pkgs.fetchurl {
-      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.9.tar.xz";
-      hash = "sha256-rAes33bPRiHMUYeiZwJwoaaZUzyKayJeSHjEFq2D8cQ=";
+      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.10.tar.xz";
+      hash = "sha256-CUl362LCDj0ZOf6BqSlYofmH8zlEblMvqGljsoBOMtw=";
       # hash = lib.fakeHash;
     };
 
@@ -49,8 +49,8 @@ let
           BATTERY_SURFACE = module;
           CHARGER_SURFACE = module;
 
-          SENSORS_SURFACE_TEMP = module;
-          SENSORS_SURFACE_FAN = module;
+          SENSORS_SURFACE_TEMP = mkForce module;
+          SENSORS_SURFACE_FAN = mkForce module;
 
           RTC_DRV_SURFACE = module;
 
@@ -206,6 +206,17 @@ in
       };
     }
     { name = "rm-specific-backlight-lcd"; }
+    {
+      name = "rm-specific-battery-sensors";
+      overrides = with lib.kernel; {
+        BATTERY_SURFACE = module;
+        CHARGER_SURFACE = module;
+      };
+    }
+    { name = "rm-specific-rtc-clocks"; }
+    { name = "rm-specific-hw-clocks"; }
+    { name = "rm-specific-pinctrl"; }
+    { name = "rm-specific-serial"; }
   ];
 }
 

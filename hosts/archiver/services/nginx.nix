@@ -1,6 +1,4 @@
 {
-  pkgs,
-  lib,
   ...
 }:
 {
@@ -53,7 +51,7 @@
 
     upstreams.linkwarden.servers."localhost:3015" = { };
     virtualHosts."linkwarden.faceftw.local" = {
-      serverName = "archiver";
+      serverName = "linkwarden.faceftw.local";
       listen = [
         {
           addr = "0.0.0.0";

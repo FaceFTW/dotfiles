@@ -6,17 +6,11 @@
     80 # HTTP
     111 # Something Samba Related (Service Discovery?)
     2283 # Immich Direct
-    3015 # Linkwarden
     3900 # Garage S3 API
     3901 # Garage RPC
     3902 # Garage S3 Web
     3903 # Garage S3 Admin
     4533 # Navidrome
-    8384 # Syncthing GUI
-    9898 # Backrest
-  ];
-  networking.firewall.allowedUDPPorts = [
-    5353 # mDNS
   ];
   networking.firewall.allowPing = true;
 
