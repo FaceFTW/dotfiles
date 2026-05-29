@@ -1,5 +1,7 @@
 {
+  config,
   pkgs,
+
   ...
 }:
 {
@@ -20,10 +22,10 @@
 
     s3_api.s3_region = "archiver";
     s3_api.api_bind_addr = "[::]:3900";
-    s3_api.root_domain = ".s3.archiver.local";
+    s3_api.root_domain = ".s3.garage.faceftw.local";
 
     s3_web.bind_addr = "[::]:3902";
-    s3_web.root_domain = ".s3-gui.archiver.local";
+    s3_web.root_domain = ".web.garage.faceftw.local";
     index = "index.html";
 
     k2v_api.api_bind_addr = "[::]:3904";
@@ -34,4 +36,28 @@
   };
   services.garage.package = pkgs.garage_2;
 
+  ############################################
+  # Garage Web UI
+  ############################################
+  systemd.services.garage-web-ui = {
+    wantedBy = [
+      "default.target"
+    ];
+    after = [
+      "network.target"
+      "garage.service"
+    ];
+    wants = [
+      "garage.service"
+    ];
+
+    environment.PORT = "3919";
+    environment.CONFIG_PATH = "/etc/garage.toml";
+    environment.API_ADMIN_KEY_FILE = "%d/GARAGE_ADMIN_TOKEN";
+
+    serviceConfig.LoadCredential = [ "GARAGE_ADMIN_TOKEN:/run/secrets/garage_admin_token" ];
+    serviceConfig.User = "garage";
+    serviceConfig.Group = "garage";
+    serviceConfig.ExecStart = "${pkgs.garage-webui}/bin/garage-webui";
+  };
 }
