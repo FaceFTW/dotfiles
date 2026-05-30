@@ -77,6 +77,7 @@ in
         export PATH=$HOME/.local/share/bin:$PATH
       '';
 
+
       nix-utils = lib.mkOrder 1200 ''
         function build-closure() {
           ### PARAMETERS
@@ -118,7 +119,7 @@ in
             --key-file /etc/secrets/nix-cache.pem
 
           nix copy --all \
-            --to 's3://nix-cache?endpoint=192.168.0.172:3900&scheme=http&region=archiver' \
+            --to 's3://nix-cache?endpoint=s3.garage.faceftw.local&scheme=http&region=archiver' \
             --option narinfo-cache-positive-ttl 0
         }
 

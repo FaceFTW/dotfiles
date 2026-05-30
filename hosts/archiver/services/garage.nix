@@ -34,6 +34,38 @@
   };
   services.garage.package = pkgs.garage_2;
 
+  # Nginx Reverse Proxy Config - S3
+  services.nginx.upstreams.garage-s3.servers."127.0.0.1:3900" = { };
+  services.nginx.virtualHosts."s3.garage.faceftw.local" = {
+    serverName = "s3.garage.faceftw.local *.s3.garage.faceftw.local";
+    listen = [
+      {
+        addr = "0.0.0.0";
+        port = 80;
+      }
+    ];
+
+    locations."/".proxyPass = "http://garage-s3";
+    locations."/".recommendedProxySettings = true;
+    locations."/".proxyWebsockets = true;
+  };
+
+  # Nginx Reverse Proxy Config - Web bucket
+  services.nginx.upstreams.garage-web.servers."127.0.0.1:3902" = { };
+  services.nginx.virtualHosts."web.garage.faceftw.local" = {
+    serverName = "web.garage.faceftw.local *.web.garage.faceftw.local";
+    listen = [
+      {
+        addr = "0.0.0.0";
+        port = 80;
+      }
+    ];
+
+    locations."/".proxyPass = "http://garage-web";
+    locations."/".recommendedProxySettings = true;
+    locations."/".proxyWebsockets = true;
+  };
+
   ############################################
   # Garage Web UI
   ############################################

@@ -61,6 +61,10 @@
       backrest               IN A      192.168.0.172
       syncthing.archiver     IN A      192.168.0.172
       garage                 IN A      192.168.0.172
+      s3.garage              IN A      192.168.0.172
+      *.s3.garage            IN CNAME  s3.garage.faceftw.local.
+      web.garage             IN A      192.168.0.172
+      *.web.garage           IN CNAME  web.garage.faceftw.local.
       jellyfin               IN A      192.168.0.172
       navidrome              IN A      192.168.0.172
 
