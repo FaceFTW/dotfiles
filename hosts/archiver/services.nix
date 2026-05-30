@@ -1,16 +1,20 @@
 {
-  config,
   pkgs,
   ...
 }:
 {
   imports = [
+    ./services/backrest.nix
     ./services/garage.nix
+    ./services/immich.nix
+    ./services/jellyfin.nix
     ./services/linkwarden.nix
     ./services/mirror_jobs.nix
     ./services/navidrome.nix
-    ./services/nginx.nix
+    ./services/syncthing.nix
   ];
+
+  services.nginx.enable = true;
 
   services.smartd.enable = true;
   services.smartd.defaults.monitored = "-a -m <nomailer> -M exec ${pkgs.smartd-notif-event}/bin/smartd-notif-event -s (S/../.././03|L/../(2|4)/./04)";
@@ -42,62 +46,6 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH3fuhneqp6s6Ye9hHb60QrXq8vlu5INzeKlgiPtO5Pq alex@faceftw.dev"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIWujFooZO+HsXm4hRgrhqlntUMQrBiSixgwC70bzE96 face@nemesis"
   ];
-
-  ############################################
-  # Jellyfin
-  ############################################
-  systemUser.jellyfin.home = "/mnt/motorway/var/jellyfin";
-
-  services.jellyfin = {
-    enable = true;
-    cacheDir = "/mnt/motorway/var/jellyfin/cache";
-    configDir = "/mnt/motorway/var/jellyfin/config";
-    dataDir = "/mnt/motorway/var/jellyfin/data";
-    logDir = "/mnt/motorway/var/jellyfin/logs";
-    openFirewall = true;
-    user = "jellyfin";
-    group = "jellyfin";
-  };
-  systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD";
-
-  ############################################
-  # Syncthing
-  ############################################
-  servicesCustom.syncthing.enable = true;
-  servicesCustom.syncthing.key = "/run/secrets/syncthing/key.pem";
-  servicesCustom.syncthing.cert = "/run/secrets/syncthing/cert.pem";
-  servicesCustom.syncthing.accessibleFolders = [ "/mnt/motorway/Workspaces" ];
-  servicesCustom.syncthing.folderOwner = "face";
-
-  ############################################
-  # Immich
-  ############################################
-  systemUser.immich.home = "/mnt/motorway/var/immich";
-
-  services.immich = {
-    enable = true;
-    user = "immich";
-    group = "immich";
-
-    openFirewall = true;
-    secretsFile = config.sops.secrets.immich_secrets.path;
-    mediaLocation = "/mnt/motorway/var/immich/data";
-    database.enable = true;
-  };
-
-  ############################################
-  # Backrest
-  ############################################
-  systemUser.backrest.home = "/mnt/motorway/var/backrest";
-
-  servicesCustom.backrest = {
-    enable = true;
-    configPath = "/mnt/motorway/var/backrest/config.json";
-    dataDir = "/mnt/motorway/var/backrest/data";
-    cacheDir = "/mnt/motorway/var/backrest/cache";
-    user = "backrest";
-    group = "backrest";
-  };
 
   ############################################
   # Postgres (Shared)

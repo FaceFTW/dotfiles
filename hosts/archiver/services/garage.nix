@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-
   ...
 }:
 {
@@ -59,5 +57,21 @@
     serviceConfig.User = "garage";
     serviceConfig.Group = "garage";
     serviceConfig.ExecStart = "${pkgs.garage-webui}/bin/garage-webui";
+  };
+
+  # Nginx Reverse Proxy Config
+  services.nginx.upstreams.garage-ui.servers."127.0.0.1:3919" = { };
+  services.nginx.virtualHosts."garage.faceftw.local" = {
+    serverName = "garage.faceftw.local";
+    listen = [
+      {
+        addr = "0.0.0.0";
+        port = 80;
+      }
+    ];
+
+    locations."/".proxyPass = "http://garage-ui";
+    locations."/".recommendedProxySettings = true;
+    locations."/".proxyWebsockets = true;
   };
 }

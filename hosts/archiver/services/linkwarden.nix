@@ -21,4 +21,20 @@
     secretFiles.POSTGRES_PASSWORD = "/run/secrets/linkwarden_postgres_password";
     enableRegistration = true;
   };
+
+  # Nginx Reverse Proxy Config
+   services.nginx. upstreams.linkwarden.servers."localhost:3015" = { };
+    services.nginx.virtualHosts."linkwarden.faceftw.local" = {
+    serverName = "linkwarden.faceftw.local";
+    listen = [
+      {
+        addr = "0.0.0.0";
+        port = 80;
+      }
+    ];
+
+    locations."/".proxyPass = "http://linkwarden";
+    locations."/".recommendedProxySettings = true;
+    locations."/".proxyWebsockets = true;
+  };
 }
