@@ -158,6 +158,16 @@
       images.durandal = nixosConfigurations.durandal.config.system.build.image;
 
       ############################################
+      # port-authority
+      ############################################
+      nixosConfigurations.port-authority = nixpkgs.lib.nixosSystem {
+        system = "";
+        specialArgs = { inherit inputs; };
+        modules = withOverlays ./hosts/port-authority/default.nix;
+      };
+      images.port-authority = nixosConfigurations.port-authority.config.system.build.image;
+
+      ############################################
       # Dev Shells
       ############################################
       devShells = forAllSystems (
