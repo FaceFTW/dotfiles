@@ -604,7 +604,7 @@ in
 
         INPUT_TABLET = no;
         INPUT_TOUCHSCREEN = no;
-        INPUT_MISC = no;
+        # INPUT_MISC = no;
       })
       (definePatch "rm-pcie-top-level" {
         PCI_SW_SWITCHTEC = no;
@@ -975,7 +975,7 @@ in
         MFD_NTXEC = no;
         MFD_RETU = no;
         MFD_SY7636A = no;
-        CONFIG_MFD_RDC321X = no;
+        MFD_RDC321X = no;
         MFD_RT4831 = no;
         MFD_RT5033 = no;
         MFD_RT5120 = no;

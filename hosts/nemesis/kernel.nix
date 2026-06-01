@@ -49,8 +49,8 @@ let
           BATTERY_SURFACE = module;
           CHARGER_SURFACE = module;
 
-          SENSORS_SURFACE_TEMP = mkForce module;
-          SENSORS_SURFACE_FAN = mkForce module;
+          SENSORS_SURFACE_TEMP = module;
+          SENSORS_SURFACE_FAN = module;
 
           RTC_DRV_SURFACE = module;
 
@@ -114,6 +114,9 @@ let
           SURFACE_GPE = module;
           SURFACE_BOOK1_DGPU_SWITCH = module;
           HID_SURFACE = module;
+
+          # Breakfixes for somewhere eventually
+          GPIO_RDC321X = no;
         };
       }
 
@@ -211,12 +214,20 @@ in
       overrides = with lib.kernel; {
         BATTERY_SURFACE = module;
         CHARGER_SURFACE = module;
+        SENSORS_SURFACE_FAN = module;
+        SENSORS_SURFACE_TEMP = module;
       };
     }
     { name = "rm-specific-rtc-clocks"; }
     { name = "rm-specific-hw-clocks"; }
     { name = "rm-specific-pinctrl"; }
-    { name = "rm-specific-serial"; }
+    {
+      name = "rm-specific-serial";
+      overrides = with lib.kernel; {
+        SERIAL_8250_DW = module;
+        SERIAL_8250_DWLIB = module;
+      };
+    }
   ];
 }
 
