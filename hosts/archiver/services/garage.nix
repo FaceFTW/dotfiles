@@ -48,6 +48,9 @@
     locations."/".proxyPass = "http://garage-s3";
     locations."/".recommendedProxySettings = true;
     locations."/".proxyWebsockets = true;
+    extraConfig = ''
+      chunked_transfer_encoding off;
+    '';
   };
 
   # Nginx Reverse Proxy Config - Web bucket
@@ -64,6 +67,9 @@
     locations."/".proxyPass = "http://garage-web";
     locations."/".recommendedProxySettings = true;
     locations."/".proxyWebsockets = true;
+    extraConfig = ''
+      chunked_transfer_encoding off;
+    '';
   };
 
   ############################################

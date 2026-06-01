@@ -27,28 +27,28 @@
     ];
   };
 
-  servicesCustom.mirror.archive-kleiner = {
-    notification-title = "Archiver - Archive to Kleiner Mirror";
-    cron = "Sun *-*-* 10:00:00";
-    source = "/mnt/archive";
-    destination = "/mnt/kleiner";
-    mounts = [
-      "mnt-archive.mount"
-      "mnt-freeman.mount"
-    ];
-    exclude = [
-      "/SteamBackups"
-      "/Misc_Large"
-      "/SteamLibrary"
-      "/TV\ Shows"
-      "/Movies"
-    ];
-    filters = [
-      "protect Autorun.inf"
-      "protect .VolumeIcon.ico"
-      "protect .VolumeIcon.icns"
-    ];
-  };
+  # servicesCustom.mirror.archive-kleiner = {
+  #   notification-title = "Archiver - Archive to Kleiner Mirror";
+  #   cron = "Sun *-*-* 10:00:00";
+  #   source = "/mnt/archive";
+  #   destination = "/mnt/kleiner";
+  #   mounts = [
+  #     "mnt-archive.mount"
+  #     "mnt-freeman.mount"
+  #   ];
+  #   exclude = [
+  #     "/SteamBackups"
+  #     "/Misc_Large"
+  #     "/SteamLibrary"
+  #     "/TV\ Shows"
+  #     "/Movies"
+  #   ];
+  #   filters = [
+  #     "protect Autorun.inf"
+  #     "protect .VolumeIcon.ico"
+  #     "protect .VolumeIcon.icns"
+  #   ];
+  # };
 
   servicesCustom.mirror.immich-archive = {
     notification-title = "Archiver - Immich to Archive Mirror";
