@@ -976,6 +976,7 @@ in
         MFD_RETU = no;
         MFD_SY7636A = no;
         MFD_RDC321X = no;
+        GPIO_RDC321X = no;
         MFD_RT4831 = no;
         MFD_RT5033 = no;
         MFD_RT5120 = no;

@@ -23,21 +23,24 @@
     "kunit.enable=0"
   ];
 
+  boot.initrd.availableKernelModules = [
+    "pcie-brcmstb" # required for the pcie bus to work
+    "reset-raspberrypi" # required for vl805 firmware to load
+  ];
+  boot.initrd.systemd.tpm2.enable = false;
+  boot.loader.grub.enable = false;
+  boot.loader.generic-extlinux-compatible.enable = true;
+  boot.loader.generic-extlinux-compatible.configurationLimit = 2;
+
   hardware.bluetooth.enable = false;
 
-  hardware.raspberry-pi."4" = {
-    apply-overlays-dtmerge.enable = true;
-    poe-plus-hat.enable = true;
-  };
+  # hardware.raspberry-pi."4" = {
+  #   apply-overlays-dtmerge.enable = true;
+  #   poe-plus-hat.enable = true;
+  # };
 
   hardware.deviceTree.enable = true;
-  hardware.deviceTree.filter = "bcm2711-rpi-4*.dtb";
-  hardware.deviceTree.overlays = [
-    {
-      name = "disable-bt";
-      dtsFile = ../../devicetree/disable-bt-overlay.dts;
-    }
-  ];
+  hardware.deviceTree.filter = "bcm2837-rpi-zero-2*";
 
   ############################################
   # udev Configuration

@@ -39,6 +39,7 @@ in
     rollback-nix = "sudo nixos-rebuild switch --no-reexec --rollback --print-build-logs --flake ~/.config/dotfiles";
     build-fabricator-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.fabricator";
     build-durandal-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.durandal";
+    build-port-authority-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.port-authority";
   };
 
   zsh.history = {
@@ -76,7 +77,6 @@ in
 
         export PATH=$HOME/.local/share/bin:$PATH
       '';
-
 
       nix-utils = lib.mkOrder 1200 ''
         function build-closure() {

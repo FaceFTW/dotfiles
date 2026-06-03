@@ -2,9 +2,9 @@
   ...
 }:
 {
-  networking.hostName = "durandal";
+  networking.hostName = "port-authority";
   networking.firewall.allowedTCPPorts = [
-    80
+    22
   ];
   networking.firewall.allowPing = true;
 
@@ -20,8 +20,8 @@
     matchConfig.Name = "end0";
     networkConfig.DHCP = "ipv4";
     networkConfig.IPv6AcceptRA = true;
-    networkConfig.MulticastDNS = "yes";
-    linkConfig.RequiredForOnline = true;
+    networkConfig.MulticastDNS = "no";
+    # linkConfig.RequiredForOnline = true;
   };
   systemd.services.systemd-udevd.restartIfChanged = false;
 

@@ -29,11 +29,12 @@ in
           # hash = lib.fakeHash;
         };
 
+        defconfig = ./rpi-zero-2-defconfig;
+
         kernelPatches = [
           ############################################
           # Config to reduce extra module builds
           ############################################
-          # These are modules that I really will likely not need
           {
             name = "98-dont-build-unused-drivers";
             patch = null;
@@ -99,7 +100,12 @@ in
     { name = "rm-x86-platform-drivers"; }
     { name = "rm-unused-driver-categories"; }
     { name = "rm-unused-individual-drivers"; }
-    { name = "rm-net-top-level"; }
+    {
+      name = "rm-net-top-level";
+      overrides = with lib.kernel; {
+        USB_NET_DRIVERS = yes;
+      };
+    }
     { name = "rm-net-dsa-drivers"; }
     {
       name = "rm-net-ethernet-drivers";
@@ -145,7 +151,12 @@ in
     { name = "rm-specific-battery-sensors"; }
     { name = "rm-specific-rtc-clocks"; }
     { name = "rm-specific-hw-clocks"; }
-    { name = "rm-specific-pinctrl"; }
+    {
+      name = "rm-specific-pinctrl";
+      overrides = with lib.kernel; {
+        PINCTRL_BCM2712 = yes;
+      };
+    }
     { name = "rm-specific-serial"; }
   ];
 
