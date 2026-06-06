@@ -33,6 +33,10 @@ let
 
     arm_boost=1
 
+    [pi02]
+    kernel=u-boot-rpi-common.bin
+    enable_gic=1
+    armstub=armstub8-gic.bin
 
     [all]
     arm_64bit=1
@@ -188,6 +192,7 @@ in
 
         # Add pi3 specific files
         cp ${pkgs.ubootRaspberryPi3_64bit}/u-boot.bin firmware/u-boot-rpi3.bin
+        cp ${pkgs.ubootRaspberryPiAarch64}/u-boot.bin firmware/u-boot-rpi-common.bin
         cp ${pkgs.raspberrypifw}/share/raspberrypi/boot/bcm2710-rpi-2-b.dtb firmware/
         cp ${pkgs.raspberrypifw}/share/raspberrypi/boot/bcm2710-rpi-3-b.dtb firmware/
         cp ${pkgs.raspberrypifw}/share/raspberrypi/boot/bcm2710-rpi-3-b-plus.dtb firmware/

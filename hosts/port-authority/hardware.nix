@@ -5,7 +5,10 @@
   ############################################
   # Hardware Configuration
   ############################################
-  boot.kernelModules = [ ];
+  boot.kernelModules = [
+    # "dwc2"
+    # "g_ether"
+  ];
   boot.blacklistedKernelModules = [
     "dw_hdmi"
     "bluetooth"
@@ -21,32 +24,31 @@
     "system_heap.max_order=0"
     "fsck.repair=yes"
     "kunit.enable=0"
+    "console=ttyS0,115200n8"
+    "console=tty0"
   ];
 
   boot.initrd.availableKernelModules = [
     "pcie-brcmstb" # required for the pcie bus to work
     "reset-raspberrypi" # required for vl805 firmware to load
+    # "dwc2"
+    # "g_ether"
   ];
   boot.initrd.systemd.tpm2.enable = false;
   boot.loader.grub.enable = false;
+
   boot.loader.generic-extlinux-compatible.enable = true;
   boot.loader.generic-extlinux-compatible.configurationLimit = 2;
 
   hardware.bluetooth.enable = false;
 
-  # hardware.raspberry-pi."4" = {
-  #   apply-overlays-dtmerge.enable = true;
-  #   poe-plus-hat.enable = true;
-  # };
-
   hardware.deviceTree.enable = true;
-  hardware.deviceTree.filter = "bcm2837-rpi-zero-2*";
+  hardware.deviceTree.filter = "bcm2*-rpi-3-b*";
+
 
   ############################################
   # udev Configuration
   ############################################
   services.udev.enable = true;
-  # services.udev.extraRules = ''
-  # '';
 
 }
