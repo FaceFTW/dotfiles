@@ -29,14 +29,11 @@ in
           # hash = lib.fakeHash;
         };
 
-        defconfig = ./rpi-zero-2-defconfig;
-
         kernelPatches = [
-          pkgs.kernelPatches.bridge_stp_helper
-          pkgs.kernelPatches.request_key_helper
           ############################################
           # Config to reduce extra module builds
           ############################################
+          # These are modules that I really will likely not need
           {
             name = "98-dont-build-unused-drivers";
             patch = null;
@@ -91,33 +88,8 @@ in
             };
           }
         ];
+
         ignoreConfigErrors = true;
-
-        # TODO: Put CONFIG_LOCALVERSION in `structuredExtraConfig` above once this is resolved:
-        # https://github.com/NixOS/nixpkgs/issues/516936
-        postConfigure = ''
-          sed -i $buildRoot/.config -e 's/^CONFIG_LOCALVERSION=.*/CONFIG_LOCALVERSION=""/'
-          sed -i $buildRoot/include/config/auto.conf -e 's/^CONFIG_LOCALVERSION=.*/CONFIG_LOCALVERSION=""/'
-        '';
-
-        # The vendor kernel uses different DTB names (bcm2708/bcm2709/bcm2710) than what
-        # U-Boot expects (bcm2835/bcm2836/bcm2837). Starting with Pi 4, names match.
-        # See: https://github.com/u-boot/u-boot/blob/master/board/raspberrypi/rpi/rpi.c
-        postFixup = ''
-          	dtbDir="$out/dtbs/broadcom"
-            rm $dtbDir/bcm283*.dtb
-            copyDTB() {
-              cp -v "$dtbDir/$1" "$dtbDir/$2"
-            }
-
-            copyDTB bcm2710-rpi-zero-2.dtb bcm2837-rpi-zero-2.dtb
-            copyDTB bcm2710-rpi-zero-2-w.dtb bcm2837-rpi-zero-2-w.dtb
-            copyDTB bcm2710-rpi-3-b.dtb bcm2837-rpi-3-b.dtb
-            copyDTB bcm2710-rpi-3-b-plus.dtb bcm2837-rpi-3-a-plus.dtb
-            copyDTB bcm2710-rpi-3-b-plus.dtb bcm2837-rpi-3-b-plus.dtb
-            copyDTB bcm2710-rpi-cm3.dtb bcm2837-rpi-cm3.dtb
-        '';
-
       }
     )
   );
@@ -127,12 +99,7 @@ in
     { name = "rm-x86-platform-drivers"; }
     { name = "rm-unused-driver-categories"; }
     { name = "rm-unused-individual-drivers"; }
-    {
-      name = "rm-net-top-level";
-      overrides = with lib.kernel; {
-        USB_NET_DRIVERS = yes;
-      };
-    }
+    { name = "rm-net-top-level"; }
     { name = "rm-net-dsa-drivers"; }
     {
       name = "rm-net-ethernet-drivers";
@@ -178,12 +145,7 @@ in
     { name = "rm-specific-battery-sensors"; }
     { name = "rm-specific-rtc-clocks"; }
     { name = "rm-specific-hw-clocks"; }
-    {
-      name = "rm-specific-pinctrl";
-      overrides = with lib.kernel; {
-        PINCTRL_BCM2712 = yes;
-      };
-    }
+    { name = "rm-specific-pinctrl"; }
     { name = "rm-specific-serial"; }
   ];
 

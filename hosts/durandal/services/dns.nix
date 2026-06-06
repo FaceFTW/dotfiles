@@ -51,9 +51,7 @@
 
       @                   IN NS   dns.faceftw.local.
 
-
-
-      dns                    IN A      192.168.0.172
+      dns                    IN A      192.168.0.7
 
       archiver               IN A      192.168.0.172
       immich                 IN A      192.168.0.172
@@ -70,6 +68,8 @@
 
       durandal               IN A      192.168.0.7
       pihole                 IN A      192.168.0.7
+
+      port-authority         IN A      192.168.0.26
     '';
   };
 

@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    # inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     ../../modules/core.nix
@@ -27,16 +27,16 @@
   ############################################
   # User Settings
   ############################################
-  defaultUser.password.type = "initialPassword";
-  defaultUser.password.value = "";
-  # defaultUser.password.value = config.sops.secrets.user_passwd.path;
+  defaultUser.password.type = "sops";
+  # defaultUser.password.value = "";
+  defaultUser.password.value = config.sops.secrets.user_passwd.path;
 
   ############################################
   # SOPS Settings
   ############################################
-  # sops.defaultSopsFile = ./secrets.yaml;
-  # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  # sops.secrets.user_passwd.neededForUsers = true;
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets.user_passwd.neededForUsers = true;
 
   ############################################
   # Services
