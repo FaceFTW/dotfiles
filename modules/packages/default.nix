@@ -125,6 +125,8 @@ in
         pkgs.nix-tree
         pkgs.nix-index
         pkgs.nil
+
+        pkgs.prune-nix-cache
       ];
     })
     ############################################

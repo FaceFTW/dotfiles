@@ -9,7 +9,7 @@
     inputs.nixos-wsl.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     ./core.nix
-    ./kernel.nix
+    ./kernel-tunables.nix
     ./packages
     ./user.nix
   ];
