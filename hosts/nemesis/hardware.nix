@@ -70,7 +70,7 @@
         # linux-surface patches
         ############################################
         name = "microsoft-surface-patches-linux-v7.0.11";
-        patch = ./surface-kernel-patches-v7.0.5.patch;
+        patch = ./surface-kernel-patches-v7.0.11.patch;
         structuredExtraConfig = with lib.kernel; {
           ##
           ## Surface Aggregator Module
