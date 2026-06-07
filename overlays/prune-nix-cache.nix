@@ -16,7 +16,7 @@ final: prev: {
       -F " +" \
       -v d="$PRUNE_DATE" \
       -v dp="(....)/(..)/(..)" \
-      'BEGIN {gensub(dp, "\1\2\3", d)} {dt=$1; gensub(dp, "\3\2\1", dt);} {if (dt >= d) print $4}' \
+      'BEGIN {gensub(dp, "\1\2\3", d)} {dt=$1; gensub(dp, "\3\2\1", dt);} {if (dt <= d) print $4}' \
     	"$BUCKET_LIST" \
      > "$FILTERED_LIST"
 
