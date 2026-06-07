@@ -11,15 +11,14 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.silentSDDM.nixosModules.default
     ../../modules/core.nix
-    ../../modules/kernel.nix
-    ../../modules/kernel-patches.nix
+    ../../modules/kernel-build.nix
+    ../../modules/kernel-tunables.nix
     ../../modules/packages
     ../../modules/services
     ../../modules/user.nix
     ./desktop.nix
     ./disks.nix
     ./hardware.nix
-    ./kernel.nix
     ./networking.nix
     ./services.nix
   ];

@@ -9,7 +9,6 @@ let
     recurseIntoAttrs
     mkForce
     mkOption
-    mkEnableOption
     types
     mergeAttrsList
     ;
@@ -21,7 +20,10 @@ in
     src = mkOption { type = types.package; };
     extraConfig = mkOption { type = types.attrs; };
     patches = mkOption { type = with types; listOf attrs; };
-    crossCompile = mkOption { type = types.bool; };
+    crossCompile = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config =
@@ -1205,7 +1207,7 @@ in
                   DRM_XE = no;
                   DRM_VGEM = no;
                   DRM_VKMS = no;
-                  DRM_GMA500 = no;
+                  DRM_GMA500 = mkForce no;
                   DRM_UDL = no;
                   DRM_AST = no;
                   DRM_MGAG200 = no;

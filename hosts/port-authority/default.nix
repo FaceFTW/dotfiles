@@ -10,15 +10,13 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     ../../modules/core.nix
-    ../../modules/kernel.nix
-    ../../modules/kernel-patches.nix
+    ../../modules/kernel-build.nix
+    ../../modules/kernel-tunables.nix
     ../../modules/image.nix
     ../../modules/packages
     ../../modules/services
     ../../modules/user.nix
     ./hardware.nix
-    ./kernel.nix
-    ../../modules/kernel-build.nix
     ./networking.nix
     # ./services.nix
   ];
