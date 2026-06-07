@@ -18,6 +18,7 @@
     ../../modules/user.nix
     ./hardware.nix
     ./kernel.nix
+    ../../modules/kernel-build.nix
     ./networking.nix
     # ./services.nix
   ];
