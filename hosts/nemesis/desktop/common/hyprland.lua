@@ -41,7 +41,7 @@ hl.on("hyprland.start", function()
 
 	hl.exec_cmd("sleep 5; $hyprscripts/check_setup_warnings.sh &")
 
-	hl.exec_cmd("XXX_START_BITWARDEN_DESKTOP_XXX")
+	-- hl.exec_cmd("XXX_START_BITWARDEN_DESKTOP_XXX")
 
 	--- XXX_EXTRA_STARTUP_XXX
 end)

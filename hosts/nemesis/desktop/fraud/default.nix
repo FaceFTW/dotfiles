@@ -91,10 +91,10 @@ in
         "XXX_START_VICINAE_XXX"
         "${pkgs.vicinae}/bin/vicinae server &"
       ]
-      [
-        "XXX_START_BITWARDEN_DESKTOP_XXX"
-        "${pkgs.bitwarden-desktop}/bin/bitwarden &"
-      ]
+      # [
+      #   "XXX_START_BITWARDEN_DESKTOP_XXX"
+      #   "${pkgs.bitwarden-desktop}/bin/bitwarden &"
+      # ]
       [
         "--- XXX_EXTRA_STARTUP_XXX"
         ''

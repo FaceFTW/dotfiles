@@ -251,8 +251,8 @@ in
   ############################################
   ssh.enable = true;
   ssh.enableDefaultConfig = false;
-  ssh.extraConfig = "AddKeysToAgent yes";
-  ssh.matchBlocks."*" = { };
+  # ssh.extraConfig = "";
+  ssh.settings."*".AddKeysToAgent = "yes";
 
   ############################################
   # fastfetch Config

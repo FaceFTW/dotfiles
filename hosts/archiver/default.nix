@@ -11,7 +11,7 @@
     inputs.sops-nix.nixosModules.sops
     inputs.disko.nixosModules.disko
     ../../modules/core.nix
-    ../../modules/kernel.nix
+    ../../modules/kernel-tunables.nix
     ../../modules/packages
     ../../modules/services
     ../../modules/user.nix

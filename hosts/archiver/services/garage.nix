@@ -50,6 +50,7 @@
     locations."/".proxyWebsockets = true;
     extraConfig = ''
       chunked_transfer_encoding off;
+      client_max_body_size 4g;
     '';
   };
 
