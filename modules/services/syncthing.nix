@@ -50,8 +50,8 @@ in
   config = mkMerge [
     (mkIf (servicesCustom.syncthing.enable && !servicesCustom.syncthing.user-level) {
       # https://nitinpassa.com/running-syncthing-as-a-system-user-on-nixos/
-      systemUser.syncthing.home = "/var/lib/syncthing";
-      systemUser.syncthing.extraGroups = [ "users" ];
+      modules.users.system.syncthing.home = "/var/lib/syncthing";
+      modules.users.system.syncthing.extraGroups = [ "users" ];
 
       services.syncthing.enable = true;
       services.syncthing.openDefaultPorts = true;

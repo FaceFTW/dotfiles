@@ -5,7 +5,7 @@
   ############################################
   # Backrest
   ############################################
-  systemUser.backrest.home = "/mnt/motorway/var/backrest";
+  modules.users.system.backrest.home = "/mnt/motorway/var/backrest";
 
   servicesCustom.backrest = {
     enable = true;

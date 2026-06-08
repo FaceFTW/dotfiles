@@ -6,7 +6,7 @@
   ############################################
   # Immich
   ############################################
-  systemUser.immich.home = "/mnt/motorway/var/immich";
+  modules.users.system.immich.home = "/mnt/motorway/var/immich";
 
   services.immich = {
     enable = true;

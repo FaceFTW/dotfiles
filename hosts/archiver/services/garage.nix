@@ -6,7 +6,7 @@
   ############################################
   # Nix Binary Cache (S3 via Garage)
   ############################################
-  systemUser.garage.home = "/mnt/motorway/var/garage";
+  modules.users.system.garage.home = "/mnt/motorway/var/garage";
   services.garage.enable = true;
   services.garage.settings = {
     data_dir = "/mnt/motorway/var/garage/data";

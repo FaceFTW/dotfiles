@@ -88,7 +88,6 @@
     enable = true;
     ports = [ 80 ];
   };
-  defaultUser.extraGroups = [ "pihole" ];
 
   systemd.tmpfiles.rules = [
     # Type Path Mode User Group Age Argument

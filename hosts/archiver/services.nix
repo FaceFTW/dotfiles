@@ -50,7 +50,7 @@
   ############################################
   # Postgres (Shared)
   ############################################
-  systemUser.postgres.home = "/mnt/motorway/var/postgres";
+  modules.users.system.postgres.home = "/mnt/motorway/var/postgres";
   services.postgresql.dataDir = "/mnt/motorway/var/postgres";
   services.postgresql.settings.max_connections = 200;
 

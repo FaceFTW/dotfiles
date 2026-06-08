@@ -4,8 +4,8 @@
   ...
 }:
 {
-  systemUser.klipper.home = "/var/lib/klipper";
-  systemUser.klipper.extraGroups = [ "camera" ];
+  modules.users.system.klipper.home = "/var/lib/klipper";
+  modules.users.system.klipper.extraGroups = [ "camera" ];
 
   environment.systemPackages = [
     pkgs.klipperscreen

@@ -28,9 +28,9 @@
   ############################################
   # User Settings
   ############################################
-  defaultUser.password.type = "sops";
-  defaultUser.password.value = config.sops.secrets.user_passwd.path;
-  defaultUser.extraGroups = [
+  modules.users.default.password.type = "sops";
+  modules.users.default.password.value = config.sops.secrets.user_passwd.path;
+  modules.users.default.extraGroups = [
     "networkmanager"
     "syncthing"
   ];

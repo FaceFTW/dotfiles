@@ -11,8 +11,8 @@ let
     mkIf
     mkMerge
     ;
-  defaultUser = config.defaultUser;
-  systemUser = config.systemUser;
+  defaultUser = config.modules.users.default;
+  systemUser = config.modules.users.system;
 
   sysUserSpec =
     with types;
@@ -44,7 +44,7 @@ in
   # NOTE: Assumes Home-Manager NixOS module is added to host module
   imports = [ ];
 
-  options.defaultUser = {
+  options.modules.users.default = {
     password = mkOption {
       type =
         with types;
@@ -77,7 +77,7 @@ in
     };
   };
 
-  options.systemUser = mkOption {
+  options.modules.users.system = mkOption {
     type = with types; attrsOf sysUserSpec;
     description = "Definitions of system users";
     default = { };

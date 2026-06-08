@@ -26,9 +26,10 @@
   ############################################
   # User Settings
   ############################################
-  defaultUser.password.type = "sops";
-  # defaultUser.password.value = "";
-  defaultUser.password.value = config.sops.secrets.user_passwd.path;
+  modules.users.default.password.type = "sops";
+  # modules.users.default.password.value = "";
+  modules.users.default.password.value = config.sops.secrets.user_passwd.path;
+  modules.users.default.extraGroups = [ "pihole" ];
 
   ############################################
   # SOPS Settings

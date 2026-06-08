@@ -5,7 +5,7 @@
   ############################################
   # Linkwarden
   ############################################
-  systemUser.linkwarden.home = "/mnt/motorway/var/linkwarden";
+  modules.users.system.linkwarden.home = "/mnt/motorway/var/linkwarden";
 
   services.linkwarden = {
     enable = true;

@@ -5,7 +5,7 @@
   ############################################
   # Jellyfin
   ############################################
-  systemUser.jellyfin.home = "/mnt/motorway/var/jellyfin";
+  modules.users.system.jellyfin.home = "/mnt/motorway/var/jellyfin";
 
   services.jellyfin = {
     enable = true;
