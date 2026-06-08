@@ -5,7 +5,7 @@
   ...
 }:
 let
-  servicesCustom = config.servicesCustom;
+  servicesCustom = config.modules.services;
   inherit (lib)
     mkIf
     mkEnableOption
@@ -15,7 +15,7 @@ let
 
 in
 {
-  options.servicesCustom.ssh-server = {
+  options.modules.services.ssh-server = {
     enable = mkEnableOption "Enable SSH Server";
 
     authorizedKeys = mkOption {

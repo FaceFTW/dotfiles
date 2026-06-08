@@ -6,7 +6,7 @@
   ############################################
   # Mirror Jobs
   ############################################
-  servicesCustom.mirror.archive-freeman = {
+  modules.services.mirror.archive-freeman = {
     notification-title = "Archiver - Archive to Freeman Mirror";
     cron = "Sun *-*-* 09:00:00";
     source = "/mnt/archive";
@@ -27,7 +27,7 @@
     ];
   };
 
-  # servicesCustom.mirror.archive-kleiner = {
+  # modules.services.mirror.archive-kleiner = {
   #   notification-title = "Archiver - Archive to Kleiner Mirror";
   #   cron = "Sun *-*-* 10:00:00";
   #   source = "/mnt/archive";
@@ -50,7 +50,7 @@
   #   ];
   # };
 
-  servicesCustom.mirror.immich-archive = {
+  modules.services.mirror.immich-archive = {
     notification-title = "Archiver - Immich to Archive Mirror";
     cron = "*-*-* 3:00:00";
     source = "/mnt/motorway/var/immich/data";
@@ -64,7 +64,7 @@
     '';
   };
 
-  servicesCustom.mirror.workspace-archive = {
+  modules.services.mirror.workspace-archive = {
     notification-title = "Archiver - Workspaces to Archive Mirror";
     cron = "*-*-* 4:00:00";
     source = "/mnt/motorway/Workspaces";
@@ -78,7 +78,7 @@
     '';
   };
 
-  servicesCustom.mirror.vault-archive = {
+  modules.services.mirror.vault-archive = {
     notification-title = "Archiver - Vault to Archive Mirror";
     cron = "*-*-* 4:00:00";
     source = "/mnt/motorway/Vaults";

@@ -7,7 +7,7 @@
   ############################################
   modules.users.system.backrest.home = "/mnt/motorway/var/backrest";
 
-  servicesCustom.backrest = {
+  modules.services.backrest = {
     enable = true;
     configPath = "/mnt/motorway/var/backrest/config.json";
     dataDir = "/mnt/motorway/var/backrest/data";

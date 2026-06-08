@@ -36,7 +36,7 @@
   wsl.wslConf.interop.enabled = true;
   wsl.wslConf.interop.appendWindowsPath = false; # Let Linux binaries take precedence
   wsl.interop.register = true;
-  kernel.isWSL = true; # For Kernel Tunable Configs
+  modules.kernel.isWSL = true; # For Kernel Tunable Configs
   boot.kernelPackages = pkgs.linuxPackages_7_0;
 
   ############################################

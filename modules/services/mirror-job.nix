@@ -133,10 +133,10 @@ let
 
     };
 
-  mirrorCfg = config.servicesCustom.mirror;
+  mirrorCfg = config.modules.services.mirror;
 in
 {
-  options.servicesCustom.mirror = mkOption {
+  options.modules.services.mirror = mkOption {
     type = with types; attrsOf jobSpec;
     default = { };
   };

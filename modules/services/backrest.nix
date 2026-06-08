@@ -11,10 +11,10 @@ let
     mkEnableOption
     mkIf
     ;
-  backrest = config.servicesCustom.backrest;
+  backrest = config.modules.services.backrest;
 in
 {
-  options.servicesCustom.backrest = {
+  options.modules.services.backrest = {
     enable = mkEnableOption "Backrest backup server";
     configPath = mkOption {
       type = types.str;

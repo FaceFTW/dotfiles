@@ -5,11 +5,11 @@
   ############################################
   # Syncthing
   ############################################
-  servicesCustom.syncthing.enable = true;
-  servicesCustom.syncthing.key = "/run/secrets/syncthing/key.pem";
-  servicesCustom.syncthing.cert = "/run/secrets/syncthing/cert.pem";
-  servicesCustom.syncthing.accessibleFolders = [ "/mnt/motorway/Workspaces" ];
-  servicesCustom.syncthing.folderOwner = "face";
+  modules.services.syncthing.enable = true;
+  modules.services.syncthing.key = "/run/secrets/syncthing/key.pem";
+  modules.services.syncthing.cert = "/run/secrets/syncthing/cert.pem";
+  modules.services.syncthing.accessibleFolders = [ "/mnt/motorway/Workspaces" ];
+  modules.services.syncthing.folderOwner = "face";
 
   # Nginx Reverse Proxy Config
   services.nginx.upstreams.syncthing-gui.servers."localhost:8384" = { };

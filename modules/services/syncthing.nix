@@ -5,7 +5,7 @@
   ...
 }:
 let
-  servicesCustom = config.servicesCustom;
+  servicesCustom = config.modules.services;
   inherit (lib)
     mkIf
     mkMerge
@@ -18,7 +18,7 @@ in
 {
   imports = [ ../user.nix ];
 
-  options.servicesCustom.syncthing = {
+  options.modules.services.syncthing = {
     enable = mkEnableOption "Enable Syncthing";
     user-level = mkEnableOption "Syncthing as user-level service";
     key = mkOption {

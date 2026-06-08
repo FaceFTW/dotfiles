@@ -4,11 +4,11 @@
   ...
 }:
 let
-  kernel = config.kernel;
+  kernel = config.modules.kernel;
   inherit (pkgs.lib) mkIf mkEnableOption;
 in
 {
-  options.kernel = {
+  options.modules.kernel = {
     isWSL = mkEnableOption "Apply WSL-Specific Kernel Configs";
   };
 
