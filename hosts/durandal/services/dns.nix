@@ -51,7 +51,15 @@
 
       @                   IN NS   dns.faceftw.local.
 
+      router                 IN A      192.168.0.1
+
+      durandal               IN A      192.168.0.7
+      pihole                 IN A      192.168.0.7
       dns                    IN A      192.168.0.7
+
+      port-authority         IN A      192.168.0.26
+
+      fabricator             IN A      192.168.0.42
 
       archiver               IN A      192.168.0.172
       immich                 IN A      192.168.0.172
@@ -65,11 +73,6 @@
       *.web.garage           IN CNAME  web.garage.faceftw.local.
       jellyfin               IN A      192.168.0.172
       navidrome              IN A      192.168.0.172
-
-      durandal               IN A      192.168.0.7
-      pihole                 IN A      192.168.0.7
-
-      port-authority         IN A      192.168.0.26
     '';
   };
 
