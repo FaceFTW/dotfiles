@@ -19,7 +19,7 @@
     "cgroup_disable=memory"
     "numa_policy=interleave"
     "nvme.max_host_mem_size_mb=0"
-    "numa=fake=1"
+    "numa.fake=1"
     "system_heap.max_order=0"
     "fsck.repair=yes"
     "kunit.enable=0"
@@ -38,10 +38,10 @@
   hardware.deviceTree.enable = true;
   hardware.deviceTree.filter = "bcm2711-rpi-4*.dtb";
   hardware.deviceTree.overlays = [
-    {
-      name = "disable-bt";
-      dtsFile = ../../devicetree/disable-bt-overlay.dts;
-    }
+    # {
+    #   name = "disable-bt";
+    #   dtsFile = ../../devicetree/disable-bt-overlay.dts;
+    # }
     {
       name = "spi";
       dtsFile = ../../devicetree/spi0-0cs-overlay.dts;
@@ -83,6 +83,7 @@
       BCM_NET_PHYLIB = yes;
       BCM_NET_PHYPTP = yes;
       WLAN_VENDOR_BROADCOM = yes;
+      BCMA = module;
 
       # I can't for the life of me figure out why this thing gets selected
       MFD_WM8994 = yes;
