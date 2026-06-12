@@ -19,16 +19,7 @@
 		"kernel",
 		"initsystem",
 		"processes",
-		"packages",
 		"shell",
-		"editor",
-		"lm",
-		"de",
-		"wm",
-		"wmtheme",
-		"theme",
-		"icons",
-		"font",
 		{
 			"type": "cpu",
 			"showPeCoreCount": true,
@@ -44,21 +35,17 @@
 		"physicalmemory",
 		{
 			"type": "swap",
-			"separate": true
+			"separate": false
 		},
 		{
 			"type": "localip",
-			"showIpv6": true,
+			"showIpv6": false,
 			"showSpeed": true,
 			"showMtu": true,
 			"showLoop": true,
 			"showFlags": true,
-			"showAllIps": true
+			"showAllIps": false
 		},
-		"dns",
-		"users",
-		"tpm",
-		"version",
 		"break",
 		"colors"
 	]
