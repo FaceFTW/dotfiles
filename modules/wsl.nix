@@ -20,10 +20,10 @@
   # User Settings
   ############################################
   # Didn't setup sops for WSL and don't plan to really...
-  defaultUser.password.type = "initialPassword";
-  defaultUser.password.value = "";
-  defaultUser.extraGroups = [ "docker" ];
-  defaultUser.extraPackages = [ pkgs.wslKeySetup ];
+  modules.users.default.password.type = "initialPassword";
+  modules.users.default.password.value = "";
+  modules.users.default.extraGroups = [ "docker" ];
+  modules.users.default.extraPackages = [ pkgs.wslKeySetup ];
 
   ############################################
   # WSL Configuration
