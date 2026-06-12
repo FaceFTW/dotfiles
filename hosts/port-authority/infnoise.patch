@@ -1,0 +1,2093 @@
+From 2dfe8d1d1bbe63c0f7e57a1f8346d6b18f9bee46 Mon Sep 17 00:00:00 2001
+From: Alex Westerman <alex@faceftw.dev>
+Date: Thu, 11 Jun 2026 22:40:15 -0400
+Subject: [PATCH] Infinite Noise TRNG Driver
+
+---
+ drivers/char/hw_random/Kconfig                |    2 +
+ drivers/char/hw_random/Makefile               |    1 +
+ drivers/char/hw_random/infnoise/Kconfig       |   42 +
+ drivers/char/hw_random/infnoise/Makefile      |    4 +
+ drivers/char/hw_random/infnoise/infnoise.h    |  272 +++++
+ .../char/hw_random/infnoise/infnoise_health.c |  442 +++++++
+ .../char/hw_random/infnoise/infnoise_keccak.c |  235 ++++
+ .../char/hw_random/infnoise/infnoise_main.c   | 1018 +++++++++++++++++
+ 8 files changed, 2016 insertions(+)
+ create mode 100755 drivers/char/hw_random/infnoise/Kconfig
+ create mode 100644 drivers/char/hw_random/infnoise/Makefile
+ create mode 100755 drivers/char/hw_random/infnoise/infnoise.h
+ create mode 100755 drivers/char/hw_random/infnoise/infnoise_health.c
+ create mode 100755 drivers/char/hw_random/infnoise/infnoise_keccak.c
+ create mode 100755 drivers/char/hw_random/infnoise/infnoise_main.c
+
+diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/Kconfig
+index dbc993fb9e01..5f2253296250 100644
+--- a/drivers/char/hw_random/Kconfig
++++ b/drivers/char/hw_random/Kconfig
+@@ -631,3 +631,5 @@ config UML_RANDOM
+ 	  entropy pool.
+ 
+ 	  If unsure, say Y.
++
++source "drivers/char/hw_random/infnoise/Kconfig"
+diff --git a/drivers/char/hw_random/Makefile b/drivers/char/hw_random/Makefile
+index b9132b3f5d21..38e8a8729e0f 100644
+--- a/drivers/char/hw_random/Makefile
++++ b/drivers/char/hw_random/Makefile
+@@ -52,3 +52,4 @@ obj-$(CONFIG_HW_RANDOM_CN10K) += cn10k-rng.o
+ obj-$(CONFIG_HW_RANDOM_POLARFIRE_SOC) += mpfs-rng.o
+ obj-$(CONFIG_HW_RANDOM_ROCKCHIP) += rockchip-rng.o
+ obj-$(CONFIG_HW_RANDOM_JH7110) += jh7110-trng.o
++obj-$(CONFIG_HW_RANDOM_INFNOISE) += infnoise/
+diff --git a/drivers/char/hw_random/infnoise/Kconfig b/drivers/char/hw_random/infnoise/Kconfig
+new file mode 100755
+index 000000000000..d4d2ad8acbee
+--- /dev/null
++++ b/drivers/char/hw_random/infnoise/Kconfig
+@@ -0,0 +1,42 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Kconfig entry for Infinite Noise TRNG driver
++#
++# To use this in-tree, add to drivers/char/hw_random/Kconfig:
++#   source "drivers/char/hw_random/infnoise/Kconfig"
++#
++# Or copy the config block below directly into the hw_random Kconfig
++#
++
++config HW_RANDOM_INFNOISE
++	tristate "Infinite Noise TRNG support"
++	depends on USB && HW_RANDOM
++	help
++	  This driver provides support for the Infinite Noise True Random
++	  Number Generator (TRNG) USB device.
++
++	  The Infinite Noise TRNG is an open-source hardware random number
++	  generator designed by Bill Cox. It uses an infinite noise
++	  multiplier (INM) circuit to generate true random numbers from
++	  thermal noise.
++
++	  The driver implements:
++	    - Health monitoring with prediction-based entropy validation
++	    - Keccak-1600 sponge-based whitening
++	    - hwrng interface for kernel entropy pool contribution
++	    - Character device (/dev/infnoiseX) for direct access
++
++	  To compile this driver as a module, choose M here: the
++	  module will be called infnoise.
++
++	  If unsure, say N.
++
++config HW_RANDOM_INFNOISE_DEBUG
++	bool "Infinite Noise TRNG debug output"
++	depends on HW_RANDOM_INFNOISE
++	help
++	  Enable debug output for the Infinite Noise TRNG driver.
++	  This adds verbose logging to the kernel log which can help
++	  diagnose issues with the device.
++
++	  If unsure, say N.
+diff --git a/drivers/char/hw_random/infnoise/Makefile b/drivers/char/hw_random/infnoise/Makefile
+new file mode 100644
+index 000000000000..65de801719f4
+--- /dev/null
++++ b/drivers/char/hw_random/infnoise/Makefile
+@@ -0,0 +1,4 @@
++obj-$(CONFIG_HW_RANDOM_INFNOISE) += infnoise.o
++infnoise-y := infnoise_main.o infnoise_health.o infnoise_keccak.o
++
++ccflags-$(CONFIG_HW_RANDOM_INFNOISE_DEBUG) += -DDEBUG
+diff --git a/drivers/char/hw_random/infnoise/infnoise.h b/drivers/char/hw_random/infnoise/infnoise.h
+new file mode 100755
+index 000000000000..67b193527d73
+--- /dev/null
++++ b/drivers/char/hw_random/infnoise/infnoise.h
+@@ -0,0 +1,272 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Infinite Noise TRNG kernel driver
++ *
++ * Copyright (C) 2024 Manuel Domke
++ *
++ * Based on the userspace driver by Bill Cox
++ * Hardware design by Bill Cox
++ */
++
++#ifndef INFNOISE_H
++#define INFNOISE_H
++
++#include <linux/types.h>
++#include <linux/usb.h>
++#include <linux/hw_random.h>
++#include <linux/mutex.h>
++#include <linux/completion.h>
++#include <linux/workqueue.h>
++
++/* USB device IDs - Infinite Noise TRNG (pid.codes registered) */
++#define INFNOISE_VENDOR_ID	0x1209	/* pid.codes VID */
++#define INFNOISE_PRODUCT_ID	0x3701	/* Infinite Noise PID */
++
++/* FTDI commands (SIO requests) */
++#define FTDI_SIO_RESET			0x00
++#define FTDI_SIO_SET_MODEM_CTRL		0x01
++#define FTDI_SIO_SET_FLOW_CTRL		0x02
++#define FTDI_SIO_SET_BAUDRATE		0x03
++#define FTDI_SIO_SET_DATA		0x04
++#define FTDI_SIO_GET_MODEM_STATUS	0x05
++#define FTDI_SIO_SET_EVENT_CHAR		0x06
++#define FTDI_SIO_SET_ERROR_CHAR		0x07
++#define FTDI_SIO_SET_LATENCY_TIMER	0x09
++#define FTDI_SIO_GET_LATENCY_TIMER	0x0A
++#define FTDI_SIO_SET_BITMODE		0x0B
++#define FTDI_SIO_READ_PINS		0x0C
++#define FTDI_SIO_READ_EEPROM		0x90
++#define FTDI_SIO_WRITE_EEPROM		0x91
++
++/* FTDI reset commands */
++#define FTDI_SIO_RESET_SIO		0x00
++#define FTDI_SIO_RESET_PURGE_RX		0x01
++#define FTDI_SIO_RESET_PURGE_TX		0x02
++
++/* FTDI bit-bang modes */
++#define FTDI_BITMODE_RESET		0x00
++#define FTDI_BITMODE_BITBANG		0x01
++#define FTDI_BITMODE_MPSSE		0x02
++#define FTDI_BITMODE_SYNCBB		0x04	/* Synchronous bit-bang */
++#define FTDI_BITMODE_MCU		0x08
++#define FTDI_BITMODE_OPTO		0x10
++#define FTDI_BITMODE_CBUS		0x20
++#define FTDI_BITMODE_SYNCFF		0x40
++
++/* Pin definitions for FT240X */
++#define INFNOISE_COMP1		1	/* Comparator 1 input */
++#define INFNOISE_COMP2		4	/* Comparator 2 input */
++#define INFNOISE_SWEN1		2	/* Switch enable 1 output */
++#define INFNOISE_SWEN2		0	/* Switch enable 2 output */
++
++/* Address/debug pins */
++#define INFNOISE_ADDR0		3
++#define INFNOISE_ADDR1		5
++#define INFNOISE_ADDR2		6
++#define INFNOISE_ADDR3		7
++
++/* Output mask: all pins except COMP1 and COMP2 are outputs */
++#define INFNOISE_MASK		(0xFF & ~(1 << INFNOISE_COMP1) & ~(1 << INFNOISE_COMP2))
++
++/* FTDI interface index (1-based: interface 0 uses index 1) */
++#define FTDI_INDEX_INTERFACE_A	1
++
++/* Buffer sizes */
++#define INFNOISE_BUFLEN		512	/* FT240X buffer size, must be multiple of 64 */
++#define INFNOISE_BYTES_OUT	(INFNOISE_BUFLEN / 8)	/* 64 bytes extracted */
++
++/* FTDI packet format: each 64-byte USB packet has 2 status bytes + 62 data bytes */
++#define FTDI_PACKET_SIZE	64
++#define FTDI_STATUS_SIZE	2
++#define FTDI_DATA_PER_PACKET	(FTDI_PACKET_SIZE - FTDI_STATUS_SIZE)  /* 62 */
++/* For 512 bytes of data, we need ceil(512/62) = 9 packets = 576 bytes */
++#define INFNOISE_USB_READ_SIZE	(((INFNOISE_BUFLEN + FTDI_DATA_PER_PACKET - 1) / FTDI_DATA_PER_PACKET) * FTDI_PACKET_SIZE)
++
++/* Health check constants */
++#define INM_PREDICTION_BITS	14	/* Bits used for prediction */
++#define INM_TABLE_SIZE		(1 << INM_PREDICTION_BITS)	/* 16384 entries */
++#define INM_MIN_DATA		80000	/* Minimum bits before data is valid */
++#define INM_MIN_SAMPLE_SIZE	100	/* Minimum samples */
++#define INM_MAX_SEQUENCE	20	/* Max consecutive same bits */
++#define INM_MAX_COUNT		(1 << 14)	/* Max counter value before scaling */
++
++/*
++ * Fixed-point arithmetic for health check (avoid floating point in kernel)
++ * Using 16.16 fixed point format
++ */
++#define FP_SHIFT		16
++#define FP_ONE			(1 << FP_SHIFT)	/* 1.0 in fixed point */
++#define FP_HALF			(FP_ONE >> 1)	/* 0.5 in fixed point */
++
++/* Design constants in fixed-point (K = 1.84) */
++#define INM_DESIGN_K_FP		120586	/* 1.84 * 65536 */
++/* log2(1.84) ≈ 0.88 in fixed-point */
++#define INM_EXPECTED_ENTROPY_FP	57671	/* 0.88 * 65536 */
++/* INM_ACCURACY = 1.03 in fixed-point */
++#define INM_ACCURACY_FP		67502	/* 1.03 * 65536 */
++
++/* Keccak-1600 constants */
++#define KECCAK_STATE_SIZE	200	/* 1600 bits = 200 bytes */
++#define KECCAK_LANES		25	/* 5x5 lanes */
++#define KECCAK_ROUNDS		24	/* Number of rounds */
++
++/*
++ * hwrng quality settings (bits of entropy per 1024 bits of input)
++ * - Raw mode: 0.88 bits/bit (unwhitened, reflects true entropy rate)
++ * - Whitened mode: ~1.0 bits/bit (Keccak output is cryptographically uniform)
++ */
++#define INFNOISE_QUALITY_RAW		880	/* Raw: 0.88 bits/bit */
++#define INFNOISE_QUALITY_WHITENED	990	/* Whitened: ~1.0 bits/bit, slight margin */
++
++/* Timeouts */
++#define INFNOISE_USB_TIMEOUT	1000	/* USB timeout in ms */
++#define INFNOISE_WARMUP_ROUNDS	5000	/* Max warmup rounds */
++
++/* Error recovery */
++#define INFNOISE_MAX_RETRIES		3	/* Retries per transfer */
++#define INFNOISE_RECOVERY_THRESHOLD	5	/* Consecutive errors before recovery */
++#define INFNOISE_RETRY_DELAY_MS		10	/* Delay between retries */
++
++/* Module parameters */
++extern bool infnoise_debug;
++extern bool infnoise_raw_mode;
++
++/* IOCTL definitions */
++#define INFNOISE_IOC_MAGIC	'N'
++#define INFNOISE_GET_STATS	_IOR(INFNOISE_IOC_MAGIC, 1, struct infnoise_stats)
++#define INFNOISE_SET_RAW	_IOW(INFNOISE_IOC_MAGIC, 2, int)
++#define INFNOISE_GET_ENTROPY	_IOR(INFNOISE_IOC_MAGIC, 3, u32)
++
++/*
++ * Statistics structure for ioctl (UAPI)
++ *
++ * Layout must be identical on 32-bit and 64-bit so that a 32-bit
++ * userspace process can issue INFNOISE_GET_STATS on a 64-bit kernel.
++ * Explicit padding ensures sizeof() == 40 on both, and __aligned(8)
++ * forces u64 alignment on 32-bit where u64 is normally 4-byte aligned.
++ */
++struct infnoise_stats {
++	__u64 total_bits;
++	__u32 total_ones;
++	__u32 total_zeros;
++	__u32 even_misfires;
++	__u32 odd_misfires;
++	__u32 entropy_estimate;	/* Fixed-point 16.16 */
++	__u32 k_estimate;	/* Fixed-point 16.16 */
++	__u8 warmup_complete;
++	__u8 health_ok;
++	__u8 __pad[6];
++} __aligned(8);
++
++/* Health check state */
++struct infnoise_health {
++	u32 *ones_even;		/* Prediction table for even bits = 1 */
++	u32 *zeros_even;	/* Prediction table for even bits = 0 */
++	u32 *ones_odd;		/* Prediction table for odd bits = 1 */
++	u32 *zeros_odd;		/* Prediction table for odd bits = 0 */
++
++	u32 prev_bits;		/* Previous N bits for prediction */
++	u32 num_bits_sampled;	/* Total bits in current entropy window */
++	u32 num_bits_of_entropy;/* Estimated entropy bits */
++	u32 entropy_level;	/* Accumulated entropy */
++
++	u64 total_bits;		/* Total bits processed */
++	u32 total_ones;		/* Count of 1 bits */
++	u32 total_zeros;	/* Count of 0 bits */
++
++	u32 even_misfires;	/* Even bit prediction failures */
++	u32 odd_misfires;	/* Odd bit prediction failures */
++
++	u32 seq_zeros;		/* Consecutive zeros */
++	u32 seq_ones;		/* Consecutive ones */
++
++	u32 current_prob;	/* Current probability (fixed-point) */
++
++	bool prev_bit;		/* Previous bit value */
++	bool prev_even;		/* Previous even bit */
++	bool prev_odd;		/* Previous odd bit */
++	bool ok_to_use;		/* Health check passed */
++};
++
++/* Keccak state */
++struct infnoise_keccak {
++	u8 state[KECCAK_STATE_SIZE];
++};
++
++/* Device state flags */
++enum infnoise_flags {
++	INFNOISE_PRESENT	= BIT(0),	/* Device is connected */
++	INFNOISE_WARMUP_DONE	= BIT(1),	/* Warmup complete */
++	INFNOISE_HWRNG_REG	= BIT(2),	/* hwrng registered */
++	INFNOISE_HEALTH_FAIL	= BIT(3),	/* Health check failed */
++};
++
++/* Main device structure */
++struct infnoise_device {
++	struct usb_device *udev;
++	struct usb_interface *intf;
++
++	/* USB endpoints */
++	u8 bulk_in_ep;
++	u8 bulk_out_ep;
++
++	/* Buffers */
++	u8 *clock_buf;		/* Clock pattern buffer (512 bytes) */
++	u8 *usb_buf;		/* Raw USB read buffer (576 bytes w/ FTDI status) */
++	u8 *read_buf;		/* Processed read buffer (512 bytes, status stripped) */
++	u8 *out_buf;		/* Output buffer (64 bytes) */
++
++	/* State */
++	struct infnoise_health health;
++	struct infnoise_keccak keccak;
++	u32 keccak_bytes_left;		/* Bytes remaining from current absorption */
++
++	/* hwrng interface */
++	struct hwrng hwrng;
++	char hwrng_name[32];
++
++	/* Character device */
++	struct usb_class_driver class;
++	int minor;
++	bool raw_mode;		/* Per-device raw mode */
++
++	/* Synchronization */
++	struct mutex lock;		/* Device access lock */
++	struct completion warmup_done;	/* Warmup completion */
++	unsigned long flags;
++
++	/* Warmup work */
++	struct work_struct warmup_work;
++
++	/* Statistics */
++	u64 bytes_generated;
++	u32 usb_errors;
++	u32 consecutive_errors;		/* Consecutive USB errors */
++	u32 recoveries;			/* Successful recovery count */
++};
++
++/* Keccak functions (infnoise_keccak.c) */
++void infnoise_keccak_init(struct infnoise_keccak *keccak);
++void infnoise_keccak_absorb(struct infnoise_keccak *keccak, const u8 *data,
++			    unsigned int lanes);
++void infnoise_keccak_extract(struct infnoise_keccak *keccak, u8 *data,
++			     unsigned int lanes);
++void infnoise_keccak_permutation(struct infnoise_keccak *keccak);
++
++/* Health check functions (infnoise_health.c) */
++int infnoise_health_init(struct infnoise_health *health);
++void infnoise_health_free(struct infnoise_health *health);
++void infnoise_health_reset(struct infnoise_health *health);
++bool infnoise_health_add_bit(struct infnoise_health *health, bool even_bit,
++			     bool odd_bit, bool even);
++bool infnoise_health_ok(struct infnoise_health *health);
++u32 infnoise_health_get_entropy(struct infnoise_health *health);
++void infnoise_health_clear_entropy(struct infnoise_health *health);
++bool infnoise_health_entropy_on_target(struct infnoise_health *health,
++				       u32 entropy, u32 num_bits);
++u32 infnoise_health_estimate_k(struct infnoise_health *health);
++u32 infnoise_health_estimate_entropy_per_bit(struct infnoise_health *health);
++void infnoise_health_get_stats(struct infnoise_health *health,
++			       struct infnoise_stats *stats);
++
++#endif /* INFNOISE_H */
+diff --git a/drivers/char/hw_random/infnoise/infnoise_health.c b/drivers/char/hw_random/infnoise/infnoise_health.c
+new file mode 100755
+index 000000000000..d98b138f43cc
+--- /dev/null
++++ b/drivers/char/hw_random/infnoise/infnoise_health.c
+@@ -0,0 +1,442 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Health monitoring for Infinite Noise TRNG kernel driver
++ *
++ * Copyright (C) 2024 Manuel Domke
++ *
++ * Based on healthcheck.c from the userspace driver by Bill Cox
++ *
++ * This implements entropy measurement using prediction-based analysis.
++ * The algorithm tracks how predictable the next bit is based on the
++ * previous N bits, and uses this to estimate actual entropy.
++ *
++ * All arithmetic uses fixed-point (16.16 format) to avoid floating
++ * point operations in the kernel.
++ */
++
++#include <linux/kernel.h>
++#include <linux/slab.h>
++#include <linux/vmalloc.h>
++#include <linux/log2.h>
++#include "infnoise.h"
++
++/* Module parameter reference */
++extern bool infnoise_debug;
++
++/*
++ * Fixed-point multiplication: (a * b) >> FP_SHIFT
++ * Uses 64-bit intermediate to avoid overflow
++ */
++static inline u32 fp_mul(u32 a, u32 b)
++{
++	return (u32)(((u64)a * b) >> FP_SHIFT);
++}
++
++/*
++ * Fixed-point division: (a << FP_SHIFT) / b
++ * Uses 64-bit intermediate to avoid overflow
++ */
++static inline u32 fp_div(u32 a, u32 b)
++{
++	if (b == 0)
++		return FP_ONE;
++	return (u32)(((u64)a << FP_SHIFT) / b);
++}
++
++/**
++ * infnoise_health_init - Initialize health check state
++ * @health: Health check state structure
++ *
++ * Allocates prediction tables and initializes all state variables.
++ * Returns 0 on success, negative error code on failure.
++ */
++int infnoise_health_init(struct infnoise_health *health)
++{
++	size_t table_size = INM_TABLE_SIZE * sizeof(u32);
++
++	memset(health, 0, sizeof(*health));
++
++	/* Allocate prediction tables using vmalloc (4 x 64KB = 256KB) */
++	health->ones_even = vzalloc(table_size);
++	health->zeros_even = vzalloc(table_size);
++	health->ones_odd = vzalloc(table_size);
++	health->zeros_odd = vzalloc(table_size);
++
++	if (!health->ones_even || !health->zeros_even ||
++	    !health->ones_odd || !health->zeros_odd) {
++		infnoise_health_free(health);
++		return -ENOMEM;
++	}
++
++	/* Initialize state */
++	health->current_prob = FP_ONE;
++	health->ok_to_use = false;
++
++	return 0;
++}
++
++/**
++ * infnoise_health_free - Free health check resources
++ * @health: Health check state structure
++ *
++ * Frees all allocated prediction tables.
++ */
++void infnoise_health_free(struct infnoise_health *health)
++{
++	vfree(health->ones_even);
++	vfree(health->zeros_even);
++	vfree(health->ones_odd);
++	vfree(health->zeros_odd);
++
++	health->ones_even = NULL;
++	health->zeros_even = NULL;
++	health->ones_odd = NULL;
++	health->zeros_odd = NULL;
++}
++
++/**
++ * infnoise_health_reset - Reset entropy counters
++ * @health: Health check state structure
++ *
++ * Resets the per-sample entropy counters without clearing
++ * the accumulated statistics tables.
++ */
++void infnoise_health_reset(struct infnoise_health *health)
++{
++	health->num_bits_sampled = 0;
++	health->current_prob = FP_ONE;
++	health->num_bits_of_entropy = 0;
++	health->entropy_level = 0;
++	health->total_ones = 0;
++	health->total_zeros = 0;
++	health->even_misfires = 0;
++	health->odd_misfires = 0;
++}
++
++/*
++ * Scale down statistics tables to prevent overflow.
++ * Called when any counter reaches INM_MAX_COUNT.
++ */
++static void scale_stats(struct infnoise_health *health)
++{
++	unsigned int i;
++
++	for (i = 0; i < INM_TABLE_SIZE; i++) {
++		health->zeros_even[i] >>= 1;
++		health->ones_even[i] >>= 1;
++		health->zeros_odd[i] >>= 1;
++		health->ones_odd[i] >>= 1;
++	}
++}
++
++/*
++ * Scale down entropy counters to prevent overflow.
++ */
++static void scale_entropy(struct infnoise_health *health)
++{
++	if (health->num_bits_sampled >= INM_MIN_DATA) {
++		health->num_bits_of_entropy >>= 1;
++		health->num_bits_sampled >>= 1;
++		health->even_misfires >>= 1;
++		health->odd_misfires >>= 1;
++	}
++}
++
++/*
++ * Scale down zero/one totals to prevent overflow.
++ */
++static void scale_zero_one_counts(struct infnoise_health *health)
++{
++	u32 max_val = max(health->total_zeros, health->total_ones);
++
++	if (max_val >= INM_MIN_DATA) {
++		health->total_zeros >>= 1;
++		health->total_ones >>= 1;
++	}
++}
++
++/**
++ * infnoise_health_add_bit - Process a new bit from the INM
++ * @health: Health check state structure
++ * @even_bit: Value from COMP2 (even clock phase)
++ * @odd_bit: Value from COMP1 (odd clock phase)
++ * @even: True if this is an even-phase sample
++ *
++ * Updates prediction statistics and entropy estimate based on the new bit.
++ * Returns true if health check is still OK, false if a fatal error occurred.
++ */
++bool infnoise_health_add_bit(struct infnoise_health *health, bool even_bit,
++			     bool odd_bit, bool even)
++{
++	bool bit;
++	u32 zeros, ones, total;
++	u32 mask = INM_TABLE_SIZE - 1;
++
++	/* Select the appropriate bit and track misfires */
++	if (even) {
++		bit = even_bit;
++		if (even_bit != health->prev_even)
++			health->even_misfires++;
++	} else {
++		bit = odd_bit;
++		if (odd_bit != health->prev_odd)
++			health->odd_misfires++;
++	}
++
++	health->prev_even = even_bit;
++	health->prev_odd = odd_bit;
++	health->total_bits++;
++
++	/* Update previous bits for next prediction */
++	health->prev_bits = ((health->prev_bits << 1) | health->prev_bit) & mask;
++	health->prev_bit = bit;
++
++	/* Check for stuck-at faults after warmup */
++	if (health->num_bits_sampled > INM_MIN_SAMPLE_SIZE) {
++		if (bit) {
++			health->total_ones++;
++			health->seq_ones++;
++			health->seq_zeros = 0;
++
++			if (health->seq_ones > INM_MAX_SEQUENCE) {
++				pr_crit("infnoise: stuck-at-1 fault detected (%u consecutive 1s)\n",
++					health->seq_ones);
++				return false;
++			}
++		} else {
++			health->total_zeros++;
++			health->seq_zeros++;
++			health->seq_ones = 0;
++
++			if (health->seq_zeros > INM_MAX_SEQUENCE) {
++				pr_crit("infnoise: stuck-at-0 fault detected (%u consecutive 0s)\n",
++					health->seq_zeros);
++				return false;
++			}
++		}
++	}
++
++	/* Get prediction statistics for current context */
++	if (even) {
++		zeros = health->zeros_even[health->prev_bits];
++		ones = health->ones_even[health->prev_bits];
++	} else {
++		zeros = health->zeros_odd[health->prev_bits];
++		ones = health->ones_odd[health->prev_bits];
++	}
++
++	total = zeros + ones;
++
++	/*
++	 * Update probability estimate.
++	 * If we have statistics, multiply probability by the frequency
++	 * of the observed outcome given the context.
++	 */
++	if (total > 0) {
++		u32 freq;
++
++		if (bit) {
++			if (ones > 0) {
++				freq = fp_div(ones, total);
++				health->current_prob = fp_mul(health->current_prob, freq);
++			}
++		} else {
++			if (zeros > 0) {
++				freq = fp_div(zeros, total);
++				health->current_prob = fp_mul(health->current_prob, freq);
++			}
++		}
++	}
++
++	/*
++	 * When probability drops below 0.5, we've accumulated at least
++	 * 1 bit of entropy. Double the probability and count the bit.
++	 */
++	while (health->current_prob <= FP_HALF) {
++		health->current_prob <<= 1;
++		health->num_bits_of_entropy++;
++
++		if (health->ok_to_use)
++			health->entropy_level++;
++	}
++
++	health->num_bits_sampled++;
++
++	/* Update prediction tables */
++	if (bit) {
++		if (even) {
++			health->ones_even[health->prev_bits]++;
++			if (health->ones_even[health->prev_bits] >= INM_MAX_COUNT)
++				scale_stats(health);
++		} else {
++			health->ones_odd[health->prev_bits]++;
++			if (health->ones_odd[health->prev_bits] >= INM_MAX_COUNT)
++				scale_stats(health);
++		}
++	} else {
++		if (even) {
++			health->zeros_even[health->prev_bits]++;
++			if (health->zeros_even[health->prev_bits] >= INM_MAX_COUNT)
++				scale_stats(health);
++		} else {
++			health->zeros_odd[health->prev_bits]++;
++			if (health->zeros_odd[health->prev_bits] >= INM_MAX_COUNT)
++				scale_stats(health);
++		}
++	}
++
++	scale_entropy(health);
++	scale_zero_one_counts(health);
++
++	/* Update health status */
++	health->ok_to_use = infnoise_health_ok(health);
++
++	return true;
++}
++
++/**
++ * infnoise_health_estimate_entropy_per_bit - Get entropy estimate
++ * @health: Health check state structure
++ *
++ * Returns the estimated entropy per bit in fixed-point format (16.16).
++ */
++u32 infnoise_health_estimate_entropy_per_bit(struct infnoise_health *health)
++{
++	if (health->num_bits_sampled == 0)
++		return 0;
++
++	return fp_div(health->num_bits_of_entropy, health->num_bits_sampled);
++}
++
++/**
++ * infnoise_health_estimate_k - Estimate amplifier gain K
++ * @health: Health check state structure
++ *
++ * Returns the estimated K value in fixed-point format.
++ * K = 2^(entropy_per_bit)
++ *
++ * Since we don't have pow() in kernel, we use a lookup table
++ * for common entropy values around 0.88 bits/bit.
++ */
++u32 infnoise_health_estimate_k(struct infnoise_health *health)
++{
++	u32 entropy = infnoise_health_estimate_entropy_per_bit(health);
++
++	/*
++	 * K = 2^entropy
++	 * For entropy around 0.88 (57671 in FP), K should be about 1.84
++	 *
++	 * Approximate 2^x for x in [0.7, 1.0] range:
++	 * 2^0.70 = 1.625  -> 106496 FP
++	 * 2^0.75 = 1.682  -> 110230 FP
++	 * 2^0.80 = 1.741  -> 114098 FP
++	 * 2^0.85 = 1.802  -> 118097 FP
++	 * 2^0.88 = 1.840  -> 120586 FP (design target)
++	 * 2^0.90 = 1.866  -> 122291 FP
++	 * 2^0.95 = 1.932  -> 126617 FP
++	 * 2^1.00 = 2.000  -> 131072 FP
++	 *
++	 * Linear interpolation: K ≈ 1 + 1.0 * entropy (rough)
++	 * Better: use piecewise linear approximation
++	 */
++
++	/* Simple linear approximation for the expected range */
++	/* 2^x ≈ 1 + 0.693*x + 0.240*x^2 for small x (Taylor) */
++	/* For x ≈ 0.88, better to use direct calculation */
++
++	/* Use lookup: entropy 57671 -> K 120586 */
++	/* Scale: K = FP_ONE + entropy * 0.95 approximately */
++	/* More accurate: K = 65536 + (entropy * 62806) >> 16 */
++
++	return FP_ONE + fp_mul(entropy, 62806); /* 0.958 scaling factor */
++}
++
++/**
++ * infnoise_health_ok - Check if health status is acceptable
++ * @health: Health check state structure
++ *
++ * Returns true if enough data has been collected and the measured
++ * entropy is within acceptable bounds of the expected entropy.
++ */
++bool infnoise_health_ok(struct infnoise_health *health)
++{
++	u32 entropy;
++	u32 lower_bound, upper_bound;
++
++	/* Need minimum amount of data */
++	if (health->total_bits < INM_MIN_DATA)
++		return false;
++
++	entropy = infnoise_health_estimate_entropy_per_bit(health);
++
++	/* Check entropy is within INM_ACCURACY of expected */
++	/* expected * accuracy >= measured */
++	lower_bound = fp_div(INM_EXPECTED_ENTROPY_FP, INM_ACCURACY_FP);
++	/* measured <= expected * accuracy */
++	upper_bound = fp_mul(INM_EXPECTED_ENTROPY_FP, INM_ACCURACY_FP);
++
++	return (entropy >= lower_bound) && (entropy <= upper_bound);
++}
++
++/**
++ * infnoise_health_get_entropy - Get accumulated entropy level
++ * @health: Health check state structure
++ *
++ * Returns the number of entropy bits accumulated since last clear.
++ */
++u32 infnoise_health_get_entropy(struct infnoise_health *health)
++{
++	return health->entropy_level;
++}
++
++/**
++ * infnoise_health_clear_entropy - Clear accumulated entropy counter
++ * @health: Health check state structure
++ */
++void infnoise_health_clear_entropy(struct infnoise_health *health)
++{
++	health->entropy_level = 0;
++}
++
++/**
++ * infnoise_health_entropy_on_target - Check if entropy meets target
++ * @health: Health check state structure
++ * @entropy: Measured entropy bits
++ * @num_bits: Number of input bits
++ *
++ * Returns true if the measured entropy is at least what we expect
++ * for the given number of input bits.
++ */
++bool infnoise_health_entropy_on_target(struct infnoise_health *health,
++				       u32 entropy, u32 num_bits)
++{
++	u32 expected;
++
++	/* expected = num_bits * expected_entropy_per_bit */
++	expected = fp_mul(num_bits << FP_SHIFT, INM_EXPECTED_ENTROPY_FP) >> FP_SHIFT;
++
++	/* Allow INM_ACCURACY tolerance */
++	return (entropy * INM_ACCURACY_FP) >= (expected << FP_SHIFT);
++}
++
++/**
++ * infnoise_health_get_stats - Get health statistics
++ * @health: Health check state structure
++ * @stats: Output statistics structure
++ *
++ * Fills in the statistics structure with current health check data.
++ */
++void infnoise_health_get_stats(struct infnoise_health *health,
++			       struct infnoise_stats *stats)
++{
++	memset(stats, 0, sizeof(*stats));
++	stats->total_bits = health->total_bits;
++	stats->total_ones = health->total_ones;
++	stats->total_zeros = health->total_zeros;
++	stats->even_misfires = health->even_misfires;
++	stats->odd_misfires = health->odd_misfires;
++	stats->entropy_estimate = infnoise_health_estimate_entropy_per_bit(health);
++	stats->k_estimate = infnoise_health_estimate_k(health);
++	stats->warmup_complete = health->total_bits >= INM_MIN_DATA;
++	stats->health_ok = health->ok_to_use;
++}
+diff --git a/drivers/char/hw_random/infnoise/infnoise_keccak.c b/drivers/char/hw_random/infnoise/infnoise_keccak.c
+new file mode 100755
+index 000000000000..f0e36eb4c39a
+--- /dev/null
++++ b/drivers/char/hw_random/infnoise/infnoise_keccak.c
+@@ -0,0 +1,235 @@
++// SPDX-License-Identifier: CC0-1.0
++/*
++ * Keccak-1600 implementation for Infinite Noise TRNG kernel driver
++ *
++ * Based on the reference implementation by Guido Bertoni, Joan Daemen,
++ * Michael Peeters and Gilles Van Assche.
++ *
++ * To the extent possible under law, the implementer has waived all copyright
++ * and related or neighboring rights to the source code in this file.
++ * http://creativecommons.org/publicdomain/zero/1.0/
++ *
++ * Adapted for Linux kernel by Manuel Domke
++ */
++
++#include <linux/types.h>
++#include <linux/string.h>
++#include <asm/byteorder.h>
++#include "infnoise.h"
++
++/* Pre-computed round constants for Keccak-1600 */
++static const u64 keccak_round_constants[KECCAK_ROUNDS] = {
++	0x0000000000000001ULL, 0x0000000000008082ULL,
++	0x800000000000808aULL, 0x8000000080008000ULL,
++	0x000000000000808bULL, 0x0000000080000001ULL,
++	0x8000000080008081ULL, 0x8000000000008009ULL,
++	0x000000000000008aULL, 0x0000000000000088ULL,
++	0x0000000080008009ULL, 0x000000008000000aULL,
++	0x000000008000808bULL, 0x800000000000008bULL,
++	0x8000000000008089ULL, 0x8000000000008003ULL,
++	0x8000000000008002ULL, 0x8000000000000080ULL,
++	0x000000000000800aULL, 0x800000008000000aULL,
++	0x8000000080008081ULL, 0x8000000000008080ULL,
++	0x0000000080000001ULL, 0x8000000080008008ULL
++};
++
++/* Pre-computed rho offsets */
++static const unsigned int keccak_rho_offsets[KECCAK_LANES] = {
++	 0,  1, 62, 28, 27,
++	36, 44,  6, 55, 20,
++	 3, 10, 43, 25, 39,
++	41, 45, 15, 21,  8,
++	18,  2, 61, 56, 14
++};
++
++/* Lane index macro: x + 5*y */
++#define KECCAK_INDEX(x, y) (((x) % 5) + 5 * ((y) % 5))
++
++/* 64-bit rotate left - handle edge cases to avoid undefined behavior */
++static inline u64 keccak_rol64(u64 x, unsigned int n)
++{
++	n &= 63;  /* Normalize to 0-63 range */
++	if (n == 0)
++		return x;
++	return (x << n) | (x >> (64 - n));
++}
++
++/* Theta step */
++static void keccak_theta(u64 *state)
++{
++	u64 c[5], d[5];
++	unsigned int x, y;
++
++	/* Compute column parities */
++	for (x = 0; x < 5; x++) {
++		c[x] = 0;
++		for (y = 0; y < 5; y++)
++			c[x] ^= state[KECCAK_INDEX(x, y)];
++	}
++
++	/* Compute D values */
++	for (x = 0; x < 5; x++)
++		d[x] = keccak_rol64(c[(x + 1) % 5], 1) ^ c[(x + 4) % 5];
++
++	/* XOR D into state */
++	for (x = 0; x < 5; x++)
++		for (y = 0; y < 5; y++)
++			state[KECCAK_INDEX(x, y)] ^= d[x];
++}
++
++/* Rho step */
++static void keccak_rho(u64 *state)
++{
++	unsigned int i;
++
++	for (i = 0; i < KECCAK_LANES; i++)
++		state[i] = keccak_rol64(state[i], keccak_rho_offsets[i]);
++}
++
++/* Pi step */
++static void keccak_pi(u64 *state)
++{
++	u64 temp[KECCAK_LANES];
++	unsigned int x, y;
++
++	memcpy(temp, state, sizeof(temp));
++
++	for (x = 0; x < 5; x++)
++		for (y = 0; y < 5; y++)
++			state[KECCAK_INDEX(y, 2 * x + 3 * y)] =
++				temp[KECCAK_INDEX(x, y)];
++}
++
++/* Chi step */
++static void keccak_chi(u64 *state)
++{
++	u64 c[5];
++	unsigned int x, y;
++
++	for (y = 0; y < 5; y++) {
++		for (x = 0; x < 5; x++)
++			c[x] = state[KECCAK_INDEX(x, y)] ^
++			       ((~state[KECCAK_INDEX(x + 1, y)]) &
++				state[KECCAK_INDEX(x + 2, y)]);
++		for (x = 0; x < 5; x++)
++			state[KECCAK_INDEX(x, y)] = c[x];
++	}
++}
++
++/* Iota step */
++static void keccak_iota(u64 *state, unsigned int round)
++{
++	state[0] ^= keccak_round_constants[round];
++}
++
++/* Full Keccak-f[1600] permutation on 64-bit words */
++static void keccak_permutation_on_words(u64 *state)
++{
++	unsigned int i;
++
++	for (i = 0; i < KECCAK_ROUNDS; i++) {
++		keccak_theta(state);
++		keccak_rho(state);
++		keccak_pi(state);
++		keccak_chi(state);
++		keccak_iota(state, i);
++	}
++}
++
++/* Convert bytes to words (for big-endian systems) */
++#if defined(__BIG_ENDIAN)
++static void keccak_bytes_to_words(u64 *words, const u8 *bytes)
++{
++	unsigned int i, j;
++
++	for (i = 0; i < KECCAK_LANES; i++) {
++		words[i] = 0;
++		for (j = 0; j < 8; j++)
++			words[i] |= (u64)bytes[i * 8 + j] << (8 * j);
++	}
++}
++
++static void keccak_words_to_bytes(u8 *bytes, const u64 *words)
++{
++	unsigned int i, j;
++
++	for (i = 0; i < KECCAK_LANES; i++)
++		for (j = 0; j < 8; j++)
++			bytes[i * 8 + j] = (words[i] >> (8 * j)) & 0xFF;
++}
++#endif
++
++/**
++ * infnoise_keccak_permutation - Apply Keccak-f[1600] permutation
++ * @keccak: Keccak state structure
++ *
++ * Applies the full 24-round Keccak-f[1600] permutation to the state.
++ */
++void infnoise_keccak_permutation(struct infnoise_keccak *keccak)
++{
++#if defined(__BIG_ENDIAN)
++	u64 state_words[KECCAK_LANES];
++
++	keccak_bytes_to_words(state_words, keccak->state);
++	keccak_permutation_on_words(state_words);
++	keccak_words_to_bytes(keccak->state, state_words);
++#else
++	/* On little-endian, we can work directly on the byte array */
++	keccak_permutation_on_words((u64 *)keccak->state);
++#endif
++}
++
++/**
++ * infnoise_keccak_init - Initialize Keccak state
++ * @keccak: Keccak state structure
++ *
++ * Zeros the Keccak state to prepare for absorbing data.
++ */
++void infnoise_keccak_init(struct infnoise_keccak *keccak)
++{
++	memset(keccak->state, 0, KECCAK_STATE_SIZE);
++}
++
++/**
++ * infnoise_keccak_absorb - Absorb data into Keccak sponge
++ * @keccak: Keccak state structure
++ * @data: Data to absorb
++ * @lanes: Number of 64-bit lanes (bytes / 8)
++ *
++ * XORs data into the state and applies the permutation.
++ * This implements the absorb phase of the sponge construction.
++ */
++void infnoise_keccak_absorb(struct infnoise_keccak *keccak, const u8 *data,
++			    unsigned int lanes)
++{
++	unsigned int i;
++	unsigned int bytes = lanes * 8;
++
++	/* XOR data into state */
++	for (i = 0; i < bytes && i < KECCAK_STATE_SIZE; i++)
++		keccak->state[i] ^= data[i];
++
++	/* Apply permutation */
++	infnoise_keccak_permutation(keccak);
++}
++
++/**
++ * infnoise_keccak_extract - Extract data from Keccak sponge
++ * @keccak: Keccak state structure
++ * @data: Buffer to store extracted data
++ * @lanes: Number of 64-bit lanes to extract (bytes / 8)
++ *
++ * Copies bytes from the state. Does NOT apply permutation;
++ * caller should call keccak_permutation() between extracts
++ * if extracting more data than the rate allows.
++ */
++void infnoise_keccak_extract(struct infnoise_keccak *keccak, u8 *data,
++			     unsigned int lanes)
++{
++	unsigned int bytes = lanes * 8;
++
++	if (bytes > KECCAK_STATE_SIZE)
++		bytes = KECCAK_STATE_SIZE;
++
++	memcpy(data, keccak->state, bytes);
++}
+diff --git a/drivers/char/hw_random/infnoise/infnoise_main.c b/drivers/char/hw_random/infnoise/infnoise_main.c
+new file mode 100755
+index 000000000000..1900ee88fce3
+--- /dev/null
++++ b/drivers/char/hw_random/infnoise/infnoise_main.c
+@@ -0,0 +1,1018 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Infinite Noise TRNG kernel driver
++ *
++ * Copyright (C) 2024 Manuel Domke
++ *
++ * Based on the userspace driver by Bill Cox
++ * Hardware design by Bill Cox
++ *
++ * This driver interfaces with the Infinite Noise TRNG USB device,
++ * implements health monitoring, Keccak-1600 whitening, and registers
++ * as an hwrng device to feed entropy to the kernel's random subsystem.
++ */
++
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/usb.h>
++#include <linux/slab.h>
++#include <linux/mutex.h>
++#include <linux/hw_random.h>
++#include <linux/workqueue.h>
++#include <linux/uaccess.h>
++#include <linux/compat.h>
++#include <linux/sched/signal.h>
++#include <linux/delay.h>
++#include "infnoise.h"
++
++#define DRIVER_NAME	"infnoise"
++#define DRIVER_VERSION	"1.0"
++#define DRIVER_DESC	"Infinite Noise TRNG driver"
++
++/* Module parameters */
++bool infnoise_debug;
++module_param_named(debug, infnoise_debug, bool, 0644);
++MODULE_PARM_DESC(debug, "Enable debug output");
++
++bool infnoise_raw_mode;
++module_param_named(raw_mode, infnoise_raw_mode, bool, 0644);
++MODULE_PARM_DESC(raw_mode, "Output raw (unwhitened) data");
++
++unsigned int infnoise_multiplier = 1;
++module_param_named(multiplier, infnoise_multiplier, uint, 0644);
++MODULE_PARM_DESC(multiplier, "Output multiplier (0=entropy only, 1-10=multiply output)");
++
++/* USB device table - only matches reprogrammed devices */
++static const struct usb_device_id infnoise_table[] = {
++	{ USB_DEVICE(INFNOISE_VENDOR_ID, INFNOISE_PRODUCT_ID) },
++	{ }
++};
++MODULE_DEVICE_TABLE(usb, infnoise_table);
++
++/* Forward declarations */
++static struct usb_driver infnoise_driver;
++static void infnoise_warmup_work(struct work_struct *work);
++static int infnoise_read_data(struct infnoise_device *dev, u8 *result,
++			      size_t max_len, bool raw);
++static int infnoise_configure_ftdi(struct infnoise_device *dev);
++
++/*
++ * FTDI USB control transfer helper
++ */
++static int ftdi_control(struct infnoise_device *dev, u8 request,
++			u16 value, u16 index)
++{
++	return usb_control_msg(dev->udev,
++			       usb_sndctrlpipe(dev->udev, 0),
++			       request,
++			       USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_DIR_OUT,
++			       value, index, NULL, 0,
++			       INFNOISE_USB_TIMEOUT);
++}
++
++/*
++ * Configure FTDI device for synchronous bit-bang mode
++ */
++static int infnoise_configure_ftdi(struct infnoise_device *dev)
++{
++	int ret;
++
++	/* Reset device */
++	ret = ftdi_control(dev, FTDI_SIO_RESET, FTDI_SIO_RESET_SIO,
++			   FTDI_INDEX_INTERFACE_A);
++	if (ret < 0) {
++		dev_err(&dev->intf->dev, "Failed to reset device: %d\n", ret);
++		return ret;
++	}
++
++	/* Set latency timer to 1ms for faster response */
++	ret = ftdi_control(dev, FTDI_SIO_SET_LATENCY_TIMER, 1,
++			   FTDI_INDEX_INTERFACE_A);
++	if (ret < 0) {
++		dev_err(&dev->intf->dev, "Failed to set latency timer: %d\n", ret);
++		return ret;
++	}
++
++	/*
++	 * Set baud rate to 30000
++	 * FTDI baud rate encoding: value = 3000000 / baud
++	 * For 30000 baud: value = 100 = 0x0064
++	 */
++	ret = ftdi_control(dev, FTDI_SIO_SET_BAUDRATE, 0x0064,
++			   FTDI_INDEX_INTERFACE_A);
++	if (ret < 0) {
++		dev_err(&dev->intf->dev, "Failed to set baud rate: %d\n", ret);
++		return ret;
++	}
++
++	/*
++	 * Enable synchronous bit-bang mode
++	 * Mode byte in high byte of value, mask in low byte
++	 * Mode 0x04 = SYNCBB, Mask 0xEB = all outputs except COMP1/COMP2
++	 */
++	ret = ftdi_control(dev, FTDI_SIO_SET_BITMODE,
++			   (FTDI_BITMODE_SYNCBB << 8) | INFNOISE_MASK,
++			   FTDI_INDEX_INTERFACE_A);
++	if (ret < 0) {
++		dev_err(&dev->intf->dev, "Failed to set bit-bang mode: %d\n", ret);
++		return ret;
++	}
++
++	/* Purge RX buffer */
++	ret = ftdi_control(dev, FTDI_SIO_RESET, FTDI_SIO_RESET_PURGE_RX,
++			   FTDI_INDEX_INTERFACE_A);
++	if (ret < 0) {
++		dev_err(&dev->intf->dev, "Failed to purge RX: %d\n", ret);
++		return ret;
++	}
++
++	/* Purge TX buffer */
++	ret = ftdi_control(dev, FTDI_SIO_RESET, FTDI_SIO_RESET_PURGE_TX,
++			   FTDI_INDEX_INTERFACE_A);
++	if (ret < 0) {
++		dev_err(&dev->intf->dev, "Failed to purge TX: %d\n", ret);
++		return ret;
++	}
++
++	/* Give the device time to settle after configuration */
++	msleep(50);
++
++	return 0;
++}
++
++/*
++ * Test USB transfer to verify device is working
++ * Similar to what libftdi does during initialization
++ */
++static int infnoise_test_transfer(struct infnoise_device *dev)
++{
++	u8 *test_buf;
++	int ret, actual;
++
++	/* Allocate DMA-capable buffer */
++	test_buf = kmalloc(64, GFP_KERNEL);
++	if (!test_buf)
++		return -ENOMEM;
++
++	memset(test_buf, 0, 64);
++
++	/* Clear any halt condition on endpoints */
++	usb_clear_halt(dev->udev, usb_sndbulkpipe(dev->udev, dev->bulk_out_ep));
++	usb_clear_halt(dev->udev, usb_rcvbulkpipe(dev->udev, dev->bulk_in_ep));
++
++	/* Test write */
++	ret = usb_bulk_msg(dev->udev,
++			   usb_sndbulkpipe(dev->udev, dev->bulk_out_ep),
++			   test_buf, 64,
++			   &actual, INFNOISE_USB_TIMEOUT);
++	if (ret < 0) {
++		dev_err(&dev->intf->dev, "Test write failed: %d\n", ret);
++		kfree(test_buf);
++		return ret;
++	}
++
++	/* Test read */
++	ret = usb_bulk_msg(dev->udev,
++			   usb_rcvbulkpipe(dev->udev, dev->bulk_in_ep),
++			   test_buf, 64,
++			   &actual, INFNOISE_USB_TIMEOUT);
++	if (ret < 0) {
++		dev_err(&dev->intf->dev, "Test read failed: %d\n", ret);
++		kfree(test_buf);
++		return ret;
++	}
++
++	dev_info(&dev->intf->dev, "Test transfer OK (%d bytes)\n", actual);
++	kfree(test_buf);
++	return 0;
++}
++
++/*
++ * Attempt to recover from USB errors
++ *
++ * This function tries to restore communication with the device after
++ * consecutive USB errors. It clears endpoint halts and reconfigures
++ * the FTDI chip. If that fails, it attempts a full USB device reset.
++ *
++ * Returns 0 on successful recovery, negative error code on failure.
++ */
++static int infnoise_try_recovery(struct infnoise_device *dev)
++{
++	int ret;
++
++	if (!test_bit(INFNOISE_PRESENT, &dev->flags))
++		return -ENODEV;
++
++	dev_warn(&dev->intf->dev, "Attempting error recovery...\n");
++
++	/* Clear any halt conditions on endpoints */
++	usb_clear_halt(dev->udev, usb_sndbulkpipe(dev->udev, dev->bulk_out_ep));
++	usb_clear_halt(dev->udev, usb_rcvbulkpipe(dev->udev, dev->bulk_in_ep));
++
++	/* Small delay to let things settle */
++	msleep(INFNOISE_RETRY_DELAY_MS);
++
++	/* Try to reconfigure the FTDI device */
++	ret = infnoise_configure_ftdi(dev);
++	if (ret < 0) {
++		dev_warn(&dev->intf->dev,
++			 "FTDI reconfiguration failed (%d), trying USB reset\n", ret);
++
++		/* Last resort: reset the USB device */
++		ret = usb_reset_device(dev->udev);
++		if (ret < 0) {
++			dev_err(&dev->intf->dev,
++				"USB reset failed: %d, device may be unusable\n", ret);
++			return ret;
++		}
++
++		/* Reconfigure after reset */
++		msleep(50);
++		ret = infnoise_configure_ftdi(dev);
++		if (ret < 0) {
++			dev_err(&dev->intf->dev,
++				"FTDI configuration after reset failed: %d\n", ret);
++			return ret;
++		}
++	}
++
++	dev->recoveries++;
++	dev->consecutive_errors = 0;
++	dev_info(&dev->intf->dev, "Recovery successful (total recoveries: %u)\n",
++		 dev->recoveries);
++
++	return 0;
++}
++
++/*
++ * Prepare the clock buffer with alternating SWEN1/SWEN2 patterns
++ */
++static void infnoise_prepare_clock_buffer(struct infnoise_device *dev)
++{
++	unsigned int i;
++
++	for (i = 0; i < INFNOISE_BUFLEN; i += 2) {
++		dev->clock_buf[i] = (1 << INFNOISE_SWEN1);
++		dev->clock_buf[i + 1] = (1 << INFNOISE_SWEN2);
++	}
++}
++
++/*
++ * Extract entropy bits from raw USB data
++ *
++ * In synchronous bit-bang mode, each byte read back contains the state
++ * of all pins. We extract one bit per byte from COMP1/COMP2 alternating.
++ */
++static int infnoise_extract_bytes(struct infnoise_device *dev, u8 *bytes,
++				  size_t length, const u8 *in_buf)
++{
++	unsigned int i, j;
++
++	infnoise_health_clear_entropy(&dev->health);
++
++	for (i = 0; i < length; i++) {
++		u8 byte = 0;
++
++		for (j = 0; j < 8; j++) {
++			u8 val = in_buf[i * 8 + j];
++			bool even_bit = (val >> INFNOISE_COMP2) & 1;
++			bool odd_bit = (val >> INFNOISE_COMP1) & 1;
++			bool even = j & 1; /* Use even bit if j is odd */
++			u8 bit = even ? even_bit : odd_bit;
++
++			byte = (byte << 1) | bit;
++
++			/* Feed bit to health checker */
++			if (!infnoise_health_add_bit(&dev->health, even_bit,
++						     odd_bit, even)) {
++				dev_err(&dev->intf->dev,
++					"Health check failed!\n");
++				set_bit(INFNOISE_HEALTH_FAIL, &dev->flags);
++				return -EIO;
++			}
++		}
++		bytes[i] = byte;
++	}
++
++	return infnoise_health_get_entropy(&dev->health);
++}
++
++/*
++ * Strip FTDI modem status bytes from USB data
++ *
++ * FTDI sends data in 64-byte packets: 2 status bytes + 62 data bytes.
++ * This function extracts just the data bytes.
++ */
++static int infnoise_strip_ftdi_status(struct infnoise_device *dev,
++				      int usb_bytes)
++{
++	int packets = usb_bytes / FTDI_PACKET_SIZE;
++	int leftover = usb_bytes % FTDI_PACKET_SIZE;
++	int data_bytes = 0;
++	int i;
++
++	for (i = 0; i < packets; i++) {
++		u8 *src = dev->usb_buf + i * FTDI_PACKET_SIZE + FTDI_STATUS_SIZE;
++		int copy_len = min(FTDI_DATA_PER_PACKET,
++				   INFNOISE_BUFLEN - data_bytes);
++
++		if (copy_len > 0) {
++			memcpy(dev->read_buf + data_bytes, src, copy_len);
++			data_bytes += copy_len;
++		}
++	}
++
++	/* Handle partial packet at end if any */
++	if (leftover > FTDI_STATUS_SIZE && data_bytes < INFNOISE_BUFLEN) {
++		int copy_len = min(leftover - FTDI_STATUS_SIZE,
++				   INFNOISE_BUFLEN - data_bytes);
++		u8 *src = dev->usb_buf + packets * FTDI_PACKET_SIZE + FTDI_STATUS_SIZE;
++
++		memcpy(dev->read_buf + data_bytes, src, copy_len);
++		data_bytes += copy_len;
++	}
++
++	return data_bytes;
++}
++
++/*
++ * Perform a single USB transfer cycle (internal, no retry)
++ *
++ * Writes clock pattern, reads back samples, extracts bits.
++ * Returns number of entropy bits, or negative error.
++ */
++static int infnoise_usb_transfer_once(struct infnoise_device *dev)
++{
++	int ret;
++	int actual;
++	int total_read = 0;
++	int data_bytes;
++
++	/* Write clock pattern */
++	ret = usb_bulk_msg(dev->udev,
++			   usb_sndbulkpipe(dev->udev, dev->bulk_out_ep),
++			   dev->clock_buf, INFNOISE_BUFLEN,
++			   &actual, INFNOISE_USB_TIMEOUT);
++	if (ret < 0) {
++		if (infnoise_debug)
++			dev_dbg(&dev->intf->dev, "USB write failed: %d\n", ret);
++		return ret;
++	}
++
++	if (actual != INFNOISE_BUFLEN) {
++		dev_err(&dev->intf->dev, "Short write: %d/%d\n",
++			actual, INFNOISE_BUFLEN);
++		return -EIO;
++	}
++
++	/*
++	 * Read samples - FTDI returns data in 64-byte packets with 2 status
++	 * bytes per packet. We need to read until we have enough data bytes.
++	 */
++	while (total_read < INFNOISE_USB_READ_SIZE) {
++		int remaining = INFNOISE_USB_READ_SIZE - total_read;
++
++		ret = usb_bulk_msg(dev->udev,
++				   usb_rcvbulkpipe(dev->udev, dev->bulk_in_ep),
++				   dev->usb_buf + total_read, remaining,
++				   &actual, INFNOISE_USB_TIMEOUT);
++		if (ret < 0) {
++			if (infnoise_debug)
++				dev_dbg(&dev->intf->dev, "USB read failed: %d\n", ret);
++			return ret;
++		}
++
++		if (actual == 0) {
++			if (infnoise_debug)
++				dev_dbg(&dev->intf->dev, "USB read timeout, got %d/%d\n",
++					total_read, INFNOISE_USB_READ_SIZE);
++			return -ETIMEDOUT;
++		}
++
++		total_read += actual;
++
++		if (infnoise_debug && total_read < INFNOISE_USB_READ_SIZE)
++			dev_dbg(&dev->intf->dev, "Partial read: %d/%d, continuing\n",
++				total_read, INFNOISE_USB_READ_SIZE);
++	}
++
++	/* Strip FTDI status bytes to get actual data */
++	data_bytes = infnoise_strip_ftdi_status(dev, total_read);
++
++	if (data_bytes < INFNOISE_BUFLEN) {
++		dev_err(&dev->intf->dev, "Short data: %d/%d bytes\n",
++			data_bytes, INFNOISE_BUFLEN);
++		return -EIO;
++	}
++
++	/* Extract entropy bits */
++	return infnoise_extract_bytes(dev, dev->out_buf, INFNOISE_BYTES_OUT,
++				      dev->read_buf);
++}
++
++/*
++ * Check if an error is potentially recoverable
++ */
++static bool infnoise_is_recoverable_error(int err)
++{
++	switch (err) {
++	case -EPIPE:		/* Endpoint stalled */
++	case -ETIMEDOUT:	/* Timeout */
++	case -EPROTO:		/* Protocol error */
++	case -EILSEQ:		/* CRC/bit stuff error */
++	case -EOVERFLOW:	/* Babble/overflow */
++	case -EIO:		/* I/O error */
++		return true;
++	case -ENODEV:		/* Device disconnected */
++	case -ESHUTDOWN:	/* Device shutting down */
++	case -ENOENT:		/* URB cancelled */
++		return false;
++	default:
++		return false;
++	}
++}
++
++/*
++ * Perform USB transfer with retry and recovery
++ *
++ * Attempts the transfer up to INFNOISE_MAX_RETRIES times. If consecutive
++ * errors exceed INFNOISE_RECOVERY_THRESHOLD, attempts device recovery.
++ * Returns number of entropy bits, or negative error.
++ */
++static int infnoise_usb_transfer(struct infnoise_device *dev)
++{
++	int ret;
++	int retry;
++
++	for (retry = 0; retry < INFNOISE_MAX_RETRIES; retry++) {
++		ret = infnoise_usb_transfer_once(dev);
++
++		if (ret >= 0) {
++			/* Success - reset consecutive error counter */
++			dev->consecutive_errors = 0;
++			return ret;
++		}
++
++		/* Track errors */
++		dev->usb_errors++;
++		dev->consecutive_errors++;
++
++		/* Check if error is recoverable */
++		if (!infnoise_is_recoverable_error(ret)) {
++			if (infnoise_debug)
++				dev_dbg(&dev->intf->dev,
++					"Non-recoverable error: %d\n", ret);
++			return ret;
++		}
++
++		/* Attempt recovery if we've hit the threshold */
++		if (dev->consecutive_errors >= INFNOISE_RECOVERY_THRESHOLD) {
++			int recovery_ret = infnoise_try_recovery(dev);
++
++			if (recovery_ret < 0) {
++				dev_err(&dev->intf->dev,
++					"Recovery failed: %d\n", recovery_ret);
++				return recovery_ret;
++			}
++			/* Recovery succeeded, retry counter continues */
++		}
++
++		/* Brief delay before retry */
++		if (retry < INFNOISE_MAX_RETRIES - 1) {
++			if (infnoise_debug)
++				dev_dbg(&dev->intf->dev,
++					"Retry %d/%d after error %d\n",
++					retry + 1, INFNOISE_MAX_RETRIES, ret);
++			msleep(INFNOISE_RETRY_DELAY_MS);
++		}
++	}
++
++	dev_err(&dev->intf->dev, "Transfer failed after %d retries, last error: %d\n",
++		INFNOISE_MAX_RETRIES, ret);
++	return ret;
++}
++
++/*
++ * Squeeze whitened data from Keccak sponge
++ *
++ * Extracts up to 128 bytes per call. If more data is needed,
++ * performs a permutation and can be called again.
++ * Returns number of bytes extracted.
++ */
++static int infnoise_keccak_squeeze(struct infnoise_device *dev, u8 *result,
++				   size_t max_len)
++{
++	size_t out_bytes;
++
++	/* Extract at most 128 bytes (16 lanes) for security margin */
++	out_bytes = min_t(size_t, max_len, 128);
++	infnoise_keccak_extract(&dev->keccak, result, (out_bytes + 7) / 8);
++
++	/* Permute state for next extraction */
++	infnoise_keccak_permutation(&dev->keccak);
++
++	return out_bytes;
++}
++
++/*
++ * Read random data from the device
++ *
++ * This is the main data path used by both hwrng and character device.
++ * Supports multiplier for increased output rate from Keccak sponge.
++ */
++static int infnoise_read_data(struct infnoise_device *dev, u8 *result,
++			      size_t max_len, bool raw)
++{
++	int entropy;
++	size_t out_bytes;
++	unsigned int mult;
++
++	/* Check device is still present */
++	if (!test_bit(INFNOISE_PRESENT, &dev->flags))
++		return -ENODEV;
++
++	/*
++	 * If we have bytes left from a previous absorption (multiplier > 1),
++	 * squeeze more data without doing a new USB transfer.
++	 */
++	if (dev->keccak_bytes_left > 0 && !raw) {
++		out_bytes = min_t(size_t, max_len, dev->keccak_bytes_left);
++		out_bytes = infnoise_keccak_squeeze(dev, result, out_bytes);
++		dev->keccak_bytes_left -= out_bytes;
++		dev->bytes_generated += out_bytes;
++		return out_bytes;
++	}
++
++	/* Perform USB transfer to get new entropy */
++	entropy = infnoise_usb_transfer(dev);
++	if (entropy < 0)
++		return entropy;
++
++	/* Check health status */
++	if (!infnoise_health_ok(&dev->health)) {
++		if (infnoise_debug)
++			dev_dbg(&dev->intf->dev, "Health check not OK yet\n");
++		return 0; /* Discard data but don't error */
++	}
++
++	/* Check entropy meets target */
++	if (!infnoise_health_entropy_on_target(&dev->health, entropy,
++					       INFNOISE_BUFLEN)) {
++		if (infnoise_debug)
++			dev_dbg(&dev->intf->dev, "Entropy below target\n");
++		return 0; /* Discard data */
++	}
++
++	/* Return raw data if requested */
++	if (raw) {
++		out_bytes = min_t(size_t, max_len, INFNOISE_BYTES_OUT);
++		memcpy(result, dev->out_buf, out_bytes);
++		dev->bytes_generated += out_bytes;
++		return out_bytes;
++	}
++
++	/* Absorb raw data into Keccak sponge (64 bytes = 8 lanes) */
++	infnoise_keccak_absorb(&dev->keccak, dev->out_buf, INFNOISE_BYTES_OUT / 8);
++
++	/* Calculate total bytes to output based on multiplier */
++	mult = infnoise_multiplier;
++	if (mult > 10)
++		mult = 10;  /* Cap at 10x for sanity */
++
++	if (mult == 0) {
++		/* Output only entropy bits worth of data */
++		out_bytes = entropy / 8;
++	} else {
++		/* Output multiplier * 32 bytes (256 bits per multiplier unit) */
++		out_bytes = mult * 32;
++	}
++
++	/* Set up remaining bytes for subsequent reads */
++	dev->keccak_bytes_left = out_bytes;
++
++	/* Squeeze first chunk */
++	out_bytes = min_t(size_t, max_len, dev->keccak_bytes_left);
++	out_bytes = infnoise_keccak_squeeze(dev, result, out_bytes);
++	dev->keccak_bytes_left -= out_bytes;
++	dev->bytes_generated += out_bytes;
++
++	return out_bytes;
++}
++
++/*
++ * Warmup work function - runs in workqueue context
++ */
++static void infnoise_warmup_work(struct work_struct *work)
++{
++	struct infnoise_device *dev = container_of(work, struct infnoise_device,
++						   warmup_work);
++	unsigned int rounds = 0;
++	u8 discard[64];
++
++	dev_info(&dev->intf->dev, "Starting warmup...\n");
++
++	mutex_lock(&dev->lock);
++
++	while (!infnoise_health_ok(&dev->health) &&
++	       rounds < INFNOISE_WARMUP_ROUNDS &&
++	       test_bit(INFNOISE_PRESENT, &dev->flags)) {
++		infnoise_read_data(dev, discard, sizeof(discard), true);
++		rounds++;
++	}
++
++	mutex_unlock(&dev->lock);
++
++	if (!test_bit(INFNOISE_PRESENT, &dev->flags)) {
++		dev_info(&dev->intf->dev, "Device disconnected during warmup\n");
++		return;
++	}
++
++	if (rounds >= INFNOISE_WARMUP_ROUNDS) {
++		dev_err(&dev->intf->dev,
++			"Warmup failed after %u rounds\n", rounds);
++		set_bit(INFNOISE_HEALTH_FAIL, &dev->flags);
++	} else {
++		dev_info(&dev->intf->dev,
++			 "Warmup complete after %u rounds\n", rounds);
++		set_bit(INFNOISE_WARMUP_DONE, &dev->flags);
++	}
++
++	complete(&dev->warmup_done);
++}
++
++/* ============== hwrng interface ============== */
++
++static int infnoise_hwrng_read(struct hwrng *rng, void *data, size_t max,
++			       bool wait)
++{
++	struct infnoise_device *dev = (struct infnoise_device *)rng->priv;
++	bool raw = infnoise_raw_mode || dev->raw_mode;
++	int ret;
++
++	if (!test_bit(INFNOISE_PRESENT, &dev->flags))
++		return -ENODEV;
++
++	/*
++	 * Update hwrng quality based on current raw mode setting.
++	 * Raw output has ~0.88 bits entropy per bit.
++	 * Whitened (Keccak) output is cryptographically uniform (~1.0 bits/bit).
++	 */
++	dev->hwrng.quality = raw ? INFNOISE_QUALITY_RAW : INFNOISE_QUALITY_WHITENED;
++
++	/* Wait for warmup if requested */
++	if (wait && !test_bit(INFNOISE_WARMUP_DONE, &dev->flags)) {
++		ret = wait_for_completion_interruptible(&dev->warmup_done);
++		if (ret)
++			return ret;
++	}
++
++	if (!test_bit(INFNOISE_WARMUP_DONE, &dev->flags))
++		return 0;
++
++	if (test_bit(INFNOISE_HEALTH_FAIL, &dev->flags))
++		return -EIO;
++
++	mutex_lock(&dev->lock);
++	ret = infnoise_read_data(dev, data, max, raw);
++	mutex_unlock(&dev->lock);
++
++	return ret;
++}
++
++static int infnoise_hwrng_register(struct infnoise_device *dev)
++{
++	int ret;
++	bool raw = infnoise_raw_mode || dev->raw_mode;
++
++	snprintf(dev->hwrng_name, sizeof(dev->hwrng_name),
++		 "infnoise-%s", dev_name(&dev->intf->dev));
++
++	dev->hwrng.name = dev->hwrng_name;
++	dev->hwrng.read = infnoise_hwrng_read;
++	dev->hwrng.priv = (unsigned long)dev;
++	dev->hwrng.quality = raw ? INFNOISE_QUALITY_RAW : INFNOISE_QUALITY_WHITENED;
++
++	ret = hwrng_register(&dev->hwrng);
++	if (ret) {
++		dev_err(&dev->intf->dev, "Failed to register hwrng: %d\n", ret);
++		return ret;
++	}
++
++	set_bit(INFNOISE_HWRNG_REG, &dev->flags);
++	dev_info(&dev->intf->dev, "Registered hwrng: %s (quality=%u)\n",
++		 dev->hwrng_name, dev->hwrng.quality);
++
++	return 0;
++}
++
++static void infnoise_hwrng_unregister(struct infnoise_device *dev)
++{
++	if (test_and_clear_bit(INFNOISE_HWRNG_REG, &dev->flags)) {
++		hwrng_unregister(&dev->hwrng);
++		dev_info(&dev->intf->dev, "Unregistered hwrng\n");
++	}
++}
++
++/* ============== Character device interface ============== */
++
++static int infnoise_open(struct inode *inode, struct file *file)
++{
++	struct infnoise_device *dev;
++	struct usb_interface *intf;
++
++	intf = usb_find_interface(&infnoise_driver, iminor(inode));
++	if (!intf)
++		return -ENODEV;
++
++	dev = usb_get_intfdata(intf);
++	if (!dev)
++		return -ENODEV;
++
++	if (!test_bit(INFNOISE_PRESENT, &dev->flags))
++		return -ENODEV;
++
++	file->private_data = dev;
++
++	return 0;
++}
++
++static int infnoise_release(struct inode *inode, struct file *file)
++{
++	return 0;
++}
++
++static ssize_t infnoise_char_read(struct file *file, char __user *buf,
++				  size_t count, loff_t *ppos)
++{
++	struct infnoise_device *dev = file->private_data;
++	u8 data[128];
++	size_t chunk;
++	ssize_t total = 0;
++	int ret;
++
++	if (!dev)
++		return -ENODEV;
++
++	/* Wait for warmup */
++	if (!test_bit(INFNOISE_WARMUP_DONE, &dev->flags)) {
++		if (file->f_flags & O_NONBLOCK)
++			return -EAGAIN;
++
++		ret = wait_for_completion_interruptible(&dev->warmup_done);
++		if (ret)
++			return ret;
++	}
++
++	if (test_bit(INFNOISE_HEALTH_FAIL, &dev->flags))
++		return -EIO;
++
++	while (total < count) {
++		chunk = min(count - total, sizeof(data));
++
++		mutex_lock(&dev->lock);
++		ret = infnoise_read_data(dev, data, chunk,
++					 infnoise_raw_mode || dev->raw_mode);
++		mutex_unlock(&dev->lock);
++
++		if (ret < 0)
++			return total ? total : ret;
++
++		if (ret == 0) {
++			/* No data available yet (warmup / entropy below target) */
++			if (total > 0)
++				break;
++			if (file->f_flags & O_NONBLOCK)
++				return -EAGAIN;
++			/* Yield CPU and back off to avoid busy-wait / soft lockup */
++			msleep(INFNOISE_RETRY_DELAY_MS);
++			if (signal_pending(current))
++				return -ERESTARTSYS;
++			continue;
++		}
++
++		if (copy_to_user(buf + total, data, ret))
++			return -EFAULT;
++
++		total += ret;
++	}
++
++	return total;
++}
++
++static long infnoise_ioctl(struct file *file, unsigned int cmd,
++			   unsigned long arg)
++{
++	struct infnoise_device *dev = file->private_data;
++	struct infnoise_stats stats = {};
++	int raw;
++	u32 entropy;
++
++	if (!dev)
++		return -ENODEV;
++
++	switch (cmd) {
++	case INFNOISE_GET_STATS:
++		mutex_lock(&dev->lock);
++		infnoise_health_get_stats(&dev->health, &stats);
++		mutex_unlock(&dev->lock);
++		if (copy_to_user((void __user *)arg, &stats, sizeof(stats)))
++			return -EFAULT;
++		return 0;
++
++	case INFNOISE_SET_RAW:
++		if (copy_from_user(&raw, (void __user *)arg, sizeof(raw)))
++			return -EFAULT;
++		dev->raw_mode = !!raw;
++		return 0;
++
++	case INFNOISE_GET_ENTROPY:
++		mutex_lock(&dev->lock);
++		entropy = infnoise_health_get_entropy(&dev->health);
++		mutex_unlock(&dev->lock);
++		if (copy_to_user((void __user *)arg, &entropy, sizeof(entropy)))
++			return -EFAULT;
++		return 0;
++
++	default:
++		return -ENOTTY;
++	}
++}
++
++static const struct file_operations infnoise_fops = {
++	.owner		= THIS_MODULE,
++	.read		= infnoise_char_read,
++	.open		= infnoise_open,
++	.release	= infnoise_release,
++	.llseek		= noop_llseek,
++	.unlocked_ioctl	= infnoise_ioctl,
++	.compat_ioctl	= compat_ptr_ioctl,
++};
++
++static struct usb_class_driver infnoise_class = {
++	.name		= "infnoise%d",
++	.fops		= &infnoise_fops,
++	.minor_base	= 192,
++};
++
++/* ============== USB probe/disconnect ============== */
++
++static int infnoise_probe(struct usb_interface *intf,
++			  const struct usb_device_id *id)
++{
++	struct usb_device *udev = interface_to_usbdev(intf);
++	struct usb_endpoint_descriptor *bulk_in, *bulk_out;
++	struct infnoise_device *dev;
++	int ret;
++
++	dev_info(&intf->dev, "Infinite Noise TRNG detected\n");
++
++	/* Reset USB device to clear any stale state */
++	ret = usb_reset_device(udev);
++	if (ret) {
++		dev_warn(&intf->dev, "USB reset failed: %d (continuing)\n", ret);
++		/* Non-fatal, continue anyway */
++	}
++
++	/* Find bulk endpoints */
++	ret = usb_find_common_endpoints(intf->cur_altsetting,
++					&bulk_in, &bulk_out, NULL, NULL);
++	if (ret) {
++		dev_err(&intf->dev, "Could not find bulk endpoints\n");
++		return ret;
++	}
++
++	/* Allocate device structure */
++	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
++	if (!dev)
++		return -ENOMEM;
++
++	dev->udev = usb_get_dev(udev);
++	dev->intf = intf;
++	dev->bulk_in_ep = bulk_in->bEndpointAddress;
++	dev->bulk_out_ep = bulk_out->bEndpointAddress;
++
++	mutex_init(&dev->lock);
++	init_completion(&dev->warmup_done);
++	INIT_WORK(&dev->warmup_work, infnoise_warmup_work);
++
++	/* Allocate buffers */
++	dev->clock_buf = kmalloc(INFNOISE_BUFLEN, GFP_KERNEL);
++	dev->usb_buf = kmalloc(INFNOISE_USB_READ_SIZE, GFP_KERNEL);
++	dev->read_buf = kmalloc(INFNOISE_BUFLEN, GFP_KERNEL);
++	dev->out_buf = kmalloc(INFNOISE_BYTES_OUT, GFP_KERNEL);
++
++	if (!dev->clock_buf || !dev->usb_buf || !dev->read_buf || !dev->out_buf) {
++		ret = -ENOMEM;
++		goto err_buffers;
++	}
++
++	/* Initialize health check */
++	ret = infnoise_health_init(&dev->health);
++	if (ret)
++		goto err_buffers;
++
++	/* Initialize Keccak */
++	infnoise_keccak_init(&dev->keccak);
++
++	/* Prepare clock buffer */
++	infnoise_prepare_clock_buffer(dev);
++
++	/* Configure FTDI */
++	ret = infnoise_configure_ftdi(dev);
++	if (ret)
++		goto err_health;
++
++	/* Test transfer to prime the device */
++	ret = infnoise_test_transfer(dev);
++	if (ret)
++		goto err_health;
++
++	/* Mark device as present */
++	set_bit(INFNOISE_PRESENT, &dev->flags);
++
++	usb_set_intfdata(intf, dev);
++
++	/* Register character device */
++	ret = usb_register_dev(intf, &infnoise_class);
++	if (ret) {
++		dev_err(&intf->dev, "Could not register char device: %d\n", ret);
++		goto err_health;
++	}
++	dev->minor = intf->minor;
++	dev_info(&intf->dev, "Registered /dev/infnoise%d\n",
++		 intf->minor - infnoise_class.minor_base);
++
++	/* Register hwrng */
++	ret = infnoise_hwrng_register(dev);
++	if (ret)
++		dev_warn(&intf->dev, "hwrng registration failed, continuing\n");
++
++	/* Start warmup in workqueue */
++	schedule_work(&dev->warmup_work);
++
++	dev_info(&intf->dev, "Infinite Noise TRNG initialized\n");
++
++	return 0;
++
++err_health:
++	infnoise_health_free(&dev->health);
++err_buffers:
++	kfree(dev->clock_buf);
++	kfree(dev->usb_buf);
++	kfree(dev->read_buf);
++	kfree(dev->out_buf);
++	usb_put_dev(dev->udev);
++	kfree(dev);
++	return ret;
++}
++
++static void infnoise_disconnect(struct usb_interface *intf)
++{
++	struct infnoise_device *dev = usb_get_intfdata(intf);
++
++	if (!dev)
++		return;
++
++	dev_info(&intf->dev, "Infinite Noise TRNG disconnected\n");
++
++	/* Mark device as absent */
++	clear_bit(INFNOISE_PRESENT, &dev->flags);
++
++	/* Complete any waiting warmup */
++	complete_all(&dev->warmup_done);
++
++	/* Cancel warmup work */
++	cancel_work_sync(&dev->warmup_work);
++
++	/* Unregister hwrng */
++	infnoise_hwrng_unregister(dev);
++
++	/* Unregister character device */
++	usb_deregister_dev(intf, &infnoise_class);
++
++	usb_set_intfdata(intf, NULL);
++
++	/* Free resources */
++	infnoise_health_free(&dev->health);
++	kfree(dev->clock_buf);
++	kfree(dev->usb_buf);
++	kfree(dev->read_buf);
++	kfree(dev->out_buf);
++	usb_put_dev(dev->udev);
++	kfree(dev);
++}
++
++static struct usb_driver infnoise_driver = {
++	.name		= DRIVER_NAME,
++	.probe		= infnoise_probe,
++	.disconnect	= infnoise_disconnect,
++	.id_table	= infnoise_table,
++	.supports_autosuspend = 0,  /* No suspend - device feeds entropy continuously */
++};
++
++module_usb_driver(infnoise_driver);
++
++MODULE_AUTHOR("Manuel Domke");
++MODULE_DESCRIPTION(DRIVER_DESC);
++MODULE_VERSION(DRIVER_VERSION);
++MODULE_LICENSE("GPL");
+-- 
+2.54.0
+

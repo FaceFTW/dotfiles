@@ -6,7 +6,7 @@ let
   git = (
     fetchGit {
       url = "https://github.com/miskcoo/ugreen_leds_controller.git";
-      rev = "1defbaf27ee48842019e451e33090edc0f4ff7aa";
+      rev = "d6c3b3d7c74a68851e6cf71433aa9a7c313cda22";
     }
   );
 in

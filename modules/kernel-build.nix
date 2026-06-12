@@ -9,13 +9,16 @@ let
     recurseIntoAttrs
     mkForce
     mkOption
+    mkEnableOption
     types
     mergeAttrsList
+    mkIf
     ;
 
 in
 {
   options.modules.kernel = {
+    enable = mkEnableOption "Custom linux Build";
     version = mkOption { type = types.str; };
     src = mkOption { type = types.package; };
     extraConfig = mkOption { type = types.attrs; };
@@ -37,9 +40,9 @@ in
         else
           pkgs;
     in
-    {
+    mkIf config.modules.kernel.enable {
       boot.kernelPackages = recurseIntoAttrs (
-        pkgs.linuxPackagesFor (
+        finalPkgs.linuxPackagesFor (
           finalPkgs.buildLinux {
             version = config.modules.kernel.version;
             src = config.modules.kernel.src;
