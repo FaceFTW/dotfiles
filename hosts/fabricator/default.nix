@@ -19,7 +19,7 @@
     ../../modules/user.nix
     ./hardware.nix
     ./networking.nix
-    ./services.nix
+    ./services
   ];
 
   nixpkgs.hostPlatform = "aarch64-linux";
