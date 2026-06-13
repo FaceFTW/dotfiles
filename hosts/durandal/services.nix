@@ -8,6 +8,4 @@
     ./services/pihole.nix
   ];
 
-
-
 }
