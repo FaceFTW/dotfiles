@@ -10,6 +10,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     ../../modules/core.nix
+    ../../modules/home
     ../../modules/kernel-build.nix
     ../../modules/kernel-tunables.nix
     ../../modules/image.nix
@@ -29,6 +30,13 @@
   modules.users.default.password.type = "sops";
   # modules.users.default.password.value = "";
   modules.users.default.password.value = config.sops.secrets.user_passwd.path;
+
+  modules.home = {
+    fastfetch.enable = true;
+    oh-my-posh.enable = true;
+    ssh-client.enable = true;
+    zsh.enable = true;
+  };
 
   # The following are system users/groups defined for various services
   # Unless they are defined elsewhere, in which here I document it for tracking

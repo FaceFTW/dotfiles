@@ -96,8 +96,6 @@ in
         home.homeDirectory = "/home/face";
         xdg.enable = true;
 
-        programs = (import ./home.nix { inherit config pkgs lib; });
-
         home.stateVersion = "25.05";
       };
 

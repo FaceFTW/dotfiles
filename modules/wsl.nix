@@ -9,6 +9,7 @@
     inputs.nixos-wsl.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     ./core.nix
+    ./home
     ./kernel-tunables.nix
     ./packages
     ./user.nix
@@ -24,6 +25,14 @@
   modules.users.default.password.value = "";
   modules.users.default.extraGroups = [ "docker" ];
   modules.users.default.extraPackages = [ pkgs.wslKeySetup ];
+
+  modules.home = {
+    fastfetch.enable = true;
+    git.enable = true;
+    oh-my-posh.enable = true;
+    ssh-client.enable = true;
+    zsh.enable = true;
+  };
 
   ############################################
   # WSL Configuration

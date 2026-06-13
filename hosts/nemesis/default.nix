@@ -11,6 +11,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.silentSDDM.nixosModules.default
     ../../modules/core.nix
+    ../../modules/home
     ../../modules/kernel-build.nix
     ../../modules/kernel-tunables.nix
     ../../modules/packages
@@ -34,6 +35,14 @@
     "networkmanager"
     "syncthing"
   ];
+
+  modules.home = {
+    fastfetch.enable = true;
+    git.enable = true;
+    oh-my-posh.enable = true;
+    ssh-client.enable = true;
+    zsh.enable = true;
+  };
 
   home-manager.backupFileExtension = "bak";
 
