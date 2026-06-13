@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   ...
 }:
@@ -45,12 +44,11 @@
   # Kernel Build Configuration
   ############################################
   modules.kernel = {
-    version = "6.18.32";
-    src = pkgs.fetchgit {
+    enable = true;
+    version = "7.0.12";
+    src = fetchGit {
       url = "https://github.com/raspberrypi/linux";
-      rev = "bb5a64adb1b761406d0e3b6570c3d2668e9198f8";
-      hash = "sha256-rpWHYPW4JotPczjB8ENzX0m+IypHX24N3GTK8s8d1dM=";
-      # hash = lib.fakeHash;
+      rev = "caad1e7413200adc7804c1f96b7de88742b4a508";
     };
 
     crossCompile = true;

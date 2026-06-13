@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   ...
 }:
@@ -60,18 +59,16 @@
   # Kernel Build Configuration
   ############################################
   modules.kernel = {
-    version = "6.18.32";
-    src = pkgs.fetchgit {
+    enable = true;
+    version = "7.0.12";
+    src = fetchGit {
       url = "https://github.com/raspberrypi/linux";
-      rev = "bb5a64adb1b761406d0e3b6570c3d2668e9198f8";
-      hash = "sha256-rpWHYPW4JotPczjB8ENzX0m+IypHX24N3GTK8s8d1dM=";
-      # hash = lib.fakeHash;
+      rev = "caad1e7413200adc7804c1f96b7de88742b4a508";
     };
 
     crossCompile = true;
 
     extraConfig = with lib.kernel; {
-
       I2C_ISCH = no;
       DMA_BCM2708 = yes; # https://github.com/raspberrypi/linux/issues/1150
       NET_VENDOR_BROADCOM = yes;
@@ -82,8 +79,10 @@
       BCM87XX_PHY = yes;
       BCM_NET_PHYLIB = yes;
       BCM_NET_PHYPTP = yes;
-      WLAN_VENDOR_BROADCOM = yes;
-      BCMA = module;
+
+      INPUT_TOUCHSCREEN = yes;
+      REGULATOR_RASPBERRYPI_TOUCHSCREEN_ATTINY = lib.mkForce module;
+      REGULATOR_RASPBERRYPI_TOUCHSCREEN_V2 = lib.mkForce module;
 
       # I can't for the life of me figure out why this thing gets selected
       MFD_WM8994 = yes;
