@@ -72,6 +72,9 @@
       I2C_ISCH = no;
       DMA_BCM2708 = yes; # https://github.com/raspberrypi/linux/issues/1150
       NET_VENDOR_BROADCOM = yes;
+      WLAN_VENDOR_BROADCOM = yes;
+
+      BCMA = module;
       BROADCOM_PHY = yes;
       BCM54140_PHY = yes;
       BCM7XXX_PHY = yes;
