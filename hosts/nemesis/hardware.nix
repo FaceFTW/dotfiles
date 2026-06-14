@@ -57,10 +57,11 @@
   # Kernel Build Configuration
   ############################################
   modules.kernel = {
-    version = "7.0.11";
+    enable = true;
+    version = "7.0.12";
     src = pkgs.fetchurl {
-      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.11.tar.xz";
-      hash = "sha256-5WyDVt2gETamBBxu+DK9Dsmb0tNd/5eDKqXsEO0BQwQ=";
+      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.12.tar.xz";
+      hash = "sha256-V+3JpB78HKa3l6+o9KWHow2ir2vKc1brVuHhpK2iZdo=";
       # hash = lib.fakeHash;
     };
 
