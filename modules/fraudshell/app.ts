@@ -1,10 +1,16 @@
-import app from "ags/gtk4/app"
-import style from "./style.scss"
-import Bar from "./widget/Bar"
+import app from "ags/gtk4/app";
+import "@/src/services/styles";
+import request from "./request";
+import { config } from "./options";
+import { windows } from "./windows";
 
 app.start({
-  css: style,
-  main() {
-    app.get_monitors().map(Bar)
-  },
-})
+	icons: `${DATADIR ?? SRC}/assets/icons`,
+	instanceName: "delta-shell",
+	main() {
+		windows();
+	},
+	requestHandler(argv, response) {
+		request(argv, response);
+	},
+});

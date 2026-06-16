@@ -21,8 +21,19 @@
     entry = "app.ts";
 
     astalPackages = with ags.packages.${system}; [
-      io
       astal4 # or astal3 for gtk3
+      apps
+      auth
+      battery
+      bluetooth
+      greet
+      hyprland
+      io
+      network
+      notifd
+      powerprofiles
+      tray
+      wireplumber
       # notifd tray wireplumber
     ];
 
@@ -31,6 +42,8 @@
       ++ [
         pkgs.libadwaita
         pkgs.libsoup_3
+        pkgs.brightnessctl
+        pkgs.hyprland
       ];
   in {
     packages.${system} = {

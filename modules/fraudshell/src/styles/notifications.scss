@@ -1,0 +1,133 @@
+window#notificationspopup {
+	all: unset;
+	color: $fg0;
+	font-size: $font-size;
+
+	.notification {
+		@if $shadow {
+			box-shadow: $window-shadow-offset
+				$window-shadow-blur
+				$window-shadow-spread
+				rgba($window-shadow-color, $window-shadow-opacity);
+		}
+	}
+}
+
+window#notificationslist {
+	all: unset;
+	color: $fg0;
+	font-size: $font-size;
+
+	.main {
+		background: rgba($bg0, $window-opacity);
+		border: $window-border-width solid $window-border-color;
+		padding: $window-padding;
+		border-radius: $window-radius;
+		@if $shadow {
+			box-shadow: $window-shadow-offset
+				$window-shadow-blur
+				$window-shadow-spread
+				rgba($window-shadow-color, $window-shadow-opacity);
+		}
+	}
+}
+
+.notification {
+	background: rgba($bg1, $window-opacity);
+	padding: 10px;
+	border-radius: $widget-radius;
+
+	&.critical {
+		color: $red;
+	}
+
+	.header {
+		.close {
+			outline: none;
+			color: $red;
+
+			&:focus {
+				transition: 0s;
+				outline-offset: -$window-outline-width;
+				outline: $window-outline-width solid $window-outline-color;
+			}
+
+			&:hover {
+				color: $red-light;
+			}
+		}
+
+		button {
+			border-radius: $widget-radius;
+			padding: 0;
+			background: rgba($bg2, $window-opacity);
+		}
+	}
+
+	.content {
+		.body {
+			font-style: normal;
+			font-weight: normal;
+		}
+
+		.image {
+			border-radius: $widget-radius;
+		}
+	}
+
+	.actions button {
+		border-radius: $widget-radius;
+		font-weight: normal;
+		background: rgba($bg2, $window-opacity);
+
+		&:hover {
+			background-color: $bg3;
+		}
+	}
+}
+
+.notifications-list {
+	tooltip {
+		background: rgba($bg0, $window-opacity);
+		border: $window-border-width solid $window-border-color;
+		border-radius: $widget-radius;
+		margin: 10px;
+		@if $shadow {
+			box-shadow: $window-shadow-offset
+				$window-shadow-blur
+				$window-shadow-spread
+				rgba($window-shadow-color, $window-shadow-opacity);
+		}
+	}
+
+	.notifs-header {
+		min-height: 40px;
+		button {
+			outline: none;
+			padding: 0;
+			min-width: 40px;
+			background: transparent;
+
+			&:focus {
+				transition: 0s;
+				outline-offset: -$window-outline-width;
+				outline: $window-outline-width solid $window-outline-color;
+			}
+		}
+	}
+
+	.list {
+		.header {
+			min-height: 0;
+		}
+	}
+
+	.notifs-clear {
+		color: $red;
+
+		&:hover {
+			transition: all $transition;
+			color: $red-light;
+		}
+	}
+}

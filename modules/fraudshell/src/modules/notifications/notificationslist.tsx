@@ -1,0 +1,117 @@
+import AstalNotifd from "gi://AstalNotifd?version=0.1";
+import { Gdk, Gtk } from "ags/gtk4";
+import { icons } from "@/src/lib/icons";
+import { createBinding, For } from "ags";
+import { config, theme } from "@/options";
+import { Notification } from "./notification";
+import { qs_page, qs_page_set } from "../quicksettings/quicksettings";
+import { windows_names } from "@/windows";
+import app from "ags/gtk4/app";
+const notifd = AstalNotifd.get_default();
+
+function Header({ showArrow = false }: { showArrow?: boolean }) {
+	const dnd = createBinding(notifd, "dontDisturb");
+	return (
+		<box class={"notifs-header"} spacing={theme.spacing}>
+			{showArrow && (
+				<button
+					cssClasses={["qs-header-button", "qs-page-prev"]}
+					focusOnClick={false}
+					onClicked={() => qs_page_set("main")}
+				>
+					<image
+						iconName={icons.arrow.left}
+						pixelSize={theme["icon-size"].normal}
+					/>
+				</button>
+			)}
+			<label label={"Notifications"} />
+			<box hexpand />
+			<button
+				cssClasses={["qs-header-button", "notifs-clear"]}
+				focusOnClick={false}
+				onClicked={() =>
+					notifd.notifications.forEach((n) => n.dismiss())
+				}
+			>
+				<image
+					halign={Gtk.Align.CENTER}
+					iconName={icons.trash}
+					pixelSize={theme["icon-size"].normal}
+				/>
+			</button>
+			<switch
+				class={"toggle"}
+				valign={Gtk.Align.CENTER}
+				active={createBinding(notifd, "dontDisturb").as((v) => !v)}
+				onNotifyActive={({ state }) => {
+					if (
+						qs_page.peek() === "notificationslist" ||
+						app.get_window(windows_names.notificationslist)?.visible
+					)
+						notifd.set_dont_disturb(!state);
+				}}
+			/>
+		</box>
+	);
+}
+
+function NotFound() {
+	const notifications = createBinding(notifd, "notifications");
+
+	return (
+		<box
+			halign={Gtk.Align.CENTER}
+			valign={Gtk.Align.CENTER}
+			vexpand
+			visible={notifications((n) => n.length === 0)}
+		>
+			<label label={"Your inbox is empty"} />
+		</box>
+	);
+}
+
+function List() {
+	const list = createBinding(notifd, "notifications").as((notifs) =>
+		notifs.sort((a, b) => b.time - a.time),
+	);
+
+	return (
+		<scrolledwindow>
+			<box
+				class={"list"}
+				orientation={Gtk.Orientation.VERTICAL}
+				spacing={theme.spacing}
+				vexpand
+			>
+				<For each={list}>
+					{(notif) => (
+						<Notification
+							n={notif}
+							onClose={() => notif.dismiss()}
+						/>
+					)}
+				</For>
+			</box>
+		</scrolledwindow>
+	);
+}
+
+export function NotificationsListModule({
+	showArrow = false,
+}: {
+	showArrow?: boolean;
+}) {
+	return (
+		<box
+			spacing={theme.spacing}
+			orientation={Gtk.Orientation.VERTICAL}
+			widthRequest={config.notifications.width}
+			class={"notifications-list"}
+		>
+			<Header showArrow={showArrow} />
+			<NotFound />
+			<List />
+		</box>
+	);
+}

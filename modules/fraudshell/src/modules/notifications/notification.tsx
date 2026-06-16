@@ -1,0 +1,207 @@
+import Pango from "gi://Pango";
+import Gtk from "gi://Gtk";
+import AstalNotifd from "gi://AstalNotifd";
+import GLib from "gi://GLib?version=2.0";
+import { isIcon, fileExists } from "@/src/lib/utils";
+import Gio from "gi://Gio?version=2.0";
+import { CCProps, createState } from "ags";
+import { timeout } from "ags/time";
+import { config, theme } from "@/options";
+import Adw from "gi://Adw?version=1";
+import { Timer } from "@/src/lib/timer";
+import { icons } from "@/src/lib/icons";
+const { margin } = theme.window;
+
+const time = (time: number, format = "%H:%M") =>
+	GLib.DateTime.new_from_unix_local(time).format(format);
+
+function urgency(n: AstalNotifd.Notification) {
+	const { LOW, NORMAL, CRITICAL } = AstalNotifd.Urgency;
+	switch (n.urgency) {
+		case LOW:
+			return "low";
+		case CRITICAL:
+			return "critical";
+		case NORMAL:
+		default:
+			return "normal";
+	}
+}
+
+export function Notification({
+	n,
+	showActions = true,
+	onClose,
+	...props
+}: Partial<CCProps<Adw.Clamp, Adw.Clamp.ConstructorProps>> & {
+	n: AstalNotifd.Notification;
+	showActions?: boolean;
+	onClose: () => void;
+}) {
+	const notificationActions = n.actions.filter(
+		(action) => action.id !== "default",
+	);
+	const hasActions = showActions && notificationActions.length > 0;
+
+	function Header() {
+		return (
+			<box class={"header"} spacing={theme.spacing}>
+				{(n.appIcon || isIcon(n.desktopEntry)) && (
+					<image
+						class={"app-icon"}
+						iconName={n.appIcon || n.desktopEntry}
+					/>
+				)}
+				<label
+					class={"app-name"}
+					halign={Gtk.Align.START}
+					ellipsize={Pango.EllipsizeMode.END}
+					label={n.appName || "Unknown"}
+				/>
+				<label
+					class={"time"}
+					hexpand
+					halign={Gtk.Align.END}
+					label={time(n.time)!}
+				/>
+				<button
+					onClicked={() => onClose()}
+					class={"close"}
+					focusOnClick={false}
+				>
+					<image
+						iconName={icons.close}
+						pixelSize={theme["icon-size"].small}
+					/>
+				</button>
+			</box>
+		);
+	}
+
+	function Content() {
+		return (
+			<box class={"content"} spacing={theme.spacing}>
+				{n.image && fileExists(n.image) && (
+					<Adw.Clamp
+						valign={Gtk.Align.START}
+						maximumSize={80}
+						widthRequest={80}
+						heightRequest={80}
+					>
+						<Adw.Clamp
+							orientation={Gtk.Orientation.VERTICAL}
+							maximumSize={80}
+						>
+							<Gtk.Picture
+								class={"image"}
+								contentFit={Gtk.ContentFit.COVER}
+								file={Gio.file_new_for_path(n.image)}
+							/>
+						</Adw.Clamp>
+					</Adw.Clamp>
+				)}
+				{n.image && isIcon(n.image) && (
+					<box class={"icon"} valign={Gtk.Align.START}>
+						<image
+							iconName={n.image}
+							iconSize={Gtk.IconSize.LARGE}
+							halign={Gtk.Align.CENTER}
+							valign={Gtk.Align.CENTER}
+						/>
+					</box>
+				)}
+				<box hexpand orientation={Gtk.Orientation.VERTICAL}>
+					<label
+						class={"body"}
+						maxWidthChars={30}
+						wrap={true}
+						halign={Gtk.Align.START}
+						useMarkup={true}
+						wrapMode={Pango.WrapMode.CHAR}
+						justify={Gtk.Justification.FILL}
+						label={n.body ? n.body : n.summary}
+					/>
+				</box>
+			</box>
+		);
+	}
+
+	function Actions() {
+		return (
+			<box class={"actions"} spacing={theme.spacing}>
+				{notificationActions.map(({ label, id }) => (
+					<button hexpand onClicked={() => n.invoke(id)}>
+						<label
+							label={label}
+							halign={Gtk.Align.CENTER}
+							hexpand
+						/>
+					</button>
+				))}
+			</box>
+		);
+	}
+
+	return (
+		<Adw.Clamp maximumSize={config.notifications.width} {...props}>
+			<box
+				orientation={Gtk.Orientation.VERTICAL}
+				widthRequest={config.notifications.width}
+				cssClasses={["notification", `${urgency(n)}`]}
+				spacing={theme.spacing}
+			>
+				<Header />
+				<Content />
+				{hasActions && <Actions />}
+			</box>
+		</Adw.Clamp>
+	);
+}
+
+export function PopupNotification({
+	n,
+	showActions = true,
+	onHide,
+}: {
+	n: AstalNotifd.Notification;
+	showActions?: boolean;
+	onHide?: (notification: AstalNotifd.Notification) => void;
+}) {
+	const [revealed, setRevealed] = createState(false);
+
+	const timer = new Timer(config.notifications.timeout * 1000);
+
+	timer.subscribe(async () => {
+		setRevealed(true);
+		if (timer.timeLeft <= 0) {
+			setRevealed(false);
+
+			timeout(config.transition * 100 + 100, () => onHide && onHide(n));
+		}
+	});
+
+	timer.start();
+
+	return (
+		<revealer
+			transitionType={
+				config.notifications.position.includes("top")
+					? Gtk.RevealerTransitionType.SLIDE_DOWN
+					: Gtk.RevealerTransitionType.SLIDE_UP
+			}
+			transitionDuration={config.transition * 1000}
+			revealChild={revealed}
+		>
+			<Gtk.EventControllerMotion
+				onEnter={() => timer.pause()}
+				onLeave={() => timer.resume()}
+			/>
+			<Notification
+				n={n}
+				onClose={() => (timer.timeLeft = 0)}
+				marginTop={margin / 2}
+				marginBottom={margin / 2}
+			/>
+		</revealer>
+	);
+}

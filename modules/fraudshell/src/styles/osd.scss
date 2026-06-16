@@ -1,0 +1,37 @@
+window#osd {
+	all: unset;
+	color: $fg0;
+	font-size: $font-size;
+
+	.main {
+		border-radius: $window-radius;
+		@if $shadow {
+			box-shadow: $window-shadow-offset
+				$window-shadow-blur
+				$window-shadow-spread
+				rgba($window-shadow-color, $window-shadow-opacity);
+		}
+	}
+
+	.osd-icon {
+		color: get-contrast-color($accent, $fg0, $bg0);
+		padding: 10px;
+		&.low {
+			color: $fg0;
+		}
+	}
+
+	levelbar {
+		trough {
+			.filled {
+				border-radius: $widget-radius;
+				background: rgba($accent, $window-opacity);
+			}
+		}
+
+		block {
+			background: rgba($bg1, $window-opacity);
+			border-radius: $widget-radius;
+		}
+	}
+}

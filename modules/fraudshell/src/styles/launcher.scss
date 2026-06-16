@@ -1,0 +1,84 @@
+window#applauncher,
+window#clipboard {
+	all: unset;
+	color: $fg0;
+	font-size: $font-size;
+
+	.main {
+		background: rgba($bg0, $window-opacity);
+		border: $window-border-width solid $window-border-color;
+		padding: $window-padding;
+		border-radius: $window-radius;
+		@if $shadow {
+			box-shadow: $window-shadow-offset
+				$window-shadow-blur
+				$window-shadow-spread
+				rgba($window-shadow-color, $window-shadow-opacity);
+		}
+	}
+
+	.clear {
+		background: transparent;
+		padding: 0;
+		color: $red;
+
+		&:hover {
+			transition: color $transition;
+			color: $red-light;
+		}
+
+		&:focus {
+			transition: 0s;
+			outline-offset: -$window-outline-width;
+			outline: $window-outline-width solid $window-outline-color;
+		}
+	}
+
+	.appbutton,
+	.clipbutton {
+		min-height: 50px;
+		padding: 0 10px;
+		border-radius: $widget-radius;
+		background: transparent;
+		transition: 0s;
+
+		&:hover {
+			transition: background 0.3s;
+			background: rgba($bg1, $window-opacity);
+		}
+
+		&:focus {
+			transition: 0s;
+			outline-offset: -$window-outline-width;
+			outline: $window-outline-width solid $window-outline-color;
+		}
+
+		.name,
+		.id {
+			font-weight: normal;
+		}
+	}
+
+	.image-content {
+		padding: 10px;
+	}
+
+	.image,
+	.color {
+		border-radius: $widget-radius;
+	}
+
+	.header {
+		background: rgba($bg1, $window-opacity);
+		border-radius: $widget-radius;
+		padding: 0 10px;
+		color: $fg0;
+
+		entry {
+			min-height: 50px;
+			outline: none;
+			background: none;
+			box-shadow: none;
+		}
+	}
+}
