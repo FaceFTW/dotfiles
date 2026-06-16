@@ -11,9 +11,6 @@ export default function request(
 ): void {
 	if (args[0] == "toggle" && args[1]) {
 		switch (args[1]) {
-			case "applauncher":
-				toggleWindow(windows_names.applauncher);
-				break;
 			case "quicksettings":
 				toggleWindow(windows_names.quicksettings);
 				break;
@@ -22,12 +19,6 @@ export default function request(
 				break;
 			case "powermenu":
 				toggleWindow(windows_names.powermenu);
-				break;
-			case "clipboard":
-				toggleWindow(windows_names.clipboard);
-				break;
-			case "weather":
-				toggleQsModule("weather");
 				break;
 			case "notificationslist":
 				toggleQsModule("notificationslist");

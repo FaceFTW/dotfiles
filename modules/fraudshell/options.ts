@@ -11,15 +11,20 @@ export const config = mkOptions(configFile, {
 		size: 48,
 		position: "top" as "top" | "bottom" | "left" | "right",
 		modules: {
-			start: ["launcher", "workspaces"],
+			start: ["workspaces"],
 			center: ["clock"],
-			end: ["recordindicator", "tray", "keyboard", "quicksettings"],
-			launcher: {
-				format: "{icon}",
-				"on-click": "toggle-launcher" as string | null,
-				"on-click-right": null as string | null,
-				"on-click-middle": null as string | null,
-			},
+			end: [
+				"recordindicator",
+				"tray",
+				"powermenu",
+				"cpu",
+				"ram",
+				"bluetooth",
+				"volume",
+				"network",
+				"battery",
+				"quicksettings",
+			],
 			battery: {
 				format: "{icon}",
 				"on-click": "toggle-power" as string | null,
@@ -29,12 +34,6 @@ export const config = mkOptions(configFile, {
 			bluetooth: {
 				format: "{icon}",
 				"on-click": "toggle-bluetooth" as string | null,
-				"on-click-right": null as string | null,
-				"on-click-middle": null as string | null,
-			},
-			clipboard: {
-				format: "{icon}",
-				"on-click": "toggle-clipboard" as string | null,
 				"on-click-right": null as string | null,
 				"on-click-middle": null as string | null,
 			},
@@ -52,13 +51,6 @@ export const config = mkOptions(configFile, {
 				"hide-empty": false,
 				"on-scroll-up": "workspace-up" as string | null,
 				"on-scroll-down": "workspace-down" as string | null,
-			},
-			keyboard: {
-				format: "{lang}",
-				compact: true,
-				"on-click": "switch-language" as string | null,
-				"on-click-right": null as string | null,
-				"on-click-middle": null as string | null,
 			},
 			network: {
 				format: "{icon}",
@@ -82,12 +74,7 @@ export const config = mkOptions(configFile, {
 				"on-scroll-up": "microphone-up" as string | null,
 				"on-scroll-down": "microphone-down" as string | null,
 			},
-			weather: {
-				format: "{icon} {temp}{temp-units}",
-				"on-click": "toggle-weather" as string | null,
-				"on-click-right": null as string | null,
-				"on-click-middle": null as string | null,
-			},
+
 			recordindicator: {
 				format: "{icon}",
 				"on-click": "screenrecord-toggle" as string | null,
@@ -131,21 +118,6 @@ export const config = mkOptions(configFile, {
 		buttons: ["network", "bluetooth", "notifications", "screenrecord"],
 		sliders: ["volume", "brightness"],
 	},
-	launcher: {
-		width: 400,
-		height: 500,
-		centered: false,
-		columns: 1,
-		"sort-type": "frequency" as "frequency" | "alphabetical" | null,
-	},
-	clipboard: {
-		enabled: true,
-		"max-items": 50,
-		"image-preview": true,
-		width: 400,
-		height: 500,
-		centered: false,
-	},
 	osd: {
 		enabled: true,
 		vertical: false,
@@ -177,16 +149,6 @@ export const config = mkOptions(configFile, {
 			height: 500,
 		},
 	},
-	weather: {
-		enabled: true,
-		hour12: false,
-		units: "celsius" as "celsius" | "fahrenheit",
-		location: {
-			auto: false,
-			coords: null as { latitude: string; longitude: string } | null,
-			city: "Minsk" as string | null,
-		},
-	},
 });
 
 export const theme = mkOptions(themeFile, {
@@ -216,7 +178,7 @@ export const theme = mkOptions(themeFile, {
 		purple: "#9141ac",
 	},
 	spacing: 10,
-	shadow: true,
+	shadow: false,
 	radius: 8,
 	"icon-size": {
 		normal: 20,

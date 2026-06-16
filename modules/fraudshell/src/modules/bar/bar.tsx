@@ -4,7 +4,6 @@ import { Clock } from "./items/clock";
 import { Launcher } from "./items/launcher";
 import { Tray } from "./items/tray";
 import { RecordIndicator } from "./items/recordindicator";
-import { Keyboard } from "./items/keyboard";
 import { config, theme } from "@/options";
 import { windows_names } from "@/windows";
 import { Volume } from "./items/volume";
@@ -23,9 +22,7 @@ import { ScreenBrightness } from "./items/brightness";
 const { position, modules, size } = config.bar;
 const { spacing } = theme.bar;
 export const isVertical = position === "right" || position === "left";
-export const orientation = isVertical
-	? Gtk.Orientation.VERTICAL
-	: Gtk.Orientation.HORIZONTAL;
+export const orientation = Gtk.Orientation.HORIZONTAL;
 
 export function BarModule({
 	gdkmonitor,
@@ -36,7 +33,6 @@ export function BarModule({
 		workspaces: () => <Workspaces gdkmonitor={gdkmonitor} />,
 		clock: () => <Clock />,
 		tray: () => <Tray />,
-		keyboard: () => <Keyboard />,
 		recordindicator: () => <RecordIndicator />,
 		notificationslist: () => <NotificationsList />,
 		volume: () => <Volume />,

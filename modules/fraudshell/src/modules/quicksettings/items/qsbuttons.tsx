@@ -13,7 +13,6 @@ import Adw from "gi://Adw?version=1";
 import { dependencies } from "@/src/lib/utils";
 import { qs_page_set } from "../quicksettings";
 import { profiles_names } from "../../power/power";
-import Weather from "@/src/services/weather";
 import AstalNotifd from "gi://AstalNotifd?version=0.1";
 import { FunctionsList } from "@/src/widgets/baritem";
 const network = AstalNetwork.get_default();

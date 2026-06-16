@@ -32,11 +32,9 @@ type BarItemProps = JSX.IntrinsicElements["box"] & {
 };
 
 export const FunctionsList = {
-	"toggle-launcher": () => toggleWindow(windows_names.applauncher),
 	"toggle-qs": () => toggleWindow(windows_names.quicksettings),
 	"toggle-calendar": () => toggleWindow(windows_names.calendar),
 	"toggle-powermenu": () => toggleWindow(windows_names.powermenu),
-	"toggle-clipboard": () => toggleWindow(windows_names.clipboard),
 	"toggle-weather": () => toggleQsModule(windows_names.weather),
 	"toggle-notifs": () => toggleQsModule(windows_names.notificationslist),
 	"toggle-volume": () =>
@@ -77,7 +75,6 @@ export const FunctionsList = {
 		const mcph = AstalWp.get_default()?.get_default_microphone();
 		if (mcph) mcph.set_mute(!mcph.get_mute());
 	},
-	"switch-language": () => compositor.keyboard.switchLayout(),
 	"screenrecord-toggle": () => {
 		const sr = ScreenRecorder.get_default();
 		if (sr) {
