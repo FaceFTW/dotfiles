@@ -1,7 +1,6 @@
 import { Gdk, Gtk } from "ags/gtk4";
 import { Workspaces } from "./items/workspaces";
 import { Clock } from "./items/clock";
-import { Launcher } from "./items/launcher";
 import { Tray } from "./items/tray";
 import { RecordIndicator } from "./items/recordindicator";
 import { config, theme } from "@/options";
@@ -29,7 +28,6 @@ export function BarModule({
 	$,
 }: JSX.IntrinsicElements["window"] & { gdkmonitor: Gdk.Monitor }) {
 	const Bar_Items = {
-		launcher: () => <Launcher />,
 		workspaces: () => <Workspaces gdkmonitor={gdkmonitor} />,
 		clock: () => <Clock />,
 		tray: () => <Tray />,

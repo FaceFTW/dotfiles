@@ -121,6 +121,8 @@ export async function resetCss() {
 		const scss = `${GLib.get_tmp_dir()}/delta-shell/main.scss`;
 		const css = `${GLib.get_tmp_dir()}/delta-shell/main.css`;
 
+		console.log(`Styles: placed under ${GLib.get_tmp_dir()}/delta-shell`);
+
 		const imports = [vars, ...style_files].map((f) => `@import '${f}';`);
 
 		await writeFileAsync(vars, variables().join("\n"));

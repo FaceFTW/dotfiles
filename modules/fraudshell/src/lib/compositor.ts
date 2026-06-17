@@ -2,14 +2,13 @@ import AstalHyprland from "gi://AstalHyprland?version=0.1";
 import { createBinding, Accessor } from "ags";
 import { bash } from "@/src/lib/utils";
 import GLib from "gi://GLib?version=2.0";
-import { LayoutKeys, layoutMap, LayoutValues } from "./keyboardLayouts";
 import { Gdk } from "ags/gtk4";
 
 const hyprland = AstalHyprland.get_default();
 
 export const compositor = {
 	name() {
-		return compositorName;
+		return "hyprland";
 	},
 	workspaces(): Accessor<any[]> {
 		return createBinding(hyprland, "workspaces").as((ws) =>

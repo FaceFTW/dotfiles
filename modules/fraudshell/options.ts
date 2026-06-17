@@ -44,7 +44,7 @@ export const config = {
 				"on-click-middle": null as string | null,
 			},
 			workspaces: {
-				"workspace-format": "{id}",
+				"workspace-format": "{id} {windows}",
 				"window-format": "{indicator} {icon}",
 				"window-icon-size": 20,
 				"taskbar-icons": {} as Record<string, string>,
