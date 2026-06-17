@@ -44,6 +44,8 @@
         pkgs.libsoup_3
         pkgs.brightnessctl
         pkgs.hyprland
+        pkgs.fluent-icon-theme
+        pkgs.fluent-gtk-theme
       ];
   in {
     packages.${system} = {

@@ -24,7 +24,6 @@ export const windows_names = {
 	osd: "osd",
 	powermenu: "powermenu",
 	verification: "verification",
-	weather: "weather",
 	calendar: "calendar",
 	notificationslist: "notificationslist",
 	volume: "volume",

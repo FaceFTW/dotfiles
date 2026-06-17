@@ -5,7 +5,7 @@ const configDir = GLib.get_user_config_dir();
 const configFile = `${configDir}/delta-shell/config.json`;
 const themeFile = `${configDir}/delta-shell/theme.json`;
 
-export const config = mkOptions(configFile, {
+export const config = {
 	transition: 0.2,
 	bar: {
 		size: 48,
@@ -149,9 +149,9 @@ export const config = mkOptions(configFile, {
 			height: 500,
 		},
 	},
-});
+};
 
-export const theme = mkOptions(themeFile, {
+export const theme = {
 	font: {
 		size: 14,
 		name: "Rubik",
@@ -241,4 +241,4 @@ export const theme = mkOptions(themeFile, {
 			},
 		},
 	},
-});
+};
