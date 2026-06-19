@@ -128,6 +128,8 @@ function createFactory(maxWidth?: number, wrap = false) {
 function DefaultOutput() {
 	const audio = wp.audio!;
 	const defaultOutput = audio.defaultSpeaker;
+	console.log(defaultOutput.device);
+	console.log();
 	const volume = createBinding(defaultOutput, "volume");
 	const speakers = createBinding(audio, "speakers");
 	const description = createBinding(defaultOutput, "description");
@@ -147,7 +149,7 @@ function DefaultOutput() {
 			>
 				<box hexpand>
 					<label
-						label={description}
+						label={description ?? "lmao?"}
 						hexpand
 						halign={Gtk.Align.START}
 						ellipsize={Pango.EllipsizeMode.END}
@@ -292,8 +294,8 @@ function List() {
 				vexpand
 			>
 				<StreamsList />
-				<DefaultOutput />
-				<DefaultMicrophone />
+				{/*<DefaultOutput />*/}
+				{/*<DefaultMicrophone />*/}
 			</box>
 		</Gtk.ScrolledWindow>
 	);
