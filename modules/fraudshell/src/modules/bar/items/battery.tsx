@@ -1,7 +1,7 @@
+//@ts-expect-error 2307
 import AstalBattery from "gi://AstalBattery";
-import { BatteryIcon } from "@/src/lib/icons";
 import BarItem from "@/src/widgets/baritem";
-import { createBinding } from "gnim";
+import { createBinding, createComputed } from "gnim";
 import { windows_names } from "@/windows";
 import { isVertical } from "../bar";
 import { config, theme } from "@/options";
@@ -10,6 +10,29 @@ export function Battery() {
 	const conf = config.bar.modules.battery;
 	const battery = AstalBattery.get_default();
 	const percentage = createBinding(battery, "percentage");
+
+	console.log(battery.state);
+
+	const getBatteryIcon = (battery: AstalBattery.Device) => {
+		const percent = (Math.round(battery.percentage * 10) * 10)
+			.toFixed()
+			.padStart(3, "0");
+		const charging =
+			battery.state === AstalBattery.State.CHARGING ||
+			battery.state === AstalBattery.State.FULLY_CHARGED
+				? "-charging"
+				: "";
+
+		return battery.state === AstalBattery.State.FULLY_CHARGED
+			? "battery-full-charging"
+			: `battery-${percent}${charging}`;
+	};
+
+	const batteryVar = createComputed([
+		createBinding(battery, "percentage"),
+		createBinding(battery, "state"),
+	]);
+	const BatteryIcon = batteryVar(() => getBatteryIcon(battery));
 
 	return (
 		<BarItem

@@ -4,95 +4,95 @@ import AstalNetwork from "gi://AstalNetwork";
 import AstalWp from "gi://AstalWp?version=0.1";
 
 export const icons = {
-	search: "ds-search-symbolic",
-	settings: "ds-settings-2-symbolic",
-	clipboard: "ds-clipboard-symbolic",
-	keyboard: "ds-keyboard-symbolic",
-	memory: "ds-memory-stick-symbolic",
-	cpu: "ds-cpu-symbolic",
+	search: "search-symbolic",
+	settings: "settings-2-symbolic",
+	clipboard: "clipboard-symbolic",
+	keyboard: "keyboard-symbolic",
+	memory: "memory-stick-symbolic",
+	cpu: "cpu-symbolic",
 	arrow: {
-		left: "ds-chevron-left-symbolic",
-		right: "ds-chevron-right-symbolic",
-		down: "ds-chevron-down-symbolic",
-		up: "ds-chevron-up-symbolic",
+		left: "chevron-left-symbolic",
+		right: "chevron-right-symbolic",
+		down: "chevron-down-symbolic",
+		up: "chevron-up-symbolic",
 	},
-	trash: "ds-trash-2-symbolic",
+	trash: "trash-2-symbolic",
 	player: {
-		icon: "ds-music-symbolic",
-		play: "ds-play-symbolic",
-		pause: "ds-pause-symbolic",
-		prev: "ds-skip-back-symbolic",
-		next: "ds-skip-forward-symbolic",
+		icon: "music-symbolic",
+		play: "play-symbolic",
+		pause: "pause-symbolic",
+		prev: "skip-back-symbolic",
+		next: "skip-forward-symbolic",
 	},
-	refresh: "ds-refresh-cw-symbolic",
-	check: "ds-check-symbolic",
+	refresh: "refresh-cw-symbolic",
+	check: "check-symbolic",
 	powerprofiles: {
-		"power-saver": "ds-speedometer-1-symbolic",
-		balanced: "ds-speedometer-2-symbolic",
-		performance: "ds-speedometer-3-symbolic",
+		"power-saver": "speedometer-1-symbolic",
+		balanced: "speedometer-2-symbolic",
+		performance: "speedometer-3-symbolic",
 	} as Record<string, any>,
 	network: {
 		wifi: {
-			disabled: "ds-wifi-off-symbolic",
-			1: "ds-wifi-1-symbolic",
-			2: "ds-wifi-2-symbolic",
-			3: "ds-wifi-3-symbolic",
-			4: "ds-wifi-4-symbolic",
+			disabled: "wifi-off-symbolic",
+			1: "wifi-1-symbolic",
+			2: "wifi-2-symbolic",
+			3: "wifi-3-symbolic",
+			4: "wifi-4-symbolic",
 		},
-		wired: "ds-ethernet-port-symbolic",
+		wired: "ethernet-port-symbolic",
 	},
-	bluetooth: "ds-bluetooth-symbolic",
-	bell: "ds-bell-symbolic",
-	bell_off: "ds-bell-off-symbolic",
+	bluetooth: "bluetooth-symbolic",
+	bell: "bell-symbolic",
+	bell_off: "bell-off-symbolic",
 	microphone: {
-		default: "ds-mic-symbolic",
-		muted: "ds-mic-off-symbolic",
+		default: "mic-symbolic",
+		muted: "mic-off-symbolic",
 	},
 	powermenu: {
-		sleep: "ds-moon-symbolic",
-		reboot: "ds-refresh-cw-symbolic",
-		logout: "ds-log-out-symbolic",
-		shutdown: "ds-power-symbolic",
+		sleep: "moon-symbolic",
+		reboot: "refresh-cw-symbolic",
+		logout: "log-out-symbolic",
+		shutdown: "power-symbolic",
 	} as Record<string, any>,
 	volume: {
-		muted: "ds-volume-x-symbolic",
-		low: "ds-volume-symbolic",
-		medium: "ds-volume-1-symbolic",
-		high: "ds-volume-2-symbolic",
+		muted: "volume-x-symbolic",
+		low: "volume-symbolic",
+		medium: "volume-1-symbolic",
+		high: "volume-2-symbolic",
 	},
 	battery: {
-		charging: "ds-battery-charging-symbolic",
-		1: "ds-battery-1-symbolic",
-		2: "ds-battery-2-symbolic",
-		3: "ds-battery-3-symbolic",
-		4: "ds-battery-4-symbolic",
+		charging: "battery-charging-symbolic",
+		1: "battery-1-symbolic",
+		2: "battery-2-symbolic",
+		3: "battery-3-symbolic",
+		4: "battery-4-symbolic",
 	},
-	brightness: "ds-sun-symbolic",
-	video: "ds-video-symbolic",
-	close: "ds-x-symbolic",
+	brightness: "sun-symbolic",
+	video: "video-symbolic",
+	close: "x-symbolic",
 	apps_default: "application-x-executable",
-	droplet: "ds-droplet-symbolic",
-	clock: "ds-clock-symbolic",
-	calendar: "ds-calendar-symbolic",
-	location: "ds-map-pin-symbolic",
+	droplet: "droplet-symbolic",
+	clock: "clock-symbolic",
+	calendar: "calendar-symbolic",
+	location: "map-pin-symbolic",
 	weather: {
 		clear: {
-			day: "ds-sun-symbolic",
-			night: "ds-moon-symbolic",
+			day: "sun-symbolic",
+			night: "moon-symbolic",
 		},
 		cloudy: {
-			day: "ds-cloud-sun-symbolic",
-			night: "ds-cloud-moon-symbolic",
+			day: "cloud-sun-symbolic",
+			night: "cloud-moon-symbolic",
 		},
-		fog: "ds-cloud-fog-symbolic",
+		fog: "cloud-fog-symbolic",
 		rain: {
-			day: "ds-cloud-sun-rain-symbolic",
-			night: "ds-cloud-moon-rain-symbolic",
-			general: "ds-cloud-drizzle-symbolic",
+			day: "cloud-sun-rain-symbolic",
+			night: "cloud-moon-rain-symbolic",
+			general: "cloud-drizzle-symbolic",
 		},
-		snow: "ds-cloud-snow-symbolic",
-		shower_rain: "ds-cloud-rain-symbolic",
-		thunder: "ds-cloud-lightning-symbolic",
+		snow: "cloud-snow-symbolic",
+		shower_rain: "cloud-rain-symbolic",
+		thunder: "cloud-lightning-symbolic",
 	},
 };
 
@@ -122,29 +122,7 @@ const speakerVar = createComputed([
 ]);
 export const VolumeIcon = speakerVar(() => getVolumeIcon(speaker));
 
-export function getBatteryIcon(battery: AstalBattery.Device) {
-	const percent = battery.percentage;
-	if (battery.state === AstalBattery.State.CHARGING) {
-		return icons.battery.charging;
-	} else {
-		if (percent <= 0.25) {
-			return icons.battery[4];
-		} else if (percent <= 0.5) {
-			return icons.battery[3];
-		} else if (percent <= 0.75) {
-			return icons.battery[2];
-		} else {
-			return icons.battery[1];
-		}
-	}
-}
 
-const battery = AstalBattery.get_default();
-const batteryVar = createComputed([
-	createBinding(battery, "percentage"),
-	createBinding(battery, "state"),
-]);
-export const BatteryIcon = batteryVar(() => getBatteryIcon(battery));
 
 export function getNetworkIcon(network: AstalNetwork.Network) {
 	const { connectivity, wifi, wired } = network;
