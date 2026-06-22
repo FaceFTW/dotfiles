@@ -8,6 +8,7 @@ sass = find_program('sass', required: true)
 dependencies = [
 	dependency('gtk4-layer-shell-0'),
 	dependency('glib-2.0'),
+	dependency('gio-2.0'),
 	dependency('libnm'),
 	dependency('astal-4-4.0'),
 	dependency('astal-apps-0.1'),

@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     astal = {
-      url = "github:aylur/astal";
+      url = "github:FaceFTW/astal";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

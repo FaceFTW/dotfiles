@@ -7,15 +7,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1781785048,
-        "narHash": "sha256-nCUaLayQHeOnWzVqL6vmp6Krr8zhini5wNj34SueAl0=",
-        "owner": "aylur",
+        "lastModified": 1782095881,
+        "narHash": "sha256-PBolddk3rURkOXgZjmZ5rpuBD8kGJwJVqOR0fcRSM+s=",
+        "owner": "FaceFTW",
         "repo": "astal",
-        "rev": "1c762bf4cf2f7e2aab1648d562dc98d2abc6e6ec",
+        "rev": "e1b6aca5992501e632f2f295b6a32d4bdd5f89d3",
         "type": "github"
       },
       "original": {
-        "owner": "aylur",
+        "owner": "FaceFTW",
         "repo": "astal",
         "type": "github"
       }

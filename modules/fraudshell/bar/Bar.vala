@@ -134,7 +134,6 @@ class Bar : Astal.Window {
         }
 
         Source.remove(interval);
-        player.dispose();
         base.dispose();
     }
 
