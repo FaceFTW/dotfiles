@@ -14,20 +14,6 @@ let
     mkOption
     types
     ;
-  zedPackage =
-  (pkgs.zed-editor.fhsWithPackages (pkgs: [
-    pkgs.package-version-server
-    pkgs.lua-language-server
-    pkgs.vala-language-server
-    pkgs.vala
-    pkgs.blueprint-compiler
-    pkgs.universal-ctags
-    pkgs.clang-tools
-    pkgs.meson
-    pkgs.glib
-    pkgs.json-glib
-
-  ]));
 in
 {
   imports = [ inputs.nixos-wsl.nixosModules.default ];
@@ -54,12 +40,18 @@ in
   config = mkMerge [
     (mkIf packages.zed.enable {
       environment.systemPackages = [
-        zedPackage
+        pkgs.zed-editor
+        pkgs.package-version-server
+        pkgs.lua-language-server
+        pkgs.vala-language-server
+        pkgs.vala
+        pkgs.blueprint-compiler
+        pkgs.universal-ctags
+        pkgs.clang-tools
+        pkgs.meson
+        pkgs.glib
+        pkgs.json-glib
       ];
-      home-manager.users.face.home.file.".zed_server" = {
-        source = "${zedPackage}/bin/zed-remote-server-stable-${zedPackage.version}+stable";
-        recursive = true;
-      };
     })
     (mkIf packages.zed.wslFixes {
       wsl.extraBin = [
