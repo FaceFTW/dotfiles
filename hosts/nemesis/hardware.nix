@@ -58,10 +58,10 @@
   ############################################
   modules.kernel = {
     enable = true;
-    version = "7.0.12";
+    version = "7.1.1";
     src = pkgs.fetchurl {
-      url = "mirror://kernel/linux/kernel/v7.x/linux-7.0.12.tar.xz";
-      hash = "sha256-V+3JpB78HKa3l6+o9KWHow2ir2vKc1brVuHhpK2iZdo=";
+      url = "mirror://kernel/linux/kernel/v7.x/linux-7.1.1.tar.xz";
+      hash = "sha256-UhX6NUHcfn9bzVG/flfxac7G/OUIylTj3IX97hQ3HX0=";
       # hash = lib.fakeHash;
     };
 
@@ -70,8 +70,9 @@
         ############################################
         # linux-surface patches
         ############################################
-        name = "microsoft-surface-patches-linux-v7.0.11";
-        patch = ./surface-kernel-patches-v7.0.11.patch;
+        name = "microsoft-surface-patches-linux-v7.1.
+        1";
+        patch = ./surface-kernel-patches-v7.1.1.patch;
         structuredExtraConfig = with lib.kernel; {
           ##
           ## Surface Aggregator Module

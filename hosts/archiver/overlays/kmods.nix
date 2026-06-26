@@ -1,8 +1,8 @@
 # Open Source version of the LED Module
-# Note that this assumes we use Kernel 7.0 since that is what we compile with
+# Note that this assumes we use Kernel 7.1 since that is what we compile with
 final: prev:
 let
-  kernel = prev.linuxKernel.kernels.linux_7_0;
+  kernel = prev.linuxKernel.kernels.linux_7_1;
   git = (
     fetchGit {
       url = "https://github.com/miskcoo/ugreen_leds_controller.git";

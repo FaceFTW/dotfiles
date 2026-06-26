@@ -45,10 +45,10 @@
   ############################################
   modules.kernel = {
     enable = true;
-    version = "7.0.12";
+    version = "7.1.1";
     src = fetchGit {
       url = "https://github.com/raspberrypi/linux";
-      rev = "caad1e7413200adc7804c1f96b7de88742b4a508";
+      rev = "83f682a5416e070e7e6d1b4c1dc5b864d78e85ab";
     };
 
     crossCompile = true;
