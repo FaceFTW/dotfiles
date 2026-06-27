@@ -10,19 +10,11 @@ template $WorkspaceButton: Gtk.Button {
 	valign: center;
 
 	Box {
-		orientation: vertical;
+		orientation: horizontal;
 		spacing: 3;
 
 		Label workspace_id {
 			xalign: 0.5;
-		}
-
-		Label window_count {
-			xalign: 0.5;
-
-			css-classes: [
-				"dim-label",
-			];
 		}
 
 		Box windows_box {

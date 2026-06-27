@@ -11,23 +11,28 @@ public class WorkspacesWidget : Gtk.Box {
     private AstalHyprland.Hyprland compositor;
 
     public WorkspacesWidget() {
-        Object();
-        this.compositor = AstalHyprland.get_default();
-        this.setup();
+     	Object();
     }
 
-    private void setup() {
-        var workspaces = compositor.workspaces;
+    construct {
+   		this.compositor = AstalHyprland.get_default();
 
-        foreach (var ws in workspaces) {
-            var button = new WorkspaceButton(ws);
-            content_box.append(button);
-        }
 
-        // Listen for workspace changes
-        compositor.notify["focused-workspace"].connect(
-            on_focused_workspace_changed
-        );
+    	CompareFunc<AstalHyprland.Workspace> wkspCmp = (a, b) => {
+     		return (int) (a.id > b.id) - (int) (a.id < b.id);
+     	};
+
+     	var workspaces = compositor.workspaces.sort(wkspCmp);
+
+	    foreach (var ws in workspaces) {
+	        var button = new WorkspaceButton(ws);
+	        content_box.append(button);
+	    }
+
+	    // Listen for workspace changes
+	    compositor.notify["focused-workspace"].connect(
+	        on_focused_workspace_changed
+	    );
     }
 
     private void on_focused_workspace_changed() {
@@ -54,27 +59,27 @@ public class WorkspaceButton : Button {
     [GtkChild]
     public unowned Label workspace_id;
     [GtkChild]
-    public unowned Label window_count;
-    [GtkChild]
     public unowned Gtk.Box windows_box;
+
     private AstalHyprland.Hyprland compositor;
+
     public WorkspaceButton(AstalHyprland.Workspace workspace) {
         Object(workspace: workspace);
-        this.compositor = AstalHyprland.get_default();
-        this.setup();
     }
 
-    private void setup() {
-        workspace_id.label = workspace.id.to_string();
+    construct {
+    	this.compositor = AstalHyprland.get_default();
+
+     	workspace_id.label = workspace.id.to_string();
         //TODO Not a fan of the looping but seems to be a vala limitation
         // and my inner FP talking
         var windows = new GLib.List<AstalHyprland.Client>();
-        foreach (AstalHyprland.Client client in compositor.clients) {
+        foreach (var client in compositor.clients) {
             if (client.workspace.id == workspace.id) {
                 windows.append(client);
             }
         }
-        window_count.label = windows.length().to_string();
+
         if (windows.length() > 0) {
             windows_box.visible = true;
             foreach (var win in windows) {
@@ -96,19 +101,15 @@ public class AppButton : Button {
     public unowned Image app_icon;
 
     [GtkChild]
-    public unowned Label app_title;
-
-    [GtkChild]
     public unowned Gtk.Box indicator;
 
 
     public AppButton(AstalHyprland.Client window) {
         Object(window: window);
-        this.setup();
+
     }
 
-    private void setup() {
-        app_title.label = window.title;
+    construct {
         app_icon.icon_name = get_icon_name();
 
         clicked.connect(() => {
