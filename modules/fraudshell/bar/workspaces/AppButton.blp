@@ -1,0 +1,32 @@
+using Gtk 4.0;
+
+template $AppButton: Gtk.Button {
+	css-classes: [
+		"taskbar-button",
+	];
+
+	hexpand: true;
+
+	Overlay {
+		child: Box {
+			orientation: horizontal;
+			spacing: 5;
+
+			Image app_icon {
+				icon-size: large;
+			}
+
+			Label app_title {
+				hexpand: true;
+				ellipsize: end;
+			}
+		};
+
+		[overlay]
+		Box indicator {
+			css-classes: [
+				"indicator",
+			];
+		}
+	}
+}

@@ -1,0 +1,21 @@
+using Gtk 4.0;
+
+template $WorkspacesWidget: Gtk.Box {
+	orientation: vertical;
+	spacing: 5;
+
+	css-classes: [
+		"workspaces",
+	];
+
+	Box content_box {
+		orientation: horizontal;
+		spacing: 5;
+
+		css-classes: [
+			"content",
+		];
+
+		hexpand: true;
+	}
+}

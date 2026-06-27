@@ -1,0 +1,97 @@
+@use "../../vars.scss";
+@use "sass:color";
+
+.bar-item {
+	background: transparent;
+	font-weight: normal;
+	padding: vars.$bar-padding 0;
+
+	.content {
+		border-radius: vars.$widget-radius;
+		background: rgba(vars.$bar-button-bg, vars.$bar-button-opacity);
+		border: vars.$bar-button-border-width solid
+			vars.$bar-button-border-color;
+		color: vars.$bar-button-fg;
+		padding: vars.$bar-button-padding;
+	}
+
+	&:hover {
+		.content {
+			background: rgba(
+				vars.$bar-button-bg-hover,
+				vars.$bar-button-opacity
+			);
+			transition: background vars.$transition;
+		}
+	}
+
+	&.active {
+		.content {
+			background: rgba(
+				vars.$bar-button-bg-active,
+				vars.$bar-button-opacity
+			);
+			transition: background vars.$transition;
+		}
+	}
+}
+
+@keyframes blink {
+	to {
+		color: vars.$red;
+	}
+}
+
+.workspaces {
+	&.compact {
+		padding: vars.$bar-padding 0;
+
+		.content {
+			padding: vars.$bar-button-padding;
+			background: vars.$bar-button-bg;
+			border-radius: vars.$widget-radius;
+			.workspace {
+				all: unset;
+
+				min-width: 20px;
+				min-height: 14px;
+
+				border-radius: vars.$widget-radius;
+				background: vars.$bar-button-bg-hover;
+				transition: all vars.$transition;
+
+				&.active {
+					background: vars.$accent;
+					min-width: 30px;
+
+					transition: all vars.$transition;
+				}
+			}
+		}
+		&:hover {
+			.content {
+				background: vars.$bar-button-bg-hover;
+				transition: background vars.$transition;
+				.workspace {
+					background: color.adjust(
+						vars.$bar-button-bg-hover,
+						vars.$lightness: 10%
+					);
+					&.active {
+						background: vars.$accent-light;
+						transition: all vars.$transition;
+					}
+					transition: all vars.$transition;
+				}
+			}
+		}
+	}
+	.workspace {
+		&.minimal,
+		&.empty {
+			.content {
+				padding: multiply-padding(vars.$bar-button-padding, 1.5);
+			}
+		}
+	}
+}

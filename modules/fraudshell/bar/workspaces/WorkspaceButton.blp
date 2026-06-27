@@ -1,0 +1,39 @@
+using Gtk 4.0;
+
+template $WorkspaceButton: Gtk.Button {
+	css-classes: [
+		"bar-item",
+		"workspace",
+	];
+
+	halign: center;
+	valign: center;
+
+	Box {
+		orientation: vertical;
+		spacing: 3;
+
+		Label workspace_id {
+			xalign: 0.5;
+		}
+
+		Label window_count {
+			xalign: 0.5;
+
+			css-classes: [
+				"dim-label",
+			];
+		}
+
+		Box windows_box {
+			orientation: horizontal;
+			spacing: 4;
+
+			css-classes: [
+				"windows",
+			];
+
+			visible: false;
+		}
+	}
+}

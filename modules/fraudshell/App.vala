@@ -38,14 +38,14 @@ class App : Gtk.Application {
     }
 
     private App() {
-        application_id = "my.awesome.simple-bar";
+        application_id = "dev.faceftw.fraudshell";
         flags = ApplicationFlags.HANDLES_COMMAND_LINE;
     }
 
     // entry point of our app
     static int main(string[] argv) {
         App.instance = new App();
-        Environment.set_prgname("simple-bar");
+        Environment.set_prgname("fraudshell");
         return App.instance.run(argv);
     }
 }
