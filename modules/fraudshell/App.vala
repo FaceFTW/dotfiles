@@ -40,6 +40,7 @@ class App : Gtk.Application {
     private App() {
         application_id = "dev.faceftw.fraudshell";
         flags = ApplicationFlags.HANDLES_COMMAND_LINE;
+        // WorkspacesWidget.get_type();
     }
 
     // entry point of our app

@@ -1,2 +1,44 @@
 @use "./bar/Bar.scss";
 @use "./bar/workspaces/Workspaces.scss";
+@use "./vars.scss";
+
+.bar-item {
+	background: transparent;
+	font-weight: normal;
+	padding: vars.$bar-padding 0;
+
+	.content {
+		border-radius: vars.$widget-radius;
+		background: rgba(vars.$bar-button-bg, vars.$bar-button-opacity);
+		border: vars.$bar-button-border-width solid
+			vars.$bar-button-border-color;
+		color: vars.$bar-button-fg;
+		padding: vars.$bar-button-padding;
+	}
+
+	&:hover {
+		.content {
+			background: rgba(
+				vars.$bar-button-bg-hover,
+				vars.$bar-button-opacity
+			);
+			transition: background vars.$transition;
+		}
+	}
+
+	&.active {
+		.content {
+			background: rgba(
+				vars.$bar-button-bg-active,
+				vars.$bar-button-opacity
+			);
+			transition: background vars.$transition;
+		}
+	}
+}
+
+@keyframes blink {
+	to {
+		color: vars.$red;
+	}
+}

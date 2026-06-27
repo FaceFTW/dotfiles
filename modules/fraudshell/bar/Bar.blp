@@ -3,7 +3,9 @@ using Astal 4.0;
 
 template $Bar: Astal.Window {
 	CenterBox centerbox {
-		start-widget: Box {};
+		start-widget: Box {
+			$WorkspacesWidget workspaces {}
+		};
 
 		center-widget: Box {
 			MenuButton {

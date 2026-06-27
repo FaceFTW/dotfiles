@@ -75,3 +75,69 @@ $bar-size: 48px;
 
 $transition: 0.2s;
 /* $shadow: ${theme.shadow}; */
+
+@function all-zero($value) {
+	$list: if(
+		sass(type-of($value) == list): $value;
+			else: (
+				$value,
+			)
+	);
+	@each $v in $list {
+		@if $v != 0 and $v != 0px and $v != "" {
+			@return false;
+		}
+	}
+	@return true;
+}
+
+@function is-light($color) {
+	$brightness: (
+			red($color) * 299 + green($color) * 587 + blue($color) * 114
+		) /
+		1000;
+	@return $brightness > 128;
+}
+
+@function multiply-padding($values, $multiplier) {
+	$result: ();
+
+	@each $value in $values {
+		@if $value == 0 {
+			$result: append($result, 0);
+		} @else {
+			$result: append($result, $value * $multiplier);
+		}
+	}
+
+	@return $result;
+}
+
+// some hack for fg color with accent
+
+@function brightness($color) {
+	@return (red($color) * 299 + green($color) * 587 + blue($color) * 114) /
+		1000;
+}
+
+@function get-contrast-color($color, $fg, $bg) {
+	$color-bright: brightness($color);
+	$fg-bright: brightness($fg);
+	$bg-bright: brightness($bg);
+
+	$is-light-theme: $bg-bright > 128;
+
+	@if $is-light-theme {
+		@if $fg-bright < 128 {
+			@return if($color-bright > 128, $fg, $bg);
+		} @else {
+			@return if($color-bright > 128, $bg, $fg);
+		}
+	} @else {
+		@if $fg-bright > 128 {
+			@return if($color-bright > 128, $bg, $fg);
+		} @else {
+			@return if($color-bright > 128, $fg, $bg);
+		}
+	}
+}

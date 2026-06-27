@@ -1,47 +1,6 @@
 @use "../../vars.scss";
 @use "sass:color";
 
-.bar-item {
-	background: transparent;
-	font-weight: normal;
-	padding: vars.$bar-padding 0;
-
-	.content {
-		border-radius: vars.$widget-radius;
-		background: rgba(vars.$bar-button-bg, vars.$bar-button-opacity);
-		border: vars.$bar-button-border-width solid
-			vars.$bar-button-border-color;
-		color: vars.$bar-button-fg;
-		padding: vars.$bar-button-padding;
-	}
-
-	&:hover {
-		.content {
-			background: rgba(
-				vars.$bar-button-bg-hover,
-				vars.$bar-button-opacity
-			);
-			transition: background vars.$transition;
-		}
-	}
-
-	&.active {
-		.content {
-			background: rgba(
-				vars.$bar-button-bg-active,
-				vars.$bar-button-opacity
-			);
-			transition: background vars.$transition;
-		}
-	}
-}
-
-@keyframes blink {
-	to {
-		color: vars.$red;
-	}
-}
-
 .workspaces {
 	&.compact {
 		padding: vars.$bar-padding 0;
@@ -75,7 +34,7 @@
 				.workspace {
 					background: color.adjust(
 						vars.$bar-button-bg-hover,
-						vars.$lightness: 10%
+						$lightness: 10%
 					);
 					&.active {
 						background: vars.$accent-light;
@@ -90,7 +49,10 @@
 		&.minimal,
 		&.empty {
 			.content {
-				padding: multiply-padding(vars.$bar-button-padding, 1.5);
+				padding: vars.multiply-padding(
+					vars.$bar-button-padding,
+					$multiplier: 1.5
+				);
 			}
 		}
 	}

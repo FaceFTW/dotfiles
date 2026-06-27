@@ -16,12 +16,17 @@ class Bar : Astal.Window {
     [GtkChild] unowned Gtk.Popover popover;
     [GtkChild] unowned Gtk.Calendar calendar;
     [GtkChild] unowned Gtk.Box traybox;
+    [GtkChild] unowned WorkspacesWidget workspaces;
+
 
     public Bar() {
         anchor = TOP | LEFT | RIGHT;
         exclusivity = EXCLUSIVE;
         add_css_class("Bar");
         present();
+
+        // //Workspaces
+        // workspaces = new WorkspacesWidget();
 
         // clock
         clock = new DateTime.now_local().format("%m/%d/%Y  %H:%M:%S");
