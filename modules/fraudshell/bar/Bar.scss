@@ -1,19 +1,54 @@
-// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-4-16/gtk/theme/Default/_colors-public.scss
-$fg-color: #{"@theme_fg_color"};
-$bg-color: #{"@theme_bg_color"};
+@use "../_vars.scss";
 
-window.Bar {
-    > box {
-        background: $bg-color;
-        color: $fg-color;
-        font-weight: bold;
-    }
+window.bar {
+	all: unset;
+	color: vars.$fg0;
+	font-size: vars.$font-size;
 
-    button {
-        min-height: 0;
-        min-width: 0;
-        border-radius: 8px;
-        margin: 4px;
-        padding: 4px 8px;
-    }
+	.main {
+		margin: vars.$bar-margin;
+		background: rgba(vars.$bar-bg, vars.$bar-opacity);
+		min-height: vars.$bar-size;
+		@if all-zero(vars.$bar-margin) {
+			border-bottom: vars.$bar-border-width solid vars.$bar-border-color;
+		} @else {
+			border-radius: vars.$widget-radius;
+			border: vars.$bar-border-width solid vars.$bar-border-color;
+		}
+	}
+
+	tooltip {
+		background: rgba(vars.$bg0, vars.$bar-opacity);
+		border: vars.$bar-border-width solid vars.$bar-border-color;
+		border-radius: vars.$widget-radius;
+	}
+
+	separator {
+		border-radius: vars.$widget-radius;
+		background: rgba(vars.$bar-separator-color, vars.$bar-opacity);
+		&.vertical {
+			margin: 0 vars.$bar-padding;
+			min-height: vars.$bar-separator-width;
+		}
+
+		&.horizontal {
+			margin: vars.$bar-padding 0;
+			min-width: vars.$bar-separator-width;
+		}
+	}
+
+	.modules-start {
+		> *:first-child .bar-item,
+		> .bar-item:first-child {
+			padding-left: vars.$bar-padding;
+		}
+	}
+
+	.modules-end {
+		> *:last-child .bar-item,
+		> .bar-item:last-child {
+			padding-right: vars.$bar-padding;
+		}
+	}
+
 }

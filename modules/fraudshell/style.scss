@@ -1,6 +1,6 @@
 @use "./bar/Bar.scss";
 @use "./bar/workspaces/Workspaces.scss";
-@use "./vars.scss";
+@use "./_vars.scss";
 
 .bar-item {
 	background: transparent;
