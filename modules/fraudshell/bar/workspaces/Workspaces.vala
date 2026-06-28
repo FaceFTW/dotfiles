@@ -18,11 +18,10 @@ public class WorkspacesWidget : Gtk.Box {
    		this.compositor = AstalHyprland.get_default();
 
 
-    	CompareFunc<AstalHyprland.Workspace> wkspCmp = (a, b) => {
-     		return (int) (a.id > b.id) - (int) (a.id < b.id);
-     	};
-
-     	var workspaces = compositor.workspaces.sort(wkspCmp);
+     	var workspaces = compositor.workspaces;
+      	workspaces.sort((a, b) => {
+        	return (int) (a.id > b.id) - (int) (a.id < b.id);
+        });
 
 	    foreach (var ws in workspaces) {
 	        var button = new WorkspaceButton(ws);
@@ -103,6 +102,7 @@ public class AppButton : Button {
     [GtkChild]
     public unowned Gtk.Box indicator;
 
+    private AstalApps.Apps appManager;
 
     public AppButton(AstalHyprland.Client window) {
         Object(window: window);
@@ -110,6 +110,8 @@ public class AppButton : Button {
     }
 
     construct {
+    	appManager = new AstalApps.Apps();
+
         app_icon.icon_name = get_icon_name();
 
         clicked.connect(() => {
@@ -124,18 +126,13 @@ public class AppButton : Button {
         add_controller(right_click);
     }
 
-    private string get_icon_name() {
-        // var config_icons = config.bar.modules.workspaces.taskbar_icons;
-        // string window_class = window.class;
+    private new string get_icon_name() {
+        string window_class = window.class;
 
-        // if (window_class in config_icons) {
-        //     return config_icons[window_class];
-        // }
-
-        // var app_info = AppInfo.get_default_for_type(window_class, false);
-        // if (app_info != null) {
-        //     return app_info.get_icon().to_string();
-        // }
+        var app_info = appManager.exact_query(window_class).first().data;
+        if (app_info != null) {
+            return app_info.icon_name;
+        }
 
         return "application-x-executable";
     }
