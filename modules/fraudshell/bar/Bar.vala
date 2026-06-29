@@ -22,11 +22,7 @@ class Bar : Astal.Window {
     public Bar() {
         anchor = TOP | LEFT | RIGHT;
         exclusivity = EXCLUSIVE;
-        add_css_class("Bar");
         present();
-
-        // //Workspaces
-        // workspaces = new WorkspacesWidget();
 
         // clock
         clock = new DateTime.now_local().format("%m/%d/%Y  %H:%M:%S");
