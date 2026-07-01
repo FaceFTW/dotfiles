@@ -17,9 +17,11 @@ template $WorkspaceButton: Gtk.Button {
 			xalign: 0.5;
 		}
 
-		Box windows_box {
+		Gtk.FlowBox windows_box {
 			orientation: horizontal;
-			spacing: 4;
+			// Obviously a ridiculous limit, but will hold in reasonable scenarios
+			max-children-per-line: 99;
+			column-spacing: 4;
 
 			css-classes: [
 				"content",

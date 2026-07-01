@@ -58,17 +58,22 @@ public class WorkspaceButton : Gtk.Button {
     [GtkChild]
     public unowned Label workspace_id;
     [GtkChild]
-    public unowned Gtk.Box windows_box;
+    public unowned Gtk.FlowBox windows_box;
 
     private AstalHyprland.Hyprland compositor;
-    // private List<weak AppButton> app_buttons; // Can't access these once they are in Gtk.Box easily
+    private GLib.ListStore clients; // Can't access these once they are in Gtk.Box easily
 
     public WorkspaceButton(AstalHyprland.Workspace workspace) {
         Object(workspace: workspace);
     }
 
     construct {
-        this.compositor = AstalHyprland.get_default();
+    	this.clients = new GLib.ListStore(typeof (AstalHyprland.Client));
+     	this.compositor = AstalHyprland.get_default();
+        this.windows_box.bind_model(
+            clients,
+            (x) => { return new AppButton((AstalHyprland.Client) x); }
+        );
 
         workspace_id.label = workspace.id.to_string();
 
@@ -79,19 +84,29 @@ public class WorkspaceButton : Gtk.Button {
         //TODO Not a fan of the looping but seems to be a vala limitation
         // and my inner FP talking
         foreach (var client in compositor.clients) {
-            if (client.workspace.id == workspace.id) {
-                var btn = new AppButton(client);
-                windows_box.append(btn);
+            if (client.workspace.id == this.workspace.id) {
+            	this.clients.append(client);
             }
         }
 
-        if (windows_box..length() > 0) {
+        if (clients.n_items > 0) {
             windows_box.visible = true;
         }
 
         compositor.client_added.connect((t,a)=>{
-            var btn = new AppButton(a);
-            windows_box.append(btn);
+        	if (a.workspace.id == this.workspace.id){
+        		this.clients.append(a);
+          	}
+        });
+
+        compositor.client_removed.connect((t,a)=>{
+        	uint pos = 0;
+         	if (this.clients.find_with_equal_func(
+          		(AstalHyprland.Client) new Object(address: a),
+            	(a,b) =>{ return ((AstalHyprland.Client) a).address == ((AstalHyprland.Client) b).address; },
+             	out pos)) {
+        	this.clients.remove(pos);
+         }
         });
 
 
@@ -101,8 +116,9 @@ public class WorkspaceButton : Gtk.Button {
 
 [GtkTemplate (ui = "/bar/workspaces/AppButton.ui")]
 public class AppButton : Gtk.Button {
-    public string window_class { get; construct; }
-    public string address { get; construct; }
+	    // public string window_class { get; construct; }
+	    // public string address { get; construct; }
+	public AstalHyprland.Client client { get; construct; }
 
     [GtkChild]
     public unowned Image app_icon;
@@ -111,44 +127,36 @@ public class AppButton : Gtk.Button {
     public unowned Gtk.Box indicator;
 
     private AstalApps.Apps appManager;
-    private AstalHyprland.Hyprland compositor;
+    // private AstalHyprland.Hyprland compositor;
 
     public AppButton(AstalHyprland.Client window) {
-        Object(
-            window_class: window.class,
-            address: window.address
+        Object(client: window
+            // window_class: window.class,
+            // address: window.address
         );
     }
 
     construct {
-        this.compositor = AstalHyprland.get_default();
+        // this.compositor = AstalHyprland.get_default();
         appManager = new AstalApps.Apps();
 
         app_icon.icon_name = get_icon_name();
 
         clicked.connect(() => {
-
-            compositor.dispatch("focus", @"{window=\"address:0x$(this.address)\"}");
+            this.client.focus();
         });
 
         var right_click = new GestureClick();
         right_click.button = Gdk.BUTTON_SECONDARY;
         right_click.pressed.connect(() => {
-        	compositor.dispatch("window.close", @"\"address:0x$(this.address)\"");
+        	this.client.kill();
         });
         add_controller(right_click);
-
-
-        compositor.client_removed.connect((t,a)=>{
-            if (this.address == a) {
-                this.destroy();
-            }
-        });
     }
 
     private new string get_icon_name() {
 
-        var app_info = appManager.exact_query(this.window_class).first().data;
+        var app_info = appManager.exact_query(this.client.class).first().data;
         if (app_info != null) {
             return app_info.icon_name;
         }
