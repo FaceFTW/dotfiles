@@ -3,6 +3,19 @@ using Gdk;
 using Astal;
 using AstalHyprland;
 
+class HyprClient : Object {
+	public string class { get; construct; }
+	public string address { get; construct; }
+
+	public HyprClient(AstalHyprland.Client client) {
+		Object( class: client.class, address: client.address );
+	}
+
+	public HyprClient.only_addr(string addr){
+		Object (class: "", address: addr);
+	}
+}
+
 [GtkTemplate (ui = "/bar/workspaces/Workspaces.ui")]
 public class WorkspacesWidget : Gtk.Box {
     [GtkChild]
@@ -53,7 +66,7 @@ public class WorkspacesWidget : Gtk.Box {
 }
 
 [GtkTemplate(ui="/bar/workspaces/WorkspaceButton.ui")]
-public class WorkspaceButton : Gtk.Button {
+class WorkspaceButton : Gtk.Button {
     public AstalHyprland.Workspace workspace { get; construct; }
     [GtkChild]
     public unowned Label workspace_id;
@@ -68,11 +81,11 @@ public class WorkspaceButton : Gtk.Button {
     }
 
     construct {
-    	this.clients = new GLib.ListStore(typeof (AstalHyprland.Client));
+    	this.clients = new GLib.ListStore(typeof (HyprClient));
      	this.compositor = AstalHyprland.get_default();
         this.windows_box.bind_model(
             clients,
-            (x) => { return new AppButton((AstalHyprland.Client) x); }
+            (x) => { return new AppButton((HyprClient) x); }
         );
 
         workspace_id.label = workspace.id.to_string();
@@ -81,11 +94,9 @@ public class WorkspaceButton : Gtk.Button {
             workspace.focus();
         });
 
-        //TODO Not a fan of the looping but seems to be a vala limitation
-        // and my inner FP talking
         foreach (var client in compositor.clients) {
             if (client.workspace.id == this.workspace.id) {
-            	this.clients.append(client);
+            	this.clients.append(new HyprClient(client));
             }
         }
 
@@ -95,15 +106,17 @@ public class WorkspaceButton : Gtk.Button {
 
         compositor.client_added.connect((t,a)=>{
         	if (a.workspace.id == this.workspace.id){
-        		this.clients.append(a);
+        		this.clients.append(new HyprClient((AstalHyprland.Client) a));
           	}
         });
 
         compositor.client_removed.connect((t,a)=>{
         	uint pos = 0;
+
+         	var target = new HyprClient.only_addr(a);
          	if (this.clients.find_with_equal_func(
-          		(AstalHyprland.Client) new Object(address: a),
-            	(a,b) =>{ return ((AstalHyprland.Client) a).address == ((AstalHyprland.Client) b).address; },
+          		target,
+            	(a,b) =>{return ((HyprClient) a).address == ((HyprClient) b).address;},
              	out pos)) {
         	this.clients.remove(pos);
          }
@@ -115,10 +128,8 @@ public class WorkspaceButton : Gtk.Button {
 }
 
 [GtkTemplate (ui = "/bar/workspaces/AppButton.ui")]
-public class AppButton : Gtk.Button {
-	    // public string window_class { get; construct; }
-	    // public string address { get; construct; }
-	public AstalHyprland.Client client { get; construct; }
+class AppButton : Gtk.Button {
+	public HyprClient client { get; construct; }
 
     [GtkChild]
     public unowned Image app_icon;
@@ -127,29 +138,26 @@ public class AppButton : Gtk.Button {
     public unowned Gtk.Box indicator;
 
     private AstalApps.Apps appManager;
-    // private AstalHyprland.Hyprland compositor;
+    private AstalHyprland.Hyprland compositor;
 
-    public AppButton(AstalHyprland.Client window) {
-        Object(client: window
-            // window_class: window.class,
-            // address: window.address
-        );
+    public AppButton(HyprClient client) {
+        Object(client: client);
     }
 
     construct {
-        // this.compositor = AstalHyprland.get_default();
+        this.compositor = AstalHyprland.get_default();
         appManager = new AstalApps.Apps();
 
         app_icon.icon_name = get_icon_name();
 
         clicked.connect(() => {
-            this.client.focus();
+            compositor.dispatch("focus", @"{window=\"address:0x$(this.client.address)\"}");
         });
 
         var right_click = new GestureClick();
         right_click.button = Gdk.BUTTON_SECONDARY;
         right_click.pressed.connect(() => {
-        	this.client.kill();
+        	compositor.dispatch("window.close", @"\"address:0x$(this.client.address)\"");
         });
         add_controller(right_click);
     }
