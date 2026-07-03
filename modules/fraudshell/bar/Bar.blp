@@ -7,8 +7,18 @@ template $Bar: Astal.Window {
 	CenterBox centerbox {
 		css-classes: ["main"];
 
-		start-widget: Box {
-			$WorkspacesWidget workspaces {}
+		start-widget: Gtk.ScrolledWindow scrollbox {
+			child:  Gtk.FlowBox {
+				orientation: vertical;
+				// Obviously a ridiculous limit, but will hold in reasonable scenarios
+				max-children-per-line: 1;
+				column-spacing: 4;
+				row-spacing: 0;
+
+				Gtk.FlowBoxChild {
+					$WorkspacesWidget workspaces {}
+				}
+			};
 		};
 
 		center-widget: Box {

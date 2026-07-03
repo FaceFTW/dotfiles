@@ -17,17 +17,21 @@ template $WorkspaceButton: Gtk.Button {
 			xalign: 0.5;
 		}
 
-		Gtk.FlowBox windows_box {
-			orientation: horizontal;
-			// Obviously a ridiculous limit, but will hold in reasonable scenarios
-			max-children-per-line: 99;
-			column-spacing: 4;
+		Gtk.ScrolledWindow scrollbox {
 
-			css-classes: [
-				"content",
-			];
+			child: Gtk.FlowBox windows_box {
+				orientation: horizontal;
+				// Obviously a ridiculous limit, but will hold in reasonable scenarios
+				max-children-per-line: 99;
+				column-spacing: 4;
+				row-spacing: 0;
 
-			visible: false;
+				css-classes: [
+					"content",
+				];
+
+				visible: false;
+			};
 		}
 	}
 }

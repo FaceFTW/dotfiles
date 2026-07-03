@@ -8,14 +8,17 @@ template $WorkspacesWidget: Gtk.Box {
 		"workspaces",
 	];
 
-	Box content_box {
-		orientation: horizontal;
-		spacing: 5;
+	Gtk.ScrolledWindow scrollbox {
+		child: Gtk.FlowBox content_box {
+			orientation: horizontal;
+			column-spacing: 5;
+			row-spacing: 0;
 
-		css-classes: [
-			"content",
-		];
+			css-classes: [
+				"content",
+			];
 
-		hexpand: true;
+			hexpand: true;
+		};
 	}
 }

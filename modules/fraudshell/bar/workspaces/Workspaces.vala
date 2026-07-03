@@ -18,8 +18,9 @@ class HyprClient : Object {
 
 [GtkTemplate (ui = "/bar/workspaces/Workspaces.ui")]
 public class WorkspacesWidget : Gtk.Box {
-    [GtkChild]
-    public unowned Gtk.Box content_box;
+
+    [GtkChild] public unowned Gtk.ScrolledWindow scrollbox;
+    [GtkChild] public unowned Gtk.FlowBox content_box;
 
     private AstalHyprland.Hyprland compositor;
 
@@ -29,7 +30,7 @@ public class WorkspacesWidget : Gtk.Box {
 
     construct {
         this.compositor = AstalHyprland.get_default();
-
+       	this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
 
         var workspaces = compositor.workspaces;
         workspaces.sort((a, b) => {
@@ -68,13 +69,13 @@ public class WorkspacesWidget : Gtk.Box {
 [GtkTemplate(ui="/bar/workspaces/WorkspaceButton.ui")]
 class WorkspaceButton : Gtk.Button {
     public AstalHyprland.Workspace workspace { get; construct; }
-    [GtkChild]
-    public unowned Label workspace_id;
-    [GtkChild]
-    public unowned Gtk.FlowBox windows_box;
+
+    [GtkChild] public unowned Label workspace_id;
+    [GtkChild] public unowned Gtk.FlowBox windows_box;
+    [GtkChild] public unowned Gtk.ScrolledWindow scrollbox;
 
     private AstalHyprland.Hyprland compositor;
-    private GLib.ListStore clients; // Can't access these once they are in Gtk.Box easily
+    private GLib.ListStore clients;
 
     public WorkspaceButton(AstalHyprland.Workspace workspace) {
         Object(workspace: workspace);
@@ -83,30 +84,28 @@ class WorkspaceButton : Gtk.Button {
     construct {
     	this.clients = new GLib.ListStore(typeof (HyprClient));
      	this.compositor = AstalHyprland.get_default();
-        this.windows_box.bind_model(
+      	this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
+      	this.windows_box.bind_model(
             clients,
             (x) => { return new AppButton((HyprClient) x); }
         );
 
         workspace_id.label = workspace.id.to_string();
 
-        clicked.connect(() => {
-            workspace.focus();
-        });
+        clicked.connect(() => { workspace.focus(); });
 
         foreach (var client in compositor.clients) {
             if (client.workspace.id == this.workspace.id) {
             	this.clients.append(new HyprClient(client));
             }
         }
+        update();
 
-        if (clients.n_items > 0) {
-            windows_box.visible = true;
-        }
 
         compositor.client_added.connect((t,a)=>{
         	if (a.workspace.id == this.workspace.id){
         		this.clients.append(new HyprClient((AstalHyprland.Client) a));
+          		update();
           	}
         });
 
@@ -115,14 +114,17 @@ class WorkspaceButton : Gtk.Button {
 
          	var target = new HyprClient.only_addr(a);
          	if (this.clients.find_with_equal_func(
-          		target,
-            	(a,b) =>{return ((HyprClient) a).address == ((HyprClient) b).address;},
-             	out pos)) {
-        	this.clients.remove(pos);
-         }
+	          		target,
+	            	(a,b) =>{return ((HyprClient) a).address == ((HyprClient) b).address;},
+	             	out pos)) {
+			        	this.clients.remove(pos);
+                        update();
+			}
         });
+    }
 
-
+    private void update(){
+	    windows_box.visible = clients.n_items > 0;
     }
 
 }
@@ -131,11 +133,9 @@ class WorkspaceButton : Gtk.Button {
 class AppButton : Gtk.Button {
 	public HyprClient client { get; construct; }
 
-    [GtkChild]
-    public unowned Image app_icon;
+    [GtkChild] public unowned Image app_icon;
 
-    [GtkChild]
-    public unowned Gtk.Box indicator;
+    [GtkChild] public unowned Gtk.Box indicator;
 
     private AstalApps.Apps appManager;
     private AstalHyprland.Hyprland compositor;
@@ -163,7 +163,6 @@ class AppButton : Gtk.Button {
     }
 
     private new string get_icon_name() {
-
         var app_info = appManager.exact_query(this.client.class).first().data;
         if (app_info != null) {
             return app_info.icon_name;
