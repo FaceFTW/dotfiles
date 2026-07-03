@@ -4,16 +4,16 @@ using Astal;
 using AstalHyprland;
 
 class HyprClient : Object {
-	public string class { get; construct; }
-	public string address { get; construct; }
+    public string class { get; construct; }
+    public string address { get; construct; }
 
-	public HyprClient(AstalHyprland.Client client) {
-		Object( class: client.class, address: client.address );
-	}
+    public HyprClient(AstalHyprland.Client client) {
+        Object( class: client.class, address: client.address );
+    }
 
-	public HyprClient.only_addr(string addr){
-		Object (class: "", address: addr);
-	}
+    public HyprClient.only_addr(string addr){
+        Object (class: "", address: addr);
+    }
 }
 
 [GtkTemplate (ui = "/bar/workspaces/Workspaces.ui")]
@@ -30,7 +30,7 @@ public class WorkspacesWidget : Gtk.Box {
 
     construct {
         this.compositor = AstalHyprland.get_default();
-       	this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
+        this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
 
         var workspaces = compositor.workspaces;
         workspaces.sort((a, b) => {
@@ -82,13 +82,16 @@ class WorkspaceButton : Gtk.Button {
     }
 
     construct {
-    	this.clients = new GLib.ListStore(typeof (HyprClient));
-     	this.compositor = AstalHyprland.get_default();
-      	this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
-      	this.windows_box.bind_model(
+        this.clients = new GLib.ListStore(typeof (HyprClient));
+        this.compositor = AstalHyprland.get_default();
+        this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
+        this.windows_box.bind_model(
             clients,
             (x) => { return new AppButton((HyprClient) x); }
         );
+        this.windows_box.set_halign(Gtk.Align.START);
+
+
 
         workspace_id.label = workspace.id.to_string();
 
@@ -96,42 +99,43 @@ class WorkspaceButton : Gtk.Button {
 
         foreach (var client in compositor.clients) {
             if (client.workspace.id == this.workspace.id) {
-            	this.clients.append(new HyprClient(client));
+                this.clients.append(new HyprClient(client));
             }
         }
         update();
 
 
         compositor.client_added.connect((t,a)=>{
-        	if (a.workspace.id == this.workspace.id){
-        		this.clients.append(new HyprClient((AstalHyprland.Client) a));
-          		update();
-          	}
+            if (a.workspace.id == this.workspace.id && a.address != null){
+                this.clients.append(new HyprClient((AstalHyprland.Client) a));
+                update();
+            }
         });
 
         compositor.client_removed.connect((t,a)=>{
-        	uint pos = 0;
+            uint pos = 0;
 
-         	var target = new HyprClient.only_addr(a);
-         	if (this.clients.find_with_equal_func(
-	          		target,
-	            	(a,b) =>{return ((HyprClient) a).address == ((HyprClient) b).address;},
-	             	out pos)) {
-			        	this.clients.remove(pos);
+            var target = new HyprClient.only_addr(a);
+            if (this.clients.find_with_equal_func(
+                    target,
+                    (a,b) =>{return ((HyprClient) a).address == ((HyprClient) b).address;},
+                    out pos)) {
+                        this.clients.remove(pos);
                         update();
-			}
+            }
         });
     }
 
     private void update(){
-	    windows_box.visible = clients.n_items > 0;
+        windows_box.visible = clients.n_items > 0;
+        // windows_box.width_request =
     }
 
 }
 
 [GtkTemplate (ui = "/bar/workspaces/AppButton.ui")]
 class AppButton : Gtk.Button {
-	public HyprClient client { get; construct; }
+    public HyprClient client { get; construct; }
 
     [GtkChild] public unowned Image app_icon;
 
@@ -157,15 +161,18 @@ class AppButton : Gtk.Button {
         var right_click = new GestureClick();
         right_click.button = Gdk.BUTTON_SECONDARY;
         right_click.pressed.connect(() => {
-        	compositor.dispatch("window.close", @"\"address:0x$(this.client.address)\"");
+            compositor.dispatch("window.close", @"\"address:0x$(this.client.address)\"");
         });
         add_controller(right_click);
     }
 
     private new string get_icon_name() {
-        var app_info = appManager.exact_query(this.client.class).first().data;
+        var app_info = appManager.exact_query(this.client.class);
         if (app_info != null) {
-            return app_info.icon_name;
+            return app_info.first()
+                    ?.data
+                    ?.icon_name
+                    ?? "application-x-executable";
         }
 
         return "application-x-executable";

@@ -11,7 +11,7 @@ template $WorkspacesWidget: Gtk.Box {
 	Gtk.ScrolledWindow scrollbox {
 		child: Gtk.FlowBox content_box {
 			orientation: horizontal;
-			column-spacing: 5;
+			column-spacing: 0;
 			row-spacing: 0;
 
 			css-classes: [
@@ -19,6 +19,7 @@ template $WorkspacesWidget: Gtk.Box {
 			];
 
 			hexpand: true;
+			vexpand: false;
 		};
 	}
 }
