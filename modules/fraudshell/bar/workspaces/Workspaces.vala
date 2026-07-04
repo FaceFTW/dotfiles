@@ -18,7 +18,6 @@ class HyprClient : Object {
 
 [GtkTemplate (ui = "/bar/workspaces/Workspaces.ui")]
 public class WorkspacesWidget : Gtk.Box {
-
     [GtkChild] public unowned Gtk.ScrolledWindow scrollbox;
     [GtkChild] public unowned Gtk.FlowBox content_box;
 
@@ -73,7 +72,6 @@ class WorkspaceButton : Gtk.Button {
 
     [GtkChild] public unowned Label workspace_id;
     [GtkChild] public unowned Gtk.FlowBox windows_box;
-    [GtkChild] public unowned Gtk.ScrolledWindow scrollbox;
 
     private AstalHyprland.Hyprland compositor;
     private GLib.ListStore clients;
@@ -83,22 +81,22 @@ class WorkspaceButton : Gtk.Button {
     }
 
     construct {
+        ////////////////////////////////////
+        // UI INIT
+        ////////////////////////////////////
         this.clients = new GLib.ListStore(typeof (HyprClient));
         this.compositor = AstalHyprland.get_default();
-        this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
         this.windows_box.bind_model(
             clients,
             (x) => { return new AppButton((HyprClient) x); }
         );
-        this.windows_box.set_halign(Gtk.Align.START);
         this.windows_box.set_layout_manager(new Gtk.BoxLayout(Gtk.Orientation.HORIZONTAL));
-
-
 
         workspace_id.label = workspace.id.to_string();
 
-        clicked.connect(() => { workspace.focus(); });
-
+        ////////////////////////////////////
+        // STATE INIT
+        ////////////////////////////////////
         foreach (var client in compositor.clients) {
             if (client.workspace.id == this.workspace.id) {
                 this.clients.append(new HyprClient(client));
@@ -106,33 +104,58 @@ class WorkspaceButton : Gtk.Button {
         }
         update();
 
+        ////////////////////////////////////
+        // SIGNALS WIRING
+        ////////////////////////////////////
+        clicked.connect(() => { workspace.focus(); });
 
-        compositor.client_added.connect((t,a)=>{
-            if (a.workspace.id == this.workspace.id && a.address != null){
-                this.clients.append(new HyprClient((AstalHyprland.Client) a));
+        compositor.client_added.connect((t, cl)=>{
+            if (cl.workspace.id == this.workspace.id && cl.address != null){
+                this.clients.append(new HyprClient((AstalHyprland.Client) cl));
                 update();
             }
         });
 
-        compositor.client_removed.connect((t,a)=>{
+        compositor.client_removed.connect((t, a)=>{
             uint pos = 0;
-
             var target = new HyprClient.only_addr(a);
-            if (this.clients.find_with_equal_func(
-                    target,
-                    (a,b) =>{return ((HyprClient) a).address == ((HyprClient) b).address;},
-                    out pos)) {
-                        this.clients.remove(pos);
-                        update();
+            if (this.find_client(target, out pos)) {
+                this.clients.remove(pos);
+                update();
+            }
+        });
+
+        compositor.client_moved.connect((t, cl, ws) => {
+            if (cl.address == null) { return; }
+
+            if (ws.id == this.workspace.id){
+                this.clients.append(new HyprClient((AstalHyprland.Client) cl));
+                update();
+                return; //Should not process other branch
+            }
+
+            // Remove from this workspace if the client is gone
+            uint pos = 0;
+            var target = new HyprClient.only_addr(cl.address);
+            if (find_client(target, out pos)) {
+                this.clients.remove(pos);
+                update();
+                return;
             }
         });
     }
 
-    private void update(){
+    private void update() {
         windows_box.visible = clients.n_items > 0;
-        // windows_box.width_request =
     }
 
+    private bool find_client(HyprClient target, out uint idx) {
+        return this.clients.find_with_equal_func(
+            target,
+            (a, b) =>{ return ((HyprClient) a).address == ((HyprClient) b).address; },
+            out idx
+        );
+    }
 }
 
 [GtkTemplate (ui = "/bar/workspaces/AppButton.ui")]
