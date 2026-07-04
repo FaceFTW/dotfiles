@@ -18,12 +18,14 @@ template $WorkspaceButton: Gtk.Button {
 		}
 
 		Gtk.ScrolledWindow scrollbox {
+			// hscrollbar-policy: 2; //GTK_POLICY_NEVER
+			// vscrollbar-policy: 2; //GTK_POLICY_NEVER
 
 			child: Gtk.FlowBox windows_box {
 				orientation: horizontal;
 				// Obviously a ridiculous limit, but will hold in reasonable scenarios
 				max-children-per-line: 99;
-				column-spacing: 4;
+				column-spacing: 0;
 				row-spacing: 0;
 
 				css-classes: [

@@ -31,6 +31,7 @@ public class WorkspacesWidget : Gtk.Box {
     construct {
         this.compositor = AstalHyprland.get_default();
         this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
+        this.content_box.set_layout_manager(new Gtk.BoxLayout(Gtk.Orientation.HORIZONTAL));
 
         var workspaces = compositor.workspaces;
         workspaces.sort((a, b) => {
@@ -90,6 +91,7 @@ class WorkspaceButton : Gtk.Button {
             (x) => { return new AppButton((HyprClient) x); }
         );
         this.windows_box.set_halign(Gtk.Align.START);
+        this.windows_box.set_layout_manager(new Gtk.BoxLayout(Gtk.Orientation.HORIZONTAL));
 
 
 
