@@ -17,7 +17,6 @@ class Bar : Astal.Window {
     [GtkChild] unowned Gtk.Calendar calendar;
     [GtkChild] unowned Gtk.Box traybox;
     [GtkChild] unowned WorkspacesWidget workspaces;
-    [GtkChild] unowned Gtk.ScrolledWindow scrollbox;
 
 
     public Bar() {
@@ -25,7 +24,6 @@ class Bar : Astal.Window {
         exclusivity = EXCLUSIVE;
         present();
 
-       	this.scrollbox.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.NEVER);
 
         // clock
         clock = new DateTime.now_local().format("%m/%d/%Y  %H:%M:%S");
