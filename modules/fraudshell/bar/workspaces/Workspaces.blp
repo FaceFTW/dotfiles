@@ -5,24 +5,21 @@ template $WorkspacesWidget: Gtk.Box {
 	spacing: 5;
 
 	css-classes: [
-		"workspaces",
+		"bar-item", "workspaces", "compact"
 	];
 
-	Gtk.ScrolledWindow scrollbox {
-		child: Gtk.FlowBox content_box {
-			orientation: horizontal;
-			column-spacing: 0;
-			row-spacing: 0;
+	Gtk.FlowBox content_box {
+		orientation: horizontal;
+		column-spacing: 0;
+		row-spacing: 0;
 
-			css-classes: [
-				"content",
-			];
+		css-classes: [
+			"content",
+		];
 
-			hexpand: false;
-			vexpand: false;
-			halign: start;
-		};
 		hexpand: false;
+		vexpand: false;
+		halign: start;
 	}
 
 }

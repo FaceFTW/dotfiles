@@ -2,8 +2,9 @@
 @use "sass:color";
 
 .workspaces {
+
 	&.compact {
-		padding: vars.$bar-padding 0;
+		padding: 0 0;
 
 		.content {
 			padding: vars.$bar-button-padding;
@@ -57,3 +58,8 @@
 		}
 	}
 }
+
+.workspaces > * {
+		padding: 0 0;
+		margin: 0 0;
+	}

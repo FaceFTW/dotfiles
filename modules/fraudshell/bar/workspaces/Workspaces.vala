@@ -18,7 +18,6 @@ class HyprClient : Object {
 
 [GtkTemplate (ui = "/bar/workspaces/Workspaces.ui")]
 public class WorkspacesWidget : Gtk.Box {
-    [GtkChild] public unowned Gtk.ScrolledWindow scrollbox;
     [GtkChild] public unowned Gtk.FlowBox content_box;
 
     private AstalHyprland.Hyprland compositor;
@@ -28,41 +27,43 @@ public class WorkspacesWidget : Gtk.Box {
     }
 
     construct {
+        ////////////////////////////////////
+        // UI INIT
+        ////////////////////////////////////
         this.compositor = AstalHyprland.get_default();
-        this.scrollbox.set_policy(PolicyType.NEVER, PolicyType.NEVER);
         this.content_box.set_layout_manager(new Gtk.BoxLayout(Gtk.Orientation.HORIZONTAL));
 
+        ////////////////////////////////////
+        // STATE INIT
+        ////////////////////////////////////
         var workspaces = compositor.workspaces;
         workspaces.sort((a, b) => {
             return (int) (a.id > b.id) - (int) (a.id < b.id);
         });
-
         foreach (var ws in workspaces) {
-            var button = new WorkspaceButton(ws);
-            content_box.append(button);
+            content_box.append(new WorkspaceButton(ws));
         }
 
+        ////////////////////////////////////
+        // SIGNAL WIRING
+        ////////////////////////////////////
         // Listen for workspace changes
-        compositor.notify["focused-workspace"].connect(
-            on_focused_workspace_changed
-        );
-    }
+        compositor.notify["focused-workspace"].connect((t,a) =>{
+            var focused = compositor.focused_workspace;
+            var child = content_box.get_first_child();
 
-    private void on_focused_workspace_changed() {
-        var focused = compositor.focused_workspace;
-        var child = content_box.get_first_child();
-
-        while (child != null) {
-            if (child is WorkspaceButton) {
-                var btn = (WorkspaceButton) child;
-                if (focused != null && btn.workspace.id == focused.id) {
-                    btn.add_css_class("active");
-                } else {
-                    btn.remove_css_class("active");
+            while (child != null) {
+                if (child is WorkspaceButton) {
+                    var btn = (WorkspaceButton) child;
+                    if (focused != null && btn.workspace.id == focused.id) {
+                        btn.add_css_class("active");
+                    } else {
+                        btn.remove_css_class("active");
+                    }
                 }
+                child = child.get_next_sibling();
             }
-            child = child.get_next_sibling();
-        }
+        });
     }
 }
 
@@ -164,8 +165,6 @@ class AppButton : Gtk.Button {
 
     [GtkChild] public unowned Image app_icon;
 
-    [GtkChild] public unowned Gtk.Box indicator;
-
     private AstalApps.Apps appManager;
     private AstalHyprland.Hyprland compositor;
 
@@ -174,10 +173,17 @@ class AppButton : Gtk.Button {
     }
 
     construct {
+        ////////////////////////////////////
+        // UI INIT
+        ////////////////////////////////////
         this.compositor = AstalHyprland.get_default();
         appManager = new AstalApps.Apps();
 
         app_icon.icon_name = get_icon_name();
+
+        ////////////////////////////////////
+        // SIGNALS WIRING
+        ////////////////////////////////////
 
         clicked.connect(() => {
             compositor.dispatch("focus", @"{window=\"address:0x$(this.client.address)\"}");

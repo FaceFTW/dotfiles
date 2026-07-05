@@ -8,21 +8,7 @@ template $AppButton: Gtk.Button {
 
 	hexpand: true;
 
-	Overlay {
-		child: Box {
-			orientation: horizontal;
-			spacing: 5;
-
-			Image app_icon {
-				icon-size: large;
-			}
-		};
-
-		[overlay]
-		Box indicator {
-			css-classes: [
-				"indicator",
-			];
-		}
+	Image app_icon {
+		icon-size: large;
 	}
 }
