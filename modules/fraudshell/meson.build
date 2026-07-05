@@ -25,7 +25,6 @@ dependencies = [
 
 blueprint_sources = files(
 	'bar/Bar.blp',
-	'bar/workspaces/AppButton.blp',
 	'bar/workspaces/WorkspaceButton.blp',
 	'bar/workspaces/Workspaces.blp',
 )

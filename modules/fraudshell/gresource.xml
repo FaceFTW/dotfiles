@@ -5,6 +5,5 @@
         <file>bar/Bar.ui</file>
         <file>bar/workspaces/Workspaces.ui</file>
         <file>bar/workspaces/WorkspaceButton.ui</file>
-        <file>bar/workspaces/AppButton.ui</file>
     </gresource>
 </gresources>

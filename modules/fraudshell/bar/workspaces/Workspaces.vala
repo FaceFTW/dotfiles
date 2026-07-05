@@ -75,6 +75,7 @@ class WorkspaceButton : Gtk.Button {
     [GtkChild] public unowned Gtk.FlowBox windows_box;
 
     private AstalHyprland.Hyprland compositor;
+    private AstalApps.Apps appManager;
     private GLib.ListStore clients;
 
     public WorkspaceButton(AstalHyprland.Workspace workspace) {
@@ -89,7 +90,7 @@ class WorkspaceButton : Gtk.Button {
         this.compositor = AstalHyprland.get_default();
         this.windows_box.bind_model(
             clients,
-            (x) => { return new AppButton((HyprClient) x); }
+            (x) => { return construct_app_button((HyprClient) x); }
         );
         this.windows_box.set_layout_manager(new Gtk.BoxLayout(Gtk.Orientation.HORIZONTAL));
 
@@ -157,55 +158,17 @@ class WorkspaceButton : Gtk.Button {
             out idx
         );
     }
-}
 
-[GtkTemplate (ui = "/bar/workspaces/AppButton.ui")]
-class AppButton : Gtk.Button {
-    public HyprClient client { get; construct; }
+    private Gtk.Image construct_app_button(HyprClient client){
+        Gtk.Image component = new Gtk.Image();
+        component.icon_size = Gtk.IconSize.LARGE;
 
-    [GtkChild] public unowned Image app_icon;
 
-    private AstalApps.Apps appManager;
-    private AstalHyprland.Hyprland compositor;
+        var app_info = appManager.exact_query(client.class);
+        component.icon_name = app_info != null ?
+             app_info.first()?.data?.icon_name ?? "application-x-executable" :
+             "application-x-executable";
 
-    public AppButton(HyprClient client) {
-        Object(client: client);
-    }
-
-    construct {
-        ////////////////////////////////////
-        // UI INIT
-        ////////////////////////////////////
-        this.compositor = AstalHyprland.get_default();
-        appManager = new AstalApps.Apps();
-
-        app_icon.icon_name = get_icon_name();
-
-        ////////////////////////////////////
-        // SIGNALS WIRING
-        ////////////////////////////////////
-
-        clicked.connect(() => {
-            compositor.dispatch("focus", @"{window=\"address:0x$(this.client.address)\"}");
-        });
-
-        var right_click = new GestureClick();
-        right_click.button = Gdk.BUTTON_SECONDARY;
-        right_click.pressed.connect(() => {
-            compositor.dispatch("window.close", @"\"address:0x$(this.client.address)\"");
-        });
-        add_controller(right_click);
-    }
-
-    private new string get_icon_name() {
-        var app_info = appManager.exact_query(this.client.class);
-        if (app_info != null) {
-            return app_info.first()
-                    ?.data
-                    ?.icon_name
-                    ?? "application-x-executable";
-        }
-
-        return "application-x-executable";
+        return component;
     }
 }
