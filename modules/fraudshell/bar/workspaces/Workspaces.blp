@@ -1,8 +1,8 @@
 using Gtk 4.0;
 
 template $WorkspacesWidget: Gtk.Box {
-	orientation: vertical;
-	spacing: 5;
+	orientation: horizontal;
+	spacing: 0;
 
 	css-classes: [
 		"bar-item", "workspaces", "compact"
@@ -12,14 +12,14 @@ template $WorkspacesWidget: Gtk.Box {
 		orientation: horizontal;
 		column-spacing: 0;
 		row-spacing: 0;
+		hexpand: false;
+		vexpand: false;
+		halign: start;
 
 		css-classes: [
 			"content",
 		];
 
-		hexpand: false;
-		vexpand: false;
-		halign: start;
 	}
 
 }

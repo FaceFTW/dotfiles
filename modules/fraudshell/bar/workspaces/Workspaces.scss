@@ -2,50 +2,47 @@
 @use "sass:color";
 
 .workspaces {
+	.content {
+		padding: vars.$bar-button-padding;
+		background: vars.$bar-button-bg;
+		border-radius: vars.$widget-radius;
+		.workspace {
+			all: unset;
 
-	&.compact {
-		padding: 0 0;
+			min-width: 20px;
+			min-height: 14px;
 
-		.content {
-			padding: vars.$bar-button-padding;
-			background: vars.$bar-button-bg;
 			border-radius: vars.$widget-radius;
-			.workspace {
-				all: unset;
+			background: vars.$bar-button-bg-hover;
+			transition: all vars.$transition;
 
-				min-width: 20px;
-				min-height: 14px;
+			&.active {
+				background: vars.$accent;
+				min-width: 30px;
 
-				border-radius: vars.$widget-radius;
-				background: vars.$bar-button-bg-hover;
 				transition: all vars.$transition;
-
-				&.active {
-					background: vars.$accent;
-					min-width: 30px;
-
-					transition: all vars.$transition;
-				}
-			}
-		}
-		&:hover {
-			.content {
-				background: vars.$bar-button-bg-hover;
-				transition: background vars.$transition;
-				.workspace {
-					background: color.adjust(
-						vars.$bar-button-bg-hover,
-						$lightness: 10%
-					);
-					&.active {
-						background: vars.$accent-light;
-						transition: all vars.$transition;
-					}
-					transition: all vars.$transition;
-				}
 			}
 		}
 	}
+
+	&:hover {
+		.content {
+			background: vars.$bar-button-bg-hover;
+			transition: background vars.$transition;
+			.workspace {
+				background: color.adjust(
+					vars.$bar-button-bg-hover,
+					$lightness: 10%
+				);
+				&.active {
+					background: vars.$accent-light;
+					transition: all vars.$transition;
+				}
+				transition: all vars.$transition;
+			}
+		}
+	}
+
 	.workspace {
 		&.minimal,
 		&.empty {
@@ -58,8 +55,3 @@
 		}
 	}
 }
-
-.workspaces > * {
-		padding: 0 0;
-		margin: 0 0;
-	}

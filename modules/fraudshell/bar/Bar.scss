@@ -50,27 +50,4 @@ window.bar {
 			padding-right: vars.$bar-padding;
 		}
 	}
-
-	.taskbar-button {
-		background: transparent;
-
-		&.focused {
-			.indicator {
-				transition: background vars.$transition;
-				background: vars.$accent;
-			}
-		}
-
-		.indicator {
-			border-radius: vars.$widget-radius;
-			min-width: 4px;
-			min-height: 4px;
-			background: lighten(vars.$bar-button-bg-active, 20%);
-			transition: min-width vars.$transition;
-		}
-
-		.content {
-			padding: 0;
-		}
-	}
 }
