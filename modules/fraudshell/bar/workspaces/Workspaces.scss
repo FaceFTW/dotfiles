@@ -13,22 +13,22 @@
 	}
 
 	.workspace-1 {
-		background-color: vars.$red-dimmed !important;
-		color: vars.$bar_bg !important;
+		background-color: vars.$red-dimmed;
+		color: vars.$bar_bg;
 
 		&.active {
-			color: vars.$bar_bg !important;
-			background-color: vars.$red !important;
+			color: vars.$bar_bg;
+			background-color: vars.$red;
 		}
 
 		&:hover {
-			color: vars.$bar-bg !important;
-			opacity: 0.9 !important;
+			color: vars.$bar-bg;
+			opacity: 0.9;
 			background: linear-gradient(
 				180deg,
 				vars.$red 75%,
 				vars.$red-dimmed
-			) !important;
+			);
 		}
 	}
 }
