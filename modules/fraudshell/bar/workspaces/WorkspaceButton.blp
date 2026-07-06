@@ -5,13 +5,15 @@ template $WorkspaceButton: Gtk.Button {
 	valign: center;
 
 	css-classes: [
-		"bar-item",
 		"workspace",
 	];
 
 	Box {
+		css-classes: [
+			"workspace",
+		];
 		orientation: horizontal;
-		spacing: 3;
+		spacing: 1;
 
 		Label workspace_id {
 			xalign: 0.5;

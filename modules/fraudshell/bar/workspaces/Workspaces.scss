@@ -2,56 +2,33 @@
 @use "sass:color";
 
 .workspaces {
-	.content {
+	padding-left: 12px;
+
+	button.workspace {
 		padding: vars.$bar-button-padding;
-		background: vars.$bar-button-bg;
-		border-radius: vars.$widget-radius;
-		.workspace {
-			all: unset;
-
-			min-width: 20px;
-			min-height: 14px;
-
-			border-radius: vars.$widget-radius;
-			background: vars.$bar-button-bg-hover;
-			transition: all vars.$transition;
-
-			&.active {
-				background: vars.$accent;
-				min-width: 30px;
-
-				transition: all vars.$transition;
-			}
-		}
+		/* margin: vars.$bar-button-padding; */
+		border-radius: 24px;
+		transition: all 0.3s ease-in-out;
+		border: 1px groove alpha(vars.$bar-bg, vars.$bar-opacity);
 	}
 
-	&:hover {
-		.content {
-			background: vars.$bar-button-bg-hover;
-			transition: background vars.$transition;
-			.workspace {
-				background: color.adjust(
-					vars.$bar-button-bg-hover,
-					$lightness: 10%
-				);
-				&.active {
-					background: vars.$accent-light;
-					transition: all vars.$transition;
-				}
-				transition: all vars.$transition;
-			}
-		}
-	}
+	.workspace-1 {
+		background-color: alpha(vars.$red-dimmed, 0.9) !important;
+		color: vars.$bar_bg !important;
 
-	.workspace {
-		&.minimal,
-		&.empty {
-			.content {
-				padding: vars.multiply-padding(
-					vars.$bar-button-padding,
-					$multiplier: 1.5
-				);
-			}
+		&.active {
+			color: vars.$bar_bg !important;
+			background-color: alpha(vars.$red, 0.9) !important;
+		}
+
+		&:hover {
+			color: vars.$bar-bg !important;
+			opacity: 0.9 !important;
+			background: linear-gradient(
+				180deg,
+				vars.$red 75%,
+				vars.$red-dimmed
+			) !important;
 		}
 	}
 }

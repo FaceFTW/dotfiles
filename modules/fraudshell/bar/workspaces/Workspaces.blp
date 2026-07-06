@@ -2,24 +2,24 @@ using Gtk 4.0;
 
 template $WorkspacesWidget: Gtk.Box {
 	orientation: horizontal;
-	spacing: 0;
+	spacing: 4;
 
 	css-classes: [
-		"bar-item", "workspaces", "compact"
+		"workspaces",
 	];
 
 	Gtk.FlowBox content_box {
 		orientation: horizontal;
-		column-spacing: 0;
-		row-spacing: 0;
-		hexpand: false;
-		vexpand: false;
-		halign: start;
+		column-spacing: 2;
+		row-spacing: 1;
 
 		css-classes: [
 			"content",
 		];
 
+		hexpand: false;
+		vexpand: false;
+		halign: start;
 	}
 
 }
