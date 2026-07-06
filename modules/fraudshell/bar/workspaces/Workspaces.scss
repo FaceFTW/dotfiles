@@ -9,16 +9,16 @@
 		/* margin: vars.$bar-button-padding; */
 		border-radius: 24px;
 		transition: all 0.3s ease-in-out;
-		border: 1px groove alpha(vars.$bar-bg, vars.$bar-opacity);
+		border: 1px groove vars.$bar-bg;
 	}
 
 	.workspace-1 {
-		background-color: alpha(vars.$red-dimmed, 0.9) !important;
+		background-color: vars.$red-dimmed !important;
 		color: vars.$bar_bg !important;
 
 		&.active {
 			color: vars.$bar_bg !important;
-			background-color: alpha(vars.$red, 0.9) !important;
+			background-color: vars.$red !important;
 		}
 
 		&:hover {

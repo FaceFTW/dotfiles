@@ -17,7 +17,7 @@ $fg2: #808080;
 
 $accent: #3584e4;
 $accent-light: color.adjust(#3584e4, $lightness: 10%);
-$blue: #3584e4;
+/* $blue: #3584e4;
 $blue-light: color.adjust($blue, $lightness: 10%);
 $cyan: #2190a4;
 $cyan-light: color.adjust($cyan, $lightness: 10%);
@@ -30,7 +30,22 @@ $orange-light: color.adjust($orange, $lightness: 10%);
 $red: #e62d42;
 $red-light: color.adjust($red, $lightness: 10%);
 $purple: #9141ac;
-$purple-light: color.adjust($purple, $lightness: 10%);
+$purple-light: color.adjust($purple, $lightness: 10%); */
+
+$foreground: #e6d9db;
+$background: #2c2525;
+$red: #fa6982;
+$red-dimmed: #ad495a;
+$orange: #faad45;
+$orange-dimmed: #ad7731;
+$yellow: #fafa00;
+$yellow-dimmed: #adad00;
+$green: #96f06e;
+$green-dimmed: #66a34b;
+$blue: #63c8fa;
+$blue-dimmed: #458bad;
+$purple: #dc6ea5;
+$purple-dimmed: #8f476b;
 
 $widget-radius: 8px;
 
