@@ -75,7 +75,7 @@ class WorkspaceButton : Gtk.Button {
         this.clients = new GLib.ListStore(typeof (HyprClient));
         this.compositor = AstalHyprland.get_default();
         this.app_manager = new AstalApps.Apps();
-        this.windows_box.add_css_class(@"workspace-$(this.workspace.id)");
+        // this.windows_box.add_css_class(@"workspace-$(this.workspace.id)");
         this.windows_box.set_layout_manager(new Gtk.BoxLayout(Gtk.Orientation.HORIZONTAL));
         this.windows_box.bind_model(
             clients,
@@ -159,7 +159,7 @@ class WorkspaceButton : Gtk.Button {
 
     private Gtk.Image construct_app_button(HyprClient client){
         Gtk.Image component = new Gtk.Image();
-        component.icon_size = Gtk.IconSize.LARGE;
+        // component.icon_size = Gtk.IconSize.NORMAL;
 
         var app_info = app_manager.exact_query(client.class);
         component.icon_name = app_info != null ?

@@ -55,6 +55,7 @@ css = custom_target(
 	input: files('style.scss'),
 	command: [sass, '@INPUT@', '@OUTPUT@'],
 	output: ['style.css'],
+	build_always_stale: true,
 )
 
 # compiling data files into a binary

@@ -2,7 +2,12 @@
 @use "sass:color";
 
 .workspaces {
+
 	padding-left: 12px;
+
+	image {
+		-gtk-icon-size: 24px;
+	}
 
 	button.workspace {
 		padding: vars.$bar-button-padding;
@@ -10,6 +15,12 @@
 		border-radius: 24px;
 		transition: all 0.3s ease-in-out;
 		border: 1px groove vars.$bar-bg;
+		min-height: 32px;
+
+		label {
+			font-size: 18px;
+			padding-left: 2px;
+		}
 	}
 
 	.workspace-1 {
@@ -28,6 +39,106 @@
 				180deg,
 				vars.$red 75%,
 				vars.$red-dimmed
+			);
+		}
+	}
+
+	.workspace-2 {
+		background-color: vars.$orange-dimmed;
+		color: vars.$bar_bg;
+
+		&.active {
+			color: vars.$bar_bg;
+			background-color: vars.$orange;
+		}
+
+		&:hover {
+			color: vars.$bar-bg;
+			opacity: 0.9;
+			background: linear-gradient(
+				180deg,
+				vars.$orange 75%,
+				vars.$orange-dimmed
+			);
+		}
+	}
+
+	.workspace-3 {
+		background-color: vars.$yellow-dimmed;
+		color: vars.$bar_bg;
+
+		&.active {
+			color: vars.$bar_bg;
+			background-color: vars.$yellow;
+		}
+
+		&:hover {
+			color: vars.$bar-bg;
+			opacity: 0.9;
+			background: linear-gradient(
+				180deg,
+				vars.$yellow 75%,
+				vars.$yellow-dimmed
+			);
+		}
+	}
+
+	.workspace-4 {
+		background-color: vars.$green-dimmed;
+		color: vars.$bar_bg;
+
+		&.active {
+			color: vars.$bar_bg;
+			background-color: vars.$green;
+		}
+
+		&:hover {
+			color: vars.$bar-bg;
+			opacity: 0.9;
+			background: linear-gradient(
+				180deg,
+				vars.$green 75%,
+				vars.$green-dimmed
+			);
+		}
+	}
+
+	.workspace-5 {
+		background-color: vars.$blue-dimmed;
+		color: vars.$bar_bg;
+
+		&.active {
+			color: vars.$bar_bg;
+			background-color: vars.$blue;
+		}
+
+		&:hover {
+			color: vars.$bar-bg;
+			opacity: 0.9;
+			background: linear-gradient(
+				180deg,
+				vars.$blue 75%,
+				vars.$blue-dimmed
+			);
+		}
+	}
+
+	.workspace-6 {
+		background-color: vars.$purple-dimmed;
+		color: vars.$bar_bg;
+
+		&.active {
+			color: vars.$bar_bg;
+			background-color: vars.$purple;
+		}
+
+		&:hover {
+			color: vars.$bar-bg;
+			opacity: 0.9;
+			background: linear-gradient(
+				180deg,
+				vars.$purple 75%,
+				vars.$purple-dimmed
 			);
 		}
 	}
