@@ -11,11 +11,17 @@
 
 	button.workspace {
 		padding: vars.$bar-button-padding;
-		/* margin: vars.$bar-button-padding; */
 		border-radius: 24px;
 		transition: all 0.3s ease-in-out;
 		border: 1px groove vars.$bar-bg;
 		min-height: 32px;
+
+		// second rule is because theme has it and selector specificity
+		&:focus, &.image-button:focus:not(.flat) {
+			box-shadow: unset;
+			border-color: unset;
+			outline: unset;
+		}
 
 		label {
 			font-size: 18px;

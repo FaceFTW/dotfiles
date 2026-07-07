@@ -94,6 +94,7 @@ class WorkspaceButton : Gtk.Button {
             }
         }
         update();
+        update_focused_workspace();
 
         ////////////////////////////////////
         // SIGNALS WIRING
@@ -135,13 +136,8 @@ class WorkspaceButton : Gtk.Button {
             }
         });
 
-        compositor.focused_workspace.notify.connect((s,p) => {
-            var focused = compositor.focused_workspace;
-            if (focused != null && this.workspace.id == focused.id) {
-                this.add_css_class("active");
-            } else {
-                this.remove_css_class("active");
-            }
+        compositor.notify["focused-workspace"].connect((s,p) => {
+            update_focused_workspace();
         });
     }
 
@@ -167,5 +163,14 @@ class WorkspaceButton : Gtk.Button {
              "application-x-executable";
 
         return component;
+    }
+
+    private void update_focused_workspace(){
+        var focused = compositor.focused_workspace;
+        if (focused != null && this.workspace.id == focused.id) {
+            this.add_css_class("active");
+        } else {
+            this.remove_css_class("active");
+        }
     }
 }
