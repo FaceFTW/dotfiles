@@ -25,12 +25,14 @@ dependencies = [
 
 blueprint_sources = files(
 	'bar/Bar.blp',
+	'bar/tray/Tray.blp',
 	'bar/workspaces/WorkspaceButton.blp',
 	'bar/workspaces/Workspaces.blp',
 )
 
 vala_sources = files(
 	'bar/Bar.vala',
+	'bar/tray/Tray.vala',
 	'bar/workspaces/Workspaces.vala',
 	'App.vala',
 )

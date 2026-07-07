@@ -1,6 +1,8 @@
 [GtkTemplate(ui="/bar/Bar.ui")]
 class Bar : Astal.Window {
     public string clock { get; set; }
+    public uint interval;
+
     public string volume_icon { get; set; }
     public string battery_visible { get; set; }
     public string battery_label { get; set; }
@@ -10,30 +12,27 @@ class Bar : Astal.Window {
     public string power_profile_icon { get; set; }
     public bool bluetooth_visible { get; set; }
 
-    uint interval;
-    HashTable<string, TrayButton> tray_items;
-
     [GtkChild] unowned Gtk.Popover popover;
     [GtkChild] unowned Gtk.Calendar calendar;
-    [GtkChild] unowned Gtk.Box traybox;
     [GtkChild] unowned WorkspacesWidget workspaces;
-
+    [GtkChild] unowned TrayWidget tray;
+    // [GtkChild] unowned Gtk.Box traybox;
 
     public Bar() {
+        Object();
+    }
+
+    construct{
         anchor = TOP | LEFT | RIGHT;
         exclusivity = EXCLUSIVE;
         present();
 
-
-        // clock
         clock = new DateTime.now_local().format("%m/%d/%Y  %H:%M:%S");
         interval = Timeout.add(1000, () => {
             clock = new DateTime.now_local().format("%m/%d/%Y  %H:%M:%S");
             return Source.CONTINUE;
         }, Priority.DEFAULT);
 
-
-        // everytime popover is opened, select current day
         popover.notify["visible"].connect(() => {
             if (popover.visible) {
                 calendar.select_day(new DateTime.now_local());
@@ -97,27 +96,9 @@ class Bar : Astal.Window {
         var powerprofile = AstalPowerProfiles.get_default();
         powerprofile.bind_property("icon-name", this, "power-profile-icon", BindingFlags.SYNC_CREATE);
 
-        // tray
-        var tray = AstalTray.get_default();
-        tray_items = new HashTable<string, TrayButton>(str_hash, str_equal);
-        tray.item_added.connect(on_tray_item_added);
-        tray.item_removed.connect(on_tray_item_removed);
-
         // bluetooth
         var bt = AstalBluetooth.get_default();
         bt.bind_property("is-connected", this, "bluetooth-visible", BindingFlags.SYNC_CREATE);
-    }
-
-    void on_tray_item_added(AstalTray.Tray tray, string id) {
-        var button = new TrayButton(id);
-        tray_items.set(id, button);
-        traybox.append(button);
-    }
-
-    void on_tray_item_removed(string id) {
-        var button = tray_items.get(id);
-        traybox.remove(button);
-        tray_items.remove(id);
     }
 
     [GtkCallback]
@@ -127,46 +108,9 @@ class Bar : Astal.Window {
     }
 
     public override void dispose() {
-        var tray = AstalTray.get_default();
-        tray.item_added.disconnect(on_tray_item_added);
-        tray.item_removed.disconnect(on_tray_item_removed);
-
-        foreach (var button in tray_items.get_values()) {
-            button.dispose();
-        }
-
         Source.remove(interval);
         base.dispose();
     }
 
-    class TrayButton : Astal.Bin {
-        AstalTray.TrayItem item;
-        Gtk.Popover popover;
-        Gtk.Image image;
 
-        public TrayButton(string id) {
-            var tray = AstalTray.get_default();
-            item = tray.get_item(id);
-
-            image = new Gtk.Image();
-            popover = new Gtk.PopoverMenu.from_model(item.menu_model);
-
-            child = new Gtk.MenuButton() {
-                child = image,
-                popover = popover,
-            };
-
-            item.bind_property("gicon", image, "gicon", BindingFlags.SYNC_CREATE);
-            popover.insert_action_group("dbusmenu", item.action_group);
-            item.notify["action-group"].connect(on_action_group);
-        }
-
-        void on_action_group() {
-            popover.insert_action_group("dbusmenu", item.action_group);
-        }
-
-        public override void dispose() {
-            item.notify.disconnect(on_action_group);
-        }
-    }
 }

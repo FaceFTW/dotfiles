@@ -4,7 +4,7 @@
 * VARIABLES
 ***************************/
 $font-size: 14pt;
-$font-name: "VCR OSD MONO";
+$font-name: "VCR OSD Mono";
 
 $bg0: #1d1d20;
 $bg1: #28282c;
@@ -17,20 +17,6 @@ $fg2: #808080;
 
 $accent: #3584e4;
 $accent-light: color.adjust(#3584e4, $lightness: 10%);
-/* $blue: #3584e4;
-$blue-light: color.adjust($blue, $lightness: 10%);
-$cyan: #2190a4;
-$cyan-light: color.adjust($cyan, $lightness: 10%);
-$green: #3a944a;
-$green-light: color.adjust($green, $lightness: 10%);
-$yellow: #c88800;
-$yellow-light: color.adjust($yellow, $lightness: 10%);
-$orange: #ed5b00;
-$orange-light: color.adjust($orange, $lightness: 10%);
-$red: #e62d42;
-$red-light: color.adjust($red, $lightness: 10%);
-$purple: #9141ac;
-$purple-light: color.adjust($purple, $lightness: 10%); */
 
 $foreground: #e6d9db;
 $background: #2c2525;
@@ -57,11 +43,6 @@ $window-border-color: $bg2;
 $window-outline-width: 2px;
 $window-outline-color: $fg1;
 $window-radius: $widget-radius + $window-padding + $window-border-width;
-/* $window-shadow-offset: ${toCssValue(window.shadow.offset)};
-$window-shadow-blur: ${window.shadow.blur}px;
-$window-shadow-spread: ${window.shadow.spread}px;
-$window-shadow-color: ${window.shadow.color};
-$window-shadow-opacity: ${window.shadow.opacity}; */
 
 $bar-position: top;
 $bar-bg: $bg0;
@@ -80,79 +61,7 @@ $bar-button-border-width: 0px;
 $bar-button-border-color: $bg2;
 $bar-button-opacity: 1;
 $bar-button-padding: 0px 4px;
-/* $bar-shadow-offset: ${toCssValue(bar.shadow.offset)};
-$bar-shadow-blur: ${bar.shadow.blur}px;
-$bar-shadow-spread: ${bar.shadow.spread}px;
-$bar-shadow-color: ${bar.shadow.color};
-$bar-shadow-opacity: ${bar.shadow.opacity}; */
-/* $bar-vertical: ${isVertical}; */
-$bar-size: 48px;
+$bar-size: 32px;
 
 $transition: 0.2s;
 /* $shadow: ${theme.shadow}; */
-
-@function all-zero($value) {
-	$list: if(
-		sass(type-of($value) == list): $value;
-			else: (
-				$value,
-			)
-	);
-	@each $v in $list {
-		@if $v != 0 and $v != 0px and $v != "" {
-			@return false;
-		}
-	}
-	@return true;
-}
-
-@function is-light($color) {
-	$brightness: (
-			red($color) * 299 + green($color) * 587 + blue($color) * 114
-		) /
-		1000;
-	@return $brightness > 128;
-}
-
-@function multiply-padding($values, $multiplier) {
-	$result: ();
-
-	@each $value in $values {
-		@if $value == 0 {
-			$result: append($result, 0);
-		} @else {
-			$result: append($result, $value * $multiplier);
-		}
-	}
-
-	@return $result;
-}
-
-// some hack for fg color with accent
-
-@function brightness($color) {
-	@return (red($color) * 299 + green($color) * 587 + blue($color) * 114) /
-		1000;
-}
-
-@function get-contrast-color($color, $fg, $bg) {
-	$color-bright: brightness($color);
-	$fg-bright: brightness($fg);
-	$bg-bright: brightness($bg);
-
-	$is-light-theme: $bg-bright > 128;
-
-	@if $is-light-theme {
-		@if $fg-bright < 128 {
-			@return if($color-bright > 128, $fg, $bg);
-		} @else {
-			@return if($color-bright > 128, $bg, $fg);
-		}
-	} @else {
-		@if $fg-bright > 128 {
-			@return if($color-bright > 128, $bg, $fg);
-		} @else {
-			@return if($color-bright > 128, $fg, $bg);
-		}
-	}
-}

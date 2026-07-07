@@ -29,6 +29,8 @@ template $Bar: Astal.Window {
 		end-widget: Box {
 			spacing: 4;
 
+			$TrayWidget tray {}
+
 			Image {
 				visible: bind template.bluetooth-visible;
 				icon-name: "bluetooth-symbolic";
@@ -69,9 +71,6 @@ template $Bar: Astal.Window {
 				}
 			}
 
-			Box traybox {
-				spacing: 4;
-			}
 		};
 	}
 }

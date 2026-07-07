@@ -3,6 +3,7 @@
     <gresource prefix="/">
         <file>style.css</file>
         <file>bar/Bar.ui</file>
+        <file>bar/tray/Tray.ui</file>
         <file>bar/workspaces/Workspaces.ui</file>
         <file>bar/workspaces/WorkspaceButton.ui</file>
     </gresource>
