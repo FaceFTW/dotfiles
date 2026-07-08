@@ -4,6 +4,9 @@
         <file>style.css</file>
         <file>bar/Bar.ui</file>
         <file>bar/tray/Tray.ui</file>
+        <file>bar/network/NetworkPopup.ui</file>
+        <file>bar/network/NetworkPopupItem.ui</file>
+        <file>bar/network/NetworkButton.ui</file>
         <file>bar/workspaces/Workspaces.ui</file>
         <file>bar/workspaces/WorkspaceButton.ui</file>
     </gresource>

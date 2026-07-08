@@ -55,7 +55,7 @@ class TrayWidget: Gtk.Box {
     }
 
 
-    private class TrayButton : Gtk.Button{
+    private class TrayButton : Gtk.Button {
         AstalTray.TrayItem item;
         Gtk.Popover popover;
         Gtk.Image image;

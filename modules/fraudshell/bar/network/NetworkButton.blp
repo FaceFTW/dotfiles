@@ -1,0 +1,12 @@
+using Gtk 4.0;
+
+template $NetworkWidget: Gtk.Button {
+	Gtk.Image signal_strength {
+
+	}
+
+	popover: Popover network_popover {
+		$NetworkPopup network_popover_contents {}
+	};
+
+}
