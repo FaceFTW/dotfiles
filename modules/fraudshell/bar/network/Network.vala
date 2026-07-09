@@ -20,7 +20,7 @@ class NetworkWidget : Gtk.Button {
         // UI INIT
         ////////////////////////////////////
         this.network_manager = AstalNetwork.get_default();
-
+        this.set_layout_manager(new Gtk.BinLayout());
 
         ////////////////////////////////////
         // STATE INIT
@@ -62,13 +62,23 @@ class NetworkWidget : Gtk.Button {
         ////////////////////////////////////
         // SIGNALS WIRING
         ////////////////////////////////////
+        this.clicked.connect((s) => {
+            this.network_popover.popup();
+        });
     }
+
+
 
 }
 
 [GtkTemplate(ui="/bar/network/NetworkPopup.ui")]
 private class NetworkPopup : Gtk.Box {
 
+    [GtkChild] unowned Gtk.Button refresh_button;
+    [GtkChild] unowned Gtk.Switch wifi_toggle;
+    [GtkChild] unowned Gtk.ListBox network_list;
+
+    private AstalNetwork.Network network_manager;
 
 
     public NetworkPopup(){
@@ -78,10 +88,31 @@ private class NetworkPopup : Gtk.Box {
     construct {
 
     }
+}
 
+[GtkTemplate(ui="/bar/network/NetworkPopupItem.ui")]
+private class NetworkPopupItem: Gtk.Button {
+    public AstalNetwork.AccessPoint access_point { get; construct; }
 
+    [GtkChild] unowned Gtk.Image ap_strength;
+    [GtkChild] unowned Gtk.Label ssid_label;
+    [GtkChild] unowned Gtk.Image connected_check;
+
+    private AstalNetwork.Network network;
+
+    public NetworkPopupItem(AstalNetwork.AccessPoint ap ) {
+        Object(access_point: ap);
+    }
+
+    construct {
+        this.ap_strength.icon_name = this.access_point.icon_name;
+        this.ssid_label.label = this.access_point.bssid;
+        this.connected_check.visible = this.network.wifi?.ssid == this.access_point.bssid;
+    }
 
 }
+
+
 
 
 // class NetworkUtils {
