@@ -16,6 +16,7 @@ class Bar : Astal.Window {
     [GtkChild] unowned Gtk.Calendar calendar;
     [GtkChild] unowned WorkspacesWidget workspaces;
     [GtkChild] unowned TrayWidget tray;
+    [GtkChild] unowned NetworkWidget network;
     // [GtkChild] unowned Gtk.Box traybox;
 
     public Bar() {
