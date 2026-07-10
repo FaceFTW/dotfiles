@@ -8,7 +8,6 @@ class Bar : Astal.Window {
     public string battery_label { get; set; }
     public string battery_icon { get; set; }
     public double volume { get; set; }
-    public string network_icon { get; set; }
     public string power_profile_icon { get; set; }
     public bool bluetooth_visible { get; set; }
 
@@ -17,7 +16,6 @@ class Bar : Astal.Window {
     [GtkChild] unowned WorkspacesWidget workspaces;
     [GtkChild] unowned TrayWidget tray;
     [GtkChild] unowned NetworkWidget network;
-    // [GtkChild] unowned Gtk.Box traybox;
 
     public Bar() {
         Object();
@@ -39,45 +37,6 @@ class Bar : Astal.Window {
                 calendar.select_day(new DateTime.now_local());
             }
         });
-
-        // network
-        var nw = AstalNetwork.get_default();
-        Binding networkBinding = null;
-
-        nw.bind_property(
-            "primary",
-            this,
-            "network-icon",
-            BindingFlags.SYNC_CREATE,
-            (_, primary) => {
-                if (networkBinding != null) networkBinding.unbind();
-
-                switch (primary.get_enum()) {
-                    case AstalNetwork.Primary.WIRED:
-                        networkBinding = nw.wired.bind_property(
-                            "icon-name",
-                            this,
-                            "network-icon",
-                            BindingFlags.SYNC_CREATE
-                        );
-                        return false;
-
-                    case AstalNetwork.Primary.WIFI:
-                        networkBinding = nw.wifi.bind_property(
-                            "icon-name",
-                            this,
-                            "network-icon",
-                            BindingFlags.SYNC_CREATE
-                        );
-                        return false;
-
-                    default:
-                        network_icon = "network-idle-symbolic";
-                        return false;
-                }
-            },
-            null
-        );
 
         // battery
         var bat = AstalBattery.get_default();

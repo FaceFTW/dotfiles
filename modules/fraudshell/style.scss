@@ -2,6 +2,26 @@
 @use "./bar/workspaces/Workspaces.scss";
 @use "./_vars.scss";
 
+menubutton > button {
+	all: unset;
+
+	& > image{
+		-gtk-icon-size: 24px;
+		min-width: 18px;
+		margin: 0 4px 0 2px;
+		padding: 0 3px;
+	}
+
+	&:hover {
+		color: vars.$fg0;
+		border-radius: 2px;
+		opacity: 0.9;
+		background: linear-gradient(180deg, vars.$bg0 75%, vars.$fg0);
+	}
+
+}
+
+
 .bar-item {
 	background: transparent;
 	font-weight: normal;

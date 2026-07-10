@@ -1,12 +1,11 @@
 using Gtk 4.0;
 
-template $NetworkWidget: Gtk.Button {
-	Gtk.Image status_icon {
+template $NetworkWidget: Gtk.Box {
+	MenuButton network_button {
+		Gtk.Image network_status_icon {}
 
+		popover: Popover network_popover {
+			$NetworkPopup network_popover_contents {}
+		};
 	}
-
-	Popover network_popover {
-		$NetworkPopup network_popover_contents {}
-	}
-
 }

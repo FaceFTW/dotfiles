@@ -1,9 +1,9 @@
 using AstalNetwork;
 
 [GtkTemplate(ui = "/bar/network/NetworkButton.ui")]
-class NetworkWidget : Gtk.Button {
-
-    [GtkChild] public unowned Gtk.Image status_icon;
+class NetworkWidget : Gtk.Box {
+    [GtkChild] public unowned Gtk.MenuButton network_button;
+    [GtkChild] public unowned Gtk.Image network_status_icon;
     [GtkChild] public unowned Gtk.Popover network_popover;
     [GtkChild] public unowned NetworkPopup network_popover_contents;
 
@@ -25,46 +25,50 @@ class NetworkWidget : Gtk.Button {
         ////////////////////////////////////
         // STATE INIT
         ////////////////////////////////////
-        network_manager.notify["primary"].connect((s,p) => {
-            if (this.icon_binding != null){
-                this.icon_binding.unbind();
-                //Should be freed here
-            };
+        network_manager.bind_property(
+            "primary",
+            this.network_status_icon,
+            "icon-name",
+            BindingFlags.SYNC_CREATE,
+            (_, primary) => {
+                if (this.icon_binding != null){
+                    this.icon_binding.unbind();
+                    //Should be freed here
+                };
 
-            switch (network_manager.primary){
-                case AstalNetwork.Primary.WIRED:
-                    if (this.network_manager.wired != null){
-                        this.icon_binding = network_manager.wired.bind_property(
-                            "icon_name",
-                            this.status_icon,
-                            "icon_name",
-                            BindingFlags.DEFAULT
-                        );
-                    }
-                    break;
-                case AstalNetwork.Primary.WIFI:
-                if (this.network_manager.wifi != null){
-                    this.icon_binding = network_manager.wifi.bind_property(
-                        "icon_name",
-                        this.status_icon,
-                        "icon_name",
-                        BindingFlags.DEFAULT
-                    );
+                switch (primary.get_enum()) {
+                    case AstalNetwork.Primary.WIRED:
+                        if (this.network_manager.wired != null){
+                            this.icon_binding = network_manager.wired.bind_property(
+                                "icon-name",
+                                this.network_status_icon,
+                                "icon-name",
+                                BindingFlags.SYNC_CREATE
+                            );
+                        }
+                        return false;
+                    case AstalNetwork.Primary.WIFI:
+                        if (this.network_manager.wifi != null){
+                            this.icon_binding = network_manager.wifi.bind_property(
+                                "icon-name",
+                                this.network_status_icon,
+                                "icon-name",
+                                BindingFlags.SYNC_CREATE
+                            );
+                        }
+                        return false;
+                    default:
+                        //No binding
+                        break;
                 }
-                    break;
-                default:
-                    //No binding
-                    break;
-
-            }
         });
 
         ////////////////////////////////////
         // SIGNALS WIRING
         ////////////////////////////////////
-        this.clicked.connect((s) => {
-            this.network_popover.popup();
-        });
+        // this.clicked.connect((s) => {
+        //     this.network_popover.popup();
+        // });
     }
 
 
