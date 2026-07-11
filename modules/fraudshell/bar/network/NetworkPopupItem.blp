@@ -2,25 +2,21 @@ using Gtk 4.0;
 
 template $NetworkPopupItem: Gtk.Button {
 	focus-on-click: false;
+
 	child: Gtk.Box {
 		orientation: horizontal;
 		spacing: 2;
 
-		Gtk.Image ap_strength {
+		Gtk.Image ap_strength {}
 
-		}
-
-		Gtk.Label ssid_label {
-
-		}
+		Gtk.Label ssid_label {}
 
 		Gtk.Box {
 			hexpand: true;
 		}
 
 		Gtk.Image connected_check {
-			icon-name: "check";
+			icon-name: "check-active-symbolic";
 		}
 	};
-
 }

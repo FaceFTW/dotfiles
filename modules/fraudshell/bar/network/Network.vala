@@ -100,6 +100,8 @@ private class NetworkPopup : Gtk.Box {
         );
 
         update_network_list();
+
+        this.
     }
 
     private void update_network_list(){
@@ -151,9 +153,17 @@ private class NetworkPopupItem: Gtk.Button {
     }
 
     construct {
+        this.network = AstalNetwork.get_default();
+
         this.ap_strength.icon_name = this.access_point.icon_name;
-        this.ssid_label.label = this.access_point.bssid;
+        this.ssid_label.label = @"$(this.access_point.ssid) - $(get_frequency(this.access_point.frequency))";
         this.connected_check.visible = this.network.wifi?.ssid == this.access_point.ssid;
+    }
+
+    private string get_frequency(uint f) {
+        if (f >= 2350 && f <= 2550){ return "2.4GHz";}
+        if (f >= 4950 && f <= 6000){ return "5GHz";}
+        else { return @"$f";}
     }
 
 }
