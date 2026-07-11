@@ -1,7 +1,7 @@
 using Gtk 4.0;
 
-template $NetworkPopup : Gtk.Box{
-	Gtk.Box{
+template $NetworkPopup: Gtk.Box {
+	Gtk.Box {
 		orientation: vertical;
 		height-request: 500;
 		width-request: 410;
@@ -20,27 +20,25 @@ template $NetworkPopup : Gtk.Box{
 
 			Gtk.Button refresh_button {
 				focus-on-click: false;
+
 				css-classes: [];
+
 				child: Image {
 					icon-name: "refresh";
 				};
-				//TODO also add scanning indicator
+
+				// TODO also add scanning indicator
 			}
 
 			Gtk.Switch wifi_toggle {
 				valign: center;
-
 			}
-
-
-
 		}
 
 		Gtk.ScrolledWindow {
-			Gtk.ListBox network_list {
+			Gtk.ListBox network_list_box {
 				vexpand: true;
 			}
 		}
-
 	}
 }

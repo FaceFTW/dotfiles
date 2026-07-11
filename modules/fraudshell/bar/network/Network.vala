@@ -80,9 +80,10 @@ private class NetworkPopup : Gtk.Box {
 
     [GtkChild] unowned Gtk.Button refresh_button;
     [GtkChild] unowned Gtk.Switch wifi_toggle;
-    [GtkChild] unowned Gtk.ListBox network_list;
+    [GtkChild] unowned Gtk.ListBox network_list_box;
 
     private AstalNetwork.Network network_manager;
+    private GLib.ListStore network_list;
 
 
     public NetworkPopup(){
@@ -90,7 +91,48 @@ private class NetworkPopup : Gtk.Box {
     }
 
     construct {
+        this.network_manager = AstalNetwork.get_default();
+        this.network_list = new GLib.ListStore (typeof (AstalNetwork.AccessPoint));
 
+        this.network_list_box.bind_model(
+            this.network_list,
+            (x) => { return new NetworkPopupItem((AstalNetwork.AccessPoint) x); }
+        );
+
+        update_network_list();
+    }
+
+    private void update_network_list(){
+        this.network_list.remove_all();
+
+        if (this.network_manager.wifi != null){
+            List<weak AstalNetwork.AccessPoint> ap_list = this.network_manager.wifi.access_points;
+            var ssid = this.network_manager.wifi.ssid;
+
+            //Filter empty SSIDs
+            unowned var l_ptr = ap_list.last();
+            while ( l_ptr != null ){
+                unowned var prev = l_ptr.prev;
+
+                if (l_ptr.data.ssid == null){
+                    ap_list.delete_link(l_ptr);
+                }
+
+                l_ptr = prev;
+            }
+
+            //Sorting
+            ap_list.sort((a, b) => { return b.strength - a.strength; });
+            // ap_list.sort((a, b) => {
+            //     if (b.ssid == ssid && a.ssid != ssid){ return 1; }
+            //     else if (b.ssid != ssid && a.ssid == ssid){ return -1; }
+            //     else { return 0; }
+            // });
+
+            foreach (var ap in ap_list){
+                this.network_list.append(ap);
+            }
+        }
     }
 }
 
@@ -111,7 +153,7 @@ private class NetworkPopupItem: Gtk.Button {
     construct {
         this.ap_strength.icon_name = this.access_point.icon_name;
         this.ssid_label.label = this.access_point.bssid;
-        this.connected_check.visible = this.network.wifi?.ssid == this.access_point.bssid;
+        this.connected_check.visible = this.network.wifi?.ssid == this.access_point.ssid;
     }
 
 }
