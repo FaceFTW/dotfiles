@@ -25,18 +25,21 @@ dependencies = [
 
 blueprint_sources = files(
 	'bar/Bar.blp',
-	'bar/tray/Tray.blp',
+	'bar/network/NetworkButton.blp',
 	'bar/network/NetworkPopup.blp',
-    'bar/network/NetworkPopupItem.blp',
-    'bar/network/NetworkButton.blp',
+	'bar/network/NetworkPopupItem.blp',
+	'bar/tray/Tray.blp',
 	'bar/workspaces/WorkspaceButton.blp',
 	'bar/workspaces/Workspaces.blp',
+	'osd/OSD.blp',
 )
 
 vala_sources = files(
 	'bar/Bar.vala',
-	'bar/tray/Tray.vala',
 	'bar/network/Network.vala',
+	'bar/osd/Brightness.vala',
+	'bar/osd/OSD.vala',
+	'bar/tray/Tray.vala',
 	'bar/workspaces/Workspaces.vala',
 	'App.vala',
 )

@@ -1,0 +1,35 @@
+using Gtk 4.0;
+using Astal 4.0;
+
+template $OSDWindow: Astal.Window {
+	name: "fraudshell-osd";
+	namespace: "fraudshell";
+	anchor: top | bottom | left | right;
+	layer: overlay;
+
+	Gtk.Revealer revealer {
+		transition-type: slide_up;
+		transition-duration: 200;
+		halign: center;
+		valign: end;
+
+		child: Gtk.Box {
+			Gtk.Overlay {
+				Gtk.Overlay {
+					Gtk.Image osd_icon {
+						valign: center;
+						halign: start;
+						pixel-size: 24;
+					}
+				}
+
+				Gtk.LevelBar osd_bar {
+					orientation: horizontal;
+					width-request: 300;
+					height-request: 56;
+					valign: center;
+				}
+			}
+		};
+	}
+}

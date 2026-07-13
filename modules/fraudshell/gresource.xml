@@ -9,5 +9,6 @@
         <file>bar/network/NetworkButton.ui</file>
         <file>bar/workspaces/Workspaces.ui</file>
         <file>bar/workspaces/WorkspaceButton.ui</file>
+        <file>osd/OSD.ui</file>
     </gresource>
 </gresources>
