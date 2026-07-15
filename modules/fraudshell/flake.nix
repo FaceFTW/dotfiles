@@ -38,6 +38,7 @@
         auth
         battery
         bluetooth
+        brightness
         greet
         hyprland
         io

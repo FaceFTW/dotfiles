@@ -100,8 +100,6 @@ private class NetworkPopup : Gtk.Box {
         );
 
         update_network_list();
-
-        this.
     }
 
     private void update_network_list(){

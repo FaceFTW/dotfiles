@@ -15,6 +15,7 @@ dependencies = [
 	dependency('astal-auth-0.1'),
 	dependency('astal-battery-0.1'),
 	dependency('astal-bluetooth-0.1'),
+	dependency('astal-brightness-0.1'),
 	dependency('astal-hyprland-0.1'),
 	dependency('astal-io-0.1'),
 	dependency('astal-network-0.1'),
@@ -37,10 +38,9 @@ blueprint_sources = files(
 vala_sources = files(
 	'bar/Bar.vala',
 	'bar/network/Network.vala',
-	'bar/osd/Brightness.vala',
-	'bar/osd/OSD.vala',
 	'bar/tray/Tray.vala',
 	'bar/workspaces/Workspaces.vala',
+	'osd/OSD.vala',
 	'App.vala',
 )
 
