@@ -17,7 +17,7 @@ class OSDWindow : Astal.Window{
     private AstalWp.Endpoint? speaker;
     private bool first_start = true;
     private uint count = 0;
-    private uint osd_timeout;
+    private uint osd_timeout = -1;
 
     public OSDWindow (){
         Object();
@@ -68,13 +68,15 @@ class OSDWindow : Astal.Window{
         this.revealed = true;
         this.osd_value = value;
         this.osd_icon_name = icon;
+        this.count ++;
 
-        if (this.osd_timeout != -1){
-            this.osd_timeout = Timeout.add(200, () => {
+        if (this.osd_timeout == -1){
+            this.osd_timeout = Timeout.add(1000, () => {
                 this.count--;
                 if (count == 0){
                     this.revealed = false;
                     this.osd_timeout = -1;
+                    this.visible = false;
                     return Source.REMOVE;
                 }
                 return Source.CONTINUE;

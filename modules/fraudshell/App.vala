@@ -3,6 +3,7 @@ class App : Gtk.Application {
     static App instance;
 
     private Bar bar;
+    private OSDWindow osd;
 
     private void init_css() {
         var provider = new Gtk.CssProvider();
@@ -32,6 +33,7 @@ class App : Gtk.Application {
             // main instance, initialize stuff here
             init_css();
             add_window((bar = new Bar()));
+            add_window((osd = new OSDWindow()));
         }
 
         return 0;
