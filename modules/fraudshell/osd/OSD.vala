@@ -5,9 +5,9 @@ using AstalWp;
 
 [GtkTemplate(ui="/osd/OSD.ui")]
 class OSDWindow : Astal.Window{
-    internal bool revealed { get; set; }
-    internal string osd_icon_name { get; set; }
-    internal uint osd_value { get; set; }
+    public bool revealed { get; set; }
+    public string osd_icon_name { get; set; }
+    public double osd_value { get; set; }
 
     [GtkChild] unowned Gtk.Revealer revealer;
     [GtkChild] unowned Gtk.Image osd_icon;
@@ -27,43 +27,48 @@ class OSDWindow : Astal.Window{
         this.brightness_manager = AstalBrightness.Brightness.get_default();
         this.speaker = Wp.get_default()?.get_default_speaker();
 
-        this.notify["visible"].connect((s,p) => {
-            if (this.visible) {
-                this.get_native()
-                    ?.get_surface()
-                    ?.set_input_region(new Cairo.Region());
-            }
-        });
+        // this.notify["visible"].connect((s,p) => {
+        //     if (this.visible) {
+        //         this.get_native()
+        //             ?.get_surface()
+        //             ?.set_input_region(new Cairo.Region());
+        //     }
+        // });
 
         if (brightness_manager != null){
-            brightness_manager.screen.notify["real-brightness"].connect((_) => {
-                show(brightness_manager.screen.real_brightness, "sun-symbolic");
+            brightness_manager.screen.notify["brightness"].connect((_) => {
+                show((double) brightness_manager.screen.brightness, "sun-symbolic");
             });
-        }
-        // } else { GLib.warn("OSD: Brightness monitoring unavailable"); }
+        } else { GLib.warning("OSD: Brightness monitoring unavailable"); }
 
 
-        Timeout.add(500, () => {
-            this.first_start = false;
-            return Source.REMOVE;
-        }, Priority.DEFAULT);
+        // Timeout.add(500, () => {
+        //     this.first_start = false;
+        //     return Source.REMOVE;
+        // }, Priority.DEFAULT);
 
-        if (this.speaker != null){
-            this.speaker.notify["volume"].connect((_) => {
-                if (this.first_start) { return; }
+        // if (this.speaker != null){
+        //     this.speaker.notify["volume"].connect((_) => {
+        //         if (this.first_start) { return; }
+        //         show(this.speaker.volume, this.speaker.volume_icon);
+        //     });
+        // }
 
-                show((uint)(this.speaker.volume), this.speaker.volume_icon);
-
-            });
-        }
+        // this.bind_property(
+        //     "osd-value",
+        //     this.osd_bar,
+        //     "value",
+        //     BindingFlags.SYNC_CREATE,
+        //     (_, val) => { this.osd_bar.value = (double) val; }
+        // );
     }
 
-    public new void dispose() {
+    // public new void dispose() {
 
-    }
+    // }
 
 
-    private void show(uint value, string icon) {
+    private void show(double value, string icon) {
         this.visible = true;
         this.revealed = true;
         this.osd_value = value;

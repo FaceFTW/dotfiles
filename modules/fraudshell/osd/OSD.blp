@@ -6,30 +6,55 @@ template $OSDWindow: Astal.Window {
 	namespace: "fraudshell";
 	anchor: top | bottom | left | right;
 	layer: overlay;
+	can-focus: false;
+	resizable: false;
+// width-request: 310;
+	// height-request: 64;
+	// margin-top: 10;
+	margin-bottom: 100;
+	// margin-start: 10;
+	// margin-end: 10;
+	styles [
+		"osd",
+	]
 
 	Gtk.Revealer revealer {
 		transition-type: slide_up;
 		transition-duration: 200;
 		halign: center;
 		valign: end;
+		width-request: 308;
+		height-request: 64;
 
-		child: Gtk.Box {
-			Gtk.Overlay {
-				Gtk.Overlay {
-					Gtk.Image osd_icon {
-						valign: center;
-						halign: start;
-						pixel-size: 24;
-					}
-				}
+		styles [
+			"osd",
+			"main",
+		] child: // Gtk.Box {
 
-				Gtk.LevelBar osd_bar {
-					orientation: horizontal;
-					width-request: 300;
-					height-request: 56;
-					valign: center;
-				}
+		Gtk.Overlay {
+			margin-top: 10;
+			margin-bottom: 10;
+			margin-start: 10;
+			margin-end: 10;
+
+			child: Gtk.Image osd_icon {
+				styles [
+					"osd-icon",
+				]
+
+				valign: center;
+				halign: start;
+				pixel-size: 24;
+			};
+
+			Gtk.LevelBar osd_bar {
+				orientation: horizontal;
+				width-request: 300;
+				height-request: 56;
+				valign: center;
 			}
 		};
+
+		// };
 	}
 }

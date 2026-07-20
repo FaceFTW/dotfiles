@@ -1,11 +1,12 @@
 @use "./bar/Bar.scss";
 @use "./bar/workspaces/Workspaces.scss";
+@use "./osd/OSD.scss";
 @use "./_vars.scss";
 
 menubutton > button {
 	all: unset;
 
-	& > image{
+	& > image {
 		-gtk-icon-size: 24px;
 		min-width: 18px;
 		margin: 0 4px 0 2px;
@@ -18,9 +19,7 @@ menubutton > button {
 		opacity: 0.9;
 		background: linear-gradient(180deg, vars.$bg0 75%, vars.$fg0);
 	}
-
 }
-
 
 .bar-item {
 	background: transparent;
@@ -30,7 +29,8 @@ menubutton > button {
 	.content {
 		border-radius: vars.$widget-radius;
 		background: rgba(vars.$bar-button-bg, vars.$bar-button-opacity);
-		border: vars.$bar-button-border-width solid vars.$bar-button-border-color;
+		border: vars.$bar-button-border-width solid
+			vars.$bar-button-border-color;
 		color: vars.$bar-button-fg;
 		padding: vars.$bar-button-padding;
 	}
