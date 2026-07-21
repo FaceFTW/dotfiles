@@ -2,13 +2,16 @@ using Gtk 4.0;
 using Astal 4.0;
 
 template $Bar: Astal.Window {
-	css-classes: ["bar"];
+	css-classes: [
+		"bar",
+	];
 
 	CenterBox centerbox {
-		css-classes: ["main"];
+		css-classes: [
+			"main",
+		];
 
 		start-widget: $WorkspacesWidget workspaces {};
-
 
 		center-widget: Box {
 			MenuButton {
@@ -31,44 +34,7 @@ template $Bar: Astal.Window {
 
 			$TrayWidget tray {}
 
-			Image {
-				visible: bind template.bluetooth-visible;
-				icon-name: "bluetooth-symbolic";
-			}
-
-			Image {
-				icon-name: bind template.power-profile-icon;
-			}
-
-			$NetworkWidget network {}
-
-			Box {
-				Image {
-					icon-name: bind template.volume-icon;
-				}
-
-				Scale {
-					width-request: 100;
-					change-value => $change_volume();
-
-					adjustment: Adjustment {
-						value: bind template.volume;
-						lower: 0;
-						upper: 1;
-					};
-				}
-			}
-
-			Box {
-				Image {
-					icon-name: bind template.battery-icon;
-				}
-
-				Label {
-					label: bind template.battery-label;
-				}
-			}
-
+			// $NetworkWidget network {}
 		};
 	}
 }

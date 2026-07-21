@@ -5,7 +5,7 @@ using AstalWp;
 
 [GtkTemplate(ui="/osd/OSD.ui")]
 class OSDWindow : Astal.Window{
-    public bool revealed { get; set; }
+    public bool revealed { get; set; default = false;}
     public string osd_icon_name { get; set; }
     public double osd_value { get; set; }
 
