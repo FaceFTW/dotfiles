@@ -5,9 +5,8 @@ using AstalWp;
 
 [GtkTemplate(ui="/osd/OSD.ui")]
 class OSDWindow : Astal.Window{
-    public bool revealed { get; set; default = false;}
-    public string osd_icon_name { get; set; }
-    public double osd_value { get; set; }
+    public string osd_icon_name { get; set; default = ""; }
+    public double osd_value { get; set; default = 0; }
 
     [GtkChild] unowned Gtk.Revealer revealer;
     [GtkChild] unowned Gtk.Image osd_icon;
@@ -24,6 +23,8 @@ class OSDWindow : Astal.Window{
     }
 
     construct {
+        // present();
+
         this.brightness_manager = AstalBrightness.Brightness.get_default();
         this.speaker = Wp.get_default()?.get_default_speaker();
 
@@ -54,13 +55,13 @@ class OSDWindow : Astal.Window{
         //     });
         // }
 
-        // this.bind_property(
-        //     "osd-value",
-        //     this.osd_bar,
-        //     "value",
-        //     BindingFlags.SYNC_CREATE,
-        //     (_, val) => { this.osd_bar.value = (double) val; }
-        // );
+        this.bind_property(
+            "osd-value",
+            this.osd_bar,
+            "value",
+            BindingFlags.SYNC_CREATE,
+            (_, val) => { this.osd_bar.value = (double) val; }
+        );
     }
 
     // public new void dispose() {
@@ -70,7 +71,7 @@ class OSDWindow : Astal.Window{
 
     private void show(double value, string icon) {
         this.visible = true;
-        this.revealed = true;
+        this.revealer.reveal_child = true;
         this.osd_value = value;
         this.osd_icon_name = icon;
         this.count ++;
@@ -79,8 +80,8 @@ class OSDWindow : Astal.Window{
             this.osd_timeout = Timeout.add(1000, () => {
                 this.count--;
                 if (count == 0){
-                    this.revealed = false;
                     this.osd_timeout = -1;
+                    this.revealer.reveal_child = false;
                     this.visible = false;
                     return Source.REMOVE;
                 }

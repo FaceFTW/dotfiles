@@ -5,7 +5,7 @@ template $OSDWindow: Astal.Window {
 	name: "fraudshell-osd";
 	namespace: "fraudshell";
 	anchor: bottom;
-	layer: overlay;
+	// layer: overlay;
 	can-focus: false;
 	resizable: false;
 	exclusivity: ignore;
@@ -37,7 +37,7 @@ template $OSDWindow: Astal.Window {
 					margin-start: 10;
 					margin-end: 10;
 
-					child: Gtk.Image osd_icon {
+					Gtk.Image osd_icon {
 						styles [
 							"osd-icon",
 						]
@@ -45,7 +45,7 @@ template $OSDWindow: Astal.Window {
 						valign: center;
 						halign: start;
 						pixel-size: 24;
-					};
+					}
 
 					Gtk.LevelBar osd_bar {
 						orientation: horizontal;
