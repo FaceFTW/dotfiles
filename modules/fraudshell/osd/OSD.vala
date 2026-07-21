@@ -28,14 +28,6 @@ class OSDWindow : Astal.Window{
         this.brightness_manager = AstalBrightness.Brightness.get_default();
         this.speaker = Wp.get_default()?.get_default_speaker();
 
-        // this.notify["visible"].connect((s,p) => {
-        //     if (this.visible) {
-        //         this.get_native()
-        //             ?.get_surface()
-        //             ?.set_input_region(new Cairo.Region());
-        //     }
-        // });
-
         if (brightness_manager != null){
             brightness_manager.screen.notify["brightness"].connect((_) => {
                 show((double) brightness_manager.screen.brightness, "sun-symbolic");
@@ -43,17 +35,22 @@ class OSDWindow : Astal.Window{
         } else { GLib.warning("OSD: Brightness monitoring unavailable"); }
 
 
-        // Timeout.add(500, () => {
-        //     this.first_start = false;
-        //     return Source.REMOVE;
-        // }, Priority.DEFAULT);
+        Timeout.add(500, () => {
+            this.first_start = false;
+            return Source.REMOVE;
+        }, Priority.DEFAULT);
 
-        // if (this.speaker != null){
-        //     this.speaker.notify["volume"].connect((_) => {
-        //         if (this.first_start) { return; }
-        //         show(this.speaker.volume, this.speaker.volume_icon);
-        //     });
-        // }
+        if (this.speaker != null){
+            this.speaker.notify["volume"].connect((_) => {
+                if (this.first_start) { return; }
+                show(this.speaker.volume, this.speaker.volume_icon);
+            });
+
+            this.speaker.notify["mute"].connect((_) => {
+                if (this.first_start) { return; }
+                show(this.speaker.volume, this.speaker.volume_icon);
+            });
+        }
 
         this.bind_property(
             "osd-value",
@@ -63,11 +60,6 @@ class OSDWindow : Astal.Window{
             (_, val) => { this.osd_bar.value = (double) val; }
         );
     }
-
-    // public new void dispose() {
-
-    // }
-
 
     private void show(double value, string icon) {
         this.visible = true;

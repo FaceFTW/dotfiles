@@ -9,8 +9,8 @@ window.osd {
 		border-radius: vars.$window-radius;
 	}
 
-	.osd-icon {
-		color: vars.$accent;
+	image.osd-icon {
+		color: vars.$fg0;
 		padding: 10px;
 		&.low {
 			color: vars.$fg0;
