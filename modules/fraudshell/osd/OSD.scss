@@ -21,12 +21,21 @@ window.osd {
 		trough {
 			.filled {
 				border-radius: vars.$widget-radius;
-				background: vars.$accent;
+				background: linear-gradient(
+						90deg,
+						vars.$red 0,
+						vars.$yellow 48px,
+						vars.$green 96px,
+						vars.$blue 144px,
+						vars.$purple 192px,
+						vars.$red 240px
+					)
+					padding-box;
 			}
 		}
 
 		block {
-			background: vars.$bg1;
+			background: vars.$bg1 padding-box;
 			border-radius: vars.$widget-radius;
 		}
 	}

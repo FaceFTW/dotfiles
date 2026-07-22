@@ -33,6 +33,25 @@ $blue-dimmed: #458bad;
 $purple: #dc6ea5;
 $purple-dimmed: #8f476b;
 
+$rainbow-gradient: linear-gradient(
+	90deg,
+	$red 0%,
+	$yellow 20%,
+	$green 40%,
+	$blue 60%,
+	$purple 80%,
+	$red 100%
+);
+$dimmed-rainbow-gradient: linear-gradient(
+	90deg,
+	$red-dimmed 0%,
+	$yellow-dimmed 20%,
+	$green-dimmed 40%,
+	$blue-dimmed 60%,
+	$purple-dimmed 80%,
+	$red-dimmed 100%
+);
+
 $widget-radius: 8px;
 
 $window-padding: 15px;
