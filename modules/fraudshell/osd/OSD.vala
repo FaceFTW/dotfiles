@@ -23,14 +23,12 @@ class OSDWindow : Astal.Window{
     }
 
     construct {
-        // present();
-
         this.brightness_manager = AstalBrightness.Brightness.get_default();
         this.speaker = Wp.get_default()?.get_default_speaker();
 
         if (brightness_manager != null){
             brightness_manager.screen.notify["brightness"].connect((_) => {
-                show((double) brightness_manager.screen.brightness, "sun-symbolic");
+                show((double) brightness_manager.screen.brightness, "weather-clear-symbolic");
             });
         } else { GLib.warning("OSD: Brightness monitoring unavailable"); }
 
@@ -58,6 +56,14 @@ class OSDWindow : Astal.Window{
             "value",
             BindingFlags.SYNC_CREATE,
             (_, val) => { this.osd_bar.value = (double) val; }
+        );
+
+        this.bind_property(
+            "osd-icon-name",
+            this.osd_icon,
+            "icon_name",
+            BindingFlags.SYNC_CREATE,
+            (_, val) => { this.osd_icon.icon_name = (string) val; }
         );
     }
 
