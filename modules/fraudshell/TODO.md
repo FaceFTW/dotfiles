@@ -13,8 +13,8 @@
 	- [ ] Show Power Profiles with Icon
 	- [ ] Add List of Power Profiles
 		- [ ] Power Profile is switched on click
-- [ ] OSD for Brightness
-- [ ] OSD for Volume
+- [x] OSD for Brightness
+- [x] OSD for Volume
 - [ ] Power Menu
 	- [ ] Under Battery
 - [ ] Bluetooth

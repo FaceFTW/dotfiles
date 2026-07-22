@@ -1,0 +1,20 @@
+using Gtk 4.0;
+
+template $BatteryWidget: Gtk.Box {
+	Gtk.MenuButton battery_button {
+		Gtk.Box {
+			orientation: horizontal;
+			spacing: 1;
+
+			Gtk.Image power_profile_icon {}
+
+			Gtk.Image battery_icon {}
+
+			Gtk.Label battery_percent {}
+		}
+
+		// popover: Gtk.Popover power_popover {
+		// 	$PowerMenuPopover power_popover_contents {}
+		// };
+	}
+}

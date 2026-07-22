@@ -26,6 +26,8 @@ dependencies = [
 
 blueprint_sources = files(
 	'bar/Bar.blp',
+	'bar/battery/BatteryWidget.blp',
+	'bar/battery/PowerMenuPopover.blp',
 	'bar/network/NetworkButton.blp',
 	'bar/network/NetworkPopup.blp',
 	'bar/network/NetworkPopupItem.blp',
@@ -37,6 +39,7 @@ blueprint_sources = files(
 
 vala_sources = files(
 	'bar/Bar.vala',
+	'bar/battery/Battery/vala',
 	'bar/network/Network.vala',
 	'bar/tray/Tray.vala',
 	'bar/workspaces/Workspaces.vala',
