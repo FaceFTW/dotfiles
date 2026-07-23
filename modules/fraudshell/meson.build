@@ -39,7 +39,7 @@ blueprint_sources = files(
 
 vala_sources = files(
 	'bar/Bar.vala',
-	'bar/battery/Battery/vala',
+	'bar/battery/Battery.vala',
 	'bar/network/Network.vala',
 	'bar/tray/Tray.vala',
 	'bar/workspaces/Workspaces.vala',

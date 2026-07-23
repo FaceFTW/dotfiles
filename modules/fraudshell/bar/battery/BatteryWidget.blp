@@ -2,13 +2,23 @@ using Gtk 4.0;
 
 template $BatteryWidget: Gtk.Box {
 	Gtk.MenuButton battery_button {
+		margin-end: 10;
+
 		Gtk.Box {
 			orientation: horizontal;
-			spacing: 1;
+			spacing: 4;
 
-			Gtk.Image power_profile_icon {}
+			Gtk.Image power_profile_icon {
+				margin-start: 2;
+				margin-end: 2;
+				pixel-size: 24;
+			}
 
-			Gtk.Image battery_icon {}
+			Gtk.Image battery_icon {
+				margin-start: 2;
+				margin-end: 2;
+				pixel-size: 28;
+			}
 
 			Gtk.Label battery_percent {}
 		}
