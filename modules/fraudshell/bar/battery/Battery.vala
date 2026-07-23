@@ -8,7 +8,7 @@ class BatteryWidget : Gtk.Box {
     [GtkChild] unowned Gtk.Image power_profile_icon;
     [GtkChild] unowned Gtk.Image battery_icon;
     [GtkChild] unowned Gtk.Label battery_percent;
-
+    [GtkChild] unowned PowerMenuPopover power_popover_contents;
 
     private AstalBattery.Device battery_manager;
     private AstalPowerProfiles.PowerProfiles power_manager;
@@ -49,5 +49,41 @@ class BatteryWidget : Gtk.Box {
 
 
 
+    }
+}
+
+[GtkTemplate(ui = "/bar/battery/PowerMenuPopover.ui")]
+class PowerMenuPopover: Gtk.Box {
+
+    [GtkChild] unowned Gtk.Button power_saver_button;
+    [GtkChild] unowned Gtk.Image power_saver_active;
+    [GtkChild] unowned Gtk.Button balanced_button;
+    [GtkChild] unowned Gtk.Image balanced_active;
+    [GtkChild] unowned Gtk.Button performance_button;
+    [GtkChild] unowned Gtk.Image performance_active;
+
+    private AstalBattery.Device battery_manager;
+    private AstalPowerProfiles.PowerProfiles power_manager;
+
+    public PowerMenuPopover() {
+        Object ();
+    }
+
+    construct {
+        this.battery_manager = AstalBattery.get_default();
+        this.power_manager = AstalPowerProfiles.get_default();
+
+
+        this.power_manager.notify["active-profile"].connect((_) => {
+            var profile = this.power_manager.active_profile;
+
+            this.power_saver_active.visible = (profile == "power-saver");
+            this.balanced_active.visible = (profile == "balanced");
+            this.performance_active.visible = (profile == "performance");
+        });
+
+        this.power_saver_button.clicked.connect(() => this.power_manager.active_profile = "power-saver");
+        this.balanced_button.clicked.connect(() => this.power_manager.active_profile = "balanced");
+        this.performance_button.clicked.connect(() => this.power_manager.active_profile = "performance");
     }
 }

@@ -20,7 +20,7 @@ class NetworkWidget : Gtk.Box {
         // UI INIT
         ////////////////////////////////////
         this.network_manager = AstalNetwork.get_default();
-        this.set_layout_manager(new Gtk.BinLayout());
+        // this.set_layout_manager(new Gtk.BinLayout());
 
         ////////////////////////////////////
         // STATE INIT
