@@ -4,9 +4,25 @@ template $PowerMenuPopover: Gtk.Box {
 	orientation: vertical;
 	height-request: 300;
 	width-request: 300;
-	spacing: 2;
+	spacing: 4;
 
-	Gtk.Box {}
+	Gtk.Box {
+		orientation: vertical;
+
+		Gtk.Box {
+			orientation: vertical;
+
+			Gtk.Label {
+				label: "Battery Information";
+			}
+
+			Gtk.Label energy_rate {}
+
+			Gtk.Label capacity {}
+
+			Gtk.Label health {}
+		}
+	}
 
 	Gtk.Box {
 		orientation: vertical;

@@ -62,6 +62,10 @@ class PowerMenuPopover: Gtk.Box {
     [GtkChild] unowned Gtk.Button performance_button;
     [GtkChild] unowned Gtk.Image performance_active;
 
+    [GtkChild] unowned Gtk.Label energy_rate;
+    [GtkChild] unowned Gtk.Label capacity;
+    [GtkChild] unowned Gtk.Label health;
+
     private AstalBattery.Device battery_manager;
     private AstalPowerProfiles.PowerProfiles power_manager;
 
@@ -85,5 +89,22 @@ class PowerMenuPopover: Gtk.Box {
         this.power_saver_button.clicked.connect(() => this.power_manager.active_profile = "power-saver");
         this.balanced_button.clicked.connect(() => this.power_manager.active_profile = "balanced");
         this.performance_button.clicked.connect(() => this.power_manager.active_profile = "performance");
+
+        Timeout.add (200, () => {
+            string energy_rate_val = "%.2f".printf(this.battery_manager.energy_rate);
+            string energy_val = "%.2f".printf(this.battery_manager.energy);
+            string energy_full_val =  "%.2f".printf(this.battery_manager.energy_full);
+            string health_val = "%.2f".printf(this.battery_manager.energy_full / this.battery_manager.energy_full_design);
+
+            if (battery_manager.charging) {
+                this.energy_rate.label = @"Charge Rate: $(energy_rate_val)W - $(this.battery_manager.time_to_full)s to full";
+            } else {
+                this.energy_rate.label = @"Charge Rate: $(energy_rate_val)W";
+            }
+
+            this.capacity.label = @"Capacity: $(energy_val)Wh / $(energy_full_val)Wh";
+            this.health.label = @"Health: $(health_val)%";
+            return Source.CONTINUE;
+        }, Priority.DEFAULT);
     }
 }
