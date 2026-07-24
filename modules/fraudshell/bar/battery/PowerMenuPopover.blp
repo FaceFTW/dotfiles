@@ -7,7 +7,7 @@ template $PowerMenuPopover: Gtk.Box {
 	spacing: 4;
 
 	Gtk.Box {
-		margin-top: 10;
+		margin-top: 6;
 		orientation: vertical;
 
 		Gtk.Box {
@@ -33,8 +33,10 @@ template $PowerMenuPopover: Gtk.Box {
 			label: "Power Profile";
 		}
 
-		Gtk.ListBox {
-			// Gtk.ListBoxRow {
+		Gtk.Box {
+			orientation: vertical;
+			spacing: 2;
+
 			Gtk.Button power_saver_button {
 				focus-on-click: false;
 
@@ -61,8 +63,6 @@ template $PowerMenuPopover: Gtk.Box {
 				}
 			}
 
-			// }
-			// Gtk.ListBoxRow {
 			Gtk.Button balanced_button {
 				focus-on-click: false;
 
@@ -89,8 +89,6 @@ template $PowerMenuPopover: Gtk.Box {
 				}
 			}
 
-			// }
-			// Gtk.ListBoxRow {
 			Gtk.Button performance_button {
 				focus-on-click: false;
 
@@ -115,8 +113,6 @@ template $PowerMenuPopover: Gtk.Box {
 						visible: false;
 					}
 				}
-
-				// }
 			}
 		}
 	}
