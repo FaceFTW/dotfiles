@@ -10,11 +10,7 @@ class NetworkWidget : Gtk.Box {
     private AstalNetwork.Network network_manager;
     private Binding icon_binding;
 
-
-    public NetworkWidget(){
-        Object();
-    }
-
+    public NetworkWidget(){ Object(); }
     construct {
         ////////////////////////////////////
         // UI INIT
@@ -85,11 +81,7 @@ private class NetworkPopup : Gtk.Box {
     private AstalNetwork.Network network_manager;
     private GLib.ListStore network_list;
 
-
-    public NetworkPopup(){
-        Object();
-    }
-
+    public NetworkPopup(){ Object(); }
     construct {
         this.network_manager = AstalNetwork.get_default();
         this.network_list = new GLib.ListStore (typeof (AstalNetwork.AccessPoint));
@@ -163,45 +155,4 @@ private class NetworkPopupItem: Gtk.Button {
         if (f >= 4950 && f <= 6000){ return "5GHz";}
         else { return @"$f";}
     }
-
 }
-
-
-
-
-// class NetworkUtils {
-//     private string ethernet_icon = "ethernet-port-symbolic";
-//     private string wifi_off_icon = "wifi-off-symbolic";
-//     private string wifi_1_icon = "wifi-1-symbolic";
-//     private string wifi_2_icon = "wifi-2-symbolic";
-//     private string wifi_3_icon = "wifi-3-symbolic";
-//     private string wifi_4_icon = "wifi-4-symbolic";
-
-
-
-//     public static string choose_net_icon(AstalNetwork.Network network_manager){
-//         if (network.primary == AstalNetwork.Primary.WIRED) {
-//             if (network.wired.internet == AstalNetwork.Internet.CONNECTED) {
-//                 return ethernet_icon;
-//             }
-//         }
-
-//         if (network.primary == AstalNetwork.Primary.WIFI) {
-//             if (!network.wifi.enabled || network.connectivity == AstalNetwork.Connectivity.NONE){
-//                 return wifi_off_icon;
-//             }
-
-//             return choose_wifi_icon()
-//         }
-//     }
-
-//     public static string choose_wifi_icon(AstalNetwork.AccessPoint? ap){
-//         var strength = ap?.strength;
-//         if (strength == null) { return wifi_off_icon; }
-//         else if ( strength <= 25 ) { return wifi_4_icon; }
-//         else if ( strength <= 50 ) { return wifi_3_icon; }
-//         else if ( strength <= 75 ) { return wifi_2_icon; }
-//         else if ( strength <= 100 ) { return wifi_1_icon; }
-//     }
-
-// }

@@ -3,25 +3,15 @@ class Bar : Astal.Window {
     public string clock { get; set; }
     public uint interval;
 
-    // public string volume_icon { get; set; }
-    // public string battery_visible { get; set; }
-    // public string battery_label { get; set; }
-    // public string battery_icon { get; set; }
-    // public double volume { get; set; }
-    // public string power_profile_icon { get; set; }
-    // public bool bluetooth_visible { get; set; }
-
     [GtkChild] unowned Gtk.Popover popover;
     [GtkChild] unowned Gtk.Calendar calendar;
     [GtkChild] unowned WorkspacesWidget workspaces;
     [GtkChild] unowned TrayWidget tray;
+    [GtkChild] unowned PerformanceWidget perf;
     [GtkChild] unowned NetworkWidget network;
     [GtkChild] unowned BatteryWidget battery;
 
-    public Bar() {
-        Object();
-    }
-
+    public Bar() { Object(); }
     construct{
         anchor = TOP | LEFT | RIGHT;
         exclusivity = EXCLUSIVE;
@@ -38,7 +28,6 @@ class Bar : Astal.Window {
                 calendar.select_day(new DateTime.now_local());
             }
         });
-
     }
 
 

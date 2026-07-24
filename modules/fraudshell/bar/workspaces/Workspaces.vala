@@ -23,10 +23,7 @@ public class WorkspacesWidget : Gtk.Box {
     private AstalHyprland.Hyprland compositor;
     private GLib.ListStore workspaces;
 
-    public WorkspacesWidget() {
-        Object();
-    }
-
+    public WorkspacesWidget() { Object(); }
     construct {
         ////////////////////////////////////
         // UI INIT
@@ -67,7 +64,6 @@ class WorkspaceButton : Gtk.Button {
     public WorkspaceButton(AstalHyprland.Workspace workspace) {
         Object(workspace: workspace);
     }
-
     construct {
         ////////////////////////////////////
         // UI INIT

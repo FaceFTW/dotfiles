@@ -6,10 +6,7 @@ class TrayWidget: Gtk.Box {
     private AstalTray.Tray tray_manager;
     private GLib.ListStore tray_items;
 
-    public TrayWidget(){
-        Object();
-    }
-
+    public TrayWidget(){ Object(); }
     construct {
         ////////////////////////////////////
         // UI INIT

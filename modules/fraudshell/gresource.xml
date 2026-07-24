@@ -9,6 +9,7 @@
         <file>bar/network/NetworkPopup.ui</file>
         <file>bar/network/NetworkPopupItem.ui</file>
         <file>bar/network/NetworkButton.ui</file>
+        <file>bar/perf/PerformanceWidget.ui</file>
         <file>bar/workspaces/Workspaces.ui</file>
         <file>bar/workspaces/WorkspaceButton.ui</file>
         <file>osd/OSD.ui</file>

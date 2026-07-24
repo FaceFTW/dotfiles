@@ -29,7 +29,7 @@
         json-glib
         gtk4-layer-shell
         networkmanager
-
+        libgtop
       ];
 
       astalPackages = with astal.packages.${system}; [

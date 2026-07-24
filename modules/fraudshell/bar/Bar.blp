@@ -2,14 +2,14 @@ using Gtk 4.0;
 using Astal 4.0;
 
 template $Bar: Astal.Window {
-	css-classes: [
+	styles [
 		"bar",
-	];
+	]
 
 	CenterBox centerbox {
-		css-classes: [
+		styles [
 			"main",
-		];
+		]
 
 		start-widget: $WorkspacesWidget workspaces {};
 
@@ -33,6 +33,8 @@ template $Bar: Astal.Window {
 			spacing: 4;
 
 			$TrayWidget tray {}
+
+			$PerformanceWidget perf {}
 
 			$NetworkWidget network {}
 

@@ -9,10 +9,10 @@
 		- [ ] Clicking on connected offers option to disconnect
 - [ ] Volume Switch
 	- [ ] TODO
-- [ ] Battery Indicator
-	- [ ] Show Power Profiles with Icon
-	- [ ] Add List of Power Profiles
-		- [ ] Power Profile is switched on click
+- [x] Battery Indicator
+	- [x] Show Power Profiles with Icon
+	- [x] Add List of Power Profiles
+		- [-] Power Profile is switched on click
 - [x] OSD for Brightness
 - [x] OSD for Volume
 - [ ] Power Menu

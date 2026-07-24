@@ -12,10 +12,7 @@ class BatteryWidget : Gtk.Box {
     private AstalBattery.Device battery_manager;
     private AstalPowerProfiles.PowerProfiles power_manager;
 
-    public BatteryWidget() {
-        Object ();
-    }
-
+    public BatteryWidget() { Object (); }
     construct {
         this.battery_manager = AstalBattery.get_default();
         this.power_manager = AstalPowerProfiles.get_default();
@@ -60,13 +57,11 @@ class PowerMenuPopover: Gtk.Box {
     public string capacity_str { get; private set; }
     [GtkChild] unowned Gtk.Label capacity;
 
+    private uint interval;
     private AstalBattery.Device battery_manager;
     private AstalPowerProfiles.PowerProfiles power_manager;
 
-    public PowerMenuPopover() {
-        Object();
-    }
-
+    public PowerMenuPopover() { Object(); }
     construct {
         this.battery_manager = AstalBattery.get_default();
         this.power_manager = AstalPowerProfiles.get_default();
@@ -99,7 +94,7 @@ class PowerMenuPopover: Gtk.Box {
             BindingFlags.SYNC_CREATE
         );
 
-        Timeout.add (1000, () => {
+        this.interval = Timeout.add (1000, () => {
         //TODO bind to properties
             string energy_rate_val = "%.2f".printf(this.battery_manager.energy_rate);
             string energy_val = "%.2f".printf(this.battery_manager.energy);
@@ -123,5 +118,10 @@ class PowerMenuPopover: Gtk.Box {
         this.power_saver_active.visible = (profile == "power-saver");
         this.balanced_active.visible = (profile == "balanced");
         this.performance_active.visible = (profile == "performance");
+    }
+
+    public override void dispose(){
+        Source.remove(this.interval);
+        base.dispose();
     }
 }
