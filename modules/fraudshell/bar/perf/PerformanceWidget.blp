@@ -9,7 +9,9 @@ template $PerformanceWidget: Gtk.Box {
 		pixel-size: 24;
 	}
 
-	Gtk.Label cpu_percent {}
+	Gtk.Label cpu_percent {
+		label: "%%%%";
+	}
 
 	Gtk.Image {
 		icon-name: "ram-symbolic";

@@ -31,12 +31,12 @@ class BatteryWidget : Gtk.Box {
 
         this.battery_manager.bind_property(
             "percentage",
-            this.battery_percent,
-            "label",
+            this.battery_percent, "label",
             BindingFlags.SYNC_CREATE,
-            (_, x) => {
+            (_, x, ref target) => {
                 double percent = ((double) x) * 100.0;
-                this.battery_percent.label = @"$percent%";
+                target.set_string("%3.f%%".printf(percent));
+                return true;
             }
         );
 

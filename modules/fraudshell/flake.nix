@@ -59,6 +59,15 @@
 
       devShells.${system}.default = pkgs.mkShell {
         packages = nativeBuildInputs ++ astalPackages;
+
+        DISPLAY = ":0";
+        WAYLAND_DISPLAY = "wayland-1";
+        DEBUG_INVOCATION = 1;
+        G_MESSAGE_DEBUG = "all";
+
+        shellHook = ''
+          export HYPRLAND_INSTANCE_SIGNATURE=$(cat HIS);
+        '';
       };
     };
 }

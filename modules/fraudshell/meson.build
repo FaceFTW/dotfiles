@@ -11,6 +11,7 @@ dependencies = [
 	dependency('gio-2.0'),
 	dependency('libnm'),
 	dependency('libgtop-2.0'),
+	dependency('gobject-2.0'),
 	dependency('astal-4-4.0'),
 	dependency('astal-apps-0.1'),
 	dependency('astal-auth-0.1'),
@@ -24,6 +25,9 @@ dependencies = [
 	dependency('astal-tray-0.1'),
 	dependency('astal-wireplumber-0.1'),
 ]
+
+vapi_dir = join_paths(meson.source_root(), 'vapi')
+vapi_dirs = ['--vapidir=@0@'.format(vapi_dir)]
 
 blueprint_sources = files(
 	'bar/Bar.blp',
@@ -86,6 +90,7 @@ executable(
 	dependencies: dependencies,
 	sources: [vala_sources, resource],
 	link_args: ['-lm'], # Link math library
+	vala_args: vapi_dirs,
 	install: true,
 	install_dir: bindir,
 )
