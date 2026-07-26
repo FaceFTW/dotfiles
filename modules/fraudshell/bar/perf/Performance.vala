@@ -2,9 +2,7 @@
 class PerformanceWidget: Gtk.Box {
 
     public double cpu_usage { get; set; }
-    public uint64 memory_used  { get; set; }
-    public uint64 memory_total { get; set; }
-    public uint64 memory_usage { get; set; }
+    public double mem_usage { get; set; }
 
     [GtkChild] unowned Gtk.Label cpu_percent;
     [GtkChild] unowned Gtk.Label ram_percent;
@@ -13,6 +11,7 @@ class PerformanceWidget: Gtk.Box {
     private uint64 last_cpu_total = 0;
     private uint64 last_cpu_used = 0;
     private DataInputStream proc_stat_stream;
+    private DataInputStream proc_meminfo_stream;
 
     public PerformanceWidget() { Object(); }
     construct {
@@ -24,6 +23,17 @@ class PerformanceWidget: Gtk.Box {
             if (this.cpu_usage != -1.0) {
                 warning (@"CPU Monitoring Unavailable (Issue with opening stream to /proc/stat)");
                 this.cpu_usage = -1.0;
+            }
+        }
+
+        try {
+            var proc_meminfo = File.new_for_path("/proc/meminfo");
+            var proc_meminfo_inner = proc_meminfo.read();
+            this.proc_meminfo_stream = new DataInputStream(proc_meminfo_inner);
+        } catch (IOError _) {
+            if (this.mem_usage != -1.0) {
+                warning (@"Mem Monitoring Unavailable (Issue with opening stream to /proc/meminfo)");
+                this.mem_usage = -1.0;
             }
         }
 
@@ -40,10 +50,18 @@ class PerformanceWidget: Gtk.Box {
             BindingFlags.SYNC_CREATE,
             (_, src, ref target) => { target.set_string("%3.f%%".printf((double) src * 100)); return true; }
         );
+
+        this.bind_property(
+            "mem_usage",
+            this.ram_percent, "label",
+            BindingFlags.SYNC_CREATE,
+            (_, src, ref target) => { target.set_string("%3.f%%".printf((double) src * 100)); return true; }
+        );
     }
 
     void update() {
         if (this.cpu_usage != -1.0){ this.updateCpuUsage(); }
+        if (this.mem_usage != -1.0){ this.updateMemUsage(); }
     }
 
     private async void updateCpuUsage(){
@@ -69,7 +87,6 @@ class PerformanceWidget: Gtk.Box {
 
             this.last_cpu_total = total;
             this.last_cpu_used = used;
-            info(this.cpu_usage.to_string());
         } catch (IOError _) {
             if (this.cpu_usage != -1.0) {
                 warning (@"CPU Monitoring Failed, disabling");
@@ -78,4 +95,40 @@ class PerformanceWidget: Gtk.Box {
         }
     }
 
+    private async void updateMemUsage(){
+        try {
+            this.proc_meminfo_stream.seek(0, SeekType.SET);
+
+            uint? total = null;
+            uint? available = null;
+
+            var line = this.proc_meminfo_stream.read_line();
+            while (line != null) {
+                if (total != null && available != null) { break; }
+
+                var data = line.split(":");
+                var value = uint.parse(data[1].strip().slice(0,-3));
+
+                if (data[0] == "MemTotal") {
+                    total = value;
+                } else if (data[0] == "MemAvailable"){
+                    available = value;
+                }
+
+                line = this.proc_meminfo_stream.read_line();
+            }
+
+            if (total == null || available == null){
+                warning (@"Mem Monitoring failure (Missing MemTotal or MemAvailable), disabling");
+                this.mem_usage = -1.0;
+                return;
+            }
+
+            this.mem_usage = (double)(total - available) / (double) total;
+
+        } catch (IOError _) {
+            warning (@"Mem Monitoring failure, disabling");
+            this.mem_usage = -1.0;
+        }
+    }
 }
