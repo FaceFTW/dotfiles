@@ -1,0 +1,16 @@
+using Gtk 4.0;
+
+template $VolumeWidget: Gtk.Box {
+	MenuButton volume_button {
+		margin-start: 5;
+		margin-end: 5;
+
+		Gtk.Image volume_icon {
+			pixel-size: 24;
+		}
+
+		// popover: Popover volume_popover {
+		// 	$VolumePopover volume_popover_contents {}
+		// };
+	}
+}

@@ -9,6 +9,7 @@ class Bar : Astal.Window {
     [GtkChild] unowned TrayWidget tray;
     [GtkChild] unowned PerformanceWidget perf;
     [GtkChild] unowned NetworkWidget network;
+    [GtkChild] unowned VolumeWidget volume;
     [GtkChild] unowned BatteryWidget battery;
 
     public Bar() { Object(); }

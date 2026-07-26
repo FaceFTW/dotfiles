@@ -34,6 +34,8 @@ blueprint_sources = files(
 	'bar/network/NetworkPopupItem.blp',
 	'bar/perf/PerformanceWidget.blp',
 	'bar/tray/Tray.blp',
+	'bar/volume/VolumePopover.blp',
+	'bar/volume/VolumeWidget.blp',
 	'bar/workspaces/WorkspaceButton.blp',
 	'bar/workspaces/Workspaces.blp',
 	'osd/OSD.blp',
@@ -45,6 +47,7 @@ vala_sources = files(
 	'bar/network/Network.vala',
 	'bar/perf/Performance.vala',
 	'bar/tray/Tray.vala',
+	'bar/volume/Volume.vala',
 	'bar/workspaces/Workspaces.vala',
 	'osd/OSD.vala',
 	'App.vala',
@@ -72,6 +75,13 @@ css = custom_target(
 	output: ['style.css'],
 	build_always_stale: true,
 )
+
+# other_resources = custom_target(
+# 	'other',
+# 	input: join_paths(meson.project_source_root(), 'resource'),
+# 	output: '.',
+# 	command: ['cp', '-r', '@INPUT@', '@OUTPUT@'],
+# )
 
 # compiling data files into a binary
 resource = import('gnome').compile_resources(

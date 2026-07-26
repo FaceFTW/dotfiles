@@ -18,4 +18,4 @@
 - [ ] Power Menu
 	- [ ] Under Battery
 - [ ] Bluetooth
-- [ ] CPU/Mem Indicator
+- [x] CPU/Mem Indicator
