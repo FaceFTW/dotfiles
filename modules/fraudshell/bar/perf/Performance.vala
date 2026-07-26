@@ -1,5 +1,3 @@
-using GTop;
-
 [GtkTemplate(ui="/bar/perf/PerformanceWidget.ui")]
 class PerformanceWidget: Gtk.Box {
 
@@ -14,10 +12,20 @@ class PerformanceWidget: Gtk.Box {
     private uint interval = 0;
     private uint64 last_cpu_total = 0;
     private uint64 last_cpu_used = 0;
+    private DataInputStream proc_stat_stream;
 
     public PerformanceWidget() { Object(); }
     construct {
-        GTop.init();
+        try {
+            var proc_stat = File.new_for_path("/proc/stat");
+            var proc_stat_inner = proc_stat.read();
+            this.proc_stat_stream = new DataInputStream(proc_stat_inner);
+        } catch (IOError _) {
+            if (this.cpu_usage != -1.0) {
+                warning (@"CPU Monitoring Unavailable (Issue with opening stream to /proc/stat)");
+                this.cpu_usage = -1.0;
+            }
+        }
 
         if (this.interval == 0){
             this.interval = Timeout.add(2000, () => {
@@ -39,11 +47,15 @@ class PerformanceWidget: Gtk.Box {
     }
 
     private async void updateCpuUsage(){
-        // try {
-            GTop.Cpu cpu = new GTop.Cpu();
+        try {
+            this.proc_stat_stream.seek(0, SeekType.SET);
+            var line = this.proc_stat_stream.read_line();
+            var stat_line = line.substring(4);
+            var stats = stat_line.split(" ");
 
-            var total = cpu.total;
-            var idle = cpu.idle;
+            var idle = long.parse(stats[3]) + long.parse(stats[4]); // idle + iowait
+            var total = 0l;
+            foreach (var stat in stats) { total += long.parse(stat); }
             var used = total - idle;
 
             if (this.last_cpu_total > 0){
@@ -58,12 +70,12 @@ class PerformanceWidget: Gtk.Box {
             this.last_cpu_total = total;
             this.last_cpu_used = used;
             info(this.cpu_usage.to_string());
-        // } catch (var _) {
-        //     if (this.cpu_usage != -1.0) {
-        //         warning ("CPU Monitoring Unavailable (GTop Failure)");
-        //         this.cpu_usage = -1.0;
-        //     }
-        // }
+        } catch (IOError _) {
+            if (this.cpu_usage != -1.0) {
+                warning (@"CPU Monitoring Failed, disabling");
+                this.cpu_usage = -1.0;
+            }
+        }
     }
 
 }
