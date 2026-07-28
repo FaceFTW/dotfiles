@@ -49,7 +49,7 @@
   ############################################
   modules.kernel = {
     enable = true;
-    version = "7.1.1";
+    version = "7.1.4";
     src = fetchGit {
       url = "https://github.com/raspberrypi/linux";
       rev = "83f682a5416e070e7e6d1b4c1dc5b864d78e85ab";

@@ -76,27 +76,27 @@
   ############################################
   # Garage Web UI
   ############################################
-  systemd.services.garage-web-ui = {
-    wantedBy = [
-      "default.target"
-    ];
-    after = [
-      "network.target"
-      "garage.service"
-    ];
-    wants = [
-      "garage.service"
-    ];
+  # systemd.services.garage-web-ui = {
+  #   wantedBy = [
+  #     "default.target"
+  #   ];
+  #   after = [
+  #     "network.target"
+  #     "garage.service"
+  #   ];
+  #   wants = [
+  #     "garage.service"
+  #   ];
 
-    environment.PORT = "3919";
-    environment.CONFIG_PATH = "/etc/garage.toml";
-    environment.API_ADMIN_KEY_FILE = "%d/GARAGE_ADMIN_TOKEN";
+  #   environment.PORT = "3919";
+  #   environment.CONFIG_PATH = "/etc/garage.toml";
+  #   environment.API_ADMIN_KEY_FILE = "%d/GARAGE_ADMIN_TOKEN";
 
-    serviceConfig.LoadCredential = [ "GARAGE_ADMIN_TOKEN:/run/secrets/garage_admin_token" ];
-    serviceConfig.User = "garage";
-    serviceConfig.Group = "garage";
-    serviceConfig.ExecStart = "${pkgs.garage-webui}/bin/garage-webui";
-  };
+  #   serviceConfig.LoadCredential = [ "GARAGE_ADMIN_TOKEN:/run/secrets/garage_admin_token" ];
+  #   serviceConfig.User = "garage";
+  #   serviceConfig.Group = "garage";
+  #   serviceConfig.ExecStart = "${pkgs.garage-webui}/bin/garage-webui";
+  # };
 
   # Nginx Reverse Proxy Config
   services.nginx.upstreams.garage-ui.servers."127.0.0.1:3919" = { };
