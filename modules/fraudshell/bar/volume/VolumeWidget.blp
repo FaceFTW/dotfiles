@@ -6,11 +6,11 @@ template $VolumeWidget: Gtk.Box {
 		margin-end: 5;
 
 		Gtk.Image volume_icon {
-			pixel-size: 24;
+			pixel-size: 28;
 		}
 
-		// popover: Popover volume_popover {
-		// 	$VolumePopover volume_popover_contents {}
-		// };
+		popover: Popover volume_popover {
+			$VolumePopover volume_popover_contents {}
+		};
 	}
 }

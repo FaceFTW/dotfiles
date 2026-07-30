@@ -1,0 +1,25 @@
+using Gtk 4.0;
+
+template $VolumeStreamWidget: Gtk.Box {
+	spacing: 2;
+	orientation: vertical;
+
+	Gtk.Image source_icon {
+		pixel-size: 24;
+	}
+
+	Gtk.Box {
+		spacing: 1;
+		orientation: vertical;
+
+		Gtk.Label source_name {
+			halign: start;
+			ellipsize: end;
+			max-width-chars: 25;
+		}
+
+		Gtk.Scale source_slider {
+			hexpand: true;
+		}
+	}
+}
