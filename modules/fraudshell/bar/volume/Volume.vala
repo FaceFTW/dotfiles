@@ -31,6 +31,7 @@ class VolumePopover : Gtk.Box {
     [GtkChild] unowned Gtk.Scale volume_slider;
 
     private AstalWp.Wp wireplumber;
+    private GLib.ListStore endpoint_list;
 
     public VolumePopover() { Object(); }
     construct {
@@ -57,19 +58,35 @@ class VolumePopover : Gtk.Box {
             this.default_speaker.volume = this.volume_slider.get_value();
         });
 
-        // this.outputs_list.list_factory = new Gtk.SignalListItemFactory();
-        // this.outputs_list.list_factory.setup.connect((_, item) => {
-        //     var label = new Gtk.Label();
-        //     label.xalign = 0;
-        //     label.hexpand = true;
-        //     ((Gtk.ListItem) item).set_child(label);
-        // });
-        // this.outputs_list.list_factory.bind.connect((_, item) => {
-        //     var label = ((Gtk.ListItem) item).get_child();
-        //     var stringObject = (Gtk.StringObject) ((Gtk.ListItem) item).get_item();
-        //     label.set_label(stringObject.get_string());
-        // });
+        this.endpoint_list = new ListStore(typeof (AstalWp.Endpoint));
+        this.outputs_list.model = endpoint_list;
+        this.outputs_list.list_factory = new Gtk.SignalListItemFactory();
+        ((Gtk.SignalListItemFactory) this.outputs_list.list_factory).setup.connect((_, item) => {
+            var label = new Gtk.Label("");
+            label.xalign = 0;
+            label.hexpand = true;
+            ((Gtk.ListItem) item).set_child(label);
+        });
+        ((Gtk.SignalListItemFactory) this.outputs_list.list_factory).bind.connect((_, item) => {
+            var label = (Gtk.Label) ((Gtk.ListItem) item).get_child();
+            var endpoint = (AstalWp.Endpoint) ((Gtk.ListItem) item).get_item();
+            label.set_label(endpoint.name);
+        });
+        update_endpoints();
     }
+
+    private void update_endpoints(){
+        if (this.endpoint_list == null) { return; }
+
+        this.endpoint_list.remove_all();
+        info(@"$(this.wireplumber.audio.speakers.is_empty())");
+        // info(@"$(this.wireplumber.audio.speakers.prev == null)");
+        foreach (var speaker in this.wireplumber.audio.speakers) {
+            info(speaker.name);
+            this.endpoint_list.append(speaker);
+        }
+    }
+
 }
 
 // [GtkTemplate(ui="/bar/volume/VolumeStreamWidget.ui")]
