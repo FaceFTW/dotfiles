@@ -9,7 +9,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 2;
 
-  boot.kernelPackages = pkgs.linuxPackages_7_0;
+  boot.kernelPackages = pkgs.linuxPackages_7_1;
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"

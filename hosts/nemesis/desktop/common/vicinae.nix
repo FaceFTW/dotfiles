@@ -12,8 +12,8 @@ in
     imports = [
       inputs.vicinae.homeManagerModules.default
     ];
-    services.vicinae.enable = true;
-    services.vicinae.extensions = [
+    programs.vicinae.enable = true;
+    programs.vicinae.extensions = [
       # vicinae-extensions.bluetooth
       vicinae-extensions.nix
       vicinae-extensions.power-profile
@@ -23,7 +23,7 @@ in
       # vicinae-extensions.dbus
 
     ];
-    services.vicinae.settings = {
+    programs.vicinae.settings = {
       close_on_focus_loss = true;
       consider_preedit = true;
       pop_to_root_on_close = true;

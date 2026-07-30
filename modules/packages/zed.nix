@@ -41,9 +41,16 @@ in
     (mkIf packages.zed.enable {
       environment.systemPackages = [
         pkgs.zed-editor
-        pkgs.openssl
         pkgs.package-version-server
         pkgs.lua-language-server
+        pkgs.vala-language-server
+        pkgs.vala
+        pkgs.blueprint-compiler
+        pkgs.universal-ctags
+        pkgs.clang-tools
+        pkgs.meson
+        pkgs.glib
+        pkgs.json-glib
       ];
     })
     (mkIf packages.zed.wslFixes {
@@ -68,7 +75,10 @@ in
                 update = _: packages.zed.config.uiFontSize;
               }
               {
-                path = [ "terminal" "font_size"];
+                path = [
+                  "terminal"
+                  "font_size"
+                ];
                 update = _: packages.zed.config.terminalFontSize;
               }
             ] (fromJSON (unsafeDiscardStringContext (readFile ../../config/zed/settings.json)))

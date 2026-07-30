@@ -14,6 +14,7 @@
       MusicFolder = "/mnt/archive/musik";
       DataFolder = "/mnt/archive/musik/navidrome";
     };
+    environmentFile = "/run/secrets/navidrome";
   };
 
   # Nginx Reverse Proxy Config

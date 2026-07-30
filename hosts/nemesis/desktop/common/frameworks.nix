@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -21,6 +22,9 @@
       [General]
       theme=KvFluentDark
     '';
+
+    # HACK: Prevent the generated GTK-4 CSS from clobbering everything
+    xdg.configFile."gtk-4.0/gtk.css".text = lib.mkForce "";
 
     #######################################################
     # GTK

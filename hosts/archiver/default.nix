@@ -71,6 +71,9 @@
     garage_admin_token.group = "garage";
     garage_metrics_token.owner = "garage";
     garage_metrics_token.group = "garage";
+
+    navidrome.owner = "face";
+    navidrome.group = "users";
   };
 
   ############################################
