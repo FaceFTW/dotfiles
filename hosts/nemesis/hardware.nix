@@ -58,10 +58,10 @@
   ############################################
   modules.kernel = {
     enable = true;
-    version = "7.1.1";
+    version = "7.1.5";
     src = pkgs.fetchurl {
       url = "mirror://kernel/linux/kernel/v7.x/linux-7.1.5.tar.xz";
-      hash = "sha256-UhX6NUHcfn9bzVG/flfxac7G/OUIylTj3IX97hQ3HX0=";
+      hash = "sha256-IqAZazy83zTcJ7d1YfTQQFhf00R+3JqzUxoax54wQec=";
       # hash = lib.fakeHash;
     };
 
