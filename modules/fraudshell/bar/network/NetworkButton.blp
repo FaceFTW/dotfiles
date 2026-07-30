@@ -2,11 +2,13 @@ using Gtk 4.0;
 
 template $NetworkWidget: Gtk.Box {
 	MenuButton network_button {
-		margin-start: 5;
-		margin-end: 5;
+		// margin-start: 5;
+		// margin-end: 5;
 
 		Gtk.Image network_status_icon {
-			pixel-size: 24;
+			pixel-size: 28;
+			valign: center;
+			halign: center;
 		}
 
 		popover: Popover network_popover {
