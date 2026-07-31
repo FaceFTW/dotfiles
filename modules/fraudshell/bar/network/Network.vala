@@ -92,6 +92,12 @@ private class NetworkPopup : Gtk.Box {
         );
 
         update_network_list();
+
+        this.network_manager.wifi.bind_property(
+            "enabled",
+            this.wifi_toggle, "active",
+            BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+        );
     }
 
     private void update_network_list(){

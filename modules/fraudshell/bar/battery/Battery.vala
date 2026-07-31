@@ -36,6 +36,7 @@ class BatteryWidget : Gtk.Box {
             (_, x, ref target) => {
                 double percent = ((double) x) * 100.0;
                 target.set_string("%3.f%%".printf(percent));
+                battery_percent.queue_resize();
                 return true;
             }
         );

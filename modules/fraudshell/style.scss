@@ -3,6 +3,9 @@
 @use "./osd/OSD.scss";
 @use "./_vars.scss";
 
+label {
+	font-family: vars.$font-name;
+}
 menubutton > button {
 	all: unset;
 

@@ -14,13 +14,14 @@ template $BatteryWidget: Gtk.Box {
 				pixel-size: 24;
 			}
 
+			Gtk.Label battery_percent {}
+
 			Gtk.Image battery_icon {
-				margin-start: 2;
-				margin-end: 2;
+				margin-start: 4;
+				// margin-end: 2;
 				pixel-size: 28;
 			}
 
-			Gtk.Label battery_percent {}
 		}
 
 		popover: Gtk.Popover power_popover {

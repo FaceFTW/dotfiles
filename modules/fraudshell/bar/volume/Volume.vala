@@ -81,7 +81,7 @@ class VolumePopover : Gtk.Box {
         this.endpoint_list.remove_all();
         info(@"$(this.wireplumber.audio.speakers.is_empty())");
         // info(@"$(this.wireplumber.audio.speakers.prev == null)");
-        foreach (var speaker in this.wireplumber.audio.speakers) {
+        foreach (var speaker in this.wireplumber.audio.speakers.first()) {
             info(speaker.name);
             this.endpoint_list.append(speaker);
         }

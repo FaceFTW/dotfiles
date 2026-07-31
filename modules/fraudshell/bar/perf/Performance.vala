@@ -48,14 +48,22 @@ class PerformanceWidget: Gtk.Box {
             "cpu_usage",
             this.cpu_percent, "label",
             BindingFlags.SYNC_CREATE,
-            (_, src, ref target) => { target.set_string("%3.f%%".printf((double) src * 100)); return true; }
+            (_, src, ref target) => {
+                target.set_string("%3.f%%".printf((double) src * 100));
+                this.cpu_percent.queue_resize();
+                return true;
+            }
         );
 
         this.bind_property(
             "mem_usage",
             this.ram_percent, "label",
             BindingFlags.SYNC_CREATE,
-            (_, src, ref target) => { target.set_string("%3.f%%".printf((double) src * 100)); return true; }
+            (_, src, ref target) => {
+                target.set_string("%3.f%%".printf((double) src * 100));
+                this.ram_percent.queue_resize();
+                return true;
+            }
         );
     }
 
