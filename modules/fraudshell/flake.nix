@@ -18,7 +18,17 @@
       pkgs = nixpkgs.legacyPackages.${system};
 
       nativeBuildInputs = with pkgs; [
-        meson
+
+        # TODO Remove once meson 1.12 hits unstable
+        (meson.overrideAttrs rec {
+          version = "1.12.0";
+          src = fetchFromGitHub {
+            owner = "mesonbuild";
+            repo = "meson";
+            tag = version;
+            hash = "sha256-3Zeavn6aW6920gM7yE73Ms1RPCP2GjX9IUL9YGmISfY=";
+          };
+        })
         ninja
         pkg-config
         gobject-introspection

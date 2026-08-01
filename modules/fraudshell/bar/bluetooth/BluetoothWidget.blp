@@ -1,0 +1,13 @@
+using Gtk 4.0;
+
+template $BluetoothWidget : Gtk.Box {
+	Gtk.Button bluetooth_button {
+		styles ['menubtn']
+		Gtk.Image bluetooth_status_icon {
+			pixel-size: 28;
+			valign: center;
+			halign: center;
+		}
+	}
+
+}

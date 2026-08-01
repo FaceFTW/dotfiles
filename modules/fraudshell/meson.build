@@ -4,6 +4,7 @@ pkgdatadir = get_option('prefix') / get_option('datadir')
 bindir = get_option('prefix') / get_option('bindir')
 blp = find_program('blueprint-compiler', required: true)
 sass = find_program('sass', required: true)
+fs = import('fs')
 
 dependencies = [
 	dependency('gtk4-layer-shell-0'),
@@ -79,18 +80,18 @@ css = custom_target(
 	build_always_stale: true,
 )
 
-# other_resources = custom_target(
-# 	'other',
-# 	input: join_paths(meson.project_source_root(), 'resource'),
-# 	output: '.',
-# 	command: ['cp', '-r', '@INPUT@', '@OUTPUT@'],
-# )
+icons = [
+	fs.copyfile('icons/bluetooth-active-symbolic.svg'),
+	fs.copyfile('icons/bluetooth-disabled-symbolic.svg'),
+	fs.copyfile('icons/bluetooth-disconnected-symbolic.svg'),
+]
+
 
 # compiling data files into a binary
 resource = import('gnome').compile_resources(
 	'data',
 	files('gresource.xml'),
-	dependencies: [ui, css],
+	dependencies: [ui, css, icons].flatten(),
 	source_dir: meson.current_build_dir(),
 )
 
