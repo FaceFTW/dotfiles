@@ -17,7 +17,6 @@ class BluetoothWidget : Gtk.Box {
 
         this.bluetooth_button.clicked.connect(() => {
             this.bt_manager.toggle();
-            // update_icon();
         });
     }
 

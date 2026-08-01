@@ -22,13 +22,7 @@ class App : Gtk.Application {
         var argv = command_line.get_arguments();
 
         if (command_line.is_remote) {
-            // app is already running we can print to remote
-            command_line.print_literal("hello from the main instance\n");
-
-            // for example, we could toggle the visibility of the bar
-            if (argv.length >= 3 && argv[1] == "toggle" && argv[2] == "bar") {
-                bar.visible = !bar.visible;
-            }
+            command_line.print_literal("FRAUDSHELL is already running. Kill the existing instance if you want to refresh!");
         } else {
             // main instance, initialize stuff here
             init_css();
@@ -39,16 +33,21 @@ class App : Gtk.Application {
         return 0;
     }
 
-    private App() {
-        application_id = "dev.faceftw.fraudshell";
+    private App(bool test) {
+        application_id = test ? "dev.faceftw.fraudshell-test" : "dev.faceftw.fraudshell";
         flags = ApplicationFlags.HANDLES_COMMAND_LINE;
-        // WorkspacesWidget.get_type();
     }
 
     // entry point of our app
     static int main(string[] argv) {
-        App.instance = new App();
-        Environment.set_prgname("fraudshell");
+        if (argv[1] == "test") {
+            App.instance = new App(true);
+            Environment.set_prgname("fraudshell-test");
+        } else {
+            App.instance = new App(false);
+            Environment.set_prgname("fraudshell");
+        }
+
         return App.instance.run(argv);
     }
 }

@@ -1,8 +1,0 @@
-{
-	"$schema": "",
-	"linter": {
-		"rules": {
-			"a11y": "off"
-		}
-	}
-}
