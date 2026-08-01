@@ -16,8 +16,10 @@
         <file>bar/workspaces/Workspaces.ui</file>
         <file>bar/workspaces/WorkspaceButton.ui</file>
         <file>osd/OSD.ui</file>
-       	<file alias="scalable/hardware/bluetooth-active-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-active-symbolic.svg</file>
-       	<file alias="scalable/hardware/bluetooth-disabled-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-disabled-symbolic.svg</file>
-       	<file alias="scalable/hardware/bluetooth-disconnected-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-disconnected-symbolic.svg</file>
+    </gresource>
+    <gresource prefix="/icons">
+	   	<file alias="scalable/hardware/bluetooth-active-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-active-symbolic.svg</file>
+	   	<file alias="scalable/hardware/bluetooth-disabled-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-disabled-symbolic.svg</file>
+	   	<file alias="scalable/hardware/bluetooth-disconnected-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-disconnected-symbolic.svg</file>
     </gresource>
 </gresources>

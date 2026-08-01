@@ -11,10 +11,14 @@ class BluetoothWidget : Gtk.Box {
     construct {
         this.bt_manager = AstalBluetooth.get_default();
 
-        this.bt_manager.notify["is-powered"].connect(() => this.update_icon);
-        this.bt_manager.notify["is-connected"].connect(() => this.update_icon);
+        this.bt_manager.notify["is-powered"].connect(() => this.update_icon());
+        this.bt_manager.notify["is-connected"].connect(() => this.update_icon());
+        update_icon();
 
-        this.bluetooth_button.clicked.connect(() => this.bt_manager.toggle());
+        this.bluetooth_button.clicked.connect(() => {
+            this.bt_manager.toggle();
+            // update_icon();
+        });
     }
 
     private void update_icon(){
