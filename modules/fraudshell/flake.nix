@@ -68,6 +68,10 @@
         buildInputs = astalPackages;
       };
 
+      overlays.default = final: prev: {
+        fraudshell = self.packages.${system}.default;
+      };
+
       devShells.${system}.default = pkgs.mkShell {
         packages = nativeBuildInputs ++ astalPackages;
 

@@ -32,12 +32,12 @@
     gtk = {
       enable = true;
       colorScheme = "dark";
-      theme.name = "Fluent-round-Dark-compact";
-      theme.package = pkgs.fluent-gtk-theme;
+      theme.name = "amarena";
+      theme.package = pkgs.amarena-theme;
       iconTheme.package = pkgs.fluent-icon-theme;
       iconTheme.name = "Fluent-dark";
-      gtk4.theme.name = "Fluent-round-Dark-compact";
-      gtk4.theme.package = pkgs.fluent-gtk-theme;
+      gtk4.theme.name = "amarena";
+      gtk4.theme.package = pkgs.amarena-theme;
       gtk4.iconTheme.package = pkgs.fluent-icon-theme;
       gtk4.iconTheme.name = "Fluent-dark";
     };
