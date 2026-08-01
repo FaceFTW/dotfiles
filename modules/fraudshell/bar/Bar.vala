@@ -8,6 +8,7 @@ class Bar : Astal.Window {
     [GtkChild] unowned WorkspacesWidget workspaces;
     [GtkChild] unowned TrayWidget tray;
     [GtkChild] unowned PerformanceWidget perf;
+    [GtkChild] unowned BluetoothWidget bluetooth;
     [GtkChild] unowned NetworkWidget network;
     [GtkChild] unowned VolumeWidget volume;
     [GtkChild] unowned BatteryWidget battery;

@@ -10,6 +10,7 @@ dependencies = [
 	dependency('glib-2.0'),
 	dependency('gio-2.0'),
 	dependency('libnm'),
+	# dependency('libnma-gtk4'),
 	dependency('gobject-2.0'),
 	dependency('astal-4-4.0'),
 	dependency('astal-apps-0.1'),
@@ -29,6 +30,7 @@ blueprint_sources = files(
 	'bar/Bar.blp',
 	'bar/battery/BatteryWidget.blp',
 	'bar/battery/PowerMenuPopover.blp',
+	'bar/bluetooth/BluetoothWidget.blp',
 	'bar/network/NetworkButton.blp',
 	'bar/network/NetworkPopup.blp',
 	'bar/network/NetworkPopupItem.blp',
@@ -44,6 +46,7 @@ blueprint_sources = files(
 vala_sources = files(
 	'bar/Bar.vala',
 	'bar/battery/Battery.vala',
+	'bar/bluetooth/Bluetooth.vala',
 	'bar/network/Network.vala',
 	'bar/perf/Performance.vala',
 	'bar/tray/Tray.vala',

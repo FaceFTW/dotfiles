@@ -144,7 +144,7 @@ private class NetworkPopupItem: Gtk.Button {
 
     private AstalNetwork.Network network;
 
-    public NetworkPopupItem(AstalNetwork.AccessPoint ap ) {
+    public NetworkPopupItem(AstalNetwork.AccessPoint ap) {
         Object(access_point: ap);
     }
 
@@ -154,6 +154,16 @@ private class NetworkPopupItem: Gtk.Button {
         this.ap_strength.icon_name = this.access_point.icon_name;
         this.ssid_label.label = @"$(this.access_point.ssid) - $(get_frequency(this.access_point.frequency))";
         this.connected_check.visible = this.network.wifi?.ssid == this.access_point.ssid;
+
+        this.clicked.connect ((_) => {
+            if (this.network.wifi?.ssid == this.access_point.ssid) {
+                this.network.wifi.deactivate_connection.begin();
+            } else if (this.access_point.get_connections().length > 0) {
+                this.access_point.activate.begin(null);
+            } else {
+                // open_wifi_dialog(null);
+            }
+        });
     }
 
     private string get_frequency(uint f) {
@@ -161,4 +171,43 @@ private class NetworkPopupItem: Gtk.Button {
         if (f >= 4950 && f <= 6000){ return "5GHz";}
         else { return @"$f";}
     }
+
+    // private void open_wifi_dialog(NM.Connection? connection) {
+    //   NM.Connection con;
+    //   if (connection == null) {
+    //     con = NM.SimpleConnection.new();
+
+    //     con.add_setting(new NM.SettingWireless() {
+    //       ssid = this.access_point.ap.ssid
+    //     });
+    //     con.add_setting(new NM.SettingConnection() {
+    //       uuid = NM.Utils.uuid_generate()
+    //     });
+    //   } else {
+    //     con = connection;
+    //   }
+
+    //   var dialog = new NMA.WifiDialog(this.network.client, con, null, this.access_point.ap, false) {
+    //     deletable = false,
+    //     modal = true,
+    //     transient_for = (Gtk.Window)this.get_root()
+    //   };
+    //   dialog.present();
+
+    //   dialog.response.connect((response) => {
+    //     if (response == Gtk.ResponseType.OK) {
+    //       NM.Device dialog_device;
+    //       NM.AccessPoint dialog_ap;
+    //       var dialog_connection = dialog.get_connection(out dialog_device, out dialog_ap);
+    //       if (connection == null) {
+    //         this.network.client.add_and_activate_connection_async.begin(dialog_connection, dialog_device, dialog_ap.get_path(), null);
+    //       } else {
+    //         connection.replace_settings_from_connection(dialog_connection);
+    //         (connection as NM.RemoteConnection)?.commit_changes(true, null);
+    //       }
+    //     }
+    //     dialog.destroy();
+    //   });
+    // }
+
 }

@@ -29,6 +29,7 @@
         json-glib
         gtk4-layer-shell
         networkmanager
+        libnma-gtk4
         upower
       ];
 

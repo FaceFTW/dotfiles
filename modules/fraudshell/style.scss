@@ -6,7 +6,9 @@
 label {
 	font-family: vars.$font-name;
 }
-menubutton > button {
+menubutton > button,
+button.menubtn
+{
 	all: unset;
 
 	& > image {

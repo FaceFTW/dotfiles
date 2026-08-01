@@ -5,6 +5,7 @@
         <file>bar/Bar.ui</file>
         <file>bar/battery/BatteryWidget.ui</file>
         <file>bar/battery/PowerMenuPopover.ui</file>
+        <file>bar/bluetooth/BluetoothWidget.ui</file>
         <file>bar/network/NetworkPopup.ui</file>
         <file>bar/network/NetworkPopupItem.ui</file>
         <file>bar/network/NetworkButton.ui</file>
