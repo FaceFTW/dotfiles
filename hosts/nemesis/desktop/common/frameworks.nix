@@ -24,7 +24,7 @@
     '';
 
     # HACK: Prevent the generated GTK-4 CSS from clobbering everything
-    xdg.configFile."gtk-4.0/gtk.css".text = lib.mkForce "";
+    # xdg.configFile."gtk-4.0/gtk.css".text = lib.mkForce "";
 
     #######################################################
     # GTK
@@ -32,12 +32,12 @@
     gtk = {
       enable = true;
       colorScheme = "dark";
-      theme.name = "amarena";
-      theme.package = pkgs.amarena-theme;
+      # theme.name = "squared";
+      # theme.package = pkgs.squared-theme;
       iconTheme.package = pkgs.fluent-icon-theme;
       iconTheme.name = "Fluent-dark";
-      gtk4.theme.name = "amarena";
-      gtk4.theme.package = pkgs.amarena-theme;
+      # gtk4.theme.name = "squared";
+      # gtk4.theme.package = pkgs.squared-theme;
       gtk4.iconTheme.package = pkgs.fluent-icon-theme;
       gtk4.iconTheme.name = "Fluent-dark";
     };
