@@ -1,0 +1,86 @@
+@use "sass:color";
+
+/**************************
+* VARIABLES
+***************************/
+$font-size: 14pt;
+$font-name: "VCR OSD Mono";
+
+$bg0: #1d1d20;
+$bg1: #28282c;
+$bg2: #36363a;
+$bg3: #48484b;
+
+$fg0: #ffffff;
+$fg1: #c0c0c0;
+$fg2: #808080;
+
+$accent: #3584e4;
+$accent-light: color.adjust(#3584e4, $lightness: 10%);
+
+$foreground: #e6d9db;
+$background: #2c2525;
+$red: #fa6982;
+$red-dimmed: #ad495a;
+$orange: #faad45;
+$orange-dimmed: #ad7731;
+$yellow: #fafa00;
+$yellow-dimmed: #adad00;
+$green: #96f06e;
+$green-dimmed: #66a34b;
+$blue: #63c8fa;
+$blue-dimmed: #458bad;
+$purple: #dc6ea5;
+$purple-dimmed: #8f476b;
+
+$rainbow-gradient: linear-gradient(
+	90deg,
+	$red 0%,
+	$yellow 20%,
+	$green 40%,
+	$blue 60%,
+	$purple 80%,
+	$red 100%
+);
+$dimmed-rainbow-gradient: linear-gradient(
+	90deg,
+	$red-dimmed 0%,
+	$yellow-dimmed 20%,
+	$green-dimmed 40%,
+	$blue-dimmed 60%,
+	$purple-dimmed 80%,
+	$red-dimmed 100%
+);
+
+$widget-radius: 8px;
+
+$window-padding: 15px;
+
+$window-opacity: 1;
+$window-border-width: 2px;
+$window-border-color: $bg2;
+$window-outline-width: 2px;
+$window-outline-color: $fg1;
+$window-radius: $widget-radius + $window-padding + $window-border-width;
+
+$bar-position: top;
+$bar-bg: $bg0;
+$bar-opacity: 1;
+$bar-margin: 0px 0px 0px 0px;
+$bar-padding: 0px;
+$bar-border-width: 2px;
+$bar-border-color: $bg2;
+$bar-separator-width: 2px;
+$bar-separator-color: $bg2;
+$bar-button-bg: $bg0;
+$bar-button-bg-hover: $bg1;
+$bar-button-bg-active: $bg2;
+$bar-button-fg: $fg0;
+$bar-button-border-width: 0px;
+$bar-button-border-color: $bg2;
+$bar-button-opacity: 1;
+$bar-button-padding: 0px 4px;
+$bar-size: 32px;
+
+$transition: 0.2s;
+/* $shadow: ${theme.shadow}; */

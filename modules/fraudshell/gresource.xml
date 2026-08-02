@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/">
+        <file>style.css</file>
+        <file>bar/Bar.ui</file>
+        <file>bar/battery/BatteryWidget.ui</file>
+        <file>bar/battery/PowerMenuPopover.ui</file>
+        <file>bar/bluetooth/BluetoothWidget.ui</file>
+        <file>bar/network/NetworkPopup.ui</file>
+        <file>bar/network/NetworkPopupItem.ui</file>
+        <file>bar/network/NetworkButton.ui</file>
+        <file>bar/perf/PerformanceWidget.ui</file>
+        <file>bar/tray/Tray.ui</file>
+        <file>bar/volume/VolumeWidget.ui</file>
+        <file>bar/volume/VolumePopover.ui</file>
+        <file>bar/workspaces/Workspaces.ui</file>
+        <file>bar/workspaces/WorkspaceButton.ui</file>
+        <file>osd/OSD.ui</file>
+    </gresource>
+    <!-- <gresource prefix="/icons">
+	   	<file alias="scalable/hardware/bluetooth-active-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-active-symbolic.svg</file>
+	   	<file alias="scalable/hardware/bluetooth-disabled-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-disabled-symbolic.svg</file>
+	   	<file alias="scalable/hardware/bluetooth-disconnected-symbolic.svg" compressed="true" preprocess="xml-stripblanks">bluetooth-disconnected-symbolic.svg</file>
+    </gresource> -->
+</gresources>

@@ -1,0 +1,21 @@
+- [ ] Network Widget
+	- [ ] Bind AP list for dynamic updates (not the stupid update fn)
+	- [ ] Refresh/Scan Button
+	- [ ] Wi-Fi Toggle
+	- [ ] Add support for Password entry
+		- [ ] Clicking Row reveals
+		- [ ] Clicking again removes
+		- [ ] Feedback on failure
+		- [ ] Clicking on connected offers option to disconnect
+- [ ] Volume Switch
+	- [ ] TODO
+- [x] Battery Indicator
+	- [x] Show Power Profiles with Icon
+	- [x] Add List of Power Profiles
+		- [-] Power Profile is switched on click
+- [x] OSD for Brightness
+- [x] OSD for Volume
+- [ ] Power Menu
+	- [ ] Under Battery
+- [ ] Bluetooth
+- [x] CPU/Mem Indicator

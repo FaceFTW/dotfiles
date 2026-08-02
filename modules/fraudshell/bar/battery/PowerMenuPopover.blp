@@ -1,0 +1,119 @@
+using Gtk 4.0;
+
+template $PowerMenuPopover: Gtk.Box {
+	orientation: vertical;
+	height-request: 210;
+	width-request: 260;
+	spacing: 4;
+
+	Gtk.Box {
+		margin-top: 6;
+		orientation: vertical;
+
+		Gtk.Box {
+			orientation: vertical;
+			spacing: 2;
+
+			Gtk.Label {
+				label: "Battery Information";
+			}
+
+			Gtk.Label energy_rate {}
+
+			Gtk.Label capacity {}
+
+			Gtk.Label health {}
+		}
+	}
+
+	Gtk.Box {
+		orientation: vertical;
+
+		Gtk.Label {
+			label: "Power Profile";
+		}
+
+		Gtk.Box {
+			orientation: vertical;
+			spacing: 2;
+
+			Gtk.Button power_saver_button {
+				focus-on-click: false;
+
+				Gtk.Box {
+					orientation: horizontal;
+					spacing: 2;
+
+					Gtk.Image {
+						icon-name: 'power-profile-power-saver-symbolic';
+					}
+
+					Gtk.Label {
+						label: "Power Saver";
+					}
+
+					Gtk.Box {
+						hexpand: true;
+					}
+
+					Gtk.Image power_saver_active {
+						icon-name: "check-active-symbolic";
+						visible: false;
+					}
+				}
+			}
+
+			Gtk.Button balanced_button {
+				focus-on-click: false;
+
+				Gtk.Box {
+					orientation: horizontal;
+					spacing: 2;
+
+					Gtk.Image {
+						icon-name: 'power-profile-balanced-symbolic';
+					}
+
+					Gtk.Label {
+						label: "Balanced";
+					}
+
+					Gtk.Box {
+						hexpand: true;
+					}
+
+					Gtk.Image balanced_active {
+						icon-name: "check-active-symbolic";
+						visible: false;
+					}
+				}
+			}
+
+			Gtk.Button performance_button {
+				focus-on-click: false;
+
+				Gtk.Box {
+					orientation: horizontal;
+					spacing: 2;
+
+					Gtk.Image {
+						icon-name: "power-profile-performance-symbolic";
+					}
+
+					Gtk.Label {
+						label: "Performance";
+					}
+
+					Gtk.Box {
+						hexpand: true;
+					}
+
+					Gtk.Image performance_active {
+						icon-name: "check-active-symbolic";
+						visible: false;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,27 @@
+using Gtk 4.0;
+
+template $PerformanceWidget: Gtk.Box {
+	orientation: horizontal;
+	spacing: 4;
+
+	Gtk.Image {
+		icon-name: "am-cpu-symbolic";
+		pixel-size: 24;
+		// margin-end: -4;
+	}
+
+	Gtk.Label cpu_percent {
+		// label: "%%%";
+	}
+
+	Gtk.Image {
+		icon-name: "am-memory-symbolic";
+		pixel-size: 24;
+		margin-start: 4;
+	}
+
+	Gtk.Label ram_percent {
+		// label: "%%%";
+		margin-end: 4;
+	}
+}

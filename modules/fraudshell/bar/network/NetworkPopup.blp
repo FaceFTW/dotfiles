@@ -1,0 +1,42 @@
+using Gtk 4.0;
+
+template $NetworkPopup: Gtk.Box {
+	Gtk.Box {
+		orientation: vertical;
+		height-request: 500;
+		width-request: 410;
+		spacing: 2;
+
+		Gtk.Box header {
+			Gtk.Label {
+				halign: start;
+				valign: center;
+				label: "Wi-Fi";
+			}
+
+			Gtk.Box {
+				hexpand: true;
+			}
+
+			Gtk.Button refresh_button {
+				focus-on-click: false;
+
+				child: Gtk.Image {
+					icon-name: "restart-symbolic";
+				};
+
+				// TODO also add scanning indicator
+			}
+
+			Gtk.Switch wifi_toggle {
+				valign: center;
+			}
+		}
+
+		Gtk.ScrolledWindow {
+			Gtk.ListBox network_list_box {
+				vexpand: true;
+			}
+		}
+	}
+}

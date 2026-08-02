@@ -1,0 +1,42 @@
+@use "../_vars.scss";
+
+window.osd {
+	all: unset;
+	color: vars.$fg0;
+	font-size: vars.$font-size;
+
+	.main {
+		border-radius: vars.$window-radius;
+	}
+
+	image.osd-icon {
+		color: vars.$fg0;
+		padding: 10px;
+		&.low {
+			color: vars.$fg0;
+		}
+	}
+
+	levelbar {
+		trough {
+			.filled {
+				border-radius: vars.$widget-radius;
+				background: linear-gradient(
+						90deg,
+						vars.$red 0,
+						vars.$yellow 48px,
+						vars.$green 96px,
+						vars.$blue 144px,
+						vars.$purple 192px,
+						vars.$red 240px
+					)
+					padding-box;
+			}
+		}
+
+		block {
+			background: vars.$bg1 padding-box;
+			border-radius: vars.$widget-radius;
+		}
+	}
+}

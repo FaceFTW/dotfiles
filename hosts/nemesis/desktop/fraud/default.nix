@@ -17,7 +17,7 @@ let
 in
 {
   imports = [
-    ./waybar.nix
+    # ./waybar.nix
     ./dunst.nix
   ];
 
@@ -98,7 +98,7 @@ in
       [
         "--- XXX_EXTRA_STARTUP_XXX"
         ''
-          hl.exec_cmd("sleep 1; ${pkgs.waybar}/bin/waybar &")
+          hl.exec_cmd("sleep 1; ${pkgs.fraudshell}/bin/fraudshell &")
           hl.exec_cmd("sleep 10; ${systemctl} --user start syncthing")
         ''
       ]

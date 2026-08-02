@@ -1,0 +1,26 @@
+using Gtk 4.0;
+
+template $WorkspacesWidget: Gtk.Box {
+	orientation: horizontal;
+	spacing: 4;
+	margin-top: 2;
+
+	css-classes: [
+		"workspaces",
+	];
+
+	Gtk.FlowBox content_box {
+		orientation: horizontal;
+		column-spacing: 2;
+		row-spacing: 1;
+
+		css-classes: [
+			"content",
+		];
+
+		hexpand: false;
+		vexpand: false;
+		halign: start;
+	}
+
+}

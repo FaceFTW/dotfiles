@@ -1,0 +1,33 @@
+using Gtk 4.0;
+
+template $VolumePopover: Gtk.Box {
+	orientation: vertical;
+	spacing: 2;
+	// height-request: 200;
+	// width-request: 350;
+
+	// Gtk.Label {
+	// 		label: "Output";
+	// 		halign: start;
+	// }
+
+	// Gtk.DropDown outputs_list {
+
+	// }
+
+	Gtk.Box{
+		valign: center;
+		spacing: 2;
+		orientation: horizontal;
+
+		Gtk.Image volume_icon {
+			pixel-size: 24;
+		}
+
+		Gtk.Scale volume_slider {
+			hexpand: true;
+			width-request: 300;
+		}
+	}
+
+}

@@ -1,0 +1,50 @@
+using Gtk 4.0;
+using Astal 4.0;
+
+template $Bar: Astal.Window {
+	margin-top: 1;
+
+	styles [
+		"bar",
+	]
+
+	CenterBox centerbox {
+		styles [
+			"main",
+		]
+
+		start-widget: $WorkspacesWidget workspaces {};
+
+		center-widget: Box {
+			MenuButton {
+				Label {
+					label: bind template.clock;
+				}
+
+				popover: Popover popover {
+					Calendar calendar {
+						show-day-names: true;
+						show-heading: true;
+						show-week-numbers: true;
+					}
+				};
+			}
+		};
+
+		end-widget: Box {
+			spacing: 4;
+
+			$TrayWidget tray {}
+
+			$PerformanceWidget perf {}
+
+			$BluetoothWidget bluetooth {}
+
+			$NetworkWidget network {}
+
+			$VolumeWidget volume {}
+
+			$BatteryWidget battery {}
+		};
+	}
+}

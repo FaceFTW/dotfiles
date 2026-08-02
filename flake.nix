@@ -54,6 +54,10 @@
     vicinae.inputs.nixpkgs.follows = "nixpkgs";
     vicinae-extensions.url = "github:vicinaehq/extensions";
     vicinae-extensions.inputs.nixpkgs.follows = "nixpkgs";
+
+    # FRAUDSHELL
+    fraudshell.url="path:./modules/fraudshell";
+    fraudshell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -86,6 +90,7 @@
             inputs.hyprnix.overlays.default
             inputs.hyprland-plugins.overlays.default
             inputs.aquamarine.overlays.default
+            inputs.fraudshell.overlays.default
             (final: prev: {
               hyprland = inputs.hyprnix.packages.${prev.stdenv.hostPlatform.system}.hyprland;
               # prev.hyprland.override {

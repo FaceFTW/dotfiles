@@ -1,0 +1,105 @@
+project('fraudshell', 'vala')
+
+pkgdatadir = get_option('prefix') / get_option('datadir')
+bindir = get_option('prefix') / get_option('bindir')
+blp = find_program('blueprint-compiler', required: true)
+sass = find_program('sass', required: true)
+fs = import('fs')
+
+dependencies = [
+	dependency('gtk4-layer-shell-0'),
+	dependency('glib-2.0'),
+	dependency('gio-2.0'),
+	dependency('libnm'),
+	# dependency('libnma-gtk4'),
+	dependency('gobject-2.0'),
+	dependency('astal-4-4.0'),
+	dependency('astal-apps-0.1'),
+	dependency('astal-auth-0.1'),
+	dependency('astal-battery-0.1'),
+	dependency('astal-bluetooth-0.1'),
+	dependency('astal-brightness-0.1'),
+	dependency('astal-hyprland-0.1'),
+	dependency('astal-io-0.1'),
+	dependency('astal-network-0.1'),
+	dependency('astal-power-profiles-0.1'),
+	dependency('astal-tray-0.1'),
+	dependency('astal-wireplumber-0.1'),
+]
+
+blueprint_sources = files(
+	'bar/Bar.blp',
+	'bar/battery/BatteryWidget.blp',
+	'bar/battery/PowerMenuPopover.blp',
+	'bar/bluetooth/BluetoothWidget.blp',
+	'bar/network/NetworkButton.blp',
+	'bar/network/NetworkPopup.blp',
+	'bar/network/NetworkPopupItem.blp',
+	'bar/perf/PerformanceWidget.blp',
+	'bar/tray/Tray.blp',
+	'bar/volume/VolumePopover.blp',
+	'bar/volume/VolumeWidget.blp',
+	'bar/workspaces/WorkspaceButton.blp',
+	'bar/workspaces/Workspaces.blp',
+	'osd/OSD.blp',
+)
+
+vala_sources = files(
+	'bar/Bar.vala',
+	'bar/battery/Battery.vala',
+	'bar/bluetooth/Bluetooth.vala',
+	'bar/network/Network.vala',
+	'bar/perf/Performance.vala',
+	'bar/tray/Tray.vala',
+	'bar/volume/Volume.vala',
+	'bar/workspaces/Workspaces.vala',
+	'osd/OSD.vala',
+	'App.vala',
+)
+
+# transplie blueprints
+ui = custom_target(
+	'blueprint',
+	input: blueprint_sources,
+	output: '.',
+	command: [
+		blp,
+		'batch-compile',
+		'@OUTPUT@',
+		'@CURRENT_SOURCE_DIR@',
+		'@INPUT@',
+	],
+)
+
+# bundle scss files
+css = custom_target(
+	'scss',
+	input: files('style.scss'),
+	command: [sass, '@INPUT@', '@OUTPUT@'],
+	output: ['style.css'],
+	build_always_stale: true,
+)
+
+icons = [
+	fs.copyfile('icons/bluetooth-active-symbolic.svg'),
+	fs.copyfile('icons/bluetooth-disabled-symbolic.svg'),
+	fs.copyfile('icons/bluetooth-disconnected-symbolic.svg'),
+]
+
+
+# compiling data files into a binary
+resource = import('gnome').compile_resources(
+	'data',
+	files('gresource.xml'),
+	dependencies: [ui, css, icons].flatten(),
+	source_dir: meson.current_build_dir(),
+)
+
+executable(
+	meson.project_name(),
+	dependencies: dependencies,
+	sources: [vala_sources, resource],
+	link_args: ['-lm'], # Link math library
+	install: true,
+	install_dir: bindir,
+)
