@@ -65,7 +65,7 @@
       immich                 IN A      192.168.0.172
       linkwarden             IN A      192.168.0.172
       backrest               IN A      192.168.0.172
-      syncthing.archiver     IN A      192.168.0.172
+      syncthing-archiver     IN A      192.168.0.172
       garage                 IN A      192.168.0.172
       s3.garage              IN A      192.168.0.172
       *.s3.garage            IN CNAME  s3.garage.faceftw.local.
