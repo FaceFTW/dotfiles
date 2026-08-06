@@ -1,34 +1,34 @@
 This is Unix we're talking about, remember.  It's not supposed to be nice for the applications programmer.
-        -- Matthew Danish on debian-devel
+    -- Matthew Danish on debian-devel
 %
 ... but hey, this is Linux, isn't it meant to do infinite loops in 6 seconds?
-        -- Jonathan Oxer in the apt-cacher ChangeLog
+    -- Jonathan Oxer in the apt-cacher ChangeLog
 %
 < sam> /.ing an issue is like asking an infinite number of monkeys for advice
-        -- in #debian-devel
+    -- in #debian-devel
 %
 <liiwi> udp - universal dropping of an pigeon
 %
 You will not censor me through bug terrorism.
-        -- James Troup
+    -- James Troup
 %
 <doogie> Thinking is dangerous.  It leads to ideas.
-        -- Seen on #Debian
+    -- Seen on #Debian
 %
 A bug in the code is worth two in the documentation.
 %
 A complex system that works is invariably found to have evolved from a simple system that works.
 %
 A computer lets you make more mistakes faster than any other invention, with the possible exceptions of handguns and Tequilla.
-        -- Mitch Ratcliffe
+    -- Mitch Ratcliffe
 %
 A language that doesn't affect the way you think about programming is not worth knowing.
 %
 A language that doesn't have everything is actually easier to program in than some that do.
-        -- Dennis M. Ritchie
+    -- Dennis M. Ritchie
 %
 A LISP programmer knows the value of everything, but the cost of nothing.
-        -- Alan Perlis
+    -- Alan Perlis
 %
 A nasty looking dwarf throws a knife at you.
 %
@@ -39,44 +39,44 @@ Adding features does not necessarily increase functionality -- it just makes the
 All your files have been destroyed (sorry).  Paul.
 %
 Almost anything derogatory you could say about today's software design would be accurate.
-        -- K. E. Iverson
+    -- K. E. Iverson
 %
 Any programming language is at its best before it is implemented and used.
 %
 Any sufficiently advanced bug is indistinguishable from a feature.
-        -- Rich Kulawiec
+    -- Rich Kulawiec
 %
 As a computer, I find your faith in technology amusing.
 %
 Ask not for whom the <CONTROL-G>  tolls.
 %
 Assembly language experience is [important] for the maturity and understanding of how computers work that it provides.
-        -- D. Gries
+    -- D. Gries
 %
 BASIC is the Computer Science equivalent of `Scientific Creationism'.
 %
 Bell Labs Unix -- Reach out and grep someone.
 %
 Beware of bugs in the above code; I have only proved it correct, not tried it.
-        -- Donald Knuth
+    -- Donald Knuth
 %
 Brain fried -- Core dumped
 %
 Build a system that even a fool can use and only a fool will want to use it.
 %
 C makes it easy for you to shoot yourself in the foot.  C++ makes that harder, but when you do, it blows away your whole leg.
-        -- Bjarne Stroustrup
+    -- Bjarne Stroustrup
 %
 Can't open /usr/share/games/fortunes/fortunes.  Lid stuck on cookie jar.
 %
 Computer Science is the only discipline in which we view adding a new wing to a building as being maintenance
-        -- Jim Horning
+    -- Jim Horning
 %
 Computers are unreliable, but humans are even more unreliable. Any system which depends on human reliability is unreliable.
-        -- Gilb
+    -- Gilb
 %
 Computers are useless.  They can only give you answers.
-        -- Pablo Picasso
+    -- Pablo Picasso
 %
 Deliver yesterday, code today, think tomorrow.
 %
@@ -112,10 +112,10 @@ I am the wandering glitch -- catch me if you can.
 I came, I saw, I deleted all your files.
 %
 I have a very small mind and must live with it.
-        -- E. Dijkstra
+    -- E. Dijkstra
 %
 I've finally learned what "upward compatible" means.  It means we get to keep all our old mistakes.
-        -- Dennie van Tassel
+    -- Dennie van Tassel
 %
 If it happens once, it's a bug.
 If it happens twice, it's a feature.
@@ -130,17 +130,17 @@ In English, every word can be verbed.  Would that it were so in our programming 
 In every non-trivial program there is at least one bug.
 %
 In seeking the unattainable, simplicity only gets in the way.
-        -- Epigrams in Programming, ACM SIGPLAN Sept. 1982
+    -- Epigrams in Programming, ACM SIGPLAN Sept. 1982
 %
 It is easier to change the specification to fit the program than vice versa.
 %
 It is easier to write an incorrect program than understand a correct one.
 %
 Let the machine do the dirty work.
-        -- "Elements of Programming Style", Kernighan and Ritchie
+    -- "Elements of Programming Style", Kernighan and Ritchie
 %
 Life would be so much easier if we could just look at the source code.
-        -- Dave Olson
+    -- Dave Olson
 %
 Due to the holiday next Monday, there will be no garbage collection.
 %
@@ -153,18 +153,18 @@ Memory fault -- core...uh...um...core... Oh dammit, I forget!
 MESSAGE ACKNOWLEDGED -- The Pershing II missiles have been launched.
 %
 Much of the excitement we get out of our work is that we don't really know what we are doing.
-        -- E. Dijkstra
+    -- E. Dijkstra
 %
 Never put off till run-time what you can do at compile-time.
-        -- D. Gries
+    -- D. Gries
 %
 Never test for an error condition you don't know how to handle.
-        -- Steinbach
+    -- Steinbach
 %
 Never trust a computer you can't repair yourself.
 %
 Never underestimate the bandwidth of a station wagon full of tapes.
-        -- Dr. Warren Jackson, Director, UTCS
+    -- Dr. Warren Jackson, Director, UTCS
 %
 No line available at 300 baud.
 %
@@ -185,7 +185,7 @@ panic: kernel trap (ignored)
 Please go away.
 %
 Premature optimization is the root of all evil.
-        -- D. E. Knuth
+    -- D. E. Knuth
 %
 Profanity is the one language all programmers know best.
 %
@@ -206,35 +206,35 @@ Security check:    INTRUDER ALERT!
 Swap read error.  You lose your mind.
 %
 Syntactic sugar causes cancer of the semicolon.
-        -- Epigrams in Programming, ACM SIGPLAN Sept. 1982
+    -- Epigrams in Programming, ACM SIGPLAN Sept. 1982
 %
 Testing can show the presence of bugs, but not their absence.
-        -- Dijkstra
+    -- Dijkstra
 %
 The algorithm for finding the longest path in a graph is NP-complete. For you systems people, that means it's *real slow*.
-        -- Bart Miller
+    -- Bart Miller
 %
 The algorithm to do that is extremely nasty.  You might want to mug someone with it.
-        -- M. Devine, Computer Science 340
+    -- M. Devine, Computer Science 340
 %
 The clothes have no emperor.
-        -- C. A. R. Hoare, commenting on ADA.
+    -- C. A. R. Hoare, commenting on ADA.
 %
 The Computer made me do it.
 %
 The goal of Computer Science is to build something that will last at least until we've finished building it.
 %
 The nice thing about standards is that there are so many of them to choose from.
-        -- Andrew S. Tanenbaum
+    -- Andrew S. Tanenbaum
 %
 The road to hell is paved with NAND gates.
-        -- J. Gooding
+    -- J. Gooding
 %
 The steady state of disks is full.
-        -- Ken Thompson
+    -- Ken Thompson
 %
 The trouble with computers is that they do what you tell them, not what you want.
-        -- D. Cohen
+    -- D. Cohen
 %
 The UNIX philosophy basically involves giving you enough rope to hang yourself.  And then a couple of feet more, just to be sure.
 %
@@ -249,7 +249,7 @@ To err is human -- to blame it on a computer is even more so.
 Trap full -- please empty.
 %
 UNIX was not designed to stop you from doing stupid things, because that would also stop you from doing clever things.
-        -- Doug Gwyn
+    -- Doug Gwyn
 %
 You are in the hall of the mountain king.
 %
@@ -258,7 +258,7 @@ You're not Dave.  Who are you?
 Your fault -- core dumped
 %
 Life is NP-hard, and then you die.
-        -- Dave Cock
+    -- Dave Cock
 %
 All rights reserved.
 %
@@ -314,7 +314,7 @@ Ray's Rule of Precision:
 %
 Recursion n.:
     See Recursion.
-        -- Random Shack Data Processing Dictionary
+    -- Random Shack Data Processing Dictionary
 %
 Reisner's Rule of Conceptual Inertia:
     If you think big enough, you'll never have to do it.
@@ -357,7 +357,7 @@ The Roman Rule:
 %
 The Second Law of Thermodynamics:
     If you think things are in a mess now, just wait!
-        -- Jim Warner
+    -- Jim Warner
 %
 Thyme's Law:
     Everything goes wrong at once.
@@ -469,97 +469,97 @@ The nice thing about Windows is - It does not just crash, it displays a dialog b
     -- Arno Schaefer's .sig
 %
 And I don't like doing silly things (except on purpose).
-        -- Larry Wall in <1992Jul3.191825.14435@netlabs.com>
+    -- Larry Wall in <1992Jul3.191825.14435@netlabs.com>
 %
 echo "Congratulations.  You aren't running Eunice."
-        -- Larry Wall in Configure from the perl distribution
+    -- Larry Wall in Configure from the perl distribution
 %
 echo "Your stdio isn't very std."
-        -- Larry Wall in Configure from the perl distribution
+    -- Larry Wall in Configure from the perl distribution
 %
 [End of diatribe.  We now return you to your regularly scheduled programming...]
-        -- Larry Wall in Configure from the perl distribution
+    -- Larry Wall in Configure from the perl distribution
 %
 In general, they do what you want, unless you want consistency.
-        -- Larry Wall in the perl man page
+    -- Larry Wall in the perl man page
 %
 I think it's a new feature.  Don't tell anyone it was an accident.  :-)
-        -- Larry Wall on s/foo/bar/eieio in <10911@jpl-devvax.JPL.NASA.GOV>
+    -- Larry Wall on s/foo/bar/eieio in <10911@jpl-devvax.JPL.NASA.GOV>
 %
 It is easier to port a shell than a shell script.
-        -- Larry Wall
+    -- Larry Wall
 %
 It is, of course, written in Perl.  Translation to C is left as an exercise for the reader.  :-)
-         -- Larry Wall in <7448@jpl-devvax.JPL.NASA.GOV>
+     -- Larry Wall in <7448@jpl-devvax.JPL.NASA.GOV>
 %
 It's all magic.  :-)
-        -- Larry Wall in <7282@jpl-devvax.JPL.NASA.GOV>
+    -- Larry Wall in <7282@jpl-devvax.JPL.NASA.GOV>
 %
 Let us be charitable, and call it a misleading feature  :-)
-        -- Larry Wall in <2609@jato.Jpl.Nasa.Gov>
+    -- Larry Wall in <2609@jato.Jpl.Nasa.Gov>
 %
 The road to hell is paved with melting snowballs.
-        -- Larry Wall in  <1992Jul2.222039.26476@netlabs.com>
+    -- Larry Wall in  <1992Jul2.222039.26476@netlabs.com>
 %
 Though I'll admit readability suffers slightly...
-        -- Larry Wall in <2969@jato.Jpl.Nasa.Gov>
+    -- Larry Wall in <2969@jato.Jpl.Nasa.Gov>
 %
 tmps_base = tmps_max;                /* protect our mortal string */
-        -- Larry Wall in stab.c from the perl source code
+    -- Larry Wall in stab.c from the perl source code
 %
 /* we have tried to make this normal case as abnormal as possible */
-        -- Larry Wall in cmd.c from the perl source code
+    -- Larry Wall in cmd.c from the perl source code
 %
 What about WRITING it first and rationalizing it afterwords?  :-)
-        -- Larry Wall in <8162@jpl-devvax.JPL.NASA.GOV>
+    -- Larry Wall in <8162@jpl-devvax.JPL.NASA.GOV>
 %
 When in doubt, parenthesize.  At the very least it will let some poor schmuck bounce on the% key in vi.
-        -- Larry Wall in the perl man page
+    -- Larry Wall in the perl man page
 %
 The whole history of computers is rampant with cheerleading at best and bigotry at worst.
-        -- Larry Wall in <199702111730.JAA28598@wall.org>
+    -- Larry Wall in <199702111730.JAA28598@wall.org>
 %
 I'd put my money where my mouth is, but my mouth keeps moving.
-        -- Larry Wall in <199704051723.JAA28035@wall.org>
+    -- Larry Wall in <199704051723.JAA28035@wall.org>
 %
 May you do Good Magic with Perl.
-        -- Larry Wall's blessing
+    -- Larry Wall's blessing
 %
 Perl has a long tradition of working around compilers.
-        -- Larry Wall in <199708252256.PAA00105@wall.org>
+    -- Larry Wall in <199708252256.PAA00105@wall.org>
 %
 Personally, I like to defiantly split my infinitives.  :-)
-        -- Larry Wall in <199708271551.IAA10211@wall.org>
+    -- Larry Wall in <199708271551.IAA10211@wall.org>
 %
 The computer should be doing the hard work.  That's what it's paid to do, after all.
-        -- Larry Wall in <199709012312.QAA08121@wall.org>
+    -- Larry Wall in <199709012312.QAA08121@wall.org>
 %
 :-) your own self.
-        -- Larry Wall in <199709261754.KAA23761@wall.org>
+    -- Larry Wall in <199709261754.KAA23761@wall.org>
 %
 I surely do hope that's a syntax error.
-        -- Larry Wall in <199710011752.KAA21624@wall.org>
+    -- Larry Wall in <199710011752.KAA21624@wall.org>
 %
 I think that's easier to read.  Pardon me.  Less difficult to read.
-        -- Larry Wall in <199710120226.TAA06867@wall.org>
+    -- Larry Wall in <199710120226.TAA06867@wall.org>
 %
 For the sake of argument I'll ignore all your fighting words.
-        -- Larry Wall in <199710221710.KAA24242@wall.org>
+    -- Larry Wall in <199710221710.KAA24242@wall.org>
 %
 Either approach may give birth to various sorts of monstrosities.
-        -- Larry Wall in <199710221950.MAA25210@wall.org>
+    -- Larry Wall in <199710221950.MAA25210@wall.org>
 %
 Maybe it's time to break that.
-        -- Larry Wall in <199710311718.JAA19082@wall.org>
+    -- Larry Wall in <199710311718.JAA19082@wall.org>
 %
 I think you're letting your knowledge of internals interfere with your linguistic judgement here.
-        -- Larry Wall in <199711011949.LAA25651@wall.org>
+    -- Larry Wall in <199711011949.LAA25651@wall.org>
 %
 There's some entertainment value in watching people juggle nitroglycerin.
-        -- Larry Wall in <199712041747.JAA18908@wall.org>
+    -- Larry Wall in <199712041747.JAA18908@wall.org>
 %
 It's easy to solve the halting problem with a shotgun.   :-)
-        -- Larry Wall in <199801151836.KAA14656@wall.org>
+    -- Larry Wall in <199801151836.KAA14656@wall.org>
 %
 Kent's Heuristic:
     Look for it first where you'd most like to find it.
@@ -891,7 +891,7 @@ Get rotated. Idiot.
 The highest honor in journalism is being murdered by the CIA
 %
 38+2 weeks pregananant?
-        -- Seen on Yahoo Answers
+    -- Seen on Yahoo Answers
 %
 Wake the fuck up Samurai, we've got a city to burn.
     - Johnny Silverhand (Cyberpunk 2077)
@@ -1499,6 +1499,29 @@ When every path you can walk has been created for you long in advance, death bec
 Stanley was so bad at following directions; it's incredible he wasn't fired years ago.
     - The Narrator (The Stanley Parable)
 %
+Maybe, when you go talk about this with your friends, you'll say "Oh, did you get the broom closet ending? The broom closet ending was my favourite!" ... I hope your friends find this concerning.
+    - The Narrator (The Stanley Parable)
+%
+Go back and look at that fern. Stanley, this fern will be very important later in the story. Make sure you study it closely and remember it carefully.
+    - The Narrator (The Stanley Parable)
+%
+Oh, hold up, what's this? Hmm... hmm, the confusion ending? You're telling me...that's what this is? It's all one giant ending? And we're supposed to restart the game... what... eight, eight times? That's really how all this goes?!
+    - The Narrator (The Stanley Parable)
+%
+I wonder what he found. If what he wanted was to be the leading man in his own story, well perhaps he's gotten it, down in... wherever he is right now. I wonder if he's happy with his choice, and if he's learned the heavy cost that comes with it.
+    - The Narrator (The Stanley Parable)
+%
+Oh no. Oh god, no, Stanley! It's a collection of reviews from Steam, the online video game distributor!
+    - The Narrator (The Stanley Parable)
+%
+ But of course, the message of the game only becomes clear once you've been playing it for about four hours, so why don't you give it four hours of play to make sure it's effective?
+    - The Narrator (The Stanley Parable)
+%
+Stanley felt the cool breeze upon his skin, the feeling of liberation, the immense possibility of the new path before him. This was exactly the way, right now, that things were meant to happen. And Stanley was happy.
+    - The Narrator (The Stanley Parable)
+%
+When Stanley came to a set of two open doors, he entered the door on his left.
+%
 —the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never the end is never—
 %
 BORN TO DIE
@@ -1573,3 +1596,54 @@ Good morning, oh and in case I don't see ya, good afternoon, good evening, and g
 %
 >> the clatter and din of humanity
 >> squealing rats in the walls
+%
+They literally call themselves Decepticons. That doesn't set off any red flags?
+    - John Cena in that one Transformers Movie
+%
+Once you've been to Cambodia, you'll never stop wanting to beat Henry Kissinger to death with your bare hands.
+    - Anthony Bourdain (A Cook's Tour)
+%
+Kane Parsons is officially the youngest director ever.
+
+He is only 20 years old.
+    - DiscussingFilm on Twitter
+%
+I always say "morning" instead of "good morning", because if it was a good morning, I'd be fishing
+%
+matrix multiplicaion mfs when their algorithm takes 8679 hours to complete, but the time complexity is O(n^2.3728596)
+%
+"That's Ad Hominem" Yeah bro this isn't a debate. I do not respect you
+%
+The adversary didn't follow the rules we made up - A definitve guide to cybersecurity
+%
+Hacking is illegal and for nerds
+%
+The online ranked opponent is the Chevy Silverado with LED headlights that cuts you off in traffic. They aren't a human they are an abstract antagonistic force
+    - Brian_F
+%
+A COMPUTER CAN NEVER BE COURT-MARTIALED THEREFORE A COMPUTER IS A GREAT CHOICE FOR COMMITTING WAR CRIMES
+    - The US Government Probably
+%
+Mankind knew that they cannot change society. So, instead of reflecting on themselves, they blamed the beasts. But they found beauty in the lives of beasts, and they couldn't lie to themselves about it.
+    - Guilty Gear -STRIVE-
+%
+> C feature
+> look inside
+> compiler extension
+%
+Houses are for living, not for speculation
+    - Xi Jinping (2016)
+%
+There's a line men like us have to cross. If we're lucky, we do what's necessary and then we die.
+    - Colonel John Konrad (Spec Ops: The Line)
+%
+No matter how hard I tried, I never could escape the reality of what happened here. That was my downfall.
+    - Colonel John Konrad (Spec Ops: The Line)
+%
+It takes a strong man to deny what's right in front of him. And if the truth is undeniable... You create your own.
+    - Colonel John Konrad (Spec Ops: The Line)
+%
+The truth, Walker, is that you're here because you wanted to feel like something you're not. A hero. I'm here because you can't accept what you've done. It broke you. You needed someone to blame. So, you cast it on me. A dead man.
+    - Colonel John Konrad (Spec Ops: The Line)
+%
+They are rage, brutal, without mercy. But you. You will be worse. Rip and tear, until it is done.

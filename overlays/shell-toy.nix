@@ -10,7 +10,7 @@ in
 
   shell-toy = prev.pkgsStatic.rustPlatform.buildRustPackage {
     pname = "sh-toy";
-    version = "0.7.2";
+    version = "0.8.1";
 
     srcs = [
       (lib.fileset.toSource {
@@ -20,14 +20,14 @@ in
       (fetchgit {
         url = "https://github.com/FaceFTW/shell-toy.git";
         name = "sh-toy-source";
-        rev = "e6a170079e675407d22012536877118a6177d69a";
-        hash = "sha256-X0kogkkLden5KpOxDdoL3m/0Q9AsyeSVuOP9sekwoMY=";
+        rev = "98859fa49ca1cc0061edd5d1a47607290eb3b7f3";
+        hash = "sha256-K7ctG61fEqshjLVmSv7oBIwclE1W51TLjqPL8KZODUA=";
         # hash = prev.lib.fakeHash;
       })
     ];
 
     sourceRoot = "sh-toy-source";
-    cargoHash = "sha256-kLQ8ev48N2H1dbUMCGvvzq8cl5EG6x1H6rEYVeJ9aPo=";
+    cargoHash = "sha256-TI3PCy9VqqsCCmpUznIlIAY8Ic0CZe1IlucycMzhyCQ=";
 
     doCheck = false;
 
