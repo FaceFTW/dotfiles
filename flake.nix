@@ -31,6 +31,7 @@
     # Hyprland Ecosystem
     hyprnix.url = "github:hyprwm/hyprnix";
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
+    hyprnix.inputs.hyprland.url = "github:hyprwm/hyprland/v0.56.1";
     aquamarine.url = "github:hyprwm/aquamarine";
     aquamarine.inputs.nixpkgs.follows = "nixpkgs";
     aquamarine.inputs.hyprutils.follows = "hyprnix/hyprutils";
@@ -56,7 +57,7 @@
     vicinae-extensions.inputs.nixpkgs.follows = "nixpkgs";
 
     # FRAUDSHELL
-    fraudshell.url="path:./modules/fraudshell";
+    fraudshell.url = "path:./modules/fraudshell";
     fraudshell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -92,12 +93,23 @@
             inputs.aquamarine.overlays.default
             inputs.fraudshell.overlays.default
             (final: prev: {
-              hyprland = inputs.hyprnix.packages.${prev.stdenv.hostPlatform.system}.hyprland;
-              # prev.hyprland.override {
-              #   hyprgraphics = inputs.hyprnix.packages.${prev.stdenv.hostPlatform.system}.hyprgraphics;
-              #   aquamarine = inputs.aquamarine.packages.${prev.stdenv.hostPlatform.system}.aquamarine;
-              # };
+              hyprland = inputs.hyprnix.packages.${prev.stdenv.hostPlatform.system}.hyprland.override {
+                glaze-hyprland =
+                  (prev.glaze.overrideAttrs {
+                    version = "7.9.1";
 
+                    src = prev.fetchFromGitHub {
+                      owner = "stephenberry";
+                      repo = "glaze";
+                      tag = "v7.9.1";
+                      hash = "sha256-NRRq5MGF2f5PW0teYnq58ELzson+U6KHVPaY6r30KLA=";
+                    };
+                  }).override
+                    {
+                      enableSSL = false;
+                      enableInterop = false;
+                    };
+              };
             })
           ]
           ++ globalOverlays

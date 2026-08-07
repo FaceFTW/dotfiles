@@ -155,36 +155,51 @@ hl.bind("SUPER + C", hl.dsp.exec_cmd(editor))
 
 hl.bind("SUPER + V", hl.dsp.exec_cmd(clipboard_hist))
 
---- Window Behavior
-hl.bind("SUPER + X", hl.dsp.window.kill())
-hl.bind("SUPER + Q", hl.dsp.window.fullscreen_state({ internal = 3, client = 0 }))
+--
+-- Window Focusing
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true, description = "Window: Move" })
+hl.bind("SUPER + mouse:274", hl.dsp.window.drag(), { mouse = true })
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true, description = "Window: Resize" })
+
+-- bind = SUPER + ←/↑/→/↓,, -- Focus in direction
+for i = 1, 4 do
+    local arrowkey = { "Left", "Right", "Up", "Down" }
+    local focusdir = { "l", "r", "u", "d" }
+    hl.bind("SUPER + " .. arrowkey[i], hl.dsp.focus({ direction = focusdir[i] }),
+        { description = "Window: Focus " .. arrowkey[i] })
+end
+
+-- bind = SUPER + SHIFT, ←/↑/→/↓,, -- Move in direction
+for i = 1, 4 do
+    local arrowkey = { "Left", "Right", "Up", "Down" }
+    local focusdir = { "l", "r", "u", "d" }
+    hl.bind("SUPER + SHIFT + " .. arrowkey[i], hl.dsp.window.move({ direction = focusdir[i] }),
+        { description = "Window: Move " .. arrowkey[i] })
+end
+
 hl.bind("ALT + F4", hl.dsp.window.signal({ signal = 9 }))
+hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Window: Close" })
+hl.bind("SUPER + SHIFT + ALT + Q", hl.dsp.exec_cmd("hyprctl kill"), { description = "Window: Forcefully zap a window" })
+
+--# Window split ratio
+-- binde = SUPER, ;/',, -- Adjust split ratio
+hl.bind("SUPER + Semicolon", hl.dsp.layout("splitratio -0.1"), { repeating = true })
+hl.bind("SUPER + Apostrophe", hl.dsp.layout("splitratio +0.1"), { repeating = true })
+
+--# Positioning mode
+hl.bind("SUPER + ALT + Space", hl.dsp.window.float({ action = "toggle" }), { description = "Window: Float/Tile" })
+hl.bind("SUPER + D", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }),
+    { description = "Window: Maximize" })
+hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }),
+    { description = "Window: Fullscreen" })
+hl.bind("SUPER + ALT + F", hl.dsp.window.fullscreen_state({ internal = 0, client = 3, action = "toggle" }),
+    { description = "Window: Fullscreen spoof" })
+hl.bind("SUPER + P", hl.dsp.window.pin(), { description = "Window: Pin" })
 
 hl.bind("SUPER + ALT+ G", hl.dsp.group.toggle())
 hl.bind("ALT + TAB", hl.dsp.group.next())
 
-hl.bind("SUPER + F", hl.dsp.window.float({ action = "toggle" }))
-
-hl.bind("SUPER + TAB", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind("SUPER + SHIFT + TAB", hl.dsp.focus({ workspace = "e-1" }))
-
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(screenshot))
-
---- Focus Interactions
-hl.bind("SUPER + SHIFT + left", hl.dsp.focus({ direction = "left" }))
-hl.bind("SUPER + SHIFT + right", hl.dsp.focus({ direction = "right" }))
-hl.bind("SUPER + SHIFT + up", hl.dsp.focus({ direction = "up" }))
-hl.bind("SUPER + SHIFT + down", hl.dsp.focus({ direction = "down" }))
-
-hl.bind("SUPER + ALT + left", hl.dsp.window.resize({ x = -10, y = 0 }))
-hl.bind("SUPER + ALT + right", hl.dsp.window.resize({ x = 10, y = 0 }))
-hl.bind("SUPER + ALT + up", hl.dsp.window.resize({ x = 0, y = 10 }))
-hl.bind("SUPER + ALT + down", hl.dsp.window.resize({ x = 0, y = -10 }))
-
-hl.bind("SUPER + SHIFT + ALT + left", hl.dsp.window.resize({ x = 50, y = 0, relative = true }))
-hl.bind("SUPER + SHIFT + ALT + right", hl.dsp.window.resize({ x = 200, y = 0, relative = true }))
-hl.bind("SUPER + SHIFT + ALT + up", hl.dsp.window.resize({ x = 0, y = 200, relative = true }))
-hl.bind("SUPER + SHIFT + ALT + down", hl.dsp.window.resize({ x = 0, y = 50, relative = true }))
 
 for i = 1, 10 do
 	local key = i % 10 -- 10 maps to key 0
