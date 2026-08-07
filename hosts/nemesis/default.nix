@@ -124,16 +124,14 @@
     pkgs.alacritty
     pkgs.firefox
     pkgs.xdg-utils
-    # pkgs.bitwarden-desktop
-    # pkgs.bitwarden-cli
     pkgs.gimp
     pkgs.inkscape
     pkgs.nvidia-offload
     pkgs.imhex
-    # pkgs.bottles
     pkgs.flameshot
     pkgs.freecad
     pkgs.keepassxc
+    pkgs.modrinth-app
 
     # For Tumbler
     pkgs.ffmpegthumbnailer
