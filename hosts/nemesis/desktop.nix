@@ -5,16 +5,7 @@
 }:
 {
   imports = [
-    # ./desktop/common/ashell.nix
-    ./desktop/common/flameshot.nix
-    ./desktop/common/frameworks.nix
-    ./desktop/common/hypr.nix
-    # ./desktop/common/ly.nix
-    ./desktop/common/silentsddm.nix
-    ./desktop/common/vicinae.nix
-    # THEMES
-    # ./themes/deep-blue
-    ./desktop/fraud
+    ./desktop
   ];
 
   services.xserver.xkb.layout = "us";

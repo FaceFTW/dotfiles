@@ -9,6 +9,10 @@
     theme = "default";
     profileIcons.face = ./face.png;
 
+    backgrounds.main = ./wallpapers/fraud-3-wallpaper.png;
+    settings."LoginScreen".background = "fraud-3-wallpaper.png";
+    settings."LockScreen".background = "fraud-3-wallpaper.png";
+    settings."LoginScreen".blur = 75;
 
     settings."LockScreen.Message".font-size = 22;
     settings."LockScreen.Message".icon-size = 28;

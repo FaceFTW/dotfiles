@@ -1,6 +1,6 @@
 {
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -16,14 +16,33 @@ let
   systemctl = "${pkgs.systemd}/bin/systemctl";
 in
 {
-  imports = [
-    # ./waybar.nix
-    ./dunst.nix
-  ];
+  programs.hyprland.enable = true;
+  programs.hyprland.package = pkgs.hyprland;
+  programs.hyprland.portalPackage = pkgs.xdg-desktop-portal-hyprland;
+
+  systemd.user.services.hyprpolkitagent = {
+    serviceConfig.ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+  };
+
+  environment.sessionVariables.AQ_DRM_DEVICES = "/dev/dri/intel_gpu:/dev/dri/nvidia_gpu";
 
   #######################################################
   # Hyprland
   #######################################################
+  home-manager.users.face.wayland.windowManager.hyprland = {
+    enable = true;
+    package = null;
+    portalPackage = null;
+    plugins = [
+      # pkgs.hyprlandPlugins.hyprbars
+      # pkgs.hyprlandPlugins.csgo-vulkan-fix
+    ];
+    systemd.enable = false;
+
+    # Config is set per theme
+    configType = "lua";
+  };
+
   home-manager.users.face.home.file.".config/hypr/hyprland.lua".text =
     with lib;
     replaceByPairs [
@@ -117,27 +136,23 @@ in
         "rgba(ffffffaa)"
       ]
 
-    ] (unsafeDiscardStringContext (readFile ../common/hyprland.lua));
+    ] (unsafeDiscardStringContext (readFile ./hyprland.lua));
 
   #######################################################
-  # Hyprpaper
-  #######################################################
-  home-manager.users.face.services.hyprpaper = {
-    enable = true;
-    settings.wallpaper = [
-      {
-        monitor = "eDP-1";
-        path = "${./wallpapers}";
-        fit_mode = "contain";
-        timeout = 300;
-      }
-    ];
-  };
-
-  #######################################################
-  # Hyprlock
+  # LOCK SCREEN
   #######################################################
   home-manager.users.face.programs.hyprlock = {
+    enable = true;
+    package = pkgs.hyprlock;
+
+    settings.general = {
+      no_fade_in = true;
+      no_fade_out = true;
+      hide_cursor = false;
+      grace = 0;
+      disable_loading_bar = true;
+    };
+
     settings.background = {
       monitor = "";
       path = "${./wallpapers/fraud-3-wallpaper.png}";
@@ -149,11 +164,34 @@ in
     };
 
     settings.input-field = {
+      monitor = "";
+      size = "250, 60";
+      outline_thickness = 2;
+      dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
+      dots_spacing = 0.35; # Scale of dots' absolute size, 0.0 - 1.0
+      dots_center = true;
+      fade_on_empty = false;
+      rounding = -1;
+      hide_input = false;
+      position = "0, -200";
+      halign = "center";
+      valign = "center";
       outer_color = "rgba(0, 0, 0, 0)";
       inner_color = "rgba(0, 0, 0, 0.2)";
       font_color = "rgba(220,220,220,1)";
       check_color = "rgb(204, 136, 34)";
       placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
+    };
+
+    settings.image = {
+      monitor = "";
+      path = "${./face.png}";
+      size = 100;
+      border_size = 2;
+      border_color = "rgba(242,243,244,0.75)";
+      position = "0, -100";
+      halign = "center";
+      valign = "center";
     };
 
     settings.label = [
@@ -184,23 +222,17 @@ in
   };
 
   #######################################################
-  # silentSDDM
+  # Hyprpaper
   #######################################################
-  programs.silentSDDM = {
-    backgrounds.main = ./wallpapers/fraud-3-wallpaper.png;
-    settings."LoginScreen".background = "fraud-3-wallpaper.png";
-    settings."LockScreen".background = "fraud-3-wallpaper.png";
-    settings."LoginScreen".blur = 75;
-
+  home-manager.users.face.services.hyprpaper = {
+    enable = true;
+    settings.wallpaper = [
+      {
+        monitor = "eDP-1";
+        path = "${./wallpapers}";
+        fit_mode = "contain";
+        timeout = 300;
+      }
+    ];
   };
-
-  #######################################################
-  # Limine
-  #######################################################
-  boot.loader.limine.style.wallpapers = [
-    ./wallpapers/fraud-1-wallpaper.png
-    ./wallpapers/fraud-2-wallpaper.png
-    ./wallpapers/fraud-3-wallpaper.png
-  ];
-  boot.loader.limine.style.interface.branding = "ENTERING LAYER 8 - FRAUD";
 }
