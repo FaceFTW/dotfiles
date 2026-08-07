@@ -147,83 +147,102 @@ hl.config({
 ---------------
 
 --- Open Programs
-hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(menu))
-hl.bind("SUPER + T", hl.dsp.exec_cmd(terminal))
-hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
-hl.bind("SUPER + B", hl.dsp.exec_cmd(browser))
-hl.bind("SUPER + C", hl.dsp.exec_cmd(editor))
+hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(menu),
+	{ description = "Open Menu" })
+hl.bind("SUPER + T", hl.dsp.exec_cmd(terminal),
+	{ description = "Open Terminal" })
+hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager),
+	{ description = "Open File Manager" })
+hl.bind("SUPER + B", hl.dsp.exec_cmd(browser),
+	{ description = "Open Browser (Not functional)" })
+hl.bind("SUPER + C", hl.dsp.exec_cmd(editor),
+	{ description = "Open Editor" })
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(screenshot),
+	{ description = "Take Screenshot" })
+hl.bind("SUPER + V", hl.dsp.exec_cmd(clipboard_hist),
+	{ description = "Open Clipboard history" })
 
-hl.bind("SUPER + V", hl.dsp.exec_cmd(clipboard_hist))
-
---
--- Window Focusing
-hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true, description = "Window: Move" })
+--- Window Focusing
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(),
+	{ mouse = true, description = "Window: Move" })
 hl.bind("SUPER + mouse:274", hl.dsp.window.drag(), { mouse = true })
-hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true, description = "Window: Resize" })
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize(),
+	{ mouse = true, description = "Window: Resize" })
 
--- bind = SUPER + ←/↑/→/↓,, -- Focus in direction
 for i = 1, 4 do
-    local arrowkey = { "Left", "Right", "Up", "Down" }
-    local focusdir = { "l", "r", "u", "d" }
-    hl.bind("SUPER + " .. arrowkey[i], hl.dsp.focus({ direction = focusdir[i] }),
-        { description = "Window: Focus " .. arrowkey[i] })
+	local arrowkey = { "Left", "Right", "Up", "Down" }
+	local focusdir = { "l", "r", "u", "d" }
+	hl.bind("SUPER + " .. arrowkey[i], hl.dsp.focus({ direction = focusdir[i] }),
+		{ description = "Window: Focus " .. arrowkey[i] })
+	hl.bind("SUPER + SHIFT + " .. arrowkey[i], hl.dsp.window.move({ direction = focusdir[i] }),
+		{ description = "Window: Move " .. arrowkey[i] })
 end
 
--- bind = SUPER + SHIFT, ←/↑/→/↓,, -- Move in direction
-for i = 1, 4 do
-    local arrowkey = { "Left", "Right", "Up", "Down" }
-    local focusdir = { "l", "r", "u", "d" }
-    hl.bind("SUPER + SHIFT + " .. arrowkey[i], hl.dsp.window.move({ direction = focusdir[i] }),
-        { description = "Window: Move " .. arrowkey[i] })
-end
+--- Window Killing
+hl.bind("ALT + F4", hl.dsp.window.signal({ signal = 9 }),
+	{ description = "SIGKILL a window" })
+hl.bind("SUPER + Q", hl.dsp.window.close(),
+	{ description = "Window: Close" })
+hl.bind("SUPER + SHIFT + ALT + Q", hl.dsp.exec_cmd("hyprctl kill"),
+	{ description = "Window: Forcefully zap a window" })
 
-hl.bind("ALT + F4", hl.dsp.window.signal({ signal = 9 }))
-hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Window: Close" })
-hl.bind("SUPER + SHIFT + ALT + Q", hl.dsp.exec_cmd("hyprctl kill"), { description = "Window: Forcefully zap a window" })
-
---# Window split ratio
--- binde = SUPER, ;/',, -- Adjust split ratio
+-- Layout Split
 hl.bind("SUPER + Semicolon", hl.dsp.layout("splitratio -0.1"), { repeating = true })
 hl.bind("SUPER + Apostrophe", hl.dsp.layout("splitratio +0.1"), { repeating = true })
 
---# Positioning mode
-hl.bind("SUPER + ALT + Space", hl.dsp.window.float({ action = "toggle" }), { description = "Window: Float/Tile" })
+-- Window Positioning mode
+hl.bind("SUPER + ALT + Space", hl.dsp.window.float({ action = "toggle" }),
+	{ description = "Window: Float/Tile" })
 hl.bind("SUPER + D", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }),
-    { description = "Window: Maximize" })
+	{ description = "Window: Maximize" })
 hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }),
-    { description = "Window: Fullscreen" })
+	{ description = "Window: Fullscreen" })
 hl.bind("SUPER + ALT + F", hl.dsp.window.fullscreen_state({ internal = 0, client = 3, action = "toggle" }),
-    { description = "Window: Fullscreen spoof" })
-hl.bind("SUPER + P", hl.dsp.window.pin(), { description = "Window: Pin" })
+	{ description = "Window: Fullscreen spoof" })
+hl.bind("SUPER + P", hl.dsp.window.pin(),
+	{ description = "Window: Pin" })
 
-hl.bind("SUPER + ALT+ G", hl.dsp.group.toggle())
-hl.bind("ALT + TAB", hl.dsp.group.next())
+-- Window Groups
+hl.bind("SUPER + ALT+ G", hl.dsp.group.toggle(),
+	{ description = "Group Windows" })
+hl.bind("ALT + TAB", hl.dsp.group.next(),
+	{ description = "Switch Active Window in Group" })
 
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(screenshot))
+-- Workspace Manipulation
+hl.bind("SUPER + TAB", hl.dsp.focus({ workspace = "r+1" }),
+	{ description = "Switch Workspace (Right)" })
+hl.bind("SUPER + SHIFT + TAB", hl.dsp.focus({ workspace = "r-1" }),
+	{ description = "Switch Workspace (Left)" })
 
 for i = 1, 10 do
 	local key = i % 10 -- 10 maps to key 0
-	hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = i }))
-	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+	hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = i }),
+		{ description = "Go to Workspace" .. i })
+	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }),
+		{ description = "Move Window to Workspace" .. i })
 end
 
 --- Power Control
-hl.bind("SUPER + L", hl.dsp.exec_cmd(hyprlock))
+hl.bind("SUPER + L", hl.dsp.exec_cmd(hyprlock),
+	{ description = "Lock Session" })
+hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd(hyprlock .. " || systemctl suspend"),
+	{ description = "Sleep" })
 
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(wpctl .. " set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
-	{ locked = true, repeating = true })
+	{ locked = true, repeating = true, description = "Raise Volume" })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(wpctl .. " set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
-	{ locked = true, repeating = true })
+	{ locked = true, repeating = true, description = "Lower Volume" })
 
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd(wpctl .. " set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-	{ locked = true, repeating = true })
+	{ locked = true, repeating = true, description = "Mute Speaker" })
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(wpctl .. " set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-	{ locked = true, repeating = true })
+	{ locked = true, repeating = true, description = "Mute Microphone" })
 
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(brightnessctl .. " -e4 -n2 set 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(brightnessctl .. " -e4 -n2 set 5%+"),
+	{ locked = true, repeating = true, description = "Increase Brightness" })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(brightnessctl .. " -e4 -n2 set 5%-"),
-	{ locked = true, repeating = true })
+	{ locked = true, repeating = true, description = "Decrease Brightness" })
 
 ----------------------
 ---- WINDOW RULES ----
