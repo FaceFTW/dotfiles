@@ -169,18 +169,18 @@
   ];
 
   # Another external SSD, but smaller
-  fileSystems."/mnt/kleiner".device = "/dev/disk/by-partuuid/c524f2dc-4057-4b30-80c1-a70397c1bbd2";
-  fileSystems."/mnt/kleiner".fsType = "exfat";
-  # fileSystems."/mnt/kleiner".noCheck = true;
-  fileSystems."/mnt/kleiner".options = [
-    "uid=face"
-    "gid=users"
-    "nofail"
-  ];
-  fileSystems."/mnt/kleiner".depends = [
-    "/mnt/archive"
-    "/mnt/motorway"
-  ];
+  # fileSystems."/mnt/kleiner".device = "/dev/disk/by-partuuid/c524f2dc-4057-4b30-80c1-a70397c1bbd2";
+  # fileSystems."/mnt/kleiner".fsType = "exfat";
+  # # fileSystems."/mnt/kleiner".noCheck = true;
+  # fileSystems."/mnt/kleiner".options = [
+  #   "uid=face"
+  #   "gid=users"
+  #   "nofail"
+  # ];
+  # fileSystems."/mnt/kleiner".depends = [
+  #   "/mnt/archive"
+  #   "/mnt/motorway"
+  # ];
 
   services.btrfs.autoScrub.enable = true;
   services.btrfs.autoScrub.fileSystems = [
