@@ -91,4 +91,18 @@
       ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/Vaults
     '';
   };
+
+  modules.services.mirror.actual-archive = {
+    notification-title = "Archiver - Actual to Archive Mirror";
+    cron = "*-*-* 4:00:00";
+    source = "/mnt/motorway/var/actual";
+    destination = "/mnt/archive/actual-backup";
+    mounts = [
+      "mnt-archive.mount"
+      "mnt-motorway.mount"
+    ];
+    post-mirror-cmds = ''
+      ${pkgs.coreutils}/bin/chown --recursive face:users /mnt/archive/actual-backup
+    '';
+  };
 }

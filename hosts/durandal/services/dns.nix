@@ -63,6 +63,7 @@
 
       archiver               IN A      192.168.0.172
       immich                 IN A      192.168.0.172
+      actual                 IN A      192.168.0.172
       linkwarden             IN A      192.168.0.172
       backrest               IN A      192.168.0.172
       syncthing-archiver     IN A      192.168.0.172

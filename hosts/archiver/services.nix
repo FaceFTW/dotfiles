@@ -4,6 +4,7 @@
 }:
 {
   imports = [
+    ./services/actual.nix
     ./services/backrest.nix
     ./services/garage.nix
     ./services/immich.nix
