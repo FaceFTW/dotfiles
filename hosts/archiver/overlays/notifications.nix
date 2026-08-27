@@ -52,4 +52,31 @@ final: prev: {
         https://api.pushover.net/1/messages.json
     '';
   };
+
+  backrest-notif-event = prev.writeShellApplication {
+    name = "backrest-notif-event";
+    runtimeInputs = [
+      prev.curl
+      prev.coreutils
+    ];
+    text = ''
+      job_name=$1
+      job_summary=$2
+
+      token=$(cat /run/secrets/pushover_api_key)
+      user=$(cat /run/secrets/pushover_user_key)
+
+      timestamp=$(${prev.coreutils}/bin/date +%s)
+
+      ${prev.curl}/bin/curl \
+        --retry 5 \
+        --retry-delay 30 \
+        --form-string "token=''${token}" \
+        --form-string "user=''${user}" \
+        --form-string "timestamp=''${timestamp}" \
+        --form-string "title=Backrest Event - ''${job_name}" \
+        --form-string "message=''${job_summary}" \
+        https://api.pushover.net/1/messages.json
+    '';
+  };
 }

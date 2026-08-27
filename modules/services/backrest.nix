@@ -44,6 +44,11 @@ in
       wantedBy = [ "default.target" ];
       after = [ "network.target" ];
 
+      path = [
+        pkgs.backrest-notif-event
+        pkgs.bash
+      ];
+
       environment.BACKREST_RESTIC_COMMAND = "${pkgs.restic}/bin/restic";
       environment.BACKREST_CONFIG = "${backrest.configPath}";
       environment.BACKREST_DATA = "${backrest.dataDir}";
