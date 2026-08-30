@@ -2,7 +2,7 @@
 {
   networking.hostName = "nemesis";
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "192.168.0.7#dns.faceftw.local" ];
+  networking.nameservers = [ "192.168.0.7#dns.faceftw.home" ];
 
   # services.resolved.enable = true;
   # services.resolved.settings.Resolve.DNS = [

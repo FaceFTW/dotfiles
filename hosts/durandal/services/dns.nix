@@ -25,31 +25,31 @@
     listenOnPort = 1053;
     zones = [
       {
-        name = "faceftw.local";
-        file = "/etc/bind/zones/faceftw.local.zone";
+        name = "faceftw.home";
+        file = "/etc/bind/zones/faceftw.home.zone";
         master = true;
-        extraConfig = "allow-update { key rfc2136key.faceftw.local.; };";
+        extraConfig = "allow-update { key rfc2136key.faceftw.home.; };";
       }
     ];
   };
 
-  environment.etc."bind/zones/faceftw.local.zone" = {
+  environment.etc."bind/zones/faceftw.home.zone" = {
     enable = true;
     user = "named";
     group = "named";
     mode = "0644";
     text = ''
-      $ORIGIN faceftw.local.
+      $ORIGIN faceftw.home.
       $TTL    60   ; 86400 - 1 day
 
-      @                   IN SOA  dns.faceftw.local. admin.faceftw.local. (
+      @                   IN SOA  dns.faceftw.home. admin.faceftw.home. (
                             1337   ; Serial
                             3600   ; Refresh
                             300    ; Retry
                             3600   ; Expire
                             300)   ; Negative Cache TT
 
-      @                   IN NS   dns.faceftw.local.
+      @                   IN NS   dns.faceftw.home.
 
       router                 IN A      192.168.0.1
 
@@ -69,9 +69,9 @@
       syncthing-archiver     IN A      192.168.0.172
       garage                 IN A      192.168.0.172
       s3.garage              IN A      192.168.0.172
-      *.s3.garage            IN CNAME  s3.garage.faceftw.local.
+      *.s3.garage            IN CNAME  s3.garage.faceftw.home.
       web.garage             IN A      192.168.0.172
-      *.web.garage           IN CNAME  web.garage.faceftw.local.
+      *.web.garage           IN CNAME  web.garage.faceftw.home.
       jellyfin               IN A      192.168.0.172
       navidrome              IN A      192.168.0.172
     '';

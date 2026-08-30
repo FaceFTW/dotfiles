@@ -19,8 +19,8 @@
 
   # Nginx Reverse Proxy Config
   services.nginx.upstreams.navidrome.servers."127.0.0.1:4533" = { };
-  services.nginx.virtualHosts."navidrome.faceftw.local" = {
-    serverName = "navidrome.faceftw.local";
+  services.nginx.virtualHosts."navidrome.faceftw.home" = {
+    serverName = "navidrome.faceftw.home";
     listen = [
       {
         addr = "0.0.0.0";

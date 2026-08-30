@@ -6,7 +6,7 @@ final: prev: {
     FILTERED_LIST=$(mktemp)
 
     ${final.s5cmd}/bin/s5cmd \
-      --endpoint-url "http://s3.garage.faceftw.local" \
+      --endpoint-url "http://s3.garage.faceftw.home" \
      	ls \
       "s3://nix-cache/*" \
     > "$BUCKET_LIST"
@@ -22,7 +22,7 @@ final: prev: {
 
     while read line; do
       ${final.s5cmd}/bin/s5cmd \
-        --endpoint-url "http://s3.garage.faceftw.local" \
+        --endpoint-url "http://s3.garage.faceftw.home" \
         rm \
         "s3://nix-cache/$line"
     done < "$FILTERED_LIST"

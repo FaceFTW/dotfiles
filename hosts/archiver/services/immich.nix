@@ -21,11 +21,11 @@
 
   # Nginx Reverse Proxy Config
     services.nginx.upstreams.immich.servers."localhost:2283" = { };
-    services.nginx.virtualHosts."immich.faceftw.local" = {
+    services.nginx.virtualHosts."immich.faceftw.home" = {
     # enableACME = true;
     # forceSSL = true;
 
-    serverName = "immich.faceftw.local";
+    serverName = "immich.faceftw.home";
     listen = [
       {
         addr = "0.0.0.0";

@@ -18,8 +18,8 @@
 
   # Nginx Reverse Proxy Config
     services.nginx.upstreams.backrest.servers."127.0.0.1:9898" = { };
-    services.nginx.virtualHosts."backrest.faceftw.local" = {
-    serverName = "backrest.faceftw.local";
+    services.nginx.virtualHosts."backrest.faceftw.home" = {
+    serverName = "backrest.faceftw.home";
     listen = [
       {
         addr = "0.0.0.0";

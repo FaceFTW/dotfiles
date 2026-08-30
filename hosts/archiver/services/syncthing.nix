@@ -13,8 +13,8 @@
 
   # Nginx Reverse Proxy Config
   services.nginx.upstreams.syncthing-gui.servers."localhost:8384" = { };
-  services.nginx.virtualHosts."syncthing-archiver.faceftw.local" = {
-    serverName = "syncthing-archiver.faceftw.local";
+  services.nginx.virtualHosts."syncthing-archiver.faceftw.home" = {
+    serverName = "syncthing-archiver.faceftw.home";
     listen = [
       {
         addr = "0.0.0.0";

@@ -121,7 +121,7 @@
                 --key-file /etc/secrets/nix-cache.pem
 
               nix copy --all \
-                --to 's3://nix-cache?endpoint=s3.garage.faceftw.local&scheme=http&region=archiver' \
+                --to 's3://nix-cache?endpoint=s3.garage.faceftw.home&scheme=http&region=archiver' \
                 --option narinfo-cache-positive-ttl 0
             }
 

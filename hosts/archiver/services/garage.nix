@@ -20,10 +20,10 @@
 
     s3_api.s3_region = "archiver";
     s3_api.api_bind_addr = "[::]:3900";
-    s3_api.root_domain = ".s3.garage.faceftw.local";
+    s3_api.root_domain = ".s3.garage.faceftw.home";
 
     s3_web.bind_addr = "[::]:3902";
-    s3_web.root_domain = ".web.garage.faceftw.local";
+    s3_web.root_domain = ".web.garage.faceftw.home";
     index = "index.html";
 
     k2v_api.api_bind_addr = "[::]:3904";
@@ -36,8 +36,8 @@
 
   # Nginx Reverse Proxy Config - S3
   services.nginx.upstreams.garage-s3.servers."127.0.0.1:3900" = { };
-  services.nginx.virtualHosts."s3.garage.faceftw.local" = {
-    serverName = "s3.garage.faceftw.local *.s3.garage.faceftw.local";
+  services.nginx.virtualHosts."s3.garage.faceftw.home" = {
+    serverName = "s3.garage.faceftw.home *.s3.garage.faceftw.home";
     listen = [
       {
         addr = "0.0.0.0";
@@ -56,8 +56,8 @@
 
   # Nginx Reverse Proxy Config - Web bucket
   services.nginx.upstreams.garage-web.servers."127.0.0.1:3902" = { };
-  services.nginx.virtualHosts."web.garage.faceftw.local" = {
-    serverName = "web.garage.faceftw.local *.web.garage.faceftw.local";
+  services.nginx.virtualHosts."web.garage.faceftw.home" = {
+    serverName = "web.garage.faceftw.home *.web.garage.faceftw.home";
     listen = [
       {
         addr = "0.0.0.0";
@@ -100,8 +100,8 @@
 
   # Nginx Reverse Proxy Config
   services.nginx.upstreams.garage-ui.servers."127.0.0.1:3919" = { };
-  services.nginx.virtualHosts."garage.faceftw.local" = {
-    serverName = "garage.faceftw.local";
+  services.nginx.virtualHosts."garage.faceftw.home" = {
+    serverName = "garage.faceftw.home";
     listen = [
       {
         addr = "0.0.0.0";
