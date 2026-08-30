@@ -46,7 +46,7 @@
   wsl.wslConf.interop.appendWindowsPath = false; # Let Linux binaries take precedence
   wsl.interop.register = true;
   modules.kernel.isWSL = true; # For Kernel Tunable Configs
-  boot.kernelPackages = pkgs.linuxPackages_7_1;
+  boot.kernelPackages = pkgs.linuxPackages_7_2;
 
   ############################################
   # Misc System Configuration
@@ -60,7 +60,7 @@
 
   nix.settings.secret-key-files = "/etc/secrets/nix-cache.pem";
   nix.settings.substituters = [
-    "s3://nix-cache?region=archiver&endpoint=s3.garage.faceftw.local&scheme=http"
+    "s3://nix-cache?region=archiver&endpoint=s3.garage.faceftw.home&scheme=http"
   ];
 
   ############################################

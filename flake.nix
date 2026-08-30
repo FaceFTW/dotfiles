@@ -31,12 +31,12 @@
     # Hyprland Ecosystem
     hyprnix.url = "github:hyprwm/hyprnix";
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
-    hyprnix.inputs.hyprland.url = "github:hyprwm/hyprland/v0.56.1";
-    aquamarine.url = "github:hyprwm/aquamarine";
-    aquamarine.inputs.nixpkgs.follows = "nixpkgs";
-    aquamarine.inputs.hyprutils.follows = "hyprnix/hyprutils";
-    aquamarine.inputs.hyprwayland-scanner.follows = "hyprnix/hyprwayland-scanner";
-    hyprnix.inputs.aquamarine.follows = "aquamarine";
+    # hyprnix.inputs.hyprland.url = "github:hyprwm/hyprland/v0.56.1";
+    # aquamarine.url = "github:hyprwm/aquamarine";
+    # aquamarine.inputs.nixpkgs.follows = "nixpkgs";
+    # aquamarine.inputs.hyprutils.follows = "hyprnix/hyprutils";
+    # aquamarine.inputs.hyprwayland-scanner.follows = "hyprnix/hyprwayland-scanner";
+    # hyprnix.inputs.aquamarine.follows = "aquamarine";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins"; # pin until hyprland 0.55 is released
     hyprland-plugins.inputs.hyprland.follows = "hyprnix/hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
@@ -90,7 +90,7 @@
             inputs.vicinae.overlays.default
             inputs.hyprnix.overlays.default
             inputs.hyprland-plugins.overlays.default
-            inputs.aquamarine.overlays.default
+            # inputs.aquamarine.overlays.default
             inputs.fraudshell.overlays.default
             (final: prev: {
               hyprland = inputs.hyprnix.packages.${prev.stdenv.hostPlatform.system}.hyprland.override {
