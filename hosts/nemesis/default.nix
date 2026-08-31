@@ -105,10 +105,10 @@
   packages.virtualization.armVirtualization = true;
 
   packages.zed.enable = true;
-  packages.zed.linkConfig = true;
-  packages.zed.config.uiFontSize = 18;
-  packages.zed.config.bufferFontSize = 16;
-  packages.zed.config.terminalFontSize = 14;
+  # packages.zed.linkConfig = true;
+  # packages.zed.config.uiFontSize = 18;
+  # packages.zed.config.bufferFontSize = 16;
+  # packages.zed.config.terminalFontSize = 14;
 
   services.flatpak.enable = true;
 
