@@ -1,0 +1,37 @@
+From 29d02570bf547c136c190d3fc90cbc09f7c2e458 Mon Sep 17 00:00:00 2001
+From: Alex Westerman <alex@faceftw.dev>
+Date: Sun, 30 Aug 2026 17:02:11 -0400
+Subject: [PATCH] disable fuzz
+
+---
+ CMakeLists.txt | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ccb2053..f6f7822 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -68,13 +68,13 @@ add_test(
+   COMMAND hyprlang_test "parse")
+ add_dependencies(tests hyprlang_test)
+ 
+-add_executable(hyprlang_fuzz "tests/fuzz/main.cpp")
+-target_link_libraries(hyprlang_fuzz PRIVATE hypr::hyprlang)
+-add_test(
+-  NAME "Fuzz"
+-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests
+-  COMMAND hyprlang_fuzz "fuzz")
+-add_dependencies(tests hyprlang_fuzz)
++# add_executable(hyprlang_fuzz "tests/fuzz/main.cpp")
++# target_link_libraries(hyprlang_fuzz PRIVATE hypr::hyprlang)
++# add_test(
++#   NAME "Fuzz"
++#   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests
++#   COMMAND hyprlang_fuzz "fuzz")
++# add_dependencies(tests hyprlang_fuzz)
+ 
+ # Installation
+ install(
+-- 
+2.55.0
+

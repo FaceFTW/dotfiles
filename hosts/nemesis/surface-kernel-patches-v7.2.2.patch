@@ -1,7 +1,7 @@
 From 717f2370af1564aca8706c55432f1106f164d9a3 Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sun, 9 Jun 2024 19:48:58 +0200
-Subject: [PATCH 01/32] Revert "efi/x86: Set the PE/COFF header's NX compat
+Subject: [PATCH 01/31] Revert "efi/x86: Set the PE/COFF header's NX compat
  flag unconditionally"
 
 This reverts commit 891f8890a4a3663da7056542757022870b499bc1.
@@ -39,7 +39,7 @@ index 9bea5a1e2c52..25848f886ad6 100644
 From d8a17bbf042e7007fbcd9674a650d58d5d1180bb Mon Sep 17 00:00:00 2001
 From: "J. Eduardo" <j.eduardo@gmail.com>
 Date: Sun, 25 Aug 2024 14:17:45 +0200
-Subject: [PATCH 02/32] PM: hibernate: Add a lockdown_hibernate parameter
+Subject: [PATCH 02/31] PM: hibernate: Add a lockdown_hibernate parameter
 
 This allows the user to tell the kernel that they know better (namely,
 they secured their swap properly), and that it can enable hibernation.
@@ -115,7 +115,7 @@ index d2479c69d71a..a1ef8b0b1da0 100644
 From b91a7b4e73cde383fd70712efde782ecb9cb440d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>
 Date: Tue, 3 Nov 2020 13:28:04 +0100
-Subject: [PATCH 03/32] mwifiex: Add quirk resetting the PCI bridge on MS
+Subject: [PATCH 03/31] mwifiex: Add quirk resetting the PCI bridge on MS
  Surface devices
 
 The most recent firmware of the 88W8897 card reports a hardcoded LTR
@@ -283,7 +283,7 @@ index d6ff964aec5b..5d30ae39d65e 100644
 From 344d8f9b580bb05c024912d30b817c75417ece06 Mon Sep 17 00:00:00 2001
 From: Tsuchiya Yuto <kitakar@gmail.com>
 Date: Sun, 4 Oct 2020 00:11:49 +0900
-Subject: [PATCH 04/32] mwifiex: pcie: disable bridge_d3 for Surface gen4+
+Subject: [PATCH 04/31] mwifiex: pcie: disable bridge_d3 for Surface gen4+
 
 Currently, mwifiex fw will crash after suspend on recent kernel series.
 On Windows, it seems that the root port of wifi will never enter D3 state
@@ -439,7 +439,7 @@ index 5d30ae39d65e..c14eb56eb911 100644
 From 2120e50c10510aa855c210719362f6c366d1cb7f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>
 Date: Thu, 25 Mar 2021 11:33:02 +0100
-Subject: [PATCH 05/32] Bluetooth: btusb: Lower passive lescan interval on
+Subject: [PATCH 05/31] Bluetooth: btusb: Lower passive lescan interval on
  Marvell 88W8897
 
 The Marvell 88W8897 combined wifi and bluetooth card (pcie+usb version)
@@ -518,7 +518,7 @@ index 184e95c1625e..2e1b92383996 100644
 From 3c243ebe54f402c13cb5fc1557059c23311bced2 Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sat, 27 Feb 2021 00:45:52 +0100
-Subject: [PATCH 06/32] ath10k: Add module parameters to override board files
+Subject: [PATCH 06/31] ath10k: Add module parameters to override board files
 
 Some Surface devices, specifically the Surface Go and AMD version of the
 Surface Laptop 3 (wich both come with QCA6174 WiFi chips), work better
@@ -639,7 +639,7 @@ index 7c2939cbde5f..eb402a3a8c5f 100644
 From 4b5538f3838eaf1fb8d6ab65d5737949933e96dc Mon Sep 17 00:00:00 2001
 From: Alex Westerman <alex@faceftw.dev>
 Date: Sat, 9 May 2026 21:18:40 -0400
-Subject: [PATCH 07/32] mei: me: Add Icelake device ID for iTouch
+Subject: [PATCH 07/31] mei: me: Add Icelake device ID for iTouch
 
 Signed-off-by: Dorian Stoll <dorian.stoll@tmsp.io>
 Patchset: ipts
@@ -679,7 +679,7 @@ index 55e0b8a98827..4fe61ba24a95 100644
 From 14e4bd4e7fa895205e3d5946e9a425955bb23d11 Mon Sep 17 00:00:00 2001
 From: Alex Westerman <alex@faceftw.dev>
 Date: Sun, 7 Jun 2026 18:20:39 -0400
-Subject: [PATCH 08/32] iommu: Use IOMMU passthrough mode for IPTS
+Subject: [PATCH 08/31] iommu: Use IOMMU passthrough mode for IPTS
 
 Adds a quirk so that IOMMU uses passthrough mode for the IPTS device.
 Otherwise, when IOMMU is enabled, IPTS produces DMAR errors like:
@@ -787,7 +787,7 @@ index 849d06dfe1ae..7914399d4d39 100644
 From a5488213755a127980457f5f9cfaf8415b0c84df Mon Sep 17 00:00:00 2001
 From: Dorian Stoll <dorian.stoll@tmsp.io>
 Date: Sun, 11 Dec 2022 12:00:59 +0100
-Subject: [PATCH 09/32] hid: Add support for Intel Precise Touch and Stylus
+Subject: [PATCH 09/31] hid: Add support for Intel Precise Touch and Stylus
 
 Based on linux-surface/intel-precise-touch@8abe268
 
@@ -3885,7 +3885,7 @@ index 000000000000..1f966b8b32c4
 From 8fb8b73f6bed505bce6a75d55d7daa7ffc6a9e3c Mon Sep 17 00:00:00 2001
 From: Dorian Stoll <dorian.stoll@tmsp.io>
 Date: Sun, 11 Dec 2022 12:03:38 +0100
-Subject: [PATCH 10/32] iommu: intel: Disable source id verification for ITHC
+Subject: [PATCH 10/31] iommu: intel: Disable source id verification for ITHC
 
 Signed-off-by: Dorian Stoll <dorian.stoll@tmsp.io>
 Patchset: ithc
@@ -3927,7 +3927,7 @@ index 25c26f706984..772bb0d8e588 100644
 From f040027e890d981a06d52d698fb0b3c9215cf2d9 Mon Sep 17 00:00:00 2001
 From: quo <tuple@list.ru>
 Date: Sun, 11 Dec 2022 12:10:54 +0100
-Subject: [PATCH 11/32] hid: Add support for Intel Touch Host Controller
+Subject: [PATCH 11/31] hid: Add support for Intel Touch Host Controller
 
 Based on quo/ithc-linux@34539af4726d.
 
@@ -6667,7 +6667,7 @@ index 000000000000..aec320d4e945
 From 93a695a9773ffc1171264c5af3ddce49672302ff Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Fri, 17 Jun 2022 02:14:00 +0200
-Subject: [PATCH 12/32] rtc: Add basic support for RTC via Surface System
+Subject: [PATCH 12/31] rtc: Add basic support for RTC via Surface System
  Aggregator Module
 
 Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
@@ -6851,7 +6851,7 @@ index 000000000000..f6c17c4e98d5
 From 6ab6267d70536494ab1172482d459cfb359d861d Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sat, 25 Jul 2020 17:19:53 +0200
-Subject: [PATCH 13/32] i2c: acpi: Implement RawBytes read access
+Subject: [PATCH 13/31] i2c: acpi: Implement RawBytes read access
 
 Microsoft Surface Pro 4 and Book 1 devices access the MSHW0030 I2C
 device via a generic serial bus operation region and RawBytes read
@@ -6963,7 +6963,7 @@ index e5fddacae9a4..6336fca33d75 100644
 From 247d6359e1933c7e29a6f5695a4259692e78b88e Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sat, 13 Feb 2021 16:41:18 +0100
-Subject: [PATCH 14/32] platform/surface: Add driver for Surface Book 1 dGPU
+Subject: [PATCH 14/31] platform/surface: Add driver for Surface Book 1 dGPU
  switch
 
 Add driver exposing the discrete GPU power-switch of the  Microsoft
@@ -7162,7 +7162,7 @@ index 000000000000..68db237734a1
 From 386562fbfd0d64d0db7479acc1026cca7039e54b Mon Sep 17 00:00:00 2001
 From: Sachi King <nakato@nakato.io>
 Date: Tue, 5 Oct 2021 00:05:09 +1100
-Subject: [PATCH 15/32] Input: soc_button_array - support AMD variant Surface
+Subject: [PATCH 15/31] Input: soc_button_array - support AMD variant Surface
  devices
 
 The power button on the AMD variant of the Surface Laptop uses the
@@ -7241,7 +7241,7 @@ index b8cad415c62c..43b5d56383e3 100644
 From d0c6b5fa63f9e479b8903366a7ecfeb19d2997f1 Mon Sep 17 00:00:00 2001
 From: Maximilian Luz <luzmaximilian@gmail.com>
 Date: Sat, 18 Feb 2023 01:02:49 +0100
-Subject: [PATCH 16/32] USB: quirks: Add USB_QUIRK_DELAY_INIT for Surface Go 3
+Subject: [PATCH 16/31] USB: quirks: Add USB_QUIRK_DELAY_INIT for Surface Go 3
  Type-Cover
 
 The touchpad on the Type-Cover of the Surface Go 3 is sometimes not
@@ -7283,7 +7283,7 @@ index b5b577f0b931..303e2c526986 100644
 From 06da4cf4662ec943e546407a6f3cf9657ea60954 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>
 Date: Thu, 5 Nov 2020 13:09:45 +0100
-Subject: [PATCH 17/32] hid/multitouch: Turn off Type Cover keyboard backlight
+Subject: [PATCH 17/31] hid/multitouch: Turn off Type Cover keyboard backlight
  when suspending
 
 The Type Cover for Microsoft Surface devices supports a special usb
@@ -7520,7 +7520,7 @@ index edb37b4c867e..4d0ab2d7b0e2 100644
 From d382ae0d4c62338f9edd695cb43b0dba84f41008 Mon Sep 17 00:00:00 2001
 From: PJungkamp <p.jungkamp@gmail.com>
 Date: Fri, 25 Feb 2022 12:04:25 +0100
-Subject: [PATCH 18/32] hid/multitouch: Add support for surface pro type cover
+Subject: [PATCH 18/31] hid/multitouch: Add support for surface pro type cover
  tablet switch
 
 The Surface Pro Type Cover has several non standard HID usages in it's
@@ -7820,7 +7820,7 @@ index 4d0ab2d7b0e2..59f92adcf664 100644
 From 6d244cdf025afd7502f0b23eb1a64b96220e7188 Mon Sep 17 00:00:00 2001
 From: Alex Westerman <alex@faceftw.dev>
 Date: Sun, 30 Aug 2026 14:17:02 -0400
-Subject: [PATCH 19/32] PCI: Add quirk to prevent calling shutdown method
+Subject: [PATCH 19/31] PCI: Add quirk to prevent calling shutdown method
 
 Work around buggy EFI firmware: On some Microsoft Surface devices
 (Surface Pro 9 and Surface Laptop 5) the EFI ResetSystem call with
@@ -7920,7 +7920,7 @@ index 64b308b6e61c..2d2ca3f88c49 100644
 From 9973bd0dfb9909f22e8c3b8364291c920da544c7 Mon Sep 17 00:00:00 2001
 From: LegendaryFire <tristan.balon@outlook.com>
 Date: Wed, 7 Jan 2026 01:06:25 +0100
-Subject: [PATCH 20/32] PCI: Add Surface Laptop Studio 2 devices to shutdown
+Subject: [PATCH 20/31] PCI: Add Surface Laptop Studio 2 devices to shutdown
  ops quirk
 
 Link: https://github.com/linux-surface/linux-surface/pull/1948
@@ -7964,7 +7964,7 @@ index 54e7d744f3f8..2048d7f2eee7 100644
 From ca58678215c0d4dcb91efdc3a654925a05aad20f Mon Sep 17 00:00:00 2001
 From: Hans de Goede <hdegoede@redhat.com>
 Date: Sun, 10 Oct 2021 20:56:57 +0200
-Subject: [PATCH 21/32] ACPI: delay enumeration of devices with a _DEP pointing
+Subject: [PATCH 21/31] ACPI: delay enumeration of devices with a _DEP pointing
  to an INT3472 device
 
 The clk and regulator frameworks expect clk/regulator consumer-devices
@@ -8041,7 +8041,7 @@ index 9a7ac2eb9ce0..46c415b3a955 100644
 From 0c29b60a3ae96168d72b099aae17f18022522b0e Mon Sep 17 00:00:00 2001
 From: zouxiaoh <xiaohong.zou@intel.com>
 Date: Fri, 25 Jun 2021 08:52:59 +0800
-Subject: [PATCH 22/32] iommu: intel-ipu: use IOMMU passthrough mode for Intel
+Subject: [PATCH 22/31] iommu: intel-ipu: use IOMMU passthrough mode for Intel
  IPUs
 
 Intel IPU(Image Processing Unit) has its own (IO)MMU hardware,
@@ -8153,7 +8153,7 @@ index 7914399d4d39..31f1bd75a77a 100644
 From 4feecb6dd49e555e34b1ee4e9251581a5484d2a5 Mon Sep 17 00:00:00 2001
 From: Daniel Scally <djrscally@gmail.com>
 Date: Sun, 10 Oct 2021 20:57:02 +0200
-Subject: [PATCH 23/32] platform/x86: int3472: Enable I2c daisy chain
+Subject: [PATCH 23/31] platform/x86: int3472: Enable I2c daisy chain
 
 The TPS68470 PMIC has an I2C passthrough mode through which I2C traffic
 can be forwarded to a device connected to the PMIC as though it were
@@ -8191,7 +8191,7 @@ index a77ed32abe55..3ef46bace187 100644
 From ac3e0a6af6fe7ae78e192b3b73b6a46cd6b8db95 Mon Sep 17 00:00:00 2001
 From: Daniel Scally <dan.scally@ideasonboard.com>
 Date: Tue, 21 Mar 2023 13:45:26 +0000
-Subject: [PATCH 24/32] media: i2c: Clarify that gain is Analogue gain in
+Subject: [PATCH 24/31] media: i2c: Clarify that gain is Analogue gain in
  OV7251
 
 Update the control ID for the gain control in the ov7251 driver to
@@ -8232,7 +8232,7 @@ index 311c61d9e25d..a1a91b41eb4d 100644
 From 50c10ce4ddcb16f4b19c213d11d3bead1d53e591 Mon Sep 17 00:00:00 2001
 From: Daniel Scally <dan.scally@ideasonboard.com>
 Date: Wed, 22 Mar 2023 11:01:42 +0000
-Subject: [PATCH 25/32] media: v4l2-core: Acquire privacy led in
+Subject: [PATCH 25/31] media: v4l2-core: Acquire privacy led in
  v4l2_async_register_subdev()
 
 The current call to v4l2_subdev_get_privacy_led() is contained in
@@ -8284,7 +8284,7 @@ index 62a3a452f788..349aebb77f2e 100644
 From fb5b550d296fdec464f688c0d2ff40e196b66562 Mon Sep 17 00:00:00 2001
 From: Alex Westerman <alex@faceftw.dev>
 Date: Thu, 25 Jun 2026 00:13:10 -0400
-Subject: [PATCH 26/32] platform: x86: int3472: Add MFD cell for tps68470 LED
+Subject: [PATCH 26/31] platform: x86: int3472: Add MFD cell for tps68470 LED
 
 Add MFD cell for tps68470-led.
 
@@ -8327,7 +8327,7 @@ index 3ef46bace187..f9849e83ada2 100644
 From 58e47132889644d5a05e5dd7a2babcc58c1962ca Mon Sep 17 00:00:00 2001
 From: Kate Hsuan <hpa@redhat.com>
 Date: Tue, 21 Mar 2023 23:37:17 +0800
-Subject: [PATCH 27/32] include: mfd: tps68470: Add masks for LEDA and LEDB
+Subject: [PATCH 27/31] include: mfd: tps68470: Add masks for LEDA and LEDB
 
 Add flags for both LEDA(TPS68470_ILEDCTL_ENA), LEDB
 (TPS68470_ILEDCTL_ENB), and current control mask for LEDB
@@ -8369,7 +8369,7 @@ index 7807fa329db0..2d2abb25b944 100644
 From 2c1d29a51d1b9872df89f199e56d3126a8b31908 Mon Sep 17 00:00:00 2001
 From: Kate Hsuan <hpa@redhat.com>
 Date: Tue, 21 Mar 2023 23:37:18 +0800
-Subject: [PATCH 28/32] leds: tps68470: Add LED control for tps68470
+Subject: [PATCH 28/31] leds: tps68470: Add LED control for tps68470
 
 There are two LED controllers, LEDA indicator LED and LEDB flash LED for
 tps68470. LEDA can be enabled by setting TPS68470_ILEDCTL_ENA. Moreover,
@@ -8621,7 +8621,7 @@ index 000000000000..35aeb5db89c8
 From 3d1385f7fc7b25bd83cf43c3e153da06aa676ae0 Mon Sep 17 00:00:00 2001
 From: gabrielstedman <gabrielstedman@users.noreply.github.com>
 Date: Fri, 13 Mar 2026 08:52:07 +0000
-Subject: [PATCH 29/32] media: ipu-bridge: Add front camera rotation quirks for
+Subject: [PATCH 29/31] media: ipu-bridge: Add front camera rotation quirks for
  Surface Pro 8 and 9
 
 On the Surface Pro 8 and 9, camera rotation in `ssdb.degree` is `0` (no
@@ -8663,131 +8663,10 @@ index 88581a4c081d..0cb87c7b29e0 100644
 2.55.0
 
 
-From b7e555fcf45221b94a4ac39d2798380df15b7a97 Mon Sep 17 00:00:00 2001
-From: Alex Westerman <alex@faceftw.dev>
-Date: Thu, 25 Jun 2026 00:15:56 -0400
-Subject: [PATCH 30/32] acpi: allow usage of acpi_tad on HW-reduced platforms
-
-The specification [1] allows so-called HW-reduced platforms,
-which do not implement everything, especially the wakeup related stuff.
-
-In that case, it is still usable as a RTC. This is helpful for [2]
-and [3], which is about a device with no other working RTC,
-but it does have an HW-reduced TAD, which can be used as a RTC instead.
-
-[1]: https://uefi.org/specs/ACPI/6.5/09_ACPI_Defined_Devices_and_Device_Specific_Objects.html#time-and-alarm-device
-[2]: https://bugzilla.kernel.org/show_bug.cgi?id=212313
-[3]: https://github.com/linux-surface/linux-surface/issues/415
-
-Signed-off-by: Bart Groeneveld | GPX Solutions B.V. <bart@gpxbv.nl>
-Patchset: rtc
----
- drivers/acpi/acpi_tad.c | 56 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 46 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/acpi/acpi_tad.c b/drivers/acpi/acpi_tad.c
-index fc43df083738..c03ceb6e27a5 100644
---- a/drivers/acpi/acpi_tad.c
-+++ b/drivers/acpi/acpi_tad.c
-@@ -473,6 +473,14 @@ static ssize_t caps_show(struct device *dev, struct device_attribute *attr,
- 
- static DEVICE_ATTR_RO(caps);
- 
-+static struct attribute *acpi_tad_attrs[] = {
-+	&dev_attr_caps.attr,
-+	NULL,
-+};
-+static const struct attribute_group acpi_tad_attr_group = {
-+	.attrs	= acpi_tad_attrs,
-+};
-+
- static ssize_t ac_alarm_store(struct device *dev, struct device_attribute *attr,
- 			      const char *buf, size_t count)
- {
-@@ -521,6 +529,16 @@ static ssize_t ac_status_show(struct device *dev, struct device_attribute *attr,
- 
- static DEVICE_ATTR_RW(ac_status);
- 
-+static struct attribute *acpi_tad_ac_attrs[] = {
-+	&dev_attr_ac_alarm.attr,
-+	&dev_attr_ac_policy.attr,
-+	&dev_attr_ac_status.attr,
-+	NULL,
-+};
-+static const struct attribute_group acpi_tad_ac_attr_group = {
-+	.attrs	= acpi_tad_ac_attrs,
-+};
-+
- static ssize_t dc_alarm_store(struct device *dev, struct device_attribute *attr,
- 			      const char *buf, size_t count)
- {
-@@ -797,6 +815,17 @@ static void acpi_tad_remove(void *data)
- 
- 	device_init_wakeup(dev, false);
- 
-+	if (dd->capabilities & ACPI_TAD_RT)
-+		sysfs_remove_group(&dev->kobj, &acpi_tad_time_attr_group);
-+
-+	if (dd->capabilities & ACPI_TAD_AC_WAKE)
-+		sysfs_remove_group(&dev->kobj, &acpi_tad_ac_attr_group);
-+
-+	if (dd->capabilities & ACPI_TAD_DC_WAKE)
-+		sysfs_remove_group(&dev->kobj, &acpi_tad_dc_attr_group);
-+
-+	sysfs_remove_group(&dev->kobj, &acpi_tad_attr_group);
-+
- 	scoped_guard(pm_runtime_noresume, dev) {
- 		if (dd->capabilities & ACPI_TAD_AC_WAKE) {
- 			acpi_tad_disable_timer(dev, ACPI_TAD_AC_TIMER);
-@@ -835,14 +864,6 @@ static int acpi_tad_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
- 
--	if (!acpi_has_method(handle, "_PRW")) {
--		dev_info(dev, "Missing _PRW\n");
--		caps &= ~(ACPI_TAD_AC_WAKE | ACPI_TAD_DC_WAKE);
--	}
--
--	if (!(caps & ACPI_TAD_AC_WAKE))
--		caps &= ~ACPI_TAD_DC_WAKE;
--
- 	dd = devm_kzalloc(dev, sizeof(*dd), GFP_KERNEL);
- 	if (!dd)
- 		return -ENOMEM;
-@@ -878,8 +899,23 @@ static int acpi_tad_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	if (caps & ACPI_TAD_RT)
--		acpi_tad_register_rtc(dev, caps);
-+	if (caps & ACPI_TAD_AC_WAKE) {
-+		ret = sysfs_create_group(&dev->kobj, &acpi_tad_ac_attr_group);
-+		if (ret)
-+			goto fail;
-+	}
-+
-+	if (caps & ACPI_TAD_DC_WAKE) {
-+		ret = sysfs_create_group(&dev->kobj, &acpi_tad_dc_attr_group);
-+		if (ret)
-+			goto fail;
-+	}
-+
-+	if (caps & ACPI_TAD_RT) {
-+		ret = sysfs_create_group(&dev->kobj, &acpi_tad_time_attr_group);
-+		if (ret)
-+			goto fail;
-+	}
- 
- 	return 0;
- }
--- 
-2.55.0
-
-
-From 035c2ca3e3ccc25895b07e856cbdb6c7c3b1bcda Mon Sep 17 00:00:00 2001
+From b217d3774dcf66578baa2f6e41473214e0ff612b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ciar=C3=A1n=20Coffey?= <github@ccoffey.ie>
 Date: Fri, 10 Oct 2025 19:04:03 +0100
-Subject: [PATCH 31/32] HID: Add hid-surface driver to filter BTN_0 (FN key)
+Subject: [PATCH 30/31] HID: Add hid-surface driver to filter BTN_0 (FN key)
 
 The Surface Aggregator Module firmware incorrectly reports the FN key
 as BTN_0 (button 256) through runtime HID events. This button can get
@@ -8943,10 +8822,10 @@ index 000000000000..a171ea65672f
 2.55.0
 
 
-From 1d65241bdb6dd489bb2ddf4dac43c8ba17c2464a Mon Sep 17 00:00:00 2001
+From b06764bc13902da10b3006523a4fbe67e843a7f3 Mon Sep 17 00:00:00 2001
 From: LegendaryFire <tristan.balon@outlook.com>
 Date: Fri, 13 Mar 2026 10:16:37 +0100
-Subject: [PATCH 32/32] hid/multitouch: Prevent mode set on Surface Laptop
+Subject: [PATCH 31/31] hid/multitouch: Prevent mode set on Surface Laptop
  Studio 2 touch pad
 
 Note: Is this still required with MT_QUIRK_KEEP_LATENCY_ON_CLOSE now

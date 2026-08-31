@@ -31,20 +31,15 @@
     # Hyprland Ecosystem
     hyprnix.url = "github:hyprwm/hyprnix";
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
-    # hyprnix.inputs.hyprland.url = "github:hyprwm/hyprland/v0.56.1";
-    # aquamarine.url = "github:hyprwm/aquamarine";
-    # aquamarine.inputs.nixpkgs.follows = "nixpkgs";
-    # aquamarine.inputs.hyprutils.follows = "hyprnix/hyprutils";
-    # aquamarine.inputs.hyprwayland-scanner.follows = "hyprnix/hyprwayland-scanner";
-    # hyprnix.inputs.aquamarine.follows = "aquamarine";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins"; # pin until hyprland 0.55 is released
+    hyprnix.inputs.hyprutils.url = "github:hyprwm/hyprutils/v0.14.0"; # Remove when hyprnix fully on GCC 16
+    hyprnix.inputs.aquamarine.url = "github:hyprwm/aquamarine/1a10fe26a9f7d989c359e6a9ea61aa2e44d06c36"; # ditto
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprnix/hyprland";
-    hyprland-plugins.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland-plugins.inputs.nixpkgs.follows = "hyprnix/nixpkgs";
 
     # Hyprcursor
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
-    rose-pine-hyprcursor.inputs.nixpkgs.follows = "nixpkgs";
-    rose-pine-hyprcursor.inputs.hyprlang.follows = "hyprnix/hyprlang";
+    rose-pine-hyprcursor.inputs.nixpkgs.follows = "hyprnix/nixpkgs";
 
     # Silent SDDM Theme
     silentSDDM.url = "github:uiriansan/SilentSDDM";

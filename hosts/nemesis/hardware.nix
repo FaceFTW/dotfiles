@@ -61,7 +61,7 @@
     version = "7.2.2";
     src = pkgs.fetchurl {
       url = "mirror://kernel/linux/kernel/v7.x/linux-7.2.2.tar.xz";
-      hash = "sha256-IqAZazy83zTcJ7d1YfTQQFhf00R+3JqzUxoax54wQec=";
+      hash = "sha256-fQ584U+YxD7+iAz/vzVKWb5Fko/fcXDXMzw3SukcDYM=";
       # hash = lib.fakeHash;
     };
 
