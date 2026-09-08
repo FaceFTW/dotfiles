@@ -21,8 +21,8 @@
 
   # Nginx Reverse Proxy Config
    services.nginx. upstreams.jellyfin.servers."127.0.0.1:8096" = { };
-    services.nginx.virtualHosts."jellyfin.faceftw.home" = {
-    serverName = "jellyfin.faceftw.home";
+    services.nginx.virtualHosts."jellyfin.internal.faceftw.dev" = {
+    serverName = "jellyfin.internal.faceftw.dev";
     listen = [
       {
         addr = "0.0.0.0";

@@ -1,4 +1,5 @@
 {
+  lib,
   ...
 }:
 {
@@ -55,7 +56,7 @@
       dhcp.active = false; # Handled by Router
       dns = {
         cnameRecords = [ ];
-        domain.name = "faceftw.me";
+        # domain.name = "faceftw.home";
 
         interface = "end0";
 
@@ -79,6 +80,8 @@
       #    sudo pihole-FTL --config webserver.api.pwhash
       webserver.api.pwhash = "";
       webserver.api.session.timeout = 43200; # 12h
+      webserver.tls.cert = lib.mkForce "/var/lib/acme/internal.faceftw.dev/fullchain.pem";
+      webserver.port = "80o,443os";
       misc.readOnly = false;
 
     };
@@ -86,11 +89,20 @@
 
   services.pihole-web = {
     enable = true;
-    ports = [ 80 ];
+    ports = [
+      "80o"
+      "443os"
+    ];
+    hostName = "pihole.internal.faceftw.dev";
   };
 
   systemd.tmpfiles.rules = [
     # Type Path Mode User Group Age Argument
     "f /etc/pihole/versions 0644 pihole pihole - -"
+  ];
+
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
   ];
 }

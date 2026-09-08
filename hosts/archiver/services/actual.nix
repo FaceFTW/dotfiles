@@ -16,11 +16,11 @@
 
   # Nginx Reverse Proxy Config
     services.nginx.upstreams.actual.servers."localhost:3012" = { };
-    services.nginx.virtualHosts."actual.faceftw.home" = {
+    services.nginx.virtualHosts."actual.internal.faceftw.dev" = {
     # enableACME = true;
     # forceSSL = true;
 
-    serverName = "actual.faceftw.home";
+    serverName = "actual.internal.faceftw.dev";
     listen = [
       {
         addr = "0.0.0.0";

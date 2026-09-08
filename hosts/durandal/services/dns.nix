@@ -30,6 +30,14 @@
         master = true;
         extraConfig = "allow-update { key rfc2136key.faceftw.home.; };";
       }
+      {
+        name = "internal.faceftw.dev";
+        file = "/etc/bind/zones/internal.faceftw.dev.zone";
+        master = true;
+        extraConfig = ''
+          allow-update { key rfc2136key.internal.faceftw.dev.; };
+        '';
+      }
     ];
   };
 
@@ -77,4 +85,47 @@
     '';
   };
 
+  environment.etc."bind/zones/internal.faceftw.dev.zone" = {
+    enable = true;
+    user = "named";
+    group = "named";
+    mode = "0644";
+    text = ''
+      $ORIGIN internal.faceftw.dev.
+      $TTL    60   ; 86400 - 1 day
+
+      @                   IN SOA  dns.internal.faceftw.dev. admin.internal.faceftw.dev. (
+                            20260902    ; Serial
+                            3600        ; Refresh
+                            300         ; Retry
+                            3600        ; Expire
+                            300)        ; Negative Cache TT
+
+      @                   IN NS   dns.internal.faceftw.dev.
+
+      router                 IN A      192.168.0.1
+
+      durandal               IN A      192.168.0.7
+      pihole                 IN A      192.168.0.7
+      dns                    IN A      192.168.0.7
+
+      port-authority         IN A      192.168.0.26
+
+      fabricator             IN A      192.168.0.42
+
+      archiver               IN A      192.168.0.172
+      immich                 IN A      192.168.0.172
+      actual                 IN A      192.168.0.172
+      linkwarden             IN A      192.168.0.172
+      backrest               IN A      192.168.0.172
+      syncthing-archiver     IN A      192.168.0.172
+      garage                 IN A      192.168.0.172
+      s3.garage              IN A      192.168.0.172
+      *.s3.garage            IN CNAME  s3.garage.internal.faceftw.dev.
+      web.garage             IN A      192.168.0.172
+      *.web.garage           IN CNAME  web.garage.internal.faceftw.dev.
+      jellyfin               IN A      192.168.0.172
+      navidrome              IN A      192.168.0.172
+    '';
+  };
 }

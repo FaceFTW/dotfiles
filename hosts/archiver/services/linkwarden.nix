@@ -23,9 +23,9 @@
   };
 
   # Nginx Reverse Proxy Config
-   services.nginx. upstreams.linkwarden.servers."localhost:3015" = { };
-    services.nginx.virtualHosts."linkwarden.faceftw.home" = {
-    serverName = "linkwarden.faceftw.home";
+  services.nginx.upstreams.linkwarden.servers."localhost:3015" = { };
+  services.nginx.virtualHosts."linkwarden.internal.faceftw.dev" = {
+    serverName = "linkwarden.internal.faceftw.dev";
     listen = [
       {
         addr = "0.0.0.0";

@@ -45,6 +45,10 @@
   sops.defaultSopsFile = ./secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
+  sops.secrets.cloudflare_acme = {
+    owner = "acme";
+    group = "acme";
+  };
 
   ############################################
   # Services
