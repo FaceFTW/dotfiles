@@ -38,6 +38,16 @@
           allow-update { key rfc2136key.internal.faceftw.dev.; };
         '';
       }
+      {
+        name = "actual.faceftw.dev";
+        file = "/etc/bind/zones/actual.faceftw.dev.zone";
+        master = true;
+      }
+      {
+        name = "dns-internal.faceftw.dev";
+        file = "/etc/bind/zones/dns-internal.faceftw.dev.zone";
+        master = true;
+      }
     ];
   };
 
@@ -91,17 +101,17 @@
     group = "named";
     mode = "0644";
     text = ''
-      $ORIGIN internal.faceftw.dev.
+      $ORIGIN faceftw.dev.
       $TTL    60   ; 86400 - 1 day
 
-      @                   IN SOA  dns.internal.faceftw.dev. admin.internal.faceftw.dev. (
+      @                   IN SOA  dns-internal.faceftw.dev. admin.internal.faceftw.dev. (
                             20260902    ; Serial
                             3600        ; Refresh
                             300         ; Retry
                             3600        ; Expire
                             300)        ; Negative Cache TT
 
-      @                   IN NS   dns.internal.faceftw.dev.
+      @                      IN NS   dns-internal.faceftw.dev.
 
       router                 IN A      192.168.0.1
 
@@ -128,4 +138,49 @@
       navidrome              IN A      192.168.0.172
     '';
   };
+
+  environment.etc."bind/zones/dns-internal.faceftw.dev.zone" = {
+    enable = true;
+    user = "named";
+    group = "named";
+    mode = "0644";
+    text = ''
+      $ORIGIN dns-internal.faceftw.dev.
+      $TTL    60   ; 86400 - 1 day
+
+      @                   IN SOA  dns-internal.faceftw.dev. admin-internal.faceftw.dev. (
+                            20260902    ; Serial
+                            3600        ; Refresh
+                            300         ; Retry
+                            3600        ; Expire
+                            300)        ; Negative Cache TT
+
+      @                      IN NS   dns-internal.faceftw.dev.
+
+      @                      IN A      192.168.0.172
+    '';
+  };
+
+  environment.etc."bind/zones/actual.faceftw.dev.zone" = {
+    enable = true;
+    user = "named";
+    group = "named";
+    mode = "0644";
+    text = ''
+      $ORIGIN actual.faceftw.dev.
+      $TTL    60   ; 86400 - 1 day
+
+      @                   IN SOA  dns-internal.faceftw.dev. admin-internal.faceftw.dev. (
+                            20260902    ; Serial
+                            3600        ; Refresh
+                            300         ; Retry
+                            3600        ; Expire
+                            300)        ; Negative Cache TT
+
+      @                      IN NS   dns-internal.faceftw.dev.
+
+      @                      IN A      192.168.0.172
+    '';
+  };
+
 }

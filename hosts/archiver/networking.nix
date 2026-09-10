@@ -5,6 +5,7 @@
     22 # SSH
     80 # HTTP
     111 # Something Samba Related (Service Discovery?)
+    443 # HTTPS
   ];
   networking.firewall.allowPing = true;
 

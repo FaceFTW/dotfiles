@@ -4,6 +4,7 @@
 }:
 {
   imports = [
+    ./services/acme.nix
     ./services/actual.nix
     ./services/backrest.nix
     ./services/garage.nix

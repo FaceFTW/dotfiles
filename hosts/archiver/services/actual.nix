@@ -13,18 +13,23 @@
     settings.port = 3012;
   };
 
-
   # Nginx Reverse Proxy Config
-    services.nginx.upstreams.actual.servers."localhost:3012" = { };
-    services.nginx.virtualHosts."actual.internal.faceftw.dev" = {
+  services.nginx.upstreams.actual.servers."localhost:3012" = { };
+  services.nginx.virtualHosts."actual.faceftw.dev" = {
+    forceSSL = true;
     # enableACME = true;
-    # forceSSL = true;
+    useACMEHost = "faceftw.dev";
 
-    serverName = "actual.internal.faceftw.dev";
+    serverName = "actual.faceftw.dev";
     listen = [
       {
         addr = "0.0.0.0";
         port = 80;
+      }
+      {
+        addr = "0.0.0.0";
+        port = 443;
+        ssl = true;
       }
     ];
 

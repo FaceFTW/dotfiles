@@ -74,6 +74,9 @@
 
     navidrome.owner = "face";
     navidrome.group = "users";
+
+    cloudflare_acme.owner = "acme";
+    cloudflare_acme.group = "nginx";
   };
 
   ############################################
