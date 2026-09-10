@@ -38,16 +38,6 @@
           allow-update { key rfc2136key.internal.faceftw.dev.; };
         '';
       }
-      {
-        name = "actual.faceftw.dev";
-        file = "/etc/bind/zones/actual.faceftw.dev.zone";
-        master = true;
-      }
-      {
-        name = "dns-internal.faceftw.dev";
-        file = "/etc/bind/zones/dns-internal.faceftw.dev.zone";
-        master = true;
-      }
     ];
   };
 
@@ -95,6 +85,7 @@
     '';
   };
 
+  # TODO This should be moved to cloudflare, A records can point to local IPs
   environment.etc."bind/zones/internal.faceftw.dev.zone" = {
     enable = true;
     user = "named";
@@ -114,73 +105,78 @@
       @                      IN NS   dns-internal.faceftw.dev.
 
       router                 IN A      192.168.0.1
-
       durandal               IN A      192.168.0.7
-      pihole                 IN A      192.168.0.7
-      dns                    IN A      192.168.0.7
-
       port-authority         IN A      192.168.0.26
-
       fabricator             IN A      192.168.0.42
-
       archiver               IN A      192.168.0.172
-      immich                 IN A      192.168.0.172
-      actual                 IN A      192.168.0.172
-      linkwarden             IN A      192.168.0.172
-      backrest               IN A      192.168.0.172
-      syncthing-archiver     IN A      192.168.0.172
-      garage                 IN A      192.168.0.172
-      s3.garage              IN A      192.168.0.172
-      *.s3.garage            IN CNAME  s3.garage.internal.faceftw.dev.
-      web.garage             IN A      192.168.0.172
-      *.web.garage           IN CNAME  web.garage.internal.faceftw.dev.
-      jellyfin               IN A      192.168.0.172
-      navidrome              IN A      192.168.0.172
     '';
   };
 
-  environment.etc."bind/zones/dns-internal.faceftw.dev.zone" = {
-    enable = true;
-    user = "named";
-    group = "named";
-    mode = "0644";
-    text = ''
-      $ORIGIN dns-internal.faceftw.dev.
-      $TTL    60   ; 86400 - 1 day
+  modules.services.bind-zone = {
+    dns-internal = {
+      apex = "dns-internal";
+      ipAddress = "192.168.0.7";
+    };
 
-      @                   IN SOA  dns-internal.faceftw.dev. admin-internal.faceftw.dev. (
-                            20260902    ; Serial
-                            3600        ; Refresh
-                            300         ; Retry
-                            3600        ; Expire
-                            300)        ; Negative Cache TT
+    actual = {
+      apex = "actual";
+      ipAddress = "192.168.0.172";
+    };
 
-      @                      IN NS   dns-internal.faceftw.dev.
+    backrest = {
+      apex = "backrest";
+      ipAddress = "192.168.0.172";
+    };
 
-      @                      IN A      192.168.0.172
-    '';
-  };
+    garage = {
+      apex = "garage";
+      ipAddress = "192.168.0.172";
+      additionalSubdomains = [
+        "s3.garage"
+        "web.garage"
+      ];
+      cnameRecords = [
+        [
+          "*.s3.garage"
+          "s3.garage.faceftw.dev"
+        ]
+        [
+          "*.web.garage"
+          "web.garage.faceftw.dev"
+        ]
+      ];
+    };
 
-  environment.etc."bind/zones/actual.faceftw.dev.zone" = {
-    enable = true;
-    user = "named";
-    group = "named";
-    mode = "0644";
-    text = ''
-      $ORIGIN actual.faceftw.dev.
-      $TTL    60   ; 86400 - 1 day
+    immich = {
+      apex = "immich";
+      ipAddress = "192.168.0.172";
+    };
 
-      @                   IN SOA  dns-internal.faceftw.dev. admin-internal.faceftw.dev. (
-                            20260902    ; Serial
-                            3600        ; Refresh
-                            300         ; Retry
-                            3600        ; Expire
-                            300)        ; Negative Cache TT
+    jellyfin = {
+      apex = "jellyfin";
+      ipAddress = "192.168.0.172";
+    };
 
-      @                      IN NS   dns-internal.faceftw.dev.
+    linkwarden = {
+      apex = "linkwarden";
+      ipAddress = "192.168.0.172";
+    };
 
-      @                      IN A      192.168.0.172
-    '';
+    navidrome = {
+      apex = "navidrome";
+      ipAddress = "192.168.0.172";
+    };
+
+    pihole = {
+      apex = "pihole";
+      ipAddress = "192.168.0.7";
+    };
+
+    syncthing-archiver = {
+      apex = "syncthing-archiver";
+      ipAddress = "192.168.0.172";
+    };
+
   };
 
 }
