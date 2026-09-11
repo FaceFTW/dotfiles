@@ -34,42 +34,23 @@
   };
   services.garage.package = pkgs.garage_2;
 
-  # Nginx Reverse Proxy Config - S3
-  services.nginx.upstreams.garage-s3.servers."127.0.0.1:3900" = { };
-  services.nginx.virtualHosts."s3.garage.internal.faceftw.dev" = {
-    serverName = "s3.garage.internal.faceftw.dev *.s3.garage.internal.faceftw.dev";
-    listen = [
-      {
-        addr = "0.0.0.0";
-        port = 80;
-      }
-    ];
-
-    locations."/".proxyPass = "http://garage-s3";
-    locations."/".recommendedProxySettings = true;
-    locations."/".proxyWebsockets = true;
+  modules.nginx.reverse-proxy.garage-s3 = {
+    localPort = 3900;
+    serverName = "s3.garage.faceftw.dev";
+    additionalServerNames = [ "*.s3.garage.faceftw.dev" ];
     extraConfig = ''
       chunked_transfer_encoding off;
       client_max_body_size 4g;
     '';
   };
 
-  # Nginx Reverse Proxy Config - Web bucket
-  services.nginx.upstreams.garage-web.servers."127.0.0.1:3902" = { };
-  services.nginx.virtualHosts."web.garage.internal.faceftw.dev" = {
-    serverName = "web.garage.internal.faceftw.dev *.web.garage.internal.faceftw.dev";
-    listen = [
-      {
-        addr = "0.0.0.0";
-        port = 80;
-      }
-    ];
-
-    locations."/".proxyPass = "http://garage-web";
-    locations."/".recommendedProxySettings = true;
-    locations."/".proxyWebsockets = true;
+  modules.nginx.reverse-proxy.garage-web = {
+    localPort = 3902;
+    serverName = "web.garage.faceftw.dev";
+    additionalServerNames = [ "*.web.garage.faceftw.dev" ];
     extraConfig = ''
       chunked_transfer_encoding off;
+      client_max_body_size 4g;
     '';
   };
 
@@ -99,18 +80,18 @@
   # };
 
   # Nginx Reverse Proxy Config
-  services.nginx.upstreams.garage-ui.servers."127.0.0.1:3919" = { };
-  services.nginx.virtualHosts."garage.internal.faceftw.dev" = {
-    serverName = "garage.internal.faceftw.dev";
-    listen = [
-      {
-        addr = "0.0.0.0";
-        port = 80;
-      }
-    ];
+  # services.nginx.upstreams.garage-ui.servers."127.0.0.1:3919" = { };
+  # services.nginx.virtualHosts."garage.internal.faceftw.dev" = {
+  #   serverName = "garage.internal.faceftw.dev";
+  #   listen = [
+  #     {
+  #       addr = "0.0.0.0";
+  #       port = 80;
+  #     }
+  #   ];
 
-    locations."/".proxyPass = "http://garage-ui";
-    locations."/".recommendedProxySettings = true;
-    locations."/".proxyWebsockets = true;
-  };
+  #   locations."/".proxyPass = "http://garage-ui";
+  #   locations."/".recommendedProxySettings = true;
+  #   locations."/".proxyWebsockets = true;
+  # };
 }

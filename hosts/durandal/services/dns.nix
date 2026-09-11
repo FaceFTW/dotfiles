@@ -92,7 +92,7 @@
     group = "named";
     mode = "0644";
     text = ''
-      $ORIGIN faceftw.dev.
+      $ORIGIN internal.faceftw.dev.
       $TTL    60   ; 86400 - 1 day
 
       @                   IN SOA  dns-internal.faceftw.dev. admin.internal.faceftw.dev. (

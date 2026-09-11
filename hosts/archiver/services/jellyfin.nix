@@ -19,19 +19,8 @@
   };
   systemd.services.jellyfin.environment.LIBVA_DRIVER_NAME = "iHD";
 
-  # Nginx Reverse Proxy Config
-   services.nginx. upstreams.jellyfin.servers."127.0.0.1:8096" = { };
-    services.nginx.virtualHosts."jellyfin.internal.faceftw.dev" = {
-    serverName = "jellyfin.internal.faceftw.dev";
-    listen = [
-      {
-        addr = "0.0.0.0";
-        port = 80;
-      }
-    ];
-
-    locations."/".proxyPass = "http://jellyfin";
-    locations."/".recommendedProxySettings = true;
-    locations."/".proxyWebsockets = true;
+  modules.nginx.reverse-proxy.jellyfin = {
+    localPort = 8096;
+    serverName = "jellyfin.faceftw.dev";
   };
 }

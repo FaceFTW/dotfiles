@@ -22,19 +22,9 @@
     enableRegistration = true;
   };
 
-  # Nginx Reverse Proxy Config
-  services.nginx.upstreams.linkwarden.servers."localhost:3015" = { };
-  services.nginx.virtualHosts."linkwarden.internal.faceftw.dev" = {
-    serverName = "linkwarden.internal.faceftw.dev";
-    listen = [
-      {
-        addr = "0.0.0.0";
-        port = 80;
-      }
-    ];
-
-    locations."/".proxyPass = "http://linkwarden";
-    locations."/".recommendedProxySettings = true;
-    locations."/".proxyWebsockets = true;
+  modules.nginx.reverse-proxy.linkwarden = {
+    localPort = 3015;
+    serverName = "linkwarden.faceftw.dev";
   };
+
 }

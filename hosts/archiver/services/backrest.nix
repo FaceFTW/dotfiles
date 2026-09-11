@@ -16,19 +16,8 @@
     group = "backrest";
   };
 
-  # Nginx Reverse Proxy Config
-    services.nginx.upstreams.backrest.servers."127.0.0.1:9898" = { };
-    services.nginx.virtualHosts."backrest.internal.faceftw.dev" = {
-    serverName = "backrest.internal.faceftw.dev";
-    listen = [
-      {
-        addr = "0.0.0.0";
-        port = 80;
-      }
-    ];
-
-    locations."/".proxyPass = "http://backrest";
-    locations."/".recommendedProxySettings = true;
-    locations."/".proxyWebsockets = true;
+  modules.nginx.reverse-proxy.backrest = {
+    localPort = 9898;
+    serverName = "backrest.faceftw.dev";
   };
 }

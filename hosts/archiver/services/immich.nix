@@ -19,24 +19,10 @@
     database.enable = true;
   };
 
-  # Nginx Reverse Proxy Config
-    services.nginx.upstreams.immich.servers."localhost:2283" = { };
-    services.nginx.virtualHosts."immich.internal.faceftw.dev" = {
-    # enableACME = true;
-    # forceSSL = true;
-
-    serverName = "immich.internal.faceftw.dev";
-    listen = [
-      {
-        addr = "0.0.0.0";
-        port = 80;
-      }
-    ];
-
+  modules.nginx.reverse-proxy.immich = {
+    localPort = 2283;
+    serverName = "immich.faceftw.dev";
     extraConfig = "client_max_body_size 1g;";
-    locations."/".proxyPass = "http://immich";
-    locations."/".recommendedProxySettings = true;
-    locations."/".proxyWebsockets = true;
   };
 
 }
