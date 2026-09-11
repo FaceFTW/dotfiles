@@ -40,7 +40,7 @@ let
     }:
     {
 
-      servers."127.0.0.1:${lib.toString localPort}" = { };
+      servers."localhost:${lib.toString localPort}" = { };
     };
 
   mkVHost =

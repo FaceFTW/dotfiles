@@ -60,7 +60,7 @@
 
   nix.settings.secret-key-files = "/etc/secrets/nix-cache.pem";
   nix.settings.substituters = [
-    "s3://nix-cache?region=archiver&endpoint=s3.garage.faceftw.home&scheme=http"
+    "s3://nix-cache?region=archiver&endpoint=s3.garage.faceftw.dev"
   ];
 
   ############################################
