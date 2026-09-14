@@ -8,4 +8,5 @@
     ./services/pihole.nix
   ];
 
+  services.nginx.enable = true;
 }

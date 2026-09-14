@@ -5,6 +5,7 @@
   networking.hostName = "durandal";
   networking.firewall.allowedTCPPorts = [
     80
+    443
   ];
   networking.firewall.allowPing = true;
 
@@ -19,32 +20,10 @@
   systemd.network.networks."10-end0" = {
     matchConfig.Name = "end0";
     networkConfig.DHCP = "ipv4";
-    networkConfig.IPv6AcceptRA = true;
-    networkConfig.MulticastDNS = "yes";
+    networkConfig.IPv6AcceptRA = false;
+    networkConfig.MulticastDNS = "no";
     linkConfig.RequiredForOnline = true;
   };
   systemd.services.systemd-udevd.restartIfChanged = false;
-
-  #
-  # Networking
-  #
-  # Essential infrastructure
-  # - List your most essential network resources here
-  networking = {
-    hosts = {
-      "192.168.0.1" = [
-        "router.faceftw.me"
-        "router"
-      ];
-      "192.168.0.7" = [
-        "durandal.faceftw.me"
-        "durandal"
-      ];
-      "192.168.0.72" = [
-        "archiver.faceftw.me"
-        "archiver"
-      ];
-    };
-  };
 
 }

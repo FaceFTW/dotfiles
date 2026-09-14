@@ -56,7 +56,6 @@
       dhcp.active = false; # Handled by Router
       dns = {
         cnameRecords = [ ];
-        # domain.name = "faceftw.home";
 
         interface = "end0";
 
@@ -70,18 +69,9 @@
       ntp.ipv6.active = false;
       ntp.sync.active = false;
 
-      # To manage the web login:
-      # 1) Temporarily set misc.readOnly to false in
-      #    configuration.nix and switch to it.
-      # 2) Manually set a password:
-      #    Pi-hole web console > Settings > All settings >
-      #    Webserver and API > webserver.api.password > Value: ******
-      # 3) Read the generated hash:
-      #    sudo pihole-FTL --config webserver.api.pwhash
       webserver.api.pwhash = "";
       webserver.api.session.timeout = 43200; # 12h
       webserver.tls.cert = lib.mkForce "/var/lib/acme/internal.faceftw.dev/fullchain.pem";
-      webserver.port = "80o,443os";
       misc.readOnly = false;
 
     };
@@ -89,11 +79,7 @@
 
   services.pihole-web = {
     enable = true;
-    ports = [
-      "80o"
-      "443os"
-    ];
-    hostName = "pihole.internal.faceftw.dev";
+    ports = [ 8080 ];
   };
 
   systemd.tmpfiles.rules = [
@@ -101,8 +87,9 @@
     "f /etc/pihole/versions 0644 pihole pihole - -"
   ];
 
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
+  modules.nginx.reverse-proxy.pihole = {
+    localPort = 8080;
+    serverName = "pihole.faceftw.dev";
+  };
+
 }
