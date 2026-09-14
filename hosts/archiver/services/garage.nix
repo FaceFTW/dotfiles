@@ -36,8 +36,8 @@
 
   modules.nginx.reverse-proxy.garage-s3 = {
     localPort = 3900;
-    serverName = "s3.garage.faceftw.dev";
-    additionalServerNames = [ "*.s3.garage.faceftw.dev" ];
+    serverName = "garage-s3.faceftw.dev";
+    additionalServerNames = [ "*.garage-s3.faceftw.dev" ];
     extraConfig = ''
       chunked_transfer_encoding off;
       client_max_body_size 4g;
@@ -46,8 +46,8 @@
 
   modules.nginx.reverse-proxy.garage-web = {
     localPort = 3902;
-    serverName = "web.garage.faceftw.dev";
-    additionalServerNames = [ "*.web.garage.faceftw.dev" ];
+    serverName = "garage-web.faceftw.dev";
+    additionalServerNames = [ "*.garage-web.faceftw.dev" ];
     extraConfig = ''
       chunked_transfer_encoding off;
       client_max_body_size 4g;

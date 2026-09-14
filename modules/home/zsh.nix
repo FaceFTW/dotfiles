@@ -111,7 +111,7 @@
               portal-wsl) host="portal" ;;
               esac
 
-              nix copy --to 's3://nix-cache?region=archiver&endpoint=192.168.0.172:3900&scheme=http' \
+              nix copy --to 's3://nix-cache?region=archiver&endpoint=garage-s3.faceftw.dev' \
                 "/home/face/.config/dotfiles#nixosConfigurations.$host.config.system.build.toplevel" \
                 "$@"
             }
@@ -121,7 +121,7 @@
                 --key-file /etc/secrets/nix-cache.pem
 
               nix copy --all \
-                --to 's3://nix-cache?endpoint=s3.garage.faceftw.home&scheme=http&region=archiver' \
+                --to 's3://nix-cache?region=archiver&endpoint=garage-s3.faceftw.dev' \
                 --option narinfo-cache-positive-ttl 0
             }
 
