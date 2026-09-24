@@ -55,7 +55,7 @@
   security.pam.services.login.enableGnomeKeyring = true;
   services.dbus.packages = [
     pkgs.gnome-keyring
-    pkgs.gcr
+    pkgs.gcr_4
   ];
   services.xserver.displayManager.sessionCommands = ''
     eval $(${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --daemonize --components=ssh,secrets)
