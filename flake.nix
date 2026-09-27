@@ -200,22 +200,3 @@
       );
     };
 }
-
-#######################################
-# OLD FRAGMENTS THAT I MAY NEED AGAIN
-#######################################
-# nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11-small";
-#
-# ashell - used in deep-blue
-# ashell.url = "github:MalpenZibo/ashell";
-# ashell.inputs.nixpkgs.follows = "nixpkgs";
-#
-# VS Code Extensions Mirror
-# nix4vscode.url = "github:nix-community/nix4vscode";
-# nix4vscode.inputs.nixpkgs.follows = "nixpkgs";
-#
-# overlay vvv
-# inputs.nix4vscode.overlays.default
-# (final: prev: {
-#   ashell = inputs.ashell.packages.${prev.stdenv.hostPlatform.system}.default;
-# })

@@ -17,7 +17,6 @@ in
     ./secrets.nix
     ./steam.nix
     ./virtualization.nix
-    ./vscode.nix
     ./zed.nix
   ];
 
