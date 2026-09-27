@@ -15,7 +15,7 @@
     upstreams.webcam-server.servers."127.0.0.1:5123" = { };
 
     virtualHosts.ingress = {
-      serverName = "fabricator fabricator.internal.faceftw.dev";
+      serverName = "fabricator.internal.faceftw.dev fabricator";
       listen = [
         {
           addr = "0.0.0.0";
