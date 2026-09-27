@@ -1,0 +1,23 @@
+matrix multiplicaion mfs when their algorithm takes 8679 hours to complete, but the time complexity is O(n^2.3728596)
+%
+> C feature
+> look inside
+> compiler extension
+%
+The adversary didn't follow the rules we made up - A definitve guide to cybersecurity
+%
+Hacking is illegal and for nerds
+%
+BORN TO TRAIN
+RAINFORESTS ON FIRE
+I am softmax(Q * K^T / sqrt(d_k)) * V
+410,757,864,530 TFLOPS
+%
+The official mascot for C++ is an obese, diseased rat named Keith, whose hind leg is missing becaue it was blown off
+%
+C programming language will let you shoot yourself in the foot, then it will reload the pistol for you.
+%
+In computer networking, IP over Avian Carriers (IPoAC) is a proposal to carry Internet Protocol (IP) traffic by birds.
+%
+“A computer can never be held accountable, therefore a computer should not be responsible for a management decision.”
+    - IBM Training Manual, 1979

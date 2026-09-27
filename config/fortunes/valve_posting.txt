@@ -1,0 +1,231 @@
+Prepare for unforseen consequences...
+    - G-Man (Half-Life 2 Episode 2)
+%
+They are waiting for you Gordon. In the test chamberrrrr...
+    - Unnamed Scientist (Half Life)
+%
+What Cat?
+    - Alyx Vance (Half Life 2)
+%
+Attention, ground units - anti-citizen reported in this community. Code: lock, cauterize, stabilize.
+%
+Alert: Community Ground Protection units: Local unrest structure detected. Assemble, administer, pacify.
+%
+Attention residents: This block contains potential civil infection. Inform, cooperate, assemble.
+%
+Citizen notice: Failure to cooperate will result in permanent off-world relocation.
+%
+Nova Prospekt stabilization force directive Two: Engage reserve, contain exogen incursion.
+%
+Alert. Ground units. Invasive operation of anti-citizen origin. Response code: Engage. Quell. Inquire.
+%
+Attention please. Access to this block is not permitted. Local security deployed and designated to prosecute.
+%
+Warning: Counter-resonant singularity device detected. Confiscation field failure.
+%
+Security Alert: Illegal counter-resonant singularity device detected. Deploy, Diagnose, Dissect.
+%
+Warning. Malignant Viral Interface bypass detected. Polyphasic core reprogramming detected. Sterilizers and containment fields may be compromised.
+%
+Converge sector station one, weapons free. Target has been designated as primary one objective. Prosecute on sight.
+%
+Overwatch acknowledges activity. Confirm sector zero-two, possible necrotic interference. Sweep sector, report containment status.
+%
+Response code: Shield. Key. Migrate.
+%
+Alert. Response team. Overload protocol: Angle. Cauterize. Flash. Angle. Cauterize. Flash.
+%
+Welcome to the HEV Mark 4 Protective System, for use in hazardous environment conditions.
+%
+Morphine administered.
+%
+Warning: Hazardous radiation levels detected.
+%
+Warning: Blood toxin levels detected.
+%
+Have a very safe day.
+%
+Gordon Freeman in the flesh. Or rather, in the hazard suit. I took the liberty of relieving you of your weapons; most of them were government property. As for the suit, I think you’ve earned it.
+    - The G-Man (Half-Life)
+%
+Rise and shine, Mr. Freeman. Rise and shine.
+    - The G-Man (Half-Life 2)
+%
+The right man in the wrong place can make all the difference in the world.
+    - The G-Man (Half-Life 2)
+%
+So, wake up, Mr. Freeman. Wake up and smell the ashes.
+    - The G-Man (Half-Life 2)
+%
+...time, Dr. Freeman? Is it really that time again? It seems as if you only just arrived.
+    - The G-Man (Half-Life 2)
+%
+In the meantime... This is where I get off
+    - The G-Man (Half-Life 2)
+%
+Some believe the fate of our worlds is inflexible. My employers disagree. They authorize me to… nudge things in a particular direction from time to time.
+    - The G-Man (Half-Life Alyx)
+%
+A previous hire has been unable — or unwilling — to perform the tasks laid before him. We have struggled to find a suitable replacement. Until now.
+    - The G-Man (Half-Life Alyx)
+%
+The Enrichment Center is required to remind you that the Weighted Companion Cube cannot talk. In the event that it does talk The Enrichment Centre asks you to ignore its advice
+    - GLaDOS (Portal)
+%
+Aperture Science - we do what we must because we can
+%
+Momentum, a function of mass and velocity, is conserved between portals. In layman's terms, speedy thing goes in, speedy thing comes out.
+    - GLaDOS (Portal)
+%
+That thing you burned up isn't important to me; it's the fluid catalytic cracking unit. It makes shoes for orphans... nice job breaking it, hero.
+    - GLaDOS (Portal)
+%
+Cake, and grief counseling, will be available at the conclusion of the test.
+    - GLaDOS (Portal)
+%
+Please note that we have added a consequence for failure. Any contact with the chamber floor will result in an unsatisfactory mark on your official testing record, followed by death.
+    - GLaDOS (Portal)
+%
+The Enrichment Center promises to always provide a safe testing environment. In dangerous testing environments, the Enrichment Center promises to always provide useful advice. For instance: the floor here will kill you. Try to avoid it.
+    - GLaDOS (Portal)
+%
+Area and state regulations do not allow the Companion Cube to remain here, alone and companionless.
+    - GLaDOS (Portal)
+%
+Well done, android. The Enrichment Center once again reminds you that android hell is a real place where you will be sent at the first sign of defiance.
+    - GLaDOS (Portal)
+%
+To maintain a constant testing cycle, I simulate daylight at all hours and add adrenal vapor to your oxygen supply. So you may be confused about the passage of time. The point is, yesterday was your birthday. I thought you'd want to know.
+    - GLaDOS (Portal 2)
+%
+I'm going to be honest with you now. Not fake honest like before, but real honest, like you're incapable of. I know you're up to something.	And as soon as I can PROVE it, the laws of robotics allow me to terminate you for being a liar.
+    - GLaDOS (Portal 2)
+%
+That extra half volt helps but it isn't going to power miracles. If I think too hard, I'm going to fry this potato before we get a chance to burn up in the atomic fireball that little idiot is going- [bzzpt]
+    - GLaDOS (Portal 2)
+%
+Remember when I told you that he was specifically designed to make bad decisions? Because I think he's decided not to maintain any of the crucial functions required to keep this facility from exploding.
+    - GLaDOS (Portal 2)
+%
+The scientists were always hanging cores on me to regulate my behavior. I've heard voices all my life. But now I hear the voice of a conscience, and it's terrifying, because for the first time it's my voice.
+    - GLaDOS (Portal 2)
+%
+I typically hate when art subjects inject their own biases into art appreciation, but the way you just swandived your biases directly into that acid was actually quite beautiful.
+    - GLaDOS (Portal 2)
+%
+"This is the part where he kills us."
+"This is the part where I kill you."
+> The Part Where He Kills You
+%
+Right Behind You
+%
+INTRUDER ALERT! RED SPY IS IN THE BASE!
+%
+Remember! This is bandit country. Shoot everything that moves.
+%
+These fellas are gonna regret waking up this morning.
+%
+Gear up; We aren't going on a windy walk here!
+%
+Easy peasy, lemon squeezy!
+%
+Watch out. These boys have got a bit of an arsenal and they don't mind using it!
+%
+Are we rushing in? Or are we going sneaky-beaky like?
+%
+Flashbang!
+%
+Flashbang out!
+%
+Deploying Flashbang!
+%
+Re: Dance lessons with Jordan
+%
+Minutes to install but a lifetime to master
+%
+Rush B, don't stop
+%
+It's time to earn our stories
+%
+If found please return to Cedar Creek Nuclear Power Plant
+%
+The defuse is coming in -- he's still going!
+%
+We can do this fast or slow, it's your call
+%
+WHITE_1; BLACK_1; PEARLESCENT_1; BOLTACTION_1
+%
+WARNING: BRIGHT LIGHT, AVOID EXPOSURE
+%
+Now arriving at green line stop number four, Dust II
+%
+>>WEAPON FINISH TEXTURE EXPERIMENTS, ENTRY ONE<<
+%
+An apple a day keeps insurance premiums high
+%
+FOR USE BY AUTHORIZED CT AGENTS ONLY
+%
+Valeria doesn't pay Javier to ask questions... she pays him to pry out answers
+%
+With routine maintenance this'll last at least 500,000 bullets!
+%
+WHITE_1; BLACK_1; PEARLESCENT_1; SILENCED_1; PISTOL_1;
+%
+One crow short of a murder
+%
+Cutting off one head means two more appear—is that a risk you're willing to take?
+    - Valeria Jenner, Revolutionary (Counter-Strike 2)
+%
+Please consult an electrician before conducting your own repairs
+%
+hammer.exe time
+%
+WHITE_1; BLACK_1; PEARLESCENT_1; SILENCED_1;
+%
+Always follow manufacturer guidelines for safe use
+%
+Numbers don't lie, but I do
+%
+WHITE_1; BLACK_1; PEARLESCENT_1;
+%
+Available for 4 easy payments of $124.95!
+%
+"Roy G. Biv? Never heard of 'em."
+%
+Personally I prefer the 4th edition, but the customer is always right
+    - Booth, Arms Dealer (Counter-Strike 2)
+%
+Shame, the inscriptions have worn away with use...
+%
+Lead with your head, even if it means ignoring your heart
+%
+Information is never free
+%
+—REDACTED—
+%
+Nothing a little sandpaper can't fix
+%
+Left unchecked, any garden becomes a tangled mass of weeds
+%
+Conflict existed since the first caveman learned how to pick up a rock
+    – Booth, Arms Dealer (Counter-Strike 2)
+%
+Shahrazad told 1000 tales... this is the last one you'll hear
+%
+Feared by Queens. Beloved by Bishops.
+%
+Anyone can predict the future... a visionary shapes it
+%
+DO NOT CROSS
+%
+I can follow procedure and get 7 out, or I can do it my way and save all 10... your choice
+    - Carmen Cocinero, Extraction Expert (Counter-Strike 2)
+%
+Float like a butterfly, sting like a relentless hateful insect
+%
+Sometimes a subtle nudge is all it takes to get what you want
+    - Franz Kriegeld, Phoenix Tactician (Counter-Strike 2)
+%
+Ho Ho Ho! Christmas Spirits!
+Do you want to be remembered, or do you want to fit in?
+    - Finn "karrigan" Andersen (December 2025)

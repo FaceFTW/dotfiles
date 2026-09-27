@@ -15,12 +15,12 @@ in
     srcs = [
       (lib.fileset.toSource {
         root = ./..;
-        fileset = lib.fileset.union ../config/fortunes.txt ../config/cowsay;
+        fileset = lib.fileset.union ../config/fortunes ../config/cowsay;
       })
       (fetchgit {
         url = "https://github.com/FaceFTW/shell-toy.git";
         name = "sh-toy-source";
-        rev = "98859fa49ca1cc0061edd5d1a47607290eb3b7f3";
+        rev = "b04256a78d368d9e76dbdd153e05c52b028be8cc";
         hash = "sha256-K7ctG61fEqshjLVmSv7oBIwclE1W51TLjqPL8KZODUA=";
         # hash = prev.lib.fakeHash;
       })
@@ -31,7 +31,7 @@ in
 
     doCheck = false;
 
-    FORTUNE_FILE = "../source/config/fortunes.txt";
+    FORTUNE_PATH = "../source/config/fortunes";
     COW_PATH = "../source/config/cowsay";
     RUSTFLAGS = "-C target-feature=+crt-static";
 
