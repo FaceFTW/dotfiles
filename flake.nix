@@ -29,12 +29,8 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hyprland Ecosystem
-    hyprnix.url = "github:FaceFTW/hyprnix";
+    hyprnix.url = "github:hyprwm/hyprnix";
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
-    hyprnix.inputs.hyprutils.url = "github:hyprwm/hyprutils/v0.14.0"; # Remove when hyprnix fully on GCC 16
-    hyprnix.inputs.aquamarine.url = "github:hyprwm/aquamarine/1a10fe26a9f7d989c359e6a9ea61aa2e44d06c36"; # ditto
-    hyprnix.inputs.hyprpolkitagent.url = "github:hyprwm/hyprpolkitagent/7e4054410f6d6331b239fea1c659ad6a917fbf6a"; # when I feel like fixing the build deps
-    hyprnix.inputs.hyprlang.url = "github:hyprwm/hyprlang/090117506ddc3d7f26e650ff344d378c2ec329cc";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprnix/hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "hyprnix/nixpkgs";
@@ -56,6 +52,7 @@
     # FRAUDSHELL
     fraudshell.url = "path:./modules/fraudshell";
     fraudshell.inputs.nixpkgs.follows = "nixpkgs";
+    fraudshell.inputs.fenix.follows = "fenix";
   };
 
   outputs =
@@ -87,27 +84,7 @@
             inputs.vicinae.overlays.default
             inputs.hyprnix.overlays.default
             inputs.hyprland-plugins.overlays.default
-            # inputs.aquamarine.overlays.default
             inputs.fraudshell.overlays.default
-            (final: prev: {
-              hyprland = inputs.hyprnix.packages.${prev.stdenv.hostPlatform.system}.hyprland.override {
-                glaze-hyprland =
-                  (prev.glaze.overrideAttrs {
-                    version = "7.9.1";
-
-                    src = prev.fetchFromGitHub {
-                      owner = "stephenberry";
-                      repo = "glaze";
-                      tag = "v7.9.1";
-                      hash = "sha256-NRRq5MGF2f5PW0teYnq58ELzson+U6KHVPaY6r30KLA=";
-                    };
-                  }).override
-                    {
-                      enableSSL = false;
-                      enableInterop = false;
-                    };
-              };
-            })
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);

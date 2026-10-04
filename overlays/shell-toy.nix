@@ -10,7 +10,7 @@ in
 
   shell-toy = prev.pkgsStatic.rustPlatform.buildRustPackage {
     pname = "sh-toy";
-    version = "0.8.1";
+    version = "0.9.0";
 
     srcs = [
       (lib.fileset.toSource {

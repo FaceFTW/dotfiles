@@ -24,7 +24,6 @@
   modules.users.default.password.type = "initialPassword";
   modules.users.default.password.value = "";
   modules.users.default.extraGroups = [ "docker" ];
-  modules.users.default.extraPackages = [ pkgs.wslKeySetup ];
 
   modules.home = {
     fastfetch.enable = true;

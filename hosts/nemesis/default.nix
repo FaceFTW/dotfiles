@@ -131,7 +131,6 @@
     pkgs.flameshot
     pkgs.freecad
     pkgs.keepassxc
-    pkgs.modrinth-app
 
     # For Tumbler
     pkgs.ffmpegthumbnailer

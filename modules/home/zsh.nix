@@ -80,6 +80,7 @@
             export PATH=$HOME/.local/share/bin:$PATH
           '';
 
+          # bash
           nix-utils = lib.mkOrder 1200 ''
             function build-closure() {
               ### PARAMETERS
