@@ -17,7 +17,7 @@
   ############################################
   # Nix Common Settings
   ############################################
-  nix.nixPath = [
+  nix.settings.nix-path = [
     "nixos-config=/home/face/.config/dotfiles:/etc/nixos"
     "nixpkgs=flake:nixpkgs"
   ];
