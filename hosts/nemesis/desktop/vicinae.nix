@@ -1,6 +1,7 @@
 {
-  pkgs,
   inputs,
+  lib,
+  pkgs,
   ...
 }:
 let
@@ -23,6 +24,11 @@ in
       # vicinae-extensions.dbus
 
     ];
+    programs.vicinae.package = pkgs.vicinae.override {
+      numen = pkgs.numen.override {
+        stdenv = pkgs.gcc15Stdenv;
+      };
+    };
     programs.vicinae.settings = {
       close_on_focus_loss = true;
       consider_preedit = true;
