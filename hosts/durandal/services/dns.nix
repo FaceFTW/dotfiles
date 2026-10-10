@@ -116,6 +116,11 @@
       ipAddress = "192.168.0.7";
     };
 
+    rustdesk = {
+      apex = "rustdesk";
+      ipAddress = "192.168.0.7";
+    };
+
     syncthing-archiver = {
       apex = "syncthing-archiver";
       ipAddress = "192.168.0.172";

@@ -131,6 +131,7 @@
     pkgs.flameshot
     pkgs.freecad
     pkgs.keepassxc
+    pkgs.rustdesk
 
     # For Tumbler
     pkgs.ffmpegthumbnailer
