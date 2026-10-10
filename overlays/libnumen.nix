@@ -1,8 +1,10 @@
 final: prev: {
+  numen = prev.numen.override {
+    stdenv = final.gcc15Stdenv;
+  };
+
   vicinae = prev.vicinae.override {
-    numen = prev.numen.override {
-      stdenv = final.gcc16Stdenv;
-    };
-    stdenv = final.gcc16Stdenv;
+    numen = final.numen;
+    stdenv = final.gcc15Stdenv;
   };
 }

@@ -48,7 +48,7 @@
     vicinae.inputs.nixpkgs.follows = "nixpkgs"; # use vicinae tied nixpkgs because of GCC mismatch issues
     vicinae.inputs.numen.inputs.nixpkgs.follows = "nixpkgs";  # Add this line
     vicinae-extensions.url = "github:vicinaehq/extensions";
-    vicinae-extensions.inputs.nixpkgs.follows = "vicinae/nixpkgs";
+    vicinae-extensions.inputs.nixpkgs.follows = "nixpkgs";
 
     # FRAUDSHELL
     fraudshell.url = "path:./modules/fraudshell";

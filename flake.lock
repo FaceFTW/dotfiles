@@ -1627,7 +1627,6 @@
       "inputs": {
         "flake-compat": "flake-compat_4",
         "nixpkgs": [
-          "vicinae",
           "nixpkgs"
         ],
         "systems": "systems_5",
