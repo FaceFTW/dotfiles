@@ -24,11 +24,7 @@ in
       # vicinae-extensions.dbus
 
     ];
-    # programs.vicinae.package = pkgs.vicinae.override {
-    #   numen = pkgs.numen.override {
-    #     stdenv = pkgs.gcc15Stdenv;
-    #   };
-    # };
+    programs.vicinae.package = pkgs.vicinae;  # CRITICAL: force it to use the overlaid version
     programs.vicinae.settings = {
       close_on_focus_loss = true;
       consider_preedit = true;
