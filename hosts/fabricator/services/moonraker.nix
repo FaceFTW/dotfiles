@@ -38,6 +38,9 @@
     host:127.0.0.1
     klippy_uds_address:/run/klipper/api
     port:7125
+
+    [webcam default]
+    rotation:90
   '';
 
   systemd.tmpfiles.rules = [
@@ -65,7 +68,10 @@
     '';
 
     # Needs `ip` command
-    path = [ pkgs.iproute2 ];
+    path = [
+      pkgs.iproute2
+      pkgs.klipper-estimator
+    ];
 
     serviceConfig.WorkingDirectory = /var/lib/moonraker;
     serviceConfig.PrivateTmp = true;
