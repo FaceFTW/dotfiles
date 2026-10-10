@@ -21,8 +21,6 @@
 
   networking.useDHCP = false;
 
-  services.resolved.enable = true;
-
   systemd.network.enable = true;
   systemd.network.networks."10-end0" = {
     matchConfig.Name = "end0";

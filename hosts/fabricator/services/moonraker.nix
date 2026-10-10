@@ -40,7 +40,10 @@
     port:7125
 
     [webcam default]
+    stream_url:http://192.168.0.42:5123/stream
+    snapshot_url:http://192.168.0.42:5123/snapshot
     rotation:90
+
   '';
 
   systemd.tmpfiles.rules = [

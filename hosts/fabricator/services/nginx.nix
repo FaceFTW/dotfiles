@@ -42,9 +42,9 @@
       locations."/websocket".recommendedProxySettings = true;
       locations."/websocket".proxyWebsockets = true;
 
-      locations."~ ^/(webcam)".proxyPass = "http://webcam-server$request_uri";
-      locations."~ ^/(webcam)".recommendedProxySettings = true;
-      locations."~ ^/(webcam)".proxyWebsockets = true;
+      locations."~ ^/(webcam)/".proxyPass = "http://webcam-server$request_uri";
+      locations."~ ^/(webcam)/".recommendedProxySettings = true;
+      locations."~ ^/(webcam)/".proxyWebsockets = true;
 
       locations."~ ^/(printer|api|access|machine|server)/".proxyPass =
         "http://mainsail-apiserver$request_uri";
