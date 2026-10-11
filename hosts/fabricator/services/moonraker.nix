@@ -8,10 +8,6 @@
   # Moonraker Config
   ############################################
   environment.etc."moonraker.cfg".text = ''
-    [analysis]
-    enable_estimator_updates:false
-    platform:linux
-
     [authorization]
     cors_domains:
         *://*.local
