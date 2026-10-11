@@ -113,4 +113,10 @@
     ACTION=="add", SUBSYSTEM=="drm", KERNEL=="card2", TAG+="systemd"
   '';
 
+  ############################################
+  # Extra Driver Configuration
+  ############################################
+  environment.etc."modprobe.d/brcmfmac.conf".text = ''
+    options brcmfmac roamoff=1 feature_disable=0x82000
+  '';
 }

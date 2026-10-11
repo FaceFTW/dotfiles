@@ -131,7 +131,7 @@
     pkgs.flameshot
     pkgs.freecad
     pkgs.keepassxc
-    pkgs.rustdesk
+    pkgs.rustdesk-flutter
 
     # For Tumbler
     pkgs.ffmpegthumbnailer
