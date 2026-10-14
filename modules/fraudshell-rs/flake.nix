@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     astal = {
-      url = "github:FaceFTW/astal";
+      url = "github:Aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -23,24 +23,24 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       lib = nixpkgs.lib;
-      rust-toolchain = fenix.packages.latest.toolchain;
+      rust-toolchain = fenix.packages.${system}.latest.toolchain;
       rustPlatform = pkgs.makeRustPlatform {
-          cargo = rust-toolchain.cargo;
-          rustc = rust-toolchain.rustc;
+        cargo = rust-toolchain;
+        rustc = rust-toolchain;
+
       };
 
-      gir-rs = pkgs.rustPlatform.buildRustPackage {
+      gir-rs = rustPlatform.buildRustPackage {
         pname = "gir-rs";
         version = "0.19.0";
 
-        src = nixpkgs.fetchFromGitHub {
-          owner = "gtk-rs";
-          repo = "gir";
+        src = fetchGit {
+          url = "https://github.com/gtk-rs/gir.git";
           rev = "ececdfdf7154dc77d5d3e2a9aa19690b47161641";
-          hash = lib.fakeHash;
+
         };
 
-        cargoHash = nixpkgs.lib.fakeHash;
+        cargoHash = "sha256-YaYqmFoKIaF0ZFuvAIHDR4hokYTjyuQ+fI5zyWYUs0c=";
       };
 
       nativeBuildInputs = with pkgs; [
@@ -61,7 +61,7 @@
         gir-rs
       ];
 
-      astalPackages = lib.attrsToList astal.packages.${system};
+      astalPackages = lib.mapAttrsToList (_: val: val) astal.packages.${system};
     in
     {
       # packages.${system}.default = pkgs.stdenv.mkDerivation {
