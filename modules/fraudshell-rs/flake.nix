@@ -34,13 +34,24 @@
         pname = "gir-rs";
         version = "0.19.0";
 
-        src = fetchGit {
+        src = nixpkgs.legacyPackages.${system}.fetchgit {
           url = "https://github.com/gtk-rs/gir.git";
           rev = "ececdfdf7154dc77d5d3e2a9aa19690b47161641";
-
+          hash = "sha256-YaRnhPQHBx7dnzXGeapX1IkcnKRY++UiuyqbJot7u2A=";
+          leaveDotGit = true; # used in build.rs
         };
 
         cargoHash = "sha256-YaYqmFoKIaF0ZFuvAIHDR4hokYTjyuQ+fI5zyWYUs0c=";
+
+        nativeBuildInputs = [ pkgs.git ];
+
+        patchPhase = ''
+          runHook prePatch
+
+          sed -i '15s%.*%%' build.rs
+
+          runHook postPatch
+        '';
       };
 
       nativeBuildInputs = with pkgs; [
