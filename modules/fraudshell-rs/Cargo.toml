@@ -1,0 +1,12 @@
+[workspace]
+members = ["astal-bindings", "astal-bindings/sys"]
+resolver = "3"
+
+[package]
+name = "fraudshell"
+version = "0.1.0"
+edition = "2024"
+authors = ["FaceFTW"]
+
+[dependencies]
+astal-bindings = {path = "./astal-bindings" }

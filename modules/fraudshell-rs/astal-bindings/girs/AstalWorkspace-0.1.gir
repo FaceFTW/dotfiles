@@ -1,0 +1,472 @@
+<?xml version='1.0' encoding='utf-8'?>
+<repository xmlns="http://www.gtk.org/introspection/core/1.0" xmlns:c="http://www.gtk.org/introspection/c/1.0" xmlns:glib="http://www.gtk.org/introspection/glib/1.0"  version="1.2">
+<include name="GObject" version="2.0" />
+<include name="Gio" version="2.0" />
+<include name="GLib" version="2.0" />
+<include name="AstalWl" version="0.1" />
+<package name="astal-workspace" />
+<c:include name="astal-workspace.h" />
+<ns2:format name="gtk-doc-markdown" />
+<namespace name="AstalWorkspace" version="0.1" c:prefix="AstalWorkspace" c:identifier-prefixes="AstalWorkspace" c:symbol-prefixes="astal_workspace">
+	<bitfield name="GroupCapabilities" c:type="AstalWorkspaceGroupCapabilities" glib:type-name="AstalWorkspaceGroupCapabilities" glib:get-type="astal_workspace_group_capabilities_get_type">
+		<doc xml:whitespace="preserve">The set of actions that the compositor supports on a workspace group. Note that this is a bitfield enum, so "has CREATE_WORKSPACE"
+and "no CREATE_WORKSPACE" are the two valid states for this type. Note that this can change over the group's lifetime.</doc>
+		<member name="create_workspace" c:identifier="ASTAL_WORKSPACE_GROUP_CAPABILITIES_CREATE_WORKSPACE" value="1" />
+	</bitfield>
+	<bitfield name="WorkspaceState" c:type="AstalWorkspaceWorkspaceState" glib:type-name="AstalWorkspaceWorkspaceState" glib:get-type="astal_workspace_workspace_state_get_type">
+		<doc xml:whitespace="preserve">The set of possible states that a workspace can be in. Note that this is a bitfield enum, so any combination of these is allowed. Not every
+compositor will use all the states.</doc>
+		<member name="active" c:identifier="ASTAL_WORKSPACE_WORKSPACE_STATE_ACTIVE" value="1" />
+		<member name="urgent" c:identifier="ASTAL_WORKSPACE_WORKSPACE_STATE_URGENT" value="2" />
+		<member name="hidden" c:identifier="ASTAL_WORKSPACE_WORKSPACE_STATE_HIDDEN" value="4" />
+	</bitfield>
+	<bitfield name="WorkspaceCapabilities" c:type="AstalWorkspaceWorkspaceCapabilities" glib:type-name="AstalWorkspaceWorkspaceCapabilities" glib:get-type="astal_workspace_workspace_capabilities_get_type">
+		<doc xml:whitespace="preserve">The set of actions that the compositor supports on a workspace. Note that this is a bitfield enum, so any combination of these is allowed. Note
+that this can change over the workspace's lifetime (e.g. ACTIVATE is supported only when inactive, and vice versa)</doc>
+		<member name="activate" c:identifier="ASTAL_WORKSPACE_WORKSPACE_CAPABILITIES_ACTIVATE" value="1" />
+		<member name="deactivate" c:identifier="ASTAL_WORKSPACE_WORKSPACE_CAPABILITIES_DEACTIVATE" value="2" />
+		<member name="remove" c:identifier="ASTAL_WORKSPACE_WORKSPACE_CAPABILITIES_REMOVE" value="4" />
+		<member name="assign" c:identifier="ASTAL_WORKSPACE_WORKSPACE_CAPABILITIES_ASSIGN" value="8" />
+	</bitfield>
+	<class name="WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup" c:symbol-prefix="workspace_group" glib:type-name="AstalWorkspaceWorkspaceGroup" glib:get-type="astal_workspace_workspace_group_get_type" glib:type-struct="WorkspaceGroupClass" parent="GObject.Object">
+		<doc xml:whitespace="preserve">A group of workspaces, belonging to some set of outputs (monitors). A workspace can be in multiple groups, and a group can be on
+multiple outputs (monitors) at once. Most of the time you don't need to worry about groups directly; if you just want the workspaces
+on a specific monitor, use a MonitorView object.
+As a ListModel, it exposes every workspace belonging to the group; lists of outputs and workspaces are also available through properties.</doc>
+		<implements name="Gio.ListModel" />
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="WorkspaceGroupPrivate" c:type="AstalWorkspaceWorkspaceGroupPrivate*" />
+		</field>
+		<method name="create_workspace" c:identifier="astal_workspace_workspace_group_create_workspace">
+			<doc xml:whitespace="preserve">Ask the compositor to create a workspace with the specified name in this group. This does nothing if the group doesn't have the
+CREATE_WORKSPACE capability.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+				</instance-parameter>
+				<parameter name="name" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="capabilities" writable="1">
+			<doc xml:whitespace="preserve">The group's current capabilities (i.e. can you create workspaces in it). Note that a group's capabilities can change over
+its lifetime.</doc>
+			<type name="AstalWorkspace.GroupCapabilities" c:type="AstalWorkspaceGroupCapabilities" />
+		</property>
+		<method name="get_capabilities" c:identifier="astal_workspace_workspace_group_get_capabilities">
+			<return-value transfer-ownership="none">
+				<type name="AstalWorkspace.GroupCapabilities" c:type="AstalWorkspaceGroupCapabilities" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="outputs" writable="1">
+			<doc xml:whitespace="preserve">The set of Wayland outputs (monitors) the group belongs to.</doc>
+			<array name="GLib.PtrArray" c:type="GPtrArray*">
+				<type name="AstalWl.Output" c:type="AstalWlOutput*" />
+			</array>
+		</property>
+		<method name="get_outputs" c:identifier="astal_workspace_workspace_group_get_outputs">
+			<return-value transfer-ownership="none">
+				<array name="GLib.PtrArray" c:type="GPtrArray*">
+					<type name="AstalWl.Output" c:type="AstalWlOutput*" />
+				</array>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="workspaces" writable="1">
+			<doc xml:whitespace="preserve">The workspaces belonging to this group.</doc>
+			<array name="GLib.PtrArray" c:type="GPtrArray*">
+				<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+			</array>
+		</property>
+		<method name="get_workspaces" c:identifier="astal_workspace_workspace_group_get_workspaces">
+			<return-value transfer-ownership="none">
+				<array name="GLib.PtrArray" c:type="GPtrArray*">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</array>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="item-type">
+			<type name="GType" c:type="GType" />
+		</property>
+		<property name="n-items">
+			<type name="guint" c:type="guint" />
+		</property>
+	</class>
+	<record name="WorkspaceGroupClass" c:type="AstalWorkspaceWorkspaceGroupClass" glib:is-gtype-struct-for="WorkspaceGroup">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="WorkspaceGroupPrivate" c:type="AstalWorkspaceWorkspaceGroupPrivate" disguised="1" />
+	<class name="WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager" c:symbol-prefix="workspace_manager" glib:type-name="AstalWorkspaceWorkspaceManager" glib:get-type="astal_workspace_workspace_manager_get_type" glib:type-struct="WorkspaceManagerClass" parent="GObject.Object">
+		<doc xml:whitespace="preserve">The global workspace state. As a ListModel, it exposes every workspace available; lists of workspaces and groups are also available through
+properties, and helper objects can be created to access workspaces on a specific monitor through the for_monitor and for_output factory methods.
+</doc>
+		<implements name="Gio.ListModel" />
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="WorkspaceManagerPrivate" c:type="AstalWorkspaceWorkspaceManagerPrivate*" />
+		</field>
+		<function name="get_default" c:identifier="astal_workspace_workspace_manager_get_default">
+			<return-value transfer-ownership="full">
+				<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+			</return-value>
+		</function>
+		<method name="for_output" c:identifier="astal_workspace_workspace_manager_for_output">
+			<doc xml:whitespace="preserve">Get a proxy object which filters workspaces to those that belong to a group on the specified Wayland output. You can get an AstalWl.Output for
+use with this function by using the AstalWl4 helper library, if you're using GTK 4.</doc>
+			<return-value transfer-ownership="full">
+				<type name="AstalWorkspace.WorkspaceMonitorView" c:type="AstalWorkspaceWorkspaceMonitorView*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+				</instance-parameter>
+				<parameter name="output" transfer-ownership="none">
+					<type name="AstalWl.Output" c:type="AstalWlOutput*" />
+				</parameter>
+			</parameters>
+		</method>
+		<method name="commit" c:identifier="astal_workspace_workspace_manager_commit">
+			<doc xml:whitespace="preserve">Commit any pending workspace method calls. By default, this is done automatically; you can use freeze_autocommit() to delay
+committing any changes until thaw_autocommit() is called. You can also call this while autocommits are frozen to commit manually.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="freeze_autocommit" c:identifier="astal_workspace_workspace_manager_freeze_autocommit">
+			<doc xml:whitespace="preserve">Temporarily suspend the automatic commit() calls after doing workspace actions. In effect, calling methods like activate()
+on workspaces or create_workspace() on groups while autocommitting is frozen will make them take effect all at once upon calling
+thaw_autocommit().</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="thaw_autocommit" c:identifier="astal_workspace_workspace_manager_thaw_autocommit">
+			<doc xml:whitespace="preserve">Resume the automatic commit() calls after doing workspace actions. If any autocommitting actions were taken during the freeze, they
+will all be applied at once.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<constructor name="new" c:identifier="astal_workspace_workspace_manager_new">
+			<return-value transfer-ownership="full">
+				<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+			</return-value>
+		</constructor>
+		<property name="workspaces" writable="1">
+			<array name="GLib.PtrArray" c:type="GPtrArray*">
+				<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+			</array>
+		</property>
+		<method name="get_workspaces" c:identifier="astal_workspace_workspace_manager_get_workspaces">
+			<return-value transfer-ownership="none">
+				<array name="GLib.PtrArray" c:type="GPtrArray*">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</array>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="groups" writable="1">
+			<array name="GLib.PtrArray" c:type="GPtrArray*">
+				<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+			</array>
+		</property>
+		<method name="get_groups" c:identifier="astal_workspace_workspace_manager_get_groups">
+			<return-value transfer-ownership="none">
+				<array name="GLib.PtrArray" c:type="GPtrArray*">
+					<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+				</array>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="item-type">
+			<type name="GType" c:type="GType" />
+		</property>
+		<property name="n-items">
+			<type name="guint" c:type="guint" />
+		</property>
+		<glib:signal name="updated">
+			<doc xml:whitespace="preserve">Emitted when the compositor updates the workspace state.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+		</glib:signal>
+	</class>
+	<record name="WorkspaceManagerClass" c:type="AstalWorkspaceWorkspaceManagerClass" glib:is-gtype-struct-for="WorkspaceManager">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="WorkspaceManagerPrivate" c:type="AstalWorkspaceWorkspaceManagerPrivate" disguised="1" />
+	<class name="WorkspaceMonitorView" c:type="AstalWorkspaceWorkspaceMonitorView" c:symbol-prefix="workspace_monitor_view" glib:type-name="AstalWorkspaceWorkspaceMonitorView" glib:get-type="astal_workspace_workspace_monitor_view_get_type" glib:type-struct="WorkspaceMonitorViewClass" parent="GObject.Object">
+		<doc xml:whitespace="preserve">A helper proxy object to list all of the workspaces on a specific monitor (Wayland output) The workspaces are only accessible via
+ListModel; the relevant groups can be accessed via property.</doc>
+		<implements name="Gio.ListModel" />
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="WorkspaceMonitorViewPrivate" c:type="AstalWorkspaceWorkspaceMonitorViewPrivate*" />
+		</field>
+		<property name="valid" writable="1">
+			<doc xml:whitespace="preserve">Whether the Wayland output this object was created with still exists, and thus the object will still receive updates normally.</doc>
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_valid" c:identifier="astal_workspace_workspace_monitor_view_get_valid">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceMonitorView" c:type="AstalWorkspaceWorkspaceMonitorView*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="groups" writable="1">
+			<doc xml:whitespace="preserve">The groups that belong to the monitor view's monitor (Wayland output).</doc>
+			<array name="GLib.PtrArray" c:type="GPtrArray*">
+				<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+			</array>
+		</property>
+		<method name="get_groups" c:identifier="astal_workspace_workspace_monitor_view_get_groups">
+			<return-value transfer-ownership="none">
+				<array name="GLib.PtrArray" c:type="GPtrArray*">
+					<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+				</array>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceMonitorView" c:type="AstalWorkspaceWorkspaceMonitorView*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="item-type">
+			<type name="GType" c:type="GType" />
+		</property>
+		<property name="n-items">
+			<type name="guint" c:type="guint" />
+		</property>
+		<glib:signal name="invalidate">
+			<doc xml:whitespace="preserve">Emitted when the Wayland output this object was created with gets destroyed.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+		</glib:signal>
+	</class>
+	<record name="WorkspaceMonitorViewClass" c:type="AstalWorkspaceWorkspaceMonitorViewClass" glib:is-gtype-struct-for="WorkspaceMonitorView">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="WorkspaceMonitorViewPrivate" c:type="AstalWorkspaceWorkspaceMonitorViewPrivate" disguised="1" />
+	<class name="Workspace" c:type="AstalWorkspaceWorkspace" c:symbol-prefix="workspace" glib:type-name="AstalWorkspaceWorkspace" glib:get-type="astal_workspace_workspace_get_type" glib:type-struct="WorkspaceClass" parent="GObject.Object">
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="WorkspacePrivate" c:type="AstalWorkspaceWorkspacePrivate*" />
+		</field>
+		<method name="activate" c:identifier="astal_workspace_workspace_activate">
+			<doc xml:whitespace="preserve">Ask the compositor to activate the workspace. This does nothing if the workspace doesn't have the ACTIVATE capability.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="deactivate" c:identifier="astal_workspace_workspace_deactivate">
+			<doc xml:whitespace="preserve">Ask the compositor to deactivate the workspace. This does nothing if the workspace doesn't have the DEACTIVATE capability.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="assign_to_group" c:identifier="astal_workspace_workspace_assign_to_group">
+			<doc xml:whitespace="preserve">Ask the compositor to assign the workspace to a group. This does nothing if the workspace doesn't have the ASSIGN capability.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+				<parameter name="group" transfer-ownership="none">
+					<type name="AstalWorkspace.WorkspaceGroup" c:type="AstalWorkspaceWorkspaceGroup*" />
+				</parameter>
+			</parameters>
+		</method>
+		<method name="remove" c:identifier="astal_workspace_workspace_remove">
+			<doc xml:whitespace="preserve">Ask the compositor to remove the workspace. This does nothing if the workspace doesn't have the REMOVE capability.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="id" writable="1">
+			<doc xml:whitespace="preserve">The workspace's ID. This is not required to be set by the compositor, but if it is set, it will not change during the workspace's
+lifetime, and will be unique during its lifetime. IDs are not human-readable and shouldn't be displayed, they're for identifying workspaces
+across sessions.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_id" c:identifier="astal_workspace_workspace_get_id">
+			<return-value transfer-ownership="none" nullable="1">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="name" writable="1">
+			<doc xml:whitespace="preserve">The workspace's human-readable name. It is not guaranteed to be unique, and can change during the workspace's lifetime.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_name" c:identifier="astal_workspace_workspace_get_name">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="coordinates" writable="1">
+			<doc xml:whitespace="preserve">The workspace's coordinates. Compositors which arrange workspaces geometrically will use this property to describe where the workspace is
+in space; other compositors may use the workspace's number or leave it as null.</doc>
+			<array name="GLib.PtrArray" c:type="GPtrArray*">
+				<type name="guint32" c:type="guint32" />
+			</array>
+		</property>
+		<method name="get_coordinates" c:identifier="astal_workspace_workspace_get_coordinates">
+			<return-value transfer-ownership="none" nullable="1">
+				<array name="GLib.PtrArray" c:type="GPtrArray*">
+					<type name="guint32" c:type="guint32" />
+				</array>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="state" writable="1">
+			<doc xml:whitespace="preserve">The workspace's current state.</doc>
+			<type name="AstalWorkspace.WorkspaceState" c:type="AstalWorkspaceWorkspaceState" />
+		</property>
+		<method name="get_state" c:identifier="astal_workspace_workspace_get_state">
+			<return-value transfer-ownership="none">
+				<type name="AstalWorkspace.WorkspaceState" c:type="AstalWorkspaceWorkspaceState" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="capabilities" writable="1">
+			<doc xml:whitespace="preserve">The workspace's current capabilities. These directly correspond to methods on this object. Note that a workspace's capabilities can
+change during its lifetime.</doc>
+			<type name="AstalWorkspace.WorkspaceCapabilities" c:type="AstalWorkspaceWorkspaceCapabilities" />
+		</property>
+		<method name="get_capabilities" c:identifier="astal_workspace_workspace_get_capabilities">
+			<return-value transfer-ownership="none">
+				<type name="AstalWorkspace.WorkspaceCapabilities" c:type="AstalWorkspaceWorkspaceCapabilities" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalWorkspace.Workspace" c:type="AstalWorkspaceWorkspace*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+	</class>
+	<record name="WorkspaceClass" c:type="AstalWorkspaceWorkspaceClass" glib:is-gtype-struct-for="Workspace">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="WorkspacePrivate" c:type="AstalWorkspaceWorkspacePrivate" disguised="1" />
+	<constant name="MAJOR_VERSION" c:identifier="ASTAL_WORKSPACE_MAJOR_VERSION" value="0">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="MINOR_VERSION" c:identifier="ASTAL_WORKSPACE_MINOR_VERSION" value="1">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="MICRO_VERSION" c:identifier="ASTAL_WORKSPACE_MICRO_VERSION" value="0">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="VERSION" c:identifier="ASTAL_WORKSPACE_VERSION" value="0.1.0">
+		<type name="utf8" c:type="const gchar*" />
+	</constant>
+	<function name="is_supported" c:identifier="astal_workspace_is_supported">
+		<doc xml:whitespace="preserve">Check whether the ext-workspace-v1 protocol is supported.</doc>
+		<return-value transfer-ownership="full">
+			<type name="gboolean" c:type="gboolean" />
+		</return-value>
+	</function>
+	<function name="get_default" c:identifier="astal_workspace_get_default">
+		<return-value transfer-ownership="full">
+			<type name="AstalWorkspace.WorkspaceManager" c:type="AstalWorkspaceWorkspaceManager*" />
+		</return-value>
+	</function>
+</namespace>
+</repository>

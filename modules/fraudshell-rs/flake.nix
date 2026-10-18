@@ -54,11 +54,19 @@
         '';
       };
 
+      gtk-rs-girs = pkgs.fetchFromGitHub {
+        owner = "gtk-rs";
+        repo = "gir-files";
+        rev = "3449225041844513256468b84d74ff5fe8bf60ca";
+        hash = "sha256-o54GFkkoWnfG6GGvZhYUD1AQJPUifAHz9zGpzhTJsQw=";
+      };
+
       nativeBuildInputs = with pkgs; [
         meson
         ninja
         pkg-config
         gobject-introspection
+        freetype
         wrapGAppsHook4
         blueprint-compiler
         dart-sass
@@ -89,14 +97,38 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = nativeBuildInputs ++ astalPackages;
 
+        # these are useful, especially for remote dev
         DISPLAY = ":0";
         WAYLAND_DISPLAY = "wayland-1";
         DEBUG_INVOCATION = 1;
         G_MESSAGE_DEBUG = "all";
 
-        # shellHook = ''
-        #   export HYPRLAND_INSTANCE_SIGNATURE=$(cat HIS);
-        # '';
+        GTK_GIR_PATH = gtk-rs-girs;
+
+        shellHook =
+          let
+            astalDevOuts = map (x: x.dev) (lib.filter (x: lib.hasAttr "dev" x) astalPackages);
+            astalPaths = map (x: "${x}/share/gir-1.0/*.gir") astalDevOuts;
+            copyCmds = lib.concatMapStringsSep "\n" (x: "cp -f ${x} astal-bindings/girs") astalPaths;
+          in
+          ''
+            # export HYPRLAND_INSTANCE_SIGNATURE=$(cat HIS);
+
+            function update-astal-girs() {
+              ${copyCmds}
+              sudo chown face:users astal-bindings/girs/*.gir
+              chmod +w astal-bindings/girs/*.gir
+
+              # TODO Add postprocessing (remove xmlns:ns2 attr)
+            }
+
+            function generate-gir-binds() {
+              gir -d $GTK_GIR_PATH \
+                  -d ../girs \
+                  -o .
+            }
+          '';
+
       };
     };
 }

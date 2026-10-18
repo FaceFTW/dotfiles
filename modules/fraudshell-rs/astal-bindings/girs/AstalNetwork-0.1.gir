@@ -1,0 +1,881 @@
+<?xml version='1.0' encoding='utf-8'?>
+<repository xmlns="http://www.gtk.org/introspection/core/1.0" xmlns:c="http://www.gtk.org/introspection/c/1.0" xmlns:glib="http://www.gtk.org/introspection/glib/1.0"  version="1.2">
+<include name="NM" version="1.0" />
+<include name="GObject" version="2.0" />
+<include name="GLib" version="2.0" />
+<include name="Gio" version="2.0" />
+<package name="astal-network" />
+<c:include name="astal-network.h" />
+<ns2:format name="gtk-doc-markdown" />
+<namespace name="AstalNetwork" version="0.1" c:prefix="AstalNetwork" c:identifier-prefixes="AstalNetwork" c:symbol-prefixes="astal_network">
+	<enumeration name="Primary" c:type="AstalNetworkPrimary" glib:type-name="AstalNetworkPrimary" glib:get-type="astal_network_primary_get_type">
+		<member name="unknown" c:identifier="ASTAL_NETWORK_PRIMARY_UNKNOWN" value="0" />
+		<member name="wired" c:identifier="ASTAL_NETWORK_PRIMARY_WIRED" value="1" />
+		<member name="wifi" c:identifier="ASTAL_NETWORK_PRIMARY_WIFI" value="2" />
+	</enumeration>
+	<function name="primary_to_string" c:identifier="astal_network_primary_to_string">
+		<return-value transfer-ownership="full">
+			<type name="utf8" c:type="gchar*" />
+		</return-value>
+		<parameters>
+			<parameter name="self" transfer-ownership="none">
+				<type name="AstalNetwork.Primary" c:type="AstalNetworkPrimary" />
+			</parameter>
+		</parameters>
+	</function>
+	<function name="primary_from_connection_type" c:identifier="astal_network_primary_from_connection_type">
+		<return-value transfer-ownership="full">
+			<type name="AstalNetwork.Primary" c:type="AstalNetworkPrimary" />
+		</return-value>
+		<parameters>
+			<parameter name="type" transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</parameter>
+		</parameters>
+	</function>
+	<enumeration name="State" c:type="AstalNetworkState" glib:type-name="AstalNetworkState" glib:get-type="astal_network_state_get_type">
+		<member name="unknown" c:identifier="ASTAL_NETWORK_STATE_UNKNOWN" value="0" />
+		<member name="asleep" c:identifier="ASTAL_NETWORK_STATE_ASLEEP" value="10" />
+		<member name="disconnected" c:identifier="ASTAL_NETWORK_STATE_DISCONNECTED" value="20" />
+		<member name="disconnecting" c:identifier="ASTAL_NETWORK_STATE_DISCONNECTING" value="30" />
+		<member name="connecting" c:identifier="ASTAL_NETWORK_STATE_CONNECTING" value="40" />
+		<member name="connected_local" c:identifier="ASTAL_NETWORK_STATE_CONNECTED_LOCAL" value="50" />
+		<member name="connected_site" c:identifier="ASTAL_NETWORK_STATE_CONNECTED_SITE" value="60" />
+		<member name="connected_global" c:identifier="ASTAL_NETWORK_STATE_CONNECTED_GLOBAL" value="70" />
+	</enumeration>
+	<function name="state_to_string" c:identifier="astal_network_state_to_string">
+		<return-value transfer-ownership="full">
+			<type name="utf8" c:type="gchar*" />
+		</return-value>
+		<parameters>
+			<parameter name="self" transfer-ownership="none">
+				<type name="AstalNetwork.State" c:type="AstalNetworkState" />
+			</parameter>
+		</parameters>
+	</function>
+	<enumeration name="Connectivity" c:type="AstalNetworkConnectivity" glib:type-name="AstalNetworkConnectivity" glib:get-type="astal_network_connectivity_get_type">
+		<member name="unknown" c:identifier="ASTAL_NETWORK_CONNECTIVITY_UNKNOWN" value="0" />
+		<member name="none" c:identifier="ASTAL_NETWORK_CONNECTIVITY_NONE" value="1" />
+		<member name="portal" c:identifier="ASTAL_NETWORK_CONNECTIVITY_PORTAL" value="2" />
+		<member name="limited" c:identifier="ASTAL_NETWORK_CONNECTIVITY_LIMITED" value="3" />
+		<member name="full" c:identifier="ASTAL_NETWORK_CONNECTIVITY_FULL" value="4" />
+	</enumeration>
+	<function name="connectivity_to_string" c:identifier="astal_network_connectivity_to_string">
+		<return-value transfer-ownership="full">
+			<type name="utf8" c:type="gchar*" />
+		</return-value>
+		<parameters>
+			<parameter name="self" transfer-ownership="none">
+				<type name="AstalNetwork.Connectivity" c:type="AstalNetworkConnectivity" />
+			</parameter>
+		</parameters>
+	</function>
+	<enumeration name="DeviceState" c:type="AstalNetworkDeviceState" glib:type-name="AstalNetworkDeviceState" glib:get-type="astal_network_device_state_get_type">
+		<member name="unknown" c:identifier="ASTAL_NETWORK_DEVICE_STATE_UNKNOWN" value="0" />
+		<member name="unmanaged" c:identifier="ASTAL_NETWORK_DEVICE_STATE_UNMANAGED" value="10" />
+		<member name="unavailable" c:identifier="ASTAL_NETWORK_DEVICE_STATE_UNAVAILABLE" value="20" />
+		<member name="disconnected" c:identifier="ASTAL_NETWORK_DEVICE_STATE_DISCONNECTED" value="30" />
+		<member name="prepare" c:identifier="ASTAL_NETWORK_DEVICE_STATE_PREPARE" value="40" />
+		<member name="config" c:identifier="ASTAL_NETWORK_DEVICE_STATE_CONFIG" value="50" />
+		<member name="need_auth" c:identifier="ASTAL_NETWORK_DEVICE_STATE_NEED_AUTH" value="60" />
+		<member name="ip_config" c:identifier="ASTAL_NETWORK_DEVICE_STATE_IP_CONFIG" value="70" />
+		<member name="ip_check" c:identifier="ASTAL_NETWORK_DEVICE_STATE_IP_CHECK" value="80" />
+		<member name="secondaries" c:identifier="ASTAL_NETWORK_DEVICE_STATE_SECONDARIES" value="90" />
+		<member name="activated" c:identifier="ASTAL_NETWORK_DEVICE_STATE_ACTIVATED" value="100" />
+		<member name="deactivating" c:identifier="ASTAL_NETWORK_DEVICE_STATE_DEACTIVATING" value="110" />
+		<member name="failed" c:identifier="ASTAL_NETWORK_DEVICE_STATE_FAILED" value="120" />
+	</enumeration>
+	<function name="device_state_to_string" c:identifier="astal_network_device_state_to_string">
+		<return-value transfer-ownership="full">
+			<type name="utf8" c:type="gchar*" />
+		</return-value>
+		<parameters>
+			<parameter name="self" transfer-ownership="none">
+				<type name="AstalNetwork.DeviceState" c:type="AstalNetworkDeviceState" />
+			</parameter>
+		</parameters>
+	</function>
+	<enumeration name="Internet" c:type="AstalNetworkInternet" glib:type-name="AstalNetworkInternet" glib:get-type="astal_network_internet_get_type">
+		<member name="connected" c:identifier="ASTAL_NETWORK_INTERNET_CONNECTED" value="0" />
+		<member name="connecting" c:identifier="ASTAL_NETWORK_INTERNET_CONNECTING" value="1" />
+		<member name="disconnected" c:identifier="ASTAL_NETWORK_INTERNET_DISCONNECTED" value="2" />
+	</enumeration>
+	<function name="internet_from_device" c:identifier="astal_network_internet_from_device">
+		<return-value transfer-ownership="full">
+			<type name="AstalNetwork.Internet" c:type="AstalNetworkInternet" />
+		</return-value>
+		<parameters>
+			<parameter name="device" transfer-ownership="none">
+				<type name="NM.Device" c:type="NMDevice*" />
+			</parameter>
+		</parameters>
+	</function>
+	<function name="internet_to_string" c:identifier="astal_network_internet_to_string">
+		<return-value transfer-ownership="full">
+			<type name="utf8" c:type="gchar*" />
+		</return-value>
+		<parameters>
+			<parameter name="self" transfer-ownership="none">
+				<type name="AstalNetwork.Internet" c:type="AstalNetworkInternet" />
+			</parameter>
+		</parameters>
+	</function>
+	<class name="AccessPoint" c:type="AstalNetworkAccessPoint" c:symbol-prefix="access_point" glib:type-name="AstalNetworkAccessPoint" glib:get-type="astal_network_access_point_get_type" glib:type-struct="AccessPointClass" parent="GObject.Object">
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="AccessPointPrivate" c:type="AstalNetworkAccessPointPrivate*" />
+		</field>
+		<field name="ap" writable="1">
+			<type name="NM.AccessPoint" c:type="NMAccessPoint*" />
+		</field>
+		<method name="get_connections" c:identifier="astal_network_access_point_get_connections">
+			<return-value transfer-ownership="full">
+				<array name="GLib.PtrArray" c:type="GPtrArray*">
+					<type name="NM.RemoteConnection" c:type="NMRemoteConnection*" />
+				</array>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="get_path" c:identifier="astal_network_access_point_get_path">
+			<return-value transfer-ownership="full">
+				<type name="utf8" c:type="gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="activate" c:identifier="astal_network_access_point_activate">
+			<doc xml:whitespace="preserve">Activates the first connection associated with this AccessPoint or creates a new SimpleConnection using "wpa-psk" and activates it.
+Returns whether the connection is the new active connection.</doc>
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+				<parameter name="password" transfer-ownership="none" nullable="1">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+				<parameter name="_callback_" transfer-ownership="none" nullable="1" closure="2" scope="async">
+					<type name="Gio.AsyncReadyCallback" c:type="GAsyncReadyCallback" />
+				</parameter>
+				<parameter name="_callback__target" transfer-ownership="none" nullable="1">
+					<type name="gpointer" c:type="void*" />
+				</parameter>
+			</parameters>
+		</method>
+		<method name="activate_finish" c:identifier="astal_network_access_point_activate_finish" throws="1">
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+				<parameter name="_res_" transfer-ownership="none">
+					<type name="Gio.AsyncResult" c:type="GAsyncResult*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="bandwidth">
+			<type name="guint" c:type="guint" />
+		</property>
+		<method name="get_bandwidth" c:identifier="astal_network_access_point_get_bandwidth">
+			<return-value transfer-ownership="none">
+				<type name="guint" c:type="guint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="bssid">
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_bssid" c:identifier="astal_network_access_point_get_bssid">
+			<return-value transfer-ownership="full">
+				<type name="utf8" c:type="gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="frequency">
+			<type name="guint" c:type="guint" />
+		</property>
+		<method name="get_frequency" c:identifier="astal_network_access_point_get_frequency">
+			<return-value transfer-ownership="none">
+				<type name="guint" c:type="guint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="last-seen">
+			<type name="gint" c:type="gint" />
+		</property>
+		<method name="get_last_seen" c:identifier="astal_network_access_point_get_last_seen">
+			<return-value transfer-ownership="none">
+				<type name="gint" c:type="gint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="max-bitrate">
+			<type name="guint" c:type="guint" />
+		</property>
+		<method name="get_max_bitrate" c:identifier="astal_network_access_point_get_max_bitrate">
+			<return-value transfer-ownership="none">
+				<type name="guint" c:type="guint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="strength">
+			<type name="guint8" c:type="guint8" />
+		</property>
+		<method name="get_strength" c:identifier="astal_network_access_point_get_strength">
+			<return-value transfer-ownership="none">
+				<type name="guint8" c:type="guint8" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="icon-name" writable="1">
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_icon_name" c:identifier="astal_network_access_point_get_icon_name">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="mode">
+			<type name="NM.80211Mode" c:type="NM80211Mode" />
+		</property>
+		<method name="get_mode" c:identifier="astal_network_access_point_get_mode">
+			<return-value transfer-ownership="none">
+				<type name="NM.80211Mode" c:type="NM80211Mode" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="flags">
+			<type name="NM.80211ApFlags" c:type="NM80211ApFlags" />
+		</property>
+		<method name="get_flags" c:identifier="astal_network_access_point_get_flags">
+			<return-value transfer-ownership="none">
+				<type name="NM.80211ApFlags" c:type="NM80211ApFlags" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="rsn-flags">
+			<type name="NM.80211ApSecurityFlags" c:type="NM80211ApSecurityFlags" />
+		</property>
+		<method name="get_rsn_flags" c:identifier="astal_network_access_point_get_rsn_flags">
+			<return-value transfer-ownership="none">
+				<type name="NM.80211ApSecurityFlags" c:type="NM80211ApSecurityFlags" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="wpa-flags">
+			<type name="NM.80211ApSecurityFlags" c:type="NM80211ApSecurityFlags" />
+		</property>
+		<method name="get_wpa_flags" c:identifier="astal_network_access_point_get_wpa_flags">
+			<return-value transfer-ownership="none">
+				<type name="NM.80211ApSecurityFlags" c:type="NM80211ApSecurityFlags" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="requires-password">
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_requires_password" c:identifier="astal_network_access_point_get_requires_password">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="ssid">
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_ssid" c:identifier="astal_network_access_point_get_ssid">
+			<return-value transfer-ownership="full" nullable="1">
+				<type name="utf8" c:type="gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+	</class>
+	<record name="AccessPointClass" c:type="AstalNetworkAccessPointClass" glib:is-gtype-struct-for="AccessPoint">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="AccessPointPrivate" c:type="AstalNetworkAccessPointPrivate" disguised="1" />
+	<class name="Network" c:type="AstalNetworkNetwork" c:symbol-prefix="network" glib:type-name="AstalNetworkNetwork" glib:get-type="astal_network_network_get_type" glib:type-struct="NetworkClass" parent="GObject.Object">
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="NetworkPrivate" c:type="AstalNetworkNetworkPrivate*" />
+		</field>
+		<function name="get_default" c:identifier="astal_network_network_get_default">
+			<return-value transfer-ownership="full">
+				<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+			</return-value>
+		</function>
+		<constructor name="new" c:identifier="astal_network_network_new">
+			<return-value transfer-ownership="full">
+				<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+			</return-value>
+		</constructor>
+		<property name="client" writable="1">
+			<type name="NM.Client" c:type="NMClient*" />
+		</property>
+		<method name="get_client" c:identifier="astal_network_network_get_client">
+			<return-value transfer-ownership="none">
+				<type name="NM.Client" c:type="NMClient*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="wifi" writable="1">
+			<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+		</property>
+		<method name="get_wifi" c:identifier="astal_network_network_get_wifi">
+			<return-value transfer-ownership="none" nullable="1">
+				<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="wired" writable="1">
+			<type name="AstalNetwork.Wired" c:type="AstalNetworkWired*" />
+		</property>
+		<method name="get_wired" c:identifier="astal_network_network_get_wired">
+			<return-value transfer-ownership="none" nullable="1">
+				<type name="AstalNetwork.Wired" c:type="AstalNetworkWired*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="primary" writable="1">
+			<type name="AstalNetwork.Primary" c:type="AstalNetworkPrimary" />
+		</property>
+		<method name="get_primary" c:identifier="astal_network_network_get_primary">
+			<return-value transfer-ownership="none">
+				<type name="AstalNetwork.Primary" c:type="AstalNetworkPrimary" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="connectivity">
+			<type name="AstalNetwork.Connectivity" c:type="AstalNetworkConnectivity" />
+		</property>
+		<method name="get_connectivity" c:identifier="astal_network_network_get_connectivity">
+			<return-value transfer-ownership="none">
+				<type name="AstalNetwork.Connectivity" c:type="AstalNetworkConnectivity" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="state">
+			<type name="AstalNetwork.State" c:type="AstalNetworkState" />
+		</property>
+		<method name="get_state" c:identifier="astal_network_network_get_state">
+			<return-value transfer-ownership="none">
+				<type name="AstalNetwork.State" c:type="AstalNetworkState" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+	</class>
+	<record name="NetworkClass" c:type="AstalNetworkNetworkClass" glib:is-gtype-struct-for="Network">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="NetworkPrivate" c:type="AstalNetworkNetworkPrivate" disguised="1" />
+	<class name="Wifi" c:type="AstalNetworkWifi" c:symbol-prefix="wifi" glib:type-name="AstalNetworkWifi" glib:get-type="astal_network_wifi_get_type" glib:type-struct="WifiClass" parent="GObject.Object">
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="WifiPrivate" c:type="AstalNetworkWifiPrivate*" />
+		</field>
+		<method name="scan" c:identifier="astal_network_wifi_scan">
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="deactivate_connection" c:identifier="astal_network_wifi_deactivate_connection">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+				<parameter name="_callback_" transfer-ownership="none" nullable="1" closure="1" scope="async">
+					<type name="Gio.AsyncReadyCallback" c:type="GAsyncReadyCallback" />
+				</parameter>
+				<parameter name="_callback__target" transfer-ownership="none" nullable="1">
+					<type name="gpointer" c:type="void*" />
+				</parameter>
+			</parameters>
+		</method>
+		<method name="deactivate_connection_finish" c:identifier="astal_network_wifi_deactivate_connection_finish" throws="1">
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+				<parameter name="_res_" transfer-ownership="none">
+					<type name="Gio.AsyncResult" c:type="GAsyncResult*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="device" writable="1" construct="1">
+			<type name="NM.DeviceWifi" c:type="NMDeviceWifi*" />
+		</property>
+		<method name="get_device" c:identifier="astal_network_wifi_get_device">
+			<return-value transfer-ownership="none">
+				<type name="NM.DeviceWifi" c:type="NMDeviceWifi*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_device" c:identifier="astal_network_wifi_set_device">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="NM.DeviceWifi" c:type="NMDeviceWifi*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="active-connection" writable="1">
+			<type name="NM.ActiveConnection" c:type="NMActiveConnection*" />
+		</property>
+		<method name="get_active_connection" c:identifier="astal_network_wifi_get_active_connection">
+			<return-value transfer-ownership="none" nullable="1">
+				<type name="NM.ActiveConnection" c:type="NMActiveConnection*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="active-access-point" writable="1">
+			<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+		</property>
+		<method name="get_active_access_point" c:identifier="astal_network_wifi_get_active_access_point">
+			<return-value transfer-ownership="none" nullable="1">
+				<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="access-points">
+			<type name="GLib.List" c:type="GList*">
+				<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+			</type>
+		</property>
+		<method name="get_access_points" c:identifier="astal_network_wifi_get_access_points">
+			<return-value transfer-ownership="container">
+				<type name="GLib.List" c:type="GList*">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</type>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="enabled" writable="1">
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_enabled" c:identifier="astal_network_wifi_get_enabled">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_enabled" c:identifier="astal_network_wifi_set_enabled">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gboolean" c:type="gboolean" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="internet" writable="1">
+			<type name="AstalNetwork.Internet" c:type="AstalNetworkInternet" />
+		</property>
+		<method name="get_internet" c:identifier="astal_network_wifi_get_internet">
+			<return-value transfer-ownership="none">
+				<type name="AstalNetwork.Internet" c:type="AstalNetworkInternet" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="bandwidth" writable="1">
+			<type name="guint" c:type="guint" />
+		</property>
+		<method name="get_bandwidth" c:identifier="astal_network_wifi_get_bandwidth">
+			<return-value transfer-ownership="none">
+				<type name="guint" c:type="guint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="ssid" writable="1">
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_ssid" c:identifier="astal_network_wifi_get_ssid">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="strength" writable="1">
+			<type name="guint8" c:type="guint8" />
+		</property>
+		<method name="get_strength" c:identifier="astal_network_wifi_get_strength">
+			<return-value transfer-ownership="none">
+				<type name="guint8" c:type="guint8" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="frequency" writable="1">
+			<type name="guint" c:type="guint" />
+		</property>
+		<method name="get_frequency" c:identifier="astal_network_wifi_get_frequency">
+			<return-value transfer-ownership="none">
+				<type name="guint" c:type="guint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="state" writable="1">
+			<type name="AstalNetwork.DeviceState" c:type="AstalNetworkDeviceState" />
+		</property>
+		<method name="get_state" c:identifier="astal_network_wifi_get_state">
+			<return-value transfer-ownership="none">
+				<type name="AstalNetwork.DeviceState" c:type="AstalNetworkDeviceState" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="icon-name" writable="1">
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_icon_name" c:identifier="astal_network_wifi_get_icon_name">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="is-hotspot" writable="1">
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_is_hotspot" c:identifier="astal_network_wifi_get_is_hotspot">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="scanning" writable="1">
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_scanning" c:identifier="astal_network_wifi_get_scanning">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wifi" c:type="AstalNetworkWifi*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<glib:signal name="access-point-added">
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<parameter name="ap" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</parameter>
+			</parameters>
+		</glib:signal>
+		<glib:signal name="access-point-removed">
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<parameter name="ap" transfer-ownership="none">
+					<type name="AstalNetwork.AccessPoint" c:type="AstalNetworkAccessPoint*" />
+				</parameter>
+			</parameters>
+		</glib:signal>
+		<glib:signal name="state-changed">
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<parameter name="new_state" transfer-ownership="none">
+					<type name="AstalNetwork.DeviceState" c:type="AstalNetworkDeviceState" />
+				</parameter>
+				<parameter name="old_state" transfer-ownership="none">
+					<type name="AstalNetwork.DeviceState" c:type="AstalNetworkDeviceState" />
+				</parameter>
+				<parameter name="reaseon" transfer-ownership="none">
+					<type name="NM.DeviceStateReason" c:type="NMDeviceStateReason" />
+				</parameter>
+			</parameters>
+		</glib:signal>
+	</class>
+	<record name="WifiClass" c:type="AstalNetworkWifiClass" glib:is-gtype-struct-for="Wifi">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="WifiPrivate" c:type="AstalNetworkWifiPrivate" disguised="1" />
+	<class name="Wired" c:type="AstalNetworkWired" c:symbol-prefix="wired" glib:type-name="AstalNetworkWired" glib:get-type="astal_network_wired_get_type" glib:type-struct="WiredClass" parent="GObject.Object">
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="WiredPrivate" c:type="AstalNetworkWiredPrivate*" />
+		</field>
+		<field name="connection" writable="1">
+			<type name="NM.ActiveConnection" c:type="NMActiveConnection*" />
+		</field>
+		<property name="device" writable="1" construct="1">
+			<type name="NM.DeviceEthernet" c:type="NMDeviceEthernet*" />
+		</property>
+		<method name="get_device" c:identifier="astal_network_wired_get_device">
+			<return-value transfer-ownership="none">
+				<type name="NM.DeviceEthernet" c:type="NMDeviceEthernet*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wired" c:type="AstalNetworkWired*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_device" c:identifier="astal_network_wired_set_device">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wired" c:type="AstalNetworkWired*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="NM.DeviceEthernet" c:type="NMDeviceEthernet*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="speed" writable="1">
+			<type name="guint" c:type="guint" />
+		</property>
+		<method name="get_speed" c:identifier="astal_network_wired_get_speed">
+			<return-value transfer-ownership="none">
+				<type name="guint" c:type="guint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wired" c:type="AstalNetworkWired*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="internet" writable="1">
+			<type name="AstalNetwork.Internet" c:type="AstalNetworkInternet" />
+		</property>
+		<method name="get_internet" c:identifier="astal_network_wired_get_internet">
+			<return-value transfer-ownership="none">
+				<type name="AstalNetwork.Internet" c:type="AstalNetworkInternet" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wired" c:type="AstalNetworkWired*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="state" writable="1">
+			<type name="AstalNetwork.DeviceState" c:type="AstalNetworkDeviceState" />
+		</property>
+		<method name="get_state" c:identifier="astal_network_wired_get_state">
+			<return-value transfer-ownership="none">
+				<type name="AstalNetwork.DeviceState" c:type="AstalNetworkDeviceState" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wired" c:type="AstalNetworkWired*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="icon-name" writable="1">
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_icon_name" c:identifier="astal_network_wired_get_icon_name">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNetwork.Wired" c:type="AstalNetworkWired*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+	</class>
+	<record name="WiredClass" c:type="AstalNetworkWiredClass" glib:is-gtype-struct-for="Wired">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="WiredPrivate" c:type="AstalNetworkWiredPrivate" disguised="1" />
+	<constant name="MAJOR_VERSION" c:identifier="ASTAL_NETWORK_MAJOR_VERSION" value="0">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="MINOR_VERSION" c:identifier="ASTAL_NETWORK_MINOR_VERSION" value="1">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="MICRO_VERSION" c:identifier="ASTAL_NETWORK_MICRO_VERSION" value="0">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="VERSION" c:identifier="ASTAL_NETWORK_VERSION" value="0.1.0">
+		<type name="utf8" c:type="const gchar*" />
+	</constant>
+	<function name="get_default" c:identifier="astal_network_get_default">
+		<return-value transfer-ownership="full">
+			<type name="AstalNetwork.Network" c:type="AstalNetworkNetwork*" />
+		</return-value>
+	</function>
+</namespace>
+</repository>

@@ -5,12 +5,12 @@ version = "4.0"
 gir_file = "girs/Astal-4.0.gir"
 target_path = "src/core"
 library = "Astal"
-manual_objects = [
+external_libraries = [
     "Gtk.Widget",
     "Gtk.Window",
     "Gtk.Application",
     "Gio.Application",
-    "AstalIO.Application",
+    "AstalIO",
 ]
 generate = [
     "Astal.WindowAnchor",

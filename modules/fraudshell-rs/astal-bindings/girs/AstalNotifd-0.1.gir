@@ -1,0 +1,1033 @@
+<?xml version='1.0' encoding='utf-8'?>
+<repository xmlns="http://www.gtk.org/introspection/core/1.0" xmlns:c="http://www.gtk.org/introspection/c/1.0" xmlns:glib="http://www.gtk.org/introspection/glib/1.0"  version="1.2">
+<include name="GObject" version="2.0" />
+<include name="Gio" version="2.0" />
+<include name="GLib" version="2.0" />
+<package name="astal-notifd" />
+<c:include name="astal-notifd.h" />
+<ns2:format name="gtk-doc-markdown" />
+<namespace name="AstalNotifd" version="0.1" c:prefix="AstalNotifd" c:identifier-prefixes="AstalNotifd" c:symbol-prefixes="astal_notifd">
+	<enumeration name="Urgency" c:type="AstalNotifdUrgency" glib:type-name="AstalNotifdUrgency" glib:get-type="astal_notifd_urgency_get_type">
+		<member name="low" c:identifier="ASTAL_NOTIFD_URGENCY_LOW" value="0" />
+		<member name="normal" c:identifier="ASTAL_NOTIFD_URGENCY_NORMAL" value="1" />
+		<member name="critical" c:identifier="ASTAL_NOTIFD_URGENCY_CRITICAL" value="2" />
+	</enumeration>
+	<enumeration name="ClosedReason" c:type="AstalNotifdClosedReason" glib:type-name="AstalNotifdClosedReason" glib:get-type="astal_notifd_closed_reason_get_type">
+		<member name="expired" c:identifier="ASTAL_NOTIFD_CLOSED_REASON_EXPIRED" value="1" />
+		<member name="dismissed_by_user" c:identifier="ASTAL_NOTIFD_CLOSED_REASON_DISMISSED_BY_USER" value="2" />
+		<member name="closed" c:identifier="ASTAL_NOTIFD_CLOSED_REASON_CLOSED" value="3" />
+		<member name="undefined" c:identifier="ASTAL_NOTIFD_CLOSED_REASON_UNDEFINED" value="4" />
+	</enumeration>
+	<enumeration name="State" c:type="AstalNotifdState" glib:type-name="AstalNotifdState" glib:get-type="astal_notifd_state_get_type">
+		<member name="draft" c:identifier="ASTAL_NOTIFD_STATE_DRAFT" value="0" />
+		<member name="sent" c:identifier="ASTAL_NOTIFD_STATE_SENT" value="1" />
+		<member name="received" c:identifier="ASTAL_NOTIFD_STATE_RECEIVED" value="2" />
+	</enumeration>
+	<class name="Action" c:type="AstalNotifdAction" c:symbol-prefix="action" glib:type-name="AstalNotifdAction" glib:get-type="astal_notifd_action_get_type" glib:type-struct="ActionClass" parent="GObject.Object">
+		<doc xml:whitespace="preserve">Notification action.</doc>
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="ActionPrivate" c:type="AstalNotifdActionPrivate*" />
+		</field>
+		<constructor name="new" c:identifier="astal_notifd_action_new">
+			<return-value transfer-ownership="full">
+				<type name="AstalNotifd.Action" c:type="AstalNotifdAction*" />
+			</return-value>
+			<parameters>
+				<parameter name="id" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+				<parameter name="label" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</constructor>
+		<method name="invoke" c:identifier="astal_notifd_action_invoke">
+			<doc xml:whitespace="preserve">Invoke this action. Note that this method only notifies the client that this action was invoked by the user. For example, if this notification
+persists beyond the lifetime of the sending application, this action will have no effect.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Action" c:type="AstalNotifdAction*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="id" writable="1" construct-only="1">
+			<doc xml:whitespace="preserve">ID of this action.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_id" c:identifier="astal_notifd_action_get_id">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Action" c:type="AstalNotifdAction*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="label" writable="1" construct-only="1">
+			<doc xml:whitespace="preserve">Label displayed to the user for this action.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_label" c:identifier="astal_notifd_action_get_label">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Action" c:type="AstalNotifdAction*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<glib:signal name="invoked">
+			<doc xml:whitespace="preserve">Emitted when the notification this action was added to invoked this action.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+		</glib:signal>
+	</class>
+	<record name="ActionClass" c:type="AstalNotifdActionClass" glib:is-gtype-struct-for="Action">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="ActionPrivate" c:type="AstalNotifdActionPrivate" disguised="1" />
+	<class name="Notifd" c:type="AstalNotifdNotifd" c:symbol-prefix="notifd" glib:type-name="AstalNotifdNotifd" glib:get-type="astal_notifd_notifd_get_type" glib:type-struct="NotifdClass" parent="GObject.Object">
+		<doc xml:whitespace="preserve">The notification daemon.
+This class queues up to become the next daemon while acting as a proxy in the meantime.</doc>
+		<implements name="Gio.ListModel" />
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="NotifdPrivate" c:type="AstalNotifdNotifdPrivate*" />
+		</field>
+		<field name="daemon" writable="1">
+			<type name="AstalNotifd.Daemon" c:type="AstalNotifdDaemon*" />
+		</field>
+		<field name="proxy" writable="1">
+			<type name="AstalNotifd.Proxy" c:type="AstalNotifdProxy*" />
+		</field>
+		<function name="get_default" c:identifier="astal_notifd_notifd_get_default">
+			<doc xml:whitespace="preserve">Get the singleton instance.</doc>
+			<return-value transfer-ownership="full">
+				<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+			</return-value>
+		</function>
+		<method name="get_notification" c:identifier="astal_notifd_notifd_get_notification">
+			<doc xml:whitespace="preserve">Gets the [class@AstalNotifd.Notification] with the given ID, or null if there is no such notification.</doc>
+			<return-value transfer-ownership="full" nullable="1">
+				<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+				</instance-parameter>
+				<parameter name="id" transfer-ownership="none">
+					<type name="guint" c:type="guint" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="ignore-timeout" writable="1">
+			<doc xml:whitespace="preserve">Ignore the timeout specified by incoming notifications. By default notifications can specify a timeout in milliseconds after which the daemon
+will resolve them even without user input.</doc>
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_ignore_timeout" c:identifier="astal_notifd_notifd_get_ignore_timeout">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_ignore_timeout" c:identifier="astal_notifd_notifd_set_ignore_timeout">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gboolean" c:type="gboolean" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="dont-disturb" writable="1">
+			<doc xml:whitespace="preserve">Tells frontends not to show popups to the user. This property does not have any effect on its own; it is merely a value shared between the
+daemon process and proxies.</doc>
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_dont_disturb" c:identifier="astal_notifd_notifd_get_dont_disturb">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_dont_disturb" c:identifier="astal_notifd_notifd_set_dont_disturb">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gboolean" c:type="gboolean" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="default-timeout" writable="1">
+			<doc xml:whitespace="preserve">Timeout used for notifications that do not specify a timeout and let the server decide. Negative values result in no timeout. By default this
+is -1.</doc>
+			<type name="gint" c:type="gint" />
+		</property>
+		<method name="get_default_timeout" c:identifier="astal_notifd_notifd_get_default_timeout">
+			<return-value transfer-ownership="none">
+				<type name="gint" c:type="gint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_default_timeout" c:identifier="astal_notifd_notifd_set_default_timeout">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gint" c:type="gint" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="notifications" getter="get_notifications">
+			<doc xml:whitespace="preserve">List of currently unresolved notifications.</doc>
+			<type name="GLib.List" c:type="GList*">
+				<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+			</type>
+		</property>
+		<method name="get_notifications" c:identifier="astal_notifd_notifd_get_notifications">
+			<return-value transfer-ownership="none">
+				<type name="GLib.List" c:type="GList*">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</type>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<glib:signal name="notified">
+			<doc xml:whitespace="preserve">Emitted when the daemon receives a [class@AstalNotifd.Notification].</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<parameter name="id" transfer-ownership="none">
+					<type name="guint" c:type="guint" />
+				</parameter>
+				<parameter name="replaced" transfer-ownership="none">
+					<type name="gboolean" c:type="gboolean" />
+				</parameter>
+			</parameters>
+		</glib:signal>
+		<glib:signal name="resolved">
+			<doc xml:whitespace="preserve">Emitted when a [class@AstalNotifd.Notification] is resolved.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<parameter name="id" transfer-ownership="none">
+					<type name="guint" c:type="guint" />
+				</parameter>
+				<parameter name="reason" transfer-ownership="none">
+					<type name="AstalNotifd.ClosedReason" c:type="AstalNotifdClosedReason" />
+				</parameter>
+			</parameters>
+		</glib:signal>
+	</class>
+	<record name="NotifdClass" c:type="AstalNotifdNotifdClass" glib:is-gtype-struct-for="Notifd">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+		<field name="notified">
+			<callback name="notifd_notified" c:type="notifd_notified">
+				<return-value transfer-ownership="full">
+					<type name="none" c:type="void" />
+				</return-value>
+				<parameters>
+					<parameter name="self" transfer-ownership="none">
+						<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+					</parameter>
+					<parameter name="id" transfer-ownership="none">
+						<type name="guint" c:type="guint" />
+					</parameter>
+					<parameter name="replaced" transfer-ownership="none">
+						<type name="gboolean" c:type="gboolean" />
+					</parameter>
+				</parameters>
+			</callback>
+		</field>
+		<field name="resolved">
+			<callback name="notifd_resolved" c:type="notifd_resolved">
+				<return-value transfer-ownership="full">
+					<type name="none" c:type="void" />
+				</return-value>
+				<parameters>
+					<parameter name="self" transfer-ownership="none">
+						<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+					</parameter>
+					<parameter name="id" transfer-ownership="none">
+						<type name="guint" c:type="guint" />
+					</parameter>
+					<parameter name="reason" transfer-ownership="none">
+						<type name="AstalNotifd.ClosedReason" c:type="AstalNotifdClosedReason" />
+					</parameter>
+				</parameters>
+			</callback>
+		</field>
+	</record>
+	<record name="NotifdPrivate" c:type="AstalNotifdNotifdPrivate" disguised="1" />
+	<class name="Notification" c:type="AstalNotifdNotification" c:symbol-prefix="notification" glib:type-name="AstalNotifdNotification" glib:get-type="astal_notifd_notification_get_type" glib:type-struct="NotificationClass" parent="GObject.Object">
+		<doc xml:whitespace="preserve">Class representing a notification.</doc>
+		<field name="parent_instance" readable="0" private="1">
+			<type name="GObject.Object" c:type="GObject" />
+		</field>
+		<field name="priv" readable="0" private="1">
+			<type name="NotificationPrivate" c:type="AstalNotifdNotificationPrivate*" />
+		</field>
+		<method name="dismiss" c:identifier="astal_notifd_notification_dismiss">
+			<doc xml:whitespace="preserve">Resolve this notification with [enum@AstalNotifd.ClosedReason.DISMISSED_BY_USER].</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="expire" c:identifier="astal_notifd_notification_expire">
+			<doc xml:whitespace="preserve">Resolve this notification with [enum@AstalNotifd.ClosedReason.EXPIRED]. Note that there should be no reason to use this method because
+expiration should be left to the daemon.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="invoke" c:identifier="astal_notifd_notification_invoke">
+			<doc xml:whitespace="preserve">Invoke an [class@AstalNotifd.Action] of this notification.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="action_id" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<method name="add_action" c:identifier="astal_notifd_notification_add_action">
+			<return-value transfer-ownership="full">
+				<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="action" transfer-ownership="none">
+					<type name="AstalNotifd.Action" c:type="AstalNotifdAction*" />
+				</parameter>
+			</parameters>
+		</method>
+		<method name="set_hint" c:identifier="astal_notifd_notification_set_hint">
+			<return-value transfer-ownership="full">
+				<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="name" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="GLib.Variant" c:type="GVariant*" />
+				</parameter>
+			</parameters>
+		</method>
+		<method name="get_hint" c:identifier="astal_notifd_notification_get_hint">
+			<return-value transfer-ownership="full" nullable="1">
+				<type name="GLib.Variant" c:type="GVariant*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="name" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<constructor name="new" c:identifier="astal_notifd_notification_new">
+			<return-value transfer-ownership="full">
+				<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+			</return-value>
+		</constructor>
+		<property name="state" writable="1">
+			<doc xml:whitespace="preserve">State of the notification.</doc>
+			<type name="AstalNotifd.State" c:type="AstalNotifdState" />
+		</property>
+		<method name="get_state" c:identifier="astal_notifd_notification_get_state">
+			<return-value transfer-ownership="none">
+				<type name="AstalNotifd.State" c:type="AstalNotifdState" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="time" writable="1">
+			<doc xml:whitespace="preserve">Unix time when the notification was sent or received.</doc>
+			<type name="gint64" c:type="gint64" />
+		</property>
+		<method name="get_time" c:identifier="astal_notifd_notification_get_time">
+			<return-value transfer-ownership="none">
+				<type name="gint64" c:type="gint64" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="id" writable="1">
+			<doc xml:whitespace="preserve">ID of the notification.</doc>
+			<type name="guint32" c:type="guint32" />
+		</property>
+		<method name="get_id" c:identifier="astal_notifd_notification_get_id">
+			<return-value transfer-ownership="none">
+				<type name="guint32" c:type="guint32" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_id" c:identifier="astal_notifd_notification_set_id">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="guint32" c:type="guint32" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="app-name" writable="1">
+			<doc xml:whitespace="preserve">Name of the sending application.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_app_name" c:identifier="astal_notifd_notification_get_app_name">
+			<return-value transfer-ownership="none" nullable="1">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_app_name" c:identifier="astal_notifd_notification_set_app_name">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none" nullable="1">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="app-icon" writable="1">
+			<doc xml:whitespace="preserve">Icon name of the sending application.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_app_icon" c:identifier="astal_notifd_notification_get_app_icon">
+			<return-value transfer-ownership="none" nullable="1">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_app_icon" c:identifier="astal_notifd_notification_set_app_icon">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none" nullable="1">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="summary" writable="1">
+			<doc xml:whitespace="preserve">Single line overview of the notification.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_summary" c:identifier="astal_notifd_notification_get_summary">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_summary" c:identifier="astal_notifd_notification_set_summary">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="body" writable="1">
+			<doc xml:whitespace="preserve">Multi-line body of text, where each line is a paragraph. May contain markup.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_body" c:identifier="astal_notifd_notification_get_body">
+			<return-value transfer-ownership="none">
+				<type name="utf8" c:type="const gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_body" c:identifier="astal_notifd_notification_set_body">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="expire-timeout" writable="1">
+			<doc xml:whitespace="preserve">Time in milliseconds after which the notification expires.</doc>
+			<type name="gint32" c:type="gint32" />
+		</property>
+		<method name="get_expire_timeout" c:identifier="astal_notifd_notification_get_expire_timeout">
+			<return-value transfer-ownership="none">
+				<type name="gint32" c:type="gint32" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_expire_timeout" c:identifier="astal_notifd_notification_set_expire_timeout">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gint32" c:type="gint32" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="actions" getter="get_actions">
+			<doc xml:whitespace="preserve">List of [class@AstalNotifd.Action]s associated with the notification.</doc>
+			<type name="GLib.List" c:type="GList*">
+				<type name="AstalNotifd.Action" c:type="AstalNotifdAction*" />
+			</type>
+		</property>
+		<method name="get_actions" c:identifier="astal_notifd_notification_get_actions">
+			<return-value transfer-ownership="none">
+				<type name="GLib.List" c:type="GList*">
+					<type name="AstalNotifd.Action" c:type="AstalNotifdAction*" />
+				</type>
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="hints">
+			<doc xml:whitespace="preserve">Notification hints. Hints are a way to provide extra data to servers. To set hints on a `DRAFT` notification, use [method@
+AstalNotifd.Notification.set_hint] or the dedicated property setters for standard hints.</doc>
+			<type name="GLib.Variant" c:type="GVariant*" />
+		</property>
+		<method name="get_hints" c:identifier="astal_notifd_notification_get_hints">
+			<return-value transfer-ownership="none">
+				<type name="GLib.Variant" c:type="GVariant*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<property name="extra-hints" readable="0" writable="1" construct-only="1">
+			<doc xml:whitespace="preserve">Extra hints that are merged with [property@AstalNotifd.Notification:hints].</doc>
+			<type name="GLib.Variant" c:type="GVariant*" />
+		</property>
+		<property name="image" writable="1">
+			<doc xml:whitespace="preserve">Standard `image-path` hint. Path to an image.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_image" c:identifier="astal_notifd_notification_get_image">
+			<return-value transfer-ownership="full">
+				<type name="utf8" c:type="gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_image" c:identifier="astal_notifd_notification_set_image">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="action-icons" writable="1">
+			<doc xml:whitespace="preserve">Standard `action-icons` hint. Indicates whether [class@AstalNotifd.Action] identifiers should be interpreted as named icons.</doc>
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_action_icons" c:identifier="astal_notifd_notification_get_action_icons">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_action_icons" c:identifier="astal_notifd_notification_set_action_icons">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gboolean" c:type="gboolean" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="category" writable="1">
+			<doc xml:whitespace="preserve">Standard `category` hint. [](https://specifications.freedesktop.org/notification-spec/latest/categories.html)</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_category" c:identifier="astal_notifd_notification_get_category">
+			<return-value transfer-ownership="full">
+				<type name="utf8" c:type="gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_category" c:identifier="astal_notifd_notification_set_category">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="desktop-entry" writable="1">
+			<doc xml:whitespace="preserve">Standard `desktop-entry` hint. Specifies the name of the desktop filename representing the calling program.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_desktop_entry" c:identifier="astal_notifd_notification_get_desktop_entry">
+			<return-value transfer-ownership="full">
+				<type name="utf8" c:type="gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_desktop_entry" c:identifier="astal_notifd_notification_set_desktop_entry">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="resident" writable="1">
+			<doc xml:whitespace="preserve">Standard `resident` hint. Indicates whether the notification is kept after action invocation.</doc>
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_resident" c:identifier="astal_notifd_notification_get_resident">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_resident" c:identifier="astal_notifd_notification_set_resident">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gboolean" c:type="gboolean" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="sound-file" writable="1">
+			<doc xml:whitespace="preserve">Standard `sound-file` hint. The path to a sound file to play when the notification pops up.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_sound_file" c:identifier="astal_notifd_notification_get_sound_file">
+			<return-value transfer-ownership="full">
+				<type name="utf8" c:type="gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_sound_file" c:identifier="astal_notifd_notification_set_sound_file">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="sound-name" writable="1">
+			<doc xml:whitespace="preserve">Standard `sound-name` hint. A themeable named sound to play when the notification pops up.</doc>
+			<type name="utf8" c:type="gchar*" />
+		</property>
+		<method name="get_sound_name" c:identifier="astal_notifd_notification_get_sound_name">
+			<return-value transfer-ownership="full">
+				<type name="utf8" c:type="gchar*" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_sound_name" c:identifier="astal_notifd_notification_set_sound_name">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="suppress-sound" writable="1">
+			<doc xml:whitespace="preserve">Standard `suppress-sound` hint. Indicates to suppress playing any sound.</doc>
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_suppress_sound" c:identifier="astal_notifd_notification_get_suppress_sound">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_suppress_sound" c:identifier="astal_notifd_notification_set_suppress_sound">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gboolean" c:type="gboolean" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="transient" writable="1">
+			<doc xml:whitespace="preserve">Standard `transient` hint. Indicates that the notification should be excluded from persistence.</doc>
+			<type name="gboolean" c:type="gboolean" />
+		</property>
+		<method name="get_transient" c:identifier="astal_notifd_notification_get_transient">
+			<return-value transfer-ownership="none">
+				<type name="gboolean" c:type="gboolean" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_transient" c:identifier="astal_notifd_notification_set_transient">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gboolean" c:type="gboolean" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="x" writable="1">
+			<doc xml:whitespace="preserve">Standard `x` hint. Specifies the X location on the screen that the notification should point to. The "y" hint must also be specified.
+</doc>
+			<type name="gint" c:type="gint" />
+		</property>
+		<method name="get_x" c:identifier="astal_notifd_notification_get_x">
+			<return-value transfer-ownership="none">
+				<type name="gint" c:type="gint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_x" c:identifier="astal_notifd_notification_set_x">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gint" c:type="gint" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="y" writable="1">
+			<doc xml:whitespace="preserve">Standard `y` hint. Specifies the Y location on the screen that the notification should point to. The "x" hint must also be specified.
+</doc>
+			<type name="gint" c:type="gint" />
+		</property>
+		<method name="get_y" c:identifier="astal_notifd_notification_get_y">
+			<return-value transfer-ownership="none">
+				<type name="gint" c:type="gint" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_y" c:identifier="astal_notifd_notification_set_y">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="gint" c:type="gint" />
+				</parameter>
+			</parameters>
+		</method>
+		<property name="urgency" writable="1">
+			<doc xml:whitespace="preserve">Standard `urgency` hint. [enum@AstalNotifd.Urgency] level of the notification.</doc>
+			<type name="AstalNotifd.Urgency" c:type="AstalNotifdUrgency" />
+		</property>
+		<method name="get_urgency" c:identifier="astal_notifd_notification_get_urgency">
+			<return-value transfer-ownership="none">
+				<type name="AstalNotifd.Urgency" c:type="AstalNotifdUrgency" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+			</parameters>
+		</method>
+		<method name="set_urgency" c:identifier="astal_notifd_notification_set_urgency">
+			<return-value transfer-ownership="none">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<instance-parameter name="self" transfer-ownership="none">
+					<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+				</instance-parameter>
+				<parameter name="value" transfer-ownership="none">
+					<type name="AstalNotifd.Urgency" c:type="AstalNotifdUrgency" />
+				</parameter>
+			</parameters>
+		</method>
+		<glib:signal name="resolved">
+			<doc xml:whitespace="preserve">Emitted when this notification is resolved.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<parameter name="reason" transfer-ownership="none">
+					<doc xml:whitespace="preserve">The reason the notification was resolved. </doc>
+					<type name="AstalNotifd.ClosedReason" c:type="AstalNotifdClosedReason" />
+				</parameter>
+			</parameters>
+		</glib:signal>
+		<glib:signal name="invoked">
+			<doc xml:whitespace="preserve">Emitted when an [class@AstalNotifd.Action] of this notification is invoked.</doc>
+			<return-value transfer-ownership="full">
+				<type name="none" c:type="void" />
+			</return-value>
+			<parameters>
+				<parameter name="action_id" transfer-ownership="none">
+					<doc xml:whitespace="preserve">ID of the invoked action. </doc>
+					<type name="utf8" c:type="const gchar*" />
+				</parameter>
+			</parameters>
+		</glib:signal>
+	</class>
+	<record name="NotificationClass" c:type="AstalNotifdNotificationClass" glib:is-gtype-struct-for="Notification">
+		<field name="parent_class" readable="0" private="1">
+			<type name="GObject.ObjectClass" c:type="GObjectClass" />
+		</field>
+	</record>
+	<record name="NotificationPrivate" c:type="AstalNotifdNotificationPrivate" disguised="1" />
+	<constant name="MAJOR_VERSION" c:identifier="ASTAL_NOTIFD_MAJOR_VERSION" value="0">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="MINOR_VERSION" c:identifier="ASTAL_NOTIFD_MINOR_VERSION" value="1">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="MICRO_VERSION" c:identifier="ASTAL_NOTIFD_MICRO_VERSION" value="0">
+		<type name="gint" c:type="gint" />
+	</constant>
+	<constant name="VERSION" c:identifier="ASTAL_NOTIFD_VERSION" value="0.1.0">
+		<type name="utf8" c:type="const gchar*" />
+	</constant>
+	<function name="get_default" c:identifier="astal_notifd_get_default">
+		<doc xml:whitespace="preserve">Get the singleton instance of [class@AstalNotifd.Notifd].</doc>
+		<return-value transfer-ownership="full">
+			<type name="AstalNotifd.Notifd" c:type="AstalNotifdNotifd*" />
+		</return-value>
+	</function>
+	<function name="send_notification" c:identifier="astal_notifd_send_notification">
+		<doc xml:whitespace="preserve">Send a notification. This function does not depend on Notifd and can be used with any notification server. The [class@
+AstalNotifd.Notification] passed to this function is never the same instance that [method@AstalNotifd.Notifd.get_notification] returns. This
+function will set the state of the passed notification from `DRAFT` to `SENT` after which the notification can no longer be mutated.</doc>
+		<return-value transfer-ownership="none">
+			<type name="none" c:type="void" />
+		</return-value>
+		<parameters>
+			<parameter name="notification" transfer-ownership="none">
+				<type name="AstalNotifd.Notification" c:type="AstalNotifdNotification*" />
+			</parameter>
+			<parameter name="_callback_" transfer-ownership="none" nullable="1" closure="2" scope="async">
+				<type name="Gio.AsyncReadyCallback" c:type="GAsyncReadyCallback" />
+			</parameter>
+			<parameter name="_callback__target" transfer-ownership="none" nullable="1">
+				<type name="gpointer" c:type="void*" />
+			</parameter>
+		</parameters>
+	</function>
+	<function name="send_notification_finish" c:identifier="astal_notifd_send_notification_finish" throws="1">
+		<return-value transfer-ownership="full">
+			<type name="none" c:type="void" />
+		</return-value>
+		<parameters>
+			<parameter name="_res_" transfer-ownership="none">
+				<type name="Gio.AsyncResult" c:type="GAsyncResult*" />
+			</parameter>
+		</parameters>
+	</function>
+</namespace>
+</repository>
