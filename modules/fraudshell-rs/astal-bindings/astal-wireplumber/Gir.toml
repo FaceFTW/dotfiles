@@ -1,0 +1,40 @@
+[options]
+girs_directories = ["../../gtk-girs", "../../girs"]
+library = "AstalWp"
+version = "0.1"
+min_cfg_version = "0.1"
+target_path = "."
+work_mode = "normal"
+use_gi_docgen = true
+generate_safety_asserts = true
+deprecate_by_min_version = true
+single_version_file = true
+generate_builder = true
+trust_return_value_nullability = true
+
+generate = [
+    "AstalWp.Device",
+    "AstalWp.Node",
+    "AstalWp.Stream",
+    "AstalWp.Available",
+    "AstalWp.Channel",
+    "AstalWp.DeviceType",
+    "AstalWp.Route",
+    "AstalWp.Profile",
+    "AstalWp.Direction",
+    "AstalWp.MediaCategory",
+    "AstalWp.MediaClass",
+    "AstalWp.MediaRole",
+    "AstalWp.NodeState",
+    "AstalWp.Scale",
+    "AstalWp.Video",
+    "AstalWp.Audio",
+    "AstalWp.Wp",
+    "AstalWp.Endpoint",
+]
+
+manual = []
+
+[[object]]
+name = "AstalWp.*"
+status = "generate"

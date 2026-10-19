@@ -1,0 +1,14 @@
+[package]
+name = "astal-powerprofiles"
+authors.workspace = true
+categories.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+readme.workspace = true
+description = "Rust bindings for the astal-power-profiles library"
+edition.workspace = true
+
+[dependencies]
+astal-power-profiles-sys = { version = "0.1.0", path = "sys" }
+glib.workspace = true

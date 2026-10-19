@@ -1,0 +1,15 @@
+[package]
+name = "astal-bluetooth"
+version = "0.1.2"
+authors.workspace = true
+categories.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+description.workspace = true
+edition.workspace = true
+
+[dependencies]
+astal-bluetooth-sys = { version = "0.1.0", path = "sys" }
+glib.workspace = true
+gio.workspace = true

@@ -1,0 +1,15 @@
+[package]
+name = "astal-notifd"
+authors.workspace = true
+categories.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+readme.workspace = true
+description.workspace = true
+edition.workspace = true
+
+[dependencies]
+astal-notifd-sys = { version = "0.1.0", path = "sys" }
+gio.workspace = true
+glib.workspace = true

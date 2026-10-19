@@ -1,0 +1,36 @@
+[options]
+girs_directories = ["../../gtk-girs", "../../girs"]
+library = "AstalTray"
+version = "0.1"
+min_cfg_version = "0.1"
+target_path = "."
+work_mode = "normal"
+use_gi_docgen = true
+generate_safety_asserts = true
+deprecate_by_min_version = true
+single_version_file = true
+generate_builder = true
+trust_return_value_nullability = true
+
+generate = [
+    "AstalTray.Category",
+    "AstalTray.Status",
+    "AstalTray.TrayItem",
+    "AstalTray.Tooltip",
+    "AstalTray.Tray",
+    "AstalTray.Pixmap",
+]
+
+manual = [
+    "GdkPixbuf.Pixbuf",
+    "Gio.Icon",
+    "GLib.ObjectPath",
+    "Gio.MenuModel",
+    "Gio.ActionGroup",
+    "Gio.ListModel",
+    "GLib.Error",
+]
+
+[[object]]
+name = "AstalTray.*"
+status = "generate"

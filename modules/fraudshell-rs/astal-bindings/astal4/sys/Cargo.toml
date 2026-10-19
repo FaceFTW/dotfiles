@@ -1,0 +1,47 @@
+[package]
+name = "astal4-sys"
+edition = "2021"
+description = "FFI Bindings for libatstal and its libraries"
+authors.workspace = true
+categories.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+build = "build.rs"
+
+[package.metadata.system-deps.astal_4]
+name = "astal-4-4.0"
+version = "4"
+
+[package.metadata.docs.rs]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
+all-features = true
+
+[lib]
+name = "astal_sys"
+
+[dependencies]
+gtk4.workspace = true
+libc.workspace = true
+
+[dependencies.glib-sys]
+workspace = true
+
+[dependencies.gtk4-sys]
+workspace = true
+
+[dependencies.gio-sys]
+workspace = true
+
+[dependencies.gdk4]
+workspace = true
+
+[build-dependencies]
+system-deps = "7"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]

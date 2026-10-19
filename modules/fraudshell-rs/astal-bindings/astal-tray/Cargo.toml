@@ -1,0 +1,16 @@
+[package]
+name = "astal-tray"
+authors.workspace = true
+categories.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+readme.workspace = true
+description.workspace = true
+edition.workspace = true
+
+[dependencies]
+astal-tray-sys = { version = "0.1.0", path = "sys" }
+gdk-pixbuf.workspace = true
+gio.workspace = true
+glib.workspace = true

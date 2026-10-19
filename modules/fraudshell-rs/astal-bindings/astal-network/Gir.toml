@@ -1,0 +1,44 @@
+[options]
+girs_directories = ["../../gtk-girs", "../../girs"]
+library = "AstalNetwork"
+version = "0.1"
+min_cfg_version = "0.1"
+target_path = "."
+work_mode = "normal"
+use_gi_docgen = true
+generate_safety_asserts = true
+deprecate_by_min_version = true
+single_version_file = true
+generate_builder = true
+trust_return_value_nullability = true
+
+generate = [
+    "AstalNetwork.Primary",
+    "AstalNetwork.State",
+    "AstalNetwork.Connectivity",
+    "AstalNetwork.DeviceState",
+    "AstalNetwork.Internet",
+    "AstalNetwork.AccessPoint",
+    "AstalNetwork.Network",
+    "AstalNetwork.Wifi",
+    "AstalNetwork.Wired",
+]
+
+manual = [
+    "Gio.AsyncReadyCallback",
+    "Gio.AsyncResult",
+    "GLib.Error",
+    "NM.80211Mode",
+    "NM.80211ApFlags",
+    "NM.80211ApSecurityFlags",
+    "NM.Client",
+    "NM.DeviceWifi",
+    "NM.ActiveConnection",
+    "NM.DeviceEthernet",
+    "NM.Device",
+    "NM.RemoteConnection",
+]
+
+[[object]]
+name = "AstalNetwork.*"
+status = "generate"

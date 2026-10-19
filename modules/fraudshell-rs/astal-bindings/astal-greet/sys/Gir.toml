@@ -1,0 +1,10 @@
+[options]
+library = "AstalGreet"
+version = "0.1"
+target_path = "."
+girs_directories = ["../../../gtk-girs/", "../../../girs/"]
+work_mode = "sys"
+single_version_file = true
+min_cfg_version = "0.1"
+
+external_libraries = ["GLib", "GObject", "Gio"]

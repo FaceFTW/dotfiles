@@ -1,0 +1,43 @@
+[package]
+name = "astal-greet-sys"
+edition = "2021"
+description = "FFI Bindings for libatstal and its libraries"
+build = "build.rs"
+authors.workspace = true
+categories.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[package.metadata.system-deps.astal_greet]
+name = "astal-greet-0.1"
+version = "0.1"
+
+[package.metadata.docs.rs]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
+all-features = true
+
+[lib]
+name = "astal_greet_sys"
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.glib-sys]
+workspace = true
+
+[dependencies.gobject-sys]
+workspace = true
+
+[dependencies.gio-sys]
+workspace = true
+
+[build-dependencies]
+system-deps = "7"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]

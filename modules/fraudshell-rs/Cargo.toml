@@ -1,5 +1,34 @@
 [workspace]
-members = ["astal-bindings", "astal-bindings/sys"]
+members = [
+	"astal-bindings/astal4",
+	"astal-bindings/astal4/sys",
+	"astal-bindings/astal-apps",
+	"astal-bindings/astal-apps/sys",
+	"astal-bindings/astal-auth",
+	"astal-bindings/astal-auth/sys",
+	"astal-bindings/astal-battery",
+	"astal-bindings/astal-battery/sys",
+	"astal-bindings/astal-bluetooth",
+	"astal-bindings/astal-bluetooth/sys",
+	"astal-bindings/astal-greet",
+	"astal-bindings/astal-greet/sys",
+	"astal-bindings/astal-hyprland",
+	"astal-bindings/astal-hyprland/sys",
+	"astal-bindings/astal-io",
+	"astal-bindings/astal-io/sys",
+	"astal-bindings/astal-network",
+	"astal-bindings/astal-network/sys",
+	"astal-bindings/astal-notifd",
+	"astal-bindings/astal-notifd/sys",
+	"astal-bindings/astal-powerprofiles",
+	"astal-bindings/astal-powerprofiles/sys",
+	"astal-bindings/astal-tray",
+	"astal-bindings/astal-tray/sys",
+	"astal-bindings/astal-wireplumber",
+	"astal-bindings/astal-wireplumber/sys",
+	"astal-bindings/astal-workspace",
+	"astal-bindings/astal-workspace/sys",
+]
 resolver = "3"
 
 [package]

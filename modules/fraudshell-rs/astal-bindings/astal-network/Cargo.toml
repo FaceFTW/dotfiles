@@ -1,0 +1,16 @@
+[package]
+name = "astal-network"
+version = "0.1.4"
+authors.workspace = true
+categories.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+description.workspace = true
+edition.workspace = true
+
+[dependencies]
+astal-network-sys = { version = "0.1.1", path = "sys" }
+gio.workspace = true
+glib.workspace = true
+nm-rs.workspace = true

@@ -1,0 +1,36 @@
+[package]
+name = "astal-power-profiles-sys"
+version = "0.1.0"
+edition = "2021"
+description = "FFI Bindings for the astal-power-profiles library"
+build = "build.rs"
+
+[package.metadata.system-deps.astal_power_profiles]
+name = "astal-power-profiles-0.1"
+version = "0.1"
+
+[package.metadata.docs.rs]
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
+all-features = true
+
+[lib]
+name = "astal_power_profiles_sys"
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.glib-sys]
+workspace = true
+
+[dependencies.gobject-sys]
+workspace = true
+
+[build-dependencies]
+system-deps = "7"
+
+[dev-dependencies]
+shell-words = "1.0.0"
+tempfile = "3"
+
+[features]

@@ -1,0 +1,22 @@
+[package]
+name = "astal-hyprland"
+authors.workspace = true
+categories.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+readme.workspace = true
+description.workspace = true
+edition.workspace = true
+
+[dependencies]
+glib.workspace = true
+gtk4.workspace = true
+astal-hyprland-sys = { version = "0.1.0", path = "sys" }
+
+[package.metadata.docs.rs]
+all-features = true
+# For build.rs scripts
+rustc-args = ["--cfg", "docsrs"]
+# For rustdoc
+rustdoc-args = ["--cfg", "docsrs"]

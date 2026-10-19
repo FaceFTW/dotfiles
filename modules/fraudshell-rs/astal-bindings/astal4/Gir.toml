@@ -1,0 +1,53 @@
+[options]
+girs_directories = ["../gtk-girs", "../girs"]
+library = "Astal"
+version = "4.0"
+min_cfg_version = "4.0"
+target_path = "."
+work_mode = "normal"
+use_gi_docgen = true
+generate_safety_asserts = true
+deprecate_by_min_version = true
+single_version_file = "."
+generate_builder = true
+trust_return_value_nullability = true
+
+generate = [
+    "Astal.WindowAnchor",
+    "Astal.Exclusivity",
+    "Astal.Layer",
+    "Astal.Keymode",
+    "Astal.Bin",
+    "Astal.Box",
+    "Astal.Slider",
+    "Astal.Window",
+    "Astal.Application",
+]
+
+manual = [
+    "Gtk.Widget",
+    "GObject.InitiallyUnowned",
+    "Gtk.Accessible",
+    "Gtk.Buildable",
+    "Gtk.Box",
+    "Gtk.ConstraintTarget",
+    "Gtk.Orientable",
+    "Gtk.Scale",
+    "Gtk.Window",
+    "Gtk.Range",
+    "Gtk.AccessibleRange",
+    "Gtk.Native",
+    "Gtk.Root",
+    "Gtk.ShortcutManager",
+    "Gdk.Monitor",
+    "Gtk.Application",
+    "Gio.Application",
+    "Gio.ActionGroup",
+    "Gio.ActionMap",
+    "AstalIO.Application",
+    "Gio.SocketConnection",
+]
+
+[[object]]
+name = "Astal.*"
+status = "generate"
