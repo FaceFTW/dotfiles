@@ -29,6 +29,7 @@
         rustc = rust-toolchain;
 
       };
+      astalPackages = lib.mapAttrsToList (_: val: val) astal.packages.${system};
 
       gir-rs = rustPlatform.buildRustPackage {
         pname = "gir-rs";
@@ -54,11 +55,28 @@
         '';
       };
 
-      gtk-rs-girs = pkgs.fetchFromGitHub {
-        owner = "gtk-rs";
-        repo = "gir-files";
-        rev = "3449225041844513256468b84d74ff5fe8bf60ca";
-        hash = "sha256-o54GFkkoWnfG6GGvZhYUD1AQJPUifAHz9zGpzhTJsQw=";
+      gir-files = pkgs.stdenvNoCC.mkDerivation rec {
+        pname = "fraudshell-link-girs";
+        version = "0.1.0";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "gtk-rs";
+          repo = "gir-files";
+          rev = "3449225041844513256468b84d74ff5fe8bf60ca";
+          hash = "sha256-o54GFkkoWnfG6GGvZhYUD1AQJPUifAHz9zGpzhTJsQw=";
+        };
+
+        buildInputs = astalPackages;
+
+        installPhase = let
+          astalDevOuts = map (x: x.dev) (lib.filter (x: lib.hasAttr "dev" x) astalPackages);
+          astalPaths = map (x: "${x}/share/gir-1.0/*.gir") astalDevOuts;
+          copyCmds = lib.concatMapStringsSep "\n" (x: "install -Dm555 ${x} -t $out/share/gir-1.0") astalPaths;
+        in ''
+          mkdir -p $out/share/gir-1.0
+          install -Dm555 -t $out/share/gir-1.0 $src/*.gir
+          ${copyCmds}
+        '';
       };
 
       nativeBuildInputs = with pkgs; [
@@ -80,7 +98,6 @@
         gir-rs
       ];
 
-      astalPackages = lib.mapAttrsToList (_: val: val) astal.packages.${system};
     in
     {
       # packages.${system}.default = pkgs.stdenv.mkDerivation {
@@ -103,7 +120,7 @@
         DEBUG_INVOCATION = 1;
         G_MESSAGE_DEBUG = "all";
 
-        GTK_GIR_PATH = gtk-rs-girs;
+        GTK_GIR_PATH = gir-files;
 
         shellHook =
           let
