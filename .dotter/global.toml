@@ -43,9 +43,7 @@ depends = []
 depends = []
 
 [linux.files]
-"config/.bashrc" = "~/.bashrc"
 "config/.zshrc" = "~/.zshrc"
-"config/profile" = "~/.profile"
 "bin/executable_sh-toy" = { target = "~/.local/bin/sh-toy", type = "symbolic" }
 "config/zed/settings.json" = { target = "~/.config/zed/settings.json", type = "symbolic" }
 "config/zed/keymap.json" = { target = "~/.config/zed/keymap.json", type = "symbolic" }
