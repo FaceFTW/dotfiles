@@ -35,13 +35,11 @@
     "https://nix-community.cachix.org"
     "https://vicinae.cachix.org"
     "https://hyprland.cachix.org"
-    "https://zed.cachix.org"
   ];
   nix.settings.trusted-public-keys = [
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
     "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    "zed.cachix.org-1:/pHQ6dpMsAZk2DiP4WCL0p9YDNKWj2Q5FL20bNmw1cU="
     "nix-cache.archiver.local-1:BFfK+JlyUtf42YxfT5btH/kbvk+hPxaVuJXDZgQyo8A="
   ];
   nix.settings.auto-optimise-store = true;
