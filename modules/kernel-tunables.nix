@@ -33,7 +33,7 @@ in
     boot.kernel.sysctl."net.core.bpf_jit_enable" = mkIf (!kernel.isWSL) 0;
 
     # Disable ftrace debugging.
-    boot.kernel.sysctl."kernel.ftrace_enabled" = false;
+    # boot.kernel.sysctl."kernel.ftrace_enabled" = false;
 
     # Avoid kernel memory address exposures via dmesg (this value can also be set by CONFIG_SECURITY_DMESG_RESTRICT).
     boot.kernel.sysctl."kernel.dmesg_restrict" = 1;
