@@ -195,7 +195,10 @@
             }
           '';
 
-          misc-utils = lib.mkOrder 1300 ''
+
+          misc-utils = lib.mkOrder 1300
+          # bash
+          ''
             function setup-envrc() {
               ### PARAMETERS
               path=$1

@@ -11,6 +11,7 @@ depends = []
 "config/fortunes.txt" = "~/.config/fortunes.txt"
 "config/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
 "config/fastfetch.jsonc" = { target = "~/.config/fastfetch/config.jsonc", type="symbolic" }
+"config/.zshrc" = "~/.config/zsh/.zshrc"
 
 
 [default.variables]
@@ -43,7 +44,6 @@ depends = []
 depends = []
 
 [linux.files]
-"config/.zshrc" = "~/.zshrc"
 "bin/executable_sh-toy" = { target = "~/.local/bin/sh-toy", type = "symbolic" }
 "config/zed/settings.json" = { target = "~/.config/zed/settings.json", type = "symbolic" }
 "config/zed/keymap.json" = { target = "~/.config/zed/keymap.json", type = "symbolic" }
