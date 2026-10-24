@@ -8,7 +8,7 @@ depends = []
 "config/gitconfig" = "~/.gitconfig"
 "config/.vimrc" = { target = "~/.vimrc", type = "symbolic" }
 "config/cowsay" = "~/.config/cowsay"
-"config/fortunes.txt" = "~/.config/fortunes.txt"
+"config/fortunes" = "~/.config/fortunes"
 "config/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
 "config/fastfetch.jsonc" = { target = "~/.config/fastfetch/config.jsonc", type="symbolic" }
 "config/.zshrc" = "~/.config/zsh/.zshrc"
