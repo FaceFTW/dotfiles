@@ -1,6 +1,6 @@
-fpath=( ~/.config/zsh/.zfuncs "${fpath[@]}" )
+fpath=( "$HOME/.config/zsh/.zfuncs" "${fpath[@]}" )
 export ZSH="$HOME/.config/zsh/.oh-my-zsh"
-export ZSHZ_DATA=$HOME/.config/z_data
+export ZSHZ_DATA="$HOME/.config/z_data"
 
 zstyle ':omz:update' mode disabled
 COMPLETION_WAITING_DOTS="true"
@@ -32,7 +32,7 @@ source $ZSH/oh-my-zsh.sh
 HISTSIZE="10000"
 SAVEHIST="10000"
 HISTORY_IGNORE='(cd *|ls*|pwd|git add .|git commit *)'
-HISTFILE="/home/face/.config/zsh/.zsh_history"
+HISTFILE="$HOME/.config/zsh/.zsh_history"
 mkdir -p "$(dirname "$HISTFILE")"
 
 # Set shell options
