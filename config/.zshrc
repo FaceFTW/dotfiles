@@ -27,8 +27,27 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-autoload -Xu jump-into
-autoload -Xu remote-reboot
+# History options should be set in .zshrc and after oh-my-zsh sourcing.
+# See https://github.com/nix-community/home-manager/issues/177.
+HISTSIZE="10000"
+SAVEHIST="10000"
+HISTORY_IGNORE='(cd *|ls*|pwd|git add .|git commit *)'
+HISTFILE="/home/face/.config/zsh/.zsh_history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+# Set shell options
+set_opts=(
+  HIST_FCNTL_LOCK APPEND_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_DUPS
+  HIST_IGNORE_SPACE HIST_SAVE_NO_DUPS SHARE_HISTORY NO_EXTENDED_HISTORY
+  NO_HIST_EXPIRE_DUPS_FIRST NO_HIST_FIND_NO_DUPS
+)
+for opt in "${set_opts[@]}"; do
+  setopt "$opt"
+done
+unset opt set_opts
+
+autoload -Uz jump-into
+autoload -Uz remote-reboot
 
 if [[ $(stat -c %a ~/.local/bin/sh-toy) != "755" ]]
 then
@@ -39,9 +58,11 @@ fi
 export GPG_TTY=$(tty)
 
 # ALIAS
-alias zshconfig="vim ~/.zshrc"
+alias la='ls -a'
+alias ll='ls -al'
 alias clearmemcache="echo 3 | sudo tee /proc/sys/vm/drop_caches"
 alias clear="/bin/clear; sh-toy"
+alias search='rg -p --glob '\''!node_modules/*'\''  $@'
 
 path+=('/home/face/.local/bin')
 eval "$(starship init zsh)"
