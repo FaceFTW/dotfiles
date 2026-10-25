@@ -10,8 +10,9 @@ depends = []
 "config/cowsay" = "~/.config/cowsay"
 "config/fortunes" = "~/.config/fortunes"
 "config/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
-"config/fastfetch.jsonc" = { target = "~/.config/fastfetch/config.jsonc", type="symbolic" }
+"config/fastfetch.jsonc" = { target = "~/.config/fastfetch/config.jsonc", type = "symbolic" }
 "config/.zshrc" = "~/.config/zsh/.zshrc"
+"config/starship.toml" = { target = "~/.config/starship.toml", type = "symbolic" }
 
 
 [default.variables]
@@ -29,7 +30,7 @@ depends = []
 [win64.files]
 "bin/executable_sh-toy.exe" = { target = "~/.local/bin/sh-toy.exe", type = "symbolic" }
 "config/profile.ps1" = "~/Onedrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
-"config/filepilot.json" = { target ="~/AppData/Roaming/Voidstar/FilePilot/FPilot-Config.json", type = "symbolic" }
+"config/filepilot.json" = { target = "~/AppData/Roaming/Voidstar/FilePilot/FPilot-Config.json", type = "symbolic" }
 "config/zed/settings.json" = { target = "~/AppData/Roaming/Zed/settings.json", type = "symbolic" }
 "config/zed/keymap.json" = { target = "~/AppData/Roaming/Zed/keymap.json", type = "symbolic" }
 

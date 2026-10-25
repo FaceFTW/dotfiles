@@ -54,4 +54,16 @@
 			"\\ x": ["workspace::SendKeystrokes", "\" + x"],
 		},
 	},
+	{
+		"context": "Editor",
+		"bindings": {
+			"shift-f12": "editor::FindAllReferences",
+		},
+	},
+	{
+		"context": "Editor",
+		"unbind": {
+			"alt-shift-f12": "editor::FindAllReferences",
+		},
+	},
 ]

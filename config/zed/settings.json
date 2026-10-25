@@ -1,9 +1,59 @@
 {
+	"cli_default_open_behavior": "existing_window",
+	"feature_flags": {
+		"tabular-data-preview": "on",
+		"notebooks": "on",
+	},
+	"proxy": "",
+	"wsl_connections": [
+		{
+			"distro_name": "NixOS",
+			"user": null,
+			"projects": [
+				{
+					"paths": ["/home/face/FTL"],
+				},
+				{
+					"paths": ["/home/face/hyprnix"],
+				},
+				{
+					"paths": ["/mnt/c/Users/awest/Workspaces/shell-toy/./"],
+				},
+			],
+		},
+	],
+	"edit_predictions": {
+		"mode": "subtle",
+		"allow_data_collection": "no",
+	},
+	"completion_menu_item_kind": "symbol",
+	"ssh_connections": [
+		{
+			"host": "192.168.0.236",
+			"username": "face",
+			"args": [],
+			"projects": [
+				{
+					"paths": ["/home/face/.config"],
+				},
+				{
+					"paths": ["/home/face/.config/dotfiles"],
+				},
+				{
+					"paths": ["/home/face/.config/dotfiles/modules/fraudshell/./"],
+				},
+			],
+		},
+	],
 	"agent": {
+		"threads_sidebar": {
+			"position": "right",
+		},
+		"dock": "right",
 		"enabled": false,
-		"button": false,
+		"button": true,
 		"favorite_models": [],
-		"model_parameters": []
+		"model_parameters": [],
 	},
 	"auto_update": false,
 	"base_keymap": "VSCode",
@@ -11,33 +61,50 @@
 	"buffer_font_size": 12,
 	"buffer_line_height": "standard",
 	"collaboration_panel": {
-		"button": false
+		"button": false,
 	},
 	"disable_ai": true,
 	"file_types": {
 		"mdx": ["*.mdx"],
-		"ini": ["*.meta"]
+		"ini": ["*.meta"],
 	},
 	"git": {
 		"inline_blame": {
-			"delay_ms": 1000
-		}
+			"delay_ms": 1000,
+		},
 	},
 	"git_panel": { "dock": "left" },
 	"hard_tabs": true,
 	"icon_theme": "VSCode Icons for Zed (Dark)",
 	"languages": {
+		"Python": {
+			"hard_tabs": false,
+		},
+		"Vala": {
+			"inlay_hints": {
+				"enabled": true,
+			},
+			"hard_tabs": false,
+		},
 		"Nix": {
 			"language_servers": ["nil", "!nixd"],
 			"formatter": "language_server",
 			"format_on_save": "off",
 			"preferred_line_length": 80,
 			"hard_tabs": false,
-			"tab_size": 2
+			"tab_size": 2,
 		},
 		"JSON": {
-			"format_on_save": "off"
-		}
+			"format_on_save": "off",
+		},
+		"CSS": {
+			"language_servers": ["biome"],
+			"formatter": "language_server",
+		},
+		"JavaScript": {
+			"language_servers": ["biome", "vtsls"],
+			"formatter": "language_server",
+		},
 	},
 	"linked_edits": true,
 	"lsp": {
@@ -45,48 +112,51 @@
 			"settings": {
 				"nix": {
 					"flake": {
-						"autoArchive": true
-					}
-				}
-			}
-		}
+						"autoArchive": true,
+					},
+				},
+			},
+		},
 	},
 	"minimap": {
-		"show": "auto"
+		"show": "auto",
 	},
 	"on_last_window_closed": "quit_app",
 	"outline_panel": {
-		"button": false
+		"button": false,
 	},
 	"preview_tabs": {
-		"enabled": false
+		"enabled": false,
 	},
 	"project_panel": {
+		"folder_indicator": "icon",
 		"entry_spacing": "standard",
 		"file_icons": true,
-		"folder_icons": true,
-		"dock": "left"
+		"dock": "left",
 	},
 	"relative_line_numbers": "disabled",
-	"show_edit_predictions": true,
+	"show_edit_predictions": false,
 	"show_whitespaces": "all",
 	"tabs": {
 		"file_icons": true,
-		"git_status": true
+		"git_status": true,
 	},
 	"telemetry": {
 		"diagnostics": false,
-		"metrics": false
+		"metrics": false,
 	},
 	"terminal": {
+		"shell": {
+			"program": "C:\\Program Files\\Git\\bin\\bash.exe",
+		},
 		"font_size": 10,
 		"font_family": "Hack Nerd Font Mono",
-		"max_scroll_history_lines": 10000
+		"max_scroll_history_lines": 10000,
 	},
 	"theme": {
 		"mode": "system",
 		"light": "One Light",
-		"dark": "VSCode Dark Modern"
+		"dark": "VSCode Dark Modern",
 	},
 	"theme_overrides": {
 		"VSCode Dark Modern": {
@@ -100,69 +170,69 @@
 					"color": "#000000",
 					"background_color": "#FF8C00",
 					"font_weight": 900,
-					"font_style": "italic"
+					"font_style": "italic",
 				},
 				"constant.comment.todo.text": {
 					"color": "#000000",
-					"background_color": "#FF8C00"
+					"background_color": "#FF8C00",
 				},
 				"string.comment.info": {
 					"color": "#000000",
 					"background_color": "#2563EB",
 					"font_weight": 900,
-					"font_style": "italic"
+					"font_style": "italic",
 				},
 				"string.comment.info.text": {
 					"color": "#000000",
-					"background_color": "#2563EB"
+					"background_color": "#2563EB",
 				},
 				"keyword.comment.warn": {
 					"color": "#000000",
 					"background_color": "#FBBF24",
 					"font_weight": 900,
-					"font_style": "italic"
+					"font_style": "italic",
 				},
 				"keyword.comment.warn.text": {
 					"color": "#000000",
-					"background_color": "#FBBF24"
+					"background_color": "#FBBF24",
 				},
 				"property.comment.error": {
 					"color": "#000000",
 					"background_color": "#DC2626",
 					"font_weight": 900,
-					"font_style": "italic"
+					"font_style": "italic",
 				},
 				"property.comment.error.text": {
 					"color": "#000000",
-					"background_color": "#DC2626"
+					"background_color": "#DC2626",
 				},
 				"title": {
-					"color": "#4D9CD6FF"
+					"color": "#4D9CD6FF",
 				},
 				"primary": {
-					"color": "#087F23FF"
+					"color": "#087F23FF",
 				},
 				"emphasis": {
 					"color": "#C586C0FF",
-					"font_style": "italic"
+					"font_style": "italic",
 				},
 				"link_text": {
-					"color": "#ce9178FF"
-				}
-			}
-		}
+					"color": "#ce9178FF",
+				},
+			},
+		},
 	},
 	"toolbar": {
-		"agent_review": false
+		"agent_review": false,
 	},
 	"ui_font_family": ".ZedSans",
 	"ui_font_size": 16,
 	"vim": {
-		"toggle_relative_line_numbers": true
+		"toggle_relative_line_numbers": true,
 	},
 	"vim_mode": true,
 	"when_closing_with_no_tabs": "keep_window_open",
 	"which_key": {
-		"enabled": true
-	}
+		"enabled": true,
+	},
 }
