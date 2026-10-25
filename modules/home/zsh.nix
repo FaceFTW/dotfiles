@@ -77,8 +77,8 @@
         "systemd"
         "uv"
         "z"
-        "zsh-autosuggestions"
-        "zsh-syntax-highlighting"
+        # "zsh-autosuggestions"
+        # "zsh-syntax-highlighting"
       ];
 
       initContent =
