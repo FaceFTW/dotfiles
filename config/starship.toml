@@ -3,14 +3,15 @@
 format = """
 [\ue0c7\u2593](fg:bg)\
 $os[\ue0b1](bg:bg fg:muted)\
-[ $shell - $username$hostname ](bg:bg)[\ue0b1](bg:bg fg:muted)\
+[ $shell - $username[@](bg:bg fg:muted)$hostname ](bg:bg)[\ue0b1](bg:bg fg:muted)\
 [ $directory](bg:bg)[\ue0b1](bg:bg fg:muted)\
-([ $git_branch$git_status](bg:bg)[\ue0b1](bg:bg fg:muted))\
-([ $cmd_duration$status ](bg:bg)[\ue0b1](bg:bg fg:muted))
+([ $git_branch ($git_state )$git_status](bg:bg)[\ue0b1](bg:bg fg:muted))\
+([ $cmd_duration ($status )](bg:bg)[\ue0b1](bg:bg fg:muted))
 $character"""
 
-palette = "main"
+continuation_prompt = "[|](fg:muted) "
 
+palette = "main"
 [palettes.main]
 bg = "#272727"
 fg = "#fafafa"
@@ -21,7 +22,7 @@ mint = "#77f5d6"
 lime = "#9FD356"
 yellow = "#ffeb3b"
 amber = "#FFCE5C"
-orange = "FFA500"
+orange = "FF8C00"
 red = "#E84855"
 purple = "#8A4FFF"
 aqua = "#2EC4B6"
@@ -61,7 +62,7 @@ format = "[$user]($style)"
 
 [hostname]
 ssh_only = false
-format = "[@$hostname]($style)"
+format = "[$hostname]($style)"
 style = "bg:bg fg:teal"
 trim_at = "."
 
@@ -79,13 +80,13 @@ format = "[$symbol $branch]($style)"
 
 [git_status]
 style = "bg:main.bg fg:main.yellow"
-format = "($ahead_behind) ($stashed) ($modified) ($untracked) ($staged) ($deleted) $renamed$conflicted"
+format = "($ahead_behind)( $stashed)( $staged)( $modified)( $untracked)( $deleted)( $renamed)( $conflicted) "
 conflicted = "[⛓️‍💥 $count](bg:bg fg:red)"
 deleted = "[✘ $count](bg:bg fg:red)"
 modified = "[✏️ $count](bg:bg fg:amber)"
-renamed = "[ $count](bg:bg fg:purple)"
+renamed = "[⏩ $count](bg:bg fg:purple)"
 staged = "[✅ $count](bg:bg fg:green)"
-untracked = "[untracked](bg:bg fg:red)"
+untracked = "[⭐ $count](bg:bg fg:orange)"
 stashed = "[💾 $count](bg:bg fg:orange)"
 ahead = "⇡${count}"
 behind = "⇣${count}"
@@ -100,6 +101,7 @@ format = "[⏳ $duration]($style)"
 
 [status]
 style = "bg:bg fg:lime"
-format = " [$status]($style)"
+# format = " [$status]($style)"
+pipestatus = true
 disabled = false
 map_symbol = true

@@ -8,7 +8,7 @@
     enable = lib.mkEnableOption "oh-my-posh Configuration";
   };
 
-  config = lib.mkIf config.modules.home.oh-my-posh.enable {
+  config = lib.mkIf config.modules.home.starship.enable {
     home-manager.users.face.programs.oh-my-posh = {
       ############################################
       # Oh My Posh Config

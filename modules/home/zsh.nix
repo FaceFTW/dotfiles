@@ -25,13 +25,6 @@
         doafunny = "sh-toy";
         clearmemcache = "echo 3 | sudo tee /proc/sys/vm/drop_caches";
 
-        # systemctl aliases
-        system-units = "sudo systemctl list-units";
-        user-units = "sudo systemctl --user list-units";
-        service-status = "sudo systemctl status";
-        user-service-status = "systemctl --user status";
-        syslog = "sudo journalctl";
-
         # Other nice aliases
         battery-info = "watch upower -i /org/freedesktop/UPower/devices/battery_BAT1";
 
@@ -62,11 +55,23 @@
       oh-my-zsh.enable = true;
       oh-my-zsh.extraConfig = "zstyle ':omz:update' mode disabled";
       oh-my-zsh.plugins = [
-        "z"
         "colorize"
         "colored-man-pages"
         "cp"
-        "vscode"
+        "dircycle"
+        "fancy-ctrl-z"
+        "gh"
+        "git-extras"
+        "gitfast"
+        "lol"
+        "npm"
+        "rsync"
+        "rust"
+        "systemd"
+        "uv"
+        "z"
+        "zsh-autosuggestions"
+        "zsh-syntax-highlighting"
       ];
 
       initContent =

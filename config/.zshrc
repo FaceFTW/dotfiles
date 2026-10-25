@@ -22,7 +22,26 @@ zstyle ':omz:update' mode disabled
 COMPLETION_WAITING_DOTS="true"
 
 # Oh My Zsh Plugins
-plugins=(colorize colored-man-pages dircycle cp lol ssh-agent gpg-agent z)
+plugins=(
+	colorize
+	colored-man-pages
+	cp
+	dircycle
+	fancy-ctrl-z
+	gh
+	git-extras
+	gitfast
+	lol
+	npm
+	rsync
+	rust
+	systemd
+	uv
+	z
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+)
+
 zstyle :omz:plugins:keychain agents gpg,ssh
 zstyle :omz:plugins:keychain options --quiet --quick --noask
 zstyle :omz:plugins:ssh-agent lazy yes
