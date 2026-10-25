@@ -37,6 +37,13 @@
         build-port-authority-image = "nix build --max-jobs 8 --keep-going --print-build-logs ~/.config/dotfiles#images.port-authority";
       };
 
+      siteFunctions = {
+        jump-into = lib.unsafeDiscardStringContext (lib.readFile "${./../../config/.zfuncs/jump-into.sh}");
+        remote-reboot = lib.unsafeDiscardStringContext (
+          lib.readFile "${./../../config/.zfuncs/remote-reboot.sh}"
+        );
+      };
+
       history = {
         append = true;
         share = true;
@@ -200,22 +207,22 @@
             }
           '';
 
-
-          misc-utils = lib.mkOrder 1300
-          # bash
-          ''
-            function setup-envrc() {
-              ### PARAMETERS
-              path=$1
-              shellName=$2
-              ### PARAMETERS
-              echo "use flake ~/.config/dotfiles#$shellName" > "$path/.envrc"
-              current_dir=$(pwd)
-              cd "$path"
-              direnv allow
-              cd "$current_dir"
-            }
-          '';
+          misc-utils =
+            lib.mkOrder 1300
+              # bash
+              ''
+                function setup-envrc() {
+                  ### PARAMETERS
+                  path=$1
+                  shellName=$2
+                  ### PARAMETERS
+                  echo "use flake ~/.config/dotfiles#$shellName" > "$path/.envrc"
+                  current_dir=$(pwd)
+                  cd "$path"
+                  direnv allow
+                  cd "$current_dir"
+                }
+              '';
 
           runAfter = lib.mkOrder 1500 "sh-toy";
 

@@ -12,6 +12,7 @@ depends = []
 "config/omp-theme.json" = { target = "~/.config/theme.omp.json", type = "symbolic" }
 "config/fastfetch.jsonc" = { target = "~/.config/fastfetch/config.jsonc", type = "symbolic" }
 "config/.zshrc" = "~/.config/zsh/.zshrc"
+"config/.zfuncs" = "~/.config/zsh/.zfuncs"
 "config/starship.toml" = { target = "~/.config/starship.toml", type = "symbolic" }
 
 

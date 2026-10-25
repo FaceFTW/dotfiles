@@ -4,8 +4,8 @@
     ./btop.nix
     ./fastfetch.nix
     ./git.nix
-    ./oh-my-posh.nix
     ./ssh-client.nix
+    ./starship.nix
     ./zsh.nix
   ];
 }
