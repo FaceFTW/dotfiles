@@ -33,7 +33,7 @@
 
   modules.home = {
     fastfetch.enable = true;
-    oh-my-posh.enable = true;
+    starship.enable = true;
     ssh-client.enable = true;
     zsh.enable = true;
   };

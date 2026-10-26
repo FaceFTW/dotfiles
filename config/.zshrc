@@ -1,35 +1,53 @@
-# Should make things explicit
-export LANG=en_US.UTF-8
-LC_COLLATE="en_US.UTF-8"
-LC_CTYPE="en_US.UTF-8"
-LC_MESSAGES="en_US.UTF-8"
-LC_MONETARY="en_US.UTF-8"
-LC_NUMERIC="en_US.UTF-8"
-LC_TIME="en_US.UTF-8"
-LC_ALL="en_US.UTF-8"
+fpath=( "$HOME/.config/zsh/.zfuncs" "${fpath[@]}" )
+export ZSH="$HOME/.config/zsh/.oh-my-zsh"
+export ZSHZ_DATA="$HOME/.config/z_data"
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
 zstyle ':omz:update' mode disabled
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 COMPLETION_WAITING_DOTS="true"
 
-# Oh My Zsh Plugins
-plugins=(colorize colored-man-pages dircycle cp lol vscode ssh-agent gpg-agent z)
-zstyle :omz:plugins:keychain agents gpg,ssh
-zstyle :omz:plugins:keychain options --quiet --quick --noask
-zstyle :omz:plugins:ssh-agent lazy yes
-
-export ZSHZ_DATA=$HOME/.config/z_data
+plugins=(
+	colorize
+	colored-man-pages
+	cp
+	dircycle
+	fancy-ctrl-z
+	gh
+	git-extras
+	gitfast
+	lol
+	npm
+	rsync
+	rust
+	systemd
+	uv
+	z
+	# zsh-autosuggestions
+	# zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
+
+# History options should be set in .zshrc and after oh-my-zsh sourcing.
+# See https://github.com/nix-community/home-manager/issues/177.
+HISTSIZE="10000"
+SAVEHIST="10000"
+HISTORY_IGNORE='(cd *|ls*|pwd|git add .|git commit *)'
+HISTFILE="$HOME/.config/zsh/.zsh_history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+# Set shell options
+set_opts=(
+  HIST_FCNTL_LOCK APPEND_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_DUPS
+  HIST_IGNORE_SPACE HIST_SAVE_NO_DUPS SHARE_HISTORY NO_EXTENDED_HISTORY
+  NO_HIST_EXPIRE_DUPS_FIRST NO_HIST_FIND_NO_DUPS
+)
+for opt in "${set_opts[@]}"; do
+  setopt "$opt"
+done
+unset opt set_opts
+
+autoload -Uz jump-into
+autoload -Uz remote-reboot
 
 if [[ $(stat -c %a ~/.local/bin/sh-toy) != "755" ]]
 then
@@ -40,14 +58,13 @@ fi
 export GPG_TTY=$(tty)
 
 # ALIAS
-alias zshconfig="vim ~/.zshrc"
-alias doafunny="sh-toy"
+alias la='ls -a'
+alias ll='ls -al'
 alias clearmemcache="echo 3 | sudo tee /proc/sys/vm/drop_caches"
-
 alias clear="/bin/clear; sh-toy"
+alias search='rg -p --glob '\''!node_modules/*'\''  $@'
 
 path+=('/home/face/.local/bin')
-eval "$(oh-my-posh --init --shell zsh --config ~/.config/theme.omp.json)"
-# enable_poshtransientprompt
+eval "$(starship init zsh)"
 
 sh-toy

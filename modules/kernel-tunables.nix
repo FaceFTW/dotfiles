@@ -33,7 +33,7 @@ in
     boot.kernel.sysctl."net.core.bpf_jit_enable" = mkIf (!kernel.isWSL) 0;
 
     # Disable ftrace debugging.
-    boot.kernel.sysctl."kernel.ftrace_enabled" = false;
+    # boot.kernel.sysctl."kernel.ftrace_enabled" = false;
 
     # Avoid kernel memory address exposures via dmesg (this value can also be set by CONFIG_SECURITY_DMESG_RESTRICT).
     boot.kernel.sysctl."kernel.dmesg_restrict" = 1;
@@ -65,10 +65,10 @@ in
       "slab_nomerge"
 
       # Only allow signed modules.
-      "module.sig_enforce=1"
+      # "module.sig_enforce=1"
 
-      # Blocks access to all kernel memory, even preventing administrators from being able to inspect and probe the kernel.
-      "lockdown=confidentiality"
+      # # Blocks access to all kernel memory, even preventing administrators from being able to inspect and probe the kernel.
+      # "lockdown=confidentiality"
 
       # Enable buddy allocator free poisoning.
       "page_poison=1"

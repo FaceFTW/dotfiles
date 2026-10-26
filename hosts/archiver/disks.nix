@@ -98,7 +98,10 @@
       motorway.content.type = "filesystem";
       motorway.content.format = "btrfs";
       motorway.content.mountpoint = "/mnt/motorway";
-      motorway.content.mountOptions = [ "noatime" ];
+      motorway.content.mountOptions = [
+        "noatime"
+        "nofail"
+      ];
     };
 
     ############################################
@@ -137,6 +140,7 @@
         "compress=zstd:9"
         "noatime"
         "x-systemd.mount-timeout=5m" # prevents a stupid timeout
+        "nofail"
       ];
     };
   };

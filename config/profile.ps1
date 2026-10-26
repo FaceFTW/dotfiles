@@ -514,4 +514,5 @@ if (Test-Path "$($Env:USERPROFILE)\.local\bin\_bat.ps1") {
 ############## STARTUP ##############
 #####################################
 sh-toy.exe
-oh-my-posh --init --shell pwsh --config "$env:USERPROFILE\.config\theme.omp.json" | Invoke-Expression
+Invoke-Expression (&starship init powershell)
+# oh-my-posh --init --shell pwsh --config "$env:USERPROFILE\.config\theme.omp.json" | Invoke-Expression

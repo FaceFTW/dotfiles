@@ -1,13 +1,13 @@
 # Versions for all the binaries we are pulling if they need it
 
-$oh_my_posh_version = "v29.0.2"
-$vim_w32_version = "9.1.2098"
+$starship_version = "v1.27.0"
+$vim_w32_version = "9.2.1229"
 $bat_version = "v0.26.1"
-$npiperelay_version = "v1.9.0"
-$fastfetch_version = "2.55.0"
+$npiperelay_version = "v1.12.2"
+$fastfetch_version = "2.70.0"
 
 # Remove Old stuff
-Remove-Item -Path "~/.local/bin/oh-my-posh.exe" -ErrorAction Ignore
+Remove-Item -Path "~/.local/bin/starship.exe" -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/vim" -Recurse -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/vim.exe" -ErrorAction Ignore
 Remove-Item -Path "~/.local/bin/bat.exe" -ErrorAction Ignore
@@ -22,10 +22,11 @@ If (Test-Path -LiteralPath "$Env:USERPROFILE/tmp") {
 
 New-Item -ItemType Directory -Name "tmp" -Path $Env:USERPROFILE  >$null
 
-# Oh-My-Posh
+# Starship
 Invoke-WebRequest `
-	-Uri "https://github.com/jandedobbeleer/oh-my-posh/releases/download/$oh_my_posh_version/posh-windows-amd64.exe" `
-	-Outfile "~/.local/bin/oh-my-posh.exe"
+	-Uri "https://github.com/starship/starship/releases/download/$starship_version/starship-x86_64-pc-windows-msvc.zip" `
+	-Outfile "$Env:USERPROFILE/tmp/starship.zip"
+Expand-Archive -Path "$Env:USERPROFILE/tmp/starship.zip" -DestinationPath "$Env:USERPROFILE/.local/bin" >$null
 
 # Vim
 Invoke-WebRequest `
@@ -33,7 +34,7 @@ Invoke-WebRequest `
 	-Outfile "$Env:USERPROFILE/tmp/vim.zip"
 Expand-Archive -Path "$Env:USERPROFILE/tmp/vim.zip" -DestinationPath "$Env:USERPROFILE/tmp" >$null
 # NOTE This will change with vim version changes
-Move-Item -Path $Env:USERPROFILE/tmp/vim/vim91 -Destination ~/.local/bin/vim
+Move-Item -Path $Env:USERPROFILE/tmp/vim/vim92 -Destination ~/.local/bin/vim
 # New-Item -ItemType SymbolicLink -Path "~/.local/bin/vim.exe" -Value "~/.local/bin/vim/vim.exe" >$null
 
 # bat

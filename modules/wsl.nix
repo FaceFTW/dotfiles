@@ -28,7 +28,7 @@
   modules.home = {
     fastfetch.enable = true;
     git.enable = true;
-    oh-my-posh.enable = true;
+    starship.enable = true;
     ssh-client.enable = true;
     zsh.enable = true;
   };
@@ -45,7 +45,7 @@
   wsl.wslConf.interop.appendWindowsPath = false; # Let Linux binaries take precedence
   wsl.interop.register = true;
   modules.kernel.isWSL = true; # For Kernel Tunable Configs
-  boot.kernelPackages = pkgs.linuxPackages_7_2;
+  boot.kernelPackages = pkgs.linuxPackages_7_3;
 
   ############################################
   # Misc System Configuration

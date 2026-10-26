@@ -1,0 +1,107 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[\ue0c7\u2593](fg:bg)\
+$os[\ue0b1](bg:bg fg:muted)\
+[ $shell - $username[@](bg:bg fg:muted)$hostname ](bg:bg)[\ue0b1](bg:bg fg:muted)\
+[ $directory](bg:bg)[\ue0b1](bg:bg fg:muted)\
+([ $git_branch ($git_state )$git_status](bg:bg)[\ue0b1](bg:bg fg:muted))\
+([ $cmd_duration ($status )](bg:bg)[\ue0b1](bg:bg fg:muted))
+$character"""
+
+continuation_prompt = "[|](fg:muted) "
+
+palette = "main"
+[palettes.main]
+bg = "#272727"
+fg = "#fafafa"
+muted = "#7a7a7a"
+cyan = "#26C6DA"
+teal = "#2EEFBF"
+mint = "#77f5d6"
+lime = "#9FD356"
+yellow = "#ffeb3b"
+amber = "#FFCE5C"
+orange = "FF8C00"
+red = "#E84855"
+purple = "#8A4FFF"
+aqua = "#2EC4B6"
+
+[os]
+disabled = false
+format = "[$symbol]($style)"
+style = "bg:bg fg:cyan"
+
+[shell]
+disabled = false
+format = "[$indicator]($style)"
+style = "bg:bg fg:fg"
+bash_indicator = "bash"
+zsh_indicator = "zsh"
+fish_indicator = "fish"
+pwsh_indicator = "pwsh"
+powershell_indicator = "pwsh"
+nu_indicator = "nu"
+ion_indicator = "ion"
+unknown_indicator = "sh"
+
+[character]
+disabled = false
+success_symbol = '[ └--\$](bold fg:green)'
+error_symbol = '[ └--\$](bold fg:red)'
+vimcmd_symbol = '[❮](bold fg:green)'
+vimcmd_replace_one_symbol = '[❮](bold fg:lavender)'
+vimcmd_replace_symbol = '[❮](bold fg:lavender)'
+vimcmd_visual_symbol = '[❮](bold fg:yellow)'
+
+[username]
+show_always = true
+style_user = "bg:bg fg:mint"
+style_root = "bg:bg fg:red"
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = false
+format = "[$hostname]($style)"
+style = "bg:bg fg:teal"
+trim_at = "."
+
+[directory]
+style = "bg:bg fg:fg"
+truncation_length = 0
+truncate_to_repo = true
+repo_root_style = "bg:bg fg:fg"
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+symbol = ""
+style = "bg:bg fg:yellow"
+format = "[$symbol $branch]($style)"
+
+[git_status]
+style = "bg:main.bg fg:main.yellow"
+format = "($ahead_behind)( $stashed)( $staged)( $modified)( $untracked)( $deleted)( $renamed)( $conflicted) "
+conflicted = "[⛓️‍💥 $count](bg:bg fg:red)"
+deleted = "[✘ $count](bg:bg fg:red)"
+modified = "[✏️ $count](bg:bg fg:amber)"
+renamed = "[⏩ $count](bg:bg fg:purple)"
+staged = "[✅ $count](bg:bg fg:green)"
+untracked = "[⭐ $count](bg:bg fg:orange)"
+stashed = "[💾 $count](bg:bg fg:orange)"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇣${behind_count} ⇡${ahead_count}"
+up_to_date = ""
+
+[cmd_duration]
+min_time = 0
+show_milliseconds = true
+style = "bg:bg fg:amber"
+format = "[⏳ $duration]($style)"
+
+[status]
+style = "bg:bg fg:lime"
+# format = " [$status]($style)"
+pipestatus = true
+disabled = false
+map_symbol = true

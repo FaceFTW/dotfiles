@@ -6,10 +6,17 @@
   ############################################
   # Hardware Configuration
   ############################################
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 2;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.systemd-boot.configurationLimit = 2;
 
-  boot.kernelPackages = pkgs.linuxPackages_7_2;
+  boot.loader.limine.enable = true;
+  boot.loader.limine.enableEditor = true;
+  boot.loader.limine.secureBoot.enable = false;
+  boot.loader.limine.maxGenerations = 2;
+
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.kernelPackages = pkgs.linuxPackages_7_3;
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
@@ -40,6 +47,7 @@
     "fbcon=font:ter-v14n"
     "vconsole.font=ter-v14n"
   ];
+
   # boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
   # boot.loader.systemd-boot.memtest86.enable = true;
 
