@@ -10,7 +10,7 @@ readme.workspace = true
 description.workspace = true
 
 [dependencies]
-astal-io = { version = "0.1.0", path = "../crates/astal-io" }
+astal-io = { version = "0.1.0", path = "../astal-io" }
 astal4-sys = { version = "0.1.0", path = "sys" }
 gdk4.workspace = true
 gio.workspace = true

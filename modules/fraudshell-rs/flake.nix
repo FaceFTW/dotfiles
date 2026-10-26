@@ -29,7 +29,15 @@
         rustc = rust-toolchain;
 
       };
-      astalPackages = lib.mapAttrsToList (_: val: val) astal.packages.${system};
+      astalPackages = lib.mapAttrsToList (
+        (
+          _: pkg:
+          pkg.overrideAttrs (old: {
+            nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.vala ];
+            VALADOC = "${pkgs.vala}/bin/valadoc";
+          })
+        )
+      ) astal.packages.${system};
 
       gir-rs = rustPlatform.buildRustPackage {
         pname = "gir-rs";
@@ -68,15 +76,18 @@
 
         buildInputs = astalPackages;
 
-        installPhase = let
-          astalDevOuts = map (x: x.dev) (lib.filter (x: lib.hasAttr "dev" x) astalPackages);
-          astalPaths = map (x: "${x}/share/gir-1.0/*.gir") astalDevOuts;
-          copyCmds = lib.concatMapStringsSep "\n" (x: "install -Dm555 ${x} -t $out/share/gir-1.0") astalPaths;
-        in ''
-          mkdir -p $out/share/gir-1.0
-          install -Dm555 -t $out/share/gir-1.0 $src/*.gir
-          ${copyCmds}
-        '';
+        installPhase =
+          let
+            astalDevOuts = map (x: x.dev) (lib.filter (x: lib.hasAttr "dev" x) astalPackages);
+            astalPaths = map (x: "${x}/share/gir-1.0/*.gir") astalDevOuts;
+            copyCmds = lib.concatMapStringsSep "\n" (x: "install -Dm555 ${x} -t $out/share/gir-1.0") astalPaths;
+          in
+          ''
+            mkdir -p $out/share/gir-1.0
+            install -Dm555 -t $out/share/gir-1.0 $src/*.gir
+            ${copyCmds}
+            sed -i "s#xmlns:ns2=\".*\"##g" $out/share/gir-1.0/*.gir
+          '';
       };
 
       nativeBuildInputs = with pkgs; [
@@ -96,6 +107,16 @@
         upower
         rust-toolchain
         gir-rs
+        glib.dev
+        gtk4.dev
+        cairo
+        pango
+        gdk-pixbuf
+        graphene
+        gtk4-layer-shell
+        wayland.dev
+        networkmanager
+        appmenu-glib-translator
       ];
 
     in
@@ -120,7 +141,9 @@
         DEBUG_INVOCATION = 1;
         G_MESSAGE_DEBUG = "all";
 
-        GTK_GIR_PATH = gir-files;
+        LD_LIBRARY_PATH = lib.makeLibraryPath (astalPackages ++ nativeBuildInputs);
+
+        GIR_PATH = gir-files;
 
         shellHook =
           let
