@@ -9,8 +9,8 @@ local final_host
 if [[ "$host_arg" =~ '([0-9]+).([0-9]+).([0-9]+).([0-9]+)' ]]; then
 	final_host="$host_arg"
 else
-	final_host="$host_arg.internal.faceftw.dev"fi
-
+	final_host="$host_arg.internal.faceftw.dev"
+fi
 
 echo "Attempting to trigger restart on $final_host"
 ssh -t "face@$final_host" "sudo reboot"
