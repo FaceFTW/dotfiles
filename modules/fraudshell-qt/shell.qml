@@ -18,7 +18,7 @@ Scope {
                 right: true
             }
 
-            implicitHeight: 30
+            implicitHeight: 40
 
             // color: "#1d1d20"
             color: "transparent"
@@ -26,9 +26,8 @@ Scope {
             GradientOutline {
                 anchors.fill: parent
 
-                WidgetWorkspaces{
-
-                	FlexboxLayout.alignSelf: FlexboxLayout.AlignStart
+                WidgetWorkspaces {
+                    FlexboxLayout.alignSelf: FlexboxLayout.AlignStart
                 }
 
                 WidgetClock {

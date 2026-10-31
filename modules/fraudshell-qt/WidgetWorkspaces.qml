@@ -5,16 +5,25 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 
-Item {
+Rectangle {
+    id: root
+    color: "transparent"
+    implicitHeight: 32
 
     component WorkspaceIPC: Item {
         id: ipc_root
-
         property int active: 1
         property int amount: 6
+        property var workspaceClients: ({
+                1: [],
+                2: [],
+                3: [],
+                4: [],
+                5: [],
+                6: []
+            })
 
-        property var switchWorkspace: w => {
-            console.log(`We are switching from workspace ${active} to ${w}`);
+        function switchWorkspace(w) {
             Hyprland.dispatch(`hl.dsp.focus({workspace="${w}"})`);
         }
 
@@ -23,59 +32,82 @@ Item {
         }
     }
 
-    component WorkspaceButton: Rectangle {
-        id: wksp_btn
-
-        required property int wnum
-        property string hover_color
-
-        property bool hovered: false
-        property bool active: ipc_root.active === wnum || area.containsMouse
-        property int activeMargin: 3
-        property int inactiveMargin: 5
-
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        Layout.rightMargin: active ? activeMargin : inactiveMargin
-        Layout.leftMargin: active ? activeMargin : inactiveMargin
-
-        radius: 10
-
-        Behavior on color {
-            ColorAnimation {
-                duration: 1000
-                to: wksp_btn.hover_color
-            }
-        }
-
-        MouseArea {
-            id: area
-            anchors.fill: parent
-            hoverEnabled: true
-            onClicked: ipc_root.switchWorkspace(parent.wnum)
-        }
-    }
-
     WorkspaceIPC {
         id: ipc_root
     }
 
     RowLayout {
-        id: layout
         anchors.fill: parent
-        anchors.topMargin: 5
-        anchors.bottomMargin: 5
-        Layout.alignment: Qt.AlignHCenter
-        spacing: 1
+        anchors.leftMargin: 12
+        anchors.topMargin: 0
+        spacing: 2
 
-        Repeater {
-            model: ipc_root.amount
+        Row {
+            Repeater {
+                model: ipc_root.amount
 
-            WorkspaceButton {
-                required property int modelData
-                wnum: modelData + 1
-                color: "#FFFFFF"
+                delegate: WorkspaceButton {
+                    required property int modelData
+                    wnum: modelData + 1
+                    clients: ipc_root.workspaceClients[modelData + 1] ?? []
+                }
             }
+        }
+    }
+
+    component WorkspaceButton: Rectangle {
+        id: btn
+
+        required property int wnum
+        property var clients: []
+
+        readonly property real iconSize: 10
+        readonly property real iconGap: 2
+        readonly property real labelWidth: workspaceLabel.implicitWidth + 8
+        readonly property real iconsWidth: clients.length ? clients.length * iconSize + Math.max(0, clients.length - 1) * iconGap : 0
+
+        implicitWidth: Math.max(32, labelWidth + iconsWidth + 18)
+        implicitHeight: 32
+        radius: 24
+        color: btn.wnum === ipc_root.active ? "#f38ba8" : "#f2cdcd"
+        border.width: 1
+        border.color: "#1e1e2e"
+
+        RowLayout {
+            anchors.centerIn: parent
+            spacing: 2
+
+            Text {
+                id: workspaceLabel
+                text: String(btn.wnum)
+                font.pixelSize: 18
+                color: "#11111b"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            Row {
+                visible: btn.clients.length > 0
+                spacing: btn.iconGap
+                layoutDirection: Qt.LeftToRight
+
+                Repeater {
+                    model: btn.clients
+
+                    delegate: Rectangle {
+                        width: btn.iconSize
+                        height: btn.iconSize
+                        radius: 2
+                        color: "#11111b"
+                        opacity: 0.8
+                    }
+                }
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: ipc_root.switchWorkspace(btn.wnum)
         }
     }
 }
