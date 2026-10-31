@@ -27,6 +27,7 @@
         qt6.qtimageformats
         qt6.qtmultimedia
         qt6.qt5compat
+        qt6.qtdeclarative
         quickshell.packages.${system}.quickshell
       ];
 

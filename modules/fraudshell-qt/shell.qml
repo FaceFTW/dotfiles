@@ -1,34 +1,40 @@
 import Quickshell
 import QtQuick
 import QtQuick.Shapes
+import QtQuick.Layouts
 
 Scope {
 
-  Variants {
-    model: Quickshell.screens
+    Variants {
+        model: Quickshell.screens
 
-    PanelWindow {
-      required property var modelData
-      screen: modelData
+        PanelWindow {
+            required property var modelData
+            screen: modelData
 
-      anchors {
-        top: true
-        left: true
-        right: true
-      }
+            anchors {
+                top: true
+                left: true
+                right: true
+            }
 
-      implicitHeight: 30
+            implicitHeight: 30
 
-      color: "#1d1d20"
+            // color: "#1d1d20"
+            color: "transparent"
 
-      GradientOutline {
+            GradientOutline {
+                anchors.fill: parent
 
-      }
+                WidgetWorkspaces{
 
-      WidgetClock {
-        anchors.centerIn: parent
+                	FlexboxLayout.alignSelf: FlexboxLayout.AlignStart
+                }
 
-      }
+                WidgetClock {
+                    FlexboxLayout.alignSelf: FlexboxLayout.AlignCenter
+                }
+            }
+        }
     }
-  }
 }
