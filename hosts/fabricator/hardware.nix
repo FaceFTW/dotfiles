@@ -37,22 +37,10 @@
   hardware.deviceTree.enable = true;
   hardware.deviceTree.filter = "bcm2711-rpi-4*.dtb";
   hardware.deviceTree.overlays = [
-    # {
-    #   name = "disable-bt";
-    #   dtsFile = ../../devicetree/disable-bt-overlay.dts;
-    # }
     {
       name = "spi";
       dtsFile = ../../devicetree/spi0-0cs-overlay.dts;
     }
-    # {
-    #   name = "imx708";
-    #   dtsFile = ../../devicetree/imx708-overlay.dts;
-    # }
-    # {
-    #   name = "ov5647";
-    #   dtsFile = ./devicetree/ov5647-overlay.dts;
-    # }
   ];
 
   ############################################
@@ -63,7 +51,7 @@
     version = "7.3.0";
     src = fetchGit {
       url = "https://github.com/raspberrypi/linux";
-      rev = "b9ae2efb2dba0d5801dcad3b618d0f2fecfe816c";
+      rev = "8169c79f5b7631b409669735b175c4b5fc616ed6";
     };
 
     crossCompile = true;
@@ -100,8 +88,6 @@
   services.udev.enable = true;
   services.udev.extraRules = ''
     SUBSYSTEM=="video4linux", KERNEL=="video[01]", GROUP="camera", MODE="660"
-    # SUBSYSTEM=="media", KERNEL=="media2", GROUP="camera", MODE="660"
-    # SUBSYSTEM=="i2c", GROUP="i2c", MODE="660"
 
     # https://raspberrypi.stackexchange.com/a/141107
     SUBSYSTEM=="dma_heap", GROUP="camera", MODE="0660"
