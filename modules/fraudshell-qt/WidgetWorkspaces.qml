@@ -14,14 +14,6 @@ Rectangle {
         id: ipc_root
         property int active: 1
         property int amount: 6
-        property var workspaceClients: ({
-                1: [],
-                2: [],
-                3: [],
-                4: [],
-                5: [],
-                6: []
-            })
 
         function switchWorkspace(w) {
             Hyprland.dispatch(`hl.dsp.focus({workspace="${w}"})`);
@@ -49,7 +41,7 @@ Rectangle {
                 delegate: WorkspaceButton {
                     required property int modelData
                     wnum: modelData + 1
-                    clients: ipc_root.workspaceClients[modelData + 1] ?? []
+                    // clients: ipc_root.workspaceClients[modelData + 1] ?? []
                 }
             }
         }
@@ -59,7 +51,7 @@ Rectangle {
         id: btn
 
         required property int wnum
-        property var clients: []
+        property var clients: Hyprland.workspaces.values[wnum - 1].toplevels.values
 
         readonly property real iconSize: 10
         readonly property real iconGap: 2
@@ -95,6 +87,8 @@ Rectangle {
                     model: btn.clients
 
                     delegate: Rectangle {
+                        property var mainAppIconSource: Quickshell.iconPath(SingletonAppSearch.guessIcon(biggestWindow?.class), "image-missing")
+
                         width: btn.iconSize
                         height: btn.iconSize
                         radius: 2
