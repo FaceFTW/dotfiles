@@ -11,6 +11,9 @@ Rectangle {
     color: "transparent"
     implicitHeight: 32
 
+    readonly property var workspaceColors: ["#ad495a", "#ad7731", "#adad00", "#66a34b", "#458bad", "#8f476b"]
+    readonly property var workspaceActiveColors: ["#fa6982", "#faad45", "#fafa00", "#96f06e", "#63c8fa", "#dc6ea5",]
+
     component WorkspaceIPC: Item {
         id: ipc_root
         property int active: 1
@@ -62,7 +65,7 @@ Rectangle {
         implicitWidth: Math.max(32, labelWidth + iconsWidth + 18)
         implicitHeight: 32
         radius: 24
-        color: btn.wnum === ipc_root.active ? "#f38ba8" : "#f2cdcd"
+        color: btn.wnum === ipc_root.active || area.containsMouse ? root.workspaceActiveColors[btn.wnum % 6] : root.workspaceColors[btn.wnum % 6]
         border.width: 1
         border.color: "#1e1e2e"
 
@@ -99,6 +102,8 @@ Rectangle {
         }
 
         MouseArea {
+            id: area
+            hoverEnabled: true
             anchors.fill: parent
             onClicked: ipc_root.switchWorkspace(btn.wnum)
         }
