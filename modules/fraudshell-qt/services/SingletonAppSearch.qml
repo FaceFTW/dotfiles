@@ -1,7 +1,8 @@
-pragma Singleton
 // Modified from https://github.com/end-4/dots-hyprland/blob/main/dots/.config/quickshell/ii/services/AppSearch.qml
+pragma Singleton
 
 import Quickshell
+import qs.services
 
 /**
  * - Eases fuzzy searching for applications by name
