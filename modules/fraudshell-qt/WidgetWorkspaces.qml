@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
+import qs.services
 
 Rectangle {
     id: root
@@ -53,8 +54,8 @@ Rectangle {
         required property int wnum
         property var clients: Hyprland.workspaces.values[wnum - 1].toplevels.values
 
-        readonly property real iconSize: 10
-        readonly property real iconGap: 2
+        readonly property real iconSize: 28
+        readonly property real iconGap: 4
         readonly property real labelWidth: workspaceLabel.implicitWidth + 8
         readonly property real iconsWidth: clients.length ? clients.length * iconSize + Math.max(0, clients.length - 1) * iconGap : 0
 
@@ -67,7 +68,7 @@ Rectangle {
 
         RowLayout {
             anchors.centerIn: parent
-            spacing: 2
+            spacing: 4
 
             Text {
                 id: workspaceLabel
@@ -86,14 +87,12 @@ Rectangle {
                 Repeater {
                     model: btn.clients
 
-                    delegate: Rectangle {
-                        property var mainAppIconSource: Quickshell.iconPath(SingletonAppSearch.guessIcon(biggestWindow?.class), "image-missing")
+                    delegate: ComponentAppIcon {
+                        required property HyprlandToplevel modelData
+                        property var mainAppIconSource: Quickshell.iconPath(SingletonAppSearch.guessIcon(modelData.wayland.appId), "image-missing")
 
-                        width: btn.iconSize
-                        height: btn.iconSize
-                        radius: 2
-                        color: "#11111b"
-                        opacity: 0.8
+                        size: btn.iconSize
+                        source: mainAppIconSource
                     }
                 }
             }
