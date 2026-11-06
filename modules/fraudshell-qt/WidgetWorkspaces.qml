@@ -36,10 +36,11 @@ Rectangle {
         anchors.fill: parent
         anchors.leftMargin: 12
         anchors.topMargin: 0
-        spacing: 12
-
+        implicitWidth: workspaceRow.implicitWidth + anchors.leftMargin
 
         Row {
+            id: workspaceRow
+            spacing: 4
             Repeater {
                 model: ipc_root.amount
 
@@ -60,7 +61,7 @@ Rectangle {
         readonly property var workspaceColor: root.workspaceColors[(btn.wnum - 1) % 6]
         readonly property var activeWorkspaceColor: root.workspaceActiveColors[(btn.wnum - 1) % 6]
 
-        readonly property real iconSize: 28
+        readonly property real iconSize: 24
         readonly property real iconGap: 4
         readonly property real labelWidth: workspaceLabel.implicitWidth + 12
         readonly property real iconsWidth: clients.length ? clients.length * iconSize + Math.max(0, clients.length - 1) * iconGap + 12 : 0
