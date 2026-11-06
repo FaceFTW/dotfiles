@@ -13,7 +13,6 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       quickshell,
       ...
@@ -21,7 +20,6 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      lib = nixpkgs.lib;
       nativeBuildInputs = with pkgs; [
         qt6.qtsvg
         qt6.qtimageformats

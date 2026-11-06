@@ -36,7 +36,8 @@ Rectangle {
         anchors.fill: parent
         anchors.leftMargin: 12
         anchors.topMargin: 0
-        spacing: 2
+        spacing: 12
+
 
         Row {
             Repeater {
@@ -45,7 +46,6 @@ Rectangle {
                 delegate: WorkspaceButton {
                     required property int modelData
                     wnum: modelData + 1
-                    // clients: ipc_root.workspaceClients[modelData + 1] ?? []
                 }
             }
         }
@@ -57,15 +57,18 @@ Rectangle {
         required property int wnum
         property var clients: Hyprland.workspaces.values[wnum - 1].toplevels.values
 
+        readonly property var workspaceColor: root.workspaceColors[(btn.wnum - 1) % 6]
+        readonly property var activeWorkspaceColor: root.workspaceActiveColors[(btn.wnum - 1) % 6]
+
         readonly property real iconSize: 28
         readonly property real iconGap: 4
-        readonly property real labelWidth: workspaceLabel.implicitWidth + 8
-        readonly property real iconsWidth: clients.length ? clients.length * iconSize + Math.max(0, clients.length - 1) * iconGap : 0
+        readonly property real labelWidth: workspaceLabel.implicitWidth + 12
+        readonly property real iconsWidth: clients.length ? clients.length * iconSize + Math.max(0, clients.length - 1) * iconGap + 12 : 0
 
-        implicitWidth: Math.max(32, labelWidth + iconsWidth + 18)
+        implicitWidth: labelWidth + iconsWidth
         implicitHeight: 32
-        radius: 24
-        color: btn.wnum === ipc_root.active || area.containsMouse ? root.workspaceActiveColors[btn.wnum % 6] : root.workspaceColors[btn.wnum % 6]
+        radius: btn.clients.length > 0 ? 24 : 16
+        color: btn.wnum === ipc_root.active || area.containsMouse ? activeWorkspaceColor : workspaceColor
         border.width: 1
         border.color: "#1e1e2e"
 
