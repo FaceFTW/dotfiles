@@ -6,7 +6,9 @@ Rectangle {
     id: windowRoot
     anchors.fill: parent
 
-    default property alias content: innerLayout.data
+    property Component leftContent
+    property Component centerContent
+    property Component rightContent
 
     // Gradient for the border/outline
     gradient: Gradient {
@@ -49,11 +51,34 @@ Rectangle {
         color: "#1d1d20"
         radius: Math.max(0, windowRoot.radius - windowRoot.strokeWidth)
 
-        FlexboxLayout {
-            id: innerLayout
-            anchors.fill: parent
-            wrap: FlexboxLayout.NoWrap
-            direction: FlexboxLayout.Column	// alignSelf of children on cross-axis
+        RowLayout {
+            anchors {
+                left: parent.left
+                verticalCenter: parent.verticalCenter
+            }
+
+            Loader {
+                sourceComponent: windowRoot.leftContent
+            }
+        }
+
+        RowLayout {
+            anchors.centerIn: parent
+
+            Loader {
+                sourceComponent: windowRoot.centerContent
+            }
+        }
+
+        RowLayout {
+            anchors {
+                right: parent.right
+                verticalCenter: parent.verticalCenter
+            }
+
+            Loader {
+                sourceComponent: windowRoot.rightContent
+            }
         }
     }
 }

@@ -26,12 +26,12 @@ Scope {
             GradientOutline {
                 anchors.fill: parent
 
-                WidgetWorkspaces {
-                    FlexboxLayout.alignSelf: FlexboxLayout.AlignStart
+                leftContent: Component {
+                    WidgetWorkspaces {}
                 }
 
-                WidgetClock {
-                    FlexboxLayout.alignSelf: FlexboxLayout.AlignCenter
+                centerContent: Component {
+                    WidgetClock {}
                 }
             }
         }
