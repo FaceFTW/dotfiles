@@ -35,7 +35,7 @@ Scope {
                 }
 
                 rightContent: Row {
-                    WidgetPowerProfile {}
+                    // WidgetPowerProfile {}
                     WidgetBattery {}
                 }
             }

@@ -11,6 +11,7 @@ Rectangle {
     id: root
     color: "transparent"
     implicitHeight: Sizes.widgetHeight
+    implicitWidth: workspaceRow.implicitWidth + 12
 
     readonly property var workspaceColors: ["#ad495a", "#ad7731", "#adad00", "#66a34b", "#458bad", "#8f476b"]
     readonly property var workspaceActiveColors: ["#fa6982", "#faad45", "#fafa00", "#96f06e", "#63c8fa", "#dc6ea5",]

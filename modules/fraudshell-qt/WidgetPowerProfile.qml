@@ -10,9 +10,8 @@ import QtQuick.Layouts
 MouseArea {
     id: root
 
-
-
     implicitHeight: Sizes.widgetHeight
+    implicitWidth: widgetRoot.implicitWidth + 4
 
     hoverEnabled: true
 
@@ -43,7 +42,7 @@ MouseArea {
                 visible: true
                 icon: ""
                 label: "Profile: "
-                value: PowerProfiles.profile.toString()
+                value: PowerProfiles.currentProfile.toString()
             }
         }
     }
