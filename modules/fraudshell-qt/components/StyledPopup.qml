@@ -37,6 +37,8 @@ LazyLoader {
         margins.right: Appearance.sizes.verticalBarWidth
         margins.bottom: Sizes.barHeight
 
+
+
         WlrLayershell.namespace: "quickshell:popup"
         WlrLayershell.layer: WlrLayer.Overlay
 

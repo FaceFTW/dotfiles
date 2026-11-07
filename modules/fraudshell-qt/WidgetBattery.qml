@@ -13,10 +13,11 @@ import QtQuick.Layouts
 
 MouseArea {
     id: root
+    anchors.rightMargin: 12
     readonly property var chargeState: Battery.chargeState
     readonly property bool isCharging: Battery.isCharging
     readonly property bool isPluggedIn: Battery.isPluggedIn
-    readonly property real percentage: Battery.percentage
+    readonly property real percentage: Battery.percentage * 100
     readonly property bool isLow: percentage <= 15 / 100
 
     implicitWidth: widgetRoot.implicitWidth
@@ -34,13 +35,13 @@ MouseArea {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 color: "#FFFFFF"
-                text: (root.percentage.toFixed(2) * 100).toString() + "%"
+                text: root.percentage.toString() + "%"
                 font.pixelSize: Sizes.font.larger
             }
 
             MaterialSymbol {
                 anchors.verticalCenter: parent.verticalCenter
-                fill: 0
+                fill: 1
                 font.weight: Font.DemiBold
                 text: {
                     if (percentage >= 93)
@@ -59,7 +60,22 @@ MouseArea {
                         return "battery_android_1";
                     return "battery_android_0";
                 }
-                iconSize: Sizes.font.hugeass
+                iconSize: 28
+                color: "#FFFFFF"
+            }
+
+            MaterialSymbol {
+                anchors.verticalCenter: parent.verticalCenter
+                fill: 1
+                font.weight: Font.DemiBold
+                text: {
+                    if (root.isCharging) {
+                        return "bolt";
+                    } else if (root.isPluggedIn) {
+                        return "power";
+                    }
+                }
+                iconSize: 20
                 color: "#FFFFFF"
             }
         }
