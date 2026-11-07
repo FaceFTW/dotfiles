@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
+import qs
 
 LazyLoader {
     id: root
@@ -20,6 +21,7 @@ LazyLoader {
         color: "transparent"
 
         anchors.top: true
+        anchors.left: true
 
         implicitWidth: popupBackground.implicitWidth + root.popupBackgroundMargin + 20
         implicitHeight: popupBackground.implicitHeight + root.popupBackgroundMargin + 20
@@ -30,14 +32,15 @@ LazyLoader {
 
         exclusionMode: ExclusionMode.Ignore
         exclusiveZone: 0
-        margins.left: {
-            return root.QsWindow?.mapFromItem(root.hoverTarget, (root.hoverTarget.width - popupBackground.implicitWidth) / 2, 0).x;
+        readonly property real desiredLeft: {
+            const point = root.QsWindow?.mapFromItem(root.hoverTarget, (root.hoverTarget.width - popupWindow.implicitWidth) / 2, 0);
+            return point ? point.x : 0;
         }
+
+        margins.left: Math.max(0, Math.min(desiredLeft, popupWindow.screen.width - popupWindow.implicitWidth))
         margins.top: Sizes.barHeight
-        margins.right: Appearance.sizes.verticalBarWidth
+        // margins.right: Appearance.sizes.verticalBarWidth
         margins.bottom: Sizes.barHeight
-
-
 
         WlrLayershell.namespace: "quickshell:popup"
         WlrLayershell.layer: WlrLayer.Overlay
@@ -46,7 +49,7 @@ LazyLoader {
             anchors.fill: parent
             radius: parent.radius
             blur: 0.9 * Sizes.elevationMargin
-            offset: Qt.vector2d(0.0, 1.0)
+            offset: Qt.vector2d(-1.0, -1.0)
             spread: 1
             color: "#AAAAAA"// To understand what it means
             cached: true
