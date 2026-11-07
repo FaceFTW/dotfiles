@@ -5,11 +5,12 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 import qs.services
+import qs.components
 
 Rectangle {
     id: root
     color: "transparent"
-    implicitHeight: 32
+    implicitHeight: Sizes.widgetHeight
 
     readonly property var workspaceColors: ["#ad495a", "#ad7731", "#adad00", "#66a34b", "#458bad", "#8f476b"]
     readonly property var workspaceActiveColors: ["#fa6982", "#faad45", "#fafa00", "#96f06e", "#63c8fa", "#dc6ea5",]
@@ -40,7 +41,7 @@ Rectangle {
 
         Row {
             id: workspaceRow
-            spacing: 4
+            spacing: Sizes.workspaceButtonGap
             Repeater {
                 model: ipc_root.amount
 
@@ -61,13 +62,13 @@ Rectangle {
         readonly property var workspaceColor: root.workspaceColors[(btn.wnum - 1) % 6]
         readonly property var activeWorkspaceColor: root.workspaceActiveColors[(btn.wnum - 1) % 6]
 
-        readonly property real iconSize: 24
-        readonly property real iconGap: 4
+        readonly property real iconSize: Sizes.workspaceIconSize
+        readonly property real iconGap: Sizes.workspaceIconGap
         readonly property real labelWidth: workspaceLabel.implicitWidth + 12
         readonly property real iconsWidth: clients.length ? clients.length * iconSize + Math.max(0, clients.length - 1) * iconGap + 12 : 0
 
         implicitWidth: labelWidth + iconsWidth
-        implicitHeight: 32
+        implicitHeight: Sizes.widgetHeight
         radius: btn.clients.length > 0 ? 24 : 16
         color: btn.wnum === ipc_root.active || area.containsMouse ? activeWorkspaceColor : workspaceColor
         border.width: 1

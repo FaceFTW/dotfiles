@@ -18,7 +18,7 @@ Scope {
                 right: true
             }
 
-            implicitHeight: 40
+            implicitHeight: Sizes.barHeight
 
             // color: "#1d1d20"
             color: "transparent"
@@ -32,6 +32,10 @@ Scope {
 
                 centerContent: Component {
                     WidgetClock {}
+                }
+
+                rightContent: Component {
+                    WidgetBattery {}
                 }
             }
         }
