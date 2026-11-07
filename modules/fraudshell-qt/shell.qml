@@ -26,15 +26,15 @@ Scope {
             GradientOutline {
                 anchors.fill: parent
 
-                leftContent: Component {
+                leftContent: Row {
                     WidgetWorkspaces {}
                 }
 
-                centerContent: Component {
+                centerContent: Row {
                     WidgetClock {}
                 }
 
-                rightContent: Component {
+                rightContent: Row {
                     WidgetBattery {}
                 }
             }

@@ -18,10 +18,10 @@ Singleton {
     readonly property bool allowAutomaticSuspend: Config.options.battery.automaticSuspend
     readonly property bool soundEnabled: Config.options.sounds.battery
 
-    property bool isLow: available && (percentage <= Config.options.battery.low / 100)
-    property bool isCritical: available && (percentage <= Config.options.battery.critical / 100)
-    property bool isSuspending: available && (percentage <= Config.options.battery.suspend / 100)
-    property bool isFull: available && (percentage >= Config.options.battery.full / 100)
+    property bool isLow: available && (percentage <= 15 / 100)
+    property bool isCritical: available && (percentage <= 10 / 100)
+    property bool isSuspending: available && (percentage <= 5 / 100)
+    property bool isFull: available && (percentage >= 100 / 100)
 
     property bool isLowAndNotCharging: isLow && !isCharging
     property bool isCriticalAndNotCharging: isCritical && !isCharging

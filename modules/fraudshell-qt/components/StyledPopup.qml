@@ -48,8 +48,8 @@ LazyLoader {
         RectangularShadow {
             anchors.fill: parent
             radius: parent.radius
-            blur: 0.9 * Sizes.elevationMargin
-            offset: Qt.vector2d(-1.0, -1.0)
+            blur: 10
+            // offset: Qt.vector2d(-1.0, -1.0)
             spread: 1
             color: "#AAAAAA"// To understand what it means
             cached: true

@@ -7,9 +7,9 @@ Rectangle {
     id: windowRoot
     anchors.fill: parent
 
-    property Component leftContent
-    property Component centerContent
-    property Component rightContent
+    property alias leftContent: leftRow.data
+    property alias centerContent: centerRow.data
+    property alias rightContent: rightRow.data
 
     // Gradient for the border/outline
     gradient: Gradient {
@@ -53,32 +53,23 @@ Rectangle {
         radius: Math.max(0, windowRoot.radius - windowRoot.strokeWidth)
 
         RowLayout {
+            id: leftRow
             anchors {
                 left: parent.left
                 verticalCenter: parent.verticalCenter
             }
-
-            Loader {
-                sourceComponent: windowRoot.leftContent
-            }
         }
 
         RowLayout {
+            id: centerRow
             anchors.centerIn: parent
-
-            Loader {
-                sourceComponent: windowRoot.centerContent
-            }
         }
 
         RowLayout {
+            id: rightRow
             anchors {
                 right: parent.right
                 verticalCenter: parent.verticalCenter
-            }
-
-            Loader {
-                sourceComponent: windowRoot.rightContent
             }
         }
     }
