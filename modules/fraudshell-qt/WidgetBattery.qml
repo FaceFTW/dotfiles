@@ -44,38 +44,32 @@ MouseArea {
                 fill: 1
                 font.weight: Font.DemiBold
                 text: {
-                    if (percentage >= 93)
-                        return "battery_android_full";
-                    if (percentage >= 78)
-                        return "battery_android_6";
-                    if (percentage >= 64)
-                        return "battery_android_5";
-                    if (percentage >= 50)
-                        return "battery_android_4";
-                    if (percentage >= 35)
-                        return "battery_android_3";
-                    if (percentage >= 21)
-                        return "battery_android_2";
-                    if (percentage >= 7)
-                        return "battery_android_1";
-                    return "battery_android_0";
+                    if (root.percentage >= 0.70)
+                        return "battery-full";
+                    if (root.percentage >= 0.35)
+                        return "battery-medium";
+                    if (root.percentage >= 0.2)
+                        return "battery-low";
+                    return "battery";
                 }
-                iconSize: 28
+                iconSize: 24
                 color: "#FFFFFF"
             }
 
             MaterialSymbol {
+                // visible: root.isCharging || root.isPluggedIn
                 anchors.verticalCenter: parent.verticalCenter
                 fill: 1
                 font.weight: Font.DemiBold
                 text: {
                     if (root.isCharging) {
-                        return "bolt";
+                        return "plug-zap";
                     } else if (root.isPluggedIn) {
-                        return "power";
-                    }
+                        return "plug";
+                    } else
+                        "";
                 }
-                iconSize: 20
+                iconSize: 24
                 color: "#FFFFFF"
             }
         }
@@ -91,7 +85,7 @@ MouseArea {
 
             // Header
             StyledPopupHeaderRow {
-                icon: "battery_android_full"
+                icon: "battery"
                 label: "Battery"
             }
 
@@ -101,7 +95,7 @@ MouseArea {
                     let power = Battery.energyRate;
                     return !(Battery.chargeState == 4 || timeValue <= 0 || power <= 0.01);
                 }
-                icon: "schedule"
+                icon: "timer"
                 label: Battery.isCharging ? "Time to full:" : "Time to empty:"
                 value: {
                     function formatTime(seconds) {
@@ -121,7 +115,7 @@ MouseArea {
 
             StyledPopupValueRow {
                 visible: !(Battery.chargeState != 4 && Battery.energyRate == 0)
-                icon: "bolt"
+                icon: "circle-gauge"
                 label: {
                     if (Battery.chargeState == 4) {
                         return "Fully charged";
@@ -141,7 +135,7 @@ MouseArea {
             }
 
             StyledPopupValueRow {
-                icon: "heart_check"
+                icon: "heart"
                 label: "Health:"
                 value: `${(Battery.health).toFixed(1)}%`
             }

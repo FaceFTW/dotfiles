@@ -21,9 +21,13 @@ MouseArea {
     cursorShape: Qt.PointingHandCursor
 
     function volumeIcon() {
-        if (muted) return "volume_mute"
-        if (volume < 0.5) return "volume_down"
-        return "volume_up"
+        if (muted)
+            return "volume-x";
+        if (volume === 0.0)
+            return "volume";
+        if (volume < 0.5)
+            return "volume-1";
+        return "volume-2";
     }
 
     MaterialSymbol {
@@ -32,21 +36,21 @@ MouseArea {
         fill: 1
         font.weight: Font.DemiBold
         text: root.volumeIcon()
-        iconSize: 28
+        iconSize: 24
         color: "#FFFFFF"
     }
 
     onClicked: Pipewire.toggleMute()
     onWheel: {
         if (wheel.angleDelta.y > 0) {
-            Pipewire.incrementVolume()
+            Pipewire.incrementVolume();
         } else {
-            Pipewire.decrementVolume()
+            Pipewire.decrementVolume();
         }
     }
 
     component SoundHoverPopup: StyledPopup {
-       id: popupRoot
+        id: popupRoot
 
         ColumnLayout {
             id: popupLayout
@@ -55,27 +59,27 @@ MouseArea {
             width: 200
 
             StyledPopupHeaderRow {
-                icon: "audio"
+                icon: "speaker"
                 label: "Audio"
             }
 
             StyledPopupValueRow {
                 visible: root.activeSink
-                icon: "devices"
+                icon: ""
                 label: "Default Sink:"
                 value: Pipewire.friendlyDeviceName(root.activeSink)
             }
 
             StyledPopupValueRow {
                 visible: true
-                icon: "percent"
+                icon: "volume-2"
                 label: "Volume:"
                 value: Math.round(root.volume * 100) + "%"
             }
 
             StyledPopupValueRow {
                 visible: root.muted
-                icon: "block"
+                icon: "volume-x"
                 label: "Status:"
                 value: "Muted"
             }

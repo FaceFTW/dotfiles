@@ -21,26 +21,14 @@ MouseArea {
     cursorShape: Qt.PointingHandCursor
 
     function deviceIcon(device) {
-        if (!device.connected) return "bluetooth_disabled"
-        if (device.deviceClass === "phone") return "phone_android"
-        if (device.deviceClass === "computer") return "desktop_mac"
-        if (device.deviceClass === "network") return "network_widget"
+        if (!device.connected) return "bluetooth-off"
+        if (device.deviceClass === "phone") return "smartphone"
+        if (device.deviceClass === "computer") return "monitor-pc"
+        if (device.deviceClass === "network") return "network"
         if (device.deviceClass === "audio") return "headphones"
         if (device.deviceClass === "keyboard") return "keyboard"
         if (device.deviceClass === "mouse") return "mouse"
-        if (device.deviceClass === "printer") return "print"
-        return "bluetooth"
-    }
-
-    function getDeviceIcon(device) {
-        if (!device.connected) return "bluetooth_disabled"
-        if (device.deviceClass === "phone") return "phone_android"
-        if (device.deviceClass === "computer") return "desktop_mac"
-        if (device.deviceClass === "network") return "network_widget"
-        if (device.deviceClass === "audio") return "headphones"
-        if (device.deviceClass === "keyboard") return "keyboard"
-        if (device.deviceClass === "mouse") return "mouse"
-        if (device.deviceClass === "printer") return "print"
+        if (device.deviceClass === "printer") return "printer"
         return "bluetooth"
     }
 
@@ -57,25 +45,17 @@ MouseArea {
         return batteryPercentage + "%"
     }
 
-    function getBatteryIcon(batteryPercentage) {
-        if (batteryPercentage >= 80) return "battery_full"
-        if (batteryPercentage >= 60) return "battery_6"
-        if (batteryPercentage >= 40) return "battery_4"
-        if (batteryPercentage >= 20) return "battery_2"
-        return "battery_empty"
-    }
-
     MaterialSymbol {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
         fill: 1
         font.weight: Font.DemiBold
         text: {
-            if (!root.bluetoothEnabled) return "bluetooth_disabled"
-            if (root.connectedCount === 0) return "bluetooth_searching"
-            return "bluetooth"
+            if (!root.bluetoothEnabled) return "bluetooth-off"
+            if (root.connectedCount === 0) return "bluetooth"
+            return "bluetooth-connected"
         }
-        iconSize: 28
+        iconSize: 24
         color: "#FFFFFF"
     }
 
@@ -95,14 +75,14 @@ MouseArea {
 
             StyledPopupValueRow {
                 visible: !root.bluetoothEnabled
-                icon: "bluetooth_disabled"
+                icon: "bluetooth-off"
                 label: "Status:"
                 value: "Disabled"
             }
 
             StyledPopupValueRow {
                 visible: root.bluetoothEnabled && root.connectedCount === 0
-                icon: "bluetooth_searching"
+                icon: "bluetooth"
                 label: "Status:"
                 value: "No devices connected"
             }
@@ -111,12 +91,12 @@ MouseArea {
                 model: root.connectedDevices
 
                 StyledPopupValueRow {
-                    icon: getDeviceIcon(modelData)
+                    icon: deviceIcon(modelData)
                     label: modelData.name
                     value: {
                         const battery = modelData.batteryPercentage
                         if (battery !== undefined && battery >= 0) {
-                            return root.formatBatteryLabel(battery) + " " + getBatteryIcon(battery)
+                            return root.formatBatteryLabel(battery) + " " + batteryIcon(battery)
                         }
                         return ""
                     }
@@ -125,7 +105,7 @@ MouseArea {
 
             StyledPopupValueRow {
                 visible: root.connectedCount > 0
-                icon: "info"
+                icon: ""
                 label: "Connected Devices:"
                 value: root.connectedCount
             }

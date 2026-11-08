@@ -23,28 +23,37 @@ MouseArea {
     cursorShape: Qt.PointingHandCursor
 
     function networkIcon() {
-        if (ethernet) return "lan"
-        if (!wifiEnabled) return "signal_wifi_off"
-        if (wifiStatus === "disconnected") return "wifi_find"
-        if (wifiStatus === "connecting") return "signal_wifi_statusbar_not_connected"
+        if (ethernet)
+            return "ethernet-port";
+        if (!wifiEnabled)
+            return "wifi-off";
+        if (wifiStatus === "disconnected")
+            return "wifi-off";
+        if (wifiStatus === "connecting")
+            return "wifi-sync";
         if (wifiStatus === "connected" && Network.active) {
-            const strength = Network.active.strength ?? 0
-            if (strength > 83) return "signal_wifi_4_bar"
-            if (strength > 67) return "network_wifi"
-            if (strength > 50) return "network_wifi_3_bar"
-            if (strength > 33) return "network_wifi_2_bar"
-            if (strength > 17) return "network_wifi_1_bar"
-            return "signal_wifi_0_bar"
+            const strength = Network.active.strength ?? 0;
+            if (strength > 75)
+                return "wifi";
+            if (strength > 50)
+                return "wifi-high";
+            if (strength > 25)
+                return "wifi-low";
+            return "wifi-zero";
         }
-        return "signal_wifi_bad"
+        return "globe-x";
     }
 
     function formatStrengthLabel(strength) {
-        if (strength >= 80) return "Excellent"
-        if (strength >= 60) return "Good"
-        if (strength >= 40) return "Fair"
-        if (strength >= 20) return "Poor"
-        return "Very Poor"
+        if (strength >= 80)
+            return "Excellent";
+        if (strength >= 60)
+            return "Good";
+        if (strength >= 40)
+            return "Fair";
+        if (strength >= 20)
+            return "Poor";
+        return "Very Poor";
     }
 
     MaterialSymbol {
@@ -53,7 +62,7 @@ MouseArea {
         fill: 1
         font.weight: Font.DemiBold
         text: root.networkIcon()
-        iconSize: 28
+        iconSize: 24
         color: "#FFFFFF"
     }
 
@@ -81,7 +90,7 @@ MouseArea {
             }
 
             StyledPopupValueRow {
-                icon: root.ethernet ? "devices" : "network_wifi"
+                icon: root.ethernet ? "ethernet-port" : "wifi"
                 label: "Connection Type:"
                 value: root.ethernet ? "Ethernet" : "Wi-Fi"
             }
@@ -109,30 +118,23 @@ MouseArea {
 
             StyledPopupValueRow {
                 visible: root.wifiStatus === "connected"
-                icon: "check_circle"
+                icon: "circle-check"
                 label: "Status:"
                 value: "Connected"
             }
 
             StyledPopupValueRow {
                 visible: root.wifiStatus === "disconnected"
-                icon: "disconnected"
+                icon: "circle-minus"
                 label: "Status:"
                 value: "Disconnected"
             }
 
             StyledPopupValueRow {
                 visible: root.wifiStatus === "limited"
-                icon: "warning"
+                icon: "triangle-exclamation-point"
                 label: "Status:"
                 value: "Limited Connectivity"
-            }
-
-            StyledPopupValueRow {
-                visible: root.wifiStatus === "connected" && !root.ethernet && root.networkStrength < 20
-                icon: "lightbulb"
-                label: "Tip:"
-                value: "Signal is weak. Consider moving closer to the router."
             }
         }
     }
