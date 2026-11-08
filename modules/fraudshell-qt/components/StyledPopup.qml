@@ -37,30 +37,35 @@ LazyLoader {
             return point ? point.x : 0;
         }
 
+        readonly property real desiredTop: {
+            const point = root.QsWindow?.mapFromItem(root.hoverTarget, 0, root.hoverTarget.height);
+            return point ? point.y : 0;
+        }
+
         margins.left: Math.max(0, Math.min(desiredLeft, popupWindow.screen.width - popupWindow.implicitWidth))
-        margins.top: Sizes.barHeight
+        margins.top: desiredTop + Sizes.barHeight + 8
         // margins.right: Appearance.sizes.verticalBarWidth
-        margins.bottom: Sizes.barHeight
+        margins.bottom: 0
 
         WlrLayershell.namespace: "quickshell:popup"
         WlrLayershell.layer: WlrLayer.Overlay
 
-        RectangularShadow {
-            anchors.fill: parent
-            radius: parent.radius
-            blur: 10
-            // offset: Qt.vector2d(-1.0, -1.0)
-            spread: 1
-            color: "#AAAAAA"// To understand what it means
-            cached: true
-        }
+        // RectangularShadow {
+        //     anchors.fill: parent
+        //     radius: parent.radius
+        //     blur: 10
+        //     // offset: Qt.vector2d(-1.0, -1.0)
+        //     spread: 1
+        //     color: "#AAAAAA"// To understand what it means
+        //     cached: true
+        // }
 
         Rectangle {
             id: popupBackground
-            readonly property real margin: 10
+            readonly property real margin: 2
             anchors {
                 fill: parent
-                topMargin: Sizes.elevationMargin + root.popupBackgroundMargin * (!popupWindow.anchors.top)
+                topMargin: Sizes.elevationMargin + root.popupBackgroundMargin
             }
             implicitWidth: root.contentItem.implicitWidth + margin * 2
             implicitHeight: root.contentItem.implicitHeight + margin * 2
