@@ -26,6 +26,6 @@ Row {
             weight: Font.DemiBold
             pixelSize: Sizes.font.normal
         }
-        color: "#1d1d1d"
+        color: "#FFFFFF"
     }
 }

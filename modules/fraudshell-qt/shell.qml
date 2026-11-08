@@ -35,6 +35,7 @@ Scope {
                 }
 
                 rightContent: Row {
+                    WidgetBluetooth {}
                     WidgetNetwork {}
                     WidgetSound {}
                     // WidgetPowerProfile {}

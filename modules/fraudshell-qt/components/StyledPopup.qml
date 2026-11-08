@@ -44,21 +44,11 @@ LazyLoader {
 
         margins.left: Math.max(0, Math.min(desiredLeft, popupWindow.screen.width - popupWindow.implicitWidth))
         margins.top: desiredTop + Sizes.barHeight + 8
-        // margins.right: Appearance.sizes.verticalBarWidth
         margins.bottom: 0
 
         WlrLayershell.namespace: "quickshell:popup"
         WlrLayershell.layer: WlrLayer.Overlay
 
-        // RectangularShadow {
-        //     anchors.fill: parent
-        //     radius: parent.radius
-        //     blur: 10
-        //     // offset: Qt.vector2d(-1.0, -1.0)
-        //     spread: 1
-        //     color: "#AAAAAA"// To understand what it means
-        //     cached: true
-        // }
 
         Rectangle {
             id: popupBackground
