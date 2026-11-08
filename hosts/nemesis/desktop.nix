@@ -16,6 +16,8 @@
     pkgs.ubuntu-sans
     pkgs.vcr-osd-mono-font
     pkgs.noto-fonts-color-emoji
+    # pkgs.material-symbols
+    pkgs.lucide
   ];
   fonts.fontconfig.defaultFonts.monospace = [
     "Hack NF Mono"
