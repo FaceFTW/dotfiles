@@ -15,8 +15,8 @@ Singleton {
     property bool isCharging: chargeState == UPowerDeviceState.Charging
     property bool isPluggedIn: isCharging || chargeState == UPowerDeviceState.PendingCharge
     property real percentage: UPower.displayDevice?.percentage ?? 1
-    readonly property bool allowAutomaticSuspend: Config.options.battery.automaticSuspend
-    readonly property bool soundEnabled: Config.options.sounds.battery
+    // readonly property bool allowAutomaticSuspend: Config.options.battery.automaticSuspend
+    // readonly property bool soundEnabled: Config.options.sounds.battery
 
     property bool isLow: available && (percentage <= 15 / 100)
     property bool isCritical: available && (percentage <= 10 / 100)
@@ -25,7 +25,7 @@ Singleton {
 
     property bool isLowAndNotCharging: isLow && !isCharging
     property bool isCriticalAndNotCharging: isCritical && !isCharging
-    property bool isSuspendingAndNotCharging: allowAutomaticSuspend && isSuspending && !isCharging
+    property bool isSuspendingAndNotCharging: isSuspending && !isCharging
     property bool isFullAndCharging: isFull && isCharging
 
     property real energyRate: UPower.displayDevice.changeRate

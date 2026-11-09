@@ -20,7 +20,7 @@ MouseArea {
     readonly property real percentage: Battery.percentage * 100
     readonly property bool isLow: percentage <= 15 / 100
 
-    implicitWidth: widgetRoot.implicitWidth
+    implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
     implicitHeight: Sizes.widgetHeight
 
     hoverEnabled: true
@@ -52,7 +52,7 @@ MouseArea {
                         return "battery-low";
                     return "battery";
                 }
-                iconSize: 24
+                iconSize: Sizes.widgetGlyphSize
                 color: "#FFFFFF"
             }
 
@@ -69,7 +69,7 @@ MouseArea {
                     } else
                         "";
                 }
-                iconSize: 24
+                iconSize: Sizes.widgetGlyphSize
                 color: "#FFFFFF"
             }
         }

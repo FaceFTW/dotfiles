@@ -11,7 +11,7 @@ MouseArea {
     id: root
 
     implicitHeight: Sizes.widgetHeight
-    implicitWidth: widgetRoot.implicitWidth + 4
+    implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
 
     property bool bluetoothEnabled: Bluetooth.enabled
     property int connectedCount: Bluetooth.connectedDevices.length
@@ -21,28 +21,41 @@ MouseArea {
     cursorShape: Qt.PointingHandCursor
 
     function deviceIcon(device) {
-        if (!device.connected) return "bluetooth-off"
-        if (device.deviceClass === "phone") return "smartphone"
-        if (device.deviceClass === "computer") return "monitor-pc"
-        if (device.deviceClass === "network") return "network"
-        if (device.deviceClass === "audio") return "headphones"
-        if (device.deviceClass === "keyboard") return "keyboard"
-        if (device.deviceClass === "mouse") return "mouse"
-        if (device.deviceClass === "printer") return "printer"
-        return "bluetooth"
+        if (!device.connected)
+            return "bluetooth-off";
+        if (device.deviceClass === "phone")
+            return "smartphone";
+        if (device.deviceClass === "computer")
+            return "monitor-pc";
+        if (device.deviceClass === "network")
+            return "network";
+        if (device.deviceClass === "audio")
+            return "headphones";
+        if (device.deviceClass === "keyboard")
+            return "keyboard";
+        if (device.deviceClass === "mouse")
+            return "mouse";
+        if (device.deviceClass === "printer")
+            return "printer";
+        return "bluetooth";
     }
 
     function batteryIcon(batteryPercentage) {
-        if (batteryPercentage >= 80) return "battery_full"
-        if (batteryPercentage >= 60) return "battery_6"
-        if (batteryPercentage >= 40) return "battery_4"
-        if (batteryPercentage >= 20) return "battery_2"
-        return "battery_empty"
+        if (batteryPercentage >= 80)
+            return "battery_full";
+        if (batteryPercentage >= 60)
+            return "battery_6";
+        if (batteryPercentage >= 40)
+            return "battery_4";
+        if (batteryPercentage >= 20)
+            return "battery_2";
+        return "battery_empty";
     }
 
     function formatBatteryLabel(batteryPercentage) {
-        if (batteryPercentage === undefined || batteryPercentage < 0) return ""
-        return batteryPercentage + "%"
+        if (batteryPercentage === undefined || batteryPercentage < 0)
+            return "";
+        return batteryPercentage + "%";
     }
 
     MaterialSymbol {
@@ -51,11 +64,13 @@ MouseArea {
         fill: 1
         font.weight: Font.DemiBold
         text: {
-            if (!root.bluetoothEnabled) return "bluetooth-off"
-            if (root.connectedCount === 0) return "bluetooth"
-            return "bluetooth-connected"
+            if (!root.bluetoothEnabled)
+                return "bluetooth-off";
+            if (root.connectedCount === 0)
+                return "bluetooth";
+            return "bluetooth-connected";
         }
-        iconSize: 24
+        iconSize: Sizes.widgetGlyphSize
         color: "#FFFFFF"
     }
 
@@ -66,7 +81,6 @@ MouseArea {
             id: popupLayout
             anchors.centerIn: parent
             spacing: 4
-            width: 220
 
             StyledPopupHeaderRow {
                 icon: "bluetooth"
@@ -94,11 +108,11 @@ MouseArea {
                     icon: deviceIcon(modelData)
                     label: modelData.name
                     value: {
-                        const battery = modelData.batteryPercentage
+                        const battery = modelData.batteryPercentage;
                         if (battery !== undefined && battery >= 0) {
-                            return root.formatBatteryLabel(battery) + " " + batteryIcon(battery)
+                            return root.formatBatteryLabel(battery) + " " + batteryIcon(battery);
                         }
-                        return ""
+                        return "";
                     }
                 }
             }

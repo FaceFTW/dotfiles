@@ -10,6 +10,9 @@ Singleton {
     // Common Properties
     readonly property real widgetHeight: 32
     readonly property real elevationMargin: 10
+    readonly property real widgetMargin: 6
+    readonly property real widgetMarginBothSides: root.widgetMargin * 2
+    readonly property real widgetGlyphSize: 24
 
     // Bar Properties
     readonly property real barHeight: 40

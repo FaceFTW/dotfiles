@@ -11,7 +11,7 @@ MouseArea {
     id: root
 
     implicitHeight: Sizes.widgetHeight
-    implicitWidth: widgetRoot.implicitWidth + 4
+    implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
 
     property string networkName: Network.networkName
     property int networkStrength: Network.networkStrength
@@ -62,7 +62,7 @@ MouseArea {
         fill: 1
         font.weight: Font.DemiBold
         text: root.networkIcon()
-        iconSize: 24
+        iconSize: Sizes.widgetGlyphSize
         color: "#FFFFFF"
     }
 
@@ -82,7 +82,6 @@ MouseArea {
             id: popupLayout
             anchors.centerIn: parent
             spacing: 4
-            width: 220
 
             StyledPopupHeaderRow {
                 icon: "network"

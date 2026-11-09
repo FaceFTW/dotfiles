@@ -11,7 +11,7 @@ MouseArea {
     id: root
 
     implicitHeight: Sizes.widgetHeight
-    implicitWidth: widgetRoot.implicitWidth + 4
+    implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
 
     property var activeSink: Pipewire.sink
     property real volume: activeSink ? activeSink.audio.volume : 0
@@ -36,7 +36,7 @@ MouseArea {
         fill: 1
         font.weight: Font.DemiBold
         text: root.volumeIcon()
-        iconSize: 24
+        iconSize: Sizes.widgetGlyphSize
         color: "#FFFFFF"
     }
 
@@ -56,7 +56,6 @@ MouseArea {
             id: popupLayout
             anchors.centerIn: parent
             spacing: 4
-            width: 200
 
             StyledPopupHeaderRow {
                 icon: "speaker"

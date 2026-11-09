@@ -23,8 +23,8 @@ Singleton {
     property real cpuUsage: 0
     property var previousCpuStats
 
-    property string maxAvailableMemoryString: kbToGbString(ResourceUsage.memoryTotal)
-    property string maxAvailableSwapString: kbToGbString(ResourceUsage.swapTotal)
+    property string maxAvailableMemoryString: kbToGbString(Performance.memoryTotal)
+    property string maxAvailableSwapString: kbToGbString(Performance.swapTotal)
     // property string maxAvailableCpuString: "--"
 
     readonly property int historyLength: 60

@@ -49,7 +49,6 @@ LazyLoader {
         WlrLayershell.namespace: "quickshell:popup"
         WlrLayershell.layer: WlrLayer.Overlay
 
-
         Rectangle {
             id: popupBackground
             readonly property real margin: 2
@@ -57,8 +56,8 @@ LazyLoader {
                 fill: parent
                 topMargin: Sizes.elevationMargin + root.popupBackgroundMargin
             }
-            implicitWidth: root.contentItem.implicitWidth + margin * 2
-            implicitHeight: root.contentItem.implicitHeight + margin * 2
+            implicitWidth: root.contentItem.implicitWidth + (margin * 2)
+            implicitHeight: root.contentItem.implicitHeight + (margin * 2)
             color: "#201f20"
             radius: 12
             children: [root.contentItem]
