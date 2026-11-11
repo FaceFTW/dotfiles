@@ -24,6 +24,7 @@ Row {
         font {
             weight: Font.DemiBold
             pixelSize: Sizes.font.normal
+            family: "VCR OSD Mono"
         }
         color: "#FFFFFF"
     }

@@ -33,6 +33,7 @@ StyledWidget {
                         color: "#FFFFFF"
                         text: (Performance.cpuUsage * 100).toFixed(0).toString() + "%"
                         font.pixelSize: Sizes.font.larger
+                        font.family: "VCR OSD Mono"
                     }
                 }
             }
@@ -55,6 +56,7 @@ StyledWidget {
                         color: "#FFFFFF"
                         text: (Performance.memoryUsedPercentage * 100).toFixed(0).toString() + "%"
                         font.pixelSize: Sizes.font.larger
+                        font.family: "VCR OSD Mono"
                     }
                 }
             }

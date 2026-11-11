@@ -83,6 +83,7 @@ Rectangle {
                 id: workspaceLabel
                 text: String(btn.wnum)
                 font.pixelSize: 18
+                font.family: "VCR OSD Mono"
                 color: "#11111b"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter

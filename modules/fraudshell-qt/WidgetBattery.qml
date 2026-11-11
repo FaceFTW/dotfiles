@@ -6,6 +6,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Services.UPower
 import qs
 import qs.components
 import qs.services
@@ -30,6 +31,7 @@ StyledWidget {
                 color: "#FFFFFF"
                 text: root.percentage.toString() + "%"
                 font.pixelSize: Sizes.font.larger
+                font.family: "VCR OSD Mono"
             }
 
             Glyph {
@@ -50,14 +52,14 @@ StyledWidget {
             }
 
             Glyph {
-                // visible: root.isCharging || root.isPluggedIn
+                visible: root.chargeState === UPowerDeviceState.Charging || root.chargeState === UPowerDeviceState.PendingCharge || root.chargeState === UPowerDeviceState.FullyCharged
                 anchors.verticalCenter: parent.verticalCenter
                 fill: 1
                 font.weight: Font.DemiBold
                 text: {
-                    if (root.isCharging) {
+                    if (root.chargeState === UPowerDeviceState.Charging) {
                         return "plug-zap";
-                    } else if (root.isPluggedIn) {
+                    } else if (root.chargeState === UPowerDeviceState.PendingCharge || root.chargeState === UPowerDeviceState.FullyCharged) {
                         return "plug";
                     } else
                         "";
