@@ -33,6 +33,7 @@ Scope {
                 }
 
                 rightContent: Row {
+                	WidgetTray {}
                     WidgetPerformance {}
                     WidgetBluetooth {}
                     WidgetNetwork {}

@@ -95,6 +95,7 @@ StyledWidget {
             model: root.connectedDevices
 
             StyledPopupValueRow {
+            	required property var modelData
                 icon: root.deviceIcon(modelData)
                 label: modelData.name
                 value: {
