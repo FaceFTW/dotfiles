@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   ...
 }:
 {
@@ -17,6 +18,7 @@
     interfaces = [ "wlan0" ];
     secretsFile = config.sops.secrets.wifi_secrets.path;
     networks."Orbi89".pskRaw = "ext:home-psk";
+    extraConfig = "country=US";
   };
 
   networking.useDHCP = false;
@@ -32,6 +34,18 @@
     matchConfig.Name = "wlan0";
     networkConfig.DHCP = "ipv4";
     linkConfig.RequiredForOnline = "routable";
+  };
+
+  systemd.services.disable-wifi-powersave = {
+    description = "Disable Wi-Fi power saving";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.iw}/bin/iw dev wlan0 set power_save off";
+    };
   };
 
 }

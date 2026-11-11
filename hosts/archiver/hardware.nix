@@ -27,7 +27,6 @@
     "sdhci_pci"
     "mmc_block"
   ];
-  boot.initrd.systemd.enable = true;
 
   boot.extraModulePackages = [ pkgs.kernelModules.ugreen_led ];
   boot.kernelModules = [

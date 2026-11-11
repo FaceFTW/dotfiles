@@ -72,7 +72,7 @@
       pkgs.klipper-estimator
     ];
 
-    serviceConfig.WorkingDirectory = /var/lib/moonraker;
+    serviceConfig.WorkingDirectory = "/var/lib/moonraker";
     serviceConfig.PrivateTmp = true;
     serviceConfig.Group = "klipper";
     serviceConfig.User = "klipper";
