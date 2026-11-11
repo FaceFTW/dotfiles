@@ -52,7 +52,7 @@ StyledWidget {
         return batteryPercentage + "%";
     }
 
-    barContent: MaterialSymbol {
+    barContent: Glyph {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
         fill: 1

@@ -24,7 +24,7 @@ StyledWidget {
         return "volume-2";
     }
 
-    barContent: MaterialSymbol {
+    barContent: Glyph {
         id: widgetRoot
         fill: 1
         font.weight: Font.DemiBold

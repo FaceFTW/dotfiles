@@ -1,4 +1,4 @@
-// Modified from https://github.com/end-4/dots-hyprland/blob/main/dots/.config/quickshell/ii/modules/common/widgets/MaterialSymbol.qml
+// Modified from https://github.com/end-4/dots-hyprland/blob/main/dots/.config/quickshell/ii/modules/common/widgets/Glyph.qml
 
 import QtQuick
 

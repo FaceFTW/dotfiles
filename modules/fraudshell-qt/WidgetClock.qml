@@ -2,6 +2,6 @@ import QtQuick
 import qs.services
 
 Text {
-  text: SingletonTime.time
+  text: Time.time
   color: "#FFFFFF"
 }

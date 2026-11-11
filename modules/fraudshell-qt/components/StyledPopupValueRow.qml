@@ -11,7 +11,7 @@ RowLayout {
     required property string value
     spacing: 4
 
-    MaterialSymbol {
+    Glyph {
         visible: root.icon !== ""
         text: root.icon
         color: "#FFFFFF"

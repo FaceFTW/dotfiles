@@ -50,7 +50,7 @@ StyledWidget {
         return "Very Poor";
     }
 
-    barContent: MaterialSymbol {
+    barContent: Glyph {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
         fill: 1

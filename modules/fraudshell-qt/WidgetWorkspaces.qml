@@ -96,9 +96,9 @@ Rectangle {
                 Repeater {
                     model: btn.clients
 
-                    delegate: ComponentAppIcon {
+                    delegate: AppIcon {
                         required property HyprlandToplevel modelData
-                        property var mainAppIconSource: Quickshell.iconPath(SingletonAppSearch.guessIcon(modelData.wayland.appId), "image-missing")
+                        property var mainAppIconSource: Quickshell.iconPath(AppSearch.guessIcon(modelData.wayland.appId), "image-missing")
 
                         size: btn.iconSize
                         source: mainAppIconSource

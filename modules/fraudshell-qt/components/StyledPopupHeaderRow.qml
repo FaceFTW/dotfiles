@@ -10,7 +10,7 @@ Row {
     required property var label
     spacing: 5
 
-    MaterialSymbol {
+    Glyph {
         anchors.verticalCenter: parent.verticalCenter
         fill: 0
         font.weight: Font.DemiBold

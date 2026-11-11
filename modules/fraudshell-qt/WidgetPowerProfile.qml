@@ -15,7 +15,7 @@ MouseArea {
 
     hoverEnabled: true
 
-    MaterialSymbol {
+    Glyph {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
         fill: 1

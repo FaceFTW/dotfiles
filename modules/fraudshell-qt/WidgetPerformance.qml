@@ -14,16 +14,13 @@ StyledWidget {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
 
-        implicitHeight: Sizes.widgetHeight
-        implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
-
         Row {
             spacing: 8
             RowLayout {
                 id: cpu
                 Row {
                     spacing: 4
-                    MaterialSymbol {
+                    Glyph {
                         anchors.verticalCenter: parent.verticalCenter
                         fill: 1
                         font.weight: Font.DemiBold
@@ -45,7 +42,7 @@ StyledWidget {
                 id: mem
                 Row {
                     spacing: 4
-                    MaterialSymbol {
+                    Glyph {
                         anchors.verticalCenter: parent.verticalCenter
                         fill: 1
                         font.weight: Font.DemiBold

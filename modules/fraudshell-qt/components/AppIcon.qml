@@ -1,3 +1,4 @@
+//Different from Glyph which is backed by a font
 import QtQuick
 
 Image {

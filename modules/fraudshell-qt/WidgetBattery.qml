@@ -22,7 +22,6 @@ StyledWidget {
 
     barContent: RowLayout {
         id: widgetRoot
-        anchors.fill: root
 
         Row {
             spacing: 4
@@ -34,7 +33,7 @@ StyledWidget {
                 font.pixelSize: Sizes.font.larger
             }
 
-            MaterialSymbol {
+            Glyph {
                 anchors.verticalCenter: parent.verticalCenter
                 fill: 1
                 font.weight: Font.DemiBold
@@ -51,7 +50,7 @@ StyledWidget {
                 color: "#FFFFFF"
             }
 
-            MaterialSymbol {
+            Glyph {
                 // visible: root.isCharging || root.isPluggedIn
                 anchors.verticalCenter: parent.verticalCenter
                 fill: 1
