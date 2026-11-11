@@ -7,20 +7,14 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 
-MouseArea {
+StyledWidget {
     id: root
-
-    implicitHeight: Sizes.widgetHeight
-    implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
 
     property string networkName: Network.networkName
     property int networkStrength: Network.networkStrength
     property string wifiStatus: Network.wifiStatus
     property bool wifiEnabled: Network.wifiEnabled
     property bool ethernet: Network.ethernet
-
-    hoverEnabled: true
-    cursorShape: Qt.PointingHandCursor
 
     function networkIcon() {
         if (ethernet)
@@ -56,7 +50,7 @@ MouseArea {
         return "Very Poor";
     }
 
-    MaterialSymbol {
+    barContent: MaterialSymbol {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
         fill: 1
@@ -75,71 +69,62 @@ MouseArea {
     //     }
     // }
 
-    component NetworkHoverPopup: StyledPopup {
-        id: popupRoot
+    hoverContent: ColumnLayout {
+        id: popupLayout
+        anchors.centerIn: parent
+        spacing: 4
 
-        ColumnLayout {
-            id: popupLayout
-            anchors.centerIn: parent
-            spacing: 4
-
-            StyledPopupHeaderRow {
-                icon: "network"
-                label: "Network"
-            }
-
-            StyledPopupValueRow {
-                icon: root.ethernet ? "ethernet-port" : "wifi"
-                label: "Connection Type:"
-                value: root.ethernet ? "Ethernet" : "Wi-Fi"
-            }
-
-            StyledPopupValueRow {
-                visible: root.networkName
-                icon: "title"
-                label: "Connection Name:"
-                value: root.networkName
-            }
-
-            StyledPopupValueRow {
-                visible: !root.ethernet && Network.active
-                icon: "signal"
-                label: "Signal Strength:"
-                value: root.networkStrength + "% (" + root.formatStrengthLabel(root.networkStrength) + ")"
-            }
-
-            StyledPopupValueRow {
-                visible: Network.wifiConnecting
-                icon: "pending"
-                label: "Status:"
-                value: "Connecting..."
-            }
-
-            StyledPopupValueRow {
-                visible: root.wifiStatus === "connected"
-                icon: "circle-check"
-                label: "Status:"
-                value: "Connected"
-            }
-
-            StyledPopupValueRow {
-                visible: root.wifiStatus === "disconnected"
-                icon: "circle-minus"
-                label: "Status:"
-                value: "Disconnected"
-            }
-
-            StyledPopupValueRow {
-                visible: root.wifiStatus === "limited"
-                icon: "triangle-exclamation-point"
-                label: "Status:"
-                value: "Limited Connectivity"
-            }
+        StyledPopupHeaderRow {
+            icon: "network"
+            label: "Network"
         }
-    }
 
-    NetworkHoverPopup {
-        id: networkHoverPopup
-        hoverTarget: root
+        StyledPopupValueRow {
+            icon: root.ethernet ? "ethernet-port" : "wifi"
+            label: "Connection Type:"
+            value: root.ethernet ? "Ethernet" : "Wi-Fi"
+        }
+
+        StyledPopupValueRow {
+            visible: root.networkName
+            icon: "title"
+            label: "Connection Name:"
+            value: root.networkName
+        }
+
+        StyledPopupValueRow {
+            visible: !root.ethernet && Network.active
+            icon: "signal"
+            label: "Signal Strength:"
+            value: root.networkStrength + "% (" + root.formatStrengthLabel(root.networkStrength) + ")"
+        }
+
+        StyledPopupValueRow {
+            visible: Network.wifiConnecting
+            icon: "pending"
+            label: "Status:"
+            value: "Connecting..."
+        }
+
+        StyledPopupValueRow {
+            visible: root.wifiStatus === "connected"
+            icon: "circle-check"
+            label: "Status:"
+            value: "Connected"
+        }
+
+        StyledPopupValueRow {
+            visible: root.wifiStatus === "disconnected"
+            icon: "circle-minus"
+            label: "Status:"
+            value: "Disconnected"
+        }
+
+        StyledPopupValueRow {
+            visible: root.wifiStatus === "limited"
+            icon: "triangle-exclamation-point"
+            label: "Status:"
+            value: "Limited Connectivity"
+        }
     }
 }

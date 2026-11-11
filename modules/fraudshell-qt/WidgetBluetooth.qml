@@ -7,18 +7,12 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 
-MouseArea {
+StyledWidget {
     id: root
-
-    implicitHeight: Sizes.widgetHeight
-    implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
 
     property bool bluetoothEnabled: Bluetooth.enabled
     property int connectedCount: Bluetooth.connectedDevices.length
     property list<var> connectedDevices: Bluetooth.connectedDevices
-
-    hoverEnabled: true
-    cursorShape: Qt.PointingHandCursor
 
     function deviceIcon(device) {
         if (!device.connected)
@@ -58,7 +52,7 @@ MouseArea {
         return batteryPercentage + "%";
     }
 
-    MaterialSymbol {
+    barContent: MaterialSymbol {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
         fill: 1
@@ -74,60 +68,51 @@ MouseArea {
         color: "#FFFFFF"
     }
 
-    component BluetoothHoverPopup: StyledPopup {
-        id: popupRoot
+    hoverContent: ColumnLayout {
+        id: popupLayout
+        anchors.centerIn: parent
+        spacing: 4
 
-        ColumnLayout {
-            id: popupLayout
-            anchors.centerIn: parent
-            spacing: 4
+        StyledPopupHeaderRow {
+            icon: "bluetooth"
+            label: "Bluetooth"
+        }
 
-            StyledPopupHeaderRow {
-                icon: "bluetooth"
-                label: "Bluetooth"
-            }
+        StyledPopupValueRow {
+            visible: !root.bluetoothEnabled
+            icon: "bluetooth-off"
+            label: "Status:"
+            value: "Disabled"
+        }
+
+        StyledPopupValueRow {
+            visible: root.bluetoothEnabled && root.connectedCount === 0
+            icon: "bluetooth"
+            label: "Status:"
+            value: "No devices connected"
+        }
+
+        Repeater {
+            model: root.connectedDevices
 
             StyledPopupValueRow {
-                visible: !root.bluetoothEnabled
-                icon: "bluetooth-off"
-                label: "Status:"
-                value: "Disabled"
-            }
-
-            StyledPopupValueRow {
-                visible: root.bluetoothEnabled && root.connectedCount === 0
-                icon: "bluetooth"
-                label: "Status:"
-                value: "No devices connected"
-            }
-
-            Repeater {
-                model: root.connectedDevices
-
-                StyledPopupValueRow {
-                    icon: deviceIcon(modelData)
-                    label: modelData.name
-                    value: {
-                        const battery = modelData.batteryPercentage;
-                        if (battery !== undefined && battery >= 0) {
-                            return root.formatBatteryLabel(battery) + " " + batteryIcon(battery);
-                        }
-                        return "";
+                icon: deviceIcon(modelData)
+                label: modelData.name
+                value: {
+                    const battery = modelData.batteryPercentage;
+                    if (battery !== undefined && battery >= 0) {
+                        return root.formatBatteryLabel(battery) + " " + batteryIcon(battery);
                     }
+                    return "";
                 }
             }
-
-            StyledPopupValueRow {
-                visible: root.connectedCount > 0
-                icon: ""
-                label: "Connected Devices:"
-                value: root.connectedCount
-            }
         }
-    }
 
-    BluetoothHoverPopup {
-        id: bluetoothHoverPopup
-        hoverTarget: root
+        StyledPopupValueRow {
+            visible: root.connectedCount > 0
+            icon: ""
+            label: "Connected Devices:"
+            value: root.connectedCount
+        }
     }
 }

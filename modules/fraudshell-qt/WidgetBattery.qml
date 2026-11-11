@@ -11,7 +11,7 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 
-MouseArea {
+StyledWidget {
     id: root
     anchors.rightMargin: 12
     readonly property var chargeState: Battery.chargeState
@@ -20,12 +20,7 @@ MouseArea {
     readonly property real percentage: Battery.percentage * 100
     readonly property bool isLow: percentage <= 15 / 100
 
-    implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
-    implicitHeight: Sizes.widgetHeight
-
-    hoverEnabled: true
-
-    RowLayout {
+    barContent: RowLayout {
         id: widgetRoot
         anchors.fill: root
 
@@ -75,75 +70,66 @@ MouseArea {
         }
     }
 
-    component BatteryPopup: StyledPopup {
-        id: popupRoot
+    hoverContent: ColumnLayout {
+        id: columnLayout
+        anchors.centerIn: parent
+        spacing: 4
 
-        ColumnLayout {
-            id: columnLayout
-            anchors.centerIn: parent
-            spacing: 4
+        // Header
+        StyledPopupHeaderRow {
+            icon: "battery"
+            label: "Battery"
+        }
 
-            // Header
-            StyledPopupHeaderRow {
-                icon: "battery"
-                label: "Battery"
+        StyledPopupValueRow {
+            visible: {
+                let timeValue = Battery.isCharging ? Battery.timeToFull : Battery.timeToEmpty;
+                let power = Battery.energyRate;
+                return !(Battery.chargeState == 4 || timeValue <= 0 || power <= 0.01);
             }
-
-            StyledPopupValueRow {
-                visible: {
-                    let timeValue = Battery.isCharging ? Battery.timeToFull : Battery.timeToEmpty;
-                    let power = Battery.energyRate;
-                    return !(Battery.chargeState == 4 || timeValue <= 0 || power <= 0.01);
-                }
-                icon: "timer"
-                label: Battery.isCharging ? "Time to full:" : "Time to empty:"
-                value: {
-                    function formatTime(seconds) {
-                        var h = Math.floor(seconds / 3600);
-                        var m = Math.floor((seconds % 3600) / 60);
-                        if (h > 0)
-                            return `${h}h, ${m}m`;
-                        else
-                            return `${m}m`;
-                    }
-                    if (Battery.isCharging)
-                        return formatTime(Battery.timeToFull);
+            icon: "timer"
+            label: Battery.isCharging ? "Time to full:" : "Time to empty:"
+            value: {
+                function formatTime(seconds) {
+                    var h = Math.floor(seconds / 3600);
+                    var m = Math.floor((seconds % 3600) / 60);
+                    if (h > 0)
+                        return `${h}h, ${m}m`;
                     else
-                        return formatTime(Battery.timeToEmpty);
+                        return `${m}m`;
                 }
-            }
-
-            StyledPopupValueRow {
-                visible: !(Battery.chargeState != 4 && Battery.energyRate == 0)
-                icon: "circle-gauge"
-                label: {
-                    if (Battery.chargeState == 4) {
-                        return "Fully charged";
-                    } else if (Battery.chargeState == 1) {
-                        return "Charging:";
-                    } else {
-                        return "Discharging:";
-                    }
-                }
-                value: {
-                    if (Battery.chargeState == 4) {
-                        return "";
-                    } else {
-                        return `${Battery.energyRate.toFixed(2)}W`;
-                    }
-                }
-            }
-
-            StyledPopupValueRow {
-                icon: "heart"
-                label: "Health:"
-                value: `${(Battery.health).toFixed(1)}%`
+                if (Battery.isCharging)
+                    return formatTime(Battery.timeToFull);
+                else
+                    return formatTime(Battery.timeToEmpty);
             }
         }
-    }
 
-    BatteryPopup {
-        id: batteryPopup
-        hoverTarget: root
+        StyledPopupValueRow {
+            visible: !(Battery.chargeState != 4 && Battery.energyRate == 0)
+            icon: "circle-gauge"
+            label: {
+                if (Battery.chargeState == 4) {
+                    return "Fully charged";
+                } else if (Battery.chargeState == 1) {
+                    return "Charging:";
+                } else {
+                    return "Discharging:";
+                }
+            }
+            value: {
+                if (Battery.chargeState == 4) {
+                    return "";
+                } else {
+                    return `${Battery.energyRate.toFixed(2)}W`;
+                }
+            }
+        }
+
+        StyledPopupValueRow {
+            icon: "heart"
+            label: "Health:"
+            value: `${(Battery.health).toFixed(1)}%`
+        }
     }
 }

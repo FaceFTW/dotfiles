@@ -7,14 +7,10 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 
-MouseArea {
-	id: root
-	implicitHeight: Sizes.widgetHeight
-    implicitWidth: widgetRoot.implicitWidth + Sizes.widgetMarginBothSides
+StyledWidget {
+    id: root
 
-    hoverEnabled: true
-
-    RowLayout {
+    barContent: RowLayout {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
 

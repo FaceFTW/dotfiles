@@ -62,6 +62,11 @@ LazyLoader {
             radius: 12
             children: [root.contentItem]
 
+            // Ensures loaded component is properly anchored
+            Component.onCompleted: {
+                root.contentItem.anchors.centerIn = popupBackground
+            }
+
             border.width: 1
             border.color: "#FFFFFF" // To understand What it look like
         }
