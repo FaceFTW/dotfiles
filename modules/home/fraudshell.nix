@@ -9,9 +9,11 @@
   };
 
   config = lib.mkIf config.modules.home.fraudshell.enable {
-    home-manager.users.face.home.file."~/.config/quickshell/fraudshell" = {
+    home-manager.users.face.xdg.configFile."quickshell/fraudshell" = {
+      enable = true;
+      force = true;
       source = ../fraudshell;
-      recursive = true;
+      # recursive = true;
     };
   };
 
