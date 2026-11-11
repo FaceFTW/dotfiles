@@ -14,8 +14,6 @@ MouseArea {
     implicitWidth: barLoader.implicitWidth + Sizes.widgetMarginBothSides
     implicitHeight: Math.max(Sizes.widgetHeight, barLoader.implicitHeight)
 
-
-
     hoverEnabled: true
     cursorShape: clickAction ? Qt.PointingHandCursor : Qt.ArrowCursor
 

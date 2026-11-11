@@ -4,8 +4,8 @@ import Quickshell
 import Quickshell.Services.UPower
 
 Singleton {
-	id: root
+    id: root
 
-	property var currentProfile: PowerProfiles.profile
-	readonly property string degraded: PowerProfiles.degradationReason.toString()
+    property var currentProfile: PowerProfiles.profile
+    readonly property string degraded: PowerProfiles.degradationReason.toString()
 }

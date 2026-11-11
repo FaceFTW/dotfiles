@@ -2,6 +2,6 @@ import QtQuick
 import qs.services
 
 Text {
-  text: Time.time
-  color: "#FFFFFF"
+    text: Time.time
+    color: "#FFFFFF"
 }

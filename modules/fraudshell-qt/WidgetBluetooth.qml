@@ -1,11 +1,10 @@
 pragma ComponentBehavior: Bound
 
+import QtQuick
+import QtQuick.Layouts
 import qs
 import qs.components
 import qs.services
-import Quickshell
-import QtQuick
-import QtQuick.Layouts
 
 StyledWidget {
     id: root
@@ -96,12 +95,12 @@ StyledWidget {
             model: root.connectedDevices
 
             StyledPopupValueRow {
-                icon: deviceIcon(modelData)
+                icon: root.deviceIcon(modelData)
                 label: modelData.name
                 value: {
                     const battery = modelData.batteryPercentage;
                     if (battery !== undefined && battery >= 0) {
-                        return root.formatBatteryLabel(battery) + " " + batteryIcon(battery);
+                        return root.formatBatteryLabel(battery) + " " + root.batteryIcon(battery);
                     }
                     return "";
                 }

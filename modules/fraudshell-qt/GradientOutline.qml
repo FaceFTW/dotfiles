@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import qs
 
 // Main container rectangle acting as the window outline/border gradient
 Rectangle {

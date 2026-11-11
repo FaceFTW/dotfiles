@@ -1,7 +1,6 @@
 // Modified from https://github.com/end-4/dots-hyprland/blob/main/dots/.config/quickshell/ii/modules/ii/bar/StyledPopupHeaderRow.qml
 
 import QtQuick
-import QtQuick.Layouts
 import qs
 
 Row {

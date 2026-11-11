@@ -3,10 +3,9 @@
 pragma Singleton
 pragma ComponentBehavior: Bound
 
+import QtQuick
 import Quickshell
 import Quickshell.Bluetooth
-import Quickshell.Io
-import QtQuick
 
 Singleton {
     id: root

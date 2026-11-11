@@ -1,16 +1,15 @@
 pragma ComponentBehavior: Bound
 
+import QtQuick
+import QtQuick.Layouts
 import qs
 import qs.components
 import qs.services
-import Quickshell
-import QtQuick
-import QtQuick.Layouts
 
 StyledWidget {
     id: root
 
-    property var activeSink: Pipewire.sink
+    property var activeSink: Audio.sink
     property real volume: activeSink ? activeSink.audio.volume : 0
     property bool muted: activeSink ? activeSink.audio.muted : false
 
@@ -33,12 +32,12 @@ StyledWidget {
         color: "#FFFFFF"
     }
 
-    onClicked: Pipewire.toggleMute()
+    onClicked: Audio.toggleMute()
     onWheel: {
         if (wheel.angleDelta.y > 0) {
-            Pipewire.incrementVolume();
+            Audio.incrementVolume();
         } else {
-            Pipewire.decrementVolume();
+            Audio.decrementVolume();
         }
     }
 
@@ -55,7 +54,7 @@ StyledWidget {
             visible: root.activeSink
             icon: ""
             label: "Default Sink:"
-            value: Pipewire.friendlyDeviceName(root.activeSink)
+            value: Audio.friendlyDeviceName(root.activeSink)
         }
 
         StyledPopupValueRow {

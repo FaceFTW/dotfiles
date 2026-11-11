@@ -2,10 +2,10 @@
 pragma Singleton
 pragma ComponentBehavior: Bound
 
-import qs.services
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import qs.services
 
 /**
  * Simple polled resource usage service with RAM, Swap, and CPU usage.
@@ -71,10 +71,10 @@ Singleton {
 
             // Parse memory and swap usage
             const textMeminfo = fileMeminfo.text();
-            memoryTotal = Number(textMeminfo.match(/MemTotal: *(\d+)/)?.[1] ?? 1);
-            memoryFree = Number(textMeminfo.match(/MemAvailable: *(\d+)/)?.[1] ?? 0);
-            swapTotal = Number(textMeminfo.match(/SwapTotal: *(\d+)/)?.[1] ?? 1);
-            swapFree = Number(textMeminfo.match(/SwapFree: *(\d+)/)?.[1] ?? 0);
+            root.memoryTotal = Number(textMeminfo.match(/MemTotal: *(\d+)/)?.[1] ?? 1);
+            root.memoryFree = Number(textMeminfo.match(/MemAvailable: *(\d+)/)?.[1] ?? 0);
+            root.swapTotal = Number(textMeminfo.match(/SwapTotal: *(\d+)/)?.[1] ?? 1);
+            root.swapFree = Number(textMeminfo.match(/SwapFree: *(\d+)/)?.[1] ?? 0);
 
             // Parse CPU usage
             const textStat = fileStat.text();
@@ -84,13 +84,13 @@ Singleton {
                 const total = stats.reduce((a, b) => a + b, 0);
                 const idle = stats[3];
 
-                if (previousCpuStats) {
-                    const totalDiff = total - previousCpuStats.total;
-                    const idleDiff = idle - previousCpuStats.idle;
-                    cpuUsage = totalDiff > 0 ? (1 - idleDiff / totalDiff) : 0;
+                if (root.previousCpuStats) {
+                    const totalDiff = total - root.previousCpuStats.total;
+                    const idleDiff = idle - root.previousCpuStats.idle;
+                    root.cpuUsage = totalDiff > 0 ? (1 - idleDiff / totalDiff) : 0;
                 }
 
-                previousCpuStats = {
+                root.previousCpuStats = {
                     total,
                     idle
                 };

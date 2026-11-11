@@ -2,7 +2,6 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 import qs
@@ -64,7 +63,7 @@ LazyLoader {
 
             // Ensures loaded component is properly anchored
             Component.onCompleted: {
-                root.contentItem.anchors.centerIn = popupBackground
+                root.contentItem.anchors.centerIn = popupBackground;
             }
 
             border.width: 1

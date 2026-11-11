@@ -4,8 +4,8 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
-import qs.services
 import qs.components
+import qs.services
 
 Rectangle {
     id: root

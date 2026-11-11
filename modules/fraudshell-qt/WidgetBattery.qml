@@ -4,12 +4,11 @@
 
 pragma ComponentBehavior: Bound
 
+import QtQuick
+import QtQuick.Layouts
 import qs
 import qs.components
 import qs.services
-import Quickshell
-import QtQuick
-import QtQuick.Layouts
 
 StyledWidget {
     id: root

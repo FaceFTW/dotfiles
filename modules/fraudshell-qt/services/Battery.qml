@@ -2,11 +2,9 @@
 
 pragma Singleton
 
-import qs.services
+import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
-import QtQuick
-import Quickshell.Io
 
 Singleton {
     id: root

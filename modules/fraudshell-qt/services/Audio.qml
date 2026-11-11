@@ -2,6 +2,7 @@
 
 pragma Singleton
 pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell
 import Quickshell.Services.Pipewire
@@ -51,23 +52,23 @@ Singleton {
 
     // Controls
     function toggleMute() {
-        Pipewire.sink.audio.muted = !Pipewire.sink.audio.muted;
+        root.sink.audio.muted = !root.sink.audio.muted;
     }
 
     function toggleMicMute() {
-        Pipewire.source.audio.muted = !Pipewire.source.audio.muted;
+        root.source.audio.muted = !root.source.audio.muted;
     }
 
     function incrementVolume() {
-        const currentVolume = Pipewire.value;
+        const currentVolume = root.value;
         const step = currentVolume < 0.1 ? 0.01 : 0.02 || 0.2;
-        Pipewire.sink.audio.volume = Math.min(1, Pipewire.sink.audio.volume + step);
+        root.sink.audio.volume = Math.min(1, root.sink.audio.volume + step);
     }
 
     function decrementVolume() {
-        const currentVolume = Pipewire.value;
+        const currentVolume = root.value;
         const step = currentVolume < 0.1 ? 0.01 : 0.02 || 0.2;
-        Pipewire.sink.audio.volume -= step;
+        root.sink.audio.volume -= step;
     }
 
     function setDefaultSink(node) {
@@ -80,17 +81,15 @@ Singleton {
 
     // Internals
     PwObjectTracker {
-        objects: [sink, source]
+        objects: [root.sink, root.source]
     }
 
     Connections { // Protection against sudden volume changes
-        target: sink?.audio ?? null
+        target: root.sink?.audio ?? null
         property bool lastReady: false
         property real lastVolume: 0
         function onVolumeChanged() {
-            if (!Config.options.audio.protection.enable)
-                return;
-            const newVolume = sink.audio.volume;
+            const newVolume = root.sink.audio.volume;
             // when resuming from suspend, we should not write volume to avoid pipewire volume reset issues
             if (isNaN(newVolume) || newVolume === undefined || newVolume === null) {
                 lastReady = false;
@@ -102,17 +101,17 @@ Singleton {
                 lastReady = true;
                 return;
             }
-            const maxAllowedIncrease = Config.options.audio.protection.maxAllowedIncrease / 100;
-            const maxAllowed = Config.options.audio.protection.maxAllowed / 100;
+            const maxAllowedIncrease = 5 / 100;
+            const maxAllowed = 100 / 100;
 
             if (newVolume - lastVolume > maxAllowedIncrease) {
-                sink.audio.volume = lastVolume;
+                root.sink.audio.volume = lastVolume;
                 root.sinkProtectionTriggered("Illegal increment");
             } else if (newVolume > maxAllowed || newVolume > root.hardMaxValue) {
                 root.sinkProtectionTriggered("Exceeded max allowed");
-                sink.audio.volume = Math.min(lastVolume, maxAllowed);
+                root.sink.audio.volume = Math.min(lastVolume, maxAllowed);
             }
-            lastVolume = sink.audio.volume;
+            lastVolume = root.sink.audio.volume;
         }
     }
 
