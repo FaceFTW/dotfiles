@@ -1,82 +1,58 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    astal = {
-      url = "github:FaceFTW/astal";
+    quickshell = {
+      # add ?ref=<tag> to track a tag
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+
+      # THIS IS IMPORTANT
+      # Mismatched system dependencies will lead to crashes and other issues.
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Rust Toolchain
-    fenix.url = "github:nix-community/fenix";
-    fenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
     {
-      self,
       nixpkgs,
-      astal,
+      quickshell,
       ...
     }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-
       nativeBuildInputs = with pkgs; [
-        meson
-        ninja
-        pkg-config
-        gobject-introspection
-        wrapGAppsHook4
-        blueprint-compiler
-        dart-sass
-        vala
-        json-glib
-        gtk4-layer-shell
-        networkmanager
-        libnma-gtk4
-        upower
+        qt6.qtsvg
+        qt6.qtimageformats
+        qt6.qtmultimedia
+        qt6.qt5compat
+        qt6.qtdeclarative
+        quickshell.packages.${system}.quickshell
       ];
 
-      astalPackages = with astal.packages.${system}; [
-        astal4
-        apps
-        auth
-        battery
-        bluetooth
-        brightness
-        greet
-        hyprland
-        io
-        network
-        notifd
-        powerprofiles
-        tray
-        wireplumber
-      ];
     in
     {
-      packages.${system}.default = pkgs.stdenv.mkDerivation {
-        name = "fraudshell";
-        src = ./.;
-        inherit nativeBuildInputs;
-        buildInputs = astalPackages;
-      };
+      # packages.${system}.default = pkgs.stdenv.mkDerivation {
+      #   name = "fraudshell";
+      #   src = ./.;
+      #   inherit nativeBuildInputs;
+      #   buildInputs = astalPackages;
+      # };
 
-      overlays.default = final: prev: {
-        fraudshell = self.packages.${system}.default;
-      };
+      # overlays.default = final: prev: {
+      #   fraudshell = self.packages.${system}.default;
+      # };
 
       devShells.${system}.default = pkgs.mkShell {
-        packages = nativeBuildInputs ++ astalPackages;
+        packages = nativeBuildInputs;
 
+        # these are useful, especially for remote dev
         DISPLAY = ":0";
         WAYLAND_DISPLAY = "wayland-1";
         DEBUG_INVOCATION = 1;
         G_MESSAGE_DEBUG = "all";
 
         shellHook = ''
-          export HYPRLAND_INSTANCE_SIGNATURE=$(cat HIS);
+          # export HYPRLAND_INSTANCE_SIGNATURE=$(cat HIS);
         '';
       };
     };

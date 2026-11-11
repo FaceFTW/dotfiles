@@ -38,6 +38,7 @@
 
   modules.home = {
     fastfetch.enable = true;
+    fraudshell.enable = true;
     git.enable = true;
     starship.enable = true;
     ssh-client.enable = true;

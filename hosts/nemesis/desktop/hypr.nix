@@ -117,7 +117,7 @@ in
       [
         "--- XXX_EXTRA_STARTUP_XXX"
         ''
-          hl.exec_cmd("sleep 1; ${pkgs.fraudshell}/bin/fraudshell &")
+          hl.exec_cmd("sleep 1; ${pkgs.quickshell} -c fraudshell &")
           hl.exec_cmd("sleep 10; ${systemctl} --user start syncthing")
         ''
       ]
