@@ -6,3 +6,5 @@ chemoistate.boltdb
 *.vscdb*
 
 result
+target
+

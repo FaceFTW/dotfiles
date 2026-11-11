@@ -34,27 +34,6 @@
         "type": "github"
       }
     },
-    "astal": {
-      "inputs": {
-        "nixpkgs": [
-          "fraudshell",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1782095881,
-        "narHash": "sha256-PBolddk3rURkOXgZjmZ5rpuBD8kGJwJVqOR0fcRSM+s=",
-        "owner": "FaceFTW",
-        "repo": "astal",
-        "rev": "e1b6aca5992501e632f2f295b6a32d4bdd5f89d3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "FaceFTW",
-        "repo": "astal",
-        "type": "github"
-      }
-    },
     "bdwgc": {
       "flake": false,
       "locked": {
@@ -257,26 +236,6 @@
         "type": "tarball",
         "url": "https://flakehub.com/f/hercules-ci/flake-parts/0.1"
       }
-    },
-    "fraudshell": {
-      "inputs": {
-        "astal": "astal",
-        "fenix": [
-          "fenix"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "path": "./modules/fraudshell",
-        "type": "path"
-      },
-      "original": {
-        "path": "./modules/fraudshell",
-        "type": "path"
-      },
-      "parent": []
     },
     "git-hooks-nix": {
       "inputs": {
@@ -1439,18 +1398,38 @@
         "type": "github"
       }
     },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792651682,
+        "narHash": "sha256-TiCGqLMpNIy7FERewgfKVluPsLVF96uc6x6xwZnMjdQ=",
+        "ref": "refs/heads/master",
+        "rev": "9b0f339b19057f4731bf3b48293307d7ef241671",
+        "revCount": 879,
+        "type": "git",
+        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+      }
+    },
     "root": {
       "inputs": {
         "determinate": "determinate",
         "disko": "disko",
         "fenix": "fenix",
-        "fraudshell": "fraudshell",
         "home-manager": "home-manager",
         "hyprland-plugins": "hyprland-plugins",
         "hyprnix": "hyprnix",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_2",
+        "quickshell": "quickshell",
         "rose-pine-hyprcursor": "rose-pine-hyprcursor",
         "silentSDDM": "silentSDDM",
         "sops-nix": "sops-nix",

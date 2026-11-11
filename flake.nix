@@ -48,14 +48,12 @@
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
     vicinae.inputs.nixpkgs.follows = "nixpkgs"; # use vicinae tied nixpkgs because of GCC mismatch issues
-    vicinae.inputs.numen.inputs.nixpkgs.follows = "nixpkgs";  # Add this line
+    vicinae.inputs.numen.inputs.nixpkgs.follows = "nixpkgs"; # Add this line
     vicinae-extensions.url = "github:vicinaehq/extensions";
     vicinae-extensions.inputs.nixpkgs.follows = "nixpkgs";
 
-    # FRAUDSHELL
-    fraudshell.url = "path:./modules/fraudshell";
-    fraudshell.inputs.nixpkgs.follows = "nixpkgs";
-    fraudshell.inputs.fenix.follows = "fenix";
+    quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+    quickshell.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -87,7 +85,7 @@
             inputs.vicinae.overlays.default
             inputs.hyprnix.overlays.default
             inputs.hyprland-plugins.overlays.default
-            inputs.fraudshell.overlays.default
+            inputs.quickshell.overlays.default
           ]
           ++ globalOverlays
           ++ (specificOverlays configModule);
@@ -176,6 +174,7 @@
         {
           rust = import ./shells/rust.nix { inherit pkgs system; };
           troubleshoot = import ./shells/troubleshoot.nix { inherit pkgs system; };
+          quickshell-dev = import ./shells/quickshell-dev.nix { inherit pkgs system; };
         }
       );
     };

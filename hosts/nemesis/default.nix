@@ -38,6 +38,7 @@
 
   modules.home = {
     fastfetch.enable = true;
+    fraudshell.enable = true;
     git.enable = true;
     starship.enable = true;
     ssh-client.enable = true;
@@ -131,12 +132,14 @@
     pkgs.flameshot
     pkgs.freecad
     pkgs.keepassxc
-    pkgs.rustdesk
+    pkgs.rustdesk-flutter
 
     # For Tumbler
     pkgs.ffmpegthumbnailer
     pkgs.icoextract
     pkgs.webp-pixbuf-loader
+
+    pkgs.quickshell
   ];
 
   system.stateVersion = "25.05"; # Don't change this

@@ -116,8 +116,9 @@ in
       # ]
       [
         "--- XXX_EXTRA_STARTUP_XXX"
+        # NOTE fraudshell is being executed as root here
         ''
-          hl.exec_cmd("sleep 1; ${pkgs.fraudshell}/bin/fraudshell &")
+          hl.exec_cmd("sleep 1; ${pkgs.quickshell}/bin/quickshell -p /home/face/.config/quickshell/fraudshell &")
           hl.exec_cmd("sleep 10; ${systemctl} --user start syncthing")
         ''
       ]
