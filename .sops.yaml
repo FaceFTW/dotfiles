@@ -35,7 +35,7 @@ creation_rules:
     - path_regex: hosts/theseus/[^/]+\.(yaml|json|env|ini)$
       key_groups:
           - age:
-                - *host_nemesis
+                - *host_theseus
                 - *user_face_manifold
 
     - path_regex: hosts/durandal/[^/]+\.(yaml|json|env|ini)$

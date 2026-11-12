@@ -51,7 +51,7 @@
   # SOPS Settings
   ############################################
   sops.defaultSopsFile = ./secrets.yaml;
-  sops.age.sshKeyFile = "/etc/ssh/ssh_host_ed25519_key";
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets.user_passwd.neededForUsers = true;
   sops.secrets."syncthing_cert.pem".key = "syncthing_cert_pem";
   sops.secrets."syncthing_cert.pem".owner = "face";
