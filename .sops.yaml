@@ -6,6 +6,7 @@ keys:
     - &host_nemesis age1j6v3hw4n8me2flq2z5n9m7fw0uuqxzdm2r87q6uv3c9ar0jqlv6skp3hn5
     - &user_face_manifold age145ltxlne4wy497exp3fw4an9ss8mxy80wvwnzzckfnpv5jw50dhqrlfrvu
     - &host_durandal age1s7gjazppqkz6j9uvtewfpu8vgq27wzg6xtp4hvq797zhtaaumelqa52qrh
+    - &host_theseus age14l2n3l86hdgmnjp70rzg6w9wsxv05njc6qz5zgx3zcqylluc5sfqlx3vm8
 
 creation_rules:
     - path_regex: hosts/fabricator/[^/]+\.(yaml|json|env|ini)$
@@ -26,6 +27,12 @@ creation_rules:
                 - *user_face_manifold
 
     - path_regex: hosts/nemesis/[^/]+\.(yaml|json|env|ini)$
+      key_groups:
+          - age:
+                - *host_nemesis
+                - *user_face_manifold
+
+    - path_regex: hosts/theseus/[^/]+\.(yaml|json|env|ini)$
       key_groups:
           - age:
                 - *host_nemesis
