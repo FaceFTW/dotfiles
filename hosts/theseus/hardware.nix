@@ -1,8 +1,6 @@
 {
   inputs,
-  config,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -13,10 +11,17 @@
   ############################################
   # Hardware Configuration
   ############################################
+  hardware.enableRedistributableFirmware = true;
+
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
   hardware.framework.enableKmod = true;
+
+  services.tlp.enable = false;
+  services.iptsd.enable = true;
+  services.fprintd.enable = true;
+  services.fprintd.enablePam = true;
 
   ############################################
   # Kernel Config
@@ -38,14 +43,6 @@
   boot.loader.limine.additionalFiles."efi/memtest86/memtest86.efi" =
     "${pkgs.memtest86-efi}/BOOTX64.efi";
   boot.loader.efi.canTouchEfiVariables = true;
-
-  ############################################
-  # Surface-related things
-  ###########################################
-  services.tlp.enable = false;
-  hardware.enableRedistributableFirmware = true;
-  services.iptsd.enable = true;
-  environment.systemPackages = [ pkgs.surface-control ];
 
   ############################################
   # udev rules

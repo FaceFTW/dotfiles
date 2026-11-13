@@ -233,5 +233,6 @@ in
         timeout = 300;
       }
     ];
+    settings.splash = false;
   };
 }
