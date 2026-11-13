@@ -53,6 +53,7 @@
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.hyprland.enableGnomeKeyring = true;
   security.pam.services.login.enableGnomeKeyring = true;
+  security.pam.services.ly.enableGnomeKeyring = true;
   services.dbus.packages = [
     pkgs.gnome-keyring
     pkgs.gcr_4
@@ -65,14 +66,6 @@
     pkgs.libsecret
   ];
   environment.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/gcr/ssh";
-
-  ############################################
-  # Howdy
-  ############################################
-  # services.howdy.enable = true;
-  # services.linux-enable-ir-emitter.enable = true;
-  # security.pam.howdy.enable = true;
-  # security.pam.services.hyprland.howdy.enable = true;
 
   ############################################
   # Miscellaneous

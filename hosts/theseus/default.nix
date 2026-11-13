@@ -81,7 +81,7 @@
   i18n.extraLocaleSettings.LC_TELEPHONE = "en_US.UTF-8";
   i18n.extraLocaleSettings.LC_TIME = "en_US.UTF-8";
 
-  # nix.settings.secret-key-files = "/run/secrets/nix_cache_pem";
+  nix.settings.secret-key-files = "/run/secrets/nix_cache_pem";
   nix.settings.substituters = [
     "s3://nix-cache?region=archiver&endpoint=garage-s3.faceftw.dev"
   ];
@@ -93,15 +93,12 @@
   packages.networking = true;
   packages.secrets.base = true;
   packages.direnv = true;
-  # packages.ghidra = true;
   packages.gitFull = true;
   packages.nixTools = true;
   packages.rust = "nightly";
   packages.nodejs.node = true;
   packages.nodejs.biome = true;
   packages.steam = true;
-  # packages.steam-nvidia-prime = true;
-  # packages.vscode.enable = true;
   packages.virtualization.armVirtualization = true;
 
   packages.zed.enable = true;
