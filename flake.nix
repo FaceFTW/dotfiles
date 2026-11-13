@@ -130,6 +130,15 @@
       };
 
       ############################################
+      # theseus
+      ############################################
+      nixosConfigurations.theseus = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = withOverlays ./hosts/theseus/default.nix;
+      };
+
+      ############################################
       # fabricator
       ############################################
       nixosConfigurations.fabricator = nixpkgs.lib.nixosSystem {
