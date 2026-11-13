@@ -31,8 +31,6 @@
     # Hyprland Ecosystem
     hyprnix.url = "github:hyprwm/hyprnix";
     hyprnix.inputs.nixpkgs.follows = "nixpkgs";
-    # hyprnix.inputs.hyprland.url="github:hyprwm/hyprland/tags/v0.57.0"; # v0.8.5
-    # hyprnix.inputs.hyprpaper.url="github:hyprwm/hyprpaper/tags/v0.8.5"; # v0.8.5
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprnix/hyprland";
     hyprland-plugins.inputs.nixpkgs.follows = "hyprnix/nixpkgs";
@@ -40,10 +38,6 @@
     # Hyprcursor
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
     rose-pine-hyprcursor.inputs.nixpkgs.follows = "hyprnix/nixpkgs";
-
-    # Silent SDDM Theme
-    silentSDDM.url = "github:uiriansan/SilentSDDM";
-    silentSDDM.inputs.nixpkgs.follows = "nixpkgs";
 
     #Vicinae
     vicinae.url = "github:vicinaehq/vicinae";
@@ -109,24 +103,6 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = withOverlays ./modules/wsl.nix ++ [ { networking.hostName = "manifold-wsl"; } ];
-      };
-
-      ############################################
-      # portal
-      ############################################
-      nixosConfigurations.portal = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = withOverlays ./modules/wsl.nix ++ [ { networking.hostName = "portal-wsl"; } ];
-      };
-
-      ############################################
-      # nemesis
-      ############################################
-      nixosConfigurations.nemesis = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = withOverlays ./hosts/nemesis/default.nix;
       };
 
       ############################################
