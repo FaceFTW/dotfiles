@@ -17,7 +17,7 @@
     ../../modules/packages
     ../../modules/services
     ../../modules/user.nix
-    ./desktop.nix
+    ./desktop
     ./disks.nix
     ./hardware.nix
     ./networking.nix
