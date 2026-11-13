@@ -101,7 +101,7 @@
   packages.nodejs.node = true;
   packages.nodejs.biome = true;
   packages.steam = true;
-  packages.steam-nvidia-prime = true;
+  # packages.steam-nvidia-prime = true;
   # packages.vscode.enable = true;
   packages.virtualization.armVirtualization = true;
 
@@ -127,7 +127,7 @@
     pkgs.xdg-utils
     pkgs.gimp
     pkgs.inkscape
-    pkgs.nvidia-offload
+    # pkgs.nvidia-offload
     pkgs.imhex
     pkgs.flameshot
     pkgs.freecad
