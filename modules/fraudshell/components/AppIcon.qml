@@ -6,6 +6,12 @@ Image {
 
     property real size
 
-    sourceSize.width: size
-    sourceSize.height: size
+    // sourceSize.width: size
+    // sourceSize.height: size
+    width: size
+    height: size
+    fillMode: Image.PreserveAspectFit
+
+    // paintedHeight: size
+    // paintedWidth:size
 }

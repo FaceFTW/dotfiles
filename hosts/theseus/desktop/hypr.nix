@@ -85,39 +85,24 @@ in
         "${pkgs.hyprlock}/bin/hyprlock"
       ]
       [
-        "XXX_START_HYPRPOLKITAGENT_XXX"
-        "${systemctl} --user start hyprpolkitagent &"
-      ]
-      [
-        "XXX_START_HYPRCTL_NUMLOCK_XXX"
-        "${hyprctl} keyword input:kb_numlock true && date '+%Y-%m-%d %H:%M:%S' > /tmp/numlock-set"
-      ]
-      [
-        "XXX_START_HYPRCTL_SETCURSOR_XXX"
-        "${hyprctl} setcursor rose-pine-hyprcursor 36"
-      ]
-      [
-        "XXX_START_HYPRCTL_DISPATCH_XXX"
-        "${hyprctl} dispatch workspace 1 &"
-      ]
-      [
-        "XXX_START_HYPRPAPER_XXX"
-        "${pkgs.hyprpaper}/bin/hyprpaper &"
-      ]
-      [
-        "XXX_START_VICINAE_XXX"
-        "${pkgs.vicinae}/bin/vicinae server &"
-      ]
-      # [
-      #   "XXX_START_BITWARDEN_DESKTOP_XXX"
-      #   "${pkgs.bitwarden-desktop}/bin/bitwarden &"
-      # ]
-      [
         "--- XXX_EXTRA_STARTUP_XXX"
-        # NOTE fraudshell is being executed as root here
+        # lua
         ''
+          --- Background Nitty Gritty
+          hl.exec_cmd("${systemctl} --user start hyprpolkitagent &")
+          hl.exec_cmd("${hyprctl} keyword input:kb_numlock true && date '+%Y-%m-%d %H:%M:%S' > /tmp/numlock-set")
+          hl.exec_cmd("${hyprctl} setcursor rose-pine-hyprcursor 36")
+          hl.exec_cmd("${hyprctl} dispatch workspace 1 &")
+          hl.exec_cmd("${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets &")
+
+          --- Core Shell Experience
+          hl.exec_cmd("${pkgs.hyprpaper}/bin/hyprpaper &")
           hl.exec_cmd("sleep 1; ${pkgs.quickshell}/bin/quickshell -p /home/face/.config/quickshell/fraudshell &")
+          hl.exec_cmd("${pkgs.vicinae}/bin/vicinae server &")
+
+          --- User Autostart Apps
           hl.exec_cmd("sleep 10; ${systemctl} --user start syncthing")
+          hl.exec_cmd("sleep 10; ${pkgs.keepassxc}/bin/keepassxc &")
         ''
       ]
       # TODO probably a hypr bug

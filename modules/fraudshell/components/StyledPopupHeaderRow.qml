@@ -14,7 +14,7 @@ Row {
         fill: 0
         font.weight: Font.DemiBold
         text: root.icon
-        iconSize: Sizes.font.large
+        iconSize: Sizes.font.larger
         color: "#FFFFFF"
     }
 
@@ -22,8 +22,8 @@ Row {
         anchors.verticalCenter: parent.verticalCenter
         text: root.label
         font {
-            weight: Font.DemiBold
-            pixelSize: Sizes.font.normal
+            weight: Font.Bold
+            pixelSize: Sizes.font.huge
             family: "VCR OSD Mono"
         }
         color: "#FFFFFF"

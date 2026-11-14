@@ -6,9 +6,9 @@ require("staging") --- For testing things without constant reloads
 
 hl.monitor({
 	output = "eDP-1",
-	mode = "2400x1600@120",
+	mode = "2880x1920@120",
 	position = "0x0",
-	scale = "1",
+	scale = "1.2",
 })
 
 -------------------------
@@ -31,21 +31,10 @@ local cursor = "rose-pine-hyprcursor";
 ---- AUTOSTART ----
 -------------------
 hl.on("hyprland.start", function()
-	hl.exec_cmd("XXX_START_HYPRPOLKITAGENT_XXX")
-	hl.exec_cmd("XXX_START_HYPRCTL_NUMLOCK_XXX")
-	hl.exec_cmd("XXX_START_HYPRCTL_SETCURSOR_XXX")
-	hl.exec_cmd("XXX_START_HYPRCTL_DISPATCH_XXX")
-
-	hl.exec_cmd("XXX_START_HYPRPAPER_XXX")
-	hl.exec_cmd("XXX_START_VICINAE_XXX")
-
 	hl.exec_cmd("sleep 5; $hyprscripts/check_setup_warnings.sh &")
-
-	-- hl.exec_cmd("XXX_START_BITWARDEN_DESKTOP_XXX")
 
 	--- XXX_EXTRA_STARTUP_XXX
 end)
-
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -221,6 +210,8 @@ for i = 1, 10 do
 	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }),
 		{ description = "Move Window to Workspace" .. i })
 end
+
+hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
 --- Power Control
 hl.bind("SUPER + L", hl.dsp.exec_cmd(hyprlock),

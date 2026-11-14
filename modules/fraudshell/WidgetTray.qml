@@ -12,17 +12,7 @@ Item {
 
     implicitWidth: trayRoot.implicitWidth + margins * 2
     implicitHeight: trayRoot.implicitHeight + margins * 2
-
-    Component.onCompleted: Qt.callLater(() => {
-        console.log("WidgetTray root:",
-                    "x/y", x, y,
-                    "size", width, height,
-                    "implicit", implicitWidth, implicitHeight)
-        console.log("WidgetTray row:",
-                    "x/y", trayRoot.x, trayRoot.y,
-                    "size", trayRoot.width, trayRoot.height,
-                    "implicit", trayRoot.implicitWidth, trayRoot.implicitHeight)
-    })
+    anchors.verticalCenter: parent.verticalCenter
 
     component SysTrayItem: MouseArea {
         id: trayItemRoot
@@ -31,11 +21,9 @@ Item {
 
         implicitWidth: 32
         implicitHeight: 32
+        anchors.verticalCenter: parent.verticalCenter
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-        onWidthChanged: console.log("Tray delegate width:", width, "item:", item)
-        onHeightChanged: console.log("Tray delegate height:", height, "item:", item)
 
         onClicked: event => {
             switch (event.button) {
@@ -51,16 +39,6 @@ Item {
             }
         }
 
-        // Diagnostic background: if this is visible but the icon isn't,
-        // delegate placement is working and the issue is with image rendering.
-        Rectangle {
-            anchors.fill: parent
-            visible: trayWidget.showDebugOverlay
-            color: "#1d1d1dff"
-            border.color: "#1d1d1d"
-            border.width: 1
-        }
-
         QsMenuAnchor {
             id: menu
             menu: trayItemRoot.item.menu
@@ -73,39 +51,20 @@ Item {
         Image {
             id: icon
 
-            // System tray item.icon may already be an image:// URL.
             source: trayItemRoot.item.icon || Quickshell.iconPath("image-missing")
             anchors.centerIn: parent
             width: parent.width
             height: parent.height
             fillMode: Image.PreserveAspectFit
-
-            onStatusChanged: console.log(
-                "Tray image:",
-                "raw icon", trayItemRoot.item.icon,
-                "source", source,
-                "status", status,
-                "item size", width, height,
-                "source size", sourceSize.width, sourceSize.height,
-                "painted size", paintedWidth, paintedHeight
-            )
         }
 
-        Component.onCompleted: Qt.callLater(() => {
-            console.log("Tray delegate:",
-                        "x/y", x, y,
-                        "size", width, height,
-                        "visible", visible,
-                        "parent size", parent.width, parent.height,
-                        "icon", item.icon)
-        })
     }
 
     RowLayout {
         id: trayRoot
 
         anchors.centerIn: parent
-        spacing: 0
+        spacing: 4
 
         Repeater {
             model: SystemTray.items
@@ -114,8 +73,8 @@ Item {
                 required property SystemTrayItem modelData
                 item: modelData
 
-                Layout.preferredWidth: 24
-                Layout.preferredHeight: 24
+                Layout.preferredWidth: 28
+                Layout.preferredHeight: 28
             }
 
             Component.onCompleted:

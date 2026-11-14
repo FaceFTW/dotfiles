@@ -5,4 +5,5 @@ Text {
     text: Time.time
     color: "#FFFFFF"
     font.family: "VCR OSD Mono"
+    font.pixelSize: Sizes.font.larger
 }

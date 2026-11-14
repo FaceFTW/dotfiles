@@ -8,14 +8,14 @@ Singleton {
     id: root
 
     // Common Properties
-    readonly property real widgetHeight: 32
+    readonly property real widgetHeight: 36
     readonly property real elevationMargin: 10
     readonly property real widgetMargin: 6
     readonly property real widgetMarginBothSides: root.widgetMargin * 2
     readonly property real widgetGlyphSize: 24
 
     // Bar Properties
-    readonly property real barHeight: 40
+    readonly property real barHeight: 48
 
     // Workspace Widget Properties
     readonly property real workspaceIconSize: 24
@@ -31,7 +31,7 @@ Singleton {
         readonly property int large: 17
         readonly property int larger: 19
         readonly property int huge: 22
-        readonly property int hugeass: 23
+        readonly property int hugeass: 24
         readonly property int title: huge
     }
 }
