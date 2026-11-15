@@ -14,12 +14,15 @@ let
     mergeAttrsList
     mkIf
     ;
-
+  kernelConf = config.modules.kernel;
 in
 {
   options.modules.kernel = {
     enable = mkEnableOption "Custom linux Build";
-    version = mkOption { type = types.str; };
+    rpi-kernel = mkEnableOption "Build as Raspberry Pi Kernel";
+    version = mkOption {
+      type = types.str;
+    };
     src = mkOption { type = types.package; };
     extraConfig = mkOption { type = types.attrs; };
     patches = mkOption { type = with types; listOf attrs; };
@@ -27,12 +30,22 @@ in
       type = types.bool;
       default = false;
     };
+
   };
 
   config =
     let
+      finalVersion = if kernelConf.rpi-kernel then "7.3.3" else kernelConf.version;
+      finalSrc =
+        if kernelConf.rpi-kernel then
+          fetchGit {
+            url = "https://github.com/raspberrypi/linux";
+            rev = "f2b04c0857b73f4014513f0a89cb392fca0b2305";
+          }
+        else
+          kernelConf.src;
       finalPkgs =
-        if config.modules.kernel.crossCompile then
+        if kernelConf.crossCompile || kernelConf.rpi-kernel then
           (import pkgs.path {
             localSystem.system = "x86_64-linux";
             crossSystem.system = "aarch64-linux";
@@ -44,10 +57,10 @@ in
       boot.kernelPackages = recurseIntoAttrs (
         finalPkgs.linuxPackagesFor (
           finalPkgs.buildLinux {
-            version = config.modules.kernel.version;
-            src = config.modules.kernel.src;
+            version = finalVersion;
+            src = finalSrc;
 
-            kernelPatches = config.modules.kernel.patches;
+            kernelPatches = kernelConf.patches;
 
             ignoreConfigErrors = true;
             # Using as list of attrs so it's easier to fold in IDEs
@@ -2659,13 +2672,33 @@ in
 
                 }
                 ############################################
-                #
+                # Raspberry Pi Kernel Specific Config
                 ############################################
+                (lib.mkIf kernelConf.rpi-kernel {
 
-                ############################################
-                #
-                ############################################
+                  I2C_ISCH = no;
+                  DMA_BCM2708 = yes; # https://github.com/raspberrypi/linux/issues/1150
+                  NET_VENDOR_BROADCOM = yes;
+                  WLAN_VENDOR_BROADCOM = yes;
 
+                  BCMA = module;
+                  BROADCOM_PHY = yes;
+                  BCM54140_PHY = yes;
+                  BCM7XXX_PHY = yes;
+                  BCM84881_PHY = yes;
+                  BCM87XX_PHY = yes;
+                  BCM_NET_PHYLIB = yes;
+                  BCM_NET_PHYPTP = yes;
+
+                  INPUT_TOUCHSCREEN = yes;
+                  REGULATOR_RASPBERRYPI_TOUCHSCREEN_ATTINY = lib.mkForce module;
+                  REGULATOR_RASPBERRYPI_TOUCHSCREEN_V2 = lib.mkForce module;
+
+                  # I can't for the life of me figure out why this thing gets selected
+                  MFD_WM8994 = yes;
+                  MFD_ARIZONA_I2C = module;
+                  MFD_ARIZONA_SPI = module;
+                })
                 ############################################
                 # Overrides
                 ############################################

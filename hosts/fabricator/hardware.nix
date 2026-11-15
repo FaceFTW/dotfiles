@@ -1,5 +1,4 @@
 {
-  lib,
   ...
 }:
 {
@@ -46,41 +45,8 @@
   ############################################
   # Kernel Build Configuration
   ############################################
-  modules.kernel = {
-    enable = true;
-    version = "7.3.0";
-    src = fetchGit {
-      url = "https://github.com/raspberrypi/linux";
-      rev = "8169c79f5b7631b409669735b175c4b5fc616ed6";
-    };
-
-    crossCompile = true;
-
-    extraConfig = with lib.kernel; {
-      I2C_ISCH = no;
-      DMA_BCM2708 = yes; # https://github.com/raspberrypi/linux/issues/1150
-      NET_VENDOR_BROADCOM = yes;
-      WLAN_VENDOR_BROADCOM = yes;
-
-      BCMA = module;
-      BROADCOM_PHY = yes;
-      BCM54140_PHY = yes;
-      BCM7XXX_PHY = yes;
-      BCM84881_PHY = yes;
-      BCM87XX_PHY = yes;
-      BCM_NET_PHYLIB = yes;
-      BCM_NET_PHYPTP = yes;
-
-      INPUT_TOUCHSCREEN = yes;
-      REGULATOR_RASPBERRYPI_TOUCHSCREEN_ATTINY = lib.mkForce module;
-      REGULATOR_RASPBERRYPI_TOUCHSCREEN_V2 = lib.mkForce module;
-
-      # I can't for the life of me figure out why this thing gets selected
-      MFD_WM8994 = yes;
-      MFD_ARIZONA_I2C = module;
-      MFD_ARIZONA_SPI = module;
-    };
-  };
+  modules.kernel.enable = true;
+  modules.kernel.rpi-kernel = true;
 
   ############################################
   # udev Configuration
