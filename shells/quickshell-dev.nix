@@ -17,4 +17,8 @@ pkgs.mkShell {
   DEBUG_INVOCATION = 1;
   G_MESSAGE_DEBUG = "all";
 
+  shellHook = ''
+    export HYPRLAND_INSTANCE_SIGNATURE="$(cat ./HIS)"
+  '';
+
 }

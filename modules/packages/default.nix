@@ -28,7 +28,7 @@ in
     ncdu = mkEnableOption "ncdu";
     networking = mkEnableOption "Extra Networking Things";
     nixTools = mkEnableOption "Nix Dev Tools";
-
+    qtTools = mkEnableOption "QT Dev Tools";
   };
 
   config = mkMerge [
@@ -148,8 +148,17 @@ in
           p.wasm
         ]))
       ];
-    }
+    })
 
-    )
+    (mkIf packages.qtTools {
+      environment.systemPackages = [
+        pkgs.qt6.qtsvg
+        pkgs.qt6.qtimageformats
+        pkgs.qt6.qtmultimedia
+        pkgs.qt6.qt5compat
+        pkgs.qt6.qtdeclarative
+        pkgs.quickshell # Through overlay
+      ];
+    })
   ];
 }

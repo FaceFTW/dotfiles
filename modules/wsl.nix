@@ -74,8 +74,8 @@
   packages.nixTools = true;
   packages.nodejs.node = true;
   packages.nodejs.biome = true;
-  # packages.nodejs.vsCodeRemotePatch = true;
-  packages.rust = "stable";
+  packages.qtTools = true;
+  packages.rust = "nightly";
   packages.secrets.base = true;
   packages.secrets.wslGpgForwarding = true;
   packages.virtualization.docker = true;
@@ -86,7 +86,8 @@
   programs.zsh.enable = true;
   programs.ssh.startAgent = true;
 
-  environment.systemPackages = [ ];
+  environment.systemPackages = [];
+
 
   system.stateVersion = "25.05";
 }

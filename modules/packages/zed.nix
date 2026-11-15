@@ -43,14 +43,18 @@ in
         pkgs.zed-editor
         pkgs.package-version-server
         pkgs.lua-language-server
-        pkgs.vala-language-server
-        pkgs.vala
         pkgs.blueprint-compiler
         pkgs.universal-ctags
         pkgs.clang-tools
-        pkgs.meson
-        pkgs.glib
-        pkgs.json-glib
+        pkgs.zed-discord-presence
+
+        pkgs.github-copilot-cli
+        pkgs.qt6.qtsvg
+        pkgs.qt6.qtimageformats
+        pkgs.qt6.qtmultimedia
+        pkgs.qt6.qt5compat
+        pkgs.qt6.qtdeclarative
+        pkgs.quickshell # Through overlay
       ];
     })
     (mkIf packages.zed.wslFixes {
