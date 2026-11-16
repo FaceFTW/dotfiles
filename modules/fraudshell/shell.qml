@@ -4,6 +4,12 @@ import Quickshell
 
 Scope {
 
+    LazyLoader {
+        id: osdLoader
+        active: true
+        component: OnScreenDisplay {}
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -34,7 +40,7 @@ Scope {
                 }
 
                 rightContent: Row {
-                	WidgetTray {}
+                    WidgetTray {}
                     WidgetPerformance {}
                     WidgetBluetooth {}
                     WidgetNetwork {}
