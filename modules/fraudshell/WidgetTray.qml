@@ -43,8 +43,8 @@ Item {
             id: menu
             menu: trayItemRoot.item.menu
             anchor.window: trayItemRoot.QsWindow.window
-            anchor.rect.x: trayItemRoot.x + (trayItemRoot.QsWindow.contentItem?.width ?? 0)
-            anchor.rect.y: trayItemRoot.y
+            anchor.rect.x: trayItemRoot.mapToItem(trayItemRoot.QsWindow.contentItem, 0, 0).x
+            anchor.rect.y: Sizes.barHeight
             anchor.rect.height: trayItemRoot.height * 3
         }
 
