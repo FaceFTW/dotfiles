@@ -210,13 +210,49 @@ Scope {
                     implicitWidth: 180
                     implicitHeight: 8
                     radius: height / 2
-                    color: "#49454f"
+
+                    gradient: Gradient {
+                        orientation: Gradient.Horizontal
+
+                        GradientStop {
+                            position: 0.0
+                            color: "#FA6982"
+                        }
+                        GradientStop {
+                            position: 0.2
+                            color: "#FAAD45"
+                        }
+                        GradientStop {
+                            position: 0.4
+                            color: "#FAFA00"
+                        }
+                        GradientStop {
+                            position: 0.6
+                            color: "#96f06e"
+                        }
+                        GradientStop {
+                            position: 0.8
+                            color: "#63c8fa"
+                        }
+                        GradientStop {
+                            position: 1.0
+                            color: "#dc6ea5"
+                        }
+                    }
 
                     Rectangle {
-                        width: parent.width * indicator.value
+                        width: parent.width * (1.0 - indicator.value)
                         height: parent.height
                         radius: height / 2
-                        color: "#d0bcff"
+                        anchors.right: parent.right
+                        color: "#49454f"
+
+                        //Mask the left radius off
+                        Rectangle {
+                            width: Math.min(parent.width, parent.height / 2)
+                            height: parent.height
+                            color: parent.color
+                        }
                     }
                 }
             }
