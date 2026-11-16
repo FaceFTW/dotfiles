@@ -101,15 +101,12 @@ Singleton {
                 lastReady = true;
                 return;
             }
-            const maxAllowedIncrease = 5 / 100;
-            const maxAllowed = 100 / 100;
+            const maxAllowedIncrease = 6 / 100;
+            // const maxAllowed = 100 / 100;
 
             if (newVolume - lastVolume > maxAllowedIncrease) {
                 root.sink.audio.volume = lastVolume;
                 root.sinkProtectionTriggered("Illegal increment");
-            } else if (newVolume > maxAllowed || newVolume > root.hardMaxValue) {
-                root.sinkProtectionTriggered("Exceeded max allowed");
-                root.sink.audio.volume = Math.min(lastVolume, maxAllowed);
             }
             lastVolume = root.sink.audio.volume;
         }

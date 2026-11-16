@@ -1,5 +1,6 @@
 //@ pragma UseQApplication
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 
 Scope {
@@ -31,22 +32,45 @@ Scope {
             GradientOutline {
                 anchors.fill: parent
 
-                leftContent: Row {
-                    WidgetWorkspaces {}
+                RowLayout {
+                    id: leftRow
+                    anchors {
+                        left: parent.left
+                        verticalCenter: parent.verticalCenter
+                    }
+
+                    Row {
+
+                        WidgetWorkspaces {}
+                    }
                 }
 
-                centerContent: Row {
-                    WidgetClock {}
+                RowLayout {
+                    id: centerRow
+                    anchors.centerIn: parent
+
+                    Row {
+
+                        WidgetClock {}
+                    }
                 }
 
-                rightContent: Row {
-                    WidgetTray {}
-                    WidgetPerformance {}
-                    WidgetBluetooth {}
-                    WidgetNetwork {}
-                    WidgetSound {}
-                    // WidgetPowerProfile {}
-                    WidgetBattery {}
+                RowLayout {
+                    id: rightRow
+                    anchors {
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                    }
+
+                    Row {
+                        WidgetTray {}
+                        WidgetPerformance {}
+                        WidgetBluetooth {}
+                        WidgetNetwork {}
+                        WidgetSound {}
+                        // WidgetPowerProfile {}
+                        WidgetBattery {}
+                    }
                 }
             }
         }

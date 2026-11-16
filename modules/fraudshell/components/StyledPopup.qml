@@ -48,26 +48,26 @@ LazyLoader {
         WlrLayershell.namespace: "quickshell:popup"
         WlrLayershell.layer: WlrLayer.Overlay
 
-        Rectangle {
-            id: popupBackground
-            readonly property real margin: 2
-            anchors {
-                fill: parent
-                topMargin: Sizes.elevationMargin + root.popupBackgroundMargin
-            }
-            implicitWidth: root.contentItem.implicitWidth + (margin * 2)
-            implicitHeight: root.contentItem.implicitHeight + (margin * 2)
-            color: "#201f20"
-            radius: 12
-            children: [root.contentItem]
+        GradientOutline {
+            Rectangle {
+                id: popupBackground
+                readonly property real margin: 2
+                anchors {
+                    fill: parent
+                    topMargin:root.popupBackgroundMargin
+                }
+                implicitWidth: root.contentItem.implicitWidth + (margin * 2)
+                implicitHeight: root.contentItem.implicitHeight + (margin * 2)
+                color: "#201f20"
+                radius: 12
+                children: [root.contentItem]
 
-            // Ensures loaded component is properly anchored
-            Component.onCompleted: {
-                root.contentItem.anchors.centerIn = popupBackground;
-            }
+                // Ensures loaded component is properly anchored
+                Component.onCompleted: {
+                    root.contentItem.anchors.centerIn = popupBackground;
+                }
 
-            border.width: 1
-            border.color: "#FFFFFF" // To understand What it look like
+            }
         }
     }
 }

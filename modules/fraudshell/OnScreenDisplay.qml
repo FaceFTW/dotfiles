@@ -21,7 +21,7 @@ Scope {
 
     function triggerOsd() {
         osdOpen = true;
-        console.log("OSD Triggered")
+        console.log("OSD Triggered");
         osdTimeout.restart();
     }
 
@@ -103,54 +103,53 @@ Scope {
                 Item {
                     id: osdValuesWrapper
                     Layout.alignment: Qt.AlignHCenter
-                    implicitWidth: osdContent.implicitWidth
-                    implicitHeight: osdContent.implicitHeight
+                    implicitWidth: osdContent.implicitWidth + osdOutline.strokeWidth * 2
+                    implicitHeight: osdContent.implicitHeight + osdOutline.strokeWidth * 2
                     clip: true
 
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        onEntered: root.osdOpen = false
-                    }
+                    GradientOutline {
+                        id: osdOutline
 
-                    ColumnLayout {
-                        id: osdContent
-                        spacing: 0
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: root.osdOpen = false
 
-                        OsdValueIndicator {
-                            Layout.alignment: Qt.AlignHCenter
-                            name: root.currentIndicator === "brightness" ? "Brightness" : "Volume"
-                            icon: root.currentIndicator === "brightness"
-                                ? "sun"
-                                : (Audio.sink?.audio.muted ? "volume-x" : "volume-2")
-                            value: Math.max(0, Math.min(1,
-                                root.currentIndicator === "brightness"
-                                    ? (root.brightnessMonitor?.brightness ?? 0)
-                                    : (Audio.sink?.audio.volume ?? 0)))
-                        }
+                            ColumnLayout {
+                                id: osdContent
+                                spacing: 0
 
-                        Rectangle {
-                            Layout.alignment: Qt.AlignHCenter
-                            visible: root.protectionMessage !== ""
-                            color: "#8c1d18"
-                            radius: 8
-                            implicitWidth: protectionRow.implicitWidth + 24
-                            implicitHeight: protectionRow.implicitHeight + 16
-
-                            RowLayout {
-                                id: protectionRow
-                                anchors.centerIn: parent
-                                spacing: 8
-
-                                Glyph {
-                                    text: "triangle-alert"
-                                    iconSize: Sizes.font.hugeass
-                                    color: "#ffffff"
+                                OsdValueIndicator {
+                                    Layout.alignment: Qt.AlignHCenter
+                                    name: root.currentIndicator === "brightness" ? "Brightness" : "Volume"
+                                    icon: root.currentIndicator === "brightness" ? "sun" : (Audio.sink?.audio.muted ? "volume-x" : "volume-2")
+                                    value: Math.max(0, Math.min(1, root.currentIndicator === "brightness" ? (root.brightnessMonitor?.brightness ?? 0) : (Audio.sink?.audio.volume ?? 0)))
                                 }
-                                Text {
-                                    color: "#ffffff"
-                                    wrapMode: Text.Wrap
-                                    text: root.protectionMessage
+
+                                Rectangle {
+                                    Layout.alignment: Qt.AlignHCenter
+                                    visible: root.protectionMessage !== ""
+                                    color: "#8c1d18"
+                                    radius: 8
+                                    implicitWidth: protectionRow.implicitWidth + 24
+                                    implicitHeight: protectionRow.implicitHeight + 16
+
+                                    RowLayout {
+                                        id: protectionRow
+                                        anchors.centerIn: parent
+                                        spacing: 8
+
+                                        Glyph {
+                                            text: "triangle-alert"
+                                            iconSize: Sizes.font.hugeass
+                                            color: "#ffffff"
+                                        }
+                                        Text {
+                                            color: "#ffffff"
+                                            wrapMode: Text.Wrap
+                                            text: root.protectionMessage
+                                        }
+                                    }
                                 }
                             }
                         }

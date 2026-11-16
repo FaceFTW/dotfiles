@@ -1,14 +1,11 @@
 import QtQuick
-import QtQuick.Layouts
 
 // Main container rectangle acting as the window outline/border gradient
 Rectangle {
     id: windowRoot
     anchors.fill: parent
 
-    property alias leftContent: leftRow.data
-    property alias centerContent: centerRow.data
-    property alias rightContent: rightRow.data
+    default property alias content: innerContent.data
 
     // Gradient for the border/outline
     gradient: Gradient {
@@ -50,26 +47,5 @@ Rectangle {
         anchors.margins: windowRoot.strokeWidth
         color: "#1d1d20"
         radius: Math.max(0, windowRoot.radius - windowRoot.strokeWidth)
-
-        RowLayout {
-            id: leftRow
-            anchors {
-                left: parent.left
-                verticalCenter: parent.verticalCenter
-            }
-        }
-
-        RowLayout {
-            id: centerRow
-            anchors.centerIn: parent
-        }
-
-        RowLayout {
-            id: rightRow
-            anchors {
-                right: parent.right
-                verticalCenter: parent.verticalCenter
-            }
-        }
     }
 }

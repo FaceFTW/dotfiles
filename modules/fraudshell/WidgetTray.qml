@@ -21,21 +21,21 @@ Item {
 
         implicitWidth: 32
         implicitHeight: 32
-        anchors.verticalCenter: parent.verticalCenter
+        // anchors.verticalCenter: parent.verticalCenter
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         onClicked: event => {
             switch (event.button) {
             case Qt.LeftButton:
-                item.activate()
-                break
+                item.activate();
+                break;
             case Qt.RightButton:
                 if (item.hasMenu)
-                    menu.open()
-                break
+                    menu.open();
+                break;
             default:
-                console.log("Button event unhandled:", event.button)
+                console.log("Button event unhandled:", event.button);
             }
         }
 
@@ -57,7 +57,6 @@ Item {
             height: parent.height
             fillMode: Image.PreserveAspectFit
         }
-
     }
 
     RowLayout {
@@ -77,13 +76,10 @@ Item {
                 Layout.preferredHeight: 28
             }
 
-            Component.onCompleted:
-                console.log("Initial tray count:", count)
+            Component.onCompleted: console.log("Initial tray count:", count)
 
             onItemAdded: (index, delegate) => {
-                console.log("Tray item added:", index,
-                            "count:", count,
-                            "delegate size:", delegate.width, delegate.height)
+                console.log("Tray item added:", index, "count:", count, "delegate size:", delegate.width, delegate.height);
             }
         }
     }
