@@ -5,6 +5,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import qs
+import qs.components
 
 LazyLoader {
     id: root
@@ -36,13 +37,8 @@ LazyLoader {
             return point ? point.x : 0;
         }
 
-        readonly property real desiredTop: {
-            const point = root.QsWindow?.mapFromItem(root.hoverTarget, 0, root.hoverTarget.height);
-            return point ? point.y : 0;
-        }
-
         margins.left: Math.max(0, Math.min(desiredLeft, popupWindow.screen.width - popupWindow.implicitWidth))
-        margins.top: desiredTop + Sizes.barHeight + 8
+        margins.top: Sizes.barHeight + 8
         margins.bottom: 0
 
         WlrLayershell.namespace: "quickshell:popup"
@@ -54,7 +50,7 @@ LazyLoader {
                 readonly property real margin: 2
                 anchors {
                     fill: parent
-                    topMargin:root.popupBackgroundMargin
+                    topMargin: root.popupBackgroundMargin
                 }
                 implicitWidth: root.contentItem.implicitWidth + (margin * 2)
                 implicitHeight: root.contentItem.implicitHeight + (margin * 2)
@@ -66,7 +62,6 @@ LazyLoader {
                 Component.onCompleted: {
                     root.contentItem.anchors.centerIn = popupBackground;
                 }
-
             }
         }
     }
