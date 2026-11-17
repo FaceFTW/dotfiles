@@ -72,11 +72,11 @@ Singleton {
     }
 
     function setDefaultSink(node) {
-        Pipewire.preferredDefaultPipewireSink = node;
+        Audio.preferredDefaultPipewireSink = node;
     }
 
     function setDefaultSource(node) {
-        Pipewire.preferredDefaultPipewireSource = node;
+        Audio.preferredDefaultPipewireSource = node;
     }
 
     // Internals

@@ -13,6 +13,8 @@ Scope {
         component: OnScreenDisplay {}
     }
 
+    NotificationPopup {}
+
     Variants {
         model: Quickshell.screens
 

@@ -8,3 +8,5 @@ chemoistate.boltdb
 result
 target
 
+*/.qmlls.ini
+modules/fraudshell/.qmlls.ini

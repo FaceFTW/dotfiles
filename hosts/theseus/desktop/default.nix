@@ -5,7 +5,6 @@
 }:
 {
   imports = [
-    ./dunst.nix
     ./flameshot.nix
     ./frameworks.nix
     ./hypr.nix
