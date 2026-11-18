@@ -4,11 +4,13 @@
   ...
 }:
 {
-  options.modules.home.zsh = {
-    enable = lib.mkEnableOption "ZSH Configuration";
+  options.modules.packages.zsh = {
+    enable = lib.mkEnableOption "ZSH (User installation only)";
   };
 
-  config = lib.mkIf config.modules.home.zsh.enable {
+  config = lib.mkIf config.modules.packages.zsh.enable {
+    programs.zsh.enable = true;
+
     home-manager.users.face.programs.zsh = {
       ############################################
       # ZSH Config

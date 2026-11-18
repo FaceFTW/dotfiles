@@ -5,13 +5,13 @@
   ...
 }:
 let
-  docker = config.packages.virtualization.docker;
-  armVirt = config.packages.virtualization.armVirtualization;
+  docker = config.modules.packages.virtualization.docker;
+  armVirt = config.modules.packages.virtualization.armVirtualization;
   inherit (lib) mkIf mkMerge mkEnableOption;
 in
 {
-  options.packages.virtualization.docker = mkEnableOption "Docker";
-  options.packages.virtualization.armVirtualization = mkEnableOption "ARM Virtualization via QEMU";
+  options.modules.packages.virtualization.docker = mkEnableOption "Docker";
+  options.modules.packages.virtualization.armVirtualization = mkEnableOption "ARM Virtualization via QEMU";
 
   config = mkMerge [
     ############################################

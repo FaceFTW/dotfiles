@@ -10,7 +10,6 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     ../../modules/core.nix
-    ../../modules/home
     ../../modules/kernel-build.nix
     ../../modules/kernel-tunables.nix
     ../../modules/image.nix
@@ -31,13 +30,6 @@
   # modules.users.default.password.value = "";
   modules.users.default.password.value = config.sops.secrets.user_passwd.path;
   modules.users.default.extraGroups = [ "pihole" ];
-
-  modules.home = {
-    fastfetch.enable = true;
-    starship.enable = true;
-    ssh-client.enable = true;
-    zsh.enable = true;
-  };
 
   ############################################
   # SOPS Settings
@@ -75,11 +67,13 @@
   ############################################
   # Global Packages
   ############################################
-  packages.monitoring = true;
-  packages.networking = true;
-  packages.secrets.base = true;
-
-  programs.zsh.enable = true;
+  modules.packages.fastfetch.enable = true;
+  modules.packages.monitoring = true;
+  modules.packages.networking = true;
+  modules.packages.secrets.base = true;
+  modules.packages.starship.enable = true;
+  modules.packages.ssh-client.enable = true;
+  modules.packages.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
     libraspberrypi

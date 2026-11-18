@@ -5,13 +5,13 @@
   ...
 }:
 let
-  nodejs = config.packages.nodejs;
+  nodejs = config.modules.packages.nodejs;
 
   inherit (lib) mkIf mkMerge mkEnableOption;
 in
 {
-  options.packages.nodejs.node = mkEnableOption "NodeJS";
-  options.packages.nodejs.biome = mkEnableOption "Install Biome";
+  options.modules.packages.nodejs.node = mkEnableOption "NodeJS";
+  options.modules.packages.nodejs.biome = mkEnableOption "Install Biome";
 
   config = mkMerge [
     ############################################

@@ -5,22 +5,28 @@
   ...
 }:
 let
-  packages = config.packages;
+  packages = config.modules.packages;
   inherit (lib) mkIf mkMerge mkEnableOption;
 
 in
 {
   imports = [
-    ./gnu.nix
+    ./btop.nix
+    ./fastfetch.nix
+    ./fraudshell.nix
+    ./git.nix
     ./nodejs.nix
     ./rust.nix
     ./secrets.nix
+    ./ssh-client.nix
+    ./starship.nix
     ./steam.nix
     ./virtualization.nix
     ./zed.nix
+    ./zsh.nix
   ];
 
-  options.packages = {
+  options.modules.packages = {
     direnv = mkEnableOption "Use direnv";
     ghidra = mkEnableOption "Ghidra";
     gitFull = mkEnableOption "Use gitFull with perl";
@@ -72,20 +78,6 @@ in
       programs.direnv.enableZshIntegration = true;
       programs.direnv.nix-direnv.enable = true;
       programs.direnv.silent = false;
-    })
-
-    ############################################
-    # Git (Big or smol?)
-    ############################################
-    (mkIf packages.gitFull {
-      environment.systemPackages = [
-        pkgs.gitFull
-      ];
-    })
-    (mkIf (!packages.gitFull) {
-      environment.systemPackages = [
-        pkgs.git
-      ];
     })
 
     ############################################

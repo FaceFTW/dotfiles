@@ -5,11 +5,16 @@
   ...
 }:
 {
-  options.modules.home.git = {
-    enable = lib.mkEnableOption "Git Configuration";
+  options.modules.packages.git = {
+    enable = lib.mkEnableOption "Git";
+    installFullGit = lib.mkEnableOption "Install Git with All Features";
   };
 
-  config = lib.mkIf config.modules.home.git.enable {
+  config = lib.mkIf config.modules.packages.git.enable {
+    environment.systemPackages = [
+      (if config.modules.packages.git.installFullGit then pkgs.gitFull else pkgs.git)
+    ];
+
     home-manager.users.face.programs.git = {
       ############################################
       # Git Config

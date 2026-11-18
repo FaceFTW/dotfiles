@@ -5,15 +5,15 @@
   ...
 }:
 let
-  secretsBase = config.packages.secrets.base;
-  wslForwarding = config.packages.secrets.wslGpgForwarding;
+  secretsBase = config.modules.packages.secrets.base;
+  wslForwarding = config.modules.packages.secrets.wslGpgForwarding;
   inherit (lib) mkIf mkEnableOption mkMerge;
 in
 {
   imports = [ ];
 
-  options.packages.secrets.base = mkEnableOption "Secrets Management Utilities";
-  options.packages.secrets.wslGpgForwarding = mkEnableOption "Use Windows GPG Agent Socket from WSL";
+  options.modules.packages.secrets.base = mkEnableOption "Secrets Management Utilities";
+  options.modules.packages.secrets.wslGpgForwarding = mkEnableOption "Use Windows GPG Agent Socket from WSL";
 
   config = mkMerge [
     ############################################

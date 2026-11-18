@@ -2,13 +2,14 @@
   config,
   lib,
   ...
-}: {
+}:
+{
 
-  options.modules.home.starship = {
-    enable = lib.mkEnableOption "Starship";
+  options.modules.packages.starship = {
+    enable = lib.mkEnableOption "Starship (User installation only)";
   };
 
-  config = lib.mkIf config.modules.home.starship.enable {
+  config = lib.mkIf config.modules.packages.starship.enable {
     home-manager.users.face.programs.starship = {
       enable = true;
       enableZshIntegration = true;

@@ -1,14 +1,17 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
-  options.modules.home.btop = {
-    enable = lib.mkEnableOption "oh-my-posh Configuration";
+  options.modules.packages.btop = {
+    enable = lib.mkEnableOption "btop (System and User install with config)";
   };
 
-  config = lib.mkIf config.modules.home.btop.enable {
+  config = lib.mkIf config.modules.packages.btop.enable {
+    environment.systemPackages = [ pkgs.btop ];
+
     home-manager.users.face.programs.btop = {
 
       enable = true;

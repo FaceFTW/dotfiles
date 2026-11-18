@@ -5,11 +5,11 @@
   ...
 }:
 let
-  packages = config.packages;
+  packages = config.modules.packages;
   inherit (lib) mkIf mkMerge mkEnableOption;
 in
 {
-  options.packages.steam = mkEnableOption "Valve Steam";
+  options.modules.packages.steam = mkEnableOption "Valve Steam";
 
   config = mkMerge [
     ############################################

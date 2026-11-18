@@ -6,7 +6,7 @@
   ...
 }:
 let
-  packages = config.packages;
+  packages = config.modules.packages;
   inherit (lib)
     mkIf
     mkMerge
@@ -17,21 +17,21 @@ let
 in
 {
   imports = [ inputs.nixos-wsl.nixosModules.default ];
-  options.packages.zed.enable = mkEnableOption "Zed Editor";
-  options.packages.zed.wslFixes = mkEnableOption "Systemd service to start the Zed remote server automatically";
+  options.modules.packages.zed.enable = mkEnableOption "Zed Editor";
+  options.modules.packages.zed.wslFixes = mkEnableOption "Systemd service to start the Zed remote server automatically";
 
-  options.packages.zed.linkConfig = mkEnableOption "Symlink to common Zed config";
-  options.packages.zed.config.uiFontSize = mkOption {
+  options.modules.packages.zed.linkConfig = mkEnableOption "Symlink to common Zed config";
+  options.modules.packages.zed.config.uiFontSize = mkOption {
     type = types.number;
     description = "Font Size for the Zed UI";
     default = 14;
   };
-  options.packages.zed.config.bufferFontSize = mkOption {
+  options.modules.packages.zed.config.bufferFontSize = mkOption {
     type = types.number;
     description = "Font Size for the buffers in Zed";
     default = 12;
   };
-  options.packages.zed.config.terminalFontSize = mkOption {
+  options.modules.packages.zed.config.terminalFontSize = mkOption {
     type = types.number;
     description = "Font Size for the Zed Terminal buffers";
     default = 11;

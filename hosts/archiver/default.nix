@@ -11,7 +11,6 @@
     inputs.sops-nix.nixosModules.sops
     inputs.disko.nixosModules.disko
     ../../modules/core.nix
-    ../../modules/home
     ../../modules/kernel-tunables.nix
     ../../modules/packages
     ../../modules/services
@@ -33,15 +32,6 @@
     "immich"
     "jellyfin"
   ];
-
-  modules.home = {
-    btop.enable = true;
-    fastfetch.enable = true;
-    git.enable = true;
-    starship.enable = true;
-    ssh-client.enable = true;
-    zsh.enable = true;
-  };
 
   ############################################
   # SOPS Settings
@@ -95,11 +85,15 @@
   ############################################
   # Global Packages
   ############################################
-  packages.monitoring = true;
-  packages.networking = true;
-  packages.secrets.base = true;
-
-  programs.zsh.enable = true;
+  modules.packages.btop.enable = true;
+  modules.packages.fastfetch.enable = true;
+  modules.packages.git.enable = true;
+  modules.packages.monitoring = true;
+  modules.packages.networking = true;
+  modules.packages.secrets.base = true;
+  modules.packages.starship.enable = true;
+  modules.packages.ssh-client.enable = true;
+  modules.packages.zsh.enable = true;
 
   environment.systemPackages = [
     pkgs.terminus_font

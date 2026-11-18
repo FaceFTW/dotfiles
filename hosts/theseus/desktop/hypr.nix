@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -121,6 +122,12 @@ in
       ]
 
     ] (unsafeDiscardStringContext (readFile ./hyprland.lua));
+
+  home-manager.users.face.home.activation = {
+    hyprland-meta-link = config.home-manager.users.face.lib.dag.entryAfter [ "writeBoundary" ] ''
+      run ln -sf $VERBOSE_ARG ${pkgs.hyprland}/share/hypr/stubs/hl.meta.lua /home/face/.local/hl.meta.lua
+    '';
+  };
 
   #######################################################
   # LOCK SCREEN

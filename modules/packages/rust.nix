@@ -5,7 +5,7 @@
   ...
 }:
 let
-  rust = config.packages.rust;
+  rust = config.modules.packages.rust;
   inherit (lib)
     mkOption
     makeLibraryPath
@@ -14,7 +14,7 @@ let
     ;
 in
 {
-  options.packages.rust = mkOption {
+  options.modules.packages.rust = mkOption {
     type =
       with lib.types;
       nullOr (enum [
