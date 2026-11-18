@@ -72,7 +72,7 @@ Scope {
                         WidgetBluetooth {}
                         WidgetNetwork {}
                         WidgetSound {}
-                        // WidgetPowerProfile {}
+                        WidgetPowerProfile {}
                         WidgetBattery {}
                     }
                 }

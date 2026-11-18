@@ -2,52 +2,56 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Services.UPower
 import qs
 import qs.components
-import qs.services
 
-MouseArea {
+StyledWidget {
     id: root
 
-    implicitHeight: Sizes.widgetHeight
-    implicitWidth: widgetRoot.implicitWidth + 4
+    property var currentProfile: PowerProfiles.profile
+    readonly property string degraded: PowerProfiles.degradationReason.toString()
 
-    hoverEnabled: true
-
-    Glyph {
+    barContent: Glyph {
         id: widgetRoot
         anchors.verticalCenter: parent.verticalCenter
         fill: 1
         font.weight: Font.DemiBold
-        text: "speed_4"
-        iconSize: 28
+        text: {
+	        switch (currentProfile.toString()) {
+	        	case "0": return "leaf";
+	        	case "1": return "scale";
+	        	case "2": return "flame";
+	        }
+        }
+        iconSize: Sizes.widgetGlyphSize
         color: "#FFFFFF"
     }
 
-    component PowerProfilePopup: StyledPopup {
-        id: popupRoot
+    hoverContent: ColumnLayout {
+        id: popupLayout
+        anchors.centerIn: parent
+        spacing: 4
 
-        ColumnLayout {
-            id: popupLayout
-            anchors.centerIn: parent
-            spacing: 4
+        StyledPopupHeaderRow {
+            icon: "circle-gauge"
+            label: "Power Profiles"
+        }
 
-            StyledPopupHeaderRow {
-                icon: "readiness_score"
-                label: "Power Profiles"
-            }
-
-            StyledPopupValueRow {
-                visible: true
-                icon: ""
-                label: "Profile: "
-                value: PowerProfiles.currentProfile.toString()
+        StyledPopupValueRow {
+            visible: true
+            icon: ""
+            label: "Profile: "
+            value: {
+	            switch (currentProfile.toString()) {
+	            	case "0": return "Power Saver";
+	            	case "1": return "Balanced";
+	            	case "2": return "Performance";
+	            }
             }
         }
     }
 
-    PowerProfilePopup {
-        id: ppPopup
-        hoverTarget: root
-    }
+    onClicked: currentProfile = (currentProfile + 1) % 3;
+
 }
