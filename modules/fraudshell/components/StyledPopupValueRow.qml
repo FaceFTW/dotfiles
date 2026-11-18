@@ -22,6 +22,7 @@ RowLayout {
         Layout.minimumWidth: 0
         text: root.label
         font.family: "VCR OSD Mono"
+        font.pixelSize: Sizes.font.large
         color: "#FFFFFF"
         elide: Text.ElideRight
     }
@@ -30,6 +31,7 @@ RowLayout {
         Layout.minimumWidth: 0
         // Layout.maximumWidth: root.width * 0.45
         font.family: "VCR OSD Mono"
+        font.pixelSize: Sizes.font.large
         horizontalAlignment: Text.AlignRight
         visible: root.value !== ""
         color: "#FFFFFF"
