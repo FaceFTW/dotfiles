@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -14,6 +15,14 @@
         run ln -sf $VERBOSE_ARG /home/face/.config/dotfiles/modules/fraudshell /home/face/.config/quickshell/fraudshell
       '';
     };
-  };
 
+    environment.systemPackages = [
+      pkgs.quickshell
+
+      # Used by Quickshell procs
+      pkgs.ddcutil
+      pkgs.networkmanager
+      pkgs.power-profiles-daemon
+    ];
+  };
 }

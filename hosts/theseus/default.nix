@@ -134,10 +134,6 @@
     pkgs.ffmpegthumbnailer
     pkgs.icoextract
     pkgs.webp-pixbuf-loader
-
-    pkgs.quickshell
-
-    pkgs.ddcutil
   ];
 
   system.stateVersion = "25.05"; # Don't change this
