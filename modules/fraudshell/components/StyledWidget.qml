@@ -44,9 +44,4 @@ MouseArea {
             }
         }
     }
-
-    // Ensures loaded component is properly anchored
-    // Component.onCompleted: {
-    //     root.barContent.anchors.centerIn = root
-    // }
 }

@@ -59,15 +59,6 @@ StyledWidget {
         color: "#FFFFFF"
     }
 
-    // onClicked: Network.toggleWifi()
-    // onWheel: {
-    //     if (wheel.angleDelta.y > 0) {
-    //         Network.enableWifi(true)
-    //     } else {
-    //         Network.enableWifi(false)
-    //     }
-    // }
-
     hoverContent: ColumnLayout {
         id: popupLayout
         anchors.centerIn: parent
@@ -92,7 +83,7 @@ StyledWidget {
         }
 
         StyledPopupValueRow {
-            visible: !root.ethernet && Network.active
+            visible: !root.ethernet && Network.active && root.wifiStatus === "connected"
             icon: "signal"
             label: "Signal Strength:"
             value: root.networkStrength + "% (" + root.formatStrengthLabel(root.networkStrength) + ")"

@@ -18,6 +18,9 @@ StyledWidget {
     hoverContent: GridLayout {
         columns: 2
 
+        width: 300
+        height: 200
+
         DayOfWeekRow {
             locale: grid.locale
 
