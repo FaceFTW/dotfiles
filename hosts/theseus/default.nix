@@ -79,24 +79,33 @@
   ############################################
   # Global Packages
   ############################################
-  modules.packages.direnv = true;
-  modules.packages.fastfetch.enable = true;
-  modules.packages.fraudshell.enable = true;
-  modules.packages.git.enable = true;
-  modules.packages.git.installFullGit = true;
-  modules.packages.networking = true;
-  modules.packages.monitoring = true;
-  modules.packages.nixTools = true;
-  modules.packages.nodejs.node = true;
-  modules.packages.nodejs.biome = true;
-  modules.packages.rust = "nightly";
-  modules.packages.secrets.base = true;
-  modules.packages.ssh-client.enable = true;
-  modules.packages.starship.enable = true;
-  modules.packages.steam = true;
-  modules.packages.virtualization.armVirtualization = true;
-  modules.packages.zed.enable = true;
-  modules.packages.zsh.enable = true;
+  modules.packages = {
+    direnv = true;
+    fastfetch.enable = true;
+    flameshot.enable = true;
+    fraudshell.enable = true;
+    git.enable = true;
+    git.installFullGit = true;
+    hyprlock.enable = true;
+    hyprlock.wallpaper = ./desktop/wallpapers/fraud-3-wallpaper.png;
+    hyprlock.userIcon = ./assets/face.png;
+    ly.enable = true;
+    networking = true;
+    monitoring = true;
+    nixTools = true;
+    nodejs.node = true;
+    nodejs.biome = true;
+    rust = "nightly";
+    secrets.base = true;
+    ssh-client.enable = true;
+    starship.enable = true;
+    steam = true;
+    styling.enable = true;
+    vicinae.enable = true;
+    virtualization.armVirtualization = true;
+    zed.enable = true;
+    zsh.enable = true;
+  };
 
   services.flatpak.enable = true;
 
@@ -113,7 +122,6 @@
     pkgs.xdg-utils
     pkgs.gimp
     pkgs.inkscape
-    # pkgs.nvidia-offload
     pkgs.imhex
     pkgs.flameshot
     pkgs.freecad

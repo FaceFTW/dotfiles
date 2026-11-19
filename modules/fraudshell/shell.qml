@@ -1,4 +1,9 @@
 //@ pragma UseQApplication
+//@ pragma NativeTextRendering
+//@ pragma RespectSystemStyle
+//@ pragma DefaultEnv QT_QPA_PLATFORMTHEME=kde
+//@ pragma DefaultEnv QT_STYLE_OVERRIDE=breeze
+//@ pragma DefaultEnv QUICKSHELL_KDE_INTEGRATION=1
 import QtQuick
 import QtQuick.Layouts
 import Quickshell

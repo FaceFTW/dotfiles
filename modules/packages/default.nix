@@ -13,14 +13,18 @@ in
   imports = [
     ./btop.nix
     ./fastfetch.nix
+    ./flameshot.nix
     ./fraudshell.nix
     ./git.nix
+    ./hyprlock.nix
     ./nodejs.nix
     ./rust.nix
     ./secrets.nix
     ./ssh-client.nix
     ./starship.nix
     ./steam.nix
+    ./styling.nix
+    ./vicinae.nix
     ./virtualization.nix
     ./zed.nix
     ./zsh.nix
