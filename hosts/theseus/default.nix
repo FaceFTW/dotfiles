@@ -87,7 +87,7 @@
     git.enable = true;
     git.installFullGit = true;
     hyprlock.enable = true;
-    hyprlock.wallpaper = ./desktop/wallpapers/fraud-3-wallpaper.png;
+    hyprlock.wallpaper = ./assets/fraud-3-wallpaper.png;
     hyprlock.userIcon = ./assets/face.png;
     ly.enable = true;
     networking = true;

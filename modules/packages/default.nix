@@ -17,6 +17,7 @@ in
     ./fraudshell.nix
     ./git.nix
     ./hyprlock.nix
+    ./ly.nix
     ./nodejs.nix
     ./rust.nix
     ./secrets.nix

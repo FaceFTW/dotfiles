@@ -120,6 +120,13 @@ hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "al
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
 
+hl.on("workspace.active", function(ws)
+	wallpaper_name = "/home/face/.config/fraud-" .. (((ws.id - 1) % 3) + 1) .. "-wallpaper.png"
+	-- hl.notification.create({ text = "trigger " .. wallpaper_name, timeout = 4000 })
+	hl.exec_cmd("XXX_HYPRCTL_XXX hyprpaper wallpaper eDP-1," .. wallpaper_name)
+end)
+
+
 ----------------
 ----  MISC  ----
 ----------------

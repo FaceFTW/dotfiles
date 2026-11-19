@@ -12,25 +12,16 @@
   # Limine
   #######################################################
   boot.loader.limine.style.wallpapers = [
-    ./wallpapers/fraud-1-wallpaper.png
-    ./wallpapers/fraud-2-wallpaper.png
-    ./wallpapers/fraud-3-wallpaper.png
+    ../assets/fraud-1-wallpaper.png
+    ../assets/fraud-2-wallpaper.png
+    ../assets/fraud-3-wallpaper.png
   ];
   boot.loader.limine.style.interface.branding = "ENTERING LAYER 8 - FRAUD";
 
   #######################################################
   # Ly
   #######################################################
-  services.displayManager.ly = {
-    enable = true;
-    settings.default_input = "login";
-    settings.animation = "colormix";
-    settings.bigclock = "en";
-    settings.colormix_col1 = "0x003686FD";
-    settings.colormix_col2 = "0x00143466";
-    settings.colormix_col3 = "0x20000000";
-    settings.full_color = true;
-  };
+
 
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.variant = "";

@@ -59,7 +59,7 @@ in
       ]
       [
         "XXX_CLIPBOARD_HIST_XXX"
-        "${pkgs.thunar}/bin/thunar"
+        "${pkgs.vicinae}/bin/vicinae deeplink vicinae://launch/clipboard/history"
       ]
       [
         "XXX_FIREFOX_XXX"
@@ -86,24 +86,28 @@ in
         "${pkgs.hyprlock}/bin/hyprlock"
       ]
       [
+        "XXX_HYPRCTL_XXX"
+        "${hyprctl}"
+      ]
+      [
         "--- XXX_EXTRA_STARTUP_XXX"
         # lua
         ''
           --- Background Nitty Gritty
-          hl.exec_cmd("${systemctl} --user start hyprpolkitagent &")
+          hl.exec_cmd("${systemctl} --user start hyprpolkitagent")
           hl.exec_cmd("${hyprctl} keyword input:kb_numlock true && date '+%Y-%m-%d %H:%M:%S' > /tmp/numlock-set")
           hl.exec_cmd("${hyprctl} setcursor rose-pine-hyprcursor 36")
-          hl.exec_cmd("${hyprctl} dispatch workspace 1 &")
-          hl.exec_cmd("${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets &")
+          hl.exec_cmd("${hyprctl} dispatch workspace 1")
+          hl.exec_cmd("${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets")
 
           --- Core Shell Experience
-          hl.exec_cmd("${pkgs.hyprpaper}/bin/hyprpaper &")
-          hl.exec_cmd("sleep 1; ${pkgs.quickshell}/bin/quickshell -p /home/face/.config/quickshell/fraudshell &")
-          hl.exec_cmd("${pkgs.vicinae}/bin/vicinae server &")
+          hl.exec_cmd("${pkgs.hyprpaper}/bin/hyprpaper")
+          hl.exec_cmd("sleep 1; ${pkgs.quickshell}/bin/quickshell -p /home/face/.config/quickshell/fraudshell")
+          hl.exec_cmd("${pkgs.vicinae}/bin/vicinae server")
 
           --- User Autostart Apps
           hl.exec_cmd("sleep 10; ${systemctl} --user start syncthing")
-          hl.exec_cmd("sleep 10; ${pkgs.keepassxc}/bin/keepassxc &")
+          hl.exec_cmd("sleep 10; ${pkgs.keepassxc}/bin/keepassxc")
         ''
       ]
       # TODO probably a hypr bug
@@ -127,6 +131,12 @@ in
     hyprland-meta-link = config.home-manager.users.face.lib.dag.entryAfter [ "writeBoundary" ] ''
       run ln -sf $VERBOSE_ARG ${pkgs.hyprland}/share/hypr/stubs/hl.meta.lua /home/face/.local/hl.meta.lua
     '';
+
+    wallpapers = config.home-manager.users.face.lib.dag.entryAfter ["writeBoundary"] ''
+      run ln -sf $VERBOSE_ARG /home/face/.config/dotfiles/hosts/theseus/assets/fraud-1-wallpaper.png /home/face/.config
+      run ln -sf $VERBOSE_ARG /home/face/.config/dotfiles/hosts/theseus/assets/fraud-2-wallpaper.png /home/face/.config
+      run ln -sf $VERBOSE_ARG /home/face/.config/dotfiles/hosts/theseus/assets/fraud-3-wallpaper.png /home/face/.config
+    '';
   };
 
   #######################################################
@@ -141,9 +151,8 @@ in
     settings.wallpaper = [
       {
         monitor = "eDP-1";
-        path = "${./wallpapers}";
+        path = "/home/face/.config/fraud-1-wallpaper.png";
         fit_mode = "contain";
-        timeout = 300;
       }
     ];
     settings.splash = false;
