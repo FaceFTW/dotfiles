@@ -43,6 +43,12 @@
   boot.loader.limine.additionalFiles."efi/memtest86/memtest86.efi" =
     "${pkgs.memtest86-efi}/BOOTX64.efi";
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.limine.style.wallpapers = [
+    ./assets/fraud-1-wallpaper.png
+    ./assets/fraud-2-wallpaper.png
+    ./assets/fraud-3-wallpaper.png
+  ];
+  boot.loader.limine.style.interface.branding = "ENTERING LAYER 8 - FRAUD";
 
   ############################################
   # udev rules

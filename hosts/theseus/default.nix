@@ -15,9 +15,9 @@
     ../../modules/packages
     ../../modules/services
     ../../modules/user.nix
-    ./desktop
     ./disks.nix
     ./hardware.nix
+    ./hypr.nix
     ./networking.nix
     ./services.nix
   ];
@@ -75,6 +75,36 @@
   nix.settings.substituters = [
     "s3://nix-cache?region=archiver&endpoint=garage-s3.faceftw.dev"
   ];
+
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.variant = "";
+
+  fonts.packages = [
+    pkgs.nerd-fonts.hack
+    pkgs.ubuntu-sans
+    pkgs.noto-fonts-color-emoji
+  ];
+  fonts.fontconfig.defaultFonts.monospace = [
+    "Hack NF Mono"
+    "Ubuntu Mono"
+  ];
+
+  # File picker for Hyprland
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  programs.dconf.enable = true;
+  environment.sessionVariables.GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas/:${pkgs.gtk4}/share/gsettings-schemas/${pkgs.gtk4.name}/glib-2.0/schemas/:${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas/";
+
+  home-manager.users.face = {
+    services.wl-clip-persist.enable = true;
+
+    home.pointerCursor.enable = true;
+    home.pointerCursor.package =
+      inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    home.pointerCursor.name = "rose-pine-hyprcursor";
+
+    xdg.terminal-exec.enable = true;
+    xdg.terminal-exec.settings.default = [ "alacritty.desktop" ];
+  };
 
   ############################################
   # Global Packages
