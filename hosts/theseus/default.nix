@@ -17,7 +17,6 @@
     ../../modules/user.nix
     ./disks.nix
     ./hardware.nix
-    ./hypr.nix
     ./networking.nix
     ./services.nix
   ];
@@ -90,7 +89,6 @@
   ];
 
   # File picker for Hyprland
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   programs.dconf.enable = true;
   environment.sessionVariables.GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas/:${pkgs.gtk4}/share/gsettings-schemas/${pkgs.gtk4.name}/glib-2.0/schemas/:${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas/";
 
@@ -116,9 +114,6 @@
     fraudshell.enable = true;
     git.enable = true;
     git.installFullGit = true;
-    hyprlock.enable = true;
-    hyprlock.wallpaper = ./assets/fraud-3-wallpaper.png;
-    hyprlock.userIcon = ./assets/face.png;
     ly.enable = true;
     networking = true;
     monitoring = true;
@@ -135,6 +130,110 @@
     virtualization.armVirtualization = true;
     zed.enable = true;
     zsh.enable = true;
+
+    # Hypr Ecosystem
+    hyprland.enable = true;
+    hyprland.filePicker = pkgs.xdg-desktop-portal-gtk;
+    hyprland.configPath = ./hyprland.lua;
+    hyprland.configSubstitutions =
+      let
+        hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+        systemctl = "${pkgs.systemd}/bin/systemctl";
+      in
+      [
+        [
+          "XXX_ALACRITTY_XXX"
+          "${pkgs.alacritty}/bin/alacritty"
+        ]
+        [
+          "XXX_THUNAR_XXX"
+          "${pkgs.thunar}/bin/thunar"
+        ]
+        [
+          "XXX_VICINAE_XXX"
+          "${pkgs.vicinae}/bin/vicinae toggle"
+        ]
+        [
+          "XXX_CLIPBOARD_HIST_XXX"
+          "${pkgs.vicinae}/bin/vicinae deeplink vicinae://launch/clipboard/history"
+        ]
+        [
+          "XXX_FIREFOX_XXX"
+          "$firefox --ozone-platform=wayland --enable-features=useozoneplatform"
+        ]
+        [
+          "XXX_ZED_XXX"
+          "${pkgs.zed-editor}/bin/zeditor"
+        ]
+        [
+          "XXX_SCREENSHOT_XXX"
+          "${pkgs.flameshot}/bin/flameshot gui"
+        ]
+        [
+          "XXX_WIREPLUMBER_XXX"
+          "${pkgs.wireplumber}/bin/wpctl"
+        ]
+        [
+          "XXX_BRIGHTNESSCTL_XXX"
+          "${pkgs.brightnessctl}/bin/brightnessctl"
+        ]
+        [
+          "XXX_HYPRLOCK_XXX"
+          "${pkgs.hyprlock}/bin/hyprlock"
+        ]
+        [
+          "XXX_HYPRCTL_XXX"
+          "${hyprctl}"
+        ]
+        [
+          "--- XXX_EXTRA_STARTUP_XXX"
+          # lua
+          ''
+            --- Background Nitty Gritty
+            hl.exec_cmd("${systemctl} --user start hyprpolkitagent")
+            hl.exec_cmd("${hyprctl} keyword input:kb_numlock true && date '+%Y-%m-%d %H:%M:%S' > /tmp/numlock-set")
+            hl.exec_cmd("${hyprctl} setcursor rose-pine-hyprcursor 36")
+            hl.exec_cmd("${hyprctl} dispatch workspace 1")
+            hl.exec_cmd("${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets")
+
+            --- Core Shell Experience
+            hl.exec_cmd("${pkgs.hyprpaper}/bin/hyprpaper")
+            hl.exec_cmd("sleep 1; ${pkgs.quickshell}/bin/quickshell -p /home/face/.config/quickshell/fraudshell")
+            hl.exec_cmd("${pkgs.vicinae}/bin/vicinae server")
+
+            --- User Autostart Apps
+            hl.exec_cmd("sleep 10; ${systemctl} --user start syncthing")
+            hl.exec_cmd("sleep 10; ${pkgs.keepassxc}/bin/keepassxc")
+          ''
+        ]
+        # TODO probably a hypr bug
+        #
+        [
+          "\"XXX_COL_ACTIVE_BORDER_XXX\""
+          "\"rgba(fa6982aa)\", \"rgba(fafa00aa)\", \"rgba(96f06eaa)\", \"rgba(6ec8faaa)\", \"rgba(dc6ea5aa)\""
+        ]
+        [
+          "XXX_COL_INACTIVE_BORDER_XXX"
+          "rgba(404040aa)"
+        ]
+        [
+          "XXX_GROUPBAR_TEXT_COLOR_XXX"
+          "rgba(ffffffaa)"
+        ]
+
+      ];
+
+    hyprlock.enable = true;
+    hyprlock.wallpaper = ./assets/fraud-3-wallpaper.png;
+    hyprlock.userIcon = ./assets/face.png;
+
+    hyprpaper.enable = true;
+    hyprpaper.defaultWallpaper = ./assets/fraud-1-wallpaper.png;
+    hyprpaper.additionalWallpaperLinks = [
+      ./assets/fraud-1-wallpaper.png
+      ./assets/fraud-2-wallpaper.png
+      ./assets/fraud-3-wallpaper.png
+    ];
   };
 
   services.flatpak.enable = true;
