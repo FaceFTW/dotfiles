@@ -13,7 +13,8 @@ in
   imports = [ ];
 
   options.modules.packages.secrets.base = mkEnableOption "Secrets Management Utilities";
-  options.modules.packages.secrets.wslGpgForwarding = mkEnableOption "Use Windows GPG Agent Socket from WSL";
+  options.modules.packages.secrets.wslGpgForwarding =
+    mkEnableOption "Use Windows GPG Agent Socket from WSL";
 
   config = mkMerge [
     ############################################

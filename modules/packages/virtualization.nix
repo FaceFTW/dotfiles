@@ -11,7 +11,8 @@ let
 in
 {
   options.modules.packages.virtualization.docker = mkEnableOption "Docker";
-  options.modules.packages.virtualization.armVirtualization = mkEnableOption "ARM Virtualization via QEMU";
+  options.modules.packages.virtualization.armVirtualization =
+    mkEnableOption "ARM Virtualization via QEMU";
 
   config = mkMerge [
     ############################################

@@ -18,11 +18,14 @@ StyledWidget {
         fill: 1
         font.weight: Font.DemiBold
         text: {
-	        switch (currentProfile.toString()) {
-	        	case "0": return "leaf";
-	        	case "1": return "scale";
-	        	case "2": return "flame";
-	        }
+            switch (currentProfile.toString()) {
+            case "0":
+                return "leaf";
+            case "1":
+                return "scale";
+            case "2":
+                return "flame";
+            }
         }
         iconSize: Sizes.widgetGlyphSize
         color: "#FFFFFF"
@@ -43,15 +46,17 @@ StyledWidget {
             icon: ""
             label: "Profile: "
             value: {
-	            switch (currentProfile.toString()) {
-	            	case "0": return "Power Saver";
-	            	case "1": return "Balanced";
-	            	case "2": return "Performance";
-	            }
+                switch (currentProfile.toString()) {
+                case "0":
+                    return "Power Saver";
+                case "1":
+                    return "Balanced";
+                case "2":
+                    return "Performance";
+                }
             }
         }
     }
 
-    onClicked: currentProfile = (currentProfile + 1) % 3;
-
+    onClicked: currentProfile = (currentProfile + 1) % 3
 }

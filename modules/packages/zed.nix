@@ -18,7 +18,8 @@ in
 {
   imports = [ inputs.nixos-wsl.nixosModules.default ];
   options.modules.packages.zed.enable = mkEnableOption "Zed Editor";
-  options.modules.packages.zed.wslFixes = mkEnableOption "Systemd service to start the Zed remote server automatically";
+  options.modules.packages.zed.wslFixes =
+    mkEnableOption "Systemd service to start the Zed remote server automatically";
 
   options.modules.packages.zed.linkConfig = mkEnableOption "Symlink to common Zed config";
   options.modules.packages.zed.config.uiFontSize = mkOption {

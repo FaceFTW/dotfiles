@@ -86,8 +86,7 @@
   programs.zsh.enable = true;
   programs.ssh.startAgent = true;
 
-  environment.systemPackages = [];
-
+  environment.systemPackages = [ ];
 
   system.stateVersion = "25.05";
 }

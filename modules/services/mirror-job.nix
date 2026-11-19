@@ -46,7 +46,7 @@ let
         default = [ ];
       };
 
-      options.filters = mkOption{
+      options.filters = mkOption {
         type = with types; listOf str;
         description = "List of rsync filters to add to the arguments";
         default = [ ];
