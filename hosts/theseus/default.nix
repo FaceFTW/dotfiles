@@ -229,12 +229,7 @@
     hyprlock.userIcon = ./assets/face.png;
 
     hyprpaper.enable = true;
-    hyprpaper.defaultWallpaper = ./assets/fraud-1-wallpaper.png;
-    hyprpaper.additionalWallpaperLinks = [
-      ./assets/fraud-1-wallpaper.png
-      ./assets/fraud-2-wallpaper.png
-      ./assets/fraud-3-wallpaper.png
-    ];
+    hyprpaper.defaultWallpaper = "/home/face/.config/dotfiles/hosts/theseus/assets/fraud-1-wallpaper.png";
   };
 
   services.flatpak.enable = true;
