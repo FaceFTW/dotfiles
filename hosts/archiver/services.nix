@@ -10,6 +10,7 @@
     ./services/garage.nix
     ./services/immich.nix
     ./services/jellyfin.nix
+    ./services/koito.nix
     ./services/linkwarden.nix
     ./services/mirror_jobs.nix
     ./services/navidrome.nix

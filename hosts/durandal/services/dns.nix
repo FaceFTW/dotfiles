@@ -101,6 +101,11 @@
       ipAddress = "192.168.0.172";
     };
 
+    koito = {
+      apex = "koito";
+      ipAddress = "192.168.0.172";
+    };
+
     linkwarden = {
       apex = "linkwarden";
       ipAddress = "192.168.0.172";
