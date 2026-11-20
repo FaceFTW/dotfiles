@@ -23,6 +23,8 @@
     "kunit.enable=0"
   ];
 
+  services.bootvine.enable = true;
+
   hardware.bluetooth.enable = false;
 
   hardware.raspberry-pi."4" = {

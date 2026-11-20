@@ -10,6 +10,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.sops-nix.nixosModules.sops
     inputs.disko.nixosModules.disko
+    inputs.bootvine.nixosModules.default
     ../../modules/core.nix
     ../../modules/kernel-tunables.nix
     ../../modules/packages
@@ -94,6 +95,7 @@
   modules.packages.starship.enable = true;
   modules.packages.ssh-client.enable = true;
   modules.packages.zsh.enable = true;
+
 
   environment.systemPackages = [
     pkgs.terminus_font

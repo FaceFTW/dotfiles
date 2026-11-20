@@ -50,6 +50,8 @@
   ];
   boot.loader.limine.style.interface.branding = "ENTERING LAYER 8 - FRAUD";
 
+  services.bootvine.enable = true;
+
   ############################################
   # udev rules
   ############################################

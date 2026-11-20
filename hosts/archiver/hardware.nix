@@ -50,6 +50,8 @@
   # boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
   # boot.loader.systemd-boot.memtest86.enable = true;
 
+  services.bootvine.enable = true;
+
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableAllFirmware = true;
   hardware.graphics.enable = true;

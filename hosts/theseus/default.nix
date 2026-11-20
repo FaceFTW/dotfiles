@@ -9,6 +9,7 @@
     inputs.determinate.nixosModules.default
     inputs.sops-nix.nixosModules.sops
     inputs.home-manager.nixosModules.home-manager
+    inputs.bootvine.nixosModules.default
     ../../modules/core.nix
     ../../modules/kernel-build.nix
     ../../modules/kernel-tunables.nix
