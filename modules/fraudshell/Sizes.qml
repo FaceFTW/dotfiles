@@ -22,7 +22,12 @@ Singleton {
     readonly property real workspaceIconGap: 4
     readonly property real workspaceButtonGap: 4
 
+    // Battery Widget Properties
+    readonly property real batteryPercentTextSize: sizes_font.larger
+    readonly property alias batteryGlyphSize: root.widgetGlyphSize
+
     readonly property QtObject font: QtObject {
+    	id: sizes_font
         readonly property int smallest: 10
         readonly property int smaller: 12
         readonly property int smallie: 13

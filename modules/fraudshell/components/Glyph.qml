@@ -4,16 +4,18 @@ import QtQuick
 
 Text {
     id: root
-    property real iconSize: 16
-    property real fill: 0
+    property real iconSize: 24
+    property real fill: 1
     property real truncatedFill: fill.toFixed(1) // Reduce memory consumption spikes from constant font remapping
     renderType: Text.NativeRendering
+
+    anchors.verticalCenter: parent.verticalCenter
 
     font {
         hintingPreference: Font.PreferNoHinting
         family: "Lucide"
         pixelSize: iconSize
-        weight: Font.Normal + (Font.DemiBold - Font.Normal) * truncatedFill
+        weight: Font.DemiBold
         variableAxes: {
             "FILL": truncatedFill,
             // "wght": font.weight,

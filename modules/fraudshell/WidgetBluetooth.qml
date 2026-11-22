@@ -79,14 +79,14 @@ StyledWidget {
 
         StyledPopupValueRow {
             visible: !root.bluetoothEnabled
-            icon: "bluetooth-off"
+            icon: ""
             label: "Status:"
             value: "Disabled"
         }
 
         StyledPopupValueRow {
             visible: root.bluetoothEnabled && root.connectedCount === 0
-            icon: "bluetooth"
+            icon: ""
             label: "Status:"
             value: "No devices connected"
         }

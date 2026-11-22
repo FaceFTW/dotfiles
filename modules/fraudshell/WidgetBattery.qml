@@ -29,15 +29,12 @@ StyledWidget {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 color: "#FFFFFF"
-                text: root.percentage.toString() + "%"
-                font.pixelSize: Sizes.font.larger
+                text: root.percentage.toFixed(0) + "%"
+                font.pixelSize: Sizes.batteryPercentTextSize
                 font.family: "VCR OSD Mono"
             }
 
             Glyph {
-                anchors.verticalCenter: parent.verticalCenter
-                fill: 1
-                font.weight: Font.DemiBold
                 text: {
                     if (root.percentage >= 0.70)
                         return "battery-full";
@@ -47,15 +44,12 @@ StyledWidget {
                         return "battery-low";
                     return "battery";
                 }
-                iconSize: Sizes.widgetGlyphSize
+                iconSize: Sizes.batteryGlyphSize
                 color: "#FFFFFF"
             }
 
             Glyph {
                 visible: root.chargeState === UPowerDeviceState.Charging || root.chargeState === UPowerDeviceState.PendingCharge || root.chargeState === UPowerDeviceState.FullyCharged
-                anchors.verticalCenter: parent.verticalCenter
-                fill: 1
-                font.weight: Font.DemiBold
                 text: {
                     if (root.chargeState === UPowerDeviceState.Charging) {
                         return "plug-zap";
@@ -64,7 +58,7 @@ StyledWidget {
                     } else
                         "";
                 }
-                iconSize: Sizes.widgetGlyphSize
+                iconSize: Sizes.batteryGlyphSize
                 color: "#FFFFFF"
             }
         }
