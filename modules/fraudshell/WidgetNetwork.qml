@@ -59,6 +59,63 @@ StyledWidget {
         color: "#FFFFFF"
     }
 
+    clickContent: ColumnLayout {
+        spacing: 6
+        implicitWidth: 280
+
+        StyledPopupHeaderRow {
+            icon: "network"
+            label: "Wi-Fi Networks"
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 8
+            Text {}
+        }
+
+        Repeater {
+            model: Network.friendlyWifiNetworks
+
+            delegate: MouseArea {
+                id: clickPopupRow
+                required property var modelData
+                Layout.fillWidth: true
+                implicitHeight: access_point_row.implicitHeight + 8
+                enabled: Network.wifiEnabled && !modelData.active
+                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                onClicked: Network.connectToWifiNetwork(modelData)
+
+                RowLayout {
+                    id: access_point_row
+                    Layout.fillWidth: true
+                    spacing: 8
+
+
+                    Glyph {
+                        visible: clickPopupRow.modelData.active
+                        text: "check"
+                    }
+
+                    Text {
+                    	id: access_point_name
+                        text: clickPopupRow.modelData.ssid
+                        font.pixelSize: 16
+
+                    }
+                }
+            }
+        }
+
+        Text {
+            visible: Network.friendlyWifiNetworks.length === 0
+            text: Network.wifiEnabled ? "No networks found" : "Enable Wi-Fi to scan"
+            color: "#FFFFFF"
+            font.family: "VCR OSD Mono"
+            font.pixelSize: Sizes.font.large
+        }
+    }
+
     hoverContent: ColumnLayout {
         id: popupLayout
         anchors.centerIn: parent
