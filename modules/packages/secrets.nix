@@ -5,15 +5,14 @@
   ...
 }:
 let
-  secretsBase = config.modules.packages.secrets.base;
-  wslForwarding = config.modules.packages.secrets.wslGpgForwarding;
   inherit (lib) mkIf mkEnableOption mkMerge;
+  secrets = config.modules.packages.secrets;
 in
 {
   imports = [ ];
 
-  options.modules.packages.secrets.base = mkEnableOption "Secrets Management Utilities";
-  options.modules.packages.secrets.wslGpgForwarding =
+  options.modules.packages.secrets.enable= mkEnableOption "Secrets Management Utilities";
+  options.modules.packages.secrets.wslGpgForwarding.enable =
     mkEnableOption "Use Windows GPG Agent Socket from WSL";
 
   config = mkMerge [
@@ -23,7 +22,7 @@ in
     {
       assertions = [
         {
-          assertion = (!wslForwarding || (secretsBase && wslForwarding));
+          assertion = (!secrets.wslGpgForwarding.enable || (secrets.enable && secrets.wslGpgForwarding.enable));
           message = "WSL GPG Forwarding requires Baseline Secrets packages to be available";
         }
       ];
@@ -32,7 +31,7 @@ in
     ############################################
     # Secrets Management Base Packages
     ############################################
-    (mkIf secretsBase {
+    (mkIf secrets.enable {
       environment.systemPackages = [
         pkgs.gnupg
         pkgs.sops
@@ -44,7 +43,7 @@ in
     ############################################
     # WSL GPG Agent Forwarding
     ############################################
-    (mkIf wslForwarding {
+    (mkIf secrets.wslGpgForwarding.enable {
       environment.systemPackages = [
         pkgs.socat
       ];

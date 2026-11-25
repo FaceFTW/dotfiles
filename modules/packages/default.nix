@@ -34,14 +34,13 @@ in
   ];
 
   options.modules.packages = {
-    direnv = mkEnableOption "Use direnv";
-    ghidra = mkEnableOption "Ghidra";
-    gitFull = mkEnableOption "Use gitFull with perl";
-    monitoring = mkEnableOption "Extra System Monitoring Utils";
-    ncdu = mkEnableOption "ncdu";
-    networking = mkEnableOption "Extra Networking Things";
-    nixTools = mkEnableOption "Nix Dev Tools";
-    qtTools = mkEnableOption "QT Dev Tools";
+    direnv.enable = mkEnableOption "Use direnv";
+    ghidra.enable = mkEnableOption "Ghidra";
+    monitoring.enable = mkEnableOption "Extra System Monitoring Utils";
+    monitoring.ncdu.enable = mkEnableOption "ncdu";
+    networking.enable = mkEnableOption "Extra Networking Things";
+    nixTools.enable = mkEnableOption "Nix Dev Tools";
+    qtTools.enable = mkEnableOption "QT Dev Tools";
   };
 
   config = mkMerge [
@@ -53,7 +52,7 @@ in
         pkgs.shell-toy
 
         pkgs.bash-completion
-        pkgs.bat
+        pkgs.batq
         # pkgs.coreutils
         pkgs.uutils-coreutils-noprefix
         pkgs.uutils-findutils
@@ -80,7 +79,7 @@ in
     ############################################
     # direnv
     ############################################
-    (mkIf packages.direnv {
+    (mkIf packages.direnv.enable {
       programs.direnv.enable = true;
       programs.direnv.enableZshIntegration = true;
       programs.direnv.nix-direnv.enable = true;
@@ -88,49 +87,9 @@ in
     })
 
     ############################################
-    # Monitoring Tools
+    # Ghidra
     ############################################
-    (mkIf packages.monitoring {
-      environment.systemPackages = [
-        pkgs.htop
-        pkgs.iftop
-        pkgs.iotop
-      ];
-    })
-    # Separated because Zig compilation on aarch64 weird
-    (mkIf packages.ncdu {
-      environment.systemPackages = [
-        pkgs.ncdu
-      ];
-    })
-
-    ############################################
-    # Networking Tools
-    ############################################
-    (mkIf packages.networking {
-      environment.systemPackages = [
-        pkgs.inetutils
-        pkgs.rsync
-      ];
-    })
-
-    ############################################
-    # Nix Tools
-    ############################################
-    (mkIf packages.nixTools {
-      environment.systemPackages = [
-        pkgs.nixfmt
-        pkgs.nix-tree
-        pkgs.nix-index
-        pkgs.nil
-
-        pkgs.prune-nix-cache
-      ];
-    })
-    ############################################
-    # Nix Tools
-    ############################################
-    (mkIf packages.ghidra {
+    (mkIf packages.ghidra.enable {
       environment.systemPackages = [
         (pkgs.ghidra.withExtensions (p: [
           p.findcrypt
@@ -149,7 +108,52 @@ in
       ];
     })
 
-    (mkIf packages.qtTools {
+    ############################################
+    # Monitoring Tools
+    ############################################
+    (mkIf packages.monitoring.enable {
+      environment.systemPackages = [
+        pkgs.htop
+        pkgs.iftop
+        pkgs.iotop
+      ];
+    })
+    # Separated because Zig compilation on aarch64 weird
+    (mkIf packages.monitoring.ncdu.enable {
+      environment.systemPackages = [
+        pkgs.ncdu
+      ];
+    })
+
+    ############################################
+    # Networking Tools
+    ############################################
+    (mkIf packages.networking.enable {
+      environment.systemPackages = [
+        pkgs.inetutils
+        pkgs.rsync
+      ];
+    })
+
+    ############################################
+    # Nix Tools
+    ############################################
+    (mkIf packages.nixTools.enable {
+      environment.systemPackages = [
+        pkgs.nixfmt
+        pkgs.nix-tree
+        pkgs.nix-index
+        pkgs.nil
+
+        pkgs.prune-nix-cache
+      ];
+    })
+
+
+    ############################################
+    # Qt Tools
+    ############################################
+    (mkIf packages.qtTools.enable {
       environment.systemPackages = [
         pkgs.qt6.qtsvg
         pkgs.qt6.qtimageformats

@@ -57,24 +57,24 @@
   # Global Packages
   ############################################
   modules.packages = {
-    direnv = true;
+    direnv.enable = true;
     fastfetch.enable = true;
     git.enable = true;
     git.installFullGit = true;
-    monitoring = true;
-    ncdu = true;
-    networking = true;
-    nixTools = true;
+    monitoring.enable = true;
+    monitoring.ncdu.enable = true;
+    networking.enable = true;
+    nixTools.enable = true;
     nodejs.node = true;
     nodejs.biome = true;
-    qtTools = true;
+    qtTools.enable = true;
     rust = "nightly";
-    secrets.base = true;
-    secrets.wslGpgForwarding = true;
+    secrets.enable = true;
+    secrets.wslGpgForwarding.enable = true;
     starship.enable = true;
     ssh-client.enable = true;
-    virtualization.docker = true;
-    virtualization.armVirtualization = true;
+    virtualization.docker.enable = true;
+    virtualization.armVirtualization.enable = true;
     zed.enable = true;
     zed.wslFixes = true;
     zsh.enable = true;

@@ -109,26 +109,26 @@
   # Global Packages
   ############################################
   modules.packages = {
-    direnv = true;
+    direnv.enable = true;
     fastfetch.enable = true;
     flameshot.enable = true;
     fraudshell.enable = true;
     git.enable = true;
     git.installFullGit = true;
     ly.enable = true;
-    networking = true;
-    monitoring = true;
-    nixTools = true;
+    networking.enable = true;
+    monitoring.enable = true;
+    nixTools.enable = true;
     nodejs.node = true;
     nodejs.biome = true;
     rust = "nightly";
-    secrets.base = true;
+    secrets.enable = true;
     ssh-client.enable = true;
     starship.enable = true;
     steam = true;
     styling.enable = true;
     vicinae.enable = true;
-    virtualization.armVirtualization = true;
+    virtualization.armVirtualization.enable = true;
     zed.enable = true;
     zsh.enable = true;
 

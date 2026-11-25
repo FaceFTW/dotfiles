@@ -67,13 +67,15 @@
   ############################################
   # Global Packages
   ############################################
-  modules.packages.fastfetch.enable = true;
-  modules.packages.monitoring = true;
-  modules.packages.networking = true;
-  modules.packages.secrets.base = true;
-  modules.packages.starship.enable = true;
-  modules.packages.ssh-client.enable = true;
-  modules.packages.zsh.enable = true;
+  modules.packages = {
+    fastfetch.enable = true;
+    monitoring.enable = true;
+    networking.enable = true;
+    secrets.enable = true;
+    starship.enable = true;
+    ssh-client.enable = true;
+    zsh.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [
     libraspberrypi
