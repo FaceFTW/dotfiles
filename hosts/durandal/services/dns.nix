@@ -49,6 +49,7 @@
       router                 IN A      192.168.0.1
       durandal               IN A      192.168.0.7
       fabricator             IN A      192.168.0.42
+      fabricator-ether       IN A      192.168.0.41
       archiver               IN A      192.168.0.172
     '';
   };

@@ -9,7 +9,6 @@
     inputs.nixos-wsl.nixosModules.default
     inputs.home-manager.nixosModules.home-manager
     ./core.nix
-    ./home
     ./kernel-tunables.nix
     ./packages
     ./user.nix
@@ -24,14 +23,6 @@
   modules.users.default.password.type = "initialPassword";
   modules.users.default.password.value = "";
   modules.users.default.extraGroups = [ "docker" ];
-
-  modules.home = {
-    fastfetch.enable = true;
-    git.enable = true;
-    starship.enable = true;
-    ssh-client.enable = true;
-    zsh.enable = true;
-  };
 
   ############################################
   # WSL Configuration
@@ -65,26 +56,29 @@
   ############################################
   # Global Packages
   ############################################
-  packages.direnv = true;
-  packages.gitFull = true;
-  packages.gnuMake = true;
-  packages.monitoring = true;
-  packages.ncdu = true;
-  packages.networking = true;
-  packages.nixTools = true;
-  packages.nodejs.node = true;
-  packages.nodejs.biome = true;
-  packages.qtTools = true;
-  packages.rust = "nightly";
-  packages.secrets.base = true;
-  packages.secrets.wslGpgForwarding = true;
-  packages.virtualization.docker = true;
-  packages.virtualization.armVirtualization = true;
-  packages.zed.enable = true;
-  packages.zed.wslFixes = true;
-
-  programs.zsh.enable = true;
-  programs.ssh.startAgent = true;
+  modules.packages = {
+    direnv = true;
+    fastfetch.enable = true;
+    git.enable = true;
+    git.installFullGit = true;
+    monitoring = true;
+    ncdu = true;
+    networking = true;
+    nixTools = true;
+    nodejs.node = true;
+    nodejs.biome = true;
+    qtTools = true;
+    rust = "nightly";
+    secrets.base = true;
+    secrets.wslGpgForwarding = true;
+    starship.enable = true;
+    ssh-client.enable = true;
+    virtualization.docker = true;
+    virtualization.armVirtualization = true;
+    zed.enable = true;
+    zed.wslFixes = true;
+    zsh.enable = true;
+  };
 
   environment.systemPackages = [ ];
 

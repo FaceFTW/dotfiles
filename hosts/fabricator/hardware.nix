@@ -23,7 +23,7 @@
     "kunit.enable=0"
   ];
 
-  services.bootvine.enable = true;
+  # services.bootvine.enable = true;
 
   hardware.bluetooth.enable = false;
 

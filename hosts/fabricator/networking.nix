@@ -27,6 +27,7 @@
   systemd.network.networks."10-end0" = {
     matchConfig.Name = "end0";
     linkConfig.RequiredForOnline = false;
+    networkConfig.DHCP = "ipv4";
   };
 
   # NOTE Local router gives Static IP
