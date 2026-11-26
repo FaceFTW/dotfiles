@@ -53,45 +53,4 @@
       client_max_body_size 4g;
     '';
   };
-
-  ############################################
-  # Garage Web UI
-  ############################################
-  # systemd.services.garage-web-ui = {
-  #   wantedBy = [
-  #     "default.target"
-  #   ];
-  #   after = [
-  #     "network.target"
-  #     "garage.service"
-  #   ];
-  #   wants = [
-  #     "garage.service"
-  #   ];
-
-  #   environment.PORT = "3919";
-  #   environment.CONFIG_PATH = "/etc/garage.toml";
-  #   environment.API_ADMIN_KEY_FILE = "%d/GARAGE_ADMIN_TOKEN";
-
-  #   serviceConfig.LoadCredential = [ "GARAGE_ADMIN_TOKEN:/run/secrets/garage_admin_token" ];
-  #   serviceConfig.User = "garage";
-  #   serviceConfig.Group = "garage";
-  #   serviceConfig.ExecStart = "${pkgs.garage-webui}/bin/garage-webui";
-  # };
-
-  # Nginx Reverse Proxy Config
-  # services.nginx.upstreams.garage-ui.servers."127.0.0.1:3919" = { };
-  # services.nginx.virtualHosts."garage.internal.faceftw.dev" = {
-  #   serverName = "garage.internal.faceftw.dev";
-  #   listen = [
-  #     {
-  #       addr = "0.0.0.0";
-  #       port = 80;
-  #     }
-  #   ];
-
-  #   locations."/".proxyPass = "http://garage-ui";
-  #   locations."/".recommendedProxySettings = true;
-  #   locations."/".proxyWebsockets = true;
-  # };
 }
