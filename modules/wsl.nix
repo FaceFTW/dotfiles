@@ -64,7 +64,7 @@
     monitoring.enable = true;
     monitoring.ncdu.enable = true;
     networking.enable = true;
-    nixTools.enable = true;
+    nix-tools.enable = true;
     nodejs.node = true;
     nodejs.biome = true;
     qtTools.enable = true;

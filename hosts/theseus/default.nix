@@ -118,7 +118,7 @@
     ly.enable = true;
     networking.enable = true;
     monitoring.enable = true;
-    nixTools.enable = true;
+    nix-tools.enable = true;
     nodejs.node = true;
     nodejs.biome = true;
     rust = "nightly";

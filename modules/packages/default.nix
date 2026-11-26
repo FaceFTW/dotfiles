@@ -21,6 +21,7 @@ in
     ./hyprpaper.nix
     ./ly.nix
     ./nodejs.nix
+    ./nix-tools.nix
     ./rust.nix
     ./secrets.nix
     ./ssh-client.nix
@@ -39,7 +40,6 @@ in
     monitoring.enable = mkEnableOption "Extra System Monitoring Utils";
     monitoring.ncdu.enable = mkEnableOption "ncdu";
     networking.enable = mkEnableOption "Extra Networking Things";
-    nixTools.enable = mkEnableOption "Nix Dev Tools";
     qtTools.enable = mkEnableOption "QT Dev Tools";
   };
 
@@ -52,7 +52,7 @@ in
         pkgs.shell-toy
 
         pkgs.bash-completion
-        pkgs.batq
+        pkgs.bat
         # pkgs.coreutils
         pkgs.uutils-coreutils-noprefix
         pkgs.uutils-findutils
@@ -134,21 +134,6 @@ in
         pkgs.rsync
       ];
     })
-
-    ############################################
-    # Nix Tools
-    ############################################
-    (mkIf packages.nixTools.enable {
-      environment.systemPackages = [
-        pkgs.nixfmt
-        pkgs.nix-tree
-        pkgs.nix-index
-        pkgs.nil
-
-        pkgs.prune-nix-cache
-      ];
-    })
-
 
     ############################################
     # Qt Tools
