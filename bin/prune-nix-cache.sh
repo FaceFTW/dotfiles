@@ -1,7 +1,7 @@
 # #!/bin/bash
 # set -euo pipefail
 
-export AWS_REGION="archiver"
+# export AWS_REGION="us-east-1"
 endpoint="https://garage-s3.faceftw.dev"
 flake_ref="/home/face/.config/dotfiles"
 
@@ -42,7 +42,7 @@ for drv_path in "${drv_list[@]}"; do
         narinfo_path="$drv_hash.narinfo"
         nar_path="nar/$drv_hash.nar.xz"
         echo "$narinfo_path" >> "$tmpdir/preserve_paths_unsorted"
-        echo "$nar_path" >> "$tmpdir/preserve_paths_unsotred"
+        echo "$nar_path" >> "$tmpdir/preserve_paths_unsorted"
     fi
 done
 if [ ! -s "$tmpdir/preserve_paths_unsorted" ]; then
@@ -64,7 +64,7 @@ fi
 
 # Filter out the files that are in latest GC roots
 # Then make it the proper S3 urls
-grep --invert-match --fixed-strings -f "$preserve_paths" "$object_keys" > "$tmpdir/rm-batch-nourl"
+grep --invert-match --fixed-strings -x -f "$preserve_paths" "$object_keys" > "$tmpdir/rm-batch-nourl"
 echo "Identified $(wc -l "$tmpdir/rm-batch-nourl" | sed "s#$tmpdir/rm-batch-nourl##")paths to remove from cache"
 awk '{print "rm s3://nix-cache/" $0}' "$tmpdir/rm-batch-nourl" > "$rm_batch"
 

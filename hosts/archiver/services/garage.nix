@@ -18,12 +18,12 @@
     rpc_public_addr = "localhost:3901";
     rpc_secret_file = "/run/secrets/garage_rpc_secret";
 
-    s3_api.s3_region = "archiver";
+    s3_api.s3_region = "us-east-1";
     s3_api.api_bind_addr = "[::]:3900";
-    s3_api.root_domain = ".s3.garage.internal.faceftw.dev";
+    s3_api.root_domain = "garage-s3.faceftw.dev";
 
     s3_web.bind_addr = "[::]:3902";
-    s3_web.root_domain = ".web.garage.internal.faceftw.dev";
+    s3_web.root_domain = "garage-web.faceftw.dev";
     index = "index.html";
 
     k2v_api.api_bind_addr = "[::]:3904";
