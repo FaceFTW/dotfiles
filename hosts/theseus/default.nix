@@ -199,6 +199,7 @@
 
             --- Core Shell Experience
             hl.exec_cmd("${pkgs.hyprpaper}/bin/hyprpaper")
+            hl.exec_cmd("${pkgs.hypridle}/bin/hypridle")
             hl.exec_cmd("sleep 1; ${pkgs.quickshell}/bin/quickshell -p /home/face/.config/quickshell/fraudshell")
             hl.exec_cmd("${pkgs.vicinae}/bin/vicinae server")
 
@@ -223,6 +224,8 @@
         ]
 
       ];
+
+    hypridle.enable = true;
 
     hyprlock.enable = true;
     hyprlock.wallpaper = ./assets/fraud-3-wallpaper.png;

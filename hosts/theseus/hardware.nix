@@ -23,6 +23,14 @@
   services.fprintd.enable = true;
   services.fprintd.enablePam = true;
 
+  services.logind.settings.Login = {
+    HandlePowerKey = "suspend-then-hibernate";
+    HandlePowerKeyLongPress = "poweroff";
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandleLidSwitchExternalPower = "suspend";
+    HandleLidSwitchDocked = "ignore";
+  };
+
   ############################################
   # Kernel Config
   ############################################

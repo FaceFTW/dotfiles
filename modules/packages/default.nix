@@ -16,6 +16,7 @@ in
     ./flameshot.nix
     ./fraudshell.nix
     ./git.nix
+    ./hypridle.nix
     ./hyprland.nix
     ./hyprlock.nix
     ./hyprpaper.nix
