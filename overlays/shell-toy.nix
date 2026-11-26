@@ -20,14 +20,14 @@ in
       (fetchgit {
         url = "https://github.com/FaceFTW/shell-toy.git";
         name = "sh-toy-source";
-        rev = "b04256a78d368d9e76dbdd153e05c52b028be8cc";
-        hash = "sha256-K7ctG61fEqshjLVmSv7oBIwclE1W51TLjqPL8KZODUA=";
+        rev = "e1c587c8b2a5b55b1d194c69ed9a8b48f04a8ddb";
+        hash = "sha256-fr7AmmwJds75qJPWTQpwmy786Vu8/CqitPeXIRpicdE=";
         # hash = prev.lib.fakeHash;
       })
     ];
 
     sourceRoot = "sh-toy-source";
-    cargoHash = "sha256-TI3PCy9VqqsCCmpUznIlIAY8Ic0CZe1IlucycMzhyCQ=";
+    cargoHash = "sha256-cqONXyGZr+LGybnEEL9dSSnQn4OKoh0sCp15w4jKBYg=";
 
     doCheck = false;
 
